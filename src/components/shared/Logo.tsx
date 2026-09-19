@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 
@@ -28,33 +30,33 @@ export function Logo({
 
   return (
     <div className={`inline-flex items-center gap-2.5 group select-none ${className}`}>
-      {/* SVG Monogram from client reference */}
+      {/* SVG Monogram matching client reference media_1789815697252.jpg */}
       <svg
         viewBox="0 0 100 100"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className={`${iconSizes[size]} transition-transform duration-300 group-hover:scale-105 flex-shrink-0`}
       >
-        {/* Dot / Circle element */}
+        {/* Solid Circle in top-left quadrant */}
         <circle
-          cx="32"
-          cy="32"
-          r="16"
-          fill={isLight ? '#FFFFFF' : '#151515'}
+          cx="34"
+          cy="36"
+          r="13"
+          fill={isLight ? '#FFFFFF' : '#0A0A0A'}
         />
-        {/* Angled 'V' / checkmark pill element */}
+        {/* Smooth rounded checkmark / angled pill */}
         <path
-          d="M32 50 L56 74 C60 78 66 78 70 74 L84 48 C88 40 82 32 74 32 C70 32 66 34 64 38 L48 60 L32 50 Z"
-          fill={isLight ? '#FFFFFF' : '#151515'}
+          d="M32 50 H52 L76 24 C80 20 86 20 90 24 C94 28 94 34 90 38 L58 74 C52 80 44 80 38 74 L24 60 C20 56 20 50 24 46 C28 42 32 46 32 50 Z"
+          fill={isLight ? '#FFFFFF' : '#0A0A0A'}
         />
       </svg>
 
       {withText && (
         <span
-          className={`font-extrabold tracking-tight font-sans ${textSizes[size]} ${
-            isLight ? 'text-white' : 'text-[#151515]'
+          className={`font-black tracking-tight font-sans ${textSizes[size]} ${
+            isLight ? 'text-white' : 'text-[#0A0A0A]'
           }`}
-          style={{ letterSpacing: '-0.03em' }}
+          style={{ letterSpacing: '-0.04em' }}
         >
           Influverse
         </span>

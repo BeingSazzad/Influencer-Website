@@ -10,29 +10,35 @@ export function FeaturedCreators() {
   const { creators } = useAppSelector((state) => state.creator);
   const { t } = useAppSelector((state) => state.lang);
 
-  // Take the first 4 featured creators (Sophie, Liam, Maya, Noah)
   const featured = creators.slice(0, 4);
 
   return (
-    <section className="py-16 bg-white border-y border-[#E7E7E2]">
+    <section className="py-20 bg-white border-y border-[#E7E7E2]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-black text-[#151515] tracking-tight">
-              {t?.featured?.title || 'Featured Creators'}
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F1EEF9] text-[#6444A6] text-[11px] font-bold uppercase tracking-wider mb-2 font-sans">
+              <Sparkles className="w-3.5 h-3.5" />
+              Verified Marketplace Talent
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-black text-[#0A0A0A] tracking-tight font-sans">
+              Featured{' '}
+              <span className="font-editorial italic font-normal text-[#0A0A0A]">
+                Creators
+              </span>
             </h2>
-            <p className="text-sm text-[#73736A] mt-1">
+            <p className="text-sm text-[#73736A] mt-1 font-sans font-medium">
               {t?.featured?.subtitle || 'Discover talented creators across different niches.'}
             </p>
           </div>
 
           <Link
             href="/creators"
-            className="inline-flex items-center gap-2 text-xs font-bold text-[#151515] hover:text-[#2B7FFF] transition-colors group self-start sm:self-auto"
+            className="inline-flex items-center gap-2 text-xs font-black text-[#0A0A0A] hover:text-[#2B7FFF] transition-colors group self-start sm:self-auto font-sans"
           >
             <span>{t?.featured?.viewAll || 'View all creators'}</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
           </Link>
         </div>
 

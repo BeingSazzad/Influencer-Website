@@ -16,12 +16,7 @@ import {
   Sparkles,
   ChevronDown,
   User as UserIcon,
-  ShoppingBag,
-  Send,
-  Layers,
   ArrowRight,
-  LogOut,
-  SlidersHorizontal,
 } from 'lucide-react';
 
 export function Navbar() {
@@ -44,16 +39,16 @@ export function Navbar() {
     {
       key: 'brand',
       label: (
-        <div className="flex items-center gap-2.5 py-1 px-1">
-          <div className="w-8 h-8 rounded-lg bg-[#151515] text-white flex items-center justify-center font-bold text-xs">
+        <div className="flex items-center gap-2.5 py-1 px-1 font-sans">
+          <div className="w-8 h-8 rounded-xl bg-[#0A0A0A] text-white flex items-center justify-center font-bold text-xs">
             B
           </div>
           <div>
-            <div className="font-bold text-[#151515] text-xs">Brand Workspace</div>
-            <div className="text-[11px] text-[#73736A]">Discover & hire creators</div>
+            <div className="font-extrabold text-[#0A0A0A] text-xs">Brand Workspace</div>
+            <div className="text-[11px] text-[#73736A]">Discover & hire talent</div>
           </div>
           {activeRole === 'brand' && (
-            <Tag color="#151515" className="ml-auto font-medium text-[10px]">
+            <Tag color="#0A0A0A" className="ml-auto font-bold text-[10px]">
               Active
             </Tag>
           )}
@@ -64,16 +59,16 @@ export function Navbar() {
     {
       key: 'creator',
       label: (
-        <div className="flex items-center gap-2.5 py-1 px-1">
-          <div className="w-8 h-8 rounded-lg bg-[#2B7FFF] text-white flex items-center justify-center font-bold text-xs">
+        <div className="flex items-center gap-2.5 py-1 px-1 font-sans">
+          <div className="w-8 h-8 rounded-xl bg-[#2B7FFF] text-white flex items-center justify-center font-bold text-xs">
             C
           </div>
           <div>
-            <div className="font-bold text-[#151515] text-xs">Creator Workspace</div>
+            <div className="font-extrabold text-[#0A0A0A] text-xs">Creator Workspace</div>
             <div className="text-[11px] text-[#73736A]">Accept offers & fulfill orders</div>
           </div>
           {activeRole === 'creator' && (
-            <Tag color="#2B7FFF" className="ml-auto font-medium text-[10px]">
+            <Tag color="#2B7FFF" className="ml-auto font-bold text-[10px]">
               Active
             </Tag>
           )}
@@ -100,10 +95,10 @@ export function Navbar() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`text-sm font-semibold transition-colors duration-200 ${
+                  className={`text-sm font-bold font-sans transition-colors duration-200 ${
                     isActive
-                      ? 'text-[#151515]'
-                      : 'text-[#666660] hover:text-[#151515]'
+                      ? 'text-[#0A0A0A]'
+                      : 'text-[#666660] hover:text-[#0A0A0A]'
                   }`}
                 >
                   {link.name}
@@ -120,12 +115,12 @@ export function Navbar() {
             {/* Saved Shortlist Link */}
             <Link
               href="/brand/saved"
-              className="relative p-2.5 text-[#555550] hover:text-[#151515] hover:bg-[#F1F1EC] rounded-full transition-colors"
+              className="relative p-2.5 text-[#555550] hover:text-[#0A0A0A] hover:bg-[#F1F1EC] rounded-full transition-colors"
               title="Saved Creators"
             >
               <Bookmark className="w-4 h-4" />
               {savedCreatorIds.length > 0 && (
-                <span className="absolute 1 top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#151515] text-[10px] font-bold text-white">
+                <span className="absolute 1 top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#0A0A0A] text-[10px] font-black text-white shadow-2xs">
                   {savedCreatorIds.length}
                 </span>
               )}
@@ -133,7 +128,7 @@ export function Navbar() {
 
             {/* Role Demo Switcher Dropdown */}
             <Dropdown menu={{ items: roleMenu }} trigger={['click']} placement="bottomRight">
-              <button className="flex items-center gap-2 px-3 py-1.5 text-xs font-semibold rounded-full bg-[#F0F0EB] hover:bg-[#E5E5DE] text-[#151515] border border-[#E0E0D8] transition-colors">
+              <button className="flex items-center gap-2 px-3.5 py-1.5 text-xs font-bold rounded-full bg-[#F0F0EB] hover:bg-[#E5E5DE] text-[#0A0A0A] border border-[#E0E0D8] transition-colors font-sans cursor-pointer">
                 <Sparkles className="w-3.5 h-3.5 text-[#2B7FFF]" />
                 <span>
                   Demo Role: <strong className="capitalize">{activeRole}</strong>
@@ -144,13 +139,13 @@ export function Navbar() {
 
             {/* Workspace / Auth Buttons */}
             {currentUser ? (
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2.5 font-sans">
                 <Link
                   href={activeRole === 'brand' ? '/brand/dashboard' : '/creator/dashboard'}
                 >
                   <Button
                     type="default"
-                    className="flex items-center gap-2 border-[#D2D2CA] text-[#151515] hover:border-[#151515] font-bold h-9 px-4 rounded-full bg-white text-xs"
+                    className="flex items-center gap-2 border-[#D2D2CA] text-[#0A0A0A] hover:border-[#0A0A0A] font-extrabold h-9 px-4 rounded-full bg-white text-xs"
                   >
                     <UserIcon className="w-3.5 h-3.5" />
                     <span>{activeRole === 'brand' ? 'Brand Portal' : 'Creator Portal'}</span>
@@ -162,7 +157,7 @@ export function Navbar() {
                 >
                   <Button
                     type="primary"
-                    className="flex items-center gap-1.5 font-bold h-9 px-4 rounded-full bg-[#151515] hover:!bg-[#2B7FFF] text-white text-xs border-none shadow-none"
+                    className="flex items-center gap-1.5 font-black h-9 px-4 rounded-full bg-[#0A0A0A] hover:!bg-[#2B7FFF] text-white text-xs border-none shadow-sm transition-all"
                   >
                     {activeRole === 'brand' ? (
                       <>
@@ -179,17 +174,17 @@ export function Navbar() {
                 </Link>
               </div>
             ) : (
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 font-sans">
                 <Link
                   href="/login"
-                  className="text-sm font-semibold text-[#151515] hover:underline px-2"
+                  className="text-sm font-bold text-[#0A0A0A] hover:underline px-2"
                 >
                   Log in
                 </Link>
                 <Link href="/register">
                   <Button
                     type="primary"
-                    className="h-10 px-5 rounded-full bg-[#151515] hover:!bg-[#2B7FFF] text-white font-bold text-sm border-none shadow-none"
+                    className="h-10 px-5 rounded-full bg-[#0A0A0A] hover:!bg-[#2B7FFF] text-white font-black text-xs border-none shadow-sm transition-all"
                   >
                     Get Started
                   </Button>
@@ -203,18 +198,18 @@ export function Navbar() {
             <LanguageSwitcher />
             <Link
               href="/brand/saved"
-              className="relative p-2 text-[#151515]"
+              className="relative p-2 text-[#0A0A0A]"
             >
               <Bookmark className="w-5 h-5" />
               {savedCreatorIds.length > 0 && (
-                <span className="absolute 0 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-[#151515] text-[10px] font-bold text-white">
+                <span className="absolute 0 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-[#0A0A0A] text-[10px] font-black text-white">
                   {savedCreatorIds.length}
                 </span>
               )}
             </Link>
             <button
               onClick={() => setIsDrawerOpen(true)}
-              className="p-2 text-[#151515] hover:bg-[#EFEFEA] rounded-lg"
+              className="p-2 text-[#0A0A0A] hover:bg-[#EFEFEA] rounded-xl"
               aria-label="Open Navigation Menu"
             >
               <MenuIcon className="w-6 h-6" />
@@ -231,10 +226,10 @@ export function Navbar() {
         open={isDrawerOpen}
         width={310}
       >
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 font-sans">
           {/* Role Switcher */}
-          <div className="p-3 bg-[#F4F4F0] rounded-xl border border-[#E7E7E2]">
-            <div className="text-[11px] font-bold text-[#73736A] uppercase tracking-wider mb-2">
+          <div className="p-3 bg-[#F4F4F0] rounded-2xl border border-[#E7E7E2]">
+            <div className="text-[11px] font-extrabold text-[#73736A] uppercase tracking-wider mb-2">
               Select Demo Perspective
             </div>
             <div className="grid grid-cols-2 gap-2">
@@ -243,10 +238,10 @@ export function Navbar() {
                   dispatch(switchRole('brand'));
                   setIsDrawerOpen(false);
                 }}
-                className={`px-3 py-2 text-xs font-bold rounded-lg border flex items-center justify-center gap-1.5 ${
+                className={`px-3 py-2 text-xs font-bold rounded-xl border flex items-center justify-center gap-1.5 ${
                   activeRole === 'brand'
-                    ? 'bg-[#151515] text-white border-[#151515]'
-                    : 'bg-white text-[#151515] border-[#E7E7E2]'
+                    ? 'bg-[#0A0A0A] text-white border-[#0A0A0A]'
+                    : 'bg-white text-[#0A0A0A] border-[#E7E7E2]'
                 }`}
               >
                 <Briefcase className="w-3.5 h-3.5" />
@@ -257,10 +252,10 @@ export function Navbar() {
                   dispatch(switchRole('creator'));
                   setIsDrawerOpen(false);
                 }}
-                className={`px-3 py-2 text-xs font-bold rounded-lg border flex items-center justify-center gap-1.5 ${
+                className={`px-3 py-2 text-xs font-bold rounded-xl border flex items-center justify-center gap-1.5 ${
                   activeRole === 'creator'
                     ? 'bg-[#2B7FFF] text-white border-[#2B7FFF]'
-                    : 'bg-white text-[#151515] border-[#E7E7E2]'
+                    : 'bg-white text-[#0A0A0A] border-[#E7E7E2]'
                 }`}
               >
                 <Sparkles className="w-3.5 h-3.5" />
@@ -276,9 +271,9 @@ export function Navbar() {
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsDrawerOpen(false)}
-                className={`px-3 py-2.5 text-sm font-semibold rounded-lg ${
+                className={`px-3 py-2.5 text-sm font-bold rounded-xl ${
                   pathname === link.href
-                    ? 'bg-[#EAEAE3] text-[#151515] font-bold'
+                    ? 'bg-[#EAEAE3] text-[#0A0A0A]'
                     : 'text-[#555550] hover:bg-[#F4F4F0]'
                 }`}
               >
@@ -295,20 +290,20 @@ export function Navbar() {
               <Button
                 type="primary"
                 block
-                className="h-11 font-bold bg-[#151515] text-white rounded-full"
+                className="h-11 font-black bg-[#0A0A0A] text-white rounded-full text-xs"
               >
                 {activeRole === 'brand' ? 'Open Brand Workspace' : 'Open Creator Workspace'}
               </Button>
             </Link>
 
             <Link href="/creators" onClick={() => setIsDrawerOpen(false)}>
-              <Button block className="h-11 font-semibold rounded-full border-[#D2D2CA]">
+              <Button block className="h-11 font-bold rounded-full border-[#D2D2CA] text-xs">
                 Browse All Creators
               </Button>
             </Link>
 
             <Link href="/login" onClick={() => setIsDrawerOpen(false)}>
-              <Button block className="h-11 font-medium rounded-full text-[#666660]">
+              <Button block className="h-11 font-bold rounded-full text-[#666660] text-xs">
                 Switch / Log In
               </Button>
             </Link>

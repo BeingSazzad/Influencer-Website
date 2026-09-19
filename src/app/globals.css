@@ -1,23 +1,36 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,600;1,700;1,800;1,900&family=Red+Hat+Display:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --font-manrope: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Red Hat Display', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
   --bg-warm-white: #FAFAF8;
-  --text-near-black: #151515;
+  --text-near-black: #0A0A0A;
   --border-neutral: #E7E7E2;
 }
 
 body {
-  font-family: var(--font-manrope);
+  font-family: var(--font-sans);
   background-color: var(--bg-warm-white);
   color: var(--text-near-black);
   letter-spacing: -0.015em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Editorial Serif Accents matching DesignMonk typography */
+.font-editorial {
+  font-family: var(--font-serif);
+  font-style: italic;
+  letter-spacing: -0.02em;
+}
+
+.font-editorial-regular {
+  font-family: var(--font-serif);
+  font-style: normal;
 }
 
 /* Restrained Pastel Utility Badges */
@@ -45,61 +58,66 @@ body {
   border: 1px solid #F8DCD4;
 }
 
+.badge-sky {
+  background-color: #EBF3FE;
+  color: #2B7FFF;
+  border: 1px solid #D8E7FD;
+}
+
 .badge-neutral {
   background-color: #F0F0EB;
   color: #40403C;
   border: 1px solid #E2E2DC;
 }
 
-/* Primary Button Aesthetics: Solid near-black, 44-48px height, 12-16px radius */
-.btn-primary {
-  background-color: #151515;
-  color: #FFFFFF;
-  font-weight: 600;
-  border-radius: 12px;
-  height: 46px;
-  padding: 0 22px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
+/* Glassmorphism & Soft Ambient Surface */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(231, 231, 226, 0.9);
 }
 
-.btn-primary:hover {
-  background-color: #2A2A2A;
-  color: #FFFFFF;
+.glass-panel-dark {
+  background: rgba(15, 15, 15, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.btn-secondary {
-  background-color: #FFFFFF;
-  color: #151515;
-  font-weight: 600;
-  border: 1px solid #E7E7E2;
-  border-radius: 12px;
-  height: 46px;
-  padding: 0 20px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-}
-
-.btn-secondary:hover {
-  background-color: #F5F5F0;
-  border-color: #D6D6CF;
-}
-
-/* Card Surface */
+/* Senior Product Designer Card Styles */
 .influverse-card {
   background: #FFFFFF;
   border: 1px solid #E7E7E2;
-  border-radius: 18px;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+  border-radius: 20px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .influverse-card:hover {
-  border-color: #D2D2CA;
-  box-shadow: 0 12px 32px -8px rgba(21, 21, 21, 0.06);
+  border-color: #0A0A0A;
+  box-shadow: 0 16px 36px -12px rgba(10, 10, 10, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Primary Button Styling */
+.btn-primary {
+  background-color: #0A0A0A;
+  color: #FFFFFF;
+  font-weight: 700;
+  border-radius: 9999px;
+  height: 44px;
+  padding: 0 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-primary:hover {
+  background-color: #2B7FFF;
+  color: #FFFFFF;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px -4px rgba(43, 127, 255, 0.35);
 }
 
 /* Custom Scrollbar */
@@ -112,7 +130,7 @@ body {
 }
 ::-webkit-scrollbar-thumb {
   background: #D8D8D0;
-  border-radius: 3px;
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #B0B0A8;

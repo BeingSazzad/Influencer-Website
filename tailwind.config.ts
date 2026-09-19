@@ -9,7 +9,10 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Manrope', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['"Red Hat Display"', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['"Red Hat Display"', 'sans-serif'],
+        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+        editorial: ['"Playfair Display"', 'Georgia', 'serif'],
       },
       colors: {
         warm: {
@@ -23,8 +26,9 @@ const config: Config = {
           700: '#52524B',
           800: '#33332D',
           900: '#151515',
+          950: '#0A0A0A',
         },
-        nearblack: '#151515',
+        nearblack: '#0A0A0A',
         pastel: {
           lavender: '#F1EEF9',
           lavenderText: '#6444A6',
@@ -34,6 +38,8 @@ const config: Config = {
           butterText: '#8C6819',
           blush: '#FDF0ED',
           blushText: '#A9432F',
+          sky: '#EBF3FE',
+          skyText: '#2B7FFF',
         },
       },
       maxWidth: {
@@ -41,9 +47,33 @@ const config: Config = {
       },
       borderRadius: {
         'xl': '14px',
-        '2xl': '18px',
-        '3xl': '24px',
-      }
+        '2xl': '20px',
+        '3xl': '28px',
+      },
+      animation: {
+        'float': 'float 6s ease-in-out infinite',
+        'float-slow': 'floatSlow 8s ease-in-out infinite',
+        'pulse-subtle': 'pulseSubtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'marquee': 'marquee 25s linear infinite',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-8px)' },
+        },
+        floatSlow: {
+          '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+          '50%': { transform: 'translateY(-12px) rotate(1.5deg)' },
+        },
+        pulseSubtle: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.85' },
+        },
+        marquee: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+      },
     },
   },
   plugins: [],

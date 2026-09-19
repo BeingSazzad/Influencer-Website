@@ -47,57 +47,60 @@ export default function CreatorsDiscoveryPage() {
 
   // Filtering and sorting logic
   const filteredCreators = useMemo(() => {
-    return creators.filter((c) => {
-      // Category filter
-      if (filters.category !== 'all') {
-        const hasCat = c.categories.some(
-          (cat) => cat.toLowerCase().includes(filters.category.toLowerCase()) ||
-                   filters.category.toLowerCase().includes(cat.toLowerCase())
-        );
-        if (!hasCat) return false;
-      }
+    return creators
+      .filter((c) => {
+        // Category filter
+        if (filters.category !== 'all') {
+          const hasCat = c.categories.some(
+            (cat) =>
+              cat.toLowerCase().includes(filters.category.toLowerCase()) ||
+              filters.category.toLowerCase().includes(cat.toLowerCase())
+          );
+          if (!hasCat) return false;
+        }
 
-      // Platform filter
-      if (filters.platform !== 'all') {
-        if (!c.platforms[filters.platform as PlatformType]) return false;
-      }
+        // Platform filter
+        if (filters.platform !== 'all') {
+          if (!c.platforms[filters.platform as PlatformType]) return false;
+        }
 
-      // Search query
-      if (filters.searchQuery) {
-        const query = filters.searchQuery.toLowerCase();
-        const matchName = c.name.toLowerCase().includes(query);
-        const matchHandle = c.handle.toLowerCase().includes(query);
-        const matchBio = c.bio.toLowerCase().includes(query);
-        const matchCat = c.categories.some((cat) => cat.toLowerCase().includes(query));
-        if (!matchName && !matchHandle && !matchBio && !matchCat) return false;
-      }
+        // Search query
+        if (filters.searchQuery) {
+          const query = filters.searchQuery.toLowerCase();
+          const matchName = c.name.toLowerCase().includes(query);
+          const matchHandle = c.handle.toLowerCase().includes(query);
+          const matchBio = c.bio.toLowerCase().includes(query);
+          const matchCat = c.categories.some((cat) => cat.toLowerCase().includes(query));
+          if (!matchName && !matchHandle && !matchBio && !matchCat) return false;
+        }
 
-      // Location filter
-      if (filters.location !== 'all' && !c.location.includes(filters.location)) {
-        return false;
-      }
+        // Location filter
+        if (filters.location !== 'all' && !c.location.includes(filters.location)) {
+          return false;
+        }
 
-      // Follower range filter
-      if (filters.followerRange !== 'all') {
-        const igFollowers = c.platforms.instagram?.followers || 0;
-        if (filters.followerRange === 'nano' && igFollowers >= 50000) return false;
-        if (filters.followerRange === 'micro' && (igFollowers < 50000 || igFollowers > 200000)) return false;
-        if (filters.followerRange === 'macro' && (igFollowers < 200000 || igFollowers > 1000000)) return false;
-        if (filters.followerRange === 'mega' && igFollowers <= 1000000) return false;
-      }
+        // Follower range filter
+        if (filters.followerRange !== 'all') {
+          const igFollowers = c.platforms.instagram?.followers || 0;
+          if (filters.followerRange === 'nano' && igFollowers >= 50000) return false;
+          if (filters.followerRange === 'micro' && (igFollowers < 50000 || igFollowers > 200000)) return false;
+          if (filters.followerRange === 'macro' && (igFollowers < 200000 || igFollowers > 1000000)) return false;
+          if (filters.followerRange === 'mega' && igFollowers <= 1000000) return false;
+        }
 
-      return true;
-    }).sort((a, b) => {
-      if (filters.sortBy === 'price_asc') return a.startingPriceEur - b.startingPriceEur;
-      if (filters.sortBy === 'price_desc') return b.startingPriceEur - a.startingPriceEur;
-      if (filters.sortBy === 'rating') return b.rating - a.rating;
-      if (filters.sortBy === 'followers') {
-        const aFollowers = (a.platforms.instagram?.followers || 0) + (a.platforms.tiktok?.followers || 0);
-        const bFollowers = (b.platforms.instagram?.followers || 0) + (b.platforms.tiktok?.followers || 0);
-        return bFollowers - aFollowers;
-      }
-      return 0; // relevance
-    });
+        return true;
+      })
+      .sort((a, b) => {
+        if (filters.sortBy === 'price_asc') return a.startingPriceEur - b.startingPriceEur;
+        if (filters.sortBy === 'price_desc') return b.startingPriceEur - a.startingPriceEur;
+        if (filters.sortBy === 'rating') return b.rating - a.rating;
+        if (filters.sortBy === 'followers') {
+          const aFollowers = (a.platforms.instagram?.followers || 0) + (a.platforms.tiktok?.followers || 0);
+          const bFollowers = (b.platforms.instagram?.followers || 0) + (b.platforms.tiktok?.followers || 0);
+          return bFollowers - aFollowers;
+        }
+        return 0; // relevance
+      });
   }, [creators, filters]);
 
   // Paginated slice
@@ -112,25 +115,26 @@ export default function CreatorsDiscoveryPage() {
         {/* Top Header Area matching reference */}
         <div className="relative">
           <div className="max-w-2xl space-y-2">
-            <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#73736A]">
+            <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#73736A] font-sans">
               CREATOR MARKETPLACE
             </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#151515] tracking-tight">
-              {t?.discovery?.title || 'Discover amazing creators'}
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0A0A0A] tracking-tight font-sans">
+              Discover amazing{' '}
+              <span className="font-editorial italic font-normal text-[#0A0A0A]">
+                creators
+              </span>
             </h1>
-            <p className="text-sm sm:text-base text-[#555550]">
+            <p className="text-sm sm:text-base text-[#555550] font-sans font-medium">
               {t?.discovery?.subtitle ||
                 'Find the right creators to bring your brand to life — across all platforms and niches.'}
             </p>
           </div>
 
           {/* Handwritten style note top right */}
-          <div className="hidden lg:flex absolute top-2 right-4 items-center gap-2 font-serif italic text-[#555550]">
-            <span className="text-base" style={{ fontFamily: 'Georgia, serif' }}>
-              Real people. Real results.
-            </span>
+          <div className="hidden lg:flex absolute top-2 right-4 items-center gap-2 font-editorial text-2xl font-bold text-[#0A0A0A]">
+            <span>Real people. Real results.</span>
             <svg
-              className="w-7 h-7 text-[#73736A] transform rotate-12"
+              className="w-7 h-7 text-[#0A0A0A] transform rotate-12"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -138,7 +142,7 @@ export default function CreatorsDiscoveryPage() {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={1.5}
+                strokeWidth={2}
                 d="M19 14l-7 7m0 0l-7-7m7 7V3"
               />
             </svg>
@@ -148,23 +152,23 @@ export default function CreatorsDiscoveryPage() {
         {/* Global Filter Bar matching reference */}
         <div className="bg-white p-3 rounded-2xl border border-[#E7E7E2] shadow-xs flex flex-wrap items-center gap-3">
           {/* Omni Search Input */}
-          <div className="flex-1 min-w-[240px] relative">
+          <div className="flex-1 min-w-[240px] relative font-sans">
             <Search className="w-4 h-4 text-[#73736A] absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder={t?.discovery?.searchPlaceholder || 'Search creators, keywords or niches...'}
               value={filters.searchQuery}
               onChange={(e) => dispatch(setFilter({ searchQuery: e.target.value }))}
-              className="w-full pl-10 pr-4 py-2 text-xs font-semibold text-[#151515] bg-[#F4F4F0] rounded-xl outline-none placeholder:text-[#A3A39C] focus:ring-1 focus:ring-[#151515]"
+              className="w-full pl-10 pr-4 py-2 text-xs font-semibold text-[#0A0A0A] bg-[#F4F4F0] rounded-xl outline-none placeholder:text-[#A3A39C] focus:ring-1 focus:ring-[#0A0A0A]"
             />
           </div>
 
           {/* All Categories Dropdown */}
-          <div className="min-w-[140px]">
+          <div className="min-w-[140px] font-sans">
             <select
               value={filters.category}
               onChange={(e) => dispatch(setFilter({ category: e.target.value }))}
-              className="w-full px-3 py-2 text-xs font-bold text-[#151515] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer"
+              className="w-full px-3 py-2 text-xs font-bold text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer"
             >
               <option value="all">All Categories</option>
               <option value="Beauty">Beauty</option>
@@ -178,11 +182,11 @@ export default function CreatorsDiscoveryPage() {
           </div>
 
           {/* Locations Dropdown */}
-          <div className="min-w-[130px]">
+          <div className="min-w-[130px] font-sans">
             <select
               value={filters.location}
               onChange={(e) => dispatch(setFilter({ location: e.target.value }))}
-              className="w-full px-3 py-2 text-xs font-bold text-[#151515] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer"
+              className="w-full px-3 py-2 text-xs font-bold text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer"
             >
               <option value="all">All Locations</option>
               <option value="London">London, UK</option>
@@ -196,11 +200,11 @@ export default function CreatorsDiscoveryPage() {
           </div>
 
           {/* Platforms Dropdown */}
-          <div className="min-w-[130px]">
+          <div className="min-w-[130px] font-sans">
             <select
               value={filters.platform}
               onChange={(e) => dispatch(setFilter({ platform: e.target.value as any }))}
-              className="w-full px-3 py-2 text-xs font-bold text-[#151515] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer"
+              className="w-full px-3 py-2 text-xs font-bold text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer"
             >
               <option value="all">All Platforms</option>
               <option value="instagram">Instagram</option>
@@ -211,11 +215,11 @@ export default function CreatorsDiscoveryPage() {
           </div>
 
           {/* Follower Range Dropdown */}
-          <div className="min-w-[140px]">
+          <div className="min-w-[140px] font-sans">
             <select
               value={filters.followerRange}
               onChange={(e) => dispatch(setFilter({ followerRange: e.target.value as any }))}
-              className="w-full px-3 py-2 text-xs font-bold text-[#151515] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer"
+              className="w-full px-3 py-2 text-xs font-bold text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer"
             >
               <option value="all">Follower Range</option>
               <option value="nano">Nano (10K - 50K)</option>
@@ -226,11 +230,11 @@ export default function CreatorsDiscoveryPage() {
           </div>
 
           {/* Sort By Dropdown */}
-          <div className="min-w-[140px]">
+          <div className="min-w-[140px] font-sans">
             <select
               value={filters.sortBy}
               onChange={(e) => dispatch(setFilter({ sortBy: e.target.value as any }))}
-              className="w-full px-3 py-2 text-xs font-bold text-[#151515] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer"
+              className="w-full px-3 py-2 text-xs font-bold text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer"
             >
               <option value="relevance">Sort: Relevance</option>
               <option value="followers">Most Followers</option>
@@ -243,7 +247,7 @@ export default function CreatorsDiscoveryPage() {
           {/* Reset Filters */}
           <button
             onClick={() => dispatch(resetFilters())}
-            className="p-2 rounded-xl border border-[#E7E7E2] hover:bg-[#F4F4F0] text-[#73736A] hover:text-[#151515] transition-colors"
+            className="p-2 rounded-xl border border-[#E7E7E2] hover:bg-[#F4F4F0] text-[#73736A] hover:text-[#0A0A0A] transition-colors"
             title="Reset Filters"
           >
             <RotateCcw className="w-4 h-4" />
@@ -253,19 +257,19 @@ export default function CreatorsDiscoveryPage() {
         {/* Main Split Grid: Left Category Sidebar + Right Creator Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Left Sidebar (25% width) matching reference */}
-          <div className="lg:col-span-3 space-y-6">
+          <div className="lg:col-span-3 space-y-6 font-sans">
             {/* Category Navigation Pills */}
-            <div className="bg-white rounded-2xl border border-[#E7E7E2] p-3 shadow-2xs space-y-1">
+            <div className="bg-white rounded-3xl border border-[#E7E7E2] p-3 shadow-2xs space-y-1">
               {categories.map((cat) => {
                 const isSelected = filters.category.toLowerCase() === cat.name.toLowerCase();
                 return (
                   <button
                     key={cat.name}
                     onClick={() => dispatch(setFilter({ category: cat.name }))}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
+                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all ${
                       isSelected
-                        ? 'bg-[#151515] text-white shadow-2xs'
-                        : 'text-[#666660] hover:bg-[#F4F4F0] hover:text-[#151515]'
+                        ? 'bg-[#0A0A0A] text-white shadow-2xs'
+                        : 'text-[#666660] hover:bg-[#F4F4F0] hover:text-[#0A0A0A]'
                     }`}
                   >
                     <div className="flex items-center gap-2.5">
@@ -285,12 +289,12 @@ export default function CreatorsDiscoveryPage() {
             </div>
 
             {/* Bottom Left Creator CTA Card matching reference */}
-            <div className="bg-white rounded-2xl border border-[#E7E7E2] p-5 shadow-2xs space-y-4">
+            <div className="bg-white rounded-3xl border border-[#E7E7E2] p-6 shadow-2xs space-y-4">
               <div>
-                <h4 className="font-extrabold text-sm text-[#151515]">
+                <h4 className="font-black text-sm text-[#0A0A0A]">
                   Are you a creator?
                 </h4>
-                <p className="text-xs text-[#73736A] mt-1.5 leading-relaxed">
+                <p className="text-xs text-[#73736A] mt-1.5 leading-relaxed font-medium">
                   Join thousands of creators and get discovered by top brands worldwide.
                 </p>
               </div>
@@ -299,7 +303,7 @@ export default function CreatorsDiscoveryPage() {
                 <Button
                   type="primary"
                   block
-                  className="h-10 rounded-full font-bold text-xs bg-[#151515] text-white hover:!bg-[#2B7FFF] border-none shadow-none"
+                  className="h-10 rounded-full font-black text-xs bg-[#0A0A0A] text-white hover:!bg-[#2B7FFF] border-none shadow-none transition-all"
                 >
                   Create Account
                 </Button>
@@ -310,12 +314,12 @@ export default function CreatorsDiscoveryPage() {
           {/* Right Main Area (75% width) */}
           <div className="lg:col-span-9 space-y-6">
             {/* Results Header with Count & Grid/List toggles */}
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between font-sans">
               <div>
-                <span className="text-sm font-black text-[#151515]">
+                <span className="text-sm font-black text-[#0A0A0A]">
                   {filteredCreators.length.toLocaleString()} creators
                 </span>
-                <span className="text-xs text-[#73736A] ml-2 hidden sm:inline">
+                <span className="text-xs text-[#73736A] ml-2 hidden sm:inline font-medium">
                   Showing 1–{paginatedCreators.length} of {filteredCreators.length} creators
                 </span>
               </div>
@@ -325,7 +329,7 @@ export default function CreatorsDiscoveryPage() {
                 <button
                   onClick={() => setViewMode('grid')}
                   className={`p-1.5 rounded-lg text-xs transition-colors ${
-                    viewMode === 'grid' ? 'bg-[#151515] text-white' : 'text-[#73736A] hover:bg-[#F4F4F0]'
+                    viewMode === 'grid' ? 'bg-[#0A0A0A] text-white' : 'text-[#73736A] hover:bg-[#F4F4F0]'
                   }`}
                   aria-label="Grid View"
                 >
@@ -334,7 +338,7 @@ export default function CreatorsDiscoveryPage() {
                 <button
                   onClick={() => setViewMode('list')}
                   className={`p-1.5 rounded-lg text-xs transition-colors ${
-                    viewMode === 'list' ? 'bg-[#151515] text-white' : 'text-[#73736A] hover:bg-[#F4F4F0]'
+                    viewMode === 'list' ? 'bg-[#0A0A0A] text-white' : 'text-[#73736A] hover:bg-[#F4F4F0]'
                   }`}
                   aria-label="List View"
                 >
@@ -357,8 +361,8 @@ export default function CreatorsDiscoveryPage() {
                 ))}
               </div>
             ) : (
-              <div className="bg-white rounded-2xl border border-[#E7E7E2] p-12 text-center space-y-3">
-                <p className="font-bold text-sm text-[#151515]">No creators found matching this filter</p>
+              <div className="bg-white rounded-3xl border border-[#E7E7E2] p-12 text-center space-y-3">
+                <p className="font-bold text-sm text-[#0A0A0A]">No creators found matching this filter</p>
                 <p className="text-xs text-[#73736A]">Try clearing some filter tags or search terms.</p>
                 <Button
                   onClick={() => dispatch(resetFilters())}

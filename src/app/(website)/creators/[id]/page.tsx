@@ -64,15 +64,15 @@ export default function CreatorProfilePage() {
   );
 
   return (
-    <div className="bg-[#FAFAF8] min-h-screen py-10">
+    <div className="bg-[#FAFAF8] min-h-screen py-10 font-sans">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-xs font-semibold text-[#73736A]">
-          <Link href="/creators" className="hover:text-[#151515] transition-colors">
+        <div className="flex items-center gap-2 text-xs font-bold text-[#73736A]">
+          <Link href="/creators" className="hover:text-[#0A0A0A] transition-colors">
             Creators
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-[#A3A39C]" />
-          <span className="text-[#151515] font-bold">{creator.name}</span>
+          <span className="text-[#0A0A0A] font-extrabold">{creator.name}</span>
         </div>
 
         {/* Profile Header Area matching reference media_1789815697276.jpg */}
@@ -82,16 +82,16 @@ export default function CreatorProfilePage() {
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
               {/* Circular Avatar with blue check badge */}
               <div className="relative shrink-0">
-                <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-4 border-[#FAFAF8] shadow-md bg-[#F4F4F0]">
+                <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-4 border-[#FAFAF8] shadow-md bg-[#F4F4F0] group">
                   <img
                     src={creator.avatar}
                     alt={creator.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
                 {creator.verified && (
                   <div
-                    className="absolute bottom-1 right-1 sm:bottom-2 sm:right-2 w-7 h-7 bg-[#2B7FFF] rounded-full flex items-center justify-center text-white border-2 border-white shadow-sm"
+                    className="absolute bottom-1 right-1 sm:bottom-2 sm:right-2 w-7 h-7 bg-[#2B7FFF] rounded-full flex items-center justify-center text-white border-2 border-white shadow-md ring-2 ring-[#2B7FFF]/20"
                     title="Verified Creator"
                   >
                     <Check className="w-4 h-4 stroke-[3]" />
@@ -100,19 +100,19 @@ export default function CreatorProfilePage() {
               </div>
 
               {/* Identity & Bio */}
-              <div className="space-y-2.5 max-w-xl">
+              <div className="space-y-3 max-w-xl">
                 {creator.verified && (
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#EBF3FE] text-[#2B7FFF] text-[11px] font-bold">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#EBF3FE] text-[#2B7FFF] text-[11px] font-black">
                     <Check className="w-3 h-3 stroke-[3]" />
                     <span>Verified creator</span>
                   </div>
                 )}
 
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#151515] tracking-tight">
+                <h1 className="text-3xl sm:text-4xl lg:text-[42px] font-black text-[#0A0A0A] tracking-tight leading-none font-sans">
                   {creator.name}
                 </h1>
 
-                <div className="flex items-center gap-2 text-xs font-semibold text-[#73736A]">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#73736A]">
                   <span>{creator.categories.join(' & ')}</span>
                   <span>•</span>
                   <span className="flex items-center gap-1">
@@ -121,7 +121,7 @@ export default function CreatorProfilePage() {
                   </span>
                 </div>
 
-                <p className="text-xs sm:text-sm text-[#555550] leading-relaxed">
+                <p className="text-xs sm:text-sm text-[#555550] leading-relaxed font-medium">
                   {creator.bio}
                 </p>
 
@@ -130,7 +130,7 @@ export default function CreatorProfilePage() {
                   {creator.tags.map((tag, idx) => (
                     <span
                       key={tag}
-                      className={`text-[11px] font-semibold px-3 py-1 rounded-full ${
+                      className={`text-[11px] font-bold px-3 py-1 rounded-full ${
                         idx === 0
                           ? 'bg-[#FDF0ED] text-[#C75D47]'
                           : idx === 1
@@ -154,38 +154,38 @@ export default function CreatorProfilePage() {
               {/* Follower Stats Columns */}
               <div className="grid grid-cols-3 gap-2 text-center">
                 {creator.platforms.instagram && (
-                  <div className="p-2 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2]">
-                    <div className="w-5 h-5 mx-auto mb-1 rounded-full bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 flex items-center justify-center text-white">
-                      <Instagram className="w-3 h-3" />
+                  <div className="p-2 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
+                    <div className="w-6 h-6 mx-auto mb-1 rounded-full bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 flex items-center justify-center text-white shadow-2xs">
+                      <Instagram className="w-3.5 h-3.5" />
                     </div>
-                    <div className="text-xs font-black text-[#151515]">
+                    <div className="text-xs font-black text-[#0A0A0A]">
                       {creator.platforms.instagram.followersFormatted}
                     </div>
-                    <div className="text-[9px] font-semibold text-[#73736A]">Followers</div>
+                    <div className="text-[9px] font-bold text-[#73736A]">Followers</div>
                   </div>
                 )}
 
                 {creator.platforms.tiktok && (
-                  <div className="p-2 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2]">
-                    <div className="w-5 h-5 mx-auto mb-1 rounded-full bg-[#151515] flex items-center justify-center text-white text-[10px] font-black">
+                  <div className="p-2 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
+                    <div className="w-6 h-6 mx-auto mb-1 rounded-full bg-[#0A0A0A] flex items-center justify-center text-white text-[10px] font-black shadow-2xs">
                       ♪
                     </div>
-                    <div className="text-xs font-black text-[#151515]">
+                    <div className="text-xs font-black text-[#0A0A0A]">
                       {creator.platforms.tiktok.followersFormatted}
                     </div>
-                    <div className="text-[9px] font-semibold text-[#73736A]">Followers</div>
+                    <div className="text-[9px] font-bold text-[#73736A]">Followers</div>
                   </div>
                 )}
 
                 {creator.platforms.youtube && (
-                  <div className="p-2 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2]">
-                    <div className="w-5 h-5 mx-auto mb-1 rounded-full bg-[#FF0000] flex items-center justify-center text-white">
-                      <Youtube className="w-3 h-3" />
+                  <div className="p-2 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
+                    <div className="w-6 h-6 mx-auto mb-1 rounded-full bg-[#FF0000] flex items-center justify-center text-white shadow-2xs">
+                      <Youtube className="w-3.5 h-3.5" />
                     </div>
-                    <div className="text-xs font-black text-[#151515]">
+                    <div className="text-xs font-black text-[#0A0A0A]">
                       {creator.platforms.youtube.followersFormatted}
                     </div>
-                    <div className="text-[9px] font-semibold text-[#73736A]">Subscribers</div>
+                    <div className="text-[9px] font-bold text-[#73736A]">Subscribers</div>
                   </div>
                 )}
               </div>
@@ -196,7 +196,7 @@ export default function CreatorProfilePage() {
                   type="primary"
                   block
                   onClick={() => handleOpenOffer()}
-                  className="h-11 rounded-full font-bold text-xs bg-[#151515] hover:!bg-[#2B7FFF] text-white border-none shadow-sm"
+                  className="h-11 rounded-full font-black text-xs bg-[#0A0A0A] hover:!bg-[#2B7FFF] text-white border-none shadow-sm transition-all"
                 >
                   Send Offer
                 </Button>
@@ -207,7 +207,7 @@ export default function CreatorProfilePage() {
                     onClick={() => {
                       message.info(`Direct messaging channel open with ${creator.name}`);
                     }}
-                    className="h-10 rounded-full font-bold text-xs border-[#D2D2CA] text-[#151515] flex items-center justify-center gap-1.5"
+                    className="h-10 rounded-full font-bold text-xs border-[#D2D2CA] text-[#0A0A0A] flex items-center justify-center gap-1.5"
                   >
                     <MessageSquare className="w-3.5 h-3.5" />
                     <span>Message</span>
@@ -220,7 +220,7 @@ export default function CreatorProfilePage() {
                       message.success(isSaved ? 'Removed from shortlist' : 'Added to brand shortlist');
                     }}
                     className={`h-10 rounded-full font-bold text-xs border-[#D2D2CA] flex items-center justify-center gap-1.5 ${
-                      isSaved ? 'bg-[#151515] text-white' : 'text-[#151515]'
+                      isSaved ? 'bg-[#0A0A0A] text-white' : 'text-[#0A0A0A]'
                     }`}
                   >
                     <Bookmark className="w-3.5 h-3.5" />
@@ -243,15 +243,15 @@ export default function CreatorProfilePage() {
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key as any)}
-                className={`pb-3.5 transition-colors relative ${
+                className={`pb-3.5 transition-colors relative cursor-pointer ${
                   activeTab === tab.key
-                    ? 'text-[#151515] font-extrabold'
-                    : 'text-[#73736A] hover:text-[#151515]'
+                    ? 'text-[#0A0A0A] font-black'
+                    : 'text-[#73736A] hover:text-[#0A0A0A]'
                 }`}
               >
                 <span>{tab.label}</span>
                 {activeTab === tab.key && (
-                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#151515] rounded-full" />
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#0A0A0A] rounded-full" />
                 )}
               </button>
             ))}
@@ -265,8 +265,8 @@ export default function CreatorProfilePage() {
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <h2 className="text-xl font-black text-[#151515] tracking-tight">Packages</h2>
-                  <p className="text-xs text-[#73736A] mt-0.5">
+                  <h2 className="text-xl font-black text-[#0A0A0A] tracking-tight">Packages</h2>
+                  <p className="text-xs text-[#73736A] mt-0.5 font-medium">
                     Choose a platform to view {creator.name.split(' ')[0]}&apos;s available packages.
                   </p>
                 </div>
@@ -275,10 +275,10 @@ export default function CreatorProfilePage() {
                 <div className="inline-flex p-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2]">
                   <button
                     onClick={() => setSelectedPlatform('instagram')}
-                    className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
+                    className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
                       selectedPlatform === 'instagram'
                         ? 'bg-[#FDF0ED] text-[#C75D47] shadow-2xs'
-                        : 'text-[#73736A] hover:text-[#151515]'
+                        : 'text-[#73736A] hover:text-[#0A0A0A]'
                     }`}
                   >
                     <Instagram className="w-3.5 h-3.5" />
@@ -287,10 +287,10 @@ export default function CreatorProfilePage() {
 
                   <button
                     onClick={() => setSelectedPlatform('tiktok')}
-                    className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
+                    className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
                       selectedPlatform === 'tiktok'
-                        ? 'bg-[#151515] text-white shadow-2xs'
-                        : 'text-[#73736A] hover:text-[#151515]'
+                        ? 'bg-[#0A0A0A] text-white shadow-2xs'
+                        : 'text-[#73736A] hover:text-[#0A0A0A]'
                     }`}
                   >
                     <span>♪ TikTok</span>
@@ -298,10 +298,10 @@ export default function CreatorProfilePage() {
 
                   <button
                     onClick={() => setSelectedPlatform('youtube')}
-                    className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
+                    className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
                       selectedPlatform === 'youtube'
                         ? 'bg-[#FF0000] text-white shadow-2xs'
-                        : 'text-[#73736A] hover:text-[#151515]'
+                        : 'text-[#73736A] hover:text-[#0A0A0A]'
                     }`}
                   >
                     <Youtube className="w-3.5 h-3.5" />
@@ -310,10 +310,10 @@ export default function CreatorProfilePage() {
 
                   <button
                     onClick={() => setSelectedPlatform('ugc')}
-                    className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
+                    className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
                       selectedPlatform === 'ugc'
                         ? 'bg-[#EEF7F2] text-[#23744D] shadow-2xs'
-                        : 'text-[#73736A] hover:text-[#151515]'
+                        : 'text-[#73736A] hover:text-[#0A0A0A]'
                     }`}
                   >
                     <span>📹 UGC</span>
@@ -343,15 +343,15 @@ export default function CreatorProfilePage() {
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-xl font-black text-[#151515] tracking-tight">Portfolio</h2>
-                  <p className="text-xs text-[#73736A] mt-0.5">
+                  <h2 className="text-xl font-black text-[#0A0A0A] tracking-tight">Portfolio</h2>
+                  <p className="text-xs text-[#73736A] mt-0.5 font-medium">
                     A selection of brand collaborations and content examples.
                   </p>
                 </div>
 
                 <button
                   onClick={() => setActiveTab('portfolio')}
-                  className="text-xs font-bold text-[#151515] hover:text-[#2B7FFF] flex items-center gap-1"
+                  className="text-xs font-bold text-[#0A0A0A] hover:text-[#2B7FFF] flex items-center gap-1 cursor-pointer"
                 >
                   <span>View full portfolio</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -368,7 +368,7 @@ export default function CreatorProfilePage() {
                     <img
                       src={item.mediaUrl}
                       alt={item.campaignTitle}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 text-white">
                       <div className="flex items-center justify-between">
@@ -391,18 +391,18 @@ export default function CreatorProfilePage() {
         {/* Tab 3: Full Portfolio */}
         {activeTab === 'portfolio' && (
           <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] space-y-6">
-            <h2 className="text-xl font-black text-[#151515]">Full Work Gallery & Case Studies</h2>
+            <h2 className="text-xl font-black text-[#0A0A0A]">Full Work Gallery & Case Studies</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {creator.portfolio.map((item) => (
-                <div key={item.id} className="rounded-2xl overflow-hidden border border-[#E7E7E2] bg-[#FAFAF8]">
-                  <img src={item.mediaUrl} alt={item.brandName} className="w-full h-56 object-cover" />
+                <div key={item.id} className="rounded-2xl overflow-hidden border border-[#E7E7E2] bg-[#FAFAF8] group">
+                  <img src={item.mediaUrl} alt={item.brandName} className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="p-4 space-y-1">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-[#2B7FFF]">
                       {item.platform} Campaign
                     </span>
-                    <h3 className="font-bold text-sm text-[#151515]">{item.brandName}</h3>
-                    <p className="text-xs text-[#73736A]">{item.campaignTitle}</p>
-                    <div className="flex justify-between text-[11px] font-semibold text-[#151515] pt-2 border-t border-[#E7E7E2]">
+                    <h3 className="font-bold text-sm text-[#0A0A0A]">{item.brandName}</h3>
+                    <p className="text-xs text-[#73736A] font-medium">{item.campaignTitle}</p>
+                    <div className="flex justify-between text-[11px] font-black text-[#0A0A0A] pt-2 border-t border-[#E7E7E2]">
                       <span>Views: {item.views}</span>
                       <span>Likes: {item.likes}</span>
                     </div>
@@ -417,8 +417,8 @@ export default function CreatorProfilePage() {
         {activeTab === 'audience' && (
           <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] space-y-8">
             <div>
-              <h2 className="text-xl font-black text-[#151515]">Verified Audience Demographics</h2>
-              <p className="text-xs text-[#73736A] mt-0.5">
+              <h2 className="text-xl font-black text-[#0A0A0A]">Verified Audience Demographics</h2>
+              <p className="text-xs text-[#73736A] mt-0.5 font-medium">
                 First-party authenticated analytics via Instagram Graph API & TikTok Creator Portal.
               </p>
             </div>
@@ -429,12 +429,12 @@ export default function CreatorProfilePage() {
                 <h3 className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Top Countries</h3>
                 {creator.audience.topCountries.map((c) => (
                   <div key={c.country} className="space-y-1">
-                    <div className="flex justify-between text-xs font-bold text-[#151515]">
+                    <div className="flex justify-between text-xs font-bold text-[#0A0A0A]">
                       <span>{c.country}</span>
                       <span>{c.percentage}%</span>
                     </div>
                     <div className="w-full h-1.5 bg-[#E7E7E2] rounded-full overflow-hidden">
-                      <div className="h-full bg-[#151515] rounded-full" style={{ width: `${c.percentage}%` }} />
+                      <div className="h-full bg-[#0A0A0A] rounded-full" style={{ width: `${c.percentage}%` }} />
                     </div>
                   </div>
                 ))}
@@ -443,7 +443,7 @@ export default function CreatorProfilePage() {
               {/* Gender Split */}
               <div className="p-5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-3">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Gender Distribution</h3>
-                <div className="flex items-center justify-between text-xs font-bold text-[#151515]">
+                <div className="flex items-center justify-between text-xs font-bold text-[#0A0A0A]">
                   <span>Female ({creator.audience.genderSplit.female}%)</span>
                   <span>Male ({creator.audience.genderSplit.male}%)</span>
                 </div>
@@ -457,7 +457,7 @@ export default function CreatorProfilePage() {
                     style={{ width: `${creator.audience.genderSplit.male}%` }}
                   />
                 </div>
-                <div className="flex justify-between text-[10px] text-[#73736A] pt-1">
+                <div className="flex justify-between text-[10px] text-[#73736A] pt-1 font-bold">
                   <span>Female</span>
                   <span>Male</span>
                 </div>
@@ -466,10 +466,10 @@ export default function CreatorProfilePage() {
               {/* Age Bracket */}
               <div className="p-5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-3">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Primary Age Bracket</h3>
-                <div className="text-3xl font-black text-[#151515] pt-2">
+                <div className="font-editorial text-3xl font-black text-[#0A0A0A] pt-2">
                   {creator.audience.topAgeGroup}
                 </div>
-                <p className="text-xs text-[#73736A]">
+                <p className="text-xs text-[#73736A] font-medium">
                   Over 78% of the engaged audience falls between young adult and high-income working age demographics.
                 </p>
               </div>
@@ -482,8 +482,8 @@ export default function CreatorProfilePage() {
           <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] space-y-6">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-black text-[#151515]">Brand Reviews & Feedback</h2>
-                <p className="text-xs text-[#73736A] mt-0.5">
+                <h2 className="text-xl font-black text-[#0A0A0A]">Brand Reviews & Feedback</h2>
+                <p className="text-xs text-[#73736A] mt-0.5 font-medium">
                   Verified reviews from completed Influverse escrow orders.
                 </p>
               </div>
@@ -498,9 +498,9 @@ export default function CreatorProfilePage() {
                 <div key={rev.id} className="p-5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <img src={rev.brandLogo} alt={rev.brandName} className="w-8 h-8 rounded-full object-cover border" />
+                      <img src={rev.brandLogo} alt={rev.brandName} className="w-9 h-9 rounded-full object-cover border" />
                       <div>
-                        <div className="font-bold text-xs text-[#151515]">{rev.brandName}</div>
+                        <div className="font-bold text-xs text-[#0A0A0A]">{rev.brandName}</div>
                         <div className="text-[10px] text-[#73736A]">{rev.campaignName} • {rev.date}</div>
                       </div>
                     </div>
@@ -510,7 +510,7 @@ export default function CreatorProfilePage() {
                       ))}
                     </div>
                   </div>
-                  <p className="text-xs text-[#555550] leading-relaxed italic">
+                  <p className="text-xs text-[#555550] leading-relaxed italic font-serif">
                     &ldquo;{rev.comment}&rdquo;
                   </p>
                 </div>

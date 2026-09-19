@@ -75,35 +75,38 @@ export function HowItWorksSection() {
   const currentSteps = activeTab === 'brand' ? brandSteps : creatorSteps;
 
   return (
-    <section id="how-it-works" className="py-20 bg-[#FAFAF8]">
+    <section id="how-it-works" className="py-24 bg-[#FAFAF8]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <h2 className="text-3xl sm:text-4xl font-black text-[#151515] tracking-tight">
-            {t?.howItWorks?.title || 'How Influverse Works'}
+        <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0A0A0A] tracking-tight font-sans">
+            How Influverse{' '}
+            <span className="font-editorial italic font-normal text-[#0A0A0A]">
+              Works
+            </span>
           </h2>
-          <p className="text-sm text-[#73736A] mt-2">
+          <p className="text-sm text-[#73736A] font-sans font-medium">
             A seamless, protected four-step workflow built on transparent escrow and verified delivery.
           </p>
 
           {/* Interactive Dual Perspective Toggle */}
-          <div className="inline-flex p-1 rounded-full bg-white border border-[#E7E7E2] mt-8 shadow-xs">
+          <div className="inline-flex p-1.5 rounded-full bg-white border border-[#E7E7E2] shadow-xs mt-6">
             <button
               onClick={() => setActiveTab('brand')}
-              className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${
+              className={`px-7 py-2.5 rounded-full text-xs font-bold transition-all font-sans ${
                 activeTab === 'brand'
-                  ? 'bg-[#151515] text-white shadow-sm'
-                  : 'text-[#73736A] hover:text-[#151515]'
+                  ? 'bg-[#0A0A0A] text-white shadow-sm'
+                  : 'text-[#73736A] hover:text-[#0A0A0A]'
               }`}
             >
               For Brands & Marketers
             </button>
             <button
               onClick={() => setActiveTab('creator')}
-              className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${
+              className={`px-7 py-2.5 rounded-full text-xs font-bold transition-all font-sans ${
                 activeTab === 'creator'
                   ? 'bg-[#2B7FFF] text-white shadow-sm'
-                  : 'text-[#73736A] hover:text-[#151515]'
+                  : 'text-[#73736A] hover:text-[#0A0A0A]'
               }`}
             >
               For Creators & Talent
@@ -111,34 +114,34 @@ export function HowItWorksSection() {
           </div>
         </div>
 
-        {/* 4 Steps Grid */}
+        {/* 4 Steps Grid with Playfair Display Numbers */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {currentSteps.map((step, idx) => {
             const Icon = step.icon;
             return (
               <div
                 key={idx}
-                className="bg-white rounded-3xl p-6 border border-[#E7E7E2] flex flex-col justify-between hover:border-[#151515] hover:shadow-md transition-all relative group"
+                className="bg-white rounded-3xl p-7 border border-[#E7E7E2] flex flex-col justify-between hover:border-[#0A0A0A] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative group"
               >
                 <div>
                   <div className="flex items-center justify-between mb-6">
-                    <span className="text-2xl font-black text-[#E0E0D8] group-hover:text-[#151515] transition-colors">
+                    <span className="font-editorial text-3xl font-black text-[#D2D2CA] group-hover:text-[#0A0A0A] transition-colors">
                       {step.step}
                     </span>
-                    <div className="w-10 h-10 rounded-xl bg-[#F4F4F0] text-[#151515] flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-2xl bg-[#F4F4F0] text-[#0A0A0A] flex items-center justify-center group-hover:scale-105 transition-transform shadow-2xs">
                       <Icon className="w-5 h-5" />
                     </div>
                   </div>
-                  <h3 className="text-base font-bold text-[#151515] mb-2">
+                  <h3 className="text-base font-extrabold text-[#0A0A0A] mb-2 font-sans">
                     {step.title}
                   </h3>
-                  <p className="text-xs text-[#73736A] leading-relaxed">
+                  <p className="text-xs text-[#73736A] leading-relaxed font-sans font-medium">
                     {step.desc}
                   </p>
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-[#F4F4F0]">
-                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#73736A]">
+                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#73736A] font-sans">
                     {step.badge}
                   </span>
                 </div>
@@ -152,7 +155,7 @@ export function HowItWorksSection() {
           <Link href={activeTab === 'brand' ? '/creators' : '/register'}>
             <Button
               type="primary"
-              className="h-11 px-8 rounded-full font-bold text-xs bg-[#151515] hover:!bg-[#2B7FFF] text-white border-none"
+              className="h-12 px-8 rounded-full font-black text-xs bg-[#0A0A0A] hover:!bg-[#2B7FFF] text-white border-none shadow-sm transition-all font-sans"
             >
               {activeTab === 'brand' ? 'Start Browsing Creators' : 'Apply as a Creator'}
               <ArrowRight className="w-3.5 h-3.5 ml-2" />
