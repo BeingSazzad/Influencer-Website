@@ -9,9 +9,9 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  currentUser: MOCK_USERS[1], // Defaults to Sophia Vance (Agent/Influencer) for instant rich dashboard preview
+  currentUser: MOCK_USERS[0], // Defaults to Elena (Brand Lead) for instant hiring & brand dashboard testing
   isAuthenticated: true,
-  activeRole: 'agent',
+  activeRole: 'brand',
 };
 
 export const authSlice = createSlice({
@@ -27,18 +27,15 @@ export const authSlice = createSlice({
     },
     switchRole: (state, action: PayloadAction<UserRole>) => {
       state.activeRole = action.payload;
-      if (action.payload === 'agent') {
-        state.currentUser = MOCK_USERS[1]; // Sophia Vance
+      if (action.payload === 'brand') {
+        state.currentUser = MOCK_USERS[0]; // Elena Rostova (Brand)
         state.isAuthenticated = true;
-      } else if (action.payload === 'buyer') {
-        state.currentUser = MOCK_USERS[0]; // Alexander Sterling
+      } else if (action.payload === 'creator') {
+        state.currentUser = MOCK_USERS[1]; // Sophie Kim (Creator)
         state.isAuthenticated = true;
-      } else {
-        state.currentUser = null;
-        state.isAuthenticated = false;
       }
     },
-    updateProfile: (state, action: PayloadAction<Partial<User>>) => {
+    updateUserProfile: (state, action: PayloadAction<Partial<User>>) => {
       if (state.currentUser) {
         state.currentUser = { ...state.currentUser, ...action.payload };
       }
@@ -46,10 +43,9 @@ export const authSlice = createSlice({
     logout: (state) => {
       state.currentUser = null;
       state.isAuthenticated = false;
-      state.activeRole = 'guest';
     },
   },
 });
 
-export const { setUser, switchRole, updateProfile, logout } = authSlice.actions;
+export const { setUser, switchRole, updateUserProfile, logout } = authSlice.actions;
 export default authSlice.reducer;

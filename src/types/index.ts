@@ -1,4 +1,5 @@
-export type UserRole = 'guest' | 'buyer' | 'agent' | 'admin';
+export type UserRole = 'brand' | 'creator';
+export type Language = 'en' | 'de';
 
 export interface User {
   id: string;
@@ -6,129 +7,157 @@ export interface User {
   email: string;
   role: UserRole;
   avatar: string;
-  phone?: string;
+  companyName?: string;
+  handle?: string;
   location?: string;
-  agency?: string;
   bio?: string;
-  socials?: {
-    instagram?: string;
-    youtube?: string;
-    tiktok?: string;
-    linkedin?: string;
-  };
-  rating?: number;
-  reviewsCount?: number;
-  salesVolume?: string;
-  activeListingsCount?: number;
+  balanceEur?: number;
 }
 
-export type PropertyType = 'villa' | 'penthouse' | 'apartment' | 'mansion' | 'townhouse' | 'commercial';
-export type PropertyStatus = 'for_sale' | 'for_rent' | 'sold' | 'pending';
+export type PlatformType = 'instagram' | 'tiktok' | 'youtube' | 'ugc';
 
-export interface Property {
+export interface CreatorPlatformInfo {
+  followers: number;
+  followersFormatted: string;
+  handle: string;
+  engagementRate: string;
+  avgViews: string;
+}
+
+export interface CreatorPackage {
+  id: string;
+  platform: PlatformType;
+  title: string;
+  type: 'story' | 'reel' | 'post' | 'video' | 'ugc_video' | 'integrated';
+  description: string;
+  priceEur: number;
+  deliveryDays: number;
+  revisions: number;
+  inclusions: string[];
+}
+
+export interface PortfolioItem {
+  id: string;
+  brandName: string;
+  campaignTitle: string;
+  mediaType: 'image' | 'video';
+  mediaUrl: string;
+  views?: string;
+  likes?: string;
+  platform: PlatformType;
+}
+
+export interface AudienceDemographics {
+  topCountries: { country: string; percentage: number }[];
+  genderSplit: { female: number; male: number };
+  topAgeGroup: string;
+}
+
+export interface CreatorReview {
+  id: string;
+  brandName: string;
+  brandLogo: string;
+  rating: number;
+  comment: string;
+  campaignName: string;
+  date: string;
+}
+
+export interface Creator {
+  id: string;
+  name: string;
+  handle: string;
+  avatar: string;
+  coverImage?: string;
+  bio: string;
+  location: string;
+  verified: boolean;
+  categories: string[];
+  tags: string[];
+  platforms: {
+    instagram?: CreatorPlatformInfo;
+    tiktok?: CreatorPlatformInfo;
+    youtube?: CreatorPlatformInfo;
+    ugc?: { avgDelivery: string; turnaround: string };
+  };
+  startingPriceEur: number;
+  rating: number;
+  reviewsCount: number;
+  totalCollaborations: number;
+  packages: CreatorPackage[];
+  portfolio: PortfolioItem[];
+  audience: AudienceDemographics;
+  reviews: CreatorReview[];
+}
+
+export type OrderStatus =
+  | 'offer_sent'
+  | 'accepted'
+  | 'in_production'
+  | 'deliverable_submitted'
+  | 'approved'
+  | 'completed'
+  | 'declined';
+
+export interface OrderDeliverable {
   id: string;
   title: string;
-  tagline: string;
-  slug: string;
-  price: number;
-  priceFormatted: string;
-  type: PropertyType;
-  status: PropertyStatus;
-  isFeatured?: boolean;
-  isVerified?: boolean;
-  address: {
-    street: string;
-    city: string;
-    state: string;
-    country: string;
-    zipCode: string;
-  };
-  coordinates: {
-    lat: number;
-    lng: number;
-  };
-  specs: {
-    bedrooms: number;
-    bathrooms: number;
-    sqft: number;
-    garage: number;
-    yearBuilt: number;
-    lotSize?: string;
-  };
-  images: string[];
-  videoTourUrl?: string;
-  virtualTour3D?: boolean;
-  description: string;
-  amenities: string[];
-  agent: {
-    id: string;
-    name: string;
-    avatar: string;
-    title: string;
-    phone: string;
-    email: string;
-    rating: number;
-    verified: boolean;
-    socialFollowers: string;
-  };
-  postedAt: string;
-  viewsCount: number;
-  savesCount: number;
-}
-
-export type LeadStatus = 'new' | 'contacted' | 'viewing_scheduled' | 'offer_made' | 'closed';
-
-export interface Lead {
-  id: string;
-  clientName: string;
-  clientEmail: string;
-  clientPhone: string;
-  clientAvatar?: string;
-  propertyId: string;
-  propertyTitle: string;
-  propertyPrice: string;
-  propertyImage: string;
-  message: string;
-  preferredDate?: string;
-  status: LeadStatus;
-  createdAt: string;
-  budgetRange: string;
+  fileUrl?: string;
+  previewUrl?: string;
+  livePostUrl?: string;
+  submittedAt: string;
   notes?: string;
 }
 
-export interface MarketInsight {
+export interface OrderMessage {
   id: string;
-  title: string;
-  category: string;
-  readTime: string;
-  publishDate: string;
-  author: string;
-  authorAvatar: string;
-  image: string;
-  summary: string;
-  views: string;
+  senderId: string;
+  senderName: string;
+  senderAvatar: string;
+  senderRole: UserRole;
+  text: string;
+  timestamp: string;
 }
 
-export interface Review {
+export interface Order {
   id: string;
-  userName: string;
-  userAvatar: string;
-  userRole: string;
-  rating: number;
-  comment: string;
-  date: string;
-  propertyTitle?: string;
+  brandId: string;
+  brandName: string;
+  brandLogo: string;
+  creatorId: string;
+  creatorName: string;
+  creatorHandle: string;
+  creatorAvatar: string;
+  packageId?: string;
+  packageTitle: string;
+  collaborationType: 'content_creation' | 'sponsored_post';
+  platform: PlatformType;
+  basePriceEur: number;
+  platformFeeEur: number;
+  totalEur: number;
+  status: OrderStatus;
+  brief: string;
+  requirements: string[];
+  deadlineDate: string;
+  createdAt: string;
+  escrowFunded: boolean;
+  escrowReleased: boolean;
+  deliverables: OrderDeliverable[];
+  messages: OrderMessage[];
+  reviewSubmitted?: {
+    rating: number;
+    comment: string;
+    date: string;
+  };
 }
 
-export interface PropertyFilterState {
+export interface CreatorFilterState {
   searchQuery: string;
-  city: string;
-  type: string;
-  status: string;
+  category: string;
+  platform: PlatformType | 'all';
+  location: string;
   minPrice: number;
   maxPrice: number;
-  bedrooms: number | 'all';
-  bathrooms: number | 'all';
-  amenities: string[];
-  sortBy: 'price_asc' | 'price_desc' | 'newest' | 'popular';
+  followerRange: 'all' | 'nano' | 'micro' | 'macro' | 'mega';
+  sortBy: 'relevance' | 'price_asc' | 'price_desc' | 'followers' | 'rating';
 }

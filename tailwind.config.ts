@@ -8,52 +8,44 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Manrope', 'system-ui', '-apple-system', 'sans-serif'],
+      },
       colors: {
-        brand: {
-          50: "#ecfdf5",
-          100: "#d1fae5",
-          200: "#a7f3d0",
-          300: "#6ee7b7",
-          400: "#34d399",
-          500: "#10b981",
-          600: "#059669",
-          700: "#047857",
-          800: "#065f46",
-          900: "#064e3b",
-          950: "#022c22",
+        warm: {
+          50: '#FCFCFB',
+          100: '#FAFAF8',
+          200: '#F4F4F0',
+          300: '#E7E7E2',
+          400: '#D2D2CA',
+          500: '#9E9E94',
+          600: '#73736A',
+          700: '#52524B',
+          800: '#33332D',
+          900: '#151515',
         },
-        gold: {
-          50: "#fbf8ee",
-          100: "#f5eed4",
-          200: "#ebdaa8",
-          300: "#dec074",
-          400: "#d0a647",
-          500: "#b88a2c",
-          600: "#9d6e23",
-          700: "#7c511f",
-          800: "#67421f",
-          900: "#57381e",
+        nearblack: '#151515',
+        pastel: {
+          lavender: '#F1EEF9',
+          lavenderText: '#6444A6',
+          mint: '#EEF7F2',
+          mintText: '#23744D',
+          butter: '#FAF6E8',
+          butterText: '#8C6819',
+          blush: '#FDF0ED',
+          blushText: '#A9432F',
         },
-        dark: {
-          850: "#151b28",
-          900: "#0b0f19",
-          950: "#060911",
-        }
       },
-      boxShadow: {
-        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.08)',
-        'luxury': '0 20px 50px -12px rgba(16, 185, 129, 0.12)',
-        'glow': '0 0 35px -5px rgba(16, 185, 129, 0.3)',
+      maxWidth: {
+        'content': '1280px',
       },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'luxury-gradient': 'linear-gradient(135deg, #064e3b 0%, #065f46 50%, #0b0f19 100%)',
+      borderRadius: {
+        'xl': '14px',
+        '2xl': '18px',
+        '3xl': '24px',
       }
     },
   },
   plugins: [],
-  corePlugins: {
-    preflight: true,
-  }
 };
 export default config;

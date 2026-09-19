@@ -1,83 +1,119 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-manrope: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --bg-warm-white: #FAFAF8;
+  --text-near-black: #151515;
+  --border-neutral: #E7E7E2;
 }
 
 body {
-  font-family: var(--font-sans);
-  background-color: #f8fafc;
-  color: #0f172a;
-  overflow-x: hidden;
+  font-family: var(--font-manrope);
+  background-color: var(--bg-warm-white);
+  color: var(--text-near-black);
+  letter-spacing: -0.015em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.font-serif {
-  font-family: var(--font-serif);
+/* Restrained Pastel Utility Badges */
+.badge-lavender {
+  background-color: #F1EEF9;
+  color: #6444A6;
+  border: 1px solid #E4DCF5;
 }
 
-/* Glassmorphism Styles */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+.badge-mint {
+  background-color: #EEF7F2;
+  color: #23744D;
+  border: 1px solid #D9EDE2;
 }
 
-.glass-dark {
-  background: rgba(11, 15, 25, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+.badge-butter {
+  background-color: #FAF6E8;
+  color: #8C6819;
+  border: 1px solid #F3ECCF;
+}
+
+.badge-blush {
+  background-color: #FDF0ED;
+  color: #A9432F;
+  border: 1px solid #F8DCD4;
+}
+
+.badge-neutral {
+  background-color: #F0F0EB;
+  color: #40403C;
+  border: 1px solid #E2E2DC;
+}
+
+/* Primary Button Aesthetics: Solid near-black, 44-48px height, 12-16px radius */
+.btn-primary {
+  background-color: #151515;
+  color: #FFFFFF;
+  font-weight: 600;
+  border-radius: 12px;
+  height: 46px;
+  padding: 0 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #2A2A2A;
+  color: #FFFFFF;
+}
+
+.btn-secondary {
+  background-color: #FFFFFF;
+  color: #151515;
+  font-weight: 600;
+  border: 1px solid #E7E7E2;
+  border-radius: 12px;
+  height: 46px;
+  padding: 0 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #F5F5F0;
+  border-color: #D6D6CF;
+}
+
+/* Card Surface */
+.influverse-card {
+  background: #FFFFFF;
+  border: 1px solid #E7E7E2;
+  border-radius: 18px;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.influverse-card:hover {
+  border-color: #D2D2CA;
+  box-shadow: 0 12px 32px -8px rgba(21, 21, 21, 0.06);
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
 }
-
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #FAFAF8;
 }
-
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 4px;
+  background: #D8D8D0;
+  border-radius: 3px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
-
-/* Luxury Card Glow Effect on Hover */
-.luxury-card {
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.luxury-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 35px -10px rgba(16, 185, 129, 0.15), 0 10px 20px -5px rgba(0, 0, 0, 0.04);
-}
-
-/* Ant Design Overrides for modern look */
-.ant-btn-primary {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
-  border: none !important;
-  box-shadow: 0 4px 14px 0 rgba(5, 150, 105, 0.3) !important;
-}
-
-.ant-btn-primary:hover {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
-  box-shadow: 0 6px 20px 0 rgba(5, 150, 105, 0.4) !important;
-}
-
-.ant-tag {
-  border-radius: 6px;
-  font-weight: 500;
-  padding: 2px 8px;
+  background: #B0B0A8;
 }

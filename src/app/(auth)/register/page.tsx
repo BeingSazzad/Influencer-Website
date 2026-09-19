@@ -6,15 +6,15 @@ import { useRouter } from 'next/navigation';
 import { useAppDispatch } from '@/redux/hooks';
 import { switchRole, setUser } from '@/redux/slices/authSlice';
 import { MOCK_USERS } from '@/Mockdata';
+import { Logo } from '@/components/shared/Logo';
 import {
-  Building2,
-  User,
-  Mail,
   Lock,
+  Mail,
+  User as UserIcon,
   Briefcase,
-  Home,
-  CheckCircle2,
-  Sparkles
+  Sparkles,
+  ArrowRight,
+  ShieldCheck,
 } from 'lucide-react';
 import { Input, Button, message } from 'antd';
 
@@ -22,149 +22,141 @@ export default function RegisterPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const [role, setRole] = useState<'agent' | 'buyer'>('agent');
-  const [name, setName] = useState('');
+  const [role, setRole] = useState<'brand' | 'creator'>('brand');
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
-  const [agency, setAgency] = useState('');
+  const [companyOrHandle, setCompanyOrHandle] = useState('');
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    message.success('Account created successfully! Welcome to LUXE PRIME.');
-    if (role === 'agent') {
-      dispatch(setUser(MOCK_USERS[1]));
-      dispatch(switchRole('agent'));
-      router.push('/agent/dashboard');
-    } else {
+    if (role === 'brand') {
       dispatch(setUser(MOCK_USERS[0]));
-      dispatch(switchRole('buyer'));
-      router.push('/user/dashboard');
+      dispatch(switchRole('brand'));
+      message.success('Account created! Welcome to Brand Workspace.');
+      router.push('/brand/dashboard');
+    } else {
+      dispatch(setUser(MOCK_USERS[1]));
+      dispatch(switchRole('creator'));
+      message.success('Creator profile created! Welcome to Creator Workspace.');
+      router.push('/creator/dashboard');
     }
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10 text-center">
-        <Link href="/" className="inline-flex items-center gap-2 mb-4">
-          <div className="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white shadow-lg shadow-emerald-500/30">
-            <Building2 className="w-6 h-6 text-slate-950" />
-          </div>
-          <span className="text-2xl font-bold tracking-tight text-white font-serif">LUXE PRIME</span>
+    <div className="min-h-screen bg-[#FAFAF8] flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10 text-center space-y-3">
+        <Link href="/" className="inline-flex items-center justify-center mb-2">
+          <Logo size="lg" />
         </Link>
-        <h2 className="text-2xl font-bold text-white tracking-tight font-serif">
-          Join the Global Luxury Real Estate Network
+        <h2 className="text-3xl font-black text-[#151515] tracking-tight">
+          Join Influverse
         </h2>
-        <p className="text-xs text-slate-400 mt-1">
-          Apply as a verified Real Estate Influencer or join as an accredited Buyer.
+        <p className="text-xs text-[#73736A]">
+          Connect with top creators or get hired by leading brands.
         </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10 px-4">
-        <div className="bg-slate-900/90 backdrop-blur-xl py-8 px-6 shadow-2xl rounded-3xl sm:px-10 border border-slate-800 space-y-6">
-          {/* Role selector */}
+        <div className="bg-white py-8 px-6 shadow-sm rounded-3xl sm:px-10 border border-[#E7E7E2] space-y-6">
+          {/* Role Intent Selector */}
           <div>
-            <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
-              Select Membership Type
+            <label className="block text-[11px] font-extrabold text-[#73736A] uppercase tracking-wider mb-2">
+              I want to join as:
             </label>
             <div className="grid grid-cols-2 gap-2">
               <button
                 type="button"
-                onClick={() => setRole('agent')}
-                className={`p-3 rounded-xl border text-left flex flex-col justify-between transition-all ${
-                  role === 'agent'
-                    ? 'bg-emerald-950/60 border-emerald-500 text-white'
-                    : 'bg-slate-800/60 border-slate-700 text-slate-400 hover:bg-slate-800'
+                onClick={() => setRole('brand')}
+                className={`py-3 px-3 rounded-2xl text-xs font-bold border flex flex-col items-center justify-center gap-1.5 transition-all ${
+                  role === 'brand'
+                    ? 'bg-[#151515] text-white border-[#151515] shadow-xs'
+                    : 'bg-[#FAFAF8] text-[#151515] border-[#E7E7E2] hover:bg-[#F4F4F0]'
                 }`}
               >
-                <div className="flex items-center justify-between mb-2">
-                  <Briefcase className="w-4 h-4 text-emerald-400" />
-                  {role === 'agent' && <CheckCircle2 className="w-4 h-4 text-emerald-400" />}
-                </div>
-                <div className="text-xs font-bold text-white">Agent / Producer</div>
-                <div className="text-[10px] text-slate-400">List estates & CRM</div>
+                <Briefcase className="w-4 h-4" />
+                <span>A Brand / Agency</span>
               </button>
-
               <button
                 type="button"
-                onClick={() => setRole('buyer')}
-                className={`p-3 rounded-xl border text-left flex flex-col justify-between transition-all ${
-                  role === 'buyer'
-                    ? 'bg-sky-950/60 border-sky-500 text-white'
-                    : 'bg-slate-800/60 border-slate-700 text-slate-400 hover:bg-slate-800'
+                onClick={() => setRole('creator')}
+                className={`py-3 px-3 rounded-2xl text-xs font-bold border flex flex-col items-center justify-center gap-1.5 transition-all ${
+                  role === 'creator'
+                    ? 'bg-[#2B7FFF] text-white border-[#2B7FFF] shadow-xs'
+                    : 'bg-[#FAFAF8] text-[#151515] border-[#E7E7E2] hover:bg-[#F4F4F0]'
                 }`}
               >
-                <div className="flex items-center justify-between mb-2">
-                  <Home className="w-4 h-4 text-sky-400" />
-                  {role === 'buyer' && <CheckCircle2 className="w-4 h-4 text-sky-400" />}
-                </div>
-                <div className="text-xs font-bold text-white">Buyer / Investor</div>
-                <div className="text-[10px] text-slate-400">Tours & wishlists</div>
+                <Sparkles className="w-4 h-4" />
+                <span>A Content Creator</span>
               </button>
             </div>
           </div>
 
           <form onSubmit={handleRegister} className="space-y-4">
             <div>
-              <label className="block text-xs font-bold text-slate-300 uppercase mb-1">
+              <label className="block text-xs font-bold text-[#151515] mb-1">
                 Full Name
               </label>
               <Input
                 size="large"
-                prefix={<User className="w-4 h-4 text-slate-500 mr-2" />}
-                placeholder="e.g. Marcus Vance"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="bg-slate-800 border-slate-700 text-white rounded-xl"
+                prefix={<UserIcon className="w-4 h-4 text-[#73736A] mr-2" />}
+                placeholder="e.g. Sarah Connor"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                className="bg-[#FAFAF8] border-[#E7E7E2] rounded-xl text-xs"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-300 uppercase mb-1">
-                Email Address
+              <label className="block text-xs font-bold text-[#151515] mb-1">
+                Work Email
               </label>
               <Input
                 type="email"
                 size="large"
-                prefix={<Mail className="w-4 h-4 text-slate-500 mr-2" />}
-                placeholder="e.g. marcus@estates.com"
+                prefix={<Mail className="w-4 h-4 text-[#73736A] mr-2" />}
+                placeholder="you@company.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="bg-slate-800 border-slate-700 text-white rounded-xl"
+                className="bg-[#FAFAF8] border-[#E7E7E2] rounded-xl text-xs"
                 required
               />
             </div>
 
-            {role === 'agent' && (
-              <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase mb-1">
-                  Brokerage / Media Channel Name
-                </label>
-                <Input
-                  size="large"
-                  prefix={<Building2 className="w-4 h-4 text-slate-500 mr-2" />}
-                  placeholder="e.g. Beverly Hills Media Group"
-                  value={agency}
-                  onChange={(e) => setAgency(e.target.value)}
-                  className="bg-slate-800 border-slate-700 text-white rounded-xl"
-                />
-              </div>
-            )}
+            <div>
+              <label className="block text-xs font-bold text-[#151515] mb-1">
+                {role === 'brand' ? 'Company Name' : 'Primary Social Handle'}
+              </label>
+              <Input
+                size="large"
+                placeholder={role === 'brand' ? 'e.g. Acme Corp' : 'e.g. @sophiekim'}
+                value={companyOrHandle}
+                onChange={(e) => setCompanyOrHandle(e.target.value)}
+                className="bg-[#FAFAF8] border-[#E7E7E2] rounded-xl text-xs"
+                required
+              />
+            </div>
 
             <Button
               type="primary"
               htmlType="submit"
               block
               size="large"
-              className="h-12 rounded-xl font-bold text-sm bg-emerald-600 hover:bg-emerald-500 text-white mt-2"
+              className="h-11 rounded-full font-bold text-xs bg-[#151515] hover:!bg-[#2B7FFF] text-white mt-2 border-none shadow-none"
             >
-              Complete Registration
+              Get Started as {role === 'brand' ? 'Brand' : 'Creator'}
             </Button>
           </form>
 
-          <div className="text-center pt-2 border-t border-slate-800 text-xs text-slate-400">
+          <div className="p-3 bg-[#EEF7F2] rounded-2xl text-[11px] text-[#23744D] flex items-center gap-2">
+            <ShieldCheck className="w-4 h-4 shrink-0" />
+            <span>100% Free registration with transparent 15% escrow on hires.</span>
+          </div>
+
+          <div className="text-center pt-2 border-t border-[#E7E7E2] text-xs text-[#73736A]">
             Already have an account?{' '}
-            <Link href="/login" className="text-emerald-400 font-bold hover:underline">
-              Sign in
+            <Link href="/login" className="text-[#151515] font-black hover:underline">
+              Sign In
             </Link>
           </div>
         </div>
