@@ -1,6 +1,7 @@
 import React from 'react';
 import { SplitHero } from '@/components/web-pages/SplitHero';
 import { FeaturedCreators } from '@/components/web-pages/FeaturedCreators';
+import { DesignMonkBentoSection } from '@/components/web-pages/DesignMonkBentoSection';
 import { ValuePropsSection } from '@/components/web-pages/ValuePropsSection';
 import { CollaborationModelsSection } from '@/components/web-pages/CollaborationModelsSection';
 import { HowItWorksSection } from '@/components/web-pages/HowItWorksSection';
@@ -19,6 +20,7 @@ export default function HomePage() {
     <div className="flex flex-col min-h-screen">
       <SplitHero />
       <FeaturedCreators />
+      <DesignMonkBentoSection />
       <ValuePropsSection />
       <CollaborationModelsSection />
       <HowItWorksSection />
@@ -28,3 +30,4 @@ export default function HomePage() {
     </div>
   );
 }
+

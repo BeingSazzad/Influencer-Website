@@ -10,35 +10,35 @@ export function AntdConfig({ children }: { children: React.ReactNode }) {
       <ConfigProvider
         theme={{
           token: {
-            colorPrimary: '#059669',
-            colorPrimaryHover: '#10b981',
-            borderRadius: 8,
-            fontFamily: 'inherit',
-            colorSuccess: '#10b981',
-            colorWarning: '#f59e0b',
-            colorError: '#ef4444',
-            colorInfo: '#0284c7',
+            colorPrimary: '#0A0A0A',
+            colorPrimaryHover: '#2B7FFF',
+            borderRadius: 14,
+            fontFamily: "'Red Hat Display', system-ui, -apple-system, sans-serif",
+            colorSuccess: '#23744D',
+            colorWarning: '#8C6819',
+            colorError: '#A9432F',
+            colorInfo: '#2B7FFF',
           },
           components: {
             Button: {
-              controlHeight: 42,
-              borderRadius: 8,
-              fontWeight: 600,
+              controlHeight: 44,
+              borderRadius: 9999,
+              fontWeight: 700,
             },
             Input: {
-              controlHeight: 42,
-              borderRadius: 8,
+              controlHeight: 44,
+              borderRadius: 14,
             },
             Select: {
-              controlHeight: 42,
-              borderRadius: 8,
+              controlHeight: 44,
+              borderRadius: 14,
             },
             Card: {
-              borderRadiusLG: 14,
+              borderRadiusLG: 20,
             },
             Tabs: {
-              itemSelectedColor: '#059669',
-              inkBarColor: '#059669',
+              itemSelectedColor: '#0A0A0A',
+              inkBarColor: '#0A0A0A',
             },
           },
         }}
