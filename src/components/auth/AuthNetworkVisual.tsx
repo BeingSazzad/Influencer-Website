@@ -15,12 +15,12 @@ export function AuthNetworkVisual({
 }: AuthNetworkVisualProps) {
   return (
     <div
-      className={`relative w-full h-full min-h-[580px] lg:min-h-[640px] rounded-[32px] overflow-hidden bg-gradient-to-b from-[#FAF9FE] via-[#F7F5FC] to-[#F5F2FA] border border-[#EBE6F7] shadow-xl shadow-purple-500/5 flex flex-col justify-between p-6 sm:p-8 select-none ${className}`}
+      className={`relative w-full h-full min-h-[580px] lg:min-h-[640px] flex flex-col justify-between p-4 sm:p-6 lg:p-8 select-none ${className}`}
     >
-      {/* Smooth Soft Ambient Radial Glow Blobs */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-200/35 rounded-full blur-[90px] pointer-events-none" />
-      <div className="absolute -top-10 -right-10 w-64 h-64 bg-pink-200/25 rounded-full blur-[80px] pointer-events-none" />
-      <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-indigo-100/30 rounded-full blur-[80px] pointer-events-none" />
+      {/* Smooth Soft Ambient Radial Glow Blobs seamless with page background */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-200/30 rounded-full blur-[110px] pointer-events-none" />
+      <div className="absolute top-4 right-4 w-72 h-72 bg-pink-200/25 rounded-full blur-[90px] pointer-events-none" />
+      <div className="absolute bottom-4 left-4 w-72 h-72 bg-indigo-100/35 rounded-full blur-[90px] pointer-events-none" />
 
       {/* Network Canvas Section */}
       <div className="relative w-full flex-1 flex items-center justify-center min-h-[380px] sm:min-h-[420px]">
