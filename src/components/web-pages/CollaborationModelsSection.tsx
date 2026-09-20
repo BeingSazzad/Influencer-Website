@@ -74,7 +74,7 @@ export function CollaborationModelsSection() {
           </div>
 
           {/* Model 2: Sponsored Posting */}
-          <div className="rounded-3xl p-8 sm:p-10 overflow-hidden bg-[#0A0A0A] bg-[linear-gradient(145deg,#141414_0%,#0A0A0A_58%,#160B10_100%)] text-white border border-[#3A2730] hover:border-[#573344] shadow-[0_18px_45px_-28px_rgba(10,10,10,0.65)] hover:shadow-[0_24px_55px_-30px_rgba(255,45,120,0.28)] transition-all duration-300 flex flex-col justify-between relative group">
+          <div className="rounded-3xl p-8 sm:p-10 overflow-hidden bg-[#0A0A0A] bg-gradient-to-b from-[#141414] to-[#0D0D0D] text-white border border-white/10 hover:border-white/20 shadow-2xl transition-all duration-300 flex flex-col justify-between relative group">
             <div className="absolute -right-24 -bottom-24 w-80 h-80 rounded-full bg-[#FF2D78]/20 blur-[95px] pointer-events-none transition-opacity duration-500 group-hover:opacity-90" />
             <div className="absolute -top-20 right-10 w-52 h-52 rounded-full bg-[#7C3AED]/10 blur-[90px] pointer-events-none" />
 

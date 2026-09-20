@@ -101,14 +101,18 @@ export function PricingSection() {
             </div>
           </div>
 
-          {/* Value Summary Card with a continuous top-to-bottom tonal gradient */}
-          <div className="lg:col-span-5 relative overflow-hidden bg-[#0A0A0A] text-white rounded-3xl p-8 sm:p-10 border border-[#351923] shadow-[0_20px_50px_-24px_rgba(10,10,10,0.55)] space-y-6 transition-[border-color,box-shadow] duration-300 hover:border-[#4A2231] hover:shadow-[0_24px_58px_-26px_rgba(10,10,10,0.65)]">
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,#2A0D1A_0%,#1A0C13_42%,#100A0D_72%,#0A0A0A_100%)] pointer-events-none" />
+          {/* Value Summary Card with consistent site dark gradient & glowing accents */}
+          <div className="lg:col-span-5 relative overflow-hidden bg-[#0A0A0A] bg-gradient-to-b from-[#141414] to-[#0D0D0D] text-white rounded-3xl p-8 sm:p-10 border border-white/10 hover:border-white/20 shadow-2xl transition-all duration-300 space-y-6 group">
+            {/* Ambient subtle glow effects matching site design */}
+            <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-[#FF2D78]/20 blur-[90px] pointer-events-none transition-opacity duration-500 group-hover:opacity-90" />
+            <div className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-[#7C3AED]/15 blur-[80px] pointer-events-none" />
 
             <div className="relative z-10 space-y-6">
               <h3 className="text-2xl sm:text-3xl font-black text-white font-sans tracking-tight">
                 What&apos;s{' '}
-                <span className="font-editorial italic font-normal text-white drop-shadow-[0_2px_12px_rgba(255,45,120,0.3)]">Included</span>
+                <span className="font-editorial italic font-normal text-white drop-shadow-[0_2px_12px_rgba(255,45,120,0.3)]">
+                  Included
+                </span>
               </h3>
               <p className="text-[15px] sm:text-[16px] text-[#A3A39C] leading-[26px] font-sans font-medium">
                 Every collaboration through Influverse comes with enterprise-grade safeguards and seamless delivery workflows.
