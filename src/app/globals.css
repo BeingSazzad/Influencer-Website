@@ -1,24 +1,84 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,600;1,700;1,800;1,900&family=Red+Hat+Display:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600;1,700;1,800;1,900&family=Red+Hat+Display:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --font-sans: 'Red Hat Display', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Red Hat Display', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Red Hat Display', system-ui, sans-serif;
+  --font-outfit: 'Red Hat Display', system-ui, sans-serif;
   --font-serif: 'Playfair Display', Georgia, serif;
-  --bg-warm-white: #FAFAF8;
-  --text-near-black: #0A0A0A;
-  --border-neutral: #E7E7E2;
+
+  /* Color System Tokens */
+  --bg-canvas: #FAFAF8;
+  --bg-surface: #FFFFFF;
+  --bg-subtle: #F4F4F0;
+  --border-default: #E7E7E2;
+  --border-strong: #D2D2CA;
+  --text-primary: #0A0A0A;
+  --text-secondary: #73736A;
+  --text-body: #44443E;
+  --accent-pink: #FF2D78;
+  --accent-green: #23744D;
+  --accent-green-bg: #EEF7F2;
+
+  /* Grid & Spacing Standards */
+  --radius-card: 24px;
+  --radius-inner: 16px;
+  --radius-pill: 9999px;
+  --max-w-page: 1152px;
+  --max-w-wide: 1600px;
+}
+
+/* Accessibility Focus Rings (WCAG 2.2 AA) */
+:focus-visible {
+  outline: 2px solid #0A0A0A;
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #0A0A0A;
+  outline-offset: 2px;
+}
+
+/* Accessible High-Contrast Selection */
+::selection {
+  background-color: #FF2D78;
+  color: #FFFFFF;
+}
+
+/* Respect Reduced Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 body {
   font-family: var(--font-sans);
-  background-color: var(--bg-warm-white);
-  color: var(--text-near-black);
-  letter-spacing: -0.015em;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+.font-outfit {
+  font-family: var(--font-sans);
 }
 
 /* Editorial Serif Accents matching DesignMonk typography */
@@ -54,14 +114,20 @@ body {
 
 .badge-blush {
   background-color: #FDF0ED;
-  color: #A9432F;
+  color: #FF2D78;
   border: 1px solid #F8DCD4;
 }
 
+.badge-pink {
+  background-color: #FFF0F5;
+  color: #FF2D78;
+  border: 1px solid #FFE0EB;
+}
+
 .badge-sky {
-  background-color: #EBF3FE;
-  color: #2B7FFF;
-  border: 1px solid #D8E7FD;
+  background-color: #FFF0F5;
+  color: #FF2D78;
+  border: 1px solid #FFE0EB;
 }
 
 .badge-neutral {
@@ -101,11 +167,14 @@ body {
 
 /* Primary Button Styling */
 .btn-primary {
+  font-family: var(--font-outfit);
   background-color: #0A0A0A;
-  color: #FFFFFF;
+  color: #FAFAFA;
   font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
   border-radius: 9999px;
-  height: 44px;
+  height: 48px;
   padding: 0 24px;
   display: inline-flex;
   align-items: center;
@@ -114,10 +183,88 @@ body {
 }
 
 .btn-primary:hover {
-  background-color: #2B7FFF;
+  background-color: #FF2D78;
   color: #FFFFFF;
   transform: translateY(-1px);
-  box-shadow: 0 8px 20px -4px rgba(43, 127, 255, 0.35);
+  box-shadow: 0 8px 20px -4px rgba(255, 45, 120, 0.4);
+}
+
+.btn-pink {
+  font-family: var(--font-outfit);
+  background-color: #FF2D78;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  border-radius: 9999px;
+  height: 48px;
+  padding: 0 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px -2px rgba(255, 45, 120, 0.3);
+}
+
+.btn-pink:hover {
+  background-color: #E01E69;
+  color: #FFFFFF;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px -4px rgba(255, 45, 120, 0.45);
+}
+
+/* Ant Design Global Button & Input Standardization */
+.ant-btn {
+  font-family: var(--font-sans) !important;
+  letter-spacing: -0.01em !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.ant-btn-primary {
+  background-color: #0A0A0A !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  font-family: var(--font-sans) !important;
+  font-weight: 600 !important;
+}
+
+.ant-btn-primary:hover,
+.ant-btn-primary:focus,
+.ant-btn-primary:active {
+  background-color: #FF2D78 !important;
+  color: #FFFFFF !important;
+}
+
+.ant-btn-primary:hover *,
+.ant-btn-primary:focus *,
+.ant-btn-primary:active * {
+  color: #FFFFFF !important;
+}
+
+/* Ensure any dark/custom Ant Design buttons maintain white text on hover */
+.ant-btn.bg-\[\#0A0A0A\],
+.ant-btn.bg-\[\#0a0a0a\],
+.ant-btn.bg-black {
+  color: #FFFFFF !important;
+}
+
+.ant-btn.bg-\[\#0A0A0A\]:hover,
+.ant-btn.bg-\[\#0a0a0a\]:hover,
+.ant-btn.bg-black:hover,
+.ant-btn.hover\:\!bg-\[\#FF2D78\]:hover,
+.ant-btn.hover\:\!bg-\[\#ff2d78\]:hover,
+.ant-btn.hover\:\!bg-\[\#23744D\]:hover,
+.ant-btn.hover\:\!bg-\[\#0A0A0A\]:hover,
+.ant-btn.hover\:\!bg-black:hover {
+  color: #FFFFFF !important;
+}
+
+.ant-btn.bg-\[\#0A0A0A\]:hover *,
+.ant-btn.bg-\[\#0a0a0a\]:hover *,
+.ant-btn.hover\:\!bg-\[\#FF2D78\]:hover *,
+.ant-btn.hover\:\!bg-\[\#ff2d78\]:hover *,
+.ant-btn.hover\:\!bg-\[\#23744D\]:hover * {
+  color: #FFFFFF !important;
 }
 
 /* Custom Scrollbar */
@@ -134,4 +281,192 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #B0B0A8;
+}
+
+/* Infinite Marquee Auto Scroll */
+@keyframes marquee-scroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee-infinite {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 35s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-infinite:hover {
+  animation-play-state: paused;
+}
+
+/* Ant Design Select & Dropdown Styling */
+.ant-select-dropdown {
+  background-color: #FFFFFF !important;
+  border: 1px solid #E7E7E2 !important;
+  border-radius: 16px !important;
+  padding: 6px !important;
+  box-shadow: 0 12px 32px -4px rgba(10, 10, 10, 0.12) !important;
+}
+
+.ant-select-item {
+  font-family: var(--font-sans) !important;
+  border-radius: 10px !important;
+  padding: 8px 12px !important;
+  margin-bottom: 2px !important;
+  color: #0A0A0A !important;
+  font-size: 14px !important;
+  transition: all 0.15s ease !important;
+}
+
+.ant-select-item-option-content {
+  color: #0A0A0A !important;
+  font-weight: 500 !important;
+}
+
+/* Option Hover State */
+.ant-select-item-option-active:not(.ant-select-item-option-selected),
+.ant-select-item-option:hover {
+  background-color: #FAFAF8 !important;
+  color: #0A0A0A !important;
+}
+
+.ant-select-item-option-active:not(.ant-select-item-option-selected) .ant-select-item-option-content,
+.ant-select-item-option:hover .ant-select-item-option-content {
+  color: #0A0A0A !important;
+}
+
+/* Option Selected State */
+.ant-select-item-option-selected {
+  background-color: #F4F4F0 !important;
+  color: #0A0A0A !important;
+  font-weight: 700 !important;
+}
+
+.ant-select-item-option-selected .ant-select-item-option-content {
+  color: #0A0A0A !important;
+  font-weight: 700 !important;
+}
+
+.ant-select-item-option-selected:hover {
+  background-color: #EAEAE3 !important;
+}
+
+/* Dropdown Menu Items */
+.ant-dropdown-menu {
+  background-color: #FFFFFF !important;
+  border: 1px solid #E7E7E2 !important;
+  border-radius: 16px !important;
+  padding: 6px !important;
+  box-shadow: 0 12px 32px -4px rgba(10, 10, 10, 0.12) !important;
+}
+
+.ant-dropdown-menu-item {
+  border-radius: 10px !important;
+  padding: 8px 12px !important;
+  color: #0A0A0A !important;
+  font-family: var(--font-sans) !important;
+}
+
+.ant-dropdown-menu-item:hover,
+.ant-dropdown-menu-item-active {
+  background-color: #FAFAF8 !important;
+  color: #0A0A0A !important;
+}
+
+.ant-dropdown-menu-item-selected {
+  background-color: #F4F4F0 !important;
+  color: #0A0A0A !important;
+  font-weight: 700 !important;
+}
+
+/* Skeleton Loading Shimmer Effects */
+@keyframes shimmer-sweep {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    #F0F0EB 0%,
+    #FAFAF8 50%,
+    #F0F0EB 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-sweep 1.8s ease-in-out infinite;
+}
+
+.skeleton-shimmer-dark {
+  background: linear-gradient(
+    90deg,
+    #1E1E1E 0%,
+    #2A2A2A 50%,
+    #1E1E1E 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-sweep 1.8s ease-in-out infinite;
+}
+
+/* Auth Network Floating Node Animations */
+@keyframes float-gentle-1 {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-6px) scale(1.02);
+  }
+}
+
+@keyframes float-gentle-2 {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(5px) scale(0.99);
+  }
+}
+
+@keyframes float-gentle-3 {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-4px) scale(1.01);
+  }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% {
+    opacity: 0.75;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+.animate-float-1 {
+  animation: float-gentle-1 5s ease-in-out infinite;
+}
+
+.animate-float-2 {
+  animation: float-gentle-2 6s ease-in-out infinite 0.8s;
+}
+
+.animate-float-3 {
+  animation: float-gentle-3 5.5s ease-in-out infinite 1.6s;
+}
+
+.animate-pulse-dot {
+  animation: pulse-subtle 3s ease-in-out infinite;
 }

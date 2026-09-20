@@ -3,64 +3,84 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Logo } from '@/components/shared/Logo';
-import { Mail, ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { Mail, ArrowLeft, CheckCircle2, ArrowRight, KeyRound } from 'lucide-react';
 import { Input, Button, message } from 'antd';
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
-    message.success('Password reset link sent to your email.');
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setSent(true);
+      message.success('Password reset link sent to your email.');
+    }, 700);
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAF8] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center space-y-3">
-        <Link href="/" className="inline-flex items-center justify-center mb-2">
+    <div className="min-h-screen bg-[#FAFAF8] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 font-sans">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
+        <Link href="/" className="inline-flex items-center justify-center mb-5">
           <Logo size="lg" />
         </Link>
-        <h2 className="text-3xl font-black text-[#151515] tracking-tight">
+        <h2 className="text-3xl font-black text-[#0A0A0A] tracking-tight">
           Reset password
         </h2>
-        <p className="text-xs text-[#73736A]">
-          Enter your email to receive a password reset link.
+        <p className="text-sm sm:text-base text-[#73736A] font-medium leading-[24px] mt-2 sm:mt-3">
+          Enter your registered email address and we&apos;ll send you instructions to reset your password.
         </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4">
-        <div className="bg-white py-8 px-6 shadow-sm rounded-3xl sm:px-10 border border-[#E7E7E2] space-y-6">
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="bg-white py-8 px-6 sm:px-10 rounded-3xl border border-[#E7E7E2] shadow-sm space-y-6">
           {sent ? (
-            <div className="text-center space-y-4 py-4">
-              <div className="w-12 h-12 rounded-full bg-[#EEF7F2] text-[#23744D] flex items-center justify-center mx-auto">
-                <CheckCircle2 className="w-6 h-6" />
+            <div className="text-center space-y-5 py-4">
+              <div className="w-16 h-16 rounded-full bg-[#EEF7F2] text-[#23744D] flex items-center justify-center mx-auto shadow-inner">
+                <CheckCircle2 className="w-8 h-8" />
               </div>
-              <h3 className="font-extrabold text-sm text-[#151515]">Check your inbox</h3>
-              <p className="text-xs text-[#73736A]">
-                We sent instructions to <strong className="text-[#151515]">{email}</strong>.
-              </p>
-              <Link href="/login">
-                <Button className="rounded-full text-xs font-bold mt-2">
-                  Return to Login
-                </Button>
-              </Link>
+              <div className="space-y-2">
+                <h3 className="font-extrabold text-xl text-[#0A0A0A]">Check your inbox</h3>
+                <p className="text-sm text-[#73736A] leading-relaxed">
+                  We sent instructions to <strong className="text-[#0A0A0A]">{email || 'your email'}</strong>. Please check your spam folder if it doesn&apos;t arrive within a few minutes.
+                </p>
+              </div>
+
+              <div className="space-y-2.5 pt-2">
+                <Link href="/reset-password">
+                  <Button
+                    type="primary"
+                    size="large"
+                    className="w-full bg-[#0A0A0A] hover:!bg-[#FF2D78] !text-white rounded-full font-bold text-sm h-12 flex items-center justify-center gap-2"
+                  >
+                    <span>Proceed to Set New Password</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
+                </Link>
+                <Link href="/login">
+                  <Button className="w-full rounded-full text-sm font-bold h-11 border border-[#E7E7E2] text-[#73736A] hover:text-[#0A0A0A]">
+                    Back to login
+                  </Button>
+                </Link>
+              </div>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                <label className="block text-xs font-bold text-[#151515] mb-1">
-                  Email Address
+                <label className="block text-sm font-bold text-[#0A0A0A] mb-1.5">
+                  Email address
                 </label>
                 <Input
-                  type="email"
                   size="large"
-                  prefix={<Mail className="w-4 h-4 text-[#73736A] mr-2" />}
-                  placeholder="you@company.com"
+                  type="email"
+                  placeholder="name@company.com or creator@domain.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-[#FAFAF8] border-[#E7E7E2] rounded-xl text-xs"
+                  prefix={<Mail className="w-4 h-4 text-[#A3A39C] mr-1.5" />}
+                  className="rounded-xl h-12"
                   required
                 />
               </div>
@@ -68,9 +88,9 @@ export default function ForgotPasswordPage() {
               <Button
                 type="primary"
                 htmlType="submit"
-                block
+                loading={loading}
                 size="large"
-                className="h-11 rounded-full font-bold text-xs bg-[#151515] hover:!bg-[#2B7FFF] text-white mt-2 border-none"
+                className="w-full bg-[#0A0A0A] hover:!bg-[#FF2D78] !text-white rounded-full font-bold text-sm h-12 transition-all shadow-sm"
               >
                 Send Reset Link
               </Button>
@@ -78,7 +98,7 @@ export default function ForgotPasswordPage() {
               <div className="text-center pt-2">
                 <Link
                   href="/login"
-                  className="inline-flex items-center gap-1.5 text-xs text-[#73736A] hover:text-[#151515] font-semibold"
+                  className="inline-flex items-center gap-1.5 text-xs text-[#73736A] hover:text-[#0A0A0A] font-bold transition-colors"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" />
                   Back to sign in

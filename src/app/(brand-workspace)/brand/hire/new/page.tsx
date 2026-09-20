@@ -105,11 +105,11 @@ export default function NewHireCampaignPage() {
         <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Left Column: Scope & Brief Form */}
           <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
-            <h2 className="text-base font-black text-[#151515]">1. Campaign Details</h2>
+            <h2 className="text-lg font-bold text-[#0A0A0A] tracking-tight">1. Campaign Details</h2>
 
             {/* Select Creator */}
             <div>
-              <label className="block text-xs font-bold text-[#151515] mb-1.5">
+              <label className="block text-sm font-semibold text-[#0A0A0A] mb-2">
                 Target Content Creator
               </label>
               <select
@@ -119,7 +119,7 @@ export default function NewHireCampaignPage() {
                   const found = creators.find((c) => c.id === e.target.value);
                   if (found) setBasePriceEur(found.startingPriceEur);
                 }}
-                className="w-full px-3 py-2.5 text-xs font-bold text-[#151515] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none"
+                className="w-full px-3.5 py-2.5 text-sm font-medium text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none"
               >
                 {creators.map((c) => (
                   <option key={c.id} value={c.id}>
@@ -131,17 +131,17 @@ export default function NewHireCampaignPage() {
 
             {/* Collaboration Type */}
             <div>
-              <label className="block text-xs font-bold text-[#151515] mb-1.5">
+              <label className="block text-sm font-semibold text-[#0A0A0A] mb-2">
                 Collaboration Type
               </label>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2.5">
                 <button
                   type="button"
                   onClick={() => setCollabType('sponsored_post')}
-                  className={`py-2.5 px-3 rounded-xl text-xs font-bold border transition-all ${
+                  className={`py-2.5 px-4 rounded-xl text-sm font-semibold border transition-all cursor-pointer ${
                     collabType === 'sponsored_post'
-                      ? 'bg-[#151515] text-white border-[#151515]'
-                      : 'bg-[#FAFAF8] text-[#151515] border-[#E7E7E2]'
+                      ? 'bg-[#0A0A0A] text-white border-[#0A0A0A]'
+                      : 'bg-[#FAFAF8] text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A]'
                   }`}
                 >
                   Sponsored Posting
@@ -149,10 +149,10 @@ export default function NewHireCampaignPage() {
                 <button
                   type="button"
                   onClick={() => setCollabType('content_creation')}
-                  className={`py-2.5 px-3 rounded-xl text-xs font-bold border transition-all ${
+                  className={`py-2.5 px-4 rounded-xl text-sm font-semibold border transition-all cursor-pointer ${
                     collabType === 'content_creation'
-                      ? 'bg-[#151515] text-white border-[#151515]'
-                      : 'bg-[#FAFAF8] text-[#151515] border-[#E7E7E2]'
+                      ? 'bg-[#0A0A0A] text-white border-[#0A0A0A]'
+                      : 'bg-[#FAFAF8] text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A]'
                   }`}
                 >
                   Content Creation (UGC)
@@ -162,13 +162,13 @@ export default function NewHireCampaignPage() {
 
             {/* Platform Selector */}
             <div>
-              <label className="block text-xs font-bold text-[#151515] mb-1.5">
+              <label className="block text-sm font-bold text-[#0A0A0A] mb-2">
                 Target Platform
               </label>
               <select
                 value={platform}
                 onChange={(e) => setPlatform(e.target.value as PlatformType)}
-                className="w-full px-3 py-2.5 text-xs font-bold text-[#151515] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none"
+                className="w-full px-3.5 py-2.5 text-sm font-medium text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none"
               >
                 <option value="instagram">Instagram (Reel / Story / Post)</option>
                 <option value="tiktok">TikTok (Dedicated / Sound)</option>
@@ -179,41 +179,41 @@ export default function NewHireCampaignPage() {
 
             {/* Campaign Title */}
             <div>
-              <label className="block text-xs font-bold text-[#151515] mb-1.5">
+              <label className="block text-sm font-bold text-[#0A0A0A] mb-2">
                 Campaign Title
               </label>
               <Input
                 value={campaignTitle}
                 onChange={(e) => setCampaignTitle(e.target.value)}
-                className="bg-[#FAFAF8] border-[#E7E7E2] rounded-xl text-xs"
+                className="bg-[#FAFAF8] border-[#E7E7E2] rounded-xl text-sm py-2"
                 required
               />
             </div>
 
             {/* Brief */}
             <div>
-              <label className="block text-xs font-bold text-[#151515] mb-1.5">
+              <label className="block text-sm font-bold text-[#0A0A0A] mb-2">
                 Creative Brief & Concept
               </label>
               <Input.TextArea
                 rows={4}
                 value={brief}
                 onChange={(e) => setBrief(e.target.value)}
-                className="bg-[#FAFAF8] border-[#E7E7E2] rounded-xl text-xs"
+                className="bg-[#FAFAF8] border-[#E7E7E2] rounded-xl text-sm"
                 required
               />
             </div>
 
             {/* Requirements */}
             <div>
-              <label className="block text-xs font-bold text-[#151515] mb-1.5">
+              <label className="block text-sm font-bold text-[#0A0A0A] mb-2">
                 Specific Deliverable Rules (one per line)
               </label>
               <Input.TextArea
                 rows={3}
                 value={requirements}
                 onChange={(e) => setRequirements(e.target.value)}
-                className="bg-[#FAFAF8] border-[#E7E7E2] rounded-xl text-xs"
+                className="bg-[#FAFAF8] border-[#E7E7E2] rounded-xl text-sm"
                 required
               />
             </div>
@@ -222,15 +222,15 @@ export default function NewHireCampaignPage() {
           {/* Right Column: Escrow Financials & Checkout */}
           <div className="lg:col-span-5 space-y-6">
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
-              <h2 className="text-base font-black text-[#151515]">2. Budget & Escrow Deposit</h2>
+              <h2 className="text-lg font-bold text-[#0A0A0A] tracking-tight">2. Budget & Escrow Deposit</h2>
 
               {/* Base Price Slider */}
               <div>
                 <div className="flex justify-between items-center mb-1">
-                  <label className="text-xs font-bold text-[#73736A]">
+                  <label className="text-sm font-semibold text-[#73736A]">
                     Creator Rate (EUR):
                   </label>
-                  <span className="text-base font-black text-[#151515]">
+                  <span className="text-lg font-bold text-[#0A0A0A]">
                     €{basePriceEur.toLocaleString()}
                   </span>
                 </div>
@@ -245,40 +245,37 @@ export default function NewHireCampaignPage() {
 
               {/* Financial Calculation Breakdown */}
               <div className="space-y-3 pt-3 border-t border-[#E7E7E2]">
-                <div className="flex justify-between text-xs text-[#555550]">
+                <div className="flex justify-between text-sm text-[#555550]">
                   <span>Creator Payout:</span>
-                  <span className="font-bold text-[#151515]">€{basePriceEur.toLocaleString()}</span>
+                  <span className="font-semibold text-[#0A0A0A]">€{basePriceEur.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between text-xs text-[#555550]">
+                <div className="flex justify-between text-sm text-[#555550]">
                   <span>Influverse Escrow Fee (15%):</span>
-                  <span className="font-bold text-[#2B7FFF]">+€{platformFeeEur.toLocaleString()}</span>
+                  <span className="font-semibold text-[#FF2D78]">+€{platformFeeEur.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between text-sm font-black text-[#151515] pt-3 border-t border-[#E7E7E2]">
+                <div className="flex justify-between text-sm font-bold text-[#0A0A0A] pt-3 border-t border-[#E7E7E2]">
                   <span>Total Escrow Deposit:</span>
-                  <span className="text-lg text-[#151515]">€{totalCostEur.toLocaleString()}</span>
+                  <span className="text-xl font-bold text-[#0A0A0A]">€{totalCostEur.toLocaleString()}</span>
                 </div>
               </div>
 
               <div className="p-4 bg-[#EEF7F2] rounded-2xl border border-[#23744D]/20 space-y-2">
-                <div className="flex items-center gap-2 text-xs font-bold text-[#23744D]">
+                <div className="flex items-center gap-2 text-sm font-bold text-[#23744D]">
                   <ShieldCheck className="w-4 h-4" />
                   <span>Escrow Guarantee Protected</span>
                 </div>
-                <p className="text-[11px] text-[#555550] leading-relaxed">
+                <p className="text-xs text-[#555550] leading-relaxed">
                   Your funds remain locked in escrow. The creator does not receive payment until you inspect and approve their submitted deliverables.
                 </p>
               </div>
 
-              <Button
-                type="primary"
-                htmlType="submit"
-                loading={isSubmitting}
-                block
-                size="large"
-                className="h-12 rounded-full font-bold text-xs bg-[#151515] hover:!bg-[#2B7FFF] text-white border-none shadow-sm"
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full h-12 rounded-full font-sans font-semibold text-base bg-[#0A0A0A] hover:bg-[#FF2D78] text-white transition-all duration-200 shadow-sm flex items-center justify-center cursor-pointer active:scale-98 disabled:opacity-50"
               >
-                Deposit €{totalCostEur.toLocaleString()} & Send Offer
-              </Button>
+                {isSubmitting ? 'Processing...' : `Deposit €${totalCostEur.toLocaleString()} & Send Offer`}
+              </button>
             </div>
           </div>
         </form>

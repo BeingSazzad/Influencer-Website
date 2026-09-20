@@ -6,6 +6,8 @@ import { useAppSelector, useAppDispatch } from '@/redux/hooks';
 import { openOfferModal } from '@/redux/slices/orderSlice';
 import { WorkspaceHeader } from '@/components/layout/WorkspaceHeader';
 import { CreatorCard } from '@/components/shared/CreatorCard';
+import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
+import { EmptyState } from '@/components/shared/EmptyState';
 import {
   ShoppingBag,
   Clock,
@@ -49,86 +51,86 @@ export default function BrandDashboardPage() {
           <Link href="/brand/hire/new">
             <Button
               type="primary"
-              className="h-9 px-4 rounded-full font-bold text-xs bg-[#151515] hover:!bg-[#2B7FFF] text-white border-none flex items-center gap-1.5"
+              className="h-10 px-5 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:!bg-[#FF2D78] !text-white hover:!text-white border-none flex items-center gap-2 cursor-pointer"
             >
-              <PlusCircle className="w-3.5 h-3.5" />
+              <PlusCircle className="w-4 h-4" />
               <span>Create Campaign Offer</span>
             </Button>
           </Link>
         }
       />
 
-      <div className="p-6 sm:p-8 max-w-6xl mx-auto space-y-8">
+      <div className="p-6 sm:p-8 max-w-6xl mx-auto space-y-8 font-sans">
         {/* Metric Cards Row in EUR */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {/* Card 1: Active In Escrow */}
-          <div className="bg-white p-5 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-3">
+          <div className="bg-white p-6 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#73736A]">
+              <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
                 In Escrow (Active)
               </span>
-              <div className="w-8 h-8 rounded-xl bg-[#EEF7F2] text-[#23744D] flex items-center justify-center">
+              <div className="w-9 h-9 rounded-xl bg-[#EEF7F2] text-[#23744D] flex items-center justify-center">
                 <ShieldCheck className="w-4 h-4" />
               </div>
             </div>
-            <div className="text-2xl font-black text-[#151515]">
-              €{activeSpendEur.toLocaleString()}
+            <div className="text-3xl sm:text-4xl font-black text-[#0A0A0A] tracking-tight">
+              €{Math.round(activeSpendEur).toLocaleString()}
             </div>
-            <div className="text-[11px] text-[#73736A]">
+            <div className="text-xs text-[#73736A] font-medium">
               Held securely for {activeOrders.length} active campaigns
             </div>
           </div>
 
           {/* Card 2: Active Orders */}
-          <div className="bg-white p-5 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-3">
+          <div className="bg-white p-6 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#73736A]">
+              <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
                 Active Hires
               </span>
-              <div className="w-8 h-8 rounded-xl bg-[#F1EEF9] text-[#6444A6] flex items-center justify-center">
+              <div className="w-9 h-9 rounded-xl bg-[#F1EEF9] text-[#6444A6] flex items-center justify-center">
                 <ShoppingBag className="w-4 h-4" />
               </div>
             </div>
-            <div className="text-2xl font-black text-[#151515]">
+            <div className="text-3xl sm:text-4xl font-black text-[#0A0A0A] tracking-tight">
               {activeOrders.length}
             </div>
-            <div className="text-[11px] text-[#73736A]">
+            <div className="text-xs text-[#73736A] font-medium">
               {activeOrders.filter((o) => o.status === 'deliverable_submitted').length} pending review
             </div>
           </div>
 
           {/* Card 3: Total Spend */}
-          <div className="bg-white p-5 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-3">
+          <div className="bg-white p-6 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#73736A]">
+              <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
                 Total Lifetime Spend
               </span>
-              <div className="w-8 h-8 rounded-xl bg-[#FAF6E8] text-[#8C6819] flex items-center justify-center">
+              <div className="w-9 h-9 rounded-xl bg-[#FAF6E8] text-[#8C6819] flex items-center justify-center">
                 <TrendingUp className="w-4 h-4" />
               </div>
             </div>
-            <div className="text-2xl font-black text-[#151515]">
-              €{totalEscrowFundedEur.toLocaleString()}
+            <div className="text-3xl sm:text-4xl font-black text-[#0A0A0A] tracking-tight">
+              €{Math.round(totalEscrowFundedEur).toLocaleString()}
             </div>
-            <div className="text-[11px] text-[#73736A]">
+            <div className="text-xs text-[#73736A] font-medium">
               Includes standard 15% platform fee
             </div>
           </div>
 
           {/* Card 4: Shortlist */}
-          <div className="bg-white p-5 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-3">
+          <div className="bg-white p-6 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#73736A]">
+              <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
                 Shortlisted
               </span>
-              <div className="w-8 h-8 rounded-xl bg-[#FDF0ED] text-[#C75D47] flex items-center justify-center">
+              <div className="w-9 h-9 rounded-xl bg-[#FDF0ED] text-[#C75D47] flex items-center justify-center">
                 <Bookmark className="w-4 h-4" />
               </div>
             </div>
-            <div className="text-2xl font-black text-[#151515]">
+            <div className="text-3xl sm:text-4xl font-black text-[#0A0A0A] tracking-tight">
               {savedCreatorIds.length} creators
             </div>
-            <div className="text-[11px] text-[#73736A]">
+            <div className="text-xs text-[#73736A] font-medium">
               Ready for campaign outreach
             </div>
           </div>
@@ -138,19 +140,19 @@ export default function BrandDashboardPage() {
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-black text-[#151515] tracking-tight">
+              <h2 className="text-lg sm:text-xl font-bold text-[#0A0A0A] tracking-tight">
                 Active Campaign Orders
               </h2>
-              <p className="text-xs text-[#73736A]">
+              <p className="text-sm text-[#73736A] mt-0.5 font-medium">
                 Track deliverable progress and release escrow payments upon approval.
               </p>
             </div>
             <Link
               href="/brand/orders"
-              className="text-xs font-bold text-[#151515] hover:text-[#2B7FFF] flex items-center gap-1"
+              className="text-sm font-semibold text-[#0A0A0A] hover:text-[#FF2D78] flex items-center gap-1.5 transition-colors"
             >
               <span>View all orders</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 
@@ -158,11 +160,11 @@ export default function BrandDashboardPage() {
             {activeOrders.map((order) => {
               const statusColors: Record<string, string> = {
                 offer_sent: 'bg-[#FAF6E8] text-[#8C6819]',
-                accepted: 'bg-[#EBF3FE] text-[#2B7FFF]',
+                accepted: 'bg-[#FFF0F5] text-[#FF2D78]',
                 in_production: 'bg-[#F1EEF9] text-[#6444A6]',
                 deliverable_submitted: 'bg-[#EEF7F2] text-[#23744D] font-extrabold animate-pulse',
                 approved: 'bg-[#EEF7F2] text-[#23744D]',
-                completed: 'bg-[#F4F4F0] text-[#151515]',
+                completed: 'bg-[#F4F4F0] text-[#0A0A0A]',
               };
 
               const statusLabels: Record<string, string> = {
@@ -174,49 +176,70 @@ export default function BrandDashboardPage() {
                 completed: 'Completed',
               };
 
+              const platformLabels: Record<string, string> = {
+                instagram: 'Instagram',
+                tiktok: 'TikTok',
+                youtube: 'YouTube',
+                ugc: 'UGC Video',
+              };
+
               return (
                 <div
                   key={order.id}
-                  className="p-4 sm:p-5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-[#151515] transition-all"
+                  className="p-5 sm:p-6 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex flex-col md:flex-row md:items-center justify-between gap-5 hover:border-[#0A0A0A] transition-all"
                 >
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-4 sm:gap-5">
                     <img
                       src={order.creatorAvatar}
                       alt={order.creatorName}
-                      className="w-12 h-12 rounded-full object-cover border border-[#E7E7E2]"
+                      className="w-14 h-14 rounded-full object-cover border border-[#E7E7E2] shrink-0 shadow-2xs"
                     />
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <h3 className="font-extrabold text-sm text-[#151515]">
+                    <div className="flex flex-col gap-2">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h3 className="font-bold text-base text-[#0A0A0A] leading-tight">
                           {order.creatorName}
                         </h3>
-                        <span className="text-[11px] text-[#73736A]">{order.creatorHandle}</span>
+                        <VerifiedBadge size="xs" />
+                        <span className="text-xs text-[#73736A] font-medium leading-none">
+                          {order.creatorHandle.startsWith('@') ? order.creatorHandle : `@${order.creatorHandle}`}
+                        </span>
+                        <span className="text-[11px] uppercase tracking-wider font-bold px-2.5 py-0.5 rounded-full bg-[#EAEAE3] text-[#4A4A45] leading-none ml-1">
+                          {platformLabels[order.platform] || order.platform}
+                        </span>
                       </div>
-                      <div className="text-xs text-[#555550] mt-0.5">
-                        {order.packageTitle} ({order.collaborationType === 'content_creation' ? 'UGC Video' : 'Sponsored Post'})
+                      <div className="text-sm font-semibold text-[#0A0A0A] leading-snug">
+                        {order.packageTitle}
                       </div>
-                      <div className="text-[11px] text-[#73736A] mt-1">
-                        Deadline: {order.deadlineDate} • Funded: €{order.totalEur} (€{order.basePriceEur} + €{order.platformFeeEur} fee)
+                      <div className="flex items-center gap-2.5 flex-wrap text-xs text-[#73736A] font-medium pt-0.5">
+                        <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-white border border-[#E7E7E2] text-[#0A0A0A] font-semibold text-xs leading-none shadow-2xs">
+                          €{order.totalEur.toLocaleString()} Escrow Funded
+                        </span>
+                        <span className="text-[#C5C5BD] text-xs leading-none select-none">•</span>
+                        <span className="inline-flex items-center text-xs text-[#73736A] leading-none">
+                          Due {order.deadlineDate}
+                        </span>
+                        <span className="text-[#C5C5BD] text-xs leading-none select-none">•</span>
+                        <span className="inline-flex items-center text-xs text-[#73736A] leading-none">
+                          {order.deliverables.length} Deliverable{order.deliverables.length === 1 ? '' : 's'}
+                        </span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3 self-end sm:self-auto">
+                  <div className="flex items-center gap-3 self-end md:self-auto shrink-0 mt-2 md:mt-0">
                     <span
-                      className={`text-[11px] font-bold px-3 py-1 rounded-full ${
-                        statusColors[order.status] || 'bg-[#F4F4F0] text-[#151515]'
+                      className={`text-xs font-semibold px-3.5 py-1.5 rounded-full leading-none inline-flex items-center ${
+                        statusColors[order.status] || 'bg-[#F4F4F0] text-[#0A0A0A]'
                       }`}
                     >
                       {statusLabels[order.status] || order.status}
                     </span>
 
                     <Link href={`/brand/orders/${order.id}`}>
-                      <Button
-                        type="primary"
-                        className="h-9 px-4 rounded-full font-bold text-xs bg-[#151515] hover:!bg-[#2B7FFF] text-white border-none"
-                      >
-                        Manage Order
-                      </Button>
+                      <button className="h-10 px-5 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:bg-[#FF2D78] text-white border-none flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer active:scale-98">
+                        <span>Manage</span>
+                        <ArrowRight className="w-4 h-4" />
+                      </button>
                     </Link>
                   </div>
                 </div>
@@ -229,27 +252,42 @@ export default function BrandDashboardPage() {
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-black text-[#151515] tracking-tight">
+              <h2 className="text-lg sm:text-xl font-bold text-[#0A0A0A] tracking-tight">
                 Saved Creator Shortlist
               </h2>
-              <p className="text-xs text-[#73736A]">
+              <p className="text-sm text-[#73736A] mt-0.5 font-medium">
                 Creators you bookmarked during discovery.
               </p>
             </div>
             <Link
               href="/brand/saved"
-              className="text-xs font-bold text-[#151515] hover:text-[#2B7FFF] flex items-center gap-1"
+              className="text-sm font-semibold text-[#0A0A0A] hover:text-[#FF2D78] flex items-center gap-1.5 transition-colors"
             >
               <span>View all ({savedCreators.length})</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {savedCreators.slice(0, 4).map((creator) => (
-              <CreatorCard key={creator.id} creator={creator} />
-            ))}
-          </div>
+          {savedCreators.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-6">
+              {savedCreators.slice(0, 4).map((creator) => (
+                <CreatorCard key={creator.id} creator={creator} />
+              ))}
+            </div>
+          ) : (
+            <EmptyState
+              color="neutral"
+              icon={<Bookmark className="w-8 h-8" />}
+              badge="Shortlist"
+              title="No Saved Creators Yet"
+              description="Bookmark creators while browsing the marketplace to quickly compare rates and issue bulk campaign briefs."
+              primaryAction={{
+                label: 'Explore Verified Creators',
+                href: '/creators',
+              }}
+              variant="dashed"
+            />
+          )}
         </div>
       </div>
     </div>

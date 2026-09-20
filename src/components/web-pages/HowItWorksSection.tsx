@@ -78,24 +78,24 @@ export function HowItWorksSection() {
     <section id="how-it-works" className="py-24 bg-[#FAFAF8]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0A0A0A] tracking-tight font-sans">
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-[48px] font-black text-[#0A0A0A] tracking-tight leading-[1.15] font-sans">
             How Influverse{' '}
             <span className="font-editorial italic font-normal text-[#0A0A0A]">
               Works
             </span>
           </h2>
-          <p className="text-sm text-[#73736A] font-sans font-medium">
+          <p className="text-[18px] leading-[28px] text-[#73736A] font-sans font-medium mt-4 sm:mt-5 mb-8">
             A seamless, protected four-step workflow built on transparent escrow and verified delivery.
           </p>
 
           {/* Interactive Dual Perspective Toggle */}
-          <div className="inline-flex p-1.5 rounded-full bg-white border border-[#E7E7E2] shadow-xs mt-6">
+          <div className="inline-flex p-1.5 rounded-full bg-white border border-[#E7E7E2] shadow-xs">
             <button
               onClick={() => setActiveTab('brand')}
-              className={`px-7 py-2.5 rounded-full text-xs font-bold transition-all font-sans ${
+              className={`px-7 py-2.5 rounded-full font-outfit font-bold text-[16px] leading-[20px] transition-all ${
                 activeTab === 'brand'
-                  ? 'bg-[#0A0A0A] text-white shadow-sm'
+                  ? 'bg-[#0A0A0A] text-[#FAFAFA] shadow-sm'
                   : 'text-[#73736A] hover:text-[#0A0A0A]'
               }`}
             >
@@ -103,9 +103,9 @@ export function HowItWorksSection() {
             </button>
             <button
               onClick={() => setActiveTab('creator')}
-              className={`px-7 py-2.5 rounded-full text-xs font-bold transition-all font-sans ${
+              className={`px-7 py-2.5 rounded-full font-outfit font-bold text-[16px] leading-[20px] transition-all ${
                 activeTab === 'creator'
-                  ? 'bg-[#2B7FFF] text-white shadow-sm'
+                  ? 'bg-[#FF2D78] text-[#FAFAFA] shadow-sm'
                   : 'text-[#73736A] hover:text-[#0A0A0A]'
               }`}
             >
@@ -132,16 +132,16 @@ export function HowItWorksSection() {
                       <Icon className="w-5 h-5" />
                     </div>
                   </div>
-                  <h3 className="text-base font-extrabold text-[#0A0A0A] mb-2 font-sans">
+                  <h3 className="text-base font-bold text-[#0A0A0A] mb-2 font-sans">
                     {step.title}
                   </h3>
-                  <p className="text-xs text-[#73736A] leading-relaxed font-sans font-medium">
+                  <p className="text-sm text-[#555550] leading-[22px] font-sans font-medium">
                     {step.desc}
                   </p>
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-[#F4F4F0]">
-                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#73736A] font-sans">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#73736A] font-sans">
                     {step.badge}
                   </span>
                 </div>
@@ -153,13 +153,12 @@ export function HowItWorksSection() {
         {/* CTA Banner Bottom */}
         <div className="mt-14 text-center">
           <Link href={activeTab === 'brand' ? '/creators' : '/register'}>
-            <Button
-              type="primary"
-              className="h-12 px-8 rounded-full font-black text-xs bg-[#0A0A0A] hover:!bg-[#2B7FFF] text-white border-none shadow-sm transition-all font-sans"
+            <button
+              className="h-12 sm:h-[52px] px-8 rounded-full font-outfit font-bold text-[16px] leading-[20px] bg-[#0A0A0A] hover:bg-[#FF2D78] text-[#FAFAFA] shadow-sm hover:shadow-md transition-all inline-flex items-center justify-center gap-2 cursor-pointer hover:scale-105 active:scale-95"
             >
-              {activeTab === 'brand' ? 'Start Browsing Creators' : 'Apply as a Creator'}
-              <ArrowRight className="w-3.5 h-3.5 ml-2" />
-            </Button>
+              <span>{activeTab === 'brand' ? 'Start Browsing Creators' : 'Apply as a Creator'}</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
           </Link>
         </div>
       </div>

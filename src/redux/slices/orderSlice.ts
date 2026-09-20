@@ -10,6 +10,7 @@ interface OrderState {
     name: string;
     handle: string;
     avatar: string;
+    verified?: boolean;
     packageId?: string;
     packageTitle?: string;
     priceEur?: number;

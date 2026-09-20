@@ -1,5 +1,6 @@
 import React from 'react';
 import { SplitHero } from '@/components/web-pages/SplitHero';
+import { TrustedBySection } from '@/components/web-pages/TrustedBySection';
 import { FeaturedCreators } from '@/components/web-pages/FeaturedCreators';
 import { DesignMonkBentoSection } from '@/components/web-pages/DesignMonkBentoSection';
 import { ValuePropsSection } from '@/components/web-pages/ValuePropsSection';
@@ -19,6 +20,7 @@ export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen">
       <SplitHero />
+      <TrustedBySection />
       <FeaturedCreators />
       <DesignMonkBentoSection />
       <ValuePropsSection />
@@ -30,4 +32,3 @@ export default function HomePage() {
     </div>
   );
 }
-

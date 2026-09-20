@@ -5,12 +5,12 @@ import Link from 'next/link';
 import { useAppSelector, useAppDispatch } from '@/redux/hooks';
 import { setFilter, resetFilters } from '@/redux/slices/creatorSlice';
 import { CreatorCard } from '@/components/shared/CreatorCard';
+import { CreatorGridSkeleton } from '@/components/shared/Skeleton';
+import { EmptyState } from '@/components/shared/EmptyState';
 import { Creator, PlatformType } from '@/types';
 import {
   Search,
   SlidersHorizontal,
-  Grid,
-  List as ListIcon,
   Sparkles,
   MapPin,
   Instagram,
@@ -20,6 +20,17 @@ import {
   RotateCcw,
   PlusCircle,
   ExternalLink,
+  ChevronDown,
+  Globe,
+  Shirt,
+  Dumbbell,
+  Plane,
+  UtensilsCrossed,
+  Camera,
+  Cpu,
+  Briefcase,
+  Palette,
+  Layers,
 } from 'lucide-react';
 import { Input, Select, Pagination, Button } from 'antd';
 
@@ -28,21 +39,80 @@ export default function CreatorsDiscoveryPage() {
   const { creators, filters } = useAppSelector((state) => state.creator);
   const { t } = useAppSelector((state) => state.lang);
 
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const pageSize = 8;
+  const pageSize = 9;
 
   const categories = [
-    { name: 'all', label: 'All Creators', count: '12,430', icon: '::' },
-    { name: 'Beauty', label: 'Beauty', count: '1,240', icon: '✨' },
-    { name: 'Fashion', label: 'Fashion', count: '980', icon: '👗' },
-    { name: 'Fitness', label: 'Fitness & Health', count: '1,340', icon: '⚡' },
-    { name: 'Travel', label: 'Travel', count: '1,120', icon: '✈️' },
-    { name: 'Food', label: 'Food & Cuisine', count: '890', icon: '🍽️' },
-    { name: 'Lifestyle', label: 'Lifestyle', count: '1,560', icon: '🌿' },
-    { name: 'Tech', label: 'Tech & Gaming', count: '760', icon: '🎮' },
-    { name: 'Business', label: 'Business', count: '420', icon: '💼' },
-    { name: 'Art', label: 'Art & Creativity', count: '680', icon: '🎨' },
+    {
+      name: 'all',
+      label: 'All Creators',
+      count: '12,430',
+      icon: <Layers className="w-4 h-4" />,
+      color: 'bg-neutral-100 text-neutral-800',
+    },
+    {
+      name: 'Beauty',
+      label: 'Beauty & Skincare',
+      count: '1,240',
+      icon: <Sparkles className="w-4 h-4" />,
+      color: 'bg-rose-50 text-rose-600',
+    },
+    {
+      name: 'Fashion',
+      label: 'Fashion & Luxury',
+      count: '980',
+      icon: <Shirt className="w-4 h-4" />,
+      color: 'bg-purple-50 text-purple-600',
+    },
+    {
+      name: 'Fitness',
+      label: 'Fitness & Health',
+      count: '1,340',
+      icon: <Dumbbell className="w-4 h-4" />,
+      color: 'bg-emerald-50 text-emerald-600',
+    },
+    {
+      name: 'Travel',
+      label: 'Travel & Vlog',
+      count: '1,120',
+      icon: <Plane className="w-4 h-4" />,
+      color: 'bg-rose-50 text-[#FF2D78]',
+    },
+    {
+      name: 'Food',
+      label: 'Food & Cuisine',
+      count: '890',
+      icon: <UtensilsCrossed className="w-4 h-4" />,
+      color: 'bg-amber-50 text-amber-600',
+    },
+    {
+      name: 'Lifestyle',
+      label: 'Lifestyle & UGC',
+      count: '1,560',
+      icon: <Camera className="w-4 h-4" />,
+      color: 'bg-teal-50 text-teal-600',
+    },
+    {
+      name: 'Tech',
+      label: 'Tech & Gaming',
+      count: '760',
+      icon: <Cpu className="w-4 h-4" />,
+      color: 'bg-indigo-50 text-indigo-600',
+    },
+    {
+      name: 'Business',
+      label: 'Founder & SaaS UGC',
+      count: '420',
+      icon: <Briefcase className="w-4 h-4" />,
+      color: 'bg-pink-50 text-[#FF2D78]',
+    },
+    {
+      name: 'Art',
+      label: 'Digital Art & Visuals',
+      count: '680',
+      icon: <Palette className="w-4 h-4" />,
+      color: 'bg-orange-50 text-orange-600',
+    },
   ];
 
   // Filtering and sorting logic
@@ -114,43 +184,25 @@ export default function CreatorsDiscoveryPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         {/* Top Header Area matching reference */}
         <div className="relative">
-          <div className="max-w-2xl space-y-2">
-            <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#73736A] font-sans">
+          <div className="max-w-2xl">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-[#73736A] font-sans block mb-3">
               CREATOR MARKETPLACE
             </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0A0A0A] tracking-tight font-sans">
+            <h1 className="text-3xl sm:text-4xl lg:text-[48px] font-black text-[#0A0A0A] tracking-tight leading-[1.15] font-sans">
               Discover amazing{' '}
               <span className="font-editorial italic font-normal text-[#0A0A0A]">
                 creators
               </span>
             </h1>
-            <p className="text-sm sm:text-base text-[#555550] font-sans font-medium">
+            <p className="text-[18px] text-[#555550] font-sans font-medium leading-[28px] mt-3 sm:mt-4">
               {t?.discovery?.subtitle ||
                 'Find the right creators to bring your brand to life — across all platforms and niches.'}
             </p>
           </div>
-
-          {/* Handwritten style note top right */}
-          <div className="hidden lg:flex absolute top-2 right-4 items-center gap-2 font-editorial text-2xl font-bold text-[#0A0A0A]">
-            <span>Real people. Real results.</span>
-            <svg
-              className="w-7 h-7 text-[#0A0A0A] transform rotate-12"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 14l-7 7m0 0l-7-7m7 7V3"
-              />
-            </svg>
-          </div>
         </div>
 
         {/* Global Filter Bar matching reference */}
-        <div className="bg-white p-3 rounded-2xl border border-[#E7E7E2] shadow-xs flex flex-wrap items-center gap-3">
+        <div className="bg-white p-3.5 rounded-2xl border border-[#E7E7E2] shadow-xs flex flex-wrap items-center gap-3">
           {/* Omni Search Input */}
           <div className="flex-1 min-w-[240px] relative font-sans">
             <Search className="w-4 h-4 text-[#73736A] absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -159,16 +211,16 @@ export default function CreatorsDiscoveryPage() {
               placeholder={t?.discovery?.searchPlaceholder || 'Search creators, keywords or niches...'}
               value={filters.searchQuery}
               onChange={(e) => dispatch(setFilter({ searchQuery: e.target.value }))}
-              className="w-full pl-10 pr-4 py-2 text-xs font-semibold text-[#0A0A0A] bg-[#F4F4F0] rounded-xl outline-none placeholder:text-[#A3A39C] focus:ring-1 focus:ring-[#0A0A0A]"
+              className="w-full pl-10 pr-4 py-2.5 text-sm font-medium text-[#0A0A0A] bg-[#F4F4F0] rounded-xl outline-none placeholder:text-[#A3A39C] focus:ring-1 focus:ring-[#0A0A0A]"
             />
           </div>
 
           {/* All Categories Dropdown */}
-          <div className="min-w-[140px] font-sans">
+          <div className="min-w-[150px] font-sans relative">
             <select
               value={filters.category}
               onChange={(e) => dispatch(setFilter({ category: e.target.value }))}
-              className="w-full px-3 py-2 text-xs font-bold text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer"
+              className="w-full pl-3.5 pr-8 py-2.5 text-sm font-bold text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer appearance-none"
             >
               <option value="all">All Categories</option>
               <option value="Beauty">Beauty</option>
@@ -179,14 +231,15 @@ export default function CreatorsDiscoveryPage() {
               <option value="Lifestyle">Lifestyle</option>
               <option value="Tech">Tech & Gaming</option>
             </select>
+            <ChevronDown className="w-4 h-4 text-[#73736A] pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
           </div>
 
           {/* Locations Dropdown */}
-          <div className="min-w-[130px] font-sans">
+          <div className="min-w-[140px] font-sans relative">
             <select
               value={filters.location}
               onChange={(e) => dispatch(setFilter({ location: e.target.value }))}
-              className="w-full px-3 py-2 text-xs font-bold text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer"
+              className="w-full pl-3.5 pr-8 py-2.5 text-sm font-bold text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer appearance-none"
             >
               <option value="all">All Locations</option>
               <option value="London">London, UK</option>
@@ -197,14 +250,15 @@ export default function CreatorsDiscoveryPage() {
               <option value="Los Angeles">Los Angeles, US</option>
               <option value="New York">New York, US</option>
             </select>
+            <ChevronDown className="w-4 h-4 text-[#73736A] pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
           </div>
 
           {/* Platforms Dropdown */}
-          <div className="min-w-[130px] font-sans">
+          <div className="min-w-[140px] font-sans relative">
             <select
               value={filters.platform}
               onChange={(e) => dispatch(setFilter({ platform: e.target.value as any }))}
-              className="w-full px-3 py-2 text-xs font-bold text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer"
+              className="w-full pl-3.5 pr-8 py-2.5 text-sm font-bold text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer appearance-none"
             >
               <option value="all">All Platforms</option>
               <option value="instagram">Instagram</option>
@@ -212,14 +266,15 @@ export default function CreatorsDiscoveryPage() {
               <option value="youtube">YouTube</option>
               <option value="ugc">UGC Creative</option>
             </select>
+            <ChevronDown className="w-4 h-4 text-[#73736A] pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
           </div>
 
           {/* Follower Range Dropdown */}
-          <div className="min-w-[140px] font-sans">
+          <div className="min-w-[150px] font-sans relative">
             <select
               value={filters.followerRange}
               onChange={(e) => dispatch(setFilter({ followerRange: e.target.value as any }))}
-              className="w-full px-3 py-2 text-xs font-bold text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer"
+              className="w-full pl-3.5 pr-8 py-2.5 text-sm font-bold text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer appearance-none"
             >
               <option value="all">Follower Range</option>
               <option value="nano">Nano (10K - 50K)</option>
@@ -227,14 +282,15 @@ export default function CreatorsDiscoveryPage() {
               <option value="macro">Macro (200K - 1M)</option>
               <option value="mega">Mega (1M+)</option>
             </select>
+            <ChevronDown className="w-4 h-4 text-[#73736A] pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
           </div>
 
           {/* Sort By Dropdown */}
-          <div className="min-w-[140px] font-sans">
+          <div className="min-w-[150px] font-sans relative">
             <select
               value={filters.sortBy}
               onChange={(e) => dispatch(setFilter({ sortBy: e.target.value as any }))}
-              className="w-full px-3 py-2 text-xs font-bold text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer"
+              className="w-full pl-3.5 pr-8 py-2.5 text-sm font-bold text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer appearance-none"
             >
               <option value="relevance">Sort: Relevance</option>
               <option value="followers">Most Followers</option>
@@ -242,12 +298,13 @@ export default function CreatorsDiscoveryPage() {
               <option value="price_asc">Price: Low to High</option>
               <option value="price_desc">Price: High to Low</option>
             </select>
+            <ChevronDown className="w-4 h-4 text-[#73736A] pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
           </div>
 
           {/* Reset Filters */}
           <button
             onClick={() => dispatch(resetFilters())}
-            className="p-2 rounded-xl border border-[#E7E7E2] hover:bg-[#F4F4F0] text-[#73736A] hover:text-[#0A0A0A] transition-colors"
+            className="p-2.5 rounded-xl border border-[#E7E7E2] hover:bg-[#F4F4F0] text-[#73736A] hover:text-[#0A0A0A] transition-colors"
             title="Reset Filters"
           >
             <RotateCcw className="w-4 h-4" />
@@ -266,19 +323,29 @@ export default function CreatorsDiscoveryPage() {
                   <button
                     key={cat.name}
                     onClick={() => dispatch(setFilter({ category: cat.name }))}
-                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all ${
+                    className={`w-full flex items-center justify-between px-3 py-2.5 rounded-2xl text-sm font-bold transition-all duration-200 cursor-pointer ${
                       isSelected
-                        ? 'bg-[#0A0A0A] text-white shadow-2xs'
-                        : 'text-[#666660] hover:bg-[#F4F4F0] hover:text-[#0A0A0A]'
+                        ? 'bg-[#0A0A0A] text-white shadow-xs'
+                        : 'text-[#555550] hover:bg-[#F4F4F0] hover:text-[#0A0A0A]'
                     }`}
                   >
-                    <div className="flex items-center gap-2.5">
-                      <span className="text-xs">{cat.icon}</span>
-                      <span>{cat.label}</span>
+                    <div className="flex items-center gap-3">
+                      <span
+                        className={`w-7 h-7 rounded-xl flex items-center justify-center shrink-0 transition-colors ${
+                          isSelected
+                            ? 'bg-white/20 text-white'
+                            : `${cat.color} shadow-2xs`
+                        }`}
+                      >
+                        {cat.icon}
+                      </span>
+                      <span className="truncate">{cat.label}</span>
                     </div>
                     <span
-                      className={`text-[10px] font-bold ${
-                        isSelected ? 'text-white/70' : 'text-[#A3A39C]'
+                      className={`text-xs font-bold px-2 py-0.5 rounded-full ${
+                        isSelected
+                          ? 'bg-white/15 text-white'
+                          : 'bg-[#FAFAF8] text-[#73736A] border border-[#E7E7E2]'
                       }`}
                     >
                       {cat.count}
@@ -289,88 +356,62 @@ export default function CreatorsDiscoveryPage() {
             </div>
 
             {/* Bottom Left Creator CTA Card matching reference */}
-            <div className="bg-white rounded-3xl border border-[#E7E7E2] p-6 shadow-2xs space-y-4">
-              <div>
-                <h4 className="font-black text-sm text-[#0A0A0A]">
+            <div className="bg-white rounded-3xl border border-[#E7E7E2] p-6 sm:p-7 shadow-2xs">
+              <div className="mb-5">
+                <h4 className="font-black text-base leading-[22px] text-[#0A0A0A] tracking-tight">
                   Are you a creator?
                 </h4>
-                <p className="text-xs text-[#73736A] mt-1.5 leading-relaxed font-medium">
+                <p className="text-xs text-[#73736A] mt-2 leading-[18px] font-medium">
                   Join thousands of creators and get discovered by top brands worldwide.
                 </p>
               </div>
 
-              <Link href="/register">
-                <Button
-                  type="primary"
-                  block
-                  className="h-10 rounded-full font-black text-xs bg-[#0A0A0A] text-white hover:!bg-[#2B7FFF] border-none shadow-none transition-all"
+              <Link href="/register" className="block w-full">
+                <button
+                  type="button"
+                  className="w-full h-11 px-5 rounded-full bg-[#0A0A0A] hover:bg-[#FF2D78] text-white font-outfit font-bold text-sm leading-[18px] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-sm hover:scale-[1.02] active:scale-[0.98]"
                 >
                   Create Account
-                </Button>
+                </button>
               </Link>
             </div>
           </div>
 
           {/* Right Main Area (75% width) */}
           <div className="lg:col-span-9 space-y-6">
-            {/* Results Header with Count & Grid/List toggles */}
+            {/* Results Header with Count */}
             <div className="flex items-center justify-between font-sans">
               <div>
-                <span className="text-sm font-black text-[#0A0A0A]">
+                <span className="text-base font-black text-[#0A0A0A]">
                   {filteredCreators.length.toLocaleString()} creators
                 </span>
-                <span className="text-xs text-[#73736A] ml-2 hidden sm:inline font-medium">
+                <span className="text-sm text-[#73736A] ml-2.5 hidden sm:inline font-medium">
                   Showing 1–{paginatedCreators.length} of {filteredCreators.length} creators
                 </span>
               </div>
-
-              {/* View Toggle */}
-              <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-[#E7E7E2]">
-                <button
-                  onClick={() => setViewMode('grid')}
-                  className={`p-1.5 rounded-lg text-xs transition-colors ${
-                    viewMode === 'grid' ? 'bg-[#0A0A0A] text-white' : 'text-[#73736A] hover:bg-[#F4F4F0]'
-                  }`}
-                  aria-label="Grid View"
-                >
-                  <Grid className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={() => setViewMode('list')}
-                  className={`p-1.5 rounded-lg text-xs transition-colors ${
-                    viewMode === 'list' ? 'bg-[#0A0A0A] text-white' : 'text-[#73736A] hover:bg-[#F4F4F0]'
-                  }`}
-                  aria-label="List View"
-                >
-                  <ListIcon className="w-4 h-4" />
-                </button>
-              </div>
             </div>
 
-            {/* Creator Cards Grid (4 columns on desktop matching reference) */}
-            {paginatedCreators.length > 0 ? (
-              <div
-                className={
-                  viewMode === 'grid'
-                    ? 'grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6'
-                    : 'space-y-4'
-                }
-              >
+            {/* Creator Cards Grid (3 columns on desktop for spacious cards) */}
+            {creators.length === 0 ? (
+              <CreatorGridSkeleton count={6} />
+            ) : paginatedCreators.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-7">
                 {paginatedCreators.map((creator) => (
                   <CreatorCard key={creator.id} creator={creator} />
                 ))}
               </div>
             ) : (
-              <div className="bg-white rounded-3xl border border-[#E7E7E2] p-12 text-center space-y-3">
-                <p className="font-bold text-sm text-[#0A0A0A]">No creators found matching this filter</p>
-                <p className="text-xs text-[#73736A]">Try clearing some filter tags or search terms.</p>
-                <Button
-                  onClick={() => dispatch(resetFilters())}
-                  className="rounded-full text-xs font-bold"
-                >
-                  Reset All Filters
-                </Button>
-              </div>
+              <EmptyState
+                color="pink"
+                showIcon={false}
+                title="No Creators Found"
+                description="We couldn't find any verified creators matching your current search parameters or category filter."
+                primaryAction={{
+                  label: 'Reset All Filters',
+                  onClick: () => dispatch(resetFilters()),
+                }}
+                variant="card"
+              />
             )}
 
             {/* Pagination Controls matching reference */}

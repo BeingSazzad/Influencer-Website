@@ -34,9 +34,9 @@ export function ValuePropsSection() {
     },
     {
       icon: ShieldCheck,
-      bgColor: 'bg-[#EBF3FE]',
-      iconColor: 'text-[#2B7FFF]',
-      borderColor: 'hover:border-[#D8E7FD]',
+      bgColor: 'bg-[#FFF0F5]',
+      iconColor: 'text-[#FF2D78]',
+      borderColor: 'hover:border-[#FFE0EB]',
       title: 'Secure & simple',
       description: 'Built-in payments, contracts and escrow protection for both sides.',
     },
@@ -54,14 +54,14 @@ export function ValuePropsSection() {
     <section className="py-24 bg-[#FAFAF8] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Centered Heading with Playfair Display accent */}
-        <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0A0A0A] tracking-tight leading-tight font-sans">
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0A0A0A] tracking-tight leading-[1.15] font-sans">
             Everything you need.{' '}
             <span className="font-editorial italic font-normal text-[#0A0A0A] block">
               In one place.
             </span>
           </h2>
-          <p className="text-sm text-[#73736A] font-sans font-medium">
+          <p className="text-lg text-[#73736A] font-sans font-medium leading-[28px] mt-4 sm:mt-5">
             A frictionless marketplace engineered for modern marketing teams and high-caliber creators.
           </p>
         </div>
@@ -81,10 +81,10 @@ export function ValuePropsSection() {
                 >
                   <Icon className="w-6 h-6" />
                 </div>
-                <h3 className="text-sm font-extrabold text-[#0A0A0A] mb-2 font-sans">
+                <h3 className="text-base font-bold text-[#0A0A0A] mb-2 font-sans">
                   {prop.title}
                 </h3>
-                <p className="text-xs text-[#73736A] leading-relaxed font-sans font-medium">
+                <p className="text-sm text-[#555550] leading-[22px] font-sans font-medium">
                   {prop.description}
                 </p>
               </div>

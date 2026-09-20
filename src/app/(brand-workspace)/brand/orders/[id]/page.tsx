@@ -10,11 +10,15 @@ import {
   submitOrderReview,
 } from '@/redux/slices/orderSlice';
 import { WorkspaceHeader } from '@/components/layout/WorkspaceHeader';
+import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
 import {
   ShieldCheck,
   CheckCircle2,
   Clock,
   Video,
+  Film,
+  Link2,
+  Download,
   Send,
   ExternalLink,
   MessageSquare,
@@ -118,86 +122,89 @@ export default function BrandOrderDetailPage() {
         backHref="/brand/orders"
       />
 
-      <div className="p-6 sm:p-8 max-w-6xl mx-auto space-y-8">
+      <div className="p-6 sm:p-8 max-w-6xl mx-auto space-y-8 font-sans">
         {/* Top Status & Escrow Banner */}
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
             <div className="flex items-center gap-4">
               <img
                 src={order.creatorAvatar}
                 alt={order.creatorName}
-                className="w-14 h-14 rounded-full object-cover border border-[#E7E7E2]"
+                className="w-14 h-14 rounded-full object-cover border border-[#E7E7E2] shadow-2xs shrink-0"
               />
-              <div>
-                <div className="flex items-center gap-2">
-                  <h2 className="text-xl font-black text-[#151515]">{order.creatorName}</h2>
-                  <span className="text-xs text-[#73736A]">{order.creatorHandle}</span>
+              <div className="space-y-1">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h2 className="text-xl font-bold text-[#0A0A0A] tracking-tight">{order.creatorName}</h2>
+                  <VerifiedBadge size="sm" />
+                  <span className="text-xs text-[#73736A] font-medium">{order.creatorHandle}</span>
                 </div>
-                <div className="text-xs text-[#555550] mt-0.5">
-                  Package: <strong className="text-[#151515]">{order.packageTitle}</strong> ({order.platform})
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-xs text-[#0A0A0A]">
+                  <span className="text-[#73736A]">Package:</span>
+                  <span className="font-semibold text-[#0A0A0A]">{order.packageTitle}</span>
+                  <span className="text-[#73736A]">({order.platform})</span>
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
-              <div className="text-right">
-                <div className="text-xs text-[#73736A]">Total Funded in Escrow</div>
-                <div className="text-xl font-black text-[#151515]">€{order.totalEur}</div>
-                <div className="text-[10px] text-[#23744D]">€{order.basePriceEur} creator + €{order.platformFeeEur} fee</div>
+            <div className="flex items-center gap-3 self-start sm:self-auto bg-[#FAFAF8] px-5 py-3.5 rounded-2xl border border-[#E7E7E2]">
+              <div className="text-left sm:text-right">
+                <div className="text-xs font-semibold text-[#73736A] uppercase tracking-wider">Total Funded in Escrow</div>
+                <div className="text-2xl sm:text-3xl font-extrabold text-[#0A0A0A] tracking-tight">€{order.totalEur.toLocaleString()}</div>
+                <div className="text-xs text-[#23744D] font-semibold">€{order.basePriceEur} creator + €{order.platformFeeEur} fee</div>
               </div>
             </div>
           </div>
 
           {/* Escrow Progress Stepper */}
-          <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 pt-4 border-t border-[#E7E7E2]">
-            <div className="p-3 rounded-xl bg-[#EEF7F2] border border-[#23744D]/20">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 pt-6 border-t border-[#E7E7E2]">
+            <div className="p-4 rounded-2xl bg-[#EEF7F2] border border-[#23744D]/25 space-y-1">
               <div className="flex items-center gap-2 text-xs font-bold text-[#23744D]">
-                <CheckCircle2 className="w-4 h-4" />
+                <CheckCircle2 className="w-4 h-4 shrink-0" />
                 <span>1. Escrow Funded</span>
               </div>
-              <p className="text-[10px] text-[#73736A] mt-1">€{order.totalEur} secured</p>
+              <p className="text-xs text-[#555550]">€{order.totalEur} secured</p>
             </div>
 
             <div
-              className={`p-3 rounded-xl border ${
+              className={`p-4 rounded-2xl border space-y-1 ${
                 order.status !== 'offer_sent'
-                  ? 'bg-[#EEF7F2] text-[#23744D] border-[#23744D]/20'
-                  : 'bg-[#FAF6E8] text-[#8C6819] border-[#FAF6E8]'
+                  ? 'bg-[#EEF7F2] text-[#23744D] border-[#23744D]/25'
+                  : 'bg-[#FAF6E8] text-[#8C6819] border-[#F3ECCF]'
               }`}
             >
               <div className="flex items-center gap-2 text-xs font-bold">
-                <CheckCircle2 className="w-4 h-4" />
+                <CheckCircle2 className="w-4 h-4 shrink-0" />
                 <span>2. Offer Accepted</span>
               </div>
-              <p className="text-[10px] text-[#73736A] mt-1">Creator working</p>
+              <p className="text-xs text-[#555550]">Creator working</p>
             </div>
 
             <div
-              className={`p-3 rounded-xl border ${
+              className={`p-4 rounded-2xl border space-y-1 ${
                 ['deliverable_submitted', 'approved', 'completed'].includes(order.status)
-                  ? 'bg-[#EEF7F2] text-[#23744D] border-[#23744D]/20'
+                  ? 'bg-[#EEF7F2] text-[#23744D] border-[#23744D]/25'
                   : 'bg-[#FAFAF8] text-[#73736A] border-[#E7E7E2]'
               }`}
             >
-              <div className="flex items-center gap-2 text-xs font-bold">
-                <Video className="w-4 h-4" />
+              <div className="flex items-center gap-2 text-xs font-bold text-[#0A0A0A]">
+                <Video className="w-4 h-4 shrink-0" />
                 <span>3. Assets Submitted</span>
               </div>
-              <p className="text-[10px] text-[#73736A] mt-1">{order.deliverables.length} files attached</p>
+              <p className="text-xs text-[#73736A]">{order.deliverables.length} files attached</p>
             </div>
 
             <div
-              className={`p-3 rounded-xl border ${
+              className={`p-4 rounded-2xl border space-y-1 ${
                 order.escrowReleased
-                  ? 'bg-[#EEF7F2] text-[#23744D] border-[#23744D]/20'
+                  ? 'bg-[#EEF7F2] text-[#23744D] border-[#23744D]/25'
                   : 'bg-[#FAFAF8] text-[#73736A] border-[#E7E7E2]'
               }`}
             >
-              <div className="flex items-center gap-2 text-xs font-bold">
-                <ShieldCheck className="w-4 h-4" />
+              <div className="flex items-center gap-2 text-xs font-bold text-[#0A0A0A]">
+                <ShieldCheck className="w-4 h-4 shrink-0" />
                 <span>4. Payment Released</span>
               </div>
-              <p className="text-[10px] text-[#73736A] mt-1">
+              <p className="text-xs text-[#73736A]">
                 {order.escrowReleased ? '100% Payout Disbursed' : 'Awaiting approval'}
               </p>
             </div>
@@ -212,10 +219,10 @@ export default function BrandOrderDetailPage() {
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-base font-black text-[#151515]">Creator Deliverables</h3>
-                  <p className="text-xs text-[#73736A]">Review submitted assets before releasing payment.</p>
+                  <h3 className="text-lg font-bold text-[#0A0A0A] tracking-tight">Creator Deliverables</h3>
+                  <p className="text-sm text-[#73736A] mt-0.5">Review submitted assets before releasing payment.</p>
                 </div>
-                <span className="px-2.5 py-0.5 rounded-full bg-[#EAEAE3] text-[#151515] text-xs font-bold">
+                <span className="px-3 py-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#0A0A0A] text-xs font-semibold">
                   {order.deliverables.length} Files
                 </span>
               </div>
@@ -225,57 +232,75 @@ export default function BrandOrderDetailPage() {
                   {order.deliverables.map((deliv) => (
                     <div
                       key={deliv.id}
-                      className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-3"
+                      className="p-5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-3.5"
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <Video className="w-4 h-4 text-[#2B7FFF]" />
-                          <span className="font-extrabold text-xs text-[#151515]">{deliv.title}</span>
+                          <Video className="w-4 h-4 text-[#FF2D78]" />
+                          <span className="font-bold text-sm text-[#0A0A0A]">{deliv.title}</span>
                         </div>
-                        <span className="text-[10px] text-[#73736A]">{deliv.submittedAt}</span>
+                        <span className="text-xs text-[#73736A] font-medium">{deliv.submittedAt}</span>
                       </div>
 
-                      {deliv.previewUrl && (
-                        <div className="rounded-xl overflow-hidden border border-[#E7E7E2] max-h-64 bg-black">
+                      {/* Video Player Preview or Image Preview */}
+                      {(deliv.previewUrl?.startsWith('blob:') || deliv.previewUrl?.includes('.mp4') || deliv.fileUrl?.startsWith('blob:') || deliv.fileUrl?.includes('.mp4')) ? (
+                        <div className="rounded-2xl overflow-hidden border border-[#E7E7E2] aspect-video max-h-72 bg-black shadow-xs flex items-center justify-center">
+                          <video
+                            src={deliv.previewUrl || deliv.fileUrl}
+                            controls
+                            className="w-full h-full object-contain"
+                          />
+                        </div>
+                      ) : deliv.previewUrl ? (
+                        <div className="rounded-2xl overflow-hidden border border-[#E7E7E2] max-h-64 bg-black">
                           <img
                             src={deliv.previewUrl}
                             alt="Deliverable Preview"
                             className="w-full h-full object-cover"
                           />
                         </div>
-                      )}
+                      ) : null}
 
                       {deliv.notes && (
-                        <p className="text-xs text-[#555550] bg-white p-3 rounded-xl border border-[#E7E7E2] italic">
+                        <p className="text-sm text-[#555550] bg-white p-3.5 rounded-xl border border-[#E7E7E2] italic leading-relaxed">
                           &ldquo;{deliv.notes}&rdquo;
                         </p>
                       )}
 
                       {deliv.fileUrl && (
-                        <a
-                          href={deliv.fileUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 text-xs font-bold text-[#2B7FFF] hover:underline"
-                        >
-                          <span>Open High-Resolution File / Draft Link</span>
-                          <ExternalLink className="w-3.5 h-3.5" />
-                        </a>
+                        <div className="pt-1">
+                          <a
+                            href={deliv.fileUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-[#E7E7E2] text-xs font-bold text-[#0A0A0A] hover:border-[#0A0A0A] hover:text-[#FF2D78] transition-colors shadow-2xs"
+                          >
+                            <Link2 className="w-3.5 h-3.5 text-[#FF2D78]" />
+                            <span>
+                              {deliv.fileUrl.includes('drive.google.com')
+                                ? 'Open Google Drive Folder'
+                                : deliv.fileUrl.includes('dropbox') || deliv.fileUrl.includes('frame.io')
+                                ? 'Open Cloud Asset Link'
+                                : 'Download / Open Master Deliverable'}
+                            </span>
+                            <ExternalLink className="w-3.5 h-3.5 text-[#73736A]" />
+                          </a>
+                        </div>
                       )}
                     </div>
                   ))}
 
                   {/* Approval / Revision Action Bar */}
                   {order.status === 'deliverable_submitted' && (
-                    <div className="p-4 bg-[#FAFAF8] rounded-2xl border border-[#E7E7E2] space-y-3">
-                      <div className="text-xs font-bold text-[#151515]">
+                    <div className="p-5 bg-[#FAFAF8] rounded-2xl border border-[#E7E7E2] space-y-3.5">
+                      <div className="text-sm font-semibold text-[#0A0A0A]">
                         Are you satisfied with these deliverables?
                       </div>
                       <div className="flex flex-wrap items-center gap-3">
                         <Button
                           type="primary"
                           onClick={handleApproveDeliverables}
-                          className="h-10 px-6 rounded-full font-bold text-xs bg-[#151515] hover:!bg-[#23744D] text-white border-none flex items-center gap-1.5"
+                          className="h-10 px-5 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:!bg-[#23744D] !text-white hover:!text-white border-none flex items-center gap-2 shadow-xs cursor-pointer"
                         >
                           <CheckCircle2 className="w-4 h-4" />
                           <span>Approve & Release Escrow Payment</span>
@@ -284,7 +309,7 @@ export default function BrandOrderDetailPage() {
                         <Button
                           type="default"
                           onClick={() => setIsRevisionModalOpen(true)}
-                          className="h-10 px-4 rounded-full font-bold text-xs border-[#D2D2CA] text-[#151515] flex items-center gap-1.5"
+                          className="h-10 px-4 rounded-full font-semibold text-sm border-[#D2D2CA] text-[#0A0A0A] flex items-center gap-2 hover:border-[#0A0A0A] cursor-pointer"
                         >
                           <RotateCcw className="w-4 h-4" />
                           <span>Request Revisions</span>
@@ -296,17 +321,19 @@ export default function BrandOrderDetailPage() {
                   {order.escrowReleased && (
                     <div className="p-4 bg-[#EEF7F2] rounded-2xl border border-[#23744D]/20 flex items-center gap-3">
                       <ShieldCheck className="w-5 h-5 text-[#23744D] shrink-0" />
-                      <div className="text-xs text-[#23744D] font-bold">
+                      <div className="text-sm text-[#23744D] font-semibold">
                         Payment of €{order.basePriceEur} has been released to {order.creatorName}&apos;s wallet.
                       </div>
                     </div>
                   )}
                 </div>
               ) : (
-                <div className="p-8 text-center bg-[#FAFAF8] rounded-2xl border border-[#E7E7E2] space-y-2">
-                  <Clock className="w-6 h-6 text-[#73736A] mx-auto" />
-                  <p className="font-bold text-xs text-[#151515]">Deliverables In Progress</p>
-                  <p className="text-[11px] text-[#73736A]">
+                <div className="p-10 text-center bg-[#FAFAF8] rounded-2xl border border-[#E7E7E2] space-y-2.5">
+                  <div className="w-12 h-12 rounded-2xl bg-[#EEF7F2] text-[#23744D] flex items-center justify-center mx-auto shadow-2xs">
+                    <Clock className="w-6 h-6" />
+                  </div>
+                  <p className="font-bold text-sm text-[#0A0A0A]">Deliverables In Progress</p>
+                  <p className="text-sm text-[#73736A] max-w-sm mx-auto leading-relaxed">
                     {order.creatorName} is currently crafting your content according to the agreed brief.
                   </p>
                 </div>
@@ -314,20 +341,20 @@ export default function BrandOrderDetailPage() {
             </div>
 
             {/* Campaign Brief Summary */}
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-4">
-              <h3 className="text-base font-black text-[#151515]">Campaign Brief & Scope</h3>
-              <p className="text-xs text-[#555550] leading-relaxed bg-[#FAFAF8] p-4 rounded-2xl border border-[#E7E7E2]">
+            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-5">
+              <h3 className="text-lg font-bold text-[#0A0A0A] tracking-tight">Campaign Brief & Scope</h3>
+              <p className="text-sm text-[#44443E] leading-relaxed bg-[#FAFAF8] p-5 rounded-2xl border border-[#E7E7E2]">
                 {order.brief}
               </p>
 
-              <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-[#73736A] mb-2">
+              <div className="pt-2">
+                <h4 className="text-xs font-semibold uppercase tracking-wider text-[#73736A] mb-3">
                   Key Requirements
                 </h4>
-                <ul className="space-y-1.5">
+                <ul className="space-y-2.5">
                   {order.requirements.map((req, idx) => (
-                    <li key={idx} className="flex items-center gap-2 text-xs font-semibold text-[#151515]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#151515]" />
+                    <li key={idx} className="flex items-center gap-2.5 text-sm text-[#0A0A0A]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#0A0A0A] shrink-0" />
                       <span>{req}</span>
                     </li>
                   ))}
@@ -339,19 +366,24 @@ export default function BrandOrderDetailPage() {
           {/* Right Column (5 cols): Chat & Review */}
           <div className="lg:col-span-5 space-y-6">
             {/* Direct Order Chat */}
-            <div className="bg-white rounded-3xl p-6 border border-[#E7E7E2] shadow-2xs flex flex-col h-[500px]">
-              <div className="flex items-center justify-between pb-3 border-b border-[#E7E7E2]">
-                <div className="flex items-center gap-2">
-                  <MessageSquare className="w-4 h-4 text-[#151515]" />
-                  <h3 className="text-xs font-black uppercase tracking-wider text-[#151515]">
+            <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#E7E7E2] shadow-2xs flex flex-col h-[540px]">
+              <div className="flex items-center justify-between pb-4 border-b border-[#E7E7E2]">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-center">
+                    <MessageSquare className="w-4 h-4 text-[#0A0A0A]" />
+                  </div>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">
                     Order Messaging
                   </h3>
                 </div>
-                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                <div className="flex items-center gap-1.5 text-xs text-[#23744D] font-semibold">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>Active</span>
+                </div>
               </div>
 
               {/* Message Feed */}
-              <div className="flex-1 overflow-y-auto py-4 space-y-3 text-xs">
+              <div className="flex-1 overflow-y-auto py-4 space-y-3.5 text-sm font-sans">
                 {order.messages.map((msg) => {
                   const isMe = msg.senderRole === 'brand';
                   return (
@@ -359,16 +391,16 @@ export default function BrandOrderDetailPage() {
                       key={msg.id}
                       className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}
                     >
-                      <div className="flex items-center gap-1.5 mb-1 text-[10px] text-[#73736A]">
-                        <span>{msg.senderName}</span>
+                      <div className="flex items-center gap-1.5 mb-1 text-xs text-[#73736A]">
+                        <span className="font-semibold text-[#0A0A0A]">{msg.senderName}</span>
                         <span>•</span>
                         <span>{msg.timestamp}</span>
                       </div>
                       <div
-                        className={`p-3 rounded-2xl max-w-[85%] leading-relaxed ${
+                        className={`p-4 rounded-2xl max-w-[85%] leading-relaxed text-sm ${
                           isMe
-                            ? 'bg-[#151515] text-white rounded-br-xs'
-                            : 'bg-[#F4F4F0] text-[#151515] rounded-bl-xs'
+                            ? 'bg-[#0A0A0A] text-white rounded-br-xs'
+                            : 'bg-[#F4F4F0] text-[#0A0A0A] rounded-bl-xs'
                         }`}
                       >
                         {msg.text}
@@ -385,11 +417,11 @@ export default function BrandOrderDetailPage() {
                   placeholder="Type message or question..."
                   value={newMessageText}
                   onChange={(e) => setNewMessageText(e.target.value)}
-                  className="flex-1 px-3 py-2 text-xs bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none"
+                  className="flex-1 h-10 px-4 text-sm font-sans bg-[#FAFAF8] border border-[#E7E7E2] rounded-full outline-none focus:border-[#0A0A0A] transition-colors"
                 />
                 <button
                   type="submit"
-                  className="px-3 py-2 bg-[#151515] hover:bg-[#2B7FFF] text-white rounded-xl transition-colors cursor-pointer"
+                  className="h-10 w-10 rounded-full bg-[#0A0A0A] hover:bg-[#FF2D78] text-white flex items-center justify-center transition-colors cursor-pointer shrink-0 shadow-xs"
                   aria-label="Send message"
                 >
                   <Send className="w-4 h-4" />
@@ -399,16 +431,16 @@ export default function BrandOrderDetailPage() {
 
             {/* Review Form (Appears when approved or completed) */}
             {order.status === 'approved' && !order.reviewSubmitted && (
-              <div className="bg-white rounded-3xl p-6 border border-[#E7E7E2] shadow-2xs space-y-4">
+              <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#E7E7E2] shadow-2xs space-y-4">
                 <div className="flex items-center gap-2">
                   <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
-                  <h3 className="font-black text-sm text-[#151515]">Leave a Review</h3>
+                  <h3 className="font-bold text-sm text-[#0A0A0A]">Leave a Review</h3>
                 </div>
                 <p className="text-xs text-[#73736A]">
                   Rate {order.creatorName}&apos;s work to finalize the campaign.
                 </p>
 
-                <form onSubmit={handleSubmitReview} className="space-y-3">
+                <form onSubmit={handleSubmitReview} className="space-y-3.5">
                   <div>
                     <Rate value={ratingVal} onChange={(v) => setRatingVal(v)} />
                   </div>
@@ -417,14 +449,14 @@ export default function BrandOrderDetailPage() {
                     placeholder="Describe how the collaboration went, communication, content quality..."
                     value={reviewComment}
                     onChange={(e) => setReviewComment(e.target.value)}
-                    className="rounded-xl text-xs"
+                    className="rounded-2xl text-sm font-sans"
                     required
                   />
                   <Button
                     type="primary"
                     htmlType="submit"
                     block
-                    className="h-10 rounded-full font-bold text-xs bg-[#151515] hover:!bg-[#2B7FFF] text-white border-none"
+                    className="h-10 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:!bg-[#FF2D78] !text-white hover:!text-white border-none shadow-sm cursor-pointer"
                   >
                     Submit Review & Complete
                   </Button>
@@ -435,17 +467,17 @@ export default function BrandOrderDetailPage() {
             {order.reviewSubmitted && (
               <div className="bg-white rounded-3xl p-6 border border-[#E7E7E2] shadow-2xs space-y-3">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-xs text-[#151515]">Your Review</h3>
+                  <h3 className="font-bold text-sm text-[#0A0A0A]">Your Review</h3>
                   <div className="flex text-amber-500">
                     {[...Array(order.reviewSubmitted.rating)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-amber-500" />
+                      <Star key={i} className="w-4 h-4 fill-amber-500" />
                     ))}
                   </div>
                 </div>
-                <p className="text-xs text-[#555550] italic bg-[#FAFAF8] p-3 rounded-xl border border-[#E7E7E2]">
+                <p className="text-sm text-[#555550] italic bg-[#FAFAF8] p-4 rounded-2xl border border-[#E7E7E2] leading-relaxed">
                   &ldquo;{order.reviewSubmitted.comment}&rdquo;
                 </p>
-                <span className="text-[10px] text-[#73736A] block">
+                <span className="text-xs text-[#73736A] block">
                   Submitted {order.reviewSubmitted.date}
                 </span>
               </div>
@@ -461,7 +493,7 @@ export default function BrandOrderDetailPage() {
         onCancel={() => setIsRevisionModalOpen(false)}
         onOk={handleRequestRevision}
         okText="Send Revision Request"
-        okButtonProps={{ className: 'bg-[#151515] rounded-full' }}
+        okButtonProps={{ className: 'bg-[#0A0A0A] rounded-full' }}
       >
         <div className="space-y-3 pt-2">
           <p className="text-xs text-[#73736A]">

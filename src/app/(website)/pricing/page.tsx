@@ -1,6 +1,5 @@
 import React from 'react';
 import { PricingSection } from '@/components/web-pages/PricingSection';
-import { FaqSection } from '@/components/web-pages/FaqSection';
 
 export const metadata = {
   title: 'Pricing & Fees — Influverse Creator Marketplace',
@@ -9,9 +8,8 @@ export const metadata = {
 
 export default function PricingPage() {
   return (
-    <div className="py-8">
+    <div className="py-4 sm:py-8">
       <PricingSection />
-      <FaqSection />
     </div>
   );
 }

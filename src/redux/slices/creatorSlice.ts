@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Creator, CreatorFilterState } from '@/types';
+import { Creator, CreatorFilterState, CreatorPhoto, CreatorPackage } from '@/types';
 import { MOCK_CREATORS } from '@/Mockdata';
 
 interface CreatorState {
@@ -48,10 +48,62 @@ export const creatorSlice = createSlice({
     setSelectedCreator: (state, action: PayloadAction<Creator | null>) => {
       state.selectedCreator = action.payload;
     },
+    addCreatorPhoto: (state, action: PayloadAction<{ creatorId: string; photo: CreatorPhoto }>) => {
+      const creator = state.creators.find((c) => c.id === action.payload.creatorId);
+      if (creator) {
+        if (!creator.photos) creator.photos = [];
+        creator.photos.unshift(action.payload.photo);
+      }
+    },
+    deleteCreatorPhoto: (state, action: PayloadAction<{ creatorId: string; photoId: string }>) => {
+      const creator = state.creators.find((c) => c.id === action.payload.creatorId);
+      if (creator && creator.photos) {
+        creator.photos = creator.photos.filter((p) => p.id !== action.payload.photoId);
+      }
+    },
+    updateCreatorProfileDetails: (state, action: PayloadAction<{ creatorId: string; updates: Partial<Creator> }>) => {
+      const creator = state.creators.find((c) => c.id === action.payload.creatorId);
+      if (creator) {
+        Object.assign(creator, action.payload.updates);
+      }
+    },
+    addCreatorPackage: (state, action: PayloadAction<{ creatorId: string; pkg: CreatorPackage }>) => {
+      const creator = state.creators.find((c) => c.id === action.payload.creatorId);
+      if (creator) {
+        if (!creator.packages) creator.packages = [];
+        creator.packages.unshift(action.payload.pkg);
+      }
+    },
+    updateCreatorPackage: (state, action: PayloadAction<{ creatorId: string; pkg: CreatorPackage }>) => {
+      const creator = state.creators.find((c) => c.id === action.payload.creatorId);
+      if (creator && creator.packages) {
+        const index = creator.packages.findIndex((p) => p.id === action.payload.pkg.id);
+        if (index !== -1) {
+          creator.packages[index] = action.payload.pkg;
+        }
+      }
+    },
+    deleteCreatorPackage: (state, action: PayloadAction<{ creatorId: string; packageId: string }>) => {
+      const creator = state.creators.find((c) => c.id === action.payload.creatorId);
+      if (creator && creator.packages) {
+        creator.packages = creator.packages.filter((p) => p.id !== action.payload.packageId);
+      }
+    },
   },
 });
 
-export const { setFilter, resetFilters, toggleSaveCreator, setSelectedCreator } =
-  creatorSlice.actions;
+export const {
+  setFilter,
+  resetFilters,
+  toggleSaveCreator,
+  setSelectedCreator,
+  addCreatorPhoto,
+  deleteCreatorPhoto,
+  updateCreatorProfileDetails,
+  addCreatorPackage,
+  updateCreatorPackage,
+  deleteCreatorPackage,
+} = creatorSlice.actions;
 
 export default creatorSlice.reducer;
+

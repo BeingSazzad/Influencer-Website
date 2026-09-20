@@ -34,17 +34,34 @@ export interface CreatorPackage {
   deliveryDays: number;
   revisions: number;
   inclusions: string[];
+  popular?: boolean;
+  usageRights?: string;
+  category?: string;
+  priceFormatted?: string;
+  features?: string[];
 }
 
 export interface PortfolioItem {
   id: string;
   brandName: string;
+  brandLogo?: string;
   campaignTitle: string;
   mediaType: 'image' | 'video';
   mediaUrl: string;
+  videoPreviewUrl?: string;
   views?: string;
   likes?: string;
+  comments?: string;
+  shares?: string;
+  engagementRate?: string;
+  duration?: string;
+  aspectRatio?: '9:16' | '16:9' | '1:1';
   platform: PlatformType;
+  deliverableType?: string;
+  description?: string;
+  soundTrack?: string;
+  completedDate?: string;
+  packagePriceEur?: number;
 }
 
 export interface AudienceDemographics {
@@ -61,6 +78,18 @@ export interface CreatorReview {
   comment: string;
   campaignName: string;
   date: string;
+}
+
+export interface CreatorPhoto {
+  id: string;
+  url: string;
+  caption: string;
+  category?: 'headshot' | 'lifestyle' | 'modeling' | 'bts' | 'outdoors' | 'studio' | 'photo' | string;
+  aspectRatio?: 'portrait' | 'landscape' | 'square';
+  date?: string;
+  location?: string;
+  cameraGear?: string;
+  tags?: string[];
 }
 
 export interface Creator {
@@ -86,6 +115,8 @@ export interface Creator {
   totalCollaborations: number;
   packages: CreatorPackage[];
   portfolio: PortfolioItem[];
+  photos?: CreatorPhoto[];
+  aestheticVibe?: string;
   audience: AudienceDemographics;
   reviews: CreatorReview[];
 }

@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { Creator } from '@/types';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { toggleSaveCreator } from '@/redux/slices/creatorSlice';
-import { Bookmark, Check, ArrowRight, Instagram, Youtube, Star } from 'lucide-react';
+import { Bookmark, ArrowRight, Instagram, Youtube, Star } from 'lucide-react';
+import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
 
 interface CreatorCardProps {
   creator: Creator;
@@ -23,61 +24,63 @@ export function CreatorCard({ creator }: CreatorCardProps) {
   };
 
   return (
-    <div className="bg-white rounded-3xl border border-[#E7E7E2] overflow-hidden hover:border-[#0A0A0A] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col group relative">
+    <div className="bg-white rounded-3xl border border-[#E7E7E2] overflow-hidden hover:border-[#0A0A0A] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col group relative font-sans">
       {/* Creator Portrait Section */}
-      <div className="relative h-64 sm:h-72 w-full bg-[#F4F4F0] overflow-hidden">
-        <Link href={`/creators/${creator.id}`}>
+      <div className="relative w-full aspect-[1/1] bg-[#F4F4F0] overflow-hidden">
+        <Link href={`/creators/${creator.id}`} className="block w-full h-full">
           <img
             src={creator.avatar}
             alt={creator.name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+            className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
           />
         </Link>
 
-        {/* Verified Blue Badge */}
-        {creator.verified && (
-          <div
-            className="absolute top-3 right-3 w-6 h-6 bg-[#2B7FFF] rounded-full flex items-center justify-center text-white shadow-md ring-2 ring-white pointer-events-none"
-            title="Verified Creator"
-          >
-            <Check className="w-3.5 h-3.5 stroke-[3]" />
-          </div>
-        )}
-
         {/* Rating pill top left */}
-        <div className="absolute top-3 left-12 px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-white text-[10px] font-bold flex items-center gap-1">
-          <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+        <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-[12px] font-bold flex items-center gap-1 shadow-xs">
+          <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
           <span>{creator.rating}</span>
         </div>
 
-        {/* Bookmark Action */}
-        <button
-          onClick={handleSave}
-          className={`absolute top-3 left-3 w-8 h-8 rounded-full flex items-center justify-center backdrop-blur-md transition-all ${
-            isSaved
-              ? 'bg-[#0A0A0A] text-white shadow-sm scale-105'
-              : 'bg-white/85 text-[#52524B] hover:bg-white hover:text-[#0A0A0A]'
-          }`}
-          title={isSaved ? 'Saved to Shortlist' : 'Save Creator'}
-        >
-          <Bookmark className={`w-4 h-4 ${isSaved ? 'fill-white' : ''}`} />
-        </button>
+        {/* Top Right Save/Bookmark Action Button */}
+        <div className="absolute top-3 right-3">
+          <button
+            onClick={handleSave}
+            className={`w-9 h-9 rounded-full flex items-center justify-center backdrop-blur-md transition-all cursor-pointer shadow-xs ${
+              isSaved
+                ? 'bg-[#0A0A0A] text-white shadow-sm scale-105'
+                : 'bg-white/85 text-[#52524B] hover:bg-white hover:text-[#0A0A0A]'
+            }`}
+            title={isSaved ? 'Saved to Shortlist' : 'Save Creator'}
+          >
+            <Bookmark className={`w-4 h-4 ${isSaved ? 'fill-white' : ''}`} />
+          </button>
+        </div>
       </div>
 
-      {/* Card Info Body */}
+      {/* Card Info Body with refined balanced padding */}
       <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
         <div>
-          {/* Creator Name & Price */}
-          <div className="flex items-center justify-between mb-1.5">
-            <Link href={`/creators/${creator.id}`}>
-              <h3 className="font-extrabold text-[#0A0A0A] text-base group-hover:text-[#2B7FFF] transition-colors font-sans">
-                {creator.name}
-              </h3>
-            </Link>
-            <div className="text-right">
-              <span className="text-[11px] font-medium text-[#73736A] font-sans block">
-                from <strong className="text-[#0A0A0A] font-editorial text-sm font-bold">€{creator.startingPriceEur}</strong>
+          {/* Creator Name & Price Header */}
+          <div className="flex items-start justify-between gap-2 mb-2">
+            <div className="min-w-0 flex-1">
+              <Link href={`/creators/${creator.id}`} className="inline-flex items-center gap-1.5 max-w-full group/link">
+                <h3 className="font-bold text-[#0A0A0A] text-base group-hover/link:text-[#FF2D78] transition-colors font-sans truncate tracking-tight">
+                  {creator.name}
+                </h3>
+                {creator.verified && <VerifiedBadge size="sm" />}
+              </Link>
+              <span className="text-xs font-medium text-[#73736A] block mt-0.5">
+                {creator.location}
               </span>
+            </div>
+
+            <div className="text-right shrink-0">
+              <span className="text-xs font-bold text-[#73736A] uppercase tracking-wider block font-sans">
+                FROM
+              </span>
+              <strong className="text-[#0A0A0A] font-editorial text-lg font-bold">
+                €{creator.startingPriceEur}
+              </strong>
             </div>
           </div>
 
@@ -86,7 +89,7 @@ export function CreatorCard({ creator }: CreatorCardProps) {
             {creator.categories.slice(0, 3).map((cat, idx) => (
               <span
                 key={cat}
-                className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full font-sans ${
+                className={`text-xs font-bold px-2.5 py-0.5 rounded-full font-sans ${
                   idx === 0
                     ? 'bg-[#F1EEF9] text-[#6444A6]'
                     : idx === 1
@@ -99,32 +102,40 @@ export function CreatorCard({ creator }: CreatorCardProps) {
             ))}
           </div>
 
-          {/* Social Platform Follower Counts Bar */}
-          <div className="flex items-center justify-between text-xs font-black text-[#0A0A0A] pt-2.5 border-t border-[#F0F0EB] font-sans">
+          {/* Social Platform Follower Counts Bar with crisp icons & proper sizes */}
+          <div className="flex items-center justify-between text-xs font-bold text-[#0A0A0A] pt-3 border-t border-[#F0F0EB] font-sans">
             {creator.platforms.instagram && (
-              <div className="flex items-center gap-1">
-                <span className="w-4 h-4 rounded-full bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 flex items-center justify-center text-white text-[9px] font-bold">
-                  <Instagram className="w-2.5 h-2.5" />
+              <div className="flex items-center gap-1.5">
+                <span className="w-5 h-5 rounded-full bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF] flex items-center justify-center text-white shrink-0 shadow-2xs">
+                  <Instagram className="w-3 h-3" />
                 </span>
-                <span>{creator.platforms.instagram.followersFormatted}</span>
+                <span className="text-xs font-extrabold text-[#0A0A0A]">
+                  {creator.platforms.instagram.followersFormatted}
+                </span>
               </div>
             )}
 
             {creator.platforms.tiktok && (
-              <div className="flex items-center gap-1">
-                <span className="w-4 h-4 rounded-full bg-[#0A0A0A] flex items-center justify-center text-white text-[9px] font-black">
-                  ♪
+              <div className="flex items-center gap-1.5">
+                <span className="w-5 h-5 rounded-full bg-[#000000] flex items-center justify-center text-white shrink-0 shadow-2xs">
+                  <svg className="w-2.5 h-2.5 fill-white" viewBox="0 0 24 24">
+                    <path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-2.891 2.887 2.896 2.896 0 0 1-2.891-2.887 2.896 2.896 0 0 1 2.891-2.887c.28 0 .546.04.8.113V9.37a6.31 6.31 0 0 0-.8-.052 6.333 6.333 0 0 0-6.333 6.333 6.333 6.333 0 0 0 6.333 6.333 6.333 6.333 0 0 0 6.333-6.333V9.01a8.172 8.172 0 0 0 4.968 1.666V7.231a4.8 4.8 0 0 1-1.19-.545z" />
+                  </svg>
                 </span>
-                <span>{creator.platforms.tiktok.followersFormatted}</span>
+                <span className="text-xs font-extrabold text-[#0A0A0A]">
+                  {creator.platforms.tiktok.followersFormatted}
+                </span>
               </div>
             )}
 
             {creator.platforms.youtube && (
-              <div className="flex items-center gap-1">
-                <span className="w-4 h-4 rounded-full bg-[#FF0000] flex items-center justify-center text-white text-[8px] font-bold">
-                  <Youtube className="w-2.5 h-2.5" />
+              <div className="flex items-center gap-1.5">
+                <span className="w-5 h-5 rounded-full bg-[#FF0000] flex items-center justify-center text-white shrink-0 shadow-2xs">
+                  <Youtube className="w-3 h-3" />
                 </span>
-                <span>{creator.platforms.youtube.followersFormatted}</span>
+                <span className="text-xs font-extrabold text-[#0A0A0A]">
+                  {creator.platforms.youtube.followersFormatted}
+                </span>
               </div>
             )}
           </div>
@@ -133,10 +144,10 @@ export function CreatorCard({ creator }: CreatorCardProps) {
         {/* View Profile Action Link */}
         <Link
           href={`/creators/${creator.id}`}
-          className="inline-flex items-center justify-center gap-1.5 w-full py-2.5 text-xs font-extrabold text-[#0A0A0A] hover:text-[#2B7FFF] transition-colors border-t border-[#F0F0EB] pt-3 font-sans"
+          className="inline-flex items-center justify-center gap-2 w-full h-10 text-xs font-extrabold text-[#0A0A0A] hover:text-white bg-[#FAFAF8] hover:bg-[#0A0A0A] rounded-full transition-all border border-[#E7E7E2] hover:border-[#0A0A0A] font-sans group/btn shadow-2xs cursor-pointer"
         >
           <span>View Profile</span>
-          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1.5 transition-transform" />
+          <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
         </Link>
       </div>
     </div>

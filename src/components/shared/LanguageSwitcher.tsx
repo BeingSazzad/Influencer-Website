@@ -11,23 +11,23 @@ export function LanguageSwitcher() {
   const currentLang = useAppSelector((state) => state.lang.currentLang);
 
   return (
-    <div className="inline-flex items-center gap-1 bg-[#F4F4F0] border border-[#E7E7E2] rounded-full p-0.5 text-xs font-semibold text-[#151515]">
+    <div className="inline-flex items-center gap-1 bg-[#F4F4F0] border border-[#E7E7E2] rounded-full p-0.5 text-xs font-semibold text-[#0A0A0A]">
       <button
         onClick={() => dispatch(setLanguage('en'))}
-        className={`px-2.5 py-1 rounded-full transition-all ${
+        className={`px-2.5 py-1 rounded-full transition-all cursor-pointer ${
           currentLang === 'en'
-            ? 'bg-[#151515] text-white shadow-xs'
-            : 'text-[#73736A] hover:text-[#151515]'
+            ? 'bg-[#0A0A0A] text-white shadow-xs'
+            : 'text-[#73736A] hover:text-[#0A0A0A]'
         }`}
       >
         EN
       </button>
       <button
         onClick={() => dispatch(setLanguage('de'))}
-        className={`px-2.5 py-1 rounded-full transition-all ${
+        className={`px-2.5 py-1 rounded-full transition-all cursor-pointer ${
           currentLang === 'de'
-            ? 'bg-[#151515] text-white shadow-xs'
-            : 'text-[#73736A] hover:text-[#151515]'
+            ? 'bg-[#0A0A0A] text-white shadow-xs'
+            : 'text-[#73736A] hover:text-[#0A0A0A]'
         }`}
       >
         DE

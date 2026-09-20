@@ -2,28 +2,28 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { switchRole } from '@/redux/slices/authSlice';
+import { logout, switchRole } from '@/redux/slices/authSlice';
 import { Logo } from '@/components/shared/Logo';
 import { LanguageSwitcher } from '@/components/shared/LanguageSwitcher';
-import { Button, Drawer, Dropdown, MenuProps, Tag } from 'antd';
+import { Dropdown, MenuProps, Drawer } from 'antd';
 import {
   Menu as MenuIcon,
-  X,
-  Bookmark,
-  Briefcase,
-  Sparkles,
+  Settings,
   ChevronDown,
   User as UserIcon,
   ArrowRight,
+  LogOut,
+  LayoutDashboard,
+  Briefcase,
 } from 'lucide-react';
 
 export function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const { currentUser, activeRole } = useAppSelector((state) => state.auth);
-  const { savedCreatorIds } = useAppSelector((state) => state.creator);
   const { t } = useAppSelector((state) => state.lang);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -35,46 +35,71 @@ export function Navbar() {
     { name: t?.nav?.faq || 'FAQ', href: '/faq' },
   ];
 
-  const roleMenu: MenuProps['items'] = [
+  const userMenuItems: MenuProps['items'] = [
     {
-      key: 'brand',
+      key: 'header',
       label: (
-        <div className="flex items-center gap-2.5 py-1 px-1 font-sans">
-          <div className="w-8 h-8 rounded-xl bg-[#0A0A0A] text-white flex items-center justify-center font-bold text-xs">
-            B
+        <div className="py-1 px-1 font-sans border-b border-[#E7E7E2] pb-2">
+          <div className="font-extrabold text-[#0A0A0A] text-xs truncate">
+            {currentUser?.name}
           </div>
-          <div>
-            <div className="font-extrabold text-[#0A0A0A] text-xs">Brand Workspace</div>
-            <div className="text-[11px] text-[#73736A]">Discover & hire talent</div>
+          <div className="text-xs text-[#73736A] truncate">
+            {currentUser?.email}
           </div>
-          {activeRole === 'brand' && (
-            <Tag color="#0A0A0A" className="ml-auto font-bold text-[10px]">
-              Active
-            </Tag>
-          )}
         </div>
       ),
-      onClick: () => dispatch(switchRole('brand')),
     },
     {
-      key: 'creator',
+      key: 'dashboard',
       label: (
-        <div className="flex items-center gap-2.5 py-1 px-1 font-sans">
-          <div className="w-8 h-8 rounded-xl bg-[#2B7FFF] text-white flex items-center justify-center font-bold text-xs">
-            C
-          </div>
-          <div>
-            <div className="font-extrabold text-[#0A0A0A] text-xs">Creator Workspace</div>
-            <div className="text-[11px] text-[#73736A]">Accept offers & fulfill orders</div>
-          </div>
-          {activeRole === 'creator' && (
-            <Tag color="#2B7FFF" className="ml-auto font-bold text-[10px]">
-              Active
-            </Tag>
-          )}
+        <div className="flex items-center gap-2 py-1 font-sans text-xs font-bold text-[#0A0A0A]">
+          <LayoutDashboard className="w-3.5 h-3.5" />
+          <span>{activeRole === 'brand' ? 'Brand Dashboard' : 'Creator Dashboard'}</span>
         </div>
       ),
-      onClick: () => dispatch(switchRole('creator')),
+      onClick: () => {
+        router.push(activeRole === 'brand' ? '/brand/dashboard' : '/creator/dashboard');
+      },
+    },
+    {
+      key: 'settings',
+      label: (
+        <div className="flex items-center gap-2 py-1 font-sans text-xs font-bold text-[#0A0A0A]">
+          <Settings className="w-3.5 h-3.5 text-[#73736A]" />
+          <span>Account & Profile Settings</span>
+        </div>
+      ),
+      onClick: () => {
+        router.push(activeRole === 'brand' ? '/brand/settings' : '/creator/settings');
+      },
+    },
+    {
+      key: 'switchRole',
+      label: (
+        <div className="flex items-center gap-2 py-1 font-sans text-xs font-bold text-[#73736A] hover:text-[#0A0A0A]">
+          <UserIcon className="w-3.5 h-3.5" />
+          <span>Switch to {activeRole === 'brand' ? 'Creator View' : 'Brand View'}</span>
+        </div>
+      ),
+      onClick: () => {
+        dispatch(switchRole(activeRole === 'brand' ? 'creator' : 'brand'));
+      },
+    },
+    {
+      type: 'divider',
+    },
+    {
+      key: 'logout',
+      label: (
+        <div className="flex items-center gap-2 py-1 font-sans text-xs font-bold text-red-600">
+          <LogOut className="w-3.5 h-3.5" />
+          <span>Log Out</span>
+        </div>
+      ),
+      onClick: () => {
+        dispatch(logout());
+        router.push('/');
+      },
     },
   ];
 
@@ -95,7 +120,7 @@ export function Navbar() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`text-sm font-bold font-sans transition-colors duration-200 ${
+                  className={`text-sm font-bold font-sans transition-colors duration-200 whitespace-nowrap ${
                     isActive
                       ? 'text-[#0A0A0A]'
                       : 'text-[#666660] hover:text-[#0A0A0A]'
@@ -108,86 +133,41 @@ export function Navbar() {
           </nav>
 
           {/* Desktop Right Actions */}
-          <div className="hidden lg:flex items-center gap-3">
-            {/* Language Switcher */}
-            <LanguageSwitcher />
+          <div className="hidden lg:flex items-center gap-4">
+            {/* Language Switcher - Only on Home Screen */}
+            {pathname === '/' && <LanguageSwitcher />}
 
-            {/* Saved Shortlist Link */}
-            <Link
-              href="/brand/saved"
-              className="relative p-2.5 text-[#555550] hover:text-[#0A0A0A] hover:bg-[#F1F1EC] rounded-full transition-colors"
-              title="Saved Creators"
-            >
-              <Bookmark className="w-4 h-4" />
-              {savedCreatorIds.length > 0 && (
-                <span className="absolute 1 top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#0A0A0A] text-[10px] font-black text-white shadow-2xs">
-                  {savedCreatorIds.length}
-                </span>
-              )}
-            </Link>
-
-            {/* Role Demo Switcher Dropdown */}
-            <Dropdown menu={{ items: roleMenu }} trigger={['click']} placement="bottomRight">
-              <button className="flex items-center gap-2 px-3.5 py-1.5 text-xs font-bold rounded-full bg-[#F0F0EB] hover:bg-[#E5E5DE] text-[#0A0A0A] border border-[#E0E0D8] transition-colors font-sans cursor-pointer">
-                <Sparkles className="w-3.5 h-3.5 text-[#2B7FFF]" />
-                <span>
-                  Demo Role: <strong className="capitalize">{activeRole}</strong>
-                </span>
-                <ChevronDown className="w-3 h-3 text-[#73736A]" />
-              </button>
-            </Dropdown>
-
-            {/* Workspace / Auth Buttons */}
+            {/* Auth State */}
             {currentUser ? (
-              <div className="flex items-center gap-2.5 font-sans">
+              <div className="flex items-center gap-3">
                 <Link
                   href={activeRole === 'brand' ? '/brand/dashboard' : '/creator/dashboard'}
+                  className="h-10 px-5 rounded-full font-bold text-xs bg-[#0A0A0A] text-white hover:bg-[#FF2D78] flex items-center gap-1.5 transition-all shadow-xs whitespace-nowrap"
                 >
-                  <Button
-                    type="default"
-                    className="flex items-center gap-2 border-[#D2D2CA] text-[#0A0A0A] hover:border-[#0A0A0A] font-extrabold h-9 px-4 rounded-full bg-white text-xs"
-                  >
-                    <UserIcon className="w-3.5 h-3.5" />
-                    <span>{activeRole === 'brand' ? 'Brand Portal' : 'Creator Portal'}</span>
-                  </Button>
+                  <span>{activeRole === 'brand' ? 'Brand Workspace' : 'Creator Workspace'}</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
 
-                <Link
-                  href={activeRole === 'brand' ? '/creators' : '/creator/offers'}
-                >
-                  <Button
-                    type="primary"
-                    className="flex items-center gap-1.5 font-black h-9 px-4 rounded-full bg-[#0A0A0A] hover:!bg-[#2B7FFF] text-white text-xs border-none shadow-sm transition-all"
-                  >
-                    {activeRole === 'brand' ? (
-                      <>
-                        <span>Find Creators</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </>
-                    ) : (
-                      <>
-                        <span>View Offers</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </>
-                    )}
-                  </Button>
-                </Link>
+                <Dropdown menu={{ items: userMenuItems }} trigger={['click']} placement="bottomRight">
+                  <button className="flex items-center gap-2 p-1 pl-2 pr-3 rounded-full bg-white border border-[#E7E7E2] hover:border-[#0A0A0A] transition-all cursor-pointer">
+                    <img
+                      src={currentUser.avatar}
+                      alt={currentUser.name}
+                      className="w-7 h-7 rounded-full object-cover border"
+                    />
+                    <span className="text-xs font-bold text-[#0A0A0A] truncate max-w-[100px]">
+                      {currentUser.name.split(' ')[0]}
+                    </span>
+                    <ChevronDown className="w-3 h-3 text-[#73736A]" />
+                  </button>
+                </Dropdown>
               </div>
             ) : (
-              <div className="flex items-center gap-3 font-sans">
-                <Link
-                  href="/login"
-                  className="text-sm font-bold text-[#0A0A0A] hover:underline px-2"
-                >
-                  Log in
-                </Link>
+              <div className="flex items-center font-sans">
                 <Link href="/register">
-                  <Button
-                    type="primary"
-                    className="h-10 px-5 rounded-full bg-[#0A0A0A] hover:!bg-[#2B7FFF] text-white font-black text-xs border-none shadow-sm transition-all"
-                  >
+                  <button className="h-11 px-6 rounded-full bg-[#FF2D78] hover:bg-[#E01E69] text-white font-outfit font-bold text-[16px] leading-[20px] shadow-sm hover:shadow-md hover:shadow-[#FF2D78]/25 transition-all cursor-pointer hover:scale-102 active:scale-98 whitespace-nowrap">
                     Get Started
-                  </Button>
+                  </button>
                 </Link>
               </div>
             )}
@@ -195,21 +175,10 @@ export function Navbar() {
 
           {/* Mobile Menu Icon */}
           <div className="flex lg:hidden items-center gap-2">
-            <LanguageSwitcher />
-            <Link
-              href="/brand/saved"
-              className="relative p-2 text-[#0A0A0A]"
-            >
-              <Bookmark className="w-5 h-5" />
-              {savedCreatorIds.length > 0 && (
-                <span className="absolute 0 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-[#0A0A0A] text-[10px] font-black text-white">
-                  {savedCreatorIds.length}
-                </span>
-              )}
-            </Link>
+            {pathname === '/' && <LanguageSwitcher />}
             <button
               onClick={() => setIsDrawerOpen(true)}
-              className="p-2 text-[#0A0A0A] hover:bg-[#EFEFEA] rounded-xl"
+              className="p-2 text-[#0A0A0A] hover:bg-[#EFEFEA] rounded-xl cursor-pointer"
               aria-label="Open Navigation Menu"
             >
               <MenuIcon className="w-6 h-6" />
@@ -227,86 +196,77 @@ export function Navbar() {
         width={310}
       >
         <div className="flex flex-col gap-6 font-sans">
-          {/* Role Switcher */}
-          <div className="p-3 bg-[#F4F4F0] rounded-2xl border border-[#E7E7E2]">
-            <div className="text-[11px] font-extrabold text-[#73736A] uppercase tracking-wider mb-2">
-              Select Demo Perspective
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                onClick={() => {
-                  dispatch(switchRole('brand'));
-                  setIsDrawerOpen(false);
-                }}
-                className={`px-3 py-2 text-xs font-bold rounded-xl border flex items-center justify-center gap-1.5 ${
-                  activeRole === 'brand'
-                    ? 'bg-[#0A0A0A] text-white border-[#0A0A0A]'
-                    : 'bg-white text-[#0A0A0A] border-[#E7E7E2]'
-                }`}
-              >
-                <Briefcase className="w-3.5 h-3.5" />
-                Brand
-              </button>
-              <button
-                onClick={() => {
-                  dispatch(switchRole('creator'));
-                  setIsDrawerOpen(false);
-                }}
-                className={`px-3 py-2 text-xs font-bold rounded-xl border flex items-center justify-center gap-1.5 ${
-                  activeRole === 'creator'
-                    ? 'bg-[#2B7FFF] text-white border-[#2B7FFF]'
-                    : 'bg-white text-[#0A0A0A] border-[#E7E7E2]'
-                }`}
-              >
-                <Sparkles className="w-3.5 h-3.5" />
-                Creator
-              </button>
-            </div>
-          </div>
+          {currentUser ? (
+            <div className="p-4 bg-[#F4F4F0] rounded-2xl border border-[#E7E7E2] space-y-3">
+              <div className="flex items-center gap-3">
+                <img
+                  src={currentUser.avatar}
+                  alt={currentUser.name}
+                  className="w-10 h-10 rounded-full object-cover border"
+                />
+                <div className="min-w-0 flex-1">
+                  <div className="font-extrabold text-sm text-[#0A0A0A] truncate">{currentUser.name}</div>
+                  <div className="text-xs text-[#73736A] capitalize">{activeRole} Account</div>
+                </div>
+              </div>
 
-          {/* Navigation Links */}
-          <div className="flex flex-col space-y-1">
+              <div className="space-y-2 pt-1">
+                <Link
+                  href={activeRole === 'brand' ? '/brand/dashboard' : '/creator/dashboard'}
+                  onClick={() => setIsDrawerOpen(false)}
+                  className="w-full h-10 rounded-xl bg-[#0A0A0A] text-white font-bold text-xs flex items-center justify-center gap-1.5"
+                >
+                  <span>Open Dashboard</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+
+                <Link
+                  href={activeRole === 'brand' ? '/brand/settings' : '/creator/settings'}
+                  onClick={() => setIsDrawerOpen(false)}
+                  className="w-full h-9 rounded-xl bg-white border border-[#E7E7E2] text-[#0A0A0A] font-bold text-xs flex items-center justify-center gap-1.5 hover:border-[#0A0A0A]"
+                >
+                  <Settings className="w-3.5 h-3.5 text-[#73736A]" />
+                  <span>Profile & Settings</span>
+                </Link>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsDrawerOpen(false);
+                    dispatch(logout());
+                    router.push('/login');
+                  }}
+                  className="w-full h-9 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 font-bold text-xs flex items-center justify-center gap-1.5 hover:bg-rose-100 cursor-pointer"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  <span>Log Out</span>
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="pt-2">
+              <Link
+                href="/register"
+                onClick={() => setIsDrawerOpen(false)}
+                className="w-full h-11 rounded-full bg-[#FF2D78] hover:bg-[#E01E69] text-white font-outfit font-bold text-[16px] leading-[20px] flex items-center justify-center shadow-sm"
+              >
+                Get Started
+              </Link>
+            </div>
+          )}
+
+          {/* Nav Links */}
+          <div className="space-y-1 border-t border-[#E7E7E2] pt-4">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsDrawerOpen(false)}
-                className={`px-3 py-2.5 text-sm font-bold rounded-xl ${
-                  pathname === link.href
-                    ? 'bg-[#EAEAE3] text-[#0A0A0A]'
-                    : 'text-[#555550] hover:bg-[#F4F4F0]'
-                }`}
+                className="block px-3 py-2 rounded-xl text-sm font-bold text-[#0A0A0A] hover:bg-[#F4F4F0]"
               >
                 {link.name}
               </Link>
             ))}
-          </div>
-
-          <div className="pt-4 border-t border-[#E7E7E2] flex flex-col gap-2.5">
-            <Link
-              href={activeRole === 'brand' ? '/brand/dashboard' : '/creator/dashboard'}
-              onClick={() => setIsDrawerOpen(false)}
-            >
-              <Button
-                type="primary"
-                block
-                className="h-11 font-black bg-[#0A0A0A] text-white rounded-full text-xs"
-              >
-                {activeRole === 'brand' ? 'Open Brand Workspace' : 'Open Creator Workspace'}
-              </Button>
-            </Link>
-
-            <Link href="/creators" onClick={() => setIsDrawerOpen(false)}>
-              <Button block className="h-11 font-bold rounded-full border-[#D2D2CA] text-xs">
-                Browse All Creators
-              </Button>
-            </Link>
-
-            <Link href="/login" onClick={() => setIsDrawerOpen(false)}>
-              <Button block className="h-11 font-bold rounded-full text-[#666660] text-xs">
-                Switch / Log In
-              </Button>
-            </Link>
           </div>
         </div>
       </Drawer>

@@ -9,8 +9,9 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Red Hat Display"', 'system-ui', '-apple-system', 'sans-serif'],
-        display: ['"Red Hat Display"', 'sans-serif'],
+        sans: ['"Red Hat Display"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+        outfit: ['"Red Hat Display"', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['"Red Hat Display"', 'system-ui', '-apple-system', 'sans-serif'],
         serif: ['"Playfair Display"', 'Georgia', 'serif'],
         editorial: ['"Playfair Display"', 'Georgia', 'serif'],
       },
@@ -25,7 +26,7 @@ const config: Config = {
           600: '#73736A',
           700: '#52524B',
           800: '#33332D',
-          900: '#151515',
+          900: '#0A0A0A',
           950: '#0A0A0A',
         },
         nearblack: '#0A0A0A',
@@ -37,9 +38,11 @@ const config: Config = {
           butter: '#FAF6E8',
           butterText: '#8C6819',
           blush: '#FDF0ED',
-          blushText: '#A9432F',
-          sky: '#EBF3FE',
-          skyText: '#2B7FFF',
+          blushText: '#FF2D78',
+          pink: '#FFF0F5',
+          pinkText: '#FF2D78',
+          rose: '#FFF0F5',
+          roseText: '#FF2D78',
         },
       },
       maxWidth: {

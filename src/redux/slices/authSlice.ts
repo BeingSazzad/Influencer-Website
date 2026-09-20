@@ -9,8 +9,8 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  currentUser: MOCK_USERS[0], // Defaults to Elena (Brand Lead) for instant hiring & brand dashboard testing
-  isAuthenticated: true,
+  currentUser: null,
+  isAuthenticated: false,
   activeRole: 'brand',
 };
 
@@ -25,13 +25,23 @@ export const authSlice = createSlice({
         state.activeRole = action.payload.role;
       }
     },
+    loginAsBrandDemo: (state) => {
+      state.currentUser = MOCK_USERS[0]; // Elena Rostova (Brand)
+      state.isAuthenticated = true;
+      state.activeRole = 'brand';
+    },
+    loginAsCreatorDemo: (state) => {
+      state.currentUser = MOCK_USERS[1]; // Sophie Kim (Creator)
+      state.isAuthenticated = true;
+      state.activeRole = 'creator';
+    },
     switchRole: (state, action: PayloadAction<UserRole>) => {
       state.activeRole = action.payload;
       if (action.payload === 'brand') {
-        state.currentUser = MOCK_USERS[0]; // Elena Rostova (Brand)
+        state.currentUser = MOCK_USERS[0];
         state.isAuthenticated = true;
       } else if (action.payload === 'creator') {
-        state.currentUser = MOCK_USERS[1]; // Sophie Kim (Creator)
+        state.currentUser = MOCK_USERS[1];
         state.isAuthenticated = true;
       }
     },
@@ -43,9 +53,18 @@ export const authSlice = createSlice({
     logout: (state) => {
       state.currentUser = null;
       state.isAuthenticated = false;
+      state.activeRole = 'brand';
     },
   },
 });
 
-export const { setUser, switchRole, updateUserProfile, logout } = authSlice.actions;
+export const {
+  setUser,
+  loginAsBrandDemo,
+  loginAsCreatorDemo,
+  switchRole,
+  updateUserProfile,
+  logout,
+} = authSlice.actions;
+
 export default authSlice.reducer;
