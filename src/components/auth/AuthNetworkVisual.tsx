@@ -9,13 +9,13 @@ interface AuthNetworkVisualProps {
 }
 
 export function AuthNetworkVisual({
-  title = 'Great work starts with a connection.',
-  subtitle = 'A shared space for brands and creators.',
+  title = '',
+  subtitle = '',
   className = '',
 }: AuthNetworkVisualProps) {
   return (
     <div
-      className={`relative w-full h-full min-h-[580px] lg:min-h-[640px] flex flex-col justify-between p-4 sm:p-6 lg:p-8 select-none ${className}`}
+      className={`relative w-full h-full min-h-[580px] lg:min-h-[640px] flex flex-col justify-center items-center p-4 sm:p-6 lg:p-8 select-none ${className}`}
     >
       {/* Smooth Soft Ambient Radial Glow Blobs seamless with page background */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-200/30 rounded-full blur-[110px] pointer-events-none" />
@@ -57,9 +57,6 @@ export function AuthNetworkVisual({
             {/* Center to Airbnb (115, 365) */}
             <path d="M 260 220 C 195 280, 150 330, 115 365" />
 
-            {/* Center to Bottom Creator (250, 375) */}
-            <path d="M 260 220 C 255 275, 252 330, 250 375" />
-
             {/* Center to Lego (440, 365) */}
             <path d="M 260 220 C 335 280, 395 330, 440 365" />
           </g>
@@ -74,7 +71,6 @@ export function AuthNetworkVisual({
             <circle cx="395" cy="252" r="4" className="animate-pulse-dot" style={{ animationDelay: '2s' }} />
             <circle cx="140" cy="242" r="4.5" className="animate-pulse-dot" style={{ animationDelay: '1.2s' }} />
             <circle cx="165" cy="315" r="4" className="animate-pulse-dot" style={{ animationDelay: '1.8s' }} />
-            <circle cx="254" cy="310" r="4.5" className="animate-pulse-dot" style={{ animationDelay: '0.4s' }} />
             <circle cx="365" cy="295" r="4" className="animate-pulse-dot" style={{ animationDelay: '2.2s' }} />
           </g>
         </svg>
@@ -268,7 +264,7 @@ export function AuthNetworkVisual({
         </div>
 
         {/* Node H: Bottom-Left AIRBNB Brand Badge */}
-        <div className="absolute bottom-[6%] left-[16%] sm:left-[18%] z-10 animate-float-2">
+        <div className="absolute bottom-[8%] left-[16%] sm:left-[18%] z-10 animate-float-2">
           <div className="group relative">
             <div className="w-13 h-13 sm:w-15 sm:h-15 rounded-2xl bg-white shadow-[0_8px_20px_rgba(255,90,95,0.12)] border border-[#ECE7F6] flex items-center justify-center p-2.5 transition-transform duration-300 hover:scale-110 cursor-pointer">
               {/* Airbnb Bélo Icon */}
@@ -282,41 +278,8 @@ export function AuthNetworkVisual({
           </div>
         </div>
 
-        {/* Node I: Bottom-Middle Creator Avatar (Curly Updo, Soft Lavender) */}
-        <div className="absolute bottom-[2%] left-[45%] sm:left-[46%] z-10 animate-float-3">
-          <div className="group relative">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#EEE6FF] border-[3.5px] border-white shadow-[0_8px_20px_rgba(139,112,248,0.15)] flex items-center justify-center overflow-hidden transition-transform duration-300 hover:scale-110 cursor-pointer">
-              {/* Illustrated Black Woman with Curly Updo */}
-              <svg viewBox="0 0 64 64" fill="none" className="w-full h-full">
-                <circle cx="32" cy="32" r="32" fill="#EEE6FF" />
-                {/* Curly bun */}
-                <circle cx="32" cy="18" r="9" fill="#1F1517" />
-                <circle cx="26" cy="19" r="6" fill="#1F1517" />
-                <circle cx="38" cy="19" r="6" fill="#1F1517" />
-                {/* Neck & Top */}
-                <path d="M28 40 L36 40 L36 48 L28 48 Z" fill="#8D5B4C" />
-                <path d="M18 56 C18 48, 46 48, 46 56 L46 64 L18 64 Z" fill="#EA580C" />
-                {/* Face */}
-                <circle cx="32" cy="32" r="12" fill="#A26B5B" />
-                {/* Hair line */}
-                <path d="M20 28 C23 22, 41 22, 44 28 C38 25, 35 25, 32 25 C29 25, 26 25, 20 28 Z" fill="#1F1517" />
-                {/* Eyes & Smile */}
-                <circle cx="28" cy="32" r="1.5" fill="#1F1517" />
-                <circle cx="36" cy="32" r="1.5" fill="#1F1517" />
-                <path d="M29 37 Q32 40 35 37" stroke="#1F1517" strokeWidth="1.2" strokeLinecap="round" fill="none" />
-                {/* Gold hoop earrings */}
-                <circle cx="19" cy="35" r="2.5" stroke="#F59E0B" strokeWidth="1.2" fill="none" />
-                <circle cx="45" cy="35" r="2.5" stroke="#F59E0B" strokeWidth="1.2" fill="none" />
-              </svg>
-            </div>
-            <div className="absolute -top-7 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full bg-[#0A0A0A] text-white text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg">
-              Amara Diallo • Fitness
-            </div>
-          </div>
-        </div>
-
         {/* Node J: Bottom-Right LEGO Brand Badge */}
-        <div className="absolute bottom-[6%] right-[14%] sm:right-[16%] z-10 animate-float-1">
+        <div className="absolute bottom-[8%] right-[14%] sm:right-[16%] z-10 animate-float-1">
           <div className="group relative">
             <div className="w-13 h-13 sm:w-15 sm:h-15 rounded-2xl bg-[#FFF9E6] shadow-[0_8px_20px_rgba(217,119,6,0.12)] border border-[#FBEAC3] flex items-center justify-center p-2 transition-transform duration-300 hover:scale-110 cursor-pointer">
               {/* LEGO Square Badge */}
@@ -333,15 +296,19 @@ export function AuthNetworkVisual({
         </div>
       </div>
 
-      {/* Bottom Typography Section matching client screenshot */}
-      <div className="relative z-10 text-center pt-4 pb-2 space-y-2">
-        <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-black text-[#0A0A0A] tracking-[-0.03em] leading-tight font-sans">
-          {title}
-        </h2>
-        <p className="text-sm sm:text-base text-[#73736A] font-medium leading-relaxed max-w-md mx-auto">
-          {subtitle}
-        </p>
-      </div>
+      {/* Bottom Typography Section (only if title is passed) */}
+      {title ? (
+        <div className="relative z-10 text-center pt-6 pb-4 space-y-2 mt-auto">
+          <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-black text-[#0A0A0A] tracking-[-0.03em] leading-tight font-sans">
+            {title}
+          </h2>
+          {subtitle ? (
+            <p className="text-sm sm:text-base text-[#73736A] font-medium leading-relaxed max-w-md mx-auto">
+              {subtitle}
+            </p>
+          ) : null}
+        </div>
+      ) : null}
     </div>
   );
 }

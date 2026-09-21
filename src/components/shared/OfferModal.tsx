@@ -20,6 +20,7 @@ export function OfferModal() {
   const [basePrice, setBasePrice] = useState<number>(selectedCreatorForOffer?.priceEur || 950);
   const [brief, setBrief] = useState('We would like an authentic 30–60s video featuring our new product launch with key value propositions and tracking link.');
   const [deadlineDays, setDeadlineDays] = useState<number>(7);
+  const [isCustomDeadline, setIsCustomDeadline] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Synchronize when selected creator opens
@@ -191,27 +192,60 @@ export function OfferModal() {
         </div>
 
         {/* 4. Delivery Turnaround */}
-        <div className="flex items-center justify-between p-3 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2] text-xs">
-          <span className="font-bold text-[#73736A] flex items-center gap-1.5">
-            <Calendar className="w-3.5 h-3.5 text-[#FF2D78]" />
-            Target Turnaround
-          </span>
-          <div className="flex items-center gap-1.5">
-            {[5, 7, 14].map((days) => (
+        <div className="p-3 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2] text-xs space-y-2.5">
+          <div className="flex items-center justify-between">
+            <span className="font-bold text-[#73736A] flex items-center gap-1.5">
+              <Calendar className="w-3.5 h-3.5 text-[#FF2D78]" />
+              Target Turnaround
+            </span>
+            <div className="flex items-center gap-1.5">
+              {[5, 7, 14].map((days) => (
+                <button
+                  key={days}
+                  type="button"
+                  onClick={() => {
+                    setDeadlineDays(days);
+                    setIsCustomDeadline(false);
+                  }}
+                  className={`px-2.5 py-1 rounded-full font-bold transition-all cursor-pointer ${
+                    !isCustomDeadline && deadlineDays === days
+                      ? 'bg-[#0A0A0A] text-white shadow-2xs'
+                      : 'bg-white text-[#73736A] border border-[#E7E7E2] hover:text-[#0A0A0A]'
+                  }`}
+                >
+                  {days} days
+                </button>
+              ))}
               <button
-                key={days}
                 type="button"
-                onClick={() => setDeadlineDays(days)}
+                onClick={() => setIsCustomDeadline(true)}
                 className={`px-2.5 py-1 rounded-full font-bold transition-all cursor-pointer ${
-                  deadlineDays === days
+                  isCustomDeadline
                     ? 'bg-[#0A0A0A] text-white shadow-2xs'
                     : 'bg-white text-[#73736A] border border-[#E7E7E2] hover:text-[#0A0A0A]'
                 }`}
               >
-                {days} days
+                Custom
               </button>
-            ))}
+            </div>
           </div>
+
+          {isCustomDeadline && (
+            <div className="flex items-center justify-between pt-2 border-t border-[#E7E7E2] animate-fade-in">
+              <span className="text-xs text-[#73736A] font-medium">Custom duration (days):</span>
+              <div className="flex items-center gap-1.5">
+                <InputNumber
+                  min={1}
+                  max={90}
+                  value={deadlineDays}
+                  onChange={(val) => setDeadlineDays(val || 1)}
+                  className="w-20 text-xs font-bold rounded-lg"
+                  size="small"
+                />
+                <span className="text-xs font-semibold text-[#0A0A0A]">days turnaround</span>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* 5. Minimalist Clean Pricing & Escrow Summary */}

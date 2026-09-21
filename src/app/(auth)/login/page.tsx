@@ -196,10 +196,7 @@ export default function LoginPage() {
 
         {/* Right: Connected Network Graphic Matching Reference Design */}
         <div className="hidden lg:block lg:col-span-7 xl:col-span-7 h-full">
-          <AuthNetworkVisual
-            title="Great work starts with a connection."
-            subtitle="A shared space for brands and creators."
-          />
+          <AuthNetworkVisual />
         </div>
       </div>
     </div>

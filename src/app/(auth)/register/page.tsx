@@ -398,10 +398,7 @@ export default function RegisterPage() {
 
         {/* Right: Connected Network Graphic Matching Reference Design */}
         <div className="hidden lg:block lg:col-span-6 xl:col-span-6 h-full">
-          <AuthNetworkVisual
-            title="Great work starts with a connection."
-            subtitle="A shared space for brands and creators."
-          />
+          <AuthNetworkVisual />
         </div>
       </div>
     </div>

@@ -454,29 +454,6 @@ export default function CreatorPackagesPage() {
         centered
       >
         <div className="space-y-4 pt-3 font-sans">
-          {/* Quick Preset Templates Bar */}
-          {!editingPkgId && (
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold uppercase tracking-wider text-[#73736A] flex items-center gap-1">
-                <Zap className="w-3.5 h-3.5 text-[#FF2D78]" />
-                <span>Quick Deliverable Templates</span>
-              </label>
-              <div className="grid grid-cols-2 gap-2">
-                {PACKAGE_TEMPLATES.map((tmpl) => (
-                  <button
-                    key={tmpl.label}
-                    type="button"
-                    onClick={() => handleApplyTemplate(tmpl)}
-                    className="p-2.5 rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] bg-[#FAFAF8] hover:bg-white text-left transition-all cursor-pointer"
-                  >
-                    <div className="text-xs font-bold text-[#0A0A0A] truncate">{tmpl.label}</div>
-                    <div className="text-xs text-[#73736A] mt-0.5">€{tmpl.priceEur} • {tmpl.deliveryDays}d turnaround</div>
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
           {/* Platform & Deliverable Type */}
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">

@@ -15,8 +15,6 @@ import {
   Package,
   Camera,
   Settings,
-  User,
-  ExternalLink,
   LogOut,
 } from 'lucide-react';
 import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
@@ -79,12 +77,6 @@ export function CreatorSidebar() {
       icon: Camera,
     },
     {
-      name: 'Profile',
-      href: `/creators/${currentCreator?.id || 'creator-01'}`,
-      icon: User,
-      external: true,
-    },
-    {
       name: 'Settings',
       href: '/creator/settings',
       icon: Settings,
@@ -114,7 +106,6 @@ export function CreatorSidebar() {
               <Link
                 key={item.name}
                 href={item.href}
-                target={item.external ? '_blank' : undefined}
                 className={`flex items-center justify-between px-4 py-3 rounded-2xl text-sm leading-[20px] font-bold transition-all ${
                   isActive
                     ? 'bg-[#0A0A0A] text-white shadow-sm'
@@ -133,9 +124,6 @@ export function CreatorSidebar() {
                   >
                     {item.badge}
                   </span>
-                )}
-                {item.external && (
-                  <ExternalLink className="w-4 h-4 text-[#A3A39C]" />
                 )}
               </Link>
             );
