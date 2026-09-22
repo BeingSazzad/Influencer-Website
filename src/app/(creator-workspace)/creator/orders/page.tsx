@@ -21,9 +21,10 @@ export default function CreatorOrdersPage() {
   const { currentUser } = useAppSelector((state) => state.auth);
   const [activeFilter, setActiveFilter] = useState<'all' | 'active' | 'review' | 'completed'>('all');
 
-  // Filter orders relevant to creator
+  // Filter orders strictly for this creator
+  const targetCreatorId = currentUser?.id || 'creator-01';
   const creatorOrders = orders.filter(
-    (o) => o.creatorId === 'creator-01' || o.creatorId === currentUser?.id || o.status !== 'offer_sent'
+    (o) => o.creatorId === targetCreatorId || (o.creatorId === 'creator-01' && currentUser?.role === 'creator')
   );
 
   const filteredOrders = creatorOrders.filter((o) => {

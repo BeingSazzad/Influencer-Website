@@ -31,27 +31,27 @@ import { Input, Button, message, Switch } from 'antd';
 const BRAND_LOGO_PRESETS = [
   {
     label: 'Aura Skincare Paris',
-    url: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80',
+    url: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=400&q=80',
   },
   {
     label: 'Maison Luxe Paris',
-    url: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80',
+    url: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=400&q=80',
   },
   {
     label: 'Glow Botanical Labs',
-    url: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=400&q=80',
+    url: 'https://images.unsplash.com/photo-1608248597359-53530f2955cf?auto=format&fit=crop&w=400&q=80',
   },
   {
     label: 'Nord Minimal Studios',
-    url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+    url: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=400&q=80',
   },
   {
     label: 'Vogue & Velour',
-    url: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80',
+    url: 'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=400&q=80',
   },
   {
     label: 'Apex Creative Co',
-    url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
+    url: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=400&q=80',
   },
 ];
 
@@ -140,17 +140,17 @@ export default function BrandSettingsPage() {
   return (
     <div className="min-h-screen pb-16 font-sans">
       <WorkspaceHeader
-        title="Brand Organization & Account Settings"
-        subtitle="Manage your brand company profile, EU VAT billing credentials, and security."
+        title="Organization Settings"
+        subtitle="Manage brand profile, billing details, and account security."
         action={
           <div className="flex items-center gap-3">
             <button
               type="button"
               onClick={() => setIsShareModalOpen(true)}
-              className="h-10 px-4 rounded-full font-bold text-sm bg-white border border-[#D2D2CA] text-[#0A0A0A] hover:border-[#FF2D78] flex items-center gap-2 transition-all cursor-pointer shadow-2xs"
+              className="h-10 px-4 rounded-full font-bold text-sm bg-white border border-[#D2D2CA] text-[#0A0A0A] hover:border-[#0A0A0A] flex items-center gap-2 transition-all cursor-pointer shadow-2xs"
             >
-              <Share2 className="w-4 h-4 text-[#FF2D78]" />
-              <span>Share Brand Hub</span>
+              <Share2 className="w-4 h-4 text-[#0A0A0A]" />
+              <span>Share Brand</span>
             </button>
 
             <button
@@ -177,7 +177,7 @@ export default function BrandSettingsPage() {
                 : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
             }`}
           >
-            <Building2 className={`w-4 h-4 ${activeTab === 'company' ? 'text-[#FF2D78]' : 'text-[#73736A]'}`} />
+            <Building2 className={`w-4 h-4 ${activeTab === 'company' ? 'text-white' : 'text-[#73736A]'}`} />
             <span>Company Profile</span>
           </button>
 
@@ -190,8 +190,8 @@ export default function BrandSettingsPage() {
                 : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
             }`}
           >
-            <Receipt className={`w-4 h-4 ${activeTab === 'billing' ? 'text-[#FF2D78]' : 'text-[#73736A]'}`} />
-            <span>Billing & EU VAT</span>
+            <Receipt className={`w-4 h-4 ${activeTab === 'billing' ? 'text-white' : 'text-[#73736A]'}`} />
+            <span>Billing & VAT</span>
           </button>
 
           <button
@@ -203,8 +203,8 @@ export default function BrandSettingsPage() {
                 : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
             }`}
           >
-            <Shield className={`w-4 h-4 ${activeTab === 'security' ? 'text-[#FF2D78]' : 'text-[#73736A]'}`} />
-            <span>Security & Password</span>
+            <Shield className={`w-4 h-4 ${activeTab === 'security' ? 'text-white' : 'text-[#73736A]'}`} />
+            <span>Security</span>
           </button>
         </div>
 
@@ -213,19 +213,47 @@ export default function BrandSettingsPage() {
           <form onSubmit={handleSaveCompany} className="space-y-6">
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
               <div className="pb-4 border-b border-[#E7E7E2]">
-                <h2 className="text-lg font-black text-[#0A0A0A] tracking-tight">Brand Identity & Contact</h2>
-                <p className="text-xs text-[#73736A] mt-0.5">This company branding appears on campaign offers sent to creators.</p>
+                <h2 className="text-lg font-black text-[#0A0A0A] tracking-tight">Brand Identity</h2>
               </div>
 
-              {/* Brand Logo Image Upload (Direct Drag-and-Drop / File Picker) */}
-              <div className="p-5 bg-[#FAFAF8] rounded-2xl border border-[#E7E7E2]">
+              {/* Brand Logo Image Upload & Presets */}
+              <div className="p-5 bg-[#FAFAF8] rounded-2xl border border-[#E7E7E2] space-y-4">
                 <ImageUpload
                   variant="avatar"
-                  label="Brand Logo / Profile Picture"
-                  description="Upload company logo (PNG, JPG, SVG, WEBP up to 10MB). Drag & drop or browse from device."
+                  label="Brand Logo"
+                  description="PNG, JPG, or SVG up to 5MB"
                   value={avatar}
                   onChange={(img) => setAvatar(img)}
                 />
+
+                <div className="pt-3 border-t border-[#E7E7E2]">
+                  <div className="text-xs font-semibold text-[#73736A] mb-2.5">Or select a brand mark preset:</div>
+                  <div className="flex flex-wrap items-center gap-2.5">
+                    {BRAND_LOGO_PRESETS.map((preset) => {
+                      const isSelected = avatar === preset.url;
+                      return (
+                        <button
+                          key={preset.label}
+                          type="button"
+                          onClick={() => setAvatar(preset.url)}
+                          title={preset.label}
+                          className={`relative w-10 h-10 rounded-full overflow-hidden border-2 transition-all cursor-pointer ${
+                            isSelected
+                              ? 'border-[#0A0A0A] ring-2 ring-black/20 scale-105 shadow-sm'
+                              : 'border-[#E7E7E2] hover:border-[#73736A] opacity-75 hover:opacity-100'
+                          }`}
+                        >
+                          <img src={preset.url} alt={preset.label} className="w-full h-full object-cover" />
+                          {isSelected && (
+                            <div className="absolute inset-0 bg-black/40 flex items-center justify-center text-white">
+                              <Check className="w-3.5 h-3.5" />
+                            </div>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
 
               {/* Company Name & Contact Name */}
@@ -241,7 +269,7 @@ export default function BrandSettingsPage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Contact Person Name</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Contact Person</label>
                   <Input
                     value={contactName}
                     onChange={(e) => setContactName(e.target.value)}
@@ -265,7 +293,7 @@ export default function BrandSettingsPage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Website URL</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Website</label>
                   <Input
                     prefix={<Globe className="w-3.5 h-3.5 text-[#73736A]" />}
                     value={website}
@@ -275,9 +303,9 @@ export default function BrandSettingsPage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Headquarters / Location</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Location</label>
                   <Input
-                    prefix={<MapPin className="w-3.5 h-3.5 text-[#FF2D78]" />}
+                    prefix={<MapPin className="w-3.5 h-3.5 text-[#73736A]" />}
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
                     className="rounded-xl h-10 text-sm font-semibold"
@@ -287,7 +315,7 @@ export default function BrandSettingsPage() {
 
               {/* Industry & Bio */}
               <div className="space-y-1.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Industry / Category</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Industry</label>
                 <Input
                   value={industry}
                   onChange={(e) => setIndustry(e.target.value)}
@@ -296,23 +324,23 @@ export default function BrandSettingsPage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Brand Story & Campaign Philosophy</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Brand Story & Guidelines</label>
                 <Input.TextArea
                   rows={3}
                   value={bio}
                   onChange={(e) => setBio(e.target.value)}
                   className="rounded-xl text-sm font-medium"
-                  placeholder="Tell creators about your brand values, target demographic, and preferred content aesthetic..."
+                  placeholder="Share brand aesthetic, target audience, and campaign guidelines..."
                 />
               </div>
 
               <div className="pt-4 border-t border-[#E7E7E2] flex items-center justify-end">
                 <button
                   type="submit"
-                  className="h-11 px-7 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-[#FF2D78] text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+                  className="h-11 px-7 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <Save className="w-4 h-4" />
-                  <span>Save Brand Settings</span>
+                  <span>Save Changes</span>
                 </button>
               </div>
             </div>
@@ -324,8 +352,7 @@ export default function BrandSettingsPage() {
           <form onSubmit={handleSaveBilling} className="space-y-6">
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
               <div className="pb-4 border-b border-[#E7E7E2]">
-                <h2 className="text-lg font-black text-[#0A0A0A] tracking-tight">EU VAT & Invoicing Details</h2>
-                <p className="text-xs text-[#73736A] mt-0.5">Automated B2B invoices with reverse charge VAT calculation for European companies.</p>
+                <h2 className="text-lg font-black text-[#0A0A0A] tracking-tight">Billing & VAT</h2>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -340,7 +367,7 @@ export default function BrandSettingsPage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">EU VAT ID Number</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">VAT ID Number</label>
                   <Input
                     value={vatNumber}
                     onChange={(e) => setVatNumber(e.target.value)}
@@ -351,7 +378,7 @@ export default function BrandSettingsPage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Official Billing Address</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Billing Address</label>
                 <Input.TextArea
                   rows={2}
                   value={billingAddress}
@@ -363,10 +390,10 @@ export default function BrandSettingsPage() {
               <div className="pt-4 border-t border-[#E7E7E2] flex items-center justify-end">
                 <button
                   type="submit"
-                  className="h-11 px-7 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-[#FF2D78] text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+                  className="h-11 px-7 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <Save className="w-4 h-4" />
-                  <span>Update Billing Credentials</span>
+                  <span>Save Billing Details</span>
                 </button>
               </div>
             </div>
@@ -378,8 +405,7 @@ export default function BrandSettingsPage() {
           <div className="space-y-6">
             <form onSubmit={handleUpdatePassword} className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
               <div className="pb-4 border-b border-[#E7E7E2]">
-                <h2 className="text-lg font-black text-[#0A0A0A] tracking-tight">Account Password & Authentication</h2>
-                <p className="text-xs text-[#73736A] mt-0.5">Secure your brand escrow authorizations and hiring budget.</p>
+                <h2 className="text-lg font-black text-[#0A0A0A] tracking-tight">Password & Authentication</h2>
               </div>
 
               <div className="space-y-4 max-w-md">
@@ -395,7 +421,7 @@ export default function BrandSettingsPage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">New Password (min 8 characters)</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">New Password</label>
                   <Input.Password
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
@@ -418,13 +444,13 @@ export default function BrandSettingsPage() {
               </div>
 
               <div className="pt-4 border-t border-[#E7E7E2] flex items-center justify-between flex-wrap gap-3">
-                <Link href="/forgot-password" className="text-xs font-bold text-[#73736A] hover:text-[#FF2D78] transition-colors">
+                <Link href="/forgot-password" className="text-xs font-bold text-[#73736A] hover:text-[#0A0A0A] transition-colors">
                   Forgot current password? Reset via email
                 </Link>
 
                 <button
                   type="submit"
-                  className="h-11 px-7 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-[#FF2D78] text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+                  className="h-11 px-7 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <KeyRound className="w-4 h-4" />
                   <span>Update Password</span>

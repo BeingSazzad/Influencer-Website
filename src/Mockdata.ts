@@ -7,7 +7,7 @@ export const MOCK_USERS: User[] = [
     email: 'elena@aura-cosmetics.com',
     role: 'brand',
     companyName: 'Aura Skincare Paris',
-    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=400&q=80',
     location: 'Berlin & Paris',
     bio: 'Brand Lead at Aura Skincare developing organic beauty and wellness product launches.',
     balanceEur: 8450,

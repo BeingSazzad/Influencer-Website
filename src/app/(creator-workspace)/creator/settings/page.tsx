@@ -270,17 +270,17 @@ export default function CreatorSettingsPage() {
   return (
     <div className="min-h-screen pb-16 font-sans">
       <WorkspaceHeader
-        title="Creator Profile & Account Settings"
-        subtitle="Manage your public rate card identity, aesthetic signature, gallery photos, and security."
+        title="Profile & Settings"
+        subtitle="Manage public rate card profile, connected channels, gallery, and security."
         action={
           <div className="flex items-center gap-3">
             <Button
               type="default"
               onClick={() => setIsShareModalOpen(true)}
-              className="h-10 px-4 rounded-full font-bold text-sm border-[#D2D2CA] text-[#0A0A0A] flex items-center gap-2 hover:border-[#FF2D78]"
+              className="h-10 px-4 rounded-full font-bold text-sm border-[#D2D2CA] text-[#0A0A0A] flex items-center gap-2 hover:border-[#0A0A0A]"
             >
-              <Share2 className="w-4 h-4 text-[#FF2D78]" />
-              <span>Share Rate Card</span>
+              <Share2 className="w-4 h-4 text-[#0A0A0A]" />
+              <span>Share Profile</span>
             </Button>
 
             <Link href={`/creators/${currentCreator.id}`} target="_blank">
@@ -288,7 +288,7 @@ export default function CreatorSettingsPage() {
                 type="default"
                 className="h-10 px-4 rounded-full font-bold text-sm border-[#D2D2CA] text-[#0A0A0A] flex items-center gap-2 hover:border-[#0A0A0A]"
               >
-                <span>Preview Public Profile</span>
+                <span>Preview Public</span>
                 <ExternalLink className="w-4 h-4" />
               </Button>
             </Link>
@@ -317,7 +317,7 @@ export default function CreatorSettingsPage() {
                 : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
             }`}
           >
-            <User className={`w-4 h-4 ${activeTab === 'profile' ? 'text-[#FF2D78]' : 'text-[#73736A]'}`} />
+            <User className={`w-4 h-4 ${activeTab === 'profile' ? 'text-white' : 'text-[#73736A]'}`} />
             <span>Profile & Identity</span>
           </button>
 
@@ -330,7 +330,7 @@ export default function CreatorSettingsPage() {
                 : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
             }`}
           >
-            <Globe className={`w-4 h-4 ${activeTab === 'socials' ? 'text-[#FF2D78]' : 'text-[#73736A]'}`} />
+            <Globe className={`w-4 h-4 ${activeTab === 'socials' ? 'text-white' : 'text-[#73736A]'}`} />
             <span>Channels & Reach</span>
           </button>
 
@@ -343,7 +343,7 @@ export default function CreatorSettingsPage() {
                 : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
             }`}
           >
-            <ImageIcon className={`w-4 h-4 ${activeTab === 'gallery' ? 'text-[#FF2D78]' : 'text-[#73736A]'}`} />
+            <ImageIcon className={`w-4 h-4 ${activeTab === 'gallery' ? 'text-white' : 'text-[#73736A]'}`} />
             <span>Gallery Photos ({photosList.length})</span>
           </button>
 
@@ -356,8 +356,8 @@ export default function CreatorSettingsPage() {
                 : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
             }`}
           >
-            <Shield className={`w-4 h-4 ${activeTab === 'security' ? 'text-[#FF2D78]' : 'text-[#73736A]'}`} />
-            <span>Security & Password</span>
+            <Shield className={`w-4 h-4 ${activeTab === 'security' ? 'text-white' : 'text-[#73736A]'}`} />
+            <span>Security</span>
           </button>
         </div>
 
@@ -422,9 +422,9 @@ export default function CreatorSettingsPage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Location / City</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Location</label>
                   <Input
-                    prefix={<MapPin className="w-3.5 h-3.5 text-[#FF2D78]" />}
+                    prefix={<MapPin className="w-3.5 h-3.5 text-[#73736A]" />}
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
                     className="rounded-xl h-10 text-sm font-semibold"
@@ -459,7 +459,7 @@ export default function CreatorSettingsPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold uppercase tracking-wider text-[#73736A] flex items-center gap-1.5">
-                    <Palette className="w-3.5 h-3.5 text-[#FF2D78]" />
+                    <Palette className="w-3.5 h-3.5 text-[#73736A]" />
                     <span>Aesthetic Signature / Visual Vibe</span>
                   </label>
                   <Input
@@ -472,7 +472,7 @@ export default function CreatorSettingsPage() {
 
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold uppercase tracking-wider text-[#73736A] flex items-center gap-1.5">
-                    <Tag className="w-3.5 h-3.5 text-[#FF2D78]" />
+                    <Tag className="w-3.5 h-3.5 text-[#73736A]" />
                     <span>Categories / Niches (comma separated)</span>
                   </label>
                   <Input
@@ -487,7 +487,7 @@ export default function CreatorSettingsPage() {
               {/* Focus Content Tags */}
               <div className="space-y-1.5">
                 <label className="text-xs font-bold uppercase tracking-wider text-[#73736A] flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-[#FF2D78]" />
+                  <Sparkles className="w-3.5 h-3.5 text-[#73736A]" />
                   <span>Content Focus Topics & Deliverable Tags (comma separated)</span>
                 </label>
                 <Input
@@ -502,7 +502,7 @@ export default function CreatorSettingsPage() {
               <div className="pt-4 border-t border-[#E7E7E2] flex items-center justify-end">
                 <button
                   type="submit"
-                  className="h-11 px-7 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-[#FF2D78] text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+                  className="h-11 px-7 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <Save className="w-4 h-4" />
                   <span>Save Profile Details</span>
@@ -622,7 +622,7 @@ export default function CreatorSettingsPage() {
               <div className="pt-4 border-t border-[#E7E7E2] flex items-center justify-end">
                 <button
                   type="submit"
-                  className="h-11 px-7 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-[#FF2D78] text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+                  className="h-11 px-7 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <Save className="w-4 h-4" />
                   <span>Update Channels & Reach</span>
@@ -638,16 +638,15 @@ export default function CreatorSettingsPage() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E7E7E2]">
               <div>
                 <h2 className="text-lg font-black text-[#0A0A0A] tracking-tight">Public Rate Card Gallery</h2>
-                <p className="text-xs text-[#73736A] mt-0.5">These high-resolution portfolio photos appear directly on your public profile Gallery tab.</p>
               </div>
 
               <button
                 type="button"
                 onClick={() => setIsPhotoModalOpen(true)}
-                className="h-10 px-5 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-[#FF2D78] text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer self-start sm:self-auto"
+                className="h-10 px-5 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer self-start sm:self-auto"
               >
                 <Plus className="w-4 h-4" />
-                <span>Add Gallery Photo</span>
+                <span>Add Photo</span>
               </button>
             </div>
 
@@ -681,7 +680,7 @@ export default function CreatorSettingsPage() {
               </div>
             ) : (
               <EmptyState
-                color="pink"
+                color="neutral"
                 icon={<Camera className="w-8 h-8" />}
                 badge="Media Gallery"
                 title="No Gallery Photos Added Yet"
@@ -703,7 +702,6 @@ export default function CreatorSettingsPage() {
             <form onSubmit={handleUpdatePassword} className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
               <div className="pb-4 border-b border-[#E7E7E2]">
                 <h2 className="text-lg font-black text-[#0A0A0A] tracking-tight">Change Password</h2>
-                <p className="text-xs text-[#73736A] mt-0.5">Ensure your account uses a strong password with letters, numbers, and symbols.</p>
               </div>
 
               <div className="space-y-4 max-w-md">
@@ -719,7 +717,7 @@ export default function CreatorSettingsPage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">New Password (min 8 characters)</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">New Password</label>
                   <Input.Password
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
@@ -742,13 +740,13 @@ export default function CreatorSettingsPage() {
               </div>
 
               <div className="pt-4 border-t border-[#E7E7E2] flex items-center justify-between flex-wrap gap-3">
-                <Link href="/forgot-password" className="text-xs font-bold text-[#73736A] hover:text-[#FF2D78] transition-colors">
+                <Link href="/forgot-password" className="text-xs font-bold text-[#73736A] hover:text-[#0A0A0A] transition-colors">
                   Forgot current password? Reset via email
                 </Link>
 
                 <button
                   type="submit"
-                  className="h-11 px-7 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-[#FF2D78] text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+                  className="h-11 px-7 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <KeyRound className="w-4 h-4" />
                   <span>Update Password</span>

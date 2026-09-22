@@ -124,7 +124,17 @@ export default function CreatorProfilePage() {
 
   const isSaved = savedCreatorIds.includes(creator.id);
 
+  const isSelfProfile =
+    currentUser?.role === 'creator' &&
+    (currentUser.id === creator.id ||
+      creator.id === 'creator-01' ||
+      currentUser.handle?.replace('@', '').toLowerCase() === creator.handle.toLowerCase());
+
   const handleOpenOffer = (pkg?: CreatorPackage) => {
+    if (isSelfProfile) {
+      router.push('/creator/packages');
+      return;
+    }
     dispatch(
       openOfferModal({
         id: creator.id,
@@ -382,27 +392,48 @@ export default function CreatorProfilePage() {
               </div>
 
               {/* Action Buttons */}
-              <div className="space-y-2.5">
-                <Button
-                  type="primary"
-                  block
-                  onClick={() => handleOpenOffer()}
-                  className="h-11 rounded-full font-bold text-sm bg-[#0A0A0A] hover:!bg-[#FF2D78] !text-white hover:!text-white border-none shadow-sm transition-all cursor-pointer"
-                >
-                  Send Offer
-                </Button>
+              {isSelfProfile ? (
+                <div className="space-y-2.5">
+                  <Link href="/creator/settings" className="block">
+                    <button
+                      type="button"
+                      className="w-full h-11 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white shadow-sm transition-all cursor-pointer flex items-center justify-center gap-2"
+                    >
+                      <span>Edit Profile & Bio</span>
+                    </button>
+                  </Link>
+                  <Link href="/creator/packages" className="block">
+                    <button
+                      type="button"
+                      className="w-full h-11 rounded-full font-bold text-xs sm:text-sm bg-white border border-[#E7E7E2] text-[#0A0A0A] flex items-center justify-center gap-2 hover:border-[#0A0A0A] hover:bg-[#FAFAF8] transition-all cursor-pointer shadow-2xs"
+                    >
+                      <span>Manage Rate Cards</span>
+                    </button>
+                  </Link>
+                </div>
+              ) : (
+                <div className="space-y-2.5">
+                  <Button
+                    type="primary"
+                    block
+                    onClick={() => handleOpenOffer()}
+                    className="h-11 rounded-full font-bold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 !text-white hover:!text-white border-none shadow-sm transition-all cursor-pointer"
+                  >
+                    Send Offer
+                  </Button>
 
-                <button
-                  type="button"
-                  onClick={() => {
-                    message.info(`Direct messaging channel open with ${creator.name}`);
-                  }}
-                  className="w-full h-11 rounded-full font-bold text-xs sm:text-sm bg-white border border-[#E7E7E2] text-[#0A0A0A] flex items-center justify-center gap-2 hover:border-[#0A0A0A] hover:bg-[#FAFAF8] transition-all cursor-pointer shadow-2xs"
-                >
-                  <MessageSquare className="w-4 h-4 text-[#73736A]" />
-                  <span>Message</span>
-                </button>
-              </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      message.info(`Direct messaging channel open with ${creator.name}`);
+                    }}
+                    className="w-full h-11 rounded-full font-bold text-xs sm:text-sm bg-white border border-[#E7E7E2] text-[#0A0A0A] flex items-center justify-center gap-2 hover:border-[#0A0A0A] hover:bg-[#FAFAF8] transition-all cursor-pointer shadow-2xs"
+                  >
+                    <MessageSquare className="w-4 h-4 text-[#73736A]" />
+                    <span>Message</span>
+                  </button>
+                </div>
+              )}
             </div>
           </div>
 

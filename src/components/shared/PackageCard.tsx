@@ -1,8 +1,9 @@
 'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { CreatorPackage } from '@/types';
-import { useAppDispatch } from '@/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { openOfferModal } from '@/redux/slices/orderSlice';
 import {
   ArrowRight,
@@ -29,62 +30,42 @@ interface PackageCardProps {
   onSelect?: (pkg: CreatorPackage) => void;
 }
 
-function getPackageVisual(pkg: CreatorPackage) {
-  const type = (pkg.type || '').toLowerCase();
+export function getPackageVisual(pkg: CreatorPackage) {
   const title = (pkg.title || '').toLowerCase();
-  const platform = pkg.platform;
+  const desc = (pkg.description || '').toLowerCase();
 
-  // 1. Story Package
-  if (type === 'story' || title.includes('story')) {
+  if (title.includes('reel') || desc.includes('reel') || pkg.platform === 'instagram') {
     return {
-      icon: <Radio className="w-5 h-5 text-[#E1306C]" />,
-      badgeBg: 'bg-gradient-to-tr from-amber-500/15 via-rose-500/20 to-purple-600/15 border border-[#E1306C]/30',
-      label: 'Instagram Story',
-      labelColor: 'text-[#C75D47] bg-[#FDF0ED]',
+      icon: <Film className="w-5 h-5 text-[#E1306C]" />,
+      badgeBg: 'bg-[#FFF0F5] border border-rose-200',
+      label: 'Instagram Reel',
+      labelColor: 'text-[#E1306C] bg-[#FFF0F5]',
     };
   }
-
-  // 2. Reel / Short Video
-  if (type === 'reel' || title.includes('reel') || title.includes('short')) {
+  if (title.includes('tiktok') || desc.includes('tiktok') || pkg.platform === 'tiktok') {
     return {
-      icon: <Clapperboard className="w-5 h-5 text-[#FF2D78]" />,
-      badgeBg: 'bg-[#FFF0F5] border border-[#FF2D78]/30',
-      label: 'Video Reel',
-      labelColor: 'text-[#FF2D78] bg-[#FFF0F5]',
-    };
-  }
-
-  // 3. Feed Post / Carousel / Photo
-  if (type === 'post' || title.includes('post') || title.includes('feed') || title.includes('photo') || title.includes('carousel')) {
-    return {
-      icon: <Layers className="w-5 h-5 text-[#2563EB]" />,
-      badgeBg: 'bg-[#EFF6FF] border border-blue-200',
-      label: 'Feed Post / Carousel',
-      labelColor: 'text-[#2563EB] bg-[#EFF6FF]',
-    };
-  }
-
-  // 4. YouTube Dedicated / Mid-roll
-  if (platform === 'youtube' || type === 'video' || title.includes('youtube')) {
-    return {
-      icon: <Video className="w-5 h-5 text-[#DC2626]" />,
-      badgeBg: 'bg-[#FEF2F2] border border-red-200',
-      label: 'YouTube Video',
-      labelColor: 'text-[#DC2626] bg-[#FEF2F2]',
-    };
-  }
-
-  // 5. TikTok
-  if (platform === 'tiktok') {
-    return {
-      icon: <Film className="w-5 h-5 text-white" />,
-      badgeBg: 'bg-[#0A0A0A] border border-[#0A0A0A]',
+      icon: <Video className="w-5 h-5 text-[#0A0A0A]" />,
+      badgeBg: 'bg-[#F4F4F0] border border-[#E7E7E2]',
       label: 'TikTok Video',
       labelColor: 'text-[#0A0A0A] bg-[#F4F4F0]',
     };
   }
-
-  // 6. UGC / Ad Creatives / Custom
+  if (title.includes('youtube') || desc.includes('youtube') || pkg.platform === 'youtube') {
+    return {
+      icon: <Clapperboard className="w-5 h-5 text-[#FF0000]" />,
+      badgeBg: 'bg-[#FEF2F2] border border-red-200',
+      label: 'YouTube Feature',
+      labelColor: 'text-[#FF0000] bg-[#FEF2F2]',
+    };
+  }
+  if (title.includes('bundle') || title.includes('campaign')) {
+    return {
+      icon: <Layers className="w-5 h-5 text-[#2563EB]" />,
+      badgeBg: 'bg-[#EFF6FF] border border-blue-200',
+      label: 'Multi-Asset Bundle',
+      labelColor: 'text-[#2563EB] bg-[#EFF6FF]',
+    };
+  }
   return {
     icon: <Sparkles className="w-5 h-5 text-[#7C3AED]" />,
     badgeBg: 'bg-[#F5F3FF] border border-purple-200',
@@ -94,16 +75,27 @@ function getPackageVisual(pkg: CreatorPackage) {
 }
 
 export function PackageCard({ packageItem, pkg, creator, onSelect }: PackageCardProps) {
+  const router = useRouter();
   const dispatch = useAppDispatch();
+  const { currentUser } = useAppSelector((state) => state.auth);
   const currentPkg = packageItem || pkg;
 
   if (!currentPkg) return null;
 
   const visual = getPackageVisual(currentPkg);
 
+  const isSelf =
+    currentUser?.role === 'creator' &&
+    (creator?.id === currentUser.id || creator?.id === 'creator-01');
+
   const handleSelectPackage = () => {
     if (onSelect) {
       onSelect(currentPkg);
+      return;
+    }
+
+    if (isSelf) {
+      router.push('/creator/packages');
       return;
     }
 

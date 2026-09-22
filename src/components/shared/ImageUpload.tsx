@@ -106,7 +106,7 @@ export function ImageUpload({
           onDrop={handleDrop}
           className={`relative w-20 h-20 rounded-full border-2 cursor-pointer transition-all overflow-hidden flex items-center justify-center shrink-0 shadow-md ${
             isDragging
-              ? 'border-[#FF2D78] bg-[#FFF0F5] scale-105 ring-4 ring-[#FF2D78]/20'
+              ? 'border-[#0A0A0A] bg-zinc-100 scale-105 ring-4 ring-black/10'
               : 'border-[#E7E7E2] hover:border-[#0A0A0A] bg-[#FAFAF8]'
           }`}
         >
@@ -137,7 +137,7 @@ export function ImageUpload({
             <button
               type="button"
               onClick={handleClick}
-              className="px-3.5 py-1.5 rounded-full bg-[#0A0A0A] hover:bg-[#FF2D78] text-white text-xs font-bold transition-all shadow-2xs flex items-center gap-1.5 cursor-pointer"
+              className="px-3.5 py-1.5 rounded-full bg-[#0A0A0A] hover:bg-zinc-800 text-white text-xs font-bold transition-all shadow-2xs flex items-center gap-1.5 cursor-pointer"
             >
               <UploadCloud className="w-3.5 h-3.5" />
               <span>{value ? 'Upload New' : 'Choose Image'}</span>
@@ -186,7 +186,7 @@ export function ImageUpload({
           onDrop={handleDrop}
           className={`relative w-full h-44 sm:h-52 rounded-2xl border-2 border-dashed cursor-pointer transition-all overflow-hidden flex flex-col items-center justify-center text-center p-6 ${
             isDragging
-              ? 'border-[#FF2D78] bg-[#FFF0F5] scale-[1.01]'
+              ? 'border-[#0A0A0A] bg-zinc-100 scale-[1.01]'
               : value
               ? 'border-[#E7E7E2] hover:border-[#0A0A0A] bg-black'
               : 'border-[#D2D2CA] hover:border-[#0A0A0A] bg-[#FAFAF8] hover:bg-[#F4F4F0]'
@@ -226,7 +226,7 @@ export function ImageUpload({
           ) : (
             <div className="space-y-2 pointer-events-none">
               <div className="w-12 h-12 rounded-2xl bg-white border border-[#E7E7E2] text-[#0A0A0A] flex items-center justify-center mx-auto shadow-2xs">
-                <UploadCloud className="w-6 h-6 text-[#FF2D78]" />
+                <UploadCloud className="w-6 h-6 text-[#0A0A0A]" />
               </div>
               <div className="space-y-0.5">
                 <div className="text-sm font-bold text-[#0A0A0A]">
@@ -271,7 +271,7 @@ export function ImageUpload({
           aspectRatio ? aspectRatio : 'min-h-[180px]'
         } ${
           isDragging
-            ? 'border-[#FF2D78] bg-[#FFF0F5] scale-[1.01]'
+            ? 'border-[#0A0A0A] bg-zinc-100 scale-[1.01]'
             : value
             ? 'border-[#E7E7E2] bg-white'
             : 'border-[#D2D2CA] hover:border-[#0A0A0A] bg-[#FAFAF8] hover:bg-[#F4F4F0]'
@@ -309,7 +309,7 @@ export function ImageUpload({
         ) : (
           <div className="space-y-2 pointer-events-none">
             <div className="w-12 h-12 rounded-2xl bg-white border border-[#E7E7E2] text-[#0A0A0A] flex items-center justify-center mx-auto shadow-2xs">
-              <UploadCloud className="w-6 h-6 text-[#FF2D78]" />
+              <UploadCloud className="w-6 h-6 text-[#0A0A0A]" />
             </div>
             <div className="space-y-0.5">
               <div className="text-sm font-bold text-[#0A0A0A]">
