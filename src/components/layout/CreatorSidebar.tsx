@@ -12,7 +12,6 @@ import {
   Inbox,
   ShoppingBag,
   Package,
-  Camera,
   MessageSquare,
   Settings,
   LogOut,
@@ -80,11 +79,6 @@ export function CreatorSidebar() {
       name: 'Packages',
       href: '/creator/packages',
       icon: Package,
-    },
-    {
-      name: 'Lookbook',
-      href: '/creator/lookbook',
-      icon: Camera,
     },
     {
       name: 'Settings',

@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { WorkspaceHeader } from '@/components/layout/WorkspaceHeader';
 import { updateUserProfile, logout } from '@/redux/slices/authSlice';
@@ -71,14 +71,28 @@ const AVATAR_PRESETS = [
   },
 ];
 
-export default function CreatorSettingsPage() {
+function CreatorSettingsContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
   const { currentUser } = useAppSelector((state) => state.auth);
   const { creators } = useAppSelector((state) => state.creator);
   const currentCreator = creators.find((c) => c.id === currentUser?.id) || creators[0];
 
-  const [activeTab, setActiveTab] = useState<'profile' | 'socials' | 'gallery' | 'security'>('profile');
+  const initialTab = searchParams.get('tab');
+  const [activeTab, setActiveTab] = useState<'profile' | 'socials' | 'gallery' | 'security'>(() => {
+    if (initialTab === 'gallery' || initialTab === 'socials' || initialTab === 'security') {
+      return initialTab;
+    }
+    return 'profile';
+  });
+
+  useEffect(() => {
+    const tab = searchParams.get('tab');
+    if (tab && ['profile', 'socials', 'gallery', 'security'].includes(tab)) {
+      setActiveTab(tab as any);
+    }
+  }, [searchParams]);
 
   // Profile Form States
   const [name, setName] = useState(currentCreator?.name || 'Sophie Kim');
@@ -344,7 +358,7 @@ export default function CreatorSettingsPage() {
             }`}
           >
             <ImageIcon className={`w-4 h-4 ${activeTab === 'gallery' ? 'text-white' : 'text-[#73736A]'}`} />
-            <span>Gallery Photos ({photosList.length})</span>
+            <span>Lookbook & Gallery ({photosList.length})</span>
           </button>
 
           <button
@@ -632,12 +646,15 @@ export default function CreatorSettingsPage() {
           </form>
         )}
 
-        {/* TAB 3: GALLERY PHOTOS MANAGEMENT */}
+        {/* TAB 3: GALLERY & LOOKBOOK PHOTOS MANAGEMENT */}
         {activeTab === 'gallery' && (
           <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E7E7E2]">
               <div>
-                <h2 className="text-lg font-black text-[#0A0A0A] tracking-tight">Public Rate Card Gallery</h2>
+                <h2 className="text-lg font-black text-[#0A0A0A] tracking-tight">Public Lookbook & Photo Gallery</h2>
+                <p className="text-xs text-[#73736A] mt-0.5">
+                  High-resolution portrait stills, headshots, and aesthetic lookbook photos displayed to hiring brands.
+                </p>
               </div>
 
               <button
@@ -646,7 +663,7 @@ export default function CreatorSettingsPage() {
                 className="h-10 px-5 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer self-start sm:self-auto"
               >
                 <Plus className="w-4 h-4" />
-                <span>Add Photo</span>
+                <span>Add Lookbook Photo</span>
               </button>
             </div>
 
@@ -895,5 +912,19 @@ export default function CreatorSettingsPage() {
         role="creator"
       />
     </div>
+  );
+}
+
+export default function CreatorSettingsPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#FAFAF8] flex items-center justify-center p-8">
+          <div className="w-8 h-8 rounded-full border-2 border-[#0A0A0A] border-t-transparent animate-spin" />
+        </div>
+      }
+    >
+      <CreatorSettingsContent />
+    </Suspense>
   );
 }
