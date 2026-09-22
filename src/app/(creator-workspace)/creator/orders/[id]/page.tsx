@@ -267,12 +267,12 @@ export default function CreatorOrderFulfilmentPage() {
 
                         <div className="flex items-center justify-between text-xs pt-1">
                           <div className="flex items-center gap-2 min-w-0">
-                            <Film className="w-4 h-4 text-[#FF2D78] shrink-0" />
+                            <Film className="w-4 h-4 text-zinc-700 shrink-0" />
                             <span className="font-bold text-[#0A0A0A] truncate">{directVideoName}</span>
                             <span className="text-[#73736A] shrink-0">({directVideoSize})</span>
                           </div>
 
-                          <label className="text-xs font-bold text-[#FF2D78] hover:underline cursor-pointer shrink-0 ml-2">
+                          <label className="text-xs font-bold text-zinc-800 hover:underline cursor-pointer shrink-0 ml-2">
                             <span>Change Video</span>
                             <input
                               type="file"
@@ -285,7 +285,7 @@ export default function CreatorOrderFulfilmentPage() {
                       </div>
                     ) : (
                       <label className="border-2 border-dashed border-[#E7E7E2] hover:border-[#0A0A0A] rounded-2xl p-6 flex flex-col items-center justify-center gap-2 cursor-pointer bg-[#FAFAF8] hover:bg-white transition-all text-center group">
-                        <div className="w-12 h-12 rounded-2xl bg-[#FFF0F5] text-[#FF2D78] flex items-center justify-center group-hover:scale-105 transition-transform">
+                        <div className="w-12 h-12 rounded-2xl bg-[#F4F4F0] text-[#0A0A0A] flex items-center justify-center group-hover:scale-105 transition-transform">
                           <Video className="w-6 h-6" />
                         </div>
                         <div className="text-xs font-bold text-[#0A0A0A]">
@@ -336,7 +336,7 @@ export default function CreatorOrderFulfilmentPage() {
                   htmlType="submit"
                   loading={isSubmitting}
                   block
-                  className="h-11 rounded-full font-bold text-sm bg-[#0A0A0A] hover:!bg-[#FF2D78] !text-white hover:!text-white border-none shadow-xs cursor-pointer"
+                  className="h-11 rounded-full font-bold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 !text-white hover:!text-white border-none shadow-xs cursor-pointer"
                 >
                   Submit for Brand Sign-Off & Escrow Release
                 </Button>
@@ -376,7 +376,7 @@ export default function CreatorOrderFulfilmentPage() {
                         href={deliv.fileUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-xs text-[#FF2D78] font-bold inline-flex items-center gap-1.5 hover:underline"
+                        className="text-xs text-[#0A0A0A] font-bold inline-flex items-center gap-1.5 hover:underline"
                       >
                         <ExternalLink className="w-3.5 h-3.5" />
                         <span>Open High-Resolution File / Download Link</span>
@@ -462,7 +462,7 @@ export default function CreatorOrderFulfilmentPage() {
                 />
                 <button
                   type="submit"
-                  className="h-10 w-10 rounded-full bg-[#0A0A0A] hover:bg-[#FF2D78] text-white flex items-center justify-center transition-colors cursor-pointer shrink-0 shadow-xs"
+                  className="h-10 w-10 rounded-full bg-[#0A0A0A] hover:bg-zinc-800 text-white flex items-center justify-center transition-colors cursor-pointer shrink-0 shadow-xs"
                   aria-label="Send message"
                 >
                   <Send className="w-4 h-4" />

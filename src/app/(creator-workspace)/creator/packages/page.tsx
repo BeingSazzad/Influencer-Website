@@ -76,8 +76,9 @@ const PACKAGE_TEMPLATES = [
 
 export default function CreatorPackagesPage() {
   const dispatch = useAppDispatch();
+  const { currentUser } = useAppSelector((state) => state.auth);
   const { creators } = useAppSelector((state) => state.creator);
-  const currentCreator = creators[0]; // Sophie Kim
+  const currentCreator = creators.find((c) => c.id === currentUser?.id) || creators[0];
 
   const packages = currentCreator?.packages || [];
 
@@ -224,7 +225,7 @@ export default function CreatorPackagesPage() {
             <Button
               type="primary"
               onClick={handleOpenAddModal}
-              className="h-10 px-5 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:!bg-[#FF2D78] !text-white hover:!text-white border-none flex items-center gap-2 cursor-pointer shadow-sm"
+              className="h-10 px-5 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 !text-white hover:!text-white border-none flex items-center gap-2 cursor-pointer shadow-sm"
             >
               <PlusCircle className="w-4 h-4" />
               <span>Add New Package</span>
@@ -241,7 +242,7 @@ export default function CreatorPackagesPage() {
               <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
                 Published Packages
               </span>
-              <Package className="w-4 h-4 text-[#FF2D78]" />
+              <Package className="w-4 h-4 text-zinc-700" />
             </div>
             <div className="text-2xl font-black text-[#0A0A0A]">{packages.length} Active</div>
             <div className="text-xs text-[#73736A]">Visible to all booking brands</div>
@@ -327,13 +328,13 @@ export default function CreatorPackagesPage() {
                   key={pkg.id}
                   className={`rounded-3xl border p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-lg relative ${
                     pkg.popular
-                      ? 'border-[#FF2D78]/40 bg-[#FAFAF8] ring-1 ring-[#FF2D78]/20'
+                      ? 'border-[#0A0A0A] bg-[#FAFAF8] ring-1 ring-[#0A0A0A]/20'
                       : 'border-[#E7E7E2] bg-white hover:border-[#0A0A0A]'
                   }`}
                 >
                   {pkg.popular && (
-                    <div className="absolute -top-3 left-6 bg-[#FF2D78] text-white text-xs font-bold uppercase tracking-wider px-3 py-0.5 rounded-full shadow-xs flex items-center gap-1">
-                      <Sparkles className="w-3 h-3" />
+                    <div className="absolute -top-3 left-6 bg-[#0A0A0A] text-white text-xs font-bold uppercase tracking-wider px-3 py-0.5 rounded-full shadow-xs flex items-center gap-1">
+                      <Sparkles className="w-3 h-3 text-amber-300" />
                       <span>Most Popular</span>
                     </div>
                   )}
@@ -590,7 +591,7 @@ export default function CreatorPackagesPage() {
               type="checkbox"
               checked={isPopular}
               onChange={(e) => setIsPopular(e.target.checked)}
-              className="w-4 h-4 rounded text-[#FF2D78] focus:ring-[#FF2D78]"
+              className="w-4 h-4 rounded text-[#0A0A0A] focus:ring-[#0A0A0A]"
             />
             <span>Mark as &quot;Most Popular&quot; tier on public rate card</span>
           </label>
@@ -607,7 +608,7 @@ export default function CreatorPackagesPage() {
             <button
               type="button"
               onClick={handleSavePackage}
-              className="h-10 px-6 rounded-full font-bold text-xs bg-[#0A0A0A] hover:bg-[#FF2D78] text-white transition-all shadow-sm cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+              className="h-10 px-6 rounded-full font-bold text-xs bg-[#0A0A0A] hover:bg-zinc-800 text-white transition-all shadow-sm cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
             >
               {editingPkgId ? 'Save Package Changes' : 'Publish to Rate Card'}
             </button>

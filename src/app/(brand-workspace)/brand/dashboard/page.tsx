@@ -29,7 +29,10 @@ export default function BrandDashboardPage() {
   const { creators, savedCreatorIds } = useAppSelector((state) => state.creator);
 
   // Filter orders related to this brand
-  const brandOrders = orders;
+  const currentBrandId = currentUser?.role === 'brand' ? currentUser.id : 'brand-aura';
+  const brandOrders = orders.filter(
+    (o) => o.brandId === currentBrandId || o.brandName === currentUser?.companyName || o.brandName === 'Aura Skincare Paris'
+  );
   const activeOrders = brandOrders.filter(
     (o) => o.status !== 'completed' && o.status !== 'declined'
   );
@@ -46,12 +49,12 @@ export default function BrandDashboardPage() {
     <div className="min-h-screen">
       <WorkspaceHeader
         title={`Welcome back, ${currentUser?.name || 'Elena'}`}
-        subtitle={`${currentUser?.companyName || 'Nordic Glow Beauty'} • Brand Campaign Hub`}
+        subtitle={`${currentUser?.companyName || 'Aura Skincare Paris'} • Brand Campaign Hub`}
         action={
           <Link href="/brand/hire/new">
             <Button
               type="primary"
-              className="h-10 px-5 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:!bg-[#FF2D78] !text-white hover:!text-white border-none flex items-center gap-2 cursor-pointer"
+              className="h-10 px-5 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 !text-white hover:!text-white border-none flex items-center gap-2 cursor-pointer shadow-sm"
             >
               <PlusCircle className="w-4 h-4" />
               <span>Create Campaign Offer</span>
@@ -149,7 +152,7 @@ export default function BrandDashboardPage() {
             </div>
             <Link
               href="/brand/orders"
-              className="text-sm font-semibold text-[#0A0A0A] hover:text-[#FF2D78] flex items-center gap-1.5 transition-colors"
+              className="text-sm font-semibold text-[#0A0A0A] hover:text-zinc-600 flex items-center gap-1.5 transition-colors"
             >
               <span>View all orders</span>
               <ArrowRight className="w-4 h-4" />
@@ -160,7 +163,7 @@ export default function BrandDashboardPage() {
             {activeOrders.map((order) => {
               const statusColors: Record<string, string> = {
                 offer_sent: 'bg-[#FAF6E8] text-[#8C6819]',
-                accepted: 'bg-[#FFF0F5] text-[#FF2D78]',
+                accepted: 'bg-[#F1EEF9] text-[#6444A6]',
                 in_production: 'bg-[#F1EEF9] text-[#6444A6]',
                 deliverable_submitted: 'bg-[#EEF7F2] text-[#23744D] font-extrabold animate-pulse',
                 approved: 'bg-[#EEF7F2] text-[#23744D]',
@@ -236,7 +239,7 @@ export default function BrandDashboardPage() {
                     </span>
 
                     <Link href={`/brand/orders/${order.id}`}>
-                      <button className="h-10 px-5 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:bg-[#FF2D78] text-white border-none flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer active:scale-98">
+                      <button className="h-10 px-5 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white border-none flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer active:scale-98">
                         <span>Manage</span>
                         <ArrowRight className="w-4 h-4" />
                       </button>
@@ -261,7 +264,7 @@ export default function BrandDashboardPage() {
             </div>
             <Link
               href="/brand/saved"
-              className="text-sm font-semibold text-[#0A0A0A] hover:text-[#FF2D78] flex items-center gap-1.5 transition-colors"
+              className="text-sm font-semibold text-[#0A0A0A] hover:text-zinc-600 flex items-center gap-1.5 transition-colors"
             >
               <span>View all ({savedCreators.length})</span>
               <ArrowRight className="w-4 h-4" />

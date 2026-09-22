@@ -20,12 +20,25 @@ import {
 
 export default function BrandOrdersPage() {
   const { orders } = useAppSelector((state) => state.order);
-  const [activeFilter, setActiveFilter] = useState<'all' | 'active' | 'review' | 'completed'>('all');
+  const { currentUser } = useAppSelector((state) => state.auth);
+  const [activeFilter, setActiveFilter] = useState<'all' | 'offers' | 'production' | 'review' | 'completed'>('all');
 
-  const filteredOrders = orders.filter((o) => {
-    if (activeFilter === 'active') return ['offer_sent', 'accepted', 'in_production'].includes(o.status);
+  // Filter orders strictly belonging to this brand
+  const currentBrandId = currentUser?.id || 'user_brand_01';
+  const brandOrders = orders.filter(
+    (o) =>
+      !o.brandId ||
+      o.brandId === currentBrandId ||
+      o.brandId === 'brand-01' ||
+      o.brandId === 'user_brand_01' ||
+      o.brandName === (currentUser?.companyName || 'Aura Skincare Paris')
+  );
+
+  const filteredOrders = brandOrders.filter((o) => {
+    if (activeFilter === 'offers') return o.status === 'offer_sent';
+    if (activeFilter === 'production') return ['accepted', 'in_production'].includes(o.status);
     if (activeFilter === 'review') return o.status === 'deliverable_submitted';
-    if (activeFilter === 'completed') return o.status === 'completed' || o.status === 'approved';
+    if (activeFilter === 'completed') return ['completed', 'approved'].includes(o.status);
     return true;
   });
 
@@ -36,7 +49,7 @@ export default function BrandOrdersPage() {
         subtitle="Manage active production, review submitted assets, and release escrow payments."
         action={
           <Link href="/brand/hire/new">
-            <button className="h-10 px-5 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:bg-[#FF2D78] text-white border-none flex items-center gap-2 transition-all shadow-2xs cursor-pointer active:scale-98">
+            <button className="h-10 px-5 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white border-none flex items-center gap-2 transition-all shadow-2xs cursor-pointer active:scale-98">
               <PlusCircle className="w-4 h-4" />
               <span>New Hire</span>
             </button>
@@ -46,17 +59,18 @@ export default function BrandOrdersPage() {
 
       <div className="p-6 sm:p-8 max-w-[1600px] mx-auto space-y-6">
         {/* Filter Pills Bar */}
-        <div className="flex items-center gap-1.5 p-1.5 bg-white rounded-2xl border border-[#E7E7E2] max-w-md shadow-2xs">
+        <div className="flex items-center gap-1.5 p-1.5 bg-white rounded-2xl border border-[#E7E7E2] max-w-xl shadow-2xs overflow-x-auto no-scrollbar">
           {[
             { key: 'all', label: 'All Orders' },
-            { key: 'active', label: 'In Progress' },
-            { key: 'review', label: 'Needs Review' },
+            { key: 'offers', label: 'Offers Pending' },
+            { key: 'production', label: 'In Production' },
+            { key: 'review', label: 'Review Assets' },
             { key: 'completed', label: 'Completed' },
           ].map((tab) => (
             <button
               key={tab.key}
               onClick={() => setActiveFilter(tab.key as any)}
-              className={`flex-1 py-2 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+              className={`flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all cursor-pointer ${
                 activeFilter === tab.key
                   ? 'bg-[#0A0A0A] text-white shadow-2xs'
                   : 'text-[#73736A] hover:text-[#0A0A0A]'
@@ -73,7 +87,7 @@ export default function BrandOrdersPage() {
             filteredOrders.map((order) => {
               const statusColors: Record<string, string> = {
                 offer_sent: 'bg-[#FAF6E8] text-[#8C6819]',
-                accepted: 'bg-[#FFF0F5] text-[#FF2D78]',
+                accepted: 'bg-[#EBF3FE] text-[#2563EB]',
                 in_production: 'bg-[#F1EEF9] text-[#6444A6]',
                 deliverable_submitted: 'bg-[#EEF7F2] text-[#23744D] font-bold',
                 approved: 'bg-[#EEF7F2] text-[#23744D]',

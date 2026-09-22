@@ -70,7 +70,7 @@ export default function CreatorOrdersPage() {
             filteredOrders.map((order) => {
               const statusColors: Record<string, string> = {
                 offer_sent: 'bg-[#FAF6E8] text-[#8C6819]',
-                accepted: 'bg-[#FFF0F5] text-[#FF2D78]',
+                accepted: 'bg-[#F1EEF9] text-[#6444A6]',
                 in_production: 'bg-[#F1EEF9] text-[#6444A6]',
                 deliverable_submitted: 'bg-[#EEF7F2] text-[#23744D] font-bold',
                 approved: 'bg-[#EEF7F2] text-[#23744D]',
@@ -150,7 +150,7 @@ export default function CreatorOrdersPage() {
                     </span>
 
                     <Link href={`/creator/orders/${order.id}`}>
-                      <button className="h-10 px-5 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:bg-[#FF2D78] text-white border-none flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer active:scale-98">
+                      <button className="h-10 px-5 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white border-none flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer active:scale-98">
                         <span>Fulfilment</span>
                         <ArrowRight className="w-4 h-4" />
                       </button>

@@ -26,8 +26,9 @@ import { Button, Modal, Input, Select, message } from 'antd';
 
 export default function CreatorLookbookPage() {
   const dispatch = useAppDispatch();
+  const { currentUser } = useAppSelector((state) => state.auth);
   const { creators } = useAppSelector((state) => state.creator);
-  const currentCreator = creators[0]; // Sophie Kim
+  const currentCreator = creators.find((c) => c.id === currentUser?.id) || creators[0];
 
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState<CreatorPhoto | null>(null);
@@ -114,7 +115,7 @@ export default function CreatorLookbookPage() {
           <Button
             type="primary"
             onClick={() => setIsUploadModalOpen(true)}
-            className="h-10 px-5 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:!bg-[#FF2D78] !text-white hover:!text-white border-none flex items-center gap-2 cursor-pointer shadow-sm"
+            className="h-10 px-5 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 !text-white hover:!text-white border-none flex items-center gap-2 cursor-pointer shadow-sm"
           >
             <PlusCircle className="w-4 h-4" />
             <span>Upload Lookbook Photo</span>
@@ -142,7 +143,7 @@ export default function CreatorLookbookPage() {
 
             <div className="p-3.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center gap-3 shrink-0">
               <div className="w-9 h-9 rounded-xl bg-[#0A0A0A] text-white flex items-center justify-center">
-                <Palette className="w-4.5 h-4.5 text-[#FF2D78]" />
+                <Palette className="w-4.5 h-4.5 text-zinc-300" />
               </div>
               <div>
                 <div className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
@@ -192,7 +193,7 @@ export default function CreatorLookbookPage() {
                   {/* Hover Overlay */}
                   <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <span className="px-4 py-2 rounded-full bg-white/95 text-[#0A0A0A] font-extrabold text-xs shadow-lg flex items-center gap-1.5">
-                      <ZoomIn className="w-3.5 h-3.5 text-[#FF2D78]" />
+                      <ZoomIn className="w-3.5 h-3.5 text-zinc-700" />
                       <span>Preview in Lightbox</span>
                     </span>
                   </div>
@@ -201,7 +202,7 @@ export default function CreatorLookbookPage() {
                 {/* Card Info Content */}
                 <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
                   <div className="space-y-1.5">
-                    <h3 className="font-extrabold text-base text-[#0A0A0A] group-hover:text-[#FF2D78] transition-colors leading-snug">
+                    <h3 className="font-extrabold text-base text-[#0A0A0A] group-hover:text-zinc-600 transition-colors leading-snug">
                       {photo.caption}
                     </h3>
 
@@ -229,7 +230,7 @@ export default function CreatorLookbookPage() {
                   {/* Footer Meta */}
                   <div className="pt-3 border-t border-[#E7E7E2] flex items-center justify-between text-xs font-bold text-[#73736A]">
                     <span className="flex items-center gap-1 text-[#0A0A0A]">
-                      <MapPin className="w-3.5 h-3.5 text-[#FF2D78]" />
+                      <MapPin className="w-3.5 h-3.5 text-zinc-500" />
                       <span>{photo.location}</span>
                     </span>
                     <span>{photo.date}</span>

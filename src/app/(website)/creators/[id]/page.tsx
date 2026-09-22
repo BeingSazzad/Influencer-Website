@@ -246,25 +246,27 @@ export default function CreatorProfilePage() {
           </div>
 
           <div className="flex shrink-0 items-center gap-2">
-            <button
-              type="button"
-              onClick={() => {
-                dispatch(toggleSaveCreator(creator.id));
-                message.success(isSaved ? 'Removed from shortlist' : 'Added to brand shortlist');
-              }}
-              title={isSaved ? 'Saved to shortlist' : 'Save Creator'}
-              className={`w-9 h-9 rounded-full flex items-center justify-center transition-all cursor-pointer border ${
-                isSaved
-                  ? 'bg-[#FFF0F5] border-[#FF2D78]/40 text-[#FF2D78] shadow-xs'
-                  : 'bg-white hover:bg-[#FAFAF8] border-[#E7E7E2] text-[#73736A] hover:text-[#0A0A0A] hover:border-[#0A0A0A] shadow-2xs'
-              }`}
-            >
-              <Bookmark
-                className={`w-4 h-4 transition-transform ${
-                  isSaved ? 'fill-[#FF2D78] text-[#FF2D78] scale-110' : ''
+            {!isSelfProfile && (
+              <button
+                type="button"
+                onClick={() => {
+                  dispatch(toggleSaveCreator(creator.id));
+                  message.success(isSaved ? 'Removed from shortlist' : 'Added to brand shortlist');
+                }}
+                title={isSaved ? 'Saved to shortlist' : 'Save Creator'}
+                className={`w-9 h-9 rounded-full flex items-center justify-center transition-all cursor-pointer border ${
+                  isSaved
+                    ? 'bg-[#FFF0F5] border-[#FF2D78]/40 text-[#FF2D78] shadow-xs'
+                    : 'bg-white hover:bg-[#FAFAF8] border-[#E7E7E2] text-[#73736A] hover:text-[#0A0A0A] hover:border-[#0A0A0A] shadow-2xs'
                 }`}
-              />
-            </button>
+              >
+                <Bookmark
+                  className={`w-4 h-4 transition-transform ${
+                    isSaved ? 'fill-[#FF2D78] text-[#FF2D78] scale-110' : ''
+                  }`}
+                />
+              </button>
+            )}
 
             <button
               type="button"
@@ -425,7 +427,11 @@ export default function CreatorProfilePage() {
                   <button
                     type="button"
                     onClick={() => {
-                      message.info(`Direct messaging channel open with ${creator.name}`);
+                      if (currentUser?.role === 'creator') {
+                        router.push(`/creator/messages?creatorId=${creator.id}`);
+                      } else {
+                        router.push(`/brand/messages?creatorId=${creator.id}`);
+                      }
                     }}
                     className="w-full h-11 rounded-full font-bold text-xs sm:text-sm bg-white border border-[#E7E7E2] text-[#0A0A0A] flex items-center justify-center gap-2 hover:border-[#0A0A0A] hover:bg-[#FAFAF8] transition-all cursor-pointer shadow-2xs"
                   >

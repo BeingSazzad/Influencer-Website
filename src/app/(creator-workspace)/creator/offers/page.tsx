@@ -13,8 +13,15 @@ import { BrandLogo } from '@/components/shared/BrandLogo';
 export default function CreatorOffersPage() {
   const dispatch = useAppDispatch();
   const { orders } = useAppSelector((state) => state.order);
+  const { currentUser } = useAppSelector((state) => state.auth);
 
-  const incomingOffers = orders.filter((o) => o.status === 'offer_sent');
+  const targetCreatorId = currentUser?.role === 'creator' ? currentUser.id : 'creator-01';
+  const incomingOffers = orders.filter(
+    (o) =>
+      o.status === 'offer_sent' &&
+      (o.creatorId === targetCreatorId ||
+        (o.creatorId === 'creator-01' && (!currentUser || currentUser?.role === 'creator')))
+  );
 
   const handleAccept = (id: string) => {
     dispatch(updateOrderStatus({ orderId: id, status: 'in_production' }));
@@ -127,7 +134,7 @@ export default function CreatorOffersPage() {
             </div>
           ) : (
             <EmptyState
-              color="pink"
+              color="neutral"
               icon={<Inbox className="w-8 h-8" />}
               badge="Inbox Zero"
               title="No Pending Campaign Offers"

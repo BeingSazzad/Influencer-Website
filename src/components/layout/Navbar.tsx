@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { logout, switchRole } from '@/redux/slices/authSlice';
+import { logout } from '@/redux/slices/authSlice';
 import { Logo } from '@/components/shared/Logo';
 import { LanguageSwitcher } from '@/components/shared/LanguageSwitcher';
 import { Dropdown, MenuProps, Drawer } from 'antd';
@@ -12,7 +12,6 @@ import {
   Menu as MenuIcon,
   Settings,
   ChevronDown,
-  User as UserIcon,
   ArrowRight,
   LogOut,
   LayoutDashboard,
@@ -74,18 +73,6 @@ export function Navbar() {
       ),
       onClick: () => {
         router.push(activeRole === 'brand' ? '/brand/settings' : '/creator/settings');
-      },
-    },
-    {
-      key: 'switchRole',
-      label: (
-        <div className="flex items-center gap-2 py-1 font-sans text-xs font-bold text-[#73736A] hover:text-[#0A0A0A]">
-          <UserIcon className="w-3.5 h-3.5" />
-          <span>Switch to {activeRole === 'brand' ? 'Creator View' : 'Brand View'}</span>
-        </div>
-      ),
-      onClick: () => {
-        dispatch(switchRole(activeRole === 'brand' ? 'creator' : 'brand'));
       },
     },
     {
@@ -249,7 +236,7 @@ export function Navbar() {
               <Link
                 href="/register"
                 onClick={() => setIsDrawerOpen(false)}
-                className="w-full h-11 rounded-full bg-[#FF2D78] hover:bg-[#E01E69] text-white font-outfit font-bold text-[16px] leading-[20px] flex items-center justify-center shadow-sm"
+                className="w-full h-11 rounded-full bg-[#0A0A0A] hover:bg-zinc-800 text-white font-outfit font-bold text-[16px] leading-[20px] flex items-center justify-center shadow-sm transition-all"
               >
                 Get Started
               </Link>

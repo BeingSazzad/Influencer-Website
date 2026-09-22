@@ -26,13 +26,19 @@ import { EmptyState } from '@/components/shared/EmptyState';
 export default function CreatorDashboardPage() {
   const dispatch = useAppDispatch();
   const { orders } = useAppSelector((state) => state.order);
+  const { currentUser } = useAppSelector((state) => state.auth);
 
-  // Filter creator's orders (Sophie Kim or default)
-  const incomingOffers = orders.filter((o) => o.status === 'offer_sent');
-  const activeOrders = orders.filter((o) =>
+  // Filter creator's orders strictly
+  const targetCreatorId = currentUser?.role === 'creator' ? currentUser.id : 'creator-01';
+  const creatorOrders = orders.filter(
+    (o) => o.creatorId === targetCreatorId || (o.creatorId === 'creator-01' && (!currentUser || currentUser?.role === 'creator'))
+  );
+
+  const incomingOffers = creatorOrders.filter((o) => o.status === 'offer_sent');
+  const activeOrders = creatorOrders.filter((o) =>
     ['accepted', 'in_production', 'deliverable_submitted'].includes(o.status)
   );
-  const completedOrders = orders.filter((o) => ['approved', 'completed'].includes(o.status));
+  const completedOrders = creatorOrders.filter((o) => ['approved', 'completed'].includes(o.status));
 
   // Earnings calculations
   const totalEarnedEur = completedOrders.reduce((acc, curr) => acc + curr.basePriceEur, 0);
@@ -48,11 +54,14 @@ export default function CreatorDashboardPage() {
     message.info('Offer declined.');
   };
 
+  const creatorDisplayName = currentUser?.name || 'Sophie Kim';
+  const creatorDisplayHandle = currentUser?.handle || 'sophiekim';
+
   return (
     <div className="min-h-screen pb-16">
       <WorkspaceHeader
         title="Creator Dashboard"
-        subtitle="Sophie Kim (@sophiekim) • Verified Talent Hub"
+        subtitle={`${creatorDisplayName} (@${creatorDisplayHandle.replace('@', '')}) • Verified Talent Hub`}
       />
 
       <div className="p-6 sm:p-8 max-w-6xl mx-auto space-y-8">
@@ -144,7 +153,7 @@ export default function CreatorDashboardPage() {
             </div>
             <Link
               href="/creator/offers"
-              className="text-sm font-bold text-[#0A0A0A] hover:text-[#FF2D78] flex items-center gap-1.5"
+              className="text-sm font-bold text-[#0A0A0A] hover:text-zinc-600 flex items-center gap-1.5 transition-colors"
             >
               <span>View all ({incomingOffers.length})</span>
               <ArrowRight className="w-4 h-4" />
@@ -280,7 +289,7 @@ export default function CreatorDashboardPage() {
                     </span>
 
                     <Link href={`/creator/orders/${order.id}`}>
-                      <button className="h-10 px-5 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:bg-[#FF2D78] text-white border-none flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer active:scale-98">
+                      <button className="h-10 px-5 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white border-none flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer active:scale-98">
                         <span>Open Fulfilment</span>
                         <ArrowRight className="w-4 h-4" />
                       </button>

@@ -51,9 +51,9 @@ export default function NewHireCampaignPage() {
 
     const newOrder: Order = {
       id: `order-${Date.now().toString().slice(-4)}`,
-      brandId: currentUser?.id || 'brand-01',
-      brandName: currentUser?.companyName || 'Nordic Glow Beauty',
-      brandLogo: currentUser?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100',
+      brandId: currentUser?.id || 'user_brand_01',
+      brandName: currentUser?.companyName || 'Aura Skincare Paris',
+      brandLogo: currentUser?.avatar || 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=100',
       creatorId: currentCreator.id,
       creatorName: currentCreator.name,
       creatorHandle: currentCreator.handle,

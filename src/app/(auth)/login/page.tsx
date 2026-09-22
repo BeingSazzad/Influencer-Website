@@ -56,7 +56,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAF8] flex items-center justify-center p-4 sm:p-6 lg:p-10 font-sans selection:bg-[#FF2D78]/20 selection:text-[#FF2D78]">
+    <div className="min-h-screen bg-[#FAFAF8] flex items-center justify-center p-4 sm:p-6 lg:p-10 font-sans selection:bg-zinc-200 selection:text-[#0A0A0A]">
       <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center py-6">
         {/* Left: Clean Minimalist Login Form */}
         <div className="w-full lg:col-span-5 xl:col-span-5 space-y-7">
@@ -79,7 +79,7 @@ export default function LoginPage() {
                 <span className="text-[11px] font-black text-[#73736A] uppercase tracking-wider">
                   1-Click Instant Demo Access
                 </span>
-                <span className="text-[11px] font-bold text-[#FF2D78] bg-[#FFF0F5] px-2 py-0.5 rounded-full border border-[#FF2D78]/20">
+                <span className="text-[11px] font-bold text-[#23744D] bg-[#EEF7F2] px-2 py-0.5 rounded-full border border-[#23744D]/20">
                   Instant Test
                 </span>
               </div>
@@ -94,7 +94,7 @@ export default function LoginPage() {
                     <div className="w-5 h-5 rounded-md bg-[#0A0A0A] text-white flex items-center justify-center font-bold text-[10px]">
                       B
                     </div>
-                    <span className="text-xs font-black text-[#0A0A0A] group-hover:text-[#FF2D78] transition-colors">
+                    <span className="text-xs font-black text-[#0A0A0A] group-hover:text-zinc-600 transition-colors">
                       Brand Demo
                     </span>
                   </div>
@@ -104,13 +104,13 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={handleCreatorDemoLogin}
-                  className="p-2.5 rounded-xl border border-[#E7E7E2] hover:border-[#FF2D78] bg-[#FAFAF8] hover:bg-[#F4F4F0] text-left transition-all cursor-pointer group"
+                  className="p-2.5 rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] bg-[#FAFAF8] hover:bg-[#F4F4F0] text-left transition-all cursor-pointer group"
                 >
                   <div className="flex items-center gap-2 mb-0.5">
-                    <div className="w-5 h-5 rounded-md bg-[#FF2D78] text-white flex items-center justify-center font-bold text-[10px]">
+                    <div className="w-5 h-5 rounded-md bg-[#18181B] text-white flex items-center justify-center font-bold text-[10px]">
                       C
                     </div>
-                    <span className="text-xs font-black text-[#0A0A0A] group-hover:text-[#FF2D78] transition-colors">
+                    <span className="text-xs font-black text-[#0A0A0A] group-hover:text-zinc-600 transition-colors">
                       Creator Demo
                     </span>
                   </div>
@@ -176,7 +176,7 @@ export default function LoginPage() {
 
               <button
                 type="submit"
-                className="w-full h-12 rounded-full font-outfit font-bold text-[16px] leading-[20px] bg-[#0A0A0A] hover:bg-[#FF2D78] text-white shadow-md hover:shadow-[#FF2D78]/25 transition-all duration-300 cursor-pointer hover:scale-[1.01] active:scale-[0.99] mt-3"
+                className="w-full h-12 rounded-full font-outfit font-bold text-[16px] leading-[20px] bg-[#0A0A0A] hover:bg-zinc-800 text-white shadow-md transition-all duration-300 cursor-pointer hover:scale-[1.01] active:scale-[0.99] mt-3"
               >
                 Log in
               </button>
@@ -186,7 +186,7 @@ export default function LoginPage() {
             <div className="text-center pt-2">
               <p className="text-sm text-[#73736A] font-medium">
                 New to Influverse?{' '}
-                <Link href="/register" className="font-bold text-[#0A0A0A] hover:text-[#FF2D78] transition-colors">
+                <Link href="/register" className="font-bold text-[#0A0A0A] hover:text-zinc-600 transition-colors">
                   Create an account
                 </Link>
               </p>

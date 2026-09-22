@@ -2,11 +2,10 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Logo } from '@/components/shared/Logo';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { switchRole, logout } from '@/redux/slices/authSlice';
+import { logout } from '@/redux/slices/authSlice';
 import { message } from 'antd';
 import {
   LayoutDashboard,
@@ -14,6 +13,7 @@ import {
   ShoppingBag,
   Package,
   Camera,
+  MessageSquare,
   Settings,
   LogOut,
 } from 'lucide-react';
@@ -26,6 +26,7 @@ export function CreatorSidebar() {
   const { currentUser } = useAppSelector((state) => state.auth);
   const { creators } = useAppSelector((state) => state.creator);
   const { orders } = useAppSelector((state) => state.order);
+  const { conversations } = useAppSelector((state) => state.message);
 
   const currentCreator = creators[0]; // Sophie Kim
   const creatorName = currentCreator?.name || currentUser?.name || 'Sophie Kim';
@@ -48,6 +49,9 @@ export function CreatorSidebar() {
     (o) => ['accepted', 'in_production', 'deliverable_submitted'].includes(o.status)
   ).length;
 
+  // Unread messages
+  const unreadMessagesCount = conversations.reduce((acc, c) => acc + (c.unreadCountCreator || 0), 0);
+
   const navItems = [
     {
       name: 'Overview',
@@ -65,6 +69,12 @@ export function CreatorSidebar() {
       href: '/creator/orders',
       icon: ShoppingBag,
       badge: activeOrdersCount > 0 ? activeOrdersCount : undefined,
+    },
+    {
+      name: 'Messages',
+      href: '/creator/messages',
+      icon: MessageSquare,
+      badge: unreadMessagesCount > 0 ? unreadMessagesCount : undefined,
     },
     {
       name: 'Packages',
@@ -148,7 +158,7 @@ export function CreatorSidebar() {
               <VerifiedBadge className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5" />
             </div>
             <div className="overflow-hidden flex-1 min-w-0">
-              <div className="text-xs font-extrabold text-[#0A0A0A] group-hover:text-[#FF2D78] transition-colors truncate">
+              <div className="text-xs font-extrabold text-[#0A0A0A] group-hover:text-zinc-600 transition-colors truncate">
                 {creatorName}
               </div>
               <div className="text-[11px] text-[#73736A] font-medium truncate">

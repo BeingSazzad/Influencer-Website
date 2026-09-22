@@ -2,17 +2,17 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Logo } from '@/components/shared/Logo';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { switchRole, logout } from '@/redux/slices/authSlice';
+import { logout } from '@/redux/slices/authSlice';
 import { message } from 'antd';
 import {
   LayoutDashboard,
   Bookmark,
   ShoppingBag,
   PlusCircle,
+  MessageSquare,
   Settings,
   LogOut,
 } from 'lucide-react';
@@ -24,8 +24,10 @@ export function BrandSidebar() {
   const { currentUser } = useAppSelector((state) => state.auth);
   const { savedCreatorIds } = useAppSelector((state) => state.creator);
   const { orders } = useAppSelector((state) => state.order);
+  const { conversations } = useAppSelector((state) => state.message);
 
   const brandOrdersCount = orders.filter((o) => o.brandId === currentUser?.id || o.brandId === 'user_brand_01').length;
+  const unreadMessagesCount = conversations.reduce((acc, c) => acc + (c.unreadCountBrand || 0), 0);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -44,6 +46,12 @@ export function BrandSidebar() {
       href: '/brand/orders',
       icon: ShoppingBag,
       badge: brandOrdersCount > 0 ? brandOrdersCount : undefined,
+    },
+    {
+      name: 'Messages',
+      href: '/brand/messages',
+      icon: MessageSquare,
+      badge: unreadMessagesCount > 0 ? unreadMessagesCount : undefined,
     },
     {
       name: 'Saved',
@@ -120,12 +128,12 @@ export function BrandSidebar() {
             className="flex items-center gap-2.5 p-2.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] hover:border-[#0A0A0A] hover:bg-white transition-all group cursor-pointer flex-1 min-w-0"
           >
             <img
-              src={currentUser?.avatar || 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80'}
+              src={currentUser?.avatar || 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80'}
               alt={currentUser?.name || 'Brand'}
               className="w-9 h-9 rounded-full object-cover border border-[#E7E7E2] shrink-0"
             />
             <div className="overflow-hidden flex-1 min-w-0">
-              <div className="text-xs font-extrabold text-[#0A0A0A] group-hover:text-[#FF2D78] transition-colors truncate">
+              <div className="text-xs font-extrabold text-[#0A0A0A] group-hover:text-zinc-600 transition-colors truncate">
                 {currentUser?.name || 'Elena Rostova'}
               </div>
               <div className="text-[11px] text-[#73736A] font-medium truncate">

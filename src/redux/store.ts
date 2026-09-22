@@ -3,6 +3,7 @@ import authReducer from './slices/authSlice';
 import creatorReducer from './slices/creatorSlice';
 import orderReducer from './slices/orderSlice';
 import langReducer from './slices/langSlice';
+import messageReducer from './slices/messageSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     creator: creatorReducer,
     order: orderReducer,
     lang: langReducer,
+    message: messageReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
 });

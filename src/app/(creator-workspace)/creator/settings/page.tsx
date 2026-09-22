@@ -76,7 +76,7 @@ export default function CreatorSettingsPage() {
   const dispatch = useAppDispatch();
   const { currentUser } = useAppSelector((state) => state.auth);
   const { creators } = useAppSelector((state) => state.creator);
-  const currentCreator = creators[0]; // Sophie Kim
+  const currentCreator = creators.find((c) => c.id === currentUser?.id) || creators[0];
 
   const [activeTab, setActiveTab] = useState<'profile' | 'socials' | 'gallery' | 'security'>('profile');
 
@@ -876,7 +876,7 @@ export default function CreatorSettingsPage() {
 
             <button
               type="submit"
-              className="h-10 px-6 rounded-full font-bold text-xs bg-[#0A0A0A] hover:bg-[#FF2D78] text-white cursor-pointer transition-all"
+              className="h-10 px-6 rounded-full font-bold text-xs bg-[#0A0A0A] hover:bg-zinc-800 text-white cursor-pointer transition-all"
             >
               Publish to Rate Card
             </button>
