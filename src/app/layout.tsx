@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { AntdRegistry } from '@ant-design/nextjs-registry';
 import { ReduxProvider } from '@/redux/provider';
 import { AntdConfig } from '@/components/AntdConfig';
 import { OfferModal } from '@/components/shared/OfferModal';
@@ -27,12 +28,14 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className="min-h-screen bg-[#FAFAF8] text-[#0A0A0A] antialiased selection:bg-[#0A0A0A] selection:text-white font-sans">
-        <ReduxProvider>
-          <AntdConfig>
-            {children}
-            <OfferModal />
-          </AntdConfig>
-        </ReduxProvider>
+        <AntdRegistry>
+          <ReduxProvider>
+            <AntdConfig>
+              {children}
+              <OfferModal />
+            </AntdConfig>
+          </ReduxProvider>
+        </AntdRegistry>
       </body>
     </html>
   );

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
 
 interface AuthNetworkVisualProps {
@@ -54,15 +55,14 @@ export function AuthNetworkVisual({
   // Curated list of verified creators with realistic portrait photography
   // and prestigious global brand partners (alternating in a 360-degree orbit)
   const nodes: NetworkNode[] = [
-    // 1. Creator (Top-Left): Sophie Kim - Beauty & Skincare
+    // 1. Creator (Top-Left): Aisha Rahman - Beauty & Skincare
     {
       type: 'creator',
-      id: 'creator-sophie',
-      name: 'Sophie Kim',
+      id: 'creator-aisha',
+      name: 'Aisha Rahman',
       category: 'Beauty & Skincare',
       followers: '1.2M',
-      photoUrl:
-        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80',
+      photoUrl: '/images/creators/aisha-rahman.webp',
       x: 130,
       y: 85,
       cx: 190,
@@ -71,12 +71,12 @@ export function AuthNetworkVisual({
       animationClass: 'animate-float-1',
     },
 
-    // 2. Brand (Top-Right): Nike - Global Partner
+    // 2. Brand (Top-Right): Pulse - Activewear Partner
     {
       type: 'brand',
-      id: 'brand-nike',
-      name: 'Nike',
-      tagline: 'Global Athletic Partner',
+      id: 'brand-pulse',
+      name: 'Pulse',
+      tagline: 'Activewear Partner',
       x: 380,
       y: 65,
       cx: 345,
@@ -84,23 +84,22 @@ export function AuthNetworkVisual({
       delay: '0.8s',
       animationClass: 'animate-float-2',
       renderLogo: () => (
-        <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-white border border-[#E7E7E2] shadow-[0_8px_20px_rgba(0,0,0,0.06)] flex items-center justify-center p-2.5 transition-transform duration-300 group-hover:scale-105">
-          <svg viewBox="0 0 24 24" className="w-8 h-8 text-[#0A0A0A]" fill="currentColor">
-            <path d="M21.707 5.293c-.267-.267-.688-.319-1.011-.125C15.65 8.193 11.234 9.9 8.212 9.9c-2.482 0-3.923-1.12-4.14-3.21-.05-.48-.445-.85-.928-.85-.515 0-.936.42-.936.936 0 4.296 3.01 6.824 6.84 6.824 3.72 0 8.65-2.09 12.35-7.397.23-.33.15-.79-.12-1.06z" />
+        <div className="w-14 h-14 rounded-2xl bg-[#111111] border border-black/10 shadow-[0_8px_20px_rgba(0,0,0,0.10)] flex items-center justify-center p-3 transition-transform duration-300 group-hover:scale-105">
+          <svg viewBox="0 0 32 32" className="w-8 h-8" fill="none" aria-hidden="true">
+            <path d="M7 18.5 15.5 5H25l-8 10.5h8L13.5 27h-7l7.5-8.5H7Z" fill="#FF2D78" />
           </svg>
         </div>
       ),
     },
 
-    // 3. Creator (Far Top-Right): Maya Chen - High Fashion
+    // 3. Creator (Far Top-Right): Mina Park - High Fashion
     {
       type: 'creator',
-      id: 'creator-maya',
-      name: 'Maya Chen',
+      id: 'creator-mina',
+      name: 'Mina Park',
       category: 'Fashion & Editorial',
       followers: '840K',
-      photoUrl:
-        'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=300&q=80',
+      photoUrl: '/images/creators/mina-park.webp',
       x: 480,
       y: 145,
       cx: 395,
@@ -109,11 +108,11 @@ export function AuthNetworkVisual({
       animationClass: 'animate-float-3',
     },
 
-    // 4. Brand (Mid-Left): Glossier - Direct Beauty Partner
+    // 4. Brand (Mid-Left): Muse - Beauty Partner
     {
       type: 'brand',
-      id: 'brand-glossier',
-      name: 'Glossier',
+      id: 'brand-muse',
+      name: 'Muse',
       tagline: 'Beauty Partner',
       x: 75,
       y: 185,
@@ -123,19 +122,19 @@ export function AuthNetworkVisual({
       animationClass: 'animate-float-2',
       renderLogo: () => (
         <div className="h-11 sm:h-12 px-4 rounded-2xl bg-white border border-[#E7E7E2] shadow-[0_8px_20px_rgba(0,0,0,0.06)] flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
-          <span className="font-serif italic font-bold text-sm tracking-tight text-[#0A0A0A]">
-            Glossier.
+          <span className="font-serif italic font-bold text-base tracking-[-0.06em] text-[#0A0A0A]">
+            muse.
           </span>
         </div>
       ),
     },
 
-    // 5. Brand (Mid-Right): Dyson - Tech & Beauty Innovations
+    // 5. Brand (Mid-Right): Luma - Beauty Technology
     {
       type: 'brand',
-      id: 'brand-dyson',
-      name: 'Dyson',
-      tagline: 'Tech & Lifestyle Partner',
+      id: 'brand-luma',
+      name: 'Luma',
+      tagline: 'Beauty Technology',
       x: 485,
       y: 260,
       cx: 395,
@@ -144,22 +143,21 @@ export function AuthNetworkVisual({
       animationClass: 'animate-float-1',
       renderLogo: () => (
         <div className="h-11 sm:h-12 px-3.5 rounded-2xl bg-white border border-[#E7E7E2] shadow-[0_8px_20px_rgba(0,0,0,0.06)] flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
-          <span className="font-sans font-black text-sm tracking-tight text-[#0A0A0A] lowercase">
-            dyson
+          <span className="font-sans font-black text-sm tracking-[0.18em] text-[#0A0A0A] uppercase">
+            LUMA
           </span>
         </div>
       ),
     },
 
-    // 6. Creator (Bottom Mid-Left): Noah Becker - Tech & Studio
+    // 6. Creator (Bottom Mid-Left): Jordan Brooks - Tech & Studio
     {
       type: 'creator',
-      id: 'creator-noah',
-      name: 'Noah Becker',
+      id: 'creator-jordan',
+      name: 'Jordan Brooks',
       category: 'Tech & Aesthetics',
       followers: '650K',
-      photoUrl:
-        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80',
+      photoUrl: '/images/creators/jordan-brooks.webp',
       x: 95,
       y: 320,
       cx: 175,
@@ -168,11 +166,11 @@ export function AuthNetworkVisual({
       animationClass: 'animate-float-1',
     },
 
-    // 7. Brand (Bottom Mid-Right): Prada - Luxury Milan House
+    // 7. Brand (Bottom Mid-Right): Atelier Nera - Luxury Fashion
     {
       type: 'brand',
-      id: 'brand-prada',
-      name: 'Prada',
+      id: 'brand-atelier-nera',
+      name: 'Atelier Nera',
       tagline: 'Luxury Fashion Partner',
       x: 460,
       y: 375,
@@ -183,21 +181,21 @@ export function AuthNetworkVisual({
       renderLogo: () => (
         <div className="h-11 sm:h-12 px-3.5 py-1 rounded-2xl bg-white border border-[#E7E7E2] shadow-[0_8px_20px_rgba(0,0,0,0.06)] flex flex-col items-center justify-center transition-transform duration-300 group-hover:scale-105">
           <span className="font-serif font-black text-xs tracking-widest text-[#0A0A0A]">
-            PRADA
+            NERA
           </span>
           <span className="text-[6.5px] font-bold tracking-[0.2em] text-[#73736A] uppercase -mt-0.5">
-            MILANO
+            ATELIER
           </span>
         </div>
       ),
     },
 
-    // 8. Brand (Bottom-Left): Sephora - Beauty Retail
+    // 8. Brand (Bottom-Left): Sora - Beauty Retail
     {
       type: 'brand',
-      id: 'brand-sephora',
-      name: 'Sephora',
-      tagline: 'Global Beauty Retail',
+      id: 'brand-sora',
+      name: 'Sora',
+      tagline: 'Modern Beauty Retail',
       x: 160,
       y: 435,
       cx: 210,
@@ -205,23 +203,23 @@ export function AuthNetworkVisual({
       delay: '1.8s',
       animationClass: 'animate-float-2',
       renderLogo: () => (
-        <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-white border border-[#E7E7E2] shadow-[0_8px_20px_rgba(0,0,0,0.06)] flex items-center justify-center p-2.5 transition-transform duration-300 group-hover:scale-105">
-          <svg viewBox="0 0 24 24" className="w-6 h-6 text-[#0A0A0A]" fill="currentColor">
-            <path d="M12.8 2C9.5 5 7.8 7.6 7.8 10.4c0 3.1 2.2 4.9 4.3 6.3 1.9 1.3 3.1 2.4 3.1 4.1 0 1.6-1.3 2.7-3.2 2.7-1.8 0-3.3-.9-4.2-2.1l-1.3 1.5c1.3 1.6 3.3 2.6 5.5 2.6 3.2 0 5.4-1.9 5.4-4.7 0-3-2.1-4.8-4.3-6.2-2-1.3-3.1-2.4-3.1-4.2 0-2.2 1.6-4.3 4.1-6.4L12.8 2z" />
+        <div className="w-14 h-14 rounded-2xl bg-white border border-[#E7E7E2] shadow-[0_8px_20px_rgba(0,0,0,0.06)] flex items-center justify-center p-2.5 transition-transform duration-300 group-hover:scale-105">
+          <svg viewBox="0 0 32 32" className="w-7 h-7 text-[#0A0A0A]" fill="none" aria-hidden="true">
+            <circle cx="16" cy="16" r="10" stroke="currentColor" strokeWidth="2.5" />
+            <path d="M10 18c3.2-6.5 8.6-8 13-6.5-2 1-3.1 3-3.7 5.1-.8 2.9-2.5 5-6.3 5.9" stroke="#FF2D78" strokeWidth="2.5" strokeLinecap="round" />
           </svg>
         </div>
       ),
     },
 
-    // 9. Creator (Bottom-Right): Liam Carter - Fitness & Travel
+    // 9. Creator (Bottom-Right): Luca Moretti - Fitness & Travel
     {
       type: 'creator',
-      id: 'creator-liam',
-      name: 'Liam Carter',
+      id: 'creator-luca',
+      name: 'Luca Moretti',
       category: 'Fitness & Travel',
       followers: '920K',
-      photoUrl:
-        'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80',
+      photoUrl: '/images/creators/luca-moretti.webp',
       x: 375,
       y: 430,
       cx: 335,
@@ -233,7 +231,7 @@ export function AuthNetworkVisual({
 
   return (
     <div
-      className={`relative w-full h-full min-h-[580px] lg:min-h-[640px] flex flex-col justify-center items-center p-4 sm:p-6 lg:p-8 select-none ${className}`}
+      className={`relative w-full h-full min-h-[500px] lg:min-h-[520px] flex flex-col justify-center items-center p-4 sm:p-5 lg:p-6 select-none ${className}`}
     >
       {/* Soft Ambient Radial Glow Blobs */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[520px] bg-purple-200/30 rounded-full blur-[110px] pointer-events-none" />
@@ -322,12 +320,13 @@ export function AuthNetworkVisual({
               {node.type === 'creator' ? (
                 <div className="group relative cursor-pointer">
                   {/* High-Resolution Portrait Photo */}
-                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-[3.5px] border-white shadow-[0_8px_24px_rgba(0,0,0,0.14)] ring-1 ring-black/5 bg-[#FAFAF8] transition-transform duration-300 group-hover:scale-110">
-                    <img
+                  <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-[3.5px] border-white shadow-[0_8px_24px_rgba(0,0,0,0.14)] ring-1 ring-black/5 bg-[#FAFAF8] transition-transform duration-300 group-hover:scale-110">
+                    <Image
                       src={node.photoUrl}
                       alt={node.name}
-                      className="w-full h-full object-cover object-center"
-                      loading="eager"
+                      fill
+                      sizes="64px"
+                      className="object-cover object-center"
                     />
                   </div>
 

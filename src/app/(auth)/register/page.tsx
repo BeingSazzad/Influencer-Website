@@ -14,19 +14,21 @@ import {
   Briefcase,
   Sparkles,
   ArrowRight,
-  ShieldCheck,
   Building,
   AtSign,
   Check,
-  Star,
+  Eye,
+  EyeOff,
+  ChevronDown,
 } from 'lucide-react';
-import { Input, Select, message } from 'antd';
+import { message } from 'antd';
 
 export default function RegisterPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
   const [role, setRole] = useState<'brand' | 'creator'>('brand');
+  const [showPassword, setShowPassword] = useState(false);
 
   // Brand Form Fields
   const [companyName, setCompanyName] = useState('');
@@ -101,7 +103,7 @@ export default function RegisterPage() {
             </p>
           </div>
 
-          <div className="bg-white p-6 sm:p-8 shadow-xl shadow-black/[0.03] rounded-3xl border border-[#E7E7E2] space-y-6">
+          <div className="bg-white p-6 sm:p-8 shadow-xl shadow-black/[0.04] rounded-3xl border border-[#D2D2CA] space-y-6">
             {/* Step 1: Role Selector */}
             <div className="space-y-3">
               <label className="block text-xs font-black uppercase tracking-wider text-[#73736A]">
@@ -113,26 +115,28 @@ export default function RegisterPage() {
                 <button
                   type="button"
                   onClick={() => setRole('brand')}
-                  className={`p-4 rounded-2xl border text-left transition-all cursor-pointer relative flex flex-col justify-between space-y-2.5 ${
+                  className={`p-4 rounded-2xl text-left transition-all cursor-pointer relative flex flex-col justify-between space-y-3 ${
                     role === 'brand'
-                      ? 'border-[#0A0A0A] bg-[#FAFAF8] ring-2 ring-[#0A0A0A]/10 shadow-sm'
-                      : 'border-[#E7E7E2] hover:border-[#D2D2CA] bg-white'
+                      ? 'border-2 border-[#0A0A0A] bg-[#FAFAF8] ring-2 ring-[#0A0A0A]/10 shadow-sm'
+                      : 'border-2 border-[#E7E7E2] hover:border-[#0A0A0A] bg-white'
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <div className="w-9 h-9 rounded-xl bg-[#0A0A0A] text-white flex items-center justify-center">
-                      <Briefcase className="w-4.5 h-4.5" />
+                    <div className="w-10 h-10 rounded-xl bg-[#0A0A0A] text-white flex items-center justify-center shadow-2xs">
+                      <Briefcase className="w-5 h-5" />
                     </div>
-                    {role === 'brand' && (
+                    {role === 'brand' ? (
                       <span className="w-5 h-5 rounded-full bg-[#0A0A0A] text-white flex items-center justify-center text-xs">
                         <Check className="w-3.5 h-3.5 stroke-[3]" />
                       </span>
+                    ) : (
+                      <span className="w-5 h-5 rounded-full border border-[#D2D2CA]" />
                     )}
                   </div>
 
                   <div>
                     <h3 className="font-black text-sm text-[#0A0A0A]">Brand / Agency</h3>
-                    <p className="text-xs text-[#73736A] mt-0.5 leading-relaxed font-medium">
+                    <p className="text-xs text-[#73736A] mt-1 leading-relaxed font-medium">
                       Hire vetted talent with escrow guarantee.
                     </p>
                   </div>
@@ -142,26 +146,28 @@ export default function RegisterPage() {
                 <button
                   type="button"
                   onClick={() => setRole('creator')}
-                  className={`p-4 rounded-2xl border text-left transition-all cursor-pointer relative flex flex-col justify-between space-y-2.5 ${
+                  className={`p-4 rounded-2xl text-left transition-all cursor-pointer relative flex flex-col justify-between space-y-3 ${
                     role === 'creator'
-                      ? 'border-[#FF2D78] bg-[#FAFAF8] ring-2 ring-[#FF2D78]/15 shadow-sm'
-                      : 'border-[#E7E7E2] hover:border-[#D2D2CA] bg-white'
+                      ? 'border-2 border-[#FF2D78] bg-[#FFF0F5] ring-2 ring-[#FF2D78]/15 shadow-sm'
+                      : 'border-2 border-[#E7E7E2] hover:border-[#FF2D78] bg-white'
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <div className="w-9 h-9 rounded-xl bg-[#FF2D78] text-white flex items-center justify-center">
-                      <Sparkles className="w-4.5 h-4.5" />
+                    <div className="w-10 h-10 rounded-xl bg-[#FF2D78] text-white flex items-center justify-center shadow-2xs">
+                      <Sparkles className="w-5 h-5" />
                     </div>
-                    {role === 'creator' && (
+                    {role === 'creator' ? (
                       <span className="w-5 h-5 rounded-full bg-[#FF2D78] text-white flex items-center justify-center text-xs">
                         <Check className="w-3.5 h-3.5 stroke-[3]" />
                       </span>
+                    ) : (
+                      <span className="w-5 h-5 rounded-full border border-[#D2D2CA]" />
                     )}
                   </div>
 
                   <div>
                     <h3 className="font-black text-sm text-[#0A0A0A]">Content Creator</h3>
-                    <p className="text-xs text-[#73736A] mt-0.5 leading-relaxed font-medium">
+                    <p className="text-xs text-[#73736A] mt-1 leading-relaxed font-medium">
                       Set rates, earn EUR & keep 100%.
                     </p>
                   </div>
@@ -185,30 +191,34 @@ export default function RegisterPage() {
                       <label className="block text-sm font-bold text-[#0A0A0A] mb-1.5">
                         Brand Name
                       </label>
-                      <Input
-                        size="large"
-                        placeholder="e.g. Aura Skincare Paris"
-                        prefix={<Building className="w-4 h-4 text-[#73736A] mr-2" />}
-                        value={companyName}
-                        onChange={(e) => setCompanyName(e.target.value)}
-                        className="bg-[#FAFAF8] border-[#E7E7E2] text-[#0A0A0A] rounded-xl text-sm h-11"
-                        required
-                      />
+                      <div className="relative flex items-center">
+                        <Building className="w-4 h-4 text-[#73736A] absolute left-3.5 pointer-events-none" />
+                        <input
+                          type="text"
+                          placeholder="e.g. Aura Skincare Paris"
+                          value={companyName}
+                          onChange={(e) => setCompanyName(e.target.value)}
+                          className="w-full h-12 pl-10 pr-4 bg-white border border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A] focus:ring-2 focus:ring-[#0A0A0A]/10 rounded-xl text-sm font-sans text-[#0A0A0A] placeholder-[#9E9E94] outline-none transition-all"
+                          required
+                        />
+                      </div>
                     </div>
 
                     <div>
                       <label className="block text-sm font-bold text-[#0A0A0A] mb-1.5">
                         Your Full Name
                       </label>
-                      <Input
-                        size="large"
-                        placeholder="e.g. Elena Rostova"
-                        prefix={<UserIcon className="w-4 h-4 text-[#73736A] mr-2" />}
-                        value={brandContactName}
-                        onChange={(e) => setBrandContactName(e.target.value)}
-                        className="bg-[#FAFAF8] border-[#E7E7E2] text-[#0A0A0A] rounded-xl text-sm h-11"
-                        required
-                      />
+                      <div className="relative flex items-center">
+                        <UserIcon className="w-4 h-4 text-[#73736A] absolute left-3.5 pointer-events-none" />
+                        <input
+                          type="text"
+                          placeholder="e.g. Elena Rostova"
+                          value={brandContactName}
+                          onChange={(e) => setBrandContactName(e.target.value)}
+                          className="w-full h-12 pl-10 pr-4 bg-white border border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A] focus:ring-2 focus:ring-[#0A0A0A]/10 rounded-xl text-sm font-sans text-[#0A0A0A] placeholder-[#9E9E94] outline-none transition-all"
+                          required
+                        />
+                      </div>
                     </div>
                   </div>
 
@@ -217,31 +227,42 @@ export default function RegisterPage() {
                       <label className="block text-sm font-bold text-[#0A0A0A] mb-1.5">
                         Work Email
                       </label>
-                      <Input
-                        size="large"
-                        type="email"
-                        placeholder="elena@company.com"
-                        prefix={<Mail className="w-4 h-4 text-[#73736A] mr-2" />}
-                        value={brandEmail}
-                        onChange={(e) => setBrandEmail(e.target.value)}
-                        className="bg-[#FAFAF8] border-[#E7E7E2] text-[#0A0A0A] rounded-xl text-sm h-11"
-                        required
-                      />
+                      <div className="relative flex items-center">
+                        <Mail className="w-4 h-4 text-[#73736A] absolute left-3.5 pointer-events-none" />
+                        <input
+                          type="email"
+                          placeholder="elena@company.com"
+                          value={brandEmail}
+                          onChange={(e) => setBrandEmail(e.target.value)}
+                          className="w-full h-12 pl-10 pr-4 bg-white border border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A] focus:ring-2 focus:ring-[#0A0A0A]/10 rounded-xl text-sm font-sans text-[#0A0A0A] placeholder-[#9E9E94] outline-none transition-all"
+                          required
+                        />
+                      </div>
                     </div>
 
                     <div>
                       <label className="block text-sm font-bold text-[#0A0A0A] mb-1.5">
                         Password
                       </label>
-                      <Input.Password
-                        size="large"
-                        placeholder="Create password"
-                        prefix={<Lock className="w-4 h-4 text-[#73736A] mr-2" />}
-                        value={brandPassword}
-                        onChange={(e) => setBrandPassword(e.target.value)}
-                        className="bg-[#FAFAF8] border-[#E7E7E2] rounded-xl text-sm h-11"
-                        required
-                      />
+                      <div className="relative flex items-center">
+                        <Lock className="w-4 h-4 text-[#73736A] absolute left-3.5 pointer-events-none" />
+                        <input
+                          type={showPassword ? 'text' : 'password'}
+                          placeholder="Create password"
+                          value={brandPassword}
+                          onChange={(e) => setBrandPassword(e.target.value)}
+                          className="w-full h-12 pl-10 pr-11 bg-white border border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A] focus:ring-2 focus:ring-[#0A0A0A]/10 rounded-xl text-sm font-sans text-[#0A0A0A] placeholder-[#9E9E94] outline-none transition-all"
+                          required
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="absolute right-3.5 text-[#73736A] hover:text-[#0A0A0A] transition-colors p-1"
+                          aria-label={showPassword ? 'Hide password' : 'Show password'}
+                        >
+                          {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        </button>
+                      </div>
                     </div>
                   </div>
 
@@ -249,20 +270,21 @@ export default function RegisterPage() {
                     <label className="block text-sm font-bold text-[#0A0A0A] mb-1.5">
                       Primary Industry / Niche
                     </label>
-                    <Select
-                      size="large"
-                      value={brandIndustry}
-                      onChange={(v) => setBrandIndustry(v)}
-                      className="w-full"
-                      options={[
-                        { value: 'Beauty & Skincare', label: 'Beauty & Skincare' },
-                        { value: 'Fashion & Apparel', label: 'Fashion & Apparel' },
-                        { value: 'Fitness & Health', label: 'Fitness & Health' },
-                        { value: 'Tech & SaaS', label: 'Tech & SaaS' },
-                        { value: 'Food & Beverage', label: 'Food & Beverage' },
-                        { value: 'Travel & Hospitality', label: 'Travel & Hospitality' },
-                      ]}
-                    />
+                    <div className="relative flex items-center">
+                      <select
+                        value={brandIndustry}
+                        onChange={(e) => setBrandIndustry(e.target.value)}
+                        className="w-full h-12 px-4 pr-10 bg-white border border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A] focus:ring-2 focus:ring-[#0A0A0A]/10 rounded-xl text-sm font-sans text-[#0A0A0A] appearance-none outline-none cursor-pointer transition-all"
+                      >
+                        <option value="Beauty & Skincare">Beauty & Skincare</option>
+                        <option value="Fashion & Apparel">Fashion & Apparel</option>
+                        <option value="Fitness & Health">Fitness & Health</option>
+                        <option value="Tech & SaaS">Tech & SaaS</option>
+                        <option value="Food & Beverage">Food & Beverage</option>
+                        <option value="Travel & Hospitality">Travel & Hospitality</option>
+                      </select>
+                      <ChevronDown className="w-4 h-4 text-[#73736A] absolute right-3.5 pointer-events-none" />
+                    </div>
                   </div>
                 </>
               ) : (
@@ -273,30 +295,34 @@ export default function RegisterPage() {
                       <label className="block text-sm font-bold text-[#0A0A0A] mb-1.5">
                         Creator Name
                       </label>
-                      <Input
-                        size="large"
-                        placeholder="e.g. Sophie Kim"
-                        prefix={<UserIcon className="w-4 h-4 text-[#73736A] mr-2" />}
-                        value={creatorName}
-                        onChange={(e) => setCreatorName(e.target.value)}
-                        className="bg-[#FAFAF8] border-[#E7E7E2] text-[#0A0A0A] rounded-xl text-sm h-11"
-                        required
-                      />
+                      <div className="relative flex items-center">
+                        <UserIcon className="w-4 h-4 text-[#73736A] absolute left-3.5 pointer-events-none" />
+                        <input
+                          type="text"
+                          placeholder="e.g. Sophie Kim"
+                          value={creatorName}
+                          onChange={(e) => setCreatorName(e.target.value)}
+                          className="w-full h-12 pl-10 pr-4 bg-white border border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A] focus:ring-2 focus:ring-[#0A0A0A]/10 rounded-xl text-sm font-sans text-[#0A0A0A] placeholder-[#9E9E94] outline-none transition-all"
+                          required
+                        />
+                      </div>
                     </div>
 
                     <div>
                       <label className="block text-sm font-bold text-[#0A0A0A] mb-1.5">
                         Social Handle
                       </label>
-                      <Input
-                        size="large"
-                        placeholder="e.g. @sophiekim"
-                        prefix={<AtSign className="w-4 h-4 text-[#73736A] mr-2" />}
-                        value={creatorHandle}
-                        onChange={(e) => setCreatorHandle(e.target.value)}
-                        className="bg-[#FAFAF8] border-[#E7E7E2] text-[#0A0A0A] rounded-xl text-sm h-11"
-                        required
-                      />
+                      <div className="relative flex items-center">
+                        <AtSign className="w-4 h-4 text-[#73736A] absolute left-3.5 pointer-events-none" />
+                        <input
+                          type="text"
+                          placeholder="e.g. @sophiekim"
+                          value={creatorHandle}
+                          onChange={(e) => setCreatorHandle(e.target.value)}
+                          className="w-full h-12 pl-10 pr-4 bg-white border border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A] focus:ring-2 focus:ring-[#0A0A0A]/10 rounded-xl text-sm font-sans text-[#0A0A0A] placeholder-[#9E9E94] outline-none transition-all"
+                          required
+                        />
+                      </div>
                     </div>
                   </div>
 
@@ -305,31 +331,42 @@ export default function RegisterPage() {
                       <label className="block text-sm font-bold text-[#0A0A0A] mb-1.5">
                         Email Address
                       </label>
-                      <Input
-                        size="large"
-                        type="email"
-                        placeholder="sophie@creatorhub.com"
-                        prefix={<Mail className="w-4 h-4 text-[#73736A] mr-2" />}
-                        value={creatorEmail}
-                        onChange={(e) => setCreatorEmail(e.target.value)}
-                        className="bg-[#FAFAF8] border-[#E7E7E2] text-[#0A0A0A] rounded-xl text-sm h-11"
-                        required
-                      />
+                      <div className="relative flex items-center">
+                        <Mail className="w-4 h-4 text-[#73736A] absolute left-3.5 pointer-events-none" />
+                        <input
+                          type="email"
+                          placeholder="sophie@creatorhub.com"
+                          value={creatorEmail}
+                          onChange={(e) => setCreatorEmail(e.target.value)}
+                          className="w-full h-12 pl-10 pr-4 bg-white border border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A] focus:ring-2 focus:ring-[#0A0A0A]/10 rounded-xl text-sm font-sans text-[#0A0A0A] placeholder-[#9E9E94] outline-none transition-all"
+                          required
+                        />
+                      </div>
                     </div>
 
                     <div>
                       <label className="block text-sm font-bold text-[#0A0A0A] mb-1.5">
                         Password
                       </label>
-                      <Input.Password
-                        size="large"
-                        placeholder="Create password"
-                        prefix={<Lock className="w-4 h-4 text-[#73736A] mr-2" />}
-                        value={creatorPassword}
-                        onChange={(e) => setCreatorPassword(e.target.value)}
-                        className="bg-[#FAFAF8] border-[#E7E7E2] rounded-xl text-sm h-11"
-                        required
-                      />
+                      <div className="relative flex items-center">
+                        <Lock className="w-4 h-4 text-[#73736A] absolute left-3.5 pointer-events-none" />
+                        <input
+                          type={showPassword ? 'text' : 'password'}
+                          placeholder="Create password"
+                          value={creatorPassword}
+                          onChange={(e) => setCreatorPassword(e.target.value)}
+                          className="w-full h-12 pl-10 pr-11 bg-white border border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A] focus:ring-2 focus:ring-[#0A0A0A]/10 rounded-xl text-sm font-sans text-[#0A0A0A] placeholder-[#9E9E94] outline-none transition-all"
+                          required
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="absolute right-3.5 text-[#73736A] hover:text-[#0A0A0A] transition-colors p-1"
+                          aria-label={showPassword ? 'Hide password' : 'Show password'}
+                        >
+                          {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        </button>
+                      </div>
                     </div>
                   </div>
 
@@ -338,39 +375,41 @@ export default function RegisterPage() {
                       <label className="block text-sm font-bold text-[#0A0A0A] mb-1.5">
                         Primary Platform
                       </label>
-                      <Select
-                        size="large"
-                        value={creatorPlatform}
-                        onChange={(v) => setCreatorPlatform(v)}
-                        className="w-full"
-                        options={[
-                          { value: 'instagram', label: 'Instagram' },
-                          { value: 'tiktok', label: 'TikTok' },
-                          { value: 'youtube', label: 'YouTube' },
-                          { value: 'ugc', label: 'UGC Content Creator' },
-                        ]}
-                      />
+                      <div className="relative flex items-center">
+                        <select
+                          value={creatorPlatform}
+                          onChange={(e) => setCreatorPlatform(e.target.value)}
+                          className="w-full h-12 px-4 pr-10 bg-white border border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A] focus:ring-2 focus:ring-[#0A0A0A]/10 rounded-xl text-sm font-sans text-[#0A0A0A] appearance-none outline-none cursor-pointer transition-all"
+                        >
+                          <option value="instagram">Instagram</option>
+                          <option value="tiktok">TikTok</option>
+                          <option value="youtube">YouTube</option>
+                          <option value="ugc">UGC Content Creator</option>
+                        </select>
+                        <ChevronDown className="w-4 h-4 text-[#73736A] absolute right-3.5 pointer-events-none" />
+                      </div>
                     </div>
 
                     <div>
                       <label className="block text-sm font-bold text-[#0A0A0A] mb-1.5">
                         Content Category
                       </label>
-                      <Select
-                        size="large"
-                        value={creatorCategory}
-                        onChange={(v) => setCreatorCategory(v)}
-                        className="w-full"
-                        options={[
-                          { value: 'Beauty', label: 'Beauty & Skincare' },
-                          { value: 'Fashion', label: 'Fashion & Style' },
-                          { value: 'Fitness', label: 'Fitness & Health' },
-                          { value: 'Travel', label: 'Travel & Outdoor' },
-                          { value: 'Food', label: 'Food & Cuisine' },
-                          { value: 'Tech', label: 'Tech & Gadgets' },
-                          { value: 'Lifestyle', label: 'Lifestyle' },
-                        ]}
-                      />
+                      <div className="relative flex items-center">
+                        <select
+                          value={creatorCategory}
+                          onChange={(e) => setCreatorCategory(e.target.value)}
+                          className="w-full h-12 px-4 pr-10 bg-white border border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A] focus:ring-2 focus:ring-[#0A0A0A]/10 rounded-xl text-sm font-sans text-[#0A0A0A] appearance-none outline-none cursor-pointer transition-all"
+                        >
+                          <option value="Beauty">Beauty & Skincare</option>
+                          <option value="Fashion">Fashion & Style</option>
+                          <option value="Fitness">Fitness & Health</option>
+                          <option value="Travel">Travel & Outdoor</option>
+                          <option value="Food">Food & Cuisine</option>
+                          <option value="Tech">Tech & Gadgets</option>
+                          <option value="Lifestyle">Lifestyle</option>
+                        </select>
+                        <ChevronDown className="w-4 h-4 text-[#73736A] absolute right-3.5 pointer-events-none" />
+                      </div>
                     </div>
                   </div>
                 </>
@@ -404,4 +443,3 @@ export default function RegisterPage() {
     </div>
   );
 }
-

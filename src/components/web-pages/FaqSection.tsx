@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useAppSelector } from '@/redux/hooks';
-import { ChevronDown, ChevronUp, HelpCircle } from 'lucide-react';
+import { ChevronDown, HelpCircle } from 'lucide-react';
 
 export function FaqSection() {
   const { t } = useAppSelector((state) => state.lang);
@@ -39,59 +39,66 @@ export function FaqSection() {
     },
   ];
 
+  const handleToggle = (idx: number) => {
+    setOpenIdx((prev) => (prev === idx ? null : idx));
+  };
+
   return (
     <section id="faq" className="py-24 bg-white border-t border-[#E7E7E2] font-sans">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16 max-w-2xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#73736A] text-xs font-bold uppercase tracking-wider mb-4">
+        <div className="text-center mb-16 max-w-2xl mx-auto space-y-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#73736A] text-xs font-bold uppercase tracking-wider mb-2">
             <HelpCircle className="w-4 h-4 text-[#FF2D78]" />
-            Common Inquiries
+            <span>Common Inquiries</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-[48px] font-black text-[#0A0A0A] tracking-tight leading-[1.15]">
             {t?.faq?.title || 'Frequently Asked Questions'}
           </h2>
-          <p className="text-[18px] text-[#73736A] font-medium leading-[28px] mt-4 sm:mt-5">
+          <p className="text-base sm:text-lg text-[#73736A] font-medium leading-[28px]">
             Everything you need to know about booking creators, escrow protection, and deliverables.
           </p>
         </div>
 
-        {/* Minimalist Open Accordion List matching reference */}
+        {/* Accordion List */}
         <div className="divide-y divide-[#E7E7E2] border-t border-b border-[#E7E7E2]">
           {faqs.map((faq, idx) => {
             const isOpen = openIdx === idx;
             return (
-              <div key={idx} className="py-6 sm:py-8 transition-colors">
+              <div
+                key={idx}
+                className="py-6 sm:py-8 transition-colors select-none"
+              >
                 <button
                   type="button"
-                  onClick={() => setOpenIdx(isOpen ? null : idx)}
-                  className="w-full text-left flex items-center justify-between gap-6 group cursor-pointer"
+                  onClick={() => handleToggle(idx)}
+                  className="w-full text-left flex items-center justify-between gap-6 group cursor-pointer focus:outline-none"
                   aria-expanded={isOpen}
                 >
-                  <span className="text-[20px] sm:text-[24px] font-bold text-[#0A0A0A] group-hover:text-[#FF2D78] transition-colors leading-snug">
+                  <span className="text-lg sm:text-xl lg:text-[22px] font-bold text-[#0A0A0A] group-hover:text-[#FF2D78] transition-colors leading-snug">
                     {faq.q}
                   </span>
 
-                  <div
-                    className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${
+                  <span
+                    className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full inline-flex items-center justify-center shrink-0 transition-all duration-300 ${
                       isOpen
-                        ? 'bg-[#FF2D78] text-white shadow-md shadow-[#FF2D78]/25'
-                        : 'bg-white border border-[#D2D2CA] text-[#0A0A0A] group-hover:border-[#FF2D78] group-hover:text-[#FF2D78]'
+                        ? 'bg-[#FF2D78] text-white shadow-md shadow-[#FF2D78]/25 rotate-180'
+                        : 'bg-white border border-[#D2D2CA] text-[#0A0A0A] group-hover:border-[#FF2D78] group-hover:text-[#FF2D78] rotate-0'
                     }`}
                   >
-                    {isOpen ? (
-                      <ChevronUp className="w-5 h-5 transition-transform" />
-                    ) : (
-                      <ChevronDown className="w-5 h-5 transition-transform" />
-                    )}
-                  </div>
+                    <ChevronDown className="w-5 h-5 transition-transform duration-300" />
+                  </span>
                 </button>
 
-                {isOpen && (
-                  <div className="pt-4 sm:pt-5 pr-12 text-[18px] text-[#555550] leading-[28px] font-medium">
+                <div
+                  className={`grid transition-all duration-300 ease-in-out ${
+                    isOpen ? 'grid-rows-[1fr] opacity-100 pt-4 sm:pt-5' : 'grid-rows-[0fr] opacity-0 pt-0'
+                  }`}
+                >
+                  <div className="overflow-hidden pr-6 sm:pr-12 text-base sm:text-[17px] text-[#555550] leading-[28px] font-medium">
                     <p>{faq.a}</p>
                   </div>
-                )}
+                </div>
               </div>
             );
           })}
@@ -100,4 +107,3 @@ export function FaqSection() {
     </section>
   );
 }
-

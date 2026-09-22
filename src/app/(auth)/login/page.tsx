@@ -13,8 +13,10 @@ import {
   ArrowRight,
   ShieldCheck,
   Sparkles,
+  Eye,
+  EyeOff,
 } from 'lucide-react';
-import { Input, Checkbox, message } from 'antd';
+import { Checkbox, message } from 'antd';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -22,6 +24,7 @@ export default function LoginPage() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
 
   const handleManualLogin = (e: React.FormEvent) => {
@@ -56,25 +59,25 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAF8] flex items-center justify-center p-4 sm:p-6 lg:p-10 font-sans selection:bg-zinc-200 selection:text-[#0A0A0A]">
-      <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center py-6">
-        {/* Left: Clean Minimalist Login Form */}
-        <div className="w-full lg:col-span-5 xl:col-span-5 space-y-7">
-          <div className="space-y-3">
-            <Link href="/" className="inline-flex items-center mb-1 hover:opacity-90 transition-opacity">
+    <div className="min-h-screen bg-[#FAFAF8] flex items-center justify-center p-4 sm:p-6 lg:p-10 font-sans selection:bg-[#FF2D78]/20 selection:text-[#FF2D78]">
+      <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center py-6">
+        {/* Left: Login Form Card (Consistent with Register page) */}
+        <div className="w-full lg:col-span-6 xl:col-span-6 space-y-6">
+          <div className="space-y-2">
+            <Link href="/" className="inline-flex items-center mb-2 hover:opacity-90 transition-opacity">
               <Logo size="lg" />
             </Link>
             <h1 className="text-3xl sm:text-4xl font-black text-[#0A0A0A] tracking-tight">
-              Welcome back.
+              Welcome back
             </h1>
-            <p className="text-sm sm:text-base text-[#73736A] font-medium leading-relaxed">
-              Log in to continue your collaborations.
+            <p className="text-sm sm:text-base text-[#73736A] font-medium leading-[24px]">
+              Log in to manage your campaigns, orders, and creator collaborations.
             </p>
           </div>
 
-          <div className="space-y-6">
+          <div className="bg-white p-6 sm:p-8 shadow-xl shadow-black/[0.04] rounded-3xl border border-[#D2D2CA] space-y-6">
             {/* Quick 1-Click Demo Accounts */}
-            <div className="space-y-2.5 p-3.5 rounded-2xl bg-white border border-[#E7E7E2] shadow-sm">
+            <div className="space-y-2.5 p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-black text-[#73736A] uppercase tracking-wider">
                   1-Click Instant Demo Access
@@ -88,13 +91,13 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={handleBrandDemoLogin}
-                  className="p-2.5 rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] bg-[#FAFAF8] hover:bg-[#F4F4F0] text-left transition-all cursor-pointer group"
+                  className="p-3 rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] bg-white hover:bg-[#F4F4F0] text-left transition-all cursor-pointer group shadow-2xs"
                 >
-                  <div className="flex items-center gap-2 mb-0.5">
+                  <div className="flex items-center gap-2 mb-1">
                     <div className="w-5 h-5 rounded-md bg-[#0A0A0A] text-white flex items-center justify-center font-bold text-[10px]">
                       B
                     </div>
-                    <span className="text-xs font-black text-[#0A0A0A] group-hover:text-zinc-600 transition-colors">
+                    <span className="text-xs font-black text-[#0A0A0A] group-hover:text-black transition-colors">
                       Brand Demo
                     </span>
                   </div>
@@ -104,13 +107,13 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={handleCreatorDemoLogin}
-                  className="p-2.5 rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] bg-[#FAFAF8] hover:bg-[#F4F4F0] text-left transition-all cursor-pointer group"
+                  className="p-3 rounded-xl border border-[#E7E7E2] hover:border-[#FF2D78] bg-white hover:bg-[#FFF0F5] text-left transition-all cursor-pointer group shadow-2xs"
                 >
-                  <div className="flex items-center gap-2 mb-0.5">
-                    <div className="w-5 h-5 rounded-md bg-[#18181B] text-white flex items-center justify-center font-bold text-[10px]">
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className="w-5 h-5 rounded-md bg-[#FF2D78] text-white flex items-center justify-center font-bold text-[10px]">
                       C
                     </div>
-                    <span className="text-xs font-black text-[#0A0A0A] group-hover:text-zinc-600 transition-colors">
+                    <span className="text-xs font-black text-[#0A0A0A] group-hover:text-[#FF2D78] transition-colors">
                       Creator Demo
                     </span>
                   </div>
@@ -121,7 +124,7 @@ export default function LoginPage() {
 
             <div className="relative flex items-center justify-center">
               <div className="border-t border-[#E7E7E2] w-full" />
-              <span className="bg-[#FAFAF8] px-3 text-[11px] font-bold text-[#A3A39C] uppercase tracking-wider absolute">
+              <span className="bg-white px-3 text-[11px] font-bold text-[#A3A39C] uppercase tracking-wider absolute">
                 or log in with email
               </span>
             </div>
@@ -132,16 +135,17 @@ export default function LoginPage() {
                 <label className="block text-sm font-bold text-[#0A0A0A] mb-1.5">
                   Email address
                 </label>
-                <Input
-                  size="large"
-                  type="email"
-                  placeholder="you@example.com"
-                  prefix={<Mail className="w-4 h-4 text-[#73736A] mr-2" />}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="bg-white border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A] text-[#0A0A0A] rounded-xl text-sm h-12 shadow-2xs"
-                  required
-                />
+                <div className="relative flex items-center">
+                  <Mail className="w-4 h-4 text-[#73736A] absolute left-3.5 pointer-events-none" />
+                  <input
+                    type="email"
+                    placeholder="you@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full h-12 pl-10 pr-4 bg-white border border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A] focus:ring-2 focus:ring-[#0A0A0A]/10 rounded-xl text-sm font-sans text-[#0A0A0A] placeholder-[#9E9E94] outline-none transition-all"
+                    required
+                  />
+                </div>
               </div>
 
               <div>
@@ -150,15 +154,25 @@ export default function LoginPage() {
                     Password
                   </label>
                 </div>
-                <Input.Password
-                  size="large"
-                  placeholder="••••••••••••"
-                  prefix={<Lock className="w-4 h-4 text-[#73736A] mr-2" />}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="bg-white border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A] rounded-xl text-sm h-12 shadow-2xs"
-                  required
-                />
+                <div className="relative flex items-center">
+                  <Lock className="w-4 h-4 text-[#73736A] absolute left-3.5 pointer-events-none" />
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="••••••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full h-12 pl-10 pr-11 bg-white border border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A] focus:ring-2 focus:ring-[#0A0A0A]/10 rounded-xl text-sm font-sans text-[#0A0A0A] placeholder-[#9E9E94] outline-none transition-all"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3.5 text-[#73736A] hover:text-[#0A0A0A] transition-colors p-1"
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
               </div>
 
               <div className="flex items-center justify-between pt-1">
@@ -176,17 +190,17 @@ export default function LoginPage() {
 
               <button
                 type="submit"
-                className="w-full h-12 rounded-full font-outfit font-bold text-[16px] leading-[20px] bg-[#0A0A0A] hover:bg-zinc-800 text-white shadow-md transition-all duration-300 cursor-pointer hover:scale-[1.01] active:scale-[0.99] mt-3"
+                className="w-full h-12 rounded-full font-bold text-sm sm:text-base bg-[#0A0A0A] hover:bg-[#FF2D78] text-white shadow-md transition-all duration-300 cursor-pointer hover:scale-[1.01] active:scale-[0.99] mt-3 font-sans"
               >
                 Log in
               </button>
             </form>
 
             {/* Sign Up Link */}
-            <div className="text-center pt-2">
+            <div className="text-center pt-2 border-t border-[#E7E7E2]/60">
               <p className="text-sm text-[#73736A] font-medium">
                 New to Influverse?{' '}
-                <Link href="/register" className="font-bold text-[#0A0A0A] hover:text-zinc-600 transition-colors">
+                <Link href="/register" className="font-bold text-[#0A0A0A] hover:text-[#FF2D78] transition-colors">
                   Create an account
                 </Link>
               </p>
@@ -195,11 +209,10 @@ export default function LoginPage() {
         </div>
 
         {/* Right: Connected Network Graphic Matching Reference Design */}
-        <div className="hidden lg:block lg:col-span-7 xl:col-span-7 h-full">
+        <div className="hidden lg:block lg:col-span-6 xl:col-span-6 h-full">
           <AuthNetworkVisual />
         </div>
       </div>
     </div>
   );
 }
-

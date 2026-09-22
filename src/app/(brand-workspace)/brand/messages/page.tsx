@@ -128,12 +128,6 @@ function BrandMessagesContent() {
     }, 1200);
   };
 
-  const quickPrompts = [
-    'Are you available for a campaign this month?',
-    'What is your standard turnaround time for 1x Reel?',
-    'Can we negotiate 60-day paid usage rights?',
-  ];
-
   return (
     <div className="min-h-screen pb-12 font-sans flex flex-col">
       <WorkspaceHeader
@@ -334,24 +328,6 @@ function BrandMessagesContent() {
                 )}
 
                 <div ref={messagesEndRef} />
-              </div>
-
-              {/* Quick Prompts Bar */}
-              <div className="px-4 py-2 border-t border-[#E7E7E2] bg-white flex items-center gap-2 overflow-x-auto no-scrollbar">
-                <span className="text-[11px] font-bold text-[#73736A] shrink-0 flex items-center gap-1">
-                  <Sparkles className="w-3 h-3 text-[#73736A]" />
-                  <span>Quick Questions:</span>
-                </span>
-                {quickPrompts.map((prompt, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => handleSendMessage(prompt)}
-                    className="text-xs px-3 py-1 rounded-full bg-[#FAFAF8] hover:bg-[#EAEAE3] border border-[#E7E7E2] text-[#0A0A0A] font-semibold whitespace-nowrap cursor-pointer transition-colors shadow-2xs"
-                  >
-                    {prompt}
-                  </button>
-                ))}
               </div>
 
               {/* Message Input Box */}

@@ -2,12 +2,10 @@
 
 import React from 'react';
 import { ConfigProvider, theme } from 'antd';
-import { AntdRegistry } from '@ant-design/nextjs-registry';
 
 export function AntdConfig({ children }: { children: React.ReactNode }) {
   return (
-    <AntdRegistry>
-      <ConfigProvider
+    <ConfigProvider
         theme={{
           token: {
             colorPrimary: '#0A0A0A',
@@ -83,9 +81,8 @@ export function AntdConfig({ children }: { children: React.ReactNode }) {
             },
           },
         }}
-      >
-        {children}
-      </ConfigProvider>
-    </AntdRegistry>
+    >
+      {children}
+    </ConfigProvider>
   );
 }
