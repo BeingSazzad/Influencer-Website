@@ -145,13 +145,7 @@ export function Navbar() {
                 </button>
               </Dropdown>
             ) : (
-              <div className="flex items-center gap-3 font-sans">
-                <Link
-                  href="/login"
-                  className="text-xs font-bold text-[#0A0A0A] hover:text-[#73736A] transition-colors px-2 py-1"
-                >
-                  Log In
-                </Link>
+              <div className="flex items-center font-sans">
                 <Link href="/register">
                   <button className="h-10 px-5 rounded-full bg-[#0A0A0A] hover:bg-zinc-800 text-white font-bold text-xs shadow-xs transition-all cursor-pointer">
                     Get Started
@@ -232,13 +226,20 @@ export function Navbar() {
               </div>
             </div>
           ) : (
-            <div className="pt-2">
+            <div className="pt-2 space-y-2.5">
               <Link
                 href="/register"
                 onClick={() => setIsDrawerOpen(false)}
-                className="w-full h-11 rounded-full bg-[#0A0A0A] hover:bg-zinc-800 text-white font-outfit font-bold text-[16px] leading-[20px] flex items-center justify-center shadow-sm transition-all"
+                className="w-full h-11 rounded-full bg-[#0A0A0A] hover:bg-[#FF2D78] text-white font-sans font-bold text-sm flex items-center justify-center shadow-sm transition-all"
               >
                 Get Started
+              </Link>
+              <Link
+                href="/login"
+                onClick={() => setIsDrawerOpen(false)}
+                className="w-full h-10 rounded-full bg-white hover:bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] font-sans font-bold text-sm flex items-center justify-center transition-all"
+              >
+                Log In
               </Link>
             </div>
           )}

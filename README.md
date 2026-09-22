@@ -1,67 +1,76 @@
-# LUXE PRIME — Influencer & Luxury Real Estate Platform
+# Influverse — The Creator Marketplace for Brands & Influencers
 
-> **Live Production Platform**: Modern luxury real estate advisory and influencer media platform built with Next.js App Router, Redux Toolkit, Ant Design, and Tailwind CSS.
+> **Production Platform**: Two-sided creator marketplace connecting brands with verified social media creators and UGC specialists with 100% escrow protection and transparent EUR (€) pricing.
 
 ---
 
-## 🏛️ System Architecture
+## 🏛️ System Architecture & Clean Code Structure
 
 ```
 src/
 ├── app/
-│   ├── (website)/              # Public-facing luxury property & agent discovery
-│   │   ├── page.tsx            # Homepage (Hero, Featured, Typologies, Influencers, Insights, CTA)
-│   │   ├── properties/         # Interactive Property Search & Filter Grid
-│   │   │   ├── page.tsx
-│   │   │   └── [id]/page.tsx   # Detailed Property Page with Gallery, Specs, Mortgage & Inquiries
-│   │   ├── agents/             # Real Estate Influencers & Top Producer Directory
-│   │   │   ├── page.tsx
-│   │   │   └── [id]/page.tsx   # Agent Profile, Bio, Social Stats & Active Listings
-│   │   └── layout.tsx          # Public Layout (Navbar + Footer)
-│   ├── (auth)/                 # Authentication Flows
-│   │   ├── login/page.tsx      # Dual-Role Login (Buyer vs Agent) with Instant Demo Switcher
-│   │   ├── register/page.tsx   # Membership Registration
-│   │   └── forgot-password/page.tsx
-│   ├── (user-dashboard)/       # Buyer / Investor Private Area
-│   │   ├── user/
-│   │   │   ├── dashboard/page.tsx       # Buyer Overview, Activity & Scheduled Tours
-│   │   │   ├── saved-properties/page.tsx# Wishlist & Comparison Matrix
-│   │   │   ├── inquiries/page.tsx       # Message threads with Agents & Itineraries
-│   │   │   └── profile/page.tsx         # Account preferences & settings
-│   │   └── layout.tsx                   # User Dashboard Layout with UserSidebar
-│   ├── (agent-dashboard)/      # Real Estate Agent / Influencer CRM & Portal
-│   │   ├── agent/
-│   │   │   ├── dashboard/page.tsx       # Agent Analytics, KPI Cards & Inquiries Feed
-│   │   │   ├── listings/
-│   │   │   │   ├── page.tsx             # Active, Pending, Sold Listings Table & Filters
-│   │   │   │   └── new/page.tsx         # Multi-step Property Listing Creator Wizard
-│   │   │   ├── leads/page.tsx           # Visual CRM Pipeline (New, Contacted, Viewing, Closed)
-│   │   │   ├── analytics/page.tsx       # Traffic, conversion, social reach analytics
-│   │   │   └── profile/page.tsx         # Influencer Brand profile & social links editor
-│   │   └── layout.tsx                   # Agent Dashboard Layout with AgentSidebar
-│   ├── (InfoPages)/            # Corporate & Content Pages
-│   │   ├── about/page.tsx      # About Us, Vision, Global Desks & Stats
-│   │   ├── contact/page.tsx    # Contact Form & Global Office Hubs
-│   │   ├── privacy/page.tsx    # Privacy Policy & Non-Disclosure Framework
-│   │   └── faq/page.tsx        # Interactive Accordion FAQ
-│   ├── layout.tsx              # Root Layout (Redux Provider, Ant Design ConfigProvider, Fonts)
-│   ├── globals.css             # Tailwind base and custom theme styling
-│   └── not-found.tsx
+│   ├── (website)/                  # Public Discovery & Marketing Portal
+│   │   ├── page.tsx                # Homepage (Hero, TrustedBy, Bento Grid, ValueProps, HowItWorks, Pricing, FAQ)
+│   │   ├── creators/               # Creators Discovery Marketplace
+│   │   │   ├── page.tsx            # Live URL sync, categories, omni-search, active filter chips & pagination
+│   │   │   └── [id]/page.tsx       # Creator Profile, Verified Stats, Packages, Portfolio Lightbox & Reviews
+│   │   ├── how-it-works/page.tsx   # Dual-perspective workflow (For Brands / For Creators) with hash navigation
+│   │   ├── pricing/page.tsx        # Transparent 15% escrow model breakdown & fee calculator
+│   │   ├── about/page.tsx          # Brand story, mission, verified creators standard
+│   │   ├── faq/page.tsx            # Categorized accordion FAQ with instant search
+│   │   └── layout.tsx              # Public Header (Navbar) + Footer
+│   ├── (auth)/                     # Authentication Flows
+│   │   ├── login/page.tsx          # 1-Click Demo Login (Brand vs Creator) + Manual auth
+│   │   ├── register/page.tsx       # Dual-role onboarding (Brand vs Creator registration)
+│   │   ├── forgot-password/page.tsx
+│   │   └── reset-password/page.tsx
+│   ├── (brand-workspace)/          # Brand & Marketer Workspace
+│   │   ├── brand/
+│   │   │   ├── dashboard/page.tsx  # Campaign metrics, quick actions & active orders overview
+│   │   │   ├── hire/new/page.tsx   # Creator hiring wizard with escrow calculation
+│   │   │   ├── orders/             # Order tracking, deliverable approvals & escrow release
+│   │   │   │   ├── page.tsx
+│   │   │   │   └── [id]/page.tsx
+│   │   │   ├── saved/page.tsx      # Shortlisted & favorite creators collection
+│   │   │   ├── messages/page.tsx   # Direct unified messaging with creators
+│   │   │   ├── payments/page.tsx   # Escrow wallet, deposits, 15% fee breakdown & tax invoices
+│   │   │   ├── settings/page.tsx   # Brand profile, billing & team preferences
+│   │   │   └── layout.tsx          # Brand workspace shell with BrandSidebar & WorkspaceHeader
+│   ├── (creator-workspace)/        # Creator & Talent Workspace
+│   │   ├── creator/
+│   │   │   ├── dashboard/page.tsx  # Earnings, active deliverables, pipeline, share profile & preview modal
+│   │   │   ├── packages/page.tsx   # Rate card manager (Stories, Reels, UGC, Dedicated posts)
+│   │   │   ├── offers/page.tsx     # Funded escrow brand offers review & acceptance
+│   │   │   ├── orders/             # Active collaboration workflows & deliverable submission
+│   │   │   │   ├── page.tsx
+│   │   │   │   └── [id]/page.tsx
+│   │   │   ├── messages/page.tsx   # Direct collaboration messaging
+│   │   │   ├── payments/page.tsx   # Net earnings, instant SEPA withdrawals & payout methods
+│   │   │   ├── settings/page.tsx   # Profile, Bio, Social handles, Photo gallery & security
+│   │   │   └── layout.tsx          # Creator workspace shell with CreatorSidebar & WorkspaceHeader
+│   ├── (legal)/                    # Compliance & Platform Policy
+│   │   ├── terms/page.tsx          # Terms of Service & Escrow Agreements
+│   │   └── privacy/page.tsx        # GDPR Privacy Policy
+│   ├── globals.css                 # Design tokens, typography variables & component styling
+│   ├── layout.tsx                  # Root layout with AntdRegistry, ReduxProvider, and preconnect fonts
+│   ├── loading.tsx                 # Instant suspense skeleton loader
+│   └── not-found.tsx               # Custom branded 404 recovery page
 ├── components/
-│   ├── ui/                     # Base design components
-│   ├── layout/                 # Navbar, Footer, UserSidebar, AgentSidebar, DashboardHeader
-│   ├── shared/                 # PropertyCard, AgentCard, SearchFilterBar, MetricCard, InquiryModal
-│   └── web-pages/              # HeroSection, FeaturedProperties, CategoriesSection, TopAgents, Insights
+│   ├── auth/                       # Auth visual network illustration
+│   ├── layout/                     # Navbar, Footer, BrandSidebar, CreatorSidebar, WorkspaceHeader
+│   ├── shared/                     # CreatorCard, PackageCard, VerifiedBadge, EmptyState, Lightboxes, Modals
+│   └── web-pages/                  # SplitHero, TrustedBy, Bento, ValueProps, HowItWorks, Pricing, FAQ
 ├── redux/
-│   ├── store.ts                # Central Redux store
-│   ├── hooks.ts                # Typed useAppDispatch & useAppSelector
+│   ├── store.ts                    # Central Redux store with typed hooks
+│   ├── hooks.ts                    # useAppDispatch & useAppSelector
 │   └── slices/
-│       ├── authSlice.ts        # Role switcher (Buyer vs Agent) & user state
-│       ├── propertySlice.ts    # Filter states, favorites, custom added listings
-│       ├── leadSlice.ts        # Agent CRM leads & inquiry creation
-│       └── uiSlice.ts          # Modals, drawer controls, active notifications
-├── Mockdata.ts                 # Rich dataset of luxury properties, influencers, leads & analytics
-└── types/                      # TypeScript definitions (Property, Agent, Lead, User, Filter)
+│       ├── authSlice.ts            # Authentication, demo role switcher (Brand vs Creator) & user profile
+│       ├── creatorSlice.ts         # Creator discovery catalog, omni-filters, search query & favorites
+│       ├── orderSlice.ts           # Escrow order lifecycles, milestones, deliverable approvals
+│       ├── messageSlice.ts         # Unified real-time chat threads & order messaging
+│       └── langSlice.ts            # Multilingual support (EN / DE)
+├── types/                          # Strictly typed domain definitions (User, Creator, Order, Package, Message)
+└── Mockdata.ts                     # Curated realistic datasets with authentic creator metrics, packages & portfolios
 ```
 
 ---
@@ -79,24 +88,41 @@ npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-### 3. Production Build & Typecheck
+### 3. Production Build & Validation
 ```bash
 npm run build
 ```
 
 ---
 
-## 🌟 Key Features
+## 🎨 Design System & Typography
 
-1. **Instant Dual-Role Demo Switching**:
-   - Toggle seamlessly between **Real Estate Agent / Influencer** and **Buyer / Investor** from the Navbar or Profile dropdown to immediately experience both dashboards and views.
-2. **Omni-Search & Dynamic Filtering**:
-   - Filter by location (Bel Air, Manhattan, Dubai, Miami Beach, London, Aspen, Monaco), property type, bedroom counts, price ranges, and sorting criteria.
-3. **Property Detail & Mortgage Underwriting**:
-   - High-res photo gallery, architectural specifications, verified amenities checklist, interactive mortgage calculator, and confidential tour scheduling.
-4. **4-Step Property Listing Creator Wizard**:
-   - Complete multi-step creator for agents to publish new trophy estates with 4K video walkthrough links and instant Redux catalog integration.
-5. **Agent CRM Lead Pipeline**:
-   - Kanban-style CRM board with drag/status progression: `New Inquiry` ➔ `Contacted` ➔ `VIP Viewing Set` ➔ `Offer / Escrow` ➔ `Closed Deal`.
-6. **Social Reach & Audience Analytics**:
-   - Track monthly video impressions across YouTube, Instagram Reels, TikTok, and direct website traffic with conversion rate insights.
+- **Primary Sans / UI Font**: `Red Hat Display` (weights 300–900)
+- **Editorial / Serif Font**: `Playfair Display` (weights 400–900, normal & italic)
+- **Palette**:
+  - Deep Onyx: `#0A0A0A`
+  - Canvas / Surface: `#FAFAF8`
+  - Subtle Gray: `#F4F4F0`
+  - Border Gray: `#E7E7E2`
+  - Accent Pink: `#FF2D78`
+  - Success Green: `#23744D` / `#EEF7F2`
+
+---
+
+## 🌟 Key Platform Features
+
+1. **Live Autocomplete Hero Search**:
+   - Instant real-time creator suggestions dropdown on the Homepage Hero with verified status, follower niches, and EUR base rates.
+   - Synchronized query parameter routing to `/creators?q=...&platform=...&category=...`.
+
+2. **Full-Featured Discovery & Filtering**:
+   - Multi-parameter filtering across Categories, Platforms (Instagram, TikTok, YouTube, UGC), Follower Tiers (Nano, Micro, Macro, Mega), and Locations.
+   - Interactive Active Filter Chips with instant one-click removal and reset.
+
+3. **100% Secure Escrow Workflow**:
+   - Brands deposit the creator base price + 15% platform fee into protected escrow.
+   - Creator delivers content for review, and escrow is released only upon brand approval.
+
+4. **Dedicated Dual Workspaces**:
+   - **Brand Workspace**: Campaign KPIs, shortlist, order tracking, and escrow management.
+   - **Creator Workspace**: Direct profile sharing modal (QR code, rate card link), package pricing manager, portfolio showcase, and incoming offer reviews.

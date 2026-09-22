@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAppSelector } from '@/redux/hooks';
+import { PlatformType } from '@/types';
 import {
   Search,
   Instagram,
@@ -16,20 +17,56 @@ import {
   Zap,
   ChevronDown,
   Globe,
+  User,
 } from 'lucide-react';
 import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
 
 export function SplitHero() {
   const router = useRouter();
   const { t } = useAppSelector((state) => state.lang);
+  const { creators } = useAppSelector((state) => state.creator);
   const [platform, setPlatform] = useState<string>('all');
   const [category, setCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
   const [isPlatformOpen, setIsPlatformOpen] = useState(false);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+
   const platformDropdownRef = useRef<HTMLDivElement>(null);
   const categoryDropdownRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLDivElement>(null);
+
+  // Live real-time suggestions computed from the creators catalog
+  const liveSuggestions = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return [];
+
+    return creators.filter((c) => {
+      const matchName = c.name.toLowerCase().includes(q);
+      const matchHandle = c.handle.toLowerCase().includes(q);
+      const matchBio = c.bio.toLowerCase().includes(q);
+      const matchCat = c.categories.some((cat) => cat.toLowerCase().includes(q));
+      const matchTag = c.tags?.some((tag) => tag.toLowerCase().includes(q));
+      const matchesText = matchName || matchHandle || matchBio || matchCat || matchTag;
+
+      const matchesPlatform =
+        platform === 'all' ||
+        (platform === 'ugc'
+          ? !!c.platforms.ugc || c.packages.some((p) => p.platform === 'ugc')
+          : !!c.platforms[platform as PlatformType]);
+
+      const matchesCategory =
+        category === 'all' ||
+        c.categories.some(
+          (cat) =>
+            cat.toLowerCase().includes(category.toLowerCase()) ||
+            category.toLowerCase().includes(cat.toLowerCase())
+        );
+
+      return matchesText && matchesPlatform && matchesCategory;
+    }).slice(0, 4);
+  }, [creators, searchQuery, platform, category]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -39,6 +76,9 @@ export function SplitHero() {
       if (categoryDropdownRef.current && !categoryDropdownRef.current.contains(event.target as Node)) {
         setIsCategoryOpen(false);
       }
+      if (searchInputRef.current && !searchInputRef.current.contains(event.target as Node)) {
+        setShowSuggestions(false);
+      }
     }
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
@@ -46,8 +86,9 @@ export function SplitHero() {
 
   const handleSearch = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
+    setShowSuggestions(false);
     const params = new URLSearchParams();
-    if (searchQuery) params.set('q', searchQuery);
+    if (searchQuery.trim()) params.set('q', searchQuery.trim());
     if (platform !== 'all') params.set('platform', platform);
     if (category !== 'all') params.set('category', category);
     router.push(`/creators?${params.toString()}`);
@@ -191,15 +232,89 @@ export function SplitHero() {
             <div className="bg-white p-1.5 sm:p-2 rounded-2xl sm:rounded-full border border-[#E7E7E2] shadow-lg shadow-black/[0.04] w-full max-w-xl xl:max-w-2xl transition-all focus-within:border-[#0A0A0A] relative z-30 mb-8">
               <form onSubmit={handleSearch} className="flex flex-col sm:flex-row items-center gap-2 sm:gap-0">
                 {/* 1. Keyword / Name Text Search Input */}
-                <div className="flex-1 flex items-center pl-3.5 pr-2 py-1.5 w-full min-w-[160px]">
+                <div ref={searchInputRef} className="flex-1 flex items-center pl-3.5 pr-2 py-1.5 w-full min-w-[160px] relative">
                   <Search className="w-4 h-4 text-[#73736A] mr-2.5 shrink-0" />
                   <input
                     type="text"
                     placeholder={t?.hero?.searchPlaceholder || 'Search creators, niches, keywords...'}
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onFocus={() => {
+                      if (searchQuery.trim()) setShowSuggestions(true);
+                    }}
+                    onChange={(e) => {
+                      setSearchQuery(e.target.value);
+                      setShowSuggestions(true);
+                    }}
                     className="w-full bg-transparent text-sm font-semibold text-[#0A0A0A] placeholder:text-[#A3A39C] outline-none font-sans"
                   />
+
+                  {/* Live Suggestions Dropdown */}
+                  {showSuggestions && searchQuery.trim().length > 0 && (
+                    <div className="absolute top-full left-0 mt-3 w-[calc(100vw-3rem)] sm:w-[380px] bg-white rounded-2xl border border-[#E7E7E2] shadow-2xl p-3 z-50 animate-in fade-in-0 zoom-in-95 duration-150">
+                      <div className="flex items-center justify-between pb-2 border-b border-[#F4F4F0] px-1 text-[11px] font-bold uppercase tracking-wider text-[#73736A]">
+                        <span>Suggested Creators</span>
+                        <span className="text-[#FF2D78]">Press Enter to search</span>
+                      </div>
+
+                      {liveSuggestions.length > 0 ? (
+                        <div className="space-y-1 pt-1.5">
+                          {liveSuggestions.map((c) => (
+                            <button
+                              key={c.id}
+                              type="button"
+                              onClick={() => {
+                                setShowSuggestions(false);
+                                router.push(`/creators/${c.id}`);
+                              }}
+                              className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#FAFAF8] transition-colors group cursor-pointer text-left"
+                            >
+                              <div className="flex items-center gap-2.5 min-w-0">
+                                <img
+                                  src={c.avatar}
+                                  alt={c.name}
+                                  className="w-9 h-9 rounded-full object-cover border border-[#E7E7E2] shrink-0"
+                                />
+                                <div className="min-w-0">
+                                  <div className="text-xs font-black text-[#0A0A0A] flex items-center gap-1 group-hover:text-[#FF2D78] transition-colors">
+                                    <span className="truncate">{c.name}</span>
+                                    {c.verified && <VerifiedBadge size="sm" />}
+                                  </div>
+                                  <div className="text-[11px] text-[#73736A] truncate">
+                                    @{c.handle.replace('@', '')} • {c.categories[0]}
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="text-right shrink-0 pl-2">
+                                <div className="text-xs font-black text-[#0A0A0A]">From €{c.startingPriceEur}</div>
+                                <div className="text-[10px] text-[#23744D] font-bold">★ {c.rating}</div>
+                              </div>
+                            </button>
+                          ))}
+
+                          <button
+                            type="button"
+                            onClick={() => handleSearch()}
+                            className="w-full mt-2 pt-2 border-t border-[#F4F4F0] text-center text-xs font-extrabold text-[#0A0A0A] hover:text-[#FF2D78] flex items-center justify-center gap-1 cursor-pointer py-1"
+                          >
+                            <span>Explore all results for &ldquo;{searchQuery}&rdquo;</span>
+                            <ArrowRight className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="py-4 text-center text-xs text-[#73736A] space-y-2">
+                          <p>No creators directly matching &ldquo;{searchQuery}&rdquo;</p>
+                          <button
+                            type="button"
+                            onClick={() => handleSearch()}
+                            className="text-[#FF2D78] font-bold hover:underline inline-flex items-center gap-1 cursor-pointer"
+                          >
+                            <span>Search full marketplace catalog</span>
+                            <ArrowRight className="w-3 h-3" />
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 {/* Divider Line */}

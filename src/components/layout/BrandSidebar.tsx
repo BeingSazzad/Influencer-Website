@@ -11,8 +11,10 @@ import {
   LayoutDashboard,
   Bookmark,
   ShoppingBag,
+  Layers,
   PlusCircle,
   MessageSquare,
+  CreditCard,
   Settings,
   LogOut,
 } from 'lucide-react';
@@ -42,9 +44,9 @@ export function BrandSidebar() {
       icon: LayoutDashboard,
     },
     {
-      name: 'Orders',
-      href: '/brand/orders',
-      icon: ShoppingBag,
+      name: 'Campaigns',
+      href: '/brand/campaigns',
+      icon: Layers,
       badge: brandOrdersCount > 0 ? brandOrdersCount : undefined,
     },
     {
@@ -58,6 +60,11 @@ export function BrandSidebar() {
       href: '/brand/saved',
       icon: Bookmark,
       badge: savedCreatorIds.length > 0 ? savedCreatorIds.length : undefined,
+    },
+    {
+      name: 'Payments',
+      href: '/brand/payments',
+      icon: CreditCard,
     },
     {
       name: 'New Offer',

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Creator, CreatorFilterState, CreatorPhoto, CreatorPackage } from '@/types';
+import { Creator, CreatorFilterState, CreatorPhoto, CreatorPackage, PortfolioItem } from '@/types';
 import { MOCK_CREATORS } from '@/Mockdata';
 
 interface CreatorState {
@@ -89,6 +89,28 @@ export const creatorSlice = createSlice({
         creator.packages = creator.packages.filter((p) => p.id !== action.payload.packageId);
       }
     },
+    addPortfolioItem: (state, action: PayloadAction<{ creatorId: string; item: PortfolioItem }>) => {
+      const creator = state.creators.find((c) => c.id === action.payload.creatorId);
+      if (creator) {
+        if (!creator.portfolio) creator.portfolio = [];
+        creator.portfolio.unshift(action.payload.item);
+      }
+    },
+    updatePortfolioItem: (state, action: PayloadAction<{ creatorId: string; item: PortfolioItem }>) => {
+      const creator = state.creators.find((c) => c.id === action.payload.creatorId);
+      if (creator && creator.portfolio) {
+        const index = creator.portfolio.findIndex((i) => i.id === action.payload.item.id);
+        if (index !== -1) {
+          creator.portfolio[index] = action.payload.item;
+        }
+      }
+    },
+    deletePortfolioItem: (state, action: PayloadAction<{ creatorId: string; itemId: string }>) => {
+      const creator = state.creators.find((c) => c.id === action.payload.creatorId);
+      if (creator && creator.portfolio) {
+        creator.portfolio = creator.portfolio.filter((i) => i.id !== action.payload.itemId);
+      }
+    },
   },
 });
 
@@ -103,6 +125,9 @@ export const {
   addCreatorPackage,
   updateCreatorPackage,
   deleteCreatorPackage,
+  addPortfolioItem,
+  updatePortfolioItem,
+  deletePortfolioItem,
 } = creatorSlice.actions;
 
 export default creatorSlice.reducer;

@@ -11,8 +11,11 @@ import {
   LayoutDashboard,
   Inbox,
   ShoppingBag,
+  Layers,
   Package,
+  Film,
   MessageSquare,
+  CreditCard,
   Settings,
   LogOut,
 } from 'lucide-react';
@@ -58,16 +61,10 @@ export function CreatorSidebar() {
       icon: LayoutDashboard,
     },
     {
-      name: 'Offers',
-      href: '/creator/offers',
-      icon: Inbox,
-      badge: pendingOffersCount > 0 ? pendingOffersCount : undefined,
-    },
-    {
-      name: 'Orders',
-      href: '/creator/orders',
-      icon: ShoppingBag,
-      badge: activeOrdersCount > 0 ? activeOrdersCount : undefined,
+      name: 'Campaigns',
+      href: '/creator/campaigns',
+      icon: Layers,
+      badge: (pendingOffersCount + activeOrdersCount) > 0 ? (pendingOffersCount + activeOrdersCount) : undefined,
     },
     {
       name: 'Messages',
@@ -79,6 +76,17 @@ export function CreatorSidebar() {
       name: 'Packages',
       href: '/creator/packages',
       icon: Package,
+    },
+    {
+      name: 'Portfolio',
+      href: '/creator/portfolio',
+      icon: Film,
+      badge: currentCreator?.portfolio?.length || undefined,
+    },
+    {
+      name: 'Payouts',
+      href: '/creator/payments',
+      icon: CreditCard,
     },
     {
       name: 'Settings',

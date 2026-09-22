@@ -139,22 +139,22 @@ export default function BrandDashboardPage() {
           </div>
         </div>
 
-        {/* Active Campaign Orders Table / List */}
+        {/* Active Campaigns Table / List */}
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-lg sm:text-xl font-bold text-[#0A0A0A] tracking-tight">
-                Active Campaign Orders
+                Active Brand Campaigns
               </h2>
               <p className="text-sm text-[#73736A] mt-0.5 font-medium">
-                Track deliverable progress and release escrow payments upon approval.
+                Track deliverables, milestone progress, and escrow release status.
               </p>
             </div>
             <Link
-              href="/brand/orders"
+              href="/brand/campaigns"
               className="text-sm font-semibold text-[#0A0A0A] hover:text-zinc-600 flex items-center gap-1.5 transition-colors"
             >
-              <span>View all orders</span>
+              <span>View all campaigns</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -288,7 +288,7 @@ export default function BrandDashboardPage() {
                 label: 'Explore Verified Creators',
                 href: '/creators',
               }}
-              variant="dashed"
+              variant="plain"
             />
           )}
         </div>

@@ -147,7 +147,7 @@ export default function CreatorOffersPage() {
                 label: 'View Public Profile',
                 href: '/creators/creator-01',
               }}
-              variant="dashed"
+              variant="plain"
             />
           )}
         </div>

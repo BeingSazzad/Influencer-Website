@@ -20,40 +20,12 @@ import {
   Receipt,
   FileText,
   LogOut,
-  Check,
   Sparkles,
   Share2,
 } from 'lucide-react';
 import { ShareProfileModal } from '@/components/shared/ShareProfileModal';
 import { ImageUpload } from '@/components/shared/ImageUpload';
 import { Input, Button, message, Switch } from 'antd';
-
-const BRAND_LOGO_PRESETS = [
-  {
-    label: 'Aura Skincare Paris',
-    url: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=400&q=80',
-  },
-  {
-    label: 'Maison Luxe Paris',
-    url: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=400&q=80',
-  },
-  {
-    label: 'Glow Botanical Labs',
-    url: 'https://images.unsplash.com/photo-1608248597359-53530f2955cf?auto=format&fit=crop&w=400&q=80',
-  },
-  {
-    label: 'Nord Minimal Studios',
-    url: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=400&q=80',
-  },
-  {
-    label: 'Vogue & Velour',
-    url: 'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=400&q=80',
-  },
-  {
-    label: 'Apex Creative Co',
-    url: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=400&q=80',
-  },
-];
 
 export default function BrandSettingsPage() {
   const router = useRouter();
@@ -66,7 +38,7 @@ export default function BrandSettingsPage() {
   const [companyName, setCompanyName] = useState(currentUser?.companyName || 'Aura Skincare Paris');
   const [contactName, setContactName] = useState(currentUser?.name || 'Elena Rostova');
   const [email, setEmail] = useState(currentUser?.email || 'elena@aura-cosmetics.com');
-  const [avatar, setAvatar] = useState(currentUser?.avatar || BRAND_LOGO_PRESETS[0].url);
+  const [avatar, setAvatar] = useState(currentUser?.avatar || '');
   const [website, setWebsite] = useState('https://aura-skincare.com');
   const [location, setLocation] = useState(currentUser?.location || 'Berlin & Paris');
   const [bio, setBio] = useState(currentUser?.bio || 'Brand Lead at Aura Skincare developing organic beauty and wellness product launches.');
@@ -216,8 +188,8 @@ export default function BrandSettingsPage() {
                 <h2 className="text-lg font-black text-[#0A0A0A] tracking-tight">Brand Identity</h2>
               </div>
 
-              {/* Brand Logo Image Upload & Presets */}
-              <div className="p-5 bg-[#FAFAF8] rounded-2xl border border-[#E7E7E2] space-y-4">
+              {/* Brand Logo Image Upload */}
+              <div className="p-5 bg-[#FAFAF8] rounded-2xl border border-[#E7E7E2]">
                 <ImageUpload
                   variant="avatar"
                   label="Brand Logo"
@@ -225,35 +197,6 @@ export default function BrandSettingsPage() {
                   value={avatar}
                   onChange={(img) => setAvatar(img)}
                 />
-
-                <div className="pt-3 border-t border-[#E7E7E2]">
-                  <div className="text-xs font-semibold text-[#73736A] mb-2.5">Or select a brand mark preset:</div>
-                  <div className="flex flex-wrap items-center gap-2.5">
-                    {BRAND_LOGO_PRESETS.map((preset) => {
-                      const isSelected = avatar === preset.url;
-                      return (
-                        <button
-                          key={preset.label}
-                          type="button"
-                          onClick={() => setAvatar(preset.url)}
-                          title={preset.label}
-                          className={`relative w-10 h-10 rounded-full overflow-hidden border-2 transition-all cursor-pointer ${
-                            isSelected
-                              ? 'border-[#0A0A0A] ring-2 ring-black/20 scale-105 shadow-sm'
-                              : 'border-[#E7E7E2] hover:border-[#73736A] opacity-75 hover:opacity-100'
-                          }`}
-                        >
-                          <img src={preset.url} alt={preset.label} className="w-full h-full object-cover" />
-                          {isSelected && (
-                            <div className="absolute inset-0 bg-black/40 flex items-center justify-center text-white">
-                              <Check className="w-3.5 h-3.5" />
-                            </div>
-                          )}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
               </div>
 
               {/* Company Name & Contact Name */}

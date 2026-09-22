@@ -1,13 +1,14 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, Suspense } from 'react';
 import Link from 'next/link';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from '@/redux/hooks';
 import { setFilter, resetFilters } from '@/redux/slices/creatorSlice';
 import { CreatorCard } from '@/components/shared/CreatorCard';
 import { CreatorGridSkeleton } from '@/components/shared/Skeleton';
 import { EmptyState } from '@/components/shared/EmptyState';
-import { Creator, PlatformType } from '@/types';
+import { Creator, PlatformType, CreatorFilterState } from '@/types';
 import {
   Search,
   SlidersHorizontal,
@@ -31,16 +32,50 @@ import {
   Briefcase,
   Palette,
   Layers,
+  X,
 } from 'lucide-react';
 import { Input, Select, Pagination, Button } from 'antd';
 
-export default function CreatorsDiscoveryPage() {
+function CreatorsDiscoveryContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
   const { creators, filters } = useAppSelector((state) => state.creator);
   const { t } = useAppSelector((state) => state.lang);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const pageSize = 9;
+
+  // Synchronize incoming URL search parameters (from Hero search, Footer category links, etc.)
+  useEffect(() => {
+    const q = searchParams.get('q') || searchParams.get('search');
+    const category = searchParams.get('category');
+    const platform = searchParams.get('platform');
+    const location = searchParams.get('location');
+
+    const updates: Partial<CreatorFilterState> = {};
+    if (q !== null && q !== undefined && q !== filters.searchQuery) {
+      updates.searchQuery = q;
+    }
+    if (category && category !== filters.category) {
+      updates.category = category;
+    }
+    if (platform && platform !== filters.platform) {
+      updates.platform = platform as any;
+    }
+    if (location && location !== filters.location) {
+      updates.location = location;
+    }
+
+    if (Object.keys(updates).length > 0) {
+      dispatch(setFilter(updates));
+    }
+  }, [searchParams]);
+
+  // Reset pagination to first page when any search or filter criteria changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filters]);
 
   const categories = [
     {
@@ -131,21 +166,34 @@ export default function CreatorsDiscoveryPage() {
 
         // Platform filter
         if (filters.platform !== 'all') {
-          if (!c.platforms[filters.platform as PlatformType]) return false;
+          if (filters.platform === 'ugc') {
+            const hasUgc =
+              !!c.platforms.ugc ||
+              c.packages.some((p) => p.platform === 'ugc') ||
+              c.categories.includes('Lifestyle') ||
+              c.bio.toLowerCase().includes('ugc');
+            if (!hasUgc) return false;
+          } else if (!c.platforms[filters.platform as PlatformType]) {
+            return false;
+          }
         }
 
         // Search query
         if (filters.searchQuery) {
-          const query = filters.searchQuery.toLowerCase();
+          const query = filters.searchQuery.toLowerCase().trim();
           const matchName = c.name.toLowerCase().includes(query);
           const matchHandle = c.handle.toLowerCase().includes(query);
           const matchBio = c.bio.toLowerCase().includes(query);
           const matchCat = c.categories.some((cat) => cat.toLowerCase().includes(query));
-          if (!matchName && !matchHandle && !matchBio && !matchCat) return false;
+          const matchTag = c.tags?.some((t) => t.toLowerCase().includes(query));
+          const matchLocation = c.location.toLowerCase().includes(query);
+          if (!matchName && !matchHandle && !matchBio && !matchCat && !matchTag && !matchLocation) {
+            return false;
+          }
         }
 
         // Location filter
-        if (filters.location !== 'all' && !c.location.includes(filters.location)) {
+        if (filters.location !== 'all' && !c.location.toLowerCase().includes(filters.location.toLowerCase())) {
           return false;
         }
 
@@ -311,6 +359,79 @@ export default function CreatorsDiscoveryPage() {
           </button>
         </div>
 
+        {/* Active Filter Chips / Status bar if any filter is applied */}
+        {(filters.searchQuery || filters.category !== 'all' || filters.platform !== 'all' || filters.location !== 'all' || filters.followerRange !== 'all') && (
+          <div className="flex flex-wrap items-center gap-2 pt-1 font-sans text-xs">
+            <span className="text-[#73736A] font-bold mr-1">Active Filters:</span>
+            {filters.searchQuery && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0A0A0A] text-white font-medium">
+                Keyword: "{filters.searchQuery}"
+                <button
+                  onClick={() => dispatch(setFilter({ searchQuery: '' }))}
+                  className="hover:text-[#FF2D78] transition-colors cursor-pointer"
+                  title="Remove query filter"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </span>
+            )}
+            {filters.category !== 'all' && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E7E7E2] text-[#0A0A0A] font-medium shadow-2xs">
+                Category: {filters.category}
+                <button
+                  onClick={() => dispatch(setFilter({ category: 'all' }))}
+                  className="text-[#73736A] hover:text-[#FF2D78] transition-colors cursor-pointer"
+                  title="Remove category filter"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </span>
+            )}
+            {filters.platform !== 'all' && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E7E7E2] text-[#0A0A0A] font-medium shadow-2xs">
+                Platform: {filters.platform.toUpperCase()}
+                <button
+                  onClick={() => dispatch(setFilter({ platform: 'all' }))}
+                  className="text-[#73736A] hover:text-[#FF2D78] transition-colors cursor-pointer"
+                  title="Remove platform filter"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </span>
+            )}
+            {filters.location !== 'all' && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E7E7E2] text-[#0A0A0A] font-medium shadow-2xs">
+                Location: {filters.location}
+                <button
+                  onClick={() => dispatch(setFilter({ location: 'all' }))}
+                  className="text-[#73736A] hover:text-[#FF2D78] transition-colors cursor-pointer"
+                  title="Remove location filter"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </span>
+            )}
+            {filters.followerRange !== 'all' && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E7E7E2] text-[#0A0A0A] font-medium shadow-2xs">
+                Followers: {filters.followerRange}
+                <button
+                  onClick={() => dispatch(setFilter({ followerRange: 'all' }))}
+                  className="text-[#73736A] hover:text-[#FF2D78] transition-colors cursor-pointer"
+                  title="Remove follower range filter"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </span>
+            )}
+            <button
+              onClick={() => dispatch(resetFilters())}
+              className="text-[#FF2D78] hover:underline font-bold ml-2 cursor-pointer transition-colors"
+            >
+              Clear all
+            </button>
+          </div>
+        )}
+
         {/* Main Split Grid: Left Category Sidebar + Right Creator Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Left Sidebar (25% width) matching reference */}
@@ -431,5 +552,21 @@ export default function CreatorsDiscoveryPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function CreatorsDiscoveryPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="bg-[#FAFAF8] min-h-screen py-10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            <CreatorGridSkeleton count={6} />
+          </div>
+        </div>
+      }
+    >
+      <CreatorsDiscoveryContent />
+    </Suspense>
   );
 }

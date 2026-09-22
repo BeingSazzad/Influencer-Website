@@ -10,12 +10,16 @@ import {
   updateCreatorProfileDetails,
   addCreatorPhoto,
   deleteCreatorPhoto,
+  addPortfolioItem,
+  updatePortfolioItem,
+  deletePortfolioItem,
 } from '@/redux/slices/creatorSlice';
 import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
 import { ShareProfileModal } from '@/components/shared/ShareProfileModal';
 import { EmptyState } from '@/components/shared/EmptyState';
 import { ImageUpload } from '@/components/shared/ImageUpload';
-import { CreatorPhoto } from '@/types';
+import { PortfolioVideoModal } from '@/components/shared/PortfolioVideoModal';
+import { CreatorPhoto, PortfolioItem, PlatformType } from '@/types';
 import {
   User,
   Shield,
@@ -41,8 +45,14 @@ import {
   LogOut,
   Check,
   Share2,
+  Edit3,
+  Eye,
+  Play,
+  Heart,
+  ArrowRight,
+  Layers,
 } from 'lucide-react';
-import { Input, Button, message, Switch, Modal } from 'antd';
+import { Input, Button, message, Switch, Modal, Popconfirm, Select } from 'antd';
 
 const AVATAR_PRESETS = [
   {
@@ -80,8 +90,8 @@ function CreatorSettingsContent() {
   const currentCreator = creators.find((c) => c.id === currentUser?.id) || creators[0];
 
   const initialTab = searchParams.get('tab');
-  const [activeTab, setActiveTab] = useState<'profile' | 'socials' | 'gallery' | 'security'>(() => {
-    if (initialTab === 'gallery' || initialTab === 'socials' || initialTab === 'security') {
+  const [activeTab, setActiveTab] = useState<'profile' | 'socials' | 'portfolio' | 'gallery' | 'security'>(() => {
+    if (initialTab === 'portfolio' || initialTab === 'gallery' || initialTab === 'socials' || initialTab === 'security') {
       return initialTab;
     }
     return 'profile';
@@ -89,7 +99,7 @@ function CreatorSettingsContent() {
 
   useEffect(() => {
     const tab = searchParams.get('tab');
-    if (tab && ['profile', 'socials', 'gallery', 'security'].includes(tab)) {
+    if (tab && ['profile', 'socials', 'portfolio', 'gallery', 'security'].includes(tab)) {
       setActiveTab(tab as any);
     }
   }, [searchParams]);
@@ -252,6 +262,99 @@ function CreatorSettingsContent() {
     message.info('Photo removed from your public gallery.');
   };
 
+  // Portfolio States
+  const portfolioList = currentCreator?.portfolio || [];
+  const [portfolioPlatformFilter, setPortfolioPlatformFilter] = useState<'all' | PlatformType>('all');
+  const [isPortfolioModalOpen, setIsPortfolioModalOpen] = useState(false);
+  const [editingPortfolioId, setEditingPortfolioId] = useState<string | null>(null);
+  const [previewingPortfolioItem, setPreviewingPortfolioItem] = useState<PortfolioItem | null>(null);
+
+  // Form states for portfolio
+  const [portBrandName, setPortBrandName] = useState('');
+  const [portBrandLogo, setPortBrandLogo] = useState('');
+  const [portCampaignTitle, setPortCampaignTitle] = useState('');
+  const [portPlatform, setPortPlatform] = useState<PlatformType>('instagram');
+  const [portDeliverableType, setPortDeliverableType] = useState('60s 4K Reel with Voiceover');
+  const [portMediaUrl, setPortMediaUrl] = useState('');
+  const [portDuration, setPortDuration] = useState('0:45');
+  const [portViews, setPortViews] = useState('280K');
+  const [portLikes, setPortLikes] = useState('21.4K');
+  const [portEngagementRate, setPortEngagementRate] = useState('8.2%');
+  const [portDescription, setPortDescription] = useState('');
+
+  const openAddPortfolioModal = () => {
+    setEditingPortfolioId(null);
+    setPortBrandName('');
+    setPortBrandLogo('');
+    setPortCampaignTitle('');
+    setPortPlatform('instagram');
+    setPortDeliverableType('60s 4K Reel with Voiceover');
+    setPortMediaUrl('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80');
+    setPortDuration('0:45');
+    setPortViews('280K');
+    setPortLikes('21.4K');
+    setPortEngagementRate('8.2%');
+    setPortDescription('Product demonstration highlighting key features with authentic skin texture and lighting.');
+    setIsPortfolioModalOpen(true);
+  };
+
+  const openEditPortfolioModal = (item: PortfolioItem) => {
+    setEditingPortfolioId(item.id);
+    setPortBrandName(item.brandName);
+    setPortBrandLogo(item.brandLogo || '');
+    setPortCampaignTitle(item.campaignTitle);
+    setPortPlatform(item.platform);
+    setPortDeliverableType(item.deliverableType || '60s 4K Reel with Voiceover');
+    setPortMediaUrl(item.mediaUrl);
+    setPortDuration(item.duration || '0:45');
+    setPortViews(item.views || '200K');
+    setPortLikes(item.likes || '15K');
+    setPortEngagementRate(item.engagementRate || '7.0%');
+    setPortDescription(item.description || '');
+    setIsPortfolioModalOpen(true);
+  };
+
+  const handleSavePortfolio = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!portBrandName.trim() || !portCampaignTitle.trim() || !portMediaUrl.trim()) {
+      message.error('Please fill in the brand name, campaign title, and media URL.');
+      return;
+    }
+
+    const payload: PortfolioItem = {
+      id: editingPortfolioId || `port-${Date.now()}`,
+      brandName: portBrandName.trim(),
+      brandLogo: portBrandLogo.trim() || undefined,
+      campaignTitle: portCampaignTitle.trim(),
+      platform: portPlatform,
+      deliverableType: portDeliverableType.trim(),
+      mediaType: 'video',
+      mediaUrl: portMediaUrl.trim(),
+      aspectRatio: '9:16',
+      duration: portDuration.trim(),
+      views: portViews.trim(),
+      likes: portLikes.trim(),
+      engagementRate: portEngagementRate.trim(),
+      description: portDescription.trim(),
+      completedDate: '2026',
+    };
+
+    if (editingPortfolioId) {
+      dispatch(updatePortfolioItem({ creatorId: currentCreator.id, item: payload }));
+      message.success(`Updated case study for ${portBrandName}!`);
+    } else {
+      dispatch(addPortfolioItem({ creatorId: currentCreator.id, item: payload }));
+      message.success(`Published new case study for ${portBrandName}!`);
+    }
+
+    setIsPortfolioModalOpen(false);
+  };
+
+  const handleDeletePortfolio = (itemId: string, brand: string) => {
+    dispatch(deletePortfolioItem({ creatorId: currentCreator.id, itemId }));
+    message.success(`Removed ${brand} case study from portfolio.`);
+  };
+
   const handleUpdatePassword = (e: React.FormEvent) => {
     e.preventDefault();
     if (!currentPassword) {
@@ -287,35 +390,28 @@ function CreatorSettingsContent() {
         title="Profile & Settings"
         subtitle="Manage public rate card profile, connected channels, gallery, and security."
         action={
-          <div className="flex items-center gap-3">
-            <Button
-              type="default"
-              onClick={() => setIsShareModalOpen(true)}
-              className="h-10 px-4 rounded-full font-bold text-sm border-[#D2D2CA] text-[#0A0A0A] flex items-center gap-2 hover:border-[#0A0A0A]"
-            >
-              <Share2 className="w-4 h-4 text-[#0A0A0A]" />
-              <span>Share Profile</span>
-            </Button>
-
-            <Link href={`/creators/${currentCreator.id}`} target="_blank">
+          activeTab === 'profile' ? (
+            <div className="flex items-center gap-2.5">
               <Button
                 type="default"
+                onClick={() => setIsShareModalOpen(true)}
                 className="h-10 px-4 rounded-full font-bold text-sm border-[#D2D2CA] text-[#0A0A0A] flex items-center gap-2 hover:border-[#0A0A0A]"
               >
-                <span>Preview Public</span>
-                <ExternalLink className="w-4 h-4" />
+                <Share2 className="w-4 h-4 text-[#0A0A0A]" />
+                <span>Share Profile</span>
               </Button>
-            </Link>
 
-            <button
-              type="button"
-              onClick={handleLogout}
-              className="h-10 px-4 rounded-full font-bold text-sm bg-[#FAFAF8] border border-[#E7E7E2] hover:border-rose-300 hover:bg-rose-50 text-[#73736A] hover:text-rose-600 flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs"
-            >
-              <LogOut className="w-4 h-4" />
-              <span>Sign Out</span>
-            </button>
-          </div>
+              <Link href={`/creators/${currentCreator.id}`} target="_blank">
+                <Button
+                  type="default"
+                  className="h-10 px-4 rounded-full font-bold text-sm border-[#D2D2CA] text-[#0A0A0A] flex items-center gap-2 hover:border-[#0A0A0A]"
+                >
+                  <span>Preview Public</span>
+                  <ExternalLink className="w-4 h-4" />
+                </Button>
+              </Link>
+            </div>
+          ) : undefined
         }
       />
 
@@ -346,6 +442,19 @@ function CreatorSettingsContent() {
           >
             <Globe className={`w-4 h-4 ${activeTab === 'socials' ? 'text-white' : 'text-[#73736A]'}`} />
             <span>Channels & Reach</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('portfolio')}
+            className={`flex-1 py-2.5 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
+              activeTab === 'portfolio'
+                ? 'bg-[#0A0A0A] text-white shadow-xs'
+                : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
+            }`}
+          >
+            <Film className={`w-4 h-4 ${activeTab === 'portfolio' ? 'text-white' : 'text-[#73736A]'}`} />
+            <span>Case Studies ({portfolioList.length})</span>
           </button>
 
           <button
@@ -646,7 +755,201 @@ function CreatorSettingsContent() {
           </form>
         )}
 
-        {/* TAB 3: GALLERY & LOOKBOOK PHOTOS MANAGEMENT */}
+        {/* TAB: WORK GALLERY & CASE STUDIES */}
+        {activeTab === 'portfolio' && (
+          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E7E7E2]">
+              <div>
+                <h2 className="text-lg font-black text-[#0A0A0A] tracking-tight">
+                  Public Case Studies & Deliverables ({portfolioList.length})
+                </h2>
+                <p className="text-xs text-[#73736A] mt-0.5">
+                  Verified campaign cards displayed in your public profile Work Gallery.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2.5 self-start sm:self-auto">
+                <Link href="/creator/portfolio">
+                  <Button
+                    type="default"
+                    className="h-10 px-4 rounded-full font-bold text-xs border-[#D2D2CA] text-[#0A0A0A] flex items-center gap-1.5 hover:border-[#0A0A0A]"
+                  >
+                    <span>Full Studio</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </Button>
+                </Link>
+
+                <button
+                  type="button"
+                  onClick={openAddPortfolioModal}
+                  className="h-10 px-5 rounded-full font-bold text-xs bg-[#0A0A0A] hover:bg-zinc-800 text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Add Case Study</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Platform Filter Pills */}
+            <div className="inline-flex items-center p-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] overflow-x-auto shrink-0 max-w-full">
+              {[
+                { key: 'all', label: 'All', count: portfolioList.length },
+                {
+                  key: 'instagram',
+                  label: 'Instagram',
+                  count: portfolioList.filter((i) => i.platform === 'instagram').length,
+                },
+                {
+                  key: 'tiktok',
+                  label: 'TikTok',
+                  count: portfolioList.filter((i) => i.platform === 'tiktok').length,
+                },
+                {
+                  key: 'youtube',
+                  label: 'YouTube',
+                  count: portfolioList.filter((i) => i.platform === 'youtube').length,
+                },
+                {
+                  key: 'ugc',
+                  label: 'UGC',
+                  count: portfolioList.filter((i) => i.platform === 'ugc').length,
+                },
+              ].map((tab) => (
+                <button
+                  key={tab.key}
+                  type="button"
+                  onClick={() => setPortfolioPlatformFilter(tab.key as any)}
+                  className={`px-3.5 py-1 rounded-full text-xs font-bold capitalize transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
+                    portfolioPlatformFilter === tab.key
+                      ? 'bg-[#0A0A0A] text-white shadow-2xs'
+                      : 'text-[#73736A] hover:text-[#0A0A0A]'
+                  }`}
+                >
+                  <span>{tab.label}</span>
+                  <span
+                    className={`text-[10px] px-1.5 py-0.2 rounded-full font-extrabold ${
+                      portfolioPlatformFilter === tab.key ? 'bg-white/20 text-white' : 'bg-[#EAEAE3] text-[#0A0A0A]'
+                    }`}
+                  >
+                    {tab.count}
+                  </span>
+                </button>
+              ))}
+            </div>
+
+            {/* Case Studies Grid */}
+            {(() => {
+              const displayList = portfolioPlatformFilter === 'all'
+                ? portfolioList
+                : portfolioList.filter((i) => i.platform === portfolioPlatformFilter);
+
+              return displayList.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {displayList.map((item) => (
+                    <div
+                      key={item.id}
+                      className="rounded-3xl overflow-hidden border border-[#E7E7E2] bg-[#FAFAF8] hover:border-[#0A0A0A] transition-all flex flex-col justify-between shadow-2xs group"
+                    >
+                      <div className="h-44 overflow-hidden relative bg-[#0A0A0A]">
+                        <img
+                          src={item.mediaUrl}
+                          alt={item.campaignTitle}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute top-2.5 inset-x-2.5 flex items-center justify-between z-10">
+                          <span className="text-[10px] font-black uppercase tracking-wider bg-black/75 backdrop-blur-md text-white px-2.5 py-0.5 rounded-full">
+                            {item.platform}
+                          </span>
+                          {item.duration && (
+                            <span className="text-[10px] font-extrabold uppercase bg-black/70 backdrop-blur-md text-white px-2 py-0.5 rounded-full">
+                              {item.duration}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-between">
+                            <h4 className="font-extrabold text-sm text-[#0A0A0A] truncate">
+                              {item.brandName}
+                            </h4>
+                            <span className="text-[11px] font-bold text-[#23744D] bg-[#EEF7F2] px-2 py-0.5 rounded-md">
+                              {item.views}
+                            </span>
+                          </div>
+                          <p className="text-xs font-semibold text-[#0A0A0A] line-clamp-1">
+                            {item.campaignTitle}
+                          </p>
+                          {item.deliverableType && (
+                            <p className="text-[11px] text-[#73736A] font-medium line-clamp-1">
+                              {item.deliverableType}
+                            </p>
+                          )}
+                        </div>
+
+                        <div className="pt-2 border-t border-[#E7E7E2] flex items-center justify-between">
+                          <button
+                            type="button"
+                            onClick={() => setPreviewingPortfolioItem(item)}
+                            className="text-xs font-bold text-[#73736A] hover:text-[#0A0A0A] flex items-center gap-1 cursor-pointer"
+                          >
+                            <Eye className="w-3.5 h-3.5" />
+                            <span>Preview</span>
+                          </button>
+
+                          <div className="flex items-center gap-1.5">
+                            <button
+                              type="button"
+                              onClick={() => openEditPortfolioModal(item)}
+                              className="h-7 px-2.5 rounded-full text-xs font-bold bg-white border border-[#D2D2CA] text-[#0A0A0A] hover:border-[#0A0A0A] flex items-center gap-1 cursor-pointer"
+                            >
+                              <Edit3 className="w-3 h-3" />
+                              <span>Edit</span>
+                            </button>
+
+                            <Popconfirm
+                              title="Delete case study?"
+                              description="This will remove it from your public profile."
+                              onConfirm={() => handleDeletePortfolio(item.id, item.brandName)}
+                              okText="Delete"
+                              cancelText="Cancel"
+                              okButtonProps={{ danger: true }}
+                            >
+                              <button
+                                type="button"
+                                className="h-7 w-7 rounded-full text-rose-600 hover:bg-rose-50 flex items-center justify-center cursor-pointer"
+                                title="Delete"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </Popconfirm>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <EmptyState
+                  color="neutral"
+                  icon={<Film className="w-8 h-8" />}
+                  badge="Case Studies"
+                  title="No Case Studies in this Channel"
+                  description="Add high-performing campaign deliverables to show brands your reach and production capability."
+                  primaryAction={{
+                    label: 'Add Case Study',
+                    onClick: openAddPortfolioModal,
+                    icon: <Plus className="w-4 h-4" />,
+                  }}
+                  variant="dashed"
+                />
+              );
+            })()}
+          </div>
+        )}
+
+        {/* TAB 4: GALLERY & LOOKBOOK PHOTOS MANAGEMENT */}
         {activeTab === 'gallery' && (
           <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E7E7E2]">
@@ -900,6 +1203,172 @@ function CreatorSettingsContent() {
           </div>
         </form>
       </Modal>
+
+      {/* Add / Edit Case Study Modal */}
+      <Modal
+        open={isPortfolioModalOpen}
+        onCancel={() => setIsPortfolioModalOpen(false)}
+        footer={null}
+        width={700}
+        centered
+        className="rounded-3xl overflow-hidden font-sans"
+      >
+        <div className="p-2 sm:p-4 space-y-5">
+          <div className="pb-3 border-b border-[#E7E7E2]">
+            <h3 className="text-lg font-black text-[#0A0A0A] tracking-tight">
+              {editingPortfolioId ? `Edit Case Study: ${portBrandName || 'Campaign'}` : 'Add Brand Case Study'}
+            </h3>
+            <p className="text-xs text-[#73736A] mt-0.5">
+              Highlight your top campaign deliverables, verified engagement, and brand impact.
+            </p>
+          </div>
+
+          <form onSubmit={handleSavePortfolio} className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div className="space-y-1">
+                <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Brand Name *</label>
+                <Input
+                  value={portBrandName}
+                  onChange={(e) => setPortBrandName(e.target.value)}
+                  placeholder="e.g. Laneige, Gisou, Rhode"
+                  className="rounded-xl h-10 text-sm font-semibold"
+                  required
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Platform *</label>
+                <Select
+                  value={portPlatform}
+                  onChange={(val) => setPortPlatform(val)}
+                  className="w-full h-10 font-bold"
+                  options={[
+                    { value: 'instagram', label: 'Instagram' },
+                    { value: 'tiktok', label: 'TikTok' },
+                    { value: 'youtube', label: 'YouTube' },
+                    { value: 'ugc', label: 'UGC Video' },
+                  ]}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Campaign Title *</label>
+              <Input
+                value={portCampaignTitle}
+                onChange={(e) => setPortCampaignTitle(e.target.value)}
+                placeholder="e.g. Dewy Glaze Hydration Routine Reel"
+                className="rounded-xl h-10 text-sm font-semibold"
+                required
+              />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div className="space-y-1">
+                <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Deliverable Format</label>
+                <Input
+                  value={portDeliverableType}
+                  onChange={(e) => setPortDeliverableType(e.target.value)}
+                  placeholder="e.g. 60s 4K Reel with Voiceover"
+                  className="rounded-xl h-10 text-sm font-medium"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Duration / Length</label>
+                <Input
+                  value={portDuration}
+                  onChange={(e) => setPortDuration(e.target.value)}
+                  placeholder="e.g. 0:45, 11:45, Carousel"
+                  className="rounded-xl h-10 text-sm font-medium"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Media / Cover URL *</label>
+              <Input
+                value={portMediaUrl}
+                onChange={(e) => setPortMediaUrl(e.target.value)}
+                placeholder="https://images.unsplash.com/photo-..."
+                className="rounded-xl h-10 text-sm font-mono"
+                required
+              />
+            </div>
+
+            {/* Metrics Row */}
+            <div className="p-3.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] grid grid-cols-3 gap-3">
+              <div className="space-y-1">
+                <label className="text-[11px] font-bold text-[#73736A]">Views</label>
+                <Input
+                  value={portViews}
+                  onChange={(e) => setPortViews(e.target.value)}
+                  placeholder="320K"
+                  className="rounded-xl text-xs font-bold text-center h-9"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[11px] font-bold text-[#73736A]">Likes</label>
+                <Input
+                  value={portLikes}
+                  onChange={(e) => setPortLikes(e.target.value)}
+                  placeholder="28.4K"
+                  className="rounded-xl text-xs font-bold text-center h-9"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[11px] font-bold text-[#73736A]">Engagement</label>
+                <Input
+                  value={portEngagementRate}
+                  onChange={(e) => setPortEngagementRate(e.target.value)}
+                  placeholder="8.9%"
+                  className="rounded-xl text-xs font-bold text-center h-9"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Campaign Brief</label>
+              <Input.TextArea
+                rows={2}
+                value={portDescription}
+                onChange={(e) => setPortDescription(e.target.value)}
+                placeholder="Key strategy, audience reaction, hook technique..."
+                className="rounded-xl text-xs font-medium"
+              />
+            </div>
+
+            <div className="pt-3 border-t border-[#E7E7E2] flex items-center justify-end gap-2.5">
+              <Button
+                type="default"
+                onClick={() => setIsPortfolioModalOpen(false)}
+                className="h-10 px-4 rounded-full font-bold text-xs"
+              >
+                Cancel
+              </Button>
+
+              <button
+                type="submit"
+                className="h-10 px-6 rounded-full font-bold text-xs bg-[#0A0A0A] hover:bg-zinc-800 text-white cursor-pointer transition-all"
+              >
+                {editingPortfolioId ? 'Save Changes' : 'Publish Case Study'}
+              </button>
+            </div>
+          </form>
+        </div>
+      </Modal>
+
+      {/* Case Study Public Preview Modal */}
+      {previewingPortfolioItem && (
+        <PortfolioVideoModal
+          item={previewingPortfolioItem}
+          creator={currentCreator}
+          onClose={() => setPreviewingPortfolioItem(null)}
+          onBookCampaign={() => setPreviewingPortfolioItem(null)}
+        />
+      )}
 
       {/* Share Profile Modal */}
       <ShareProfileModal

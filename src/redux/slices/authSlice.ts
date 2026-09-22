@@ -50,6 +50,16 @@ export const authSlice = createSlice({
         state.currentUser = { ...state.currentUser, ...action.payload };
       }
     },
+    depositBrandFunds: (state, action: PayloadAction<number>) => {
+      if (state.currentUser) {
+        state.currentUser.balanceEur = (state.currentUser.balanceEur || 0) + action.payload;
+      }
+    },
+    withdrawCreatorFunds: (state, action: PayloadAction<number>) => {
+      if (state.currentUser) {
+        state.currentUser.balanceEur = Math.max(0, (state.currentUser.balanceEur || 0) - action.payload);
+      }
+    },
     logout: (state) => {
       state.currentUser = null;
       state.isAuthenticated = false;
@@ -64,6 +74,8 @@ export const {
   loginAsCreatorDemo,
   switchRole,
   updateUserProfile,
+  depositBrandFunds,
+  withdrawCreatorFunds,
   logout,
 } = authSlice.actions;
 

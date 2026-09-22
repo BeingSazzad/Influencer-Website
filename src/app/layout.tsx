@@ -27,6 +27,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
       <body className="min-h-screen bg-[#FAFAF8] text-[#0A0A0A] antialiased selection:bg-[#0A0A0A] selection:text-white font-sans">
         <AntdRegistry>
           <ReduxProvider>
