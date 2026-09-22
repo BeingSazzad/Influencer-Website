@@ -39,12 +39,15 @@ export function Navbar() {
     {
       key: 'header',
       label: (
-        <div className="py-1 px-1 font-sans border-b border-[#E7E7E2] pb-2">
-          <div className="font-extrabold text-[#0A0A0A] text-xs truncate">
-            {currentUser?.name}
+        <div className="py-1 px-1 font-sans border-b border-[#E7E7E2] pb-2 min-w-[200px]">
+          <div className="font-black text-[#0A0A0A] text-xs truncate">
+            {currentUser?.companyName || currentUser?.name}
           </div>
-          <div className="text-xs text-[#73736A] truncate">
+          <div className="text-[11px] text-[#73736A] truncate">
             {currentUser?.email}
+          </div>
+          <div className="inline-flex items-center gap-1 mt-1.5 px-2 py-0.5 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[10px] font-extrabold text-[#0A0A0A] uppercase tracking-wider">
+            {activeRole === 'brand' ? 'Brand Account' : 'Creator Account'}
           </div>
         </div>
       ),
@@ -53,8 +56,8 @@ export function Navbar() {
       key: 'dashboard',
       label: (
         <div className="flex items-center gap-2 py-1 font-sans text-xs font-bold text-[#0A0A0A]">
-          <LayoutDashboard className="w-3.5 h-3.5" />
-          <span>{activeRole === 'brand' ? 'Brand Dashboard' : 'Creator Dashboard'}</span>
+          <LayoutDashboard className="w-3.5 h-3.5 text-[#0A0A0A]" />
+          <span>{activeRole === 'brand' ? 'Brand Workspace' : 'Creator Workspace'}</span>
         </div>
       ),
       onClick: () => {
@@ -66,7 +69,7 @@ export function Navbar() {
       label: (
         <div className="flex items-center gap-2 py-1 font-sans text-xs font-bold text-[#0A0A0A]">
           <Settings className="w-3.5 h-3.5 text-[#73736A]" />
-          <span>Account & Profile Settings</span>
+          <span>Profile & Settings</span>
         </div>
       ),
       onClick: () => {
@@ -91,9 +94,9 @@ export function Navbar() {
     {
       key: 'logout',
       label: (
-        <div className="flex items-center gap-2 py-1 font-sans text-xs font-bold text-red-600">
-          <LogOut className="w-3.5 h-3.5" />
-          <span>Log Out</span>
+        <div className="flex items-center gap-2 py-1 font-sans text-xs font-bold text-rose-600">
+          <LogOut className="w-3.5 h-3.5 text-rose-600" />
+          <span>Sign Out</span>
         </div>
       ),
       onClick: () => {
@@ -139,33 +142,31 @@ export function Navbar() {
 
             {/* Auth State */}
             {currentUser ? (
-              <div className="flex items-center gap-3">
-                <Link
-                  href={activeRole === 'brand' ? '/brand/dashboard' : '/creator/dashboard'}
-                  className="h-10 px-5 rounded-full font-bold text-xs bg-[#0A0A0A] text-white hover:bg-[#FF2D78] flex items-center gap-1.5 transition-all shadow-xs whitespace-nowrap"
-                >
-                  <span>{activeRole === 'brand' ? 'Brand Workspace' : 'Creator Workspace'}</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-
-                <Dropdown menu={{ items: userMenuItems }} trigger={['click']} placement="bottomRight">
-                  <button className="flex items-center gap-2 p-1 pl-2 pr-3 rounded-full bg-white border border-[#E7E7E2] hover:border-[#0A0A0A] transition-all cursor-pointer">
-                    <img
-                      src={currentUser.avatar}
-                      alt={currentUser.name}
-                      className="w-7 h-7 rounded-full object-cover border"
-                    />
-                    <span className="text-xs font-bold text-[#0A0A0A] truncate max-w-[100px]">
-                      {currentUser.name.split(' ')[0]}
+              <Dropdown menu={{ items: userMenuItems }} trigger={['click']} placement="bottomRight">
+                <button className="flex items-center gap-2.5 py-1 px-2.5 rounded-full bg-white border border-[#E7E7E2] hover:border-[#0A0A0A] hover:shadow-2xs transition-all cursor-pointer group">
+                  <img
+                    src={currentUser.avatar}
+                    alt={currentUser.name}
+                    className="w-7 h-7 rounded-full object-cover border border-[#E7E7E2]"
+                  />
+                  <div className="flex flex-col text-left">
+                    <span className="text-xs font-bold text-[#0A0A0A] truncate max-w-[120px]">
+                      {currentUser.companyName || currentUser.name.split(' ')[0]}
                     </span>
-                    <ChevronDown className="w-3 h-3 text-[#73736A]" />
-                  </button>
-                </Dropdown>
-              </div>
+                  </div>
+                  <ChevronDown className="w-3.5 h-3.5 text-[#73736A] group-hover:text-[#0A0A0A] transition-colors" />
+                </button>
+              </Dropdown>
             ) : (
-              <div className="flex items-center font-sans">
+              <div className="flex items-center gap-3 font-sans">
+                <Link
+                  href="/login"
+                  className="text-xs font-bold text-[#0A0A0A] hover:text-[#73736A] transition-colors px-2 py-1"
+                >
+                  Log In
+                </Link>
                 <Link href="/register">
-                  <button className="h-11 px-6 rounded-full bg-[#FF2D78] hover:bg-[#E01E69] text-white font-outfit font-bold text-[16px] leading-[20px] shadow-sm hover:shadow-md hover:shadow-[#FF2D78]/25 transition-all cursor-pointer hover:scale-102 active:scale-98 whitespace-nowrap">
+                  <button className="h-10 px-5 rounded-full bg-[#0A0A0A] hover:bg-zinc-800 text-white font-bold text-xs shadow-xs transition-all cursor-pointer">
                     Get Started
                   </button>
                 </Link>
