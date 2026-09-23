@@ -510,17 +510,6 @@ function CreatorSettingsContent() {
                 />
               </div>
 
-              {/* Cover Banner Image Upload (Direct Drag & Drop) */}
-              <div className="space-y-2">
-                <ImageUpload
-                  variant="banner"
-                  label="Cover Banner Image"
-                  description="Upload a panoramic showcase banner (16:9 or 3:1 recommended, PNG/JPG up to 10MB)"
-                  value={coverImage}
-                  onChange={(img) => setCoverImage(img)}
-                />
-              </div>
-
               {/* Name, Handle, Location, Starting Rate */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="space-y-1.5">
