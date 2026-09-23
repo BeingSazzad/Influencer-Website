@@ -70,6 +70,26 @@ export const MOCK_CREATORS: Creator[] = [
     totalCollaborations: 128,
     packages: [
       {
+        id: 'pkg-sk-omni',
+        platform: 'all',
+        platforms: ['youtube', 'instagram', 'tiktok', 'ugc'],
+        title: '360° All-Platform Brand Takeover',
+        type: 'bundle',
+        description: 'Complete cross-channel launch bundle across YouTube, Instagram, and TikTok with organic rights and Spark ad whitelisting.',
+        priceEur: 3200,
+        deliveryDays: 7,
+        revisions: 2,
+        popular: true,
+        usageRights: '90-Day Full Commercial Ad Rights',
+        inclusions: [
+          '1x YouTube Dedicated Integration (60-90s)',
+          '1x 60s Instagram Reel (4K) + 3x Stories',
+          '1x High-Retention TikTok Hook Video',
+          'Commercial Spark Ad Whitelisting',
+          'Cross-Platform Performance Analytics',
+        ],
+      },
+      {
         id: 'pkg-sk-1',
         platform: 'instagram',
         title: 'Story Package',

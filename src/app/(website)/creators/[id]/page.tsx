@@ -77,7 +77,7 @@ export default function CreatorProfilePage() {
   );
 
   const [activeTab, setActiveTab] = useState<'overview' | 'packages' | 'portfolio' | 'photos' | 'audience' | 'reviews'>('overview');
-  const [selectedPlatform, setSelectedPlatform] = useState<PlatformType>('instagram');
+  const [selectedPlatform, setSelectedPlatform] = useState<'all' | PlatformType>('all');
   const [portfolioFilter, setPortfolioFilter] = useState<'all' | PlatformType>('all');
   const [photoFilter, setPhotoFilter] = useState<string>('all');
   const [reviewFilter, setReviewFilter] = useState<'all' | '5' | '4'>('all');
@@ -156,9 +156,13 @@ export default function CreatorProfilePage() {
     handleOpenOffer(matchingPkg);
   };
 
-  const filteredPackages = creator.packages.filter(
-    (p) => p.platform === selectedPlatform
-  );
+  const filteredPackages = creator.packages.filter((p) => {
+    if (selectedPlatform === 'all') return true;
+    if (selectedPlatform === 'multi') {
+      return p.platform === 'multi' || p.platform === 'all' || (p.platforms && p.platforms.length > 1);
+    }
+    return p.platform === selectedPlatform || (p.platforms && p.platforms.includes(selectedPlatform));
+  });
 
   const filteredPortfolio = portfolioFilter === 'all'
     ? creator.portfolio
@@ -872,18 +876,25 @@ export default function CreatorProfilePage() {
               </div>
 
               {/* Platform Switcher */}
-              <div className="inline-flex p-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2]">
-                {(['instagram', 'tiktok', 'youtube', 'ugc'] as PlatformType[]).map((p) => (
+              <div className="inline-flex p-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] overflow-x-auto max-w-full">
+                {[
+                  { id: 'all' as const, label: 'All' },
+                  { id: 'multi' as const, label: 'Multi-Platform 🌟' },
+                  { id: 'instagram' as const, label: 'Instagram' },
+                  { id: 'tiktok' as const, label: 'TikTok' },
+                  { id: 'youtube' as const, label: 'YouTube' },
+                  { id: 'ugc' as const, label: 'UGC' },
+                ].map((item) => (
                   <button
-                    key={p}
-                    onClick={() => setSelectedPlatform(p)}
-                    className={`px-3.5 py-1.5 rounded-full text-sm font-bold capitalize transition-all cursor-pointer ${
-                      selectedPlatform === p
+                    key={item.id}
+                    onClick={() => setSelectedPlatform(item.id)}
+                    className={`px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer shrink-0 ${
+                      selectedPlatform === item.id
                         ? 'bg-[#0A0A0A] text-white shadow-2xs'
                         : 'text-[#73736A] hover:text-[#0A0A0A]'
                     }`}
                   >
-                    {p}
+                    {item.label}
                   </button>
                 ))}
               </div>

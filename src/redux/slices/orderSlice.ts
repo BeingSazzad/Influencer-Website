@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Order, OrderStatus, OrderDeliverable, OrderMessage } from '@/types';
+import { Order, OrderStatus, OrderDeliverable, OrderMessage, PlatformType } from '@/types';
 import { MOCK_ORDERS } from '@/Mockdata';
 
 interface OrderState {
@@ -14,7 +14,7 @@ interface OrderState {
     packageId?: string;
     packageTitle?: string;
     priceEur?: number;
-    platform?: 'instagram' | 'tiktok' | 'youtube' | 'ugc';
+    platform?: PlatformType;
   } | null;
 }
 

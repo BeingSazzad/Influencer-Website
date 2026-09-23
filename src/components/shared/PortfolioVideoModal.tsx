@@ -58,7 +58,7 @@ export function PortfolioVideoModal({
 
   if (!item) return null;
 
-  const platformIcons = {
+  const platformIcons: Record<string, React.ReactNode> = {
     instagram: (
       <span className="w-5 h-5 rounded-full bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF] flex items-center justify-center text-white shrink-0 shadow-2xs">
         <Instagram className="w-3 h-3" />
@@ -78,6 +78,16 @@ export function PortfolioVideoModal({
     ),
     ugc: (
       <span className="w-5 h-5 rounded-full bg-[#6444A6] flex items-center justify-center text-white shrink-0 shadow-2xs">
+        <Sparkles className="w-3 h-3" />
+      </span>
+    ),
+    all: (
+      <span className="w-5 h-5 rounded-full bg-gradient-to-tr from-amber-500 to-rose-500 flex items-center justify-center text-white shrink-0 shadow-2xs">
+        <Sparkles className="w-3 h-3" />
+      </span>
+    ),
+    multi: (
+      <span className="w-5 h-5 rounded-full bg-gradient-to-tr from-amber-500 to-rose-500 flex items-center justify-center text-white shrink-0 shadow-2xs">
         <Sparkles className="w-3 h-3" />
       </span>
     ),

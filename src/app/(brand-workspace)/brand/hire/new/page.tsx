@@ -168,6 +168,8 @@ function NewHireContent() {
                 onChange={(val) => setPlatform(val)}
                 className="w-full h-10"
                 options={[
+                  { value: 'all', label: '🌟 All Platforms (360° Omni-Channel)' },
+                  { value: 'multi', label: '⚡ Custom Multi-Platform Bundle' },
                   { value: 'instagram', label: 'Instagram (Reel / Story / Post)' },
                   { value: 'tiktok', label: 'TikTok (Dedicated / Sound)' },
                   { value: 'youtube', label: 'YouTube (Integration / Video)' },

@@ -20,13 +20,33 @@ import {
   Edit3,
   ShieldCheck,
   Zap,
+  Layers,
 } from 'lucide-react';
 import { Button, Modal, Input, InputNumber, Select, message, Popconfirm } from 'antd';
 
 const PACKAGE_TEMPLATES = [
   {
+    label: '🚀 360° All-Platform Launch',
+    platform: 'all' as PlatformType,
+    platforms: ['youtube', 'instagram', 'tiktok', 'ugc'] as PlatformType[],
+    title: '360° Multi-Platform Brand Takeover',
+    description: 'Complete cross-channel launch bundle across YouTube, Instagram, and TikTok with organic cross-posts and high-conversion ad rights.',
+    priceEur: 2800,
+    deliveryDays: 7,
+    revisions: 2,
+    usageRights: '90-Day Full Commercial Ad Rights',
+    inclusions: [
+      '1x YouTube Dedicated Integration (60-90s)',
+      '1x 60s Instagram Reel (4K) + 3x Stories',
+      '1x TikTok Sound & Viral Hook Video',
+      'Full Commercial Paid Ads Whitelisting',
+      'Cross-Platform Campaign Analytics Report',
+    ],
+  },
+  {
     label: '⚡ 60s Reel Bundle',
     platform: 'instagram' as PlatformType,
+    platforms: ['instagram'] as PlatformType[],
     title: '60s Dedicated Reel + Story Slides',
     description: 'High-retention 60s Instagram Reel with authentic product integration, voiceover, and 3x follow-up Story link stickers.',
     priceEur: 1200,
@@ -38,6 +58,7 @@ const PACKAGE_TEMPLATES = [
   {
     label: '🔥 TikTok Hook Ad',
     platform: 'tiktok' as PlatformType,
+    platforms: ['tiktok'] as PlatformType[],
     title: 'TikTok Viral Sound & Hook Video',
     description: 'Engaging 30–60s vertical video optimized for TikTok algorithm with trending audio, direct hook, and clear call-to-action.',
     priceEur: 950,
@@ -49,6 +70,7 @@ const PACKAGE_TEMPLATES = [
   {
     label: '📦 3x UGC Raw Creatives',
     platform: 'ugc' as PlatformType,
+    platforms: ['ugc'] as PlatformType[],
     title: '3x UGC Video Ad Hooks (Paid Media)',
     description: 'Direct-response UGC video creatives designed specifically for Meta and TikTok paid acquisition campaigns.',
     priceEur: 850,
@@ -60,6 +82,7 @@ const PACKAGE_TEMPLATES = [
   {
     label: '🎬 YouTube Mid-Roll',
     platform: 'youtube' as PlatformType,
+    platforms: ['youtube'] as PlatformType[],
     title: '60–90s Dedicated YouTube Mid-Roll',
     description: 'Seamless 60–90 second mid-roll segment inside a high-retention longform video with top pinned description link.',
     priceEur: 1800,
@@ -83,7 +106,12 @@ export default function CreatorPackagesPage() {
   const [editingPkgId, setEditingPkgId] = useState<string | null>(null);
 
   // Form states
-  const [platform, setPlatform] = useState<PlatformType>('instagram');
+  const [platform, setPlatform] = useState<PlatformType>('all');
+  const [selectedBundledPlatforms, setSelectedBundledPlatforms] = useState<PlatformType[]>([
+    'youtube',
+    'instagram',
+    'tiktok',
+  ]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [priceEur, setPriceEur] = useState<number>(850);
@@ -95,7 +123,13 @@ export default function CreatorPackagesPage() {
 
   const filteredPackages = packages.filter((pkg) => {
     if (selectedPlatformFilter === 'all') return true;
-    return pkg.platform === selectedPlatformFilter;
+    if (selectedPlatformFilter === 'multi') {
+      return pkg.platform === 'multi' || pkg.platform === 'all' || (pkg.platforms && pkg.platforms.length > 1);
+    }
+    return (
+      pkg.platform === selectedPlatformFilter ||
+      (pkg.platforms && pkg.platforms.includes(selectedPlatformFilter))
+    );
   });
 
   // KPI Metrics
@@ -112,6 +146,13 @@ export default function CreatorPackagesPage() {
 
   const applyTemplate = (template: typeof PACKAGE_TEMPLATES[0]) => {
     setPlatform(template.platform);
+    if (template.platforms) {
+      setSelectedBundledPlatforms(template.platforms);
+    } else if (template.platform === 'all' || template.platform === 'multi') {
+      setSelectedBundledPlatforms(['youtube', 'instagram', 'tiktok', 'ugc']);
+    } else {
+      setSelectedBundledPlatforms([template.platform]);
+    }
     setTitle(template.title);
     setDescription(template.description);
     setPriceEur(template.priceEur);
@@ -125,6 +166,13 @@ export default function CreatorPackagesPage() {
   const handleOpenEditModal = (pkg: CreatorPackage) => {
     setEditingPkgId(pkg.id);
     setPlatform(pkg.platform);
+    if (pkg.platforms && pkg.platforms.length > 0) {
+      setSelectedBundledPlatforms(pkg.platforms);
+    } else if (pkg.platform === 'all' || pkg.platform === 'multi') {
+      setSelectedBundledPlatforms(['youtube', 'instagram', 'tiktok', 'ugc']);
+    } else {
+      setSelectedBundledPlatforms([pkg.platform]);
+    }
     setTitle(pkg.title);
     setDescription(pkg.description);
     setPriceEur(pkg.priceEur);
@@ -153,12 +201,27 @@ export default function CreatorPackagesPage() {
       .map((i) => i.trim())
       .filter((i) => i.length > 0);
 
+    const bundledPlatforms =
+      platform === 'all' || platform === 'multi'
+        ? selectedBundledPlatforms
+        : [platform];
+
+    const packageType =
+      platform === 'all' || platform === 'multi'
+        ? 'bundle'
+        : platform === 'ugc'
+        ? 'ugc_video'
+        : platform === 'youtube'
+        ? 'video'
+        : 'reel';
+
     if (editingPkgId) {
       const updatedPkg: CreatorPackage = {
         id: editingPkgId,
         platform,
+        platforms: bundledPlatforms,
         title: title.trim(),
-        type: platform === 'ugc' ? 'ugc_video' : platform === 'youtube' ? 'video' : 'reel',
+        type: packageType,
         description: description.trim(),
         priceEur,
         deliveryDays,
@@ -174,8 +237,9 @@ export default function CreatorPackagesPage() {
       const newPkg: CreatorPackage = {
         id: `pkg-${Date.now()}`,
         platform,
+        platforms: bundledPlatforms,
         title: title.trim(),
-        type: platform === 'ugc' ? 'ugc_video' : platform === 'youtube' ? 'video' : 'reel',
+        type: packageType,
         description: description.trim(),
         priceEur,
         deliveryDays,
@@ -261,30 +325,62 @@ export default function CreatorPackagesPage() {
 
             {/* Platform Filter Pills */}
             <div className="inline-flex items-center p-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] overflow-x-auto shrink-0 max-w-full">
-              {(['all', 'instagram', 'tiktok', 'youtube', 'ugc'] as const).map((pType) => {
-                const isActive = selectedPlatformFilter === pType;
-                const count =
-                  pType === 'all'
-                    ? packages.length
-                    : packages.filter((p) => p.platform === pType).length;
-
+              {[
+                { id: 'all' as const, label: 'All Packages', count: packages.length },
+                {
+                  id: 'multi' as const,
+                  label: 'Multi-Platform 🌟',
+                  count: packages.filter(
+                    (p) => p.platform === 'multi' || p.platform === 'all' || (p.platforms && p.platforms.length > 1)
+                  ).length,
+                },
+                {
+                  id: 'instagram' as const,
+                  label: 'Instagram',
+                  count: packages.filter(
+                    (p) => p.platform === 'instagram' || p.platforms?.includes('instagram')
+                  ).length,
+                },
+                {
+                  id: 'tiktok' as const,
+                  label: 'TikTok',
+                  count: packages.filter(
+                    (p) => p.platform === 'tiktok' || p.platforms?.includes('tiktok')
+                  ).length,
+                },
+                {
+                  id: 'youtube' as const,
+                  label: 'YouTube',
+                  count: packages.filter(
+                    (p) => p.platform === 'youtube' || p.platforms?.includes('youtube')
+                  ).length,
+                },
+                {
+                  id: 'ugc' as const,
+                  label: 'UGC',
+                  count: packages.filter(
+                    (p) => p.platform === 'ugc' || p.platforms?.includes('ugc')
+                  ).length,
+                },
+              ].map((pill) => {
+                const isActive = selectedPlatformFilter === pill.id;
                 return (
                   <button
-                    key={pType}
-                    onClick={() => setSelectedPlatformFilter(pType)}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer capitalize flex items-center gap-1.5 shrink-0 ${
+                    key={pill.id}
+                    onClick={() => setSelectedPlatformFilter(pill.id)}
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
                       isActive
                         ? 'bg-[#0A0A0A] text-white shadow-2xs'
                         : 'text-[#73736A] hover:text-[#0A0A0A]'
                     }`}
                   >
-                    <span>{pType === 'ugc' ? 'UGC' : pType === 'all' ? 'All' : pType}</span>
+                    <span>{pill.label}</span>
                     <span
                       className={`text-[10px] px-1.5 py-0.2 rounded-full font-extrabold ${
                         isActive ? 'bg-white/20 text-white' : 'bg-[#EAEAE3] text-[#0A0A0A]'
                       }`}
                     >
-                      {count}
+                      {pill.count}
                     </span>
                   </button>
                 );
@@ -313,13 +409,25 @@ export default function CreatorPackagesPage() {
 
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#FAFAF8] text-[#73736A] border border-[#E7E7E2] flex items-center gap-1.5 capitalize">
-                        {pkg.platform === 'instagram' && <Instagram className="w-3 h-3 text-[#FF2D78]" />}
-                        {pkg.platform === 'tiktok' && <Film className="w-3 h-3 text-[#0A0A0A]" />}
-                        {pkg.platform === 'youtube' && <Youtube className="w-3 h-3 text-red-500" />}
-                        {pkg.platform === 'ugc' && <Sparkles className="w-3 h-3 text-purple-500" />}
-                        <span>{pkg.platform}</span>
-                      </span>
+                      {pkg.platform === 'all' || pkg.platform === 'multi' || (pkg.platforms && pkg.platforms.length > 1) ? (
+                        <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-gradient-to-r from-amber-50 to-rose-50 text-[#0A0A0A] border border-amber-200/60 flex items-center gap-1.5">
+                          <Layers className="w-3.5 h-3.5 text-amber-600" />
+                          <span className="font-extrabold">{pkg.platform === 'all' ? 'All Platforms' : 'Multi-Platform'}</span>
+                          <div className="flex items-center gap-1 pl-1 border-l border-amber-200">
+                            <Instagram className="w-3 h-3 text-[#FF2D78]" />
+                            <Film className="w-3 h-3 text-[#0A0A0A]" />
+                            <Youtube className="w-3 h-3 text-red-500" />
+                          </div>
+                        </span>
+                      ) : (
+                        <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#FAFAF8] text-[#73736A] border border-[#E7E7E2] flex items-center gap-1.5 capitalize">
+                          {pkg.platform === 'instagram' && <Instagram className="w-3 h-3 text-[#FF2D78]" />}
+                          {pkg.platform === 'tiktok' && <Film className="w-3 h-3 text-[#0A0A0A]" />}
+                          {pkg.platform === 'youtube' && <Youtube className="w-3 h-3 text-red-500" />}
+                          {pkg.platform === 'ugc' && <Sparkles className="w-3 h-3 text-purple-500" />}
+                          <span>{pkg.platform}</span>
+                        </span>
+                      )}
 
                       <span className="text-2xl font-black text-[#0A0A0A]">
                         €{pkg.priceEur.toLocaleString()}
@@ -448,16 +556,27 @@ export default function CreatorPackagesPage() {
           {/* Platform & Usage Rights */}
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
-              <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Platform</label>
+              <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Platform Coverage</label>
               <Select
                 value={platform}
-                onChange={(val) => setPlatform(val)}
+                onChange={(val) => {
+                  setPlatform(val);
+                  if (val === 'all') {
+                    setSelectedBundledPlatforms(['youtube', 'instagram', 'tiktok', 'ugc']);
+                  } else if (val === 'multi') {
+                    setSelectedBundledPlatforms(['youtube', 'instagram', 'tiktok']);
+                  } else {
+                    setSelectedBundledPlatforms([val]);
+                  }
+                }}
                 className="w-full h-10"
                 options={[
-                  { value: 'instagram', label: 'Instagram' },
-                  { value: 'tiktok', label: 'TikTok' },
-                  { value: 'youtube', label: 'YouTube' },
-                  { value: 'ugc', label: 'Direct UGC' },
+                  { value: 'all', label: '🌟 All Platforms (360° Omni)' },
+                  { value: 'multi', label: '⚡ Custom Multi-Platform Bundle' },
+                  { value: 'instagram', label: 'Instagram Only' },
+                  { value: 'tiktok', label: 'TikTok Only' },
+                  { value: 'youtube', label: 'YouTube Only' },
+                  { value: 'ugc', label: 'Direct UGC Only' },
                 ]}
               />
             </div>
@@ -477,6 +596,52 @@ export default function CreatorPackagesPage() {
               />
             </div>
           </div>
+
+          {/* Cross-Channel Platform Chips (when All or Multi-Platform is selected) */}
+          {(platform === 'all' || platform === 'multi') && (
+            <div className="p-3 bg-[#FAFAF8] rounded-2xl border border-[#E7E7E2] space-y-2">
+              <div className="flex items-center justify-between text-xs font-bold text-[#73736A] uppercase tracking-wider">
+                <span>Included Channels ({selectedBundledPlatforms.length})</span>
+                <span className="text-[11px] font-semibold text-[#0A0A0A] normal-case">Channels bundled in this tier:</span>
+              </div>
+              <div className="flex flex-wrap items-center gap-2">
+                {[
+                  { id: 'instagram' as PlatformType, label: 'Instagram', icon: <Instagram className="w-3.5 h-3.5 text-[#FF2D78]" /> },
+                  { id: 'tiktok' as PlatformType, label: 'TikTok', icon: <Film className="w-3.5 h-3.5 text-[#0A0A0A]" /> },
+                  { id: 'youtube' as PlatformType, label: 'YouTube', icon: <Youtube className="w-3.5 h-3.5 text-red-500" /> },
+                  { id: 'ugc' as PlatformType, label: 'Direct UGC', icon: <Sparkles className="w-3.5 h-3.5 text-purple-500" /> },
+                ].map((ch) => {
+                  const isChecked = selectedBundledPlatforms.includes(ch.id);
+                  return (
+                    <button
+                      key={ch.id}
+                      type="button"
+                      onClick={() => {
+                        if (isChecked) {
+                          if (selectedBundledPlatforms.length > 1) {
+                            setSelectedBundledPlatforms(selectedBundledPlatforms.filter((p) => p !== ch.id));
+                          } else {
+                            message.warning('A bundle must include at least 1 channel.');
+                          }
+                        } else {
+                          setSelectedBundledPlatforms([...selectedBundledPlatforms, ch.id]);
+                        }
+                      }}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold border transition-all flex items-center gap-1.5 cursor-pointer ${
+                        isChecked
+                          ? 'bg-[#0A0A0A] text-white border-[#0A0A0A] shadow-2xs'
+                          : 'bg-white text-[#73736A] border-[#E7E7E2] hover:border-[#0A0A0A]'
+                      }`}
+                    >
+                      {ch.icon}
+                      <span>{ch.label}</span>
+                      {isChecked && <Check className="w-3 h-3 text-emerald-400" />}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
 
           {/* Package Title */}
           <div className="space-y-1.5">

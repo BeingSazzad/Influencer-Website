@@ -34,6 +34,19 @@ export function getPackageVisual(pkg: CreatorPackage) {
   const title = (pkg.title || '').toLowerCase();
   const desc = (pkg.description || '').toLowerCase();
 
+  if (
+    pkg.platform === 'all' ||
+    pkg.platform === 'multi' ||
+    (pkg.platforms && pkg.platforms.length > 1) ||
+    title.includes('omni') ||
+    title.includes('360')
+  ) {
+    return {
+      icon: <Layers className="w-4 h-4 text-amber-600" />,
+      badgeBg: 'bg-gradient-to-r from-amber-50 to-rose-50 border border-amber-200/70',
+      label: pkg.platform === 'all' ? 'All Platforms (360°)' : 'Multi-Platform Bundle',
+    };
+  }
   if (title.includes('reel') || desc.includes('reel') || pkg.platform === 'instagram') {
     return {
       icon: <Film className="w-4 h-4 text-[#FF2D78]" />,

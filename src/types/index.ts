@@ -14,7 +14,7 @@ export interface User {
   balanceEur?: number;
 }
 
-export type PlatformType = 'instagram' | 'tiktok' | 'youtube' | 'ugc';
+export type PlatformType = 'instagram' | 'tiktok' | 'youtube' | 'ugc' | 'all' | 'multi';
 
 export interface CreatorPlatformInfo {
   followers: number;
@@ -27,8 +27,9 @@ export interface CreatorPlatformInfo {
 export interface CreatorPackage {
   id: string;
   platform: PlatformType;
+  platforms?: PlatformType[];
   title: string;
-  type: 'story' | 'reel' | 'post' | 'video' | 'ugc_video' | 'integrated';
+  type: 'story' | 'reel' | 'post' | 'video' | 'ugc_video' | 'integrated' | 'bundle';
   description: string;
   priceEur: number;
   deliveryDays: number;
@@ -108,6 +109,8 @@ export interface Creator {
     tiktok?: CreatorPlatformInfo;
     youtube?: CreatorPlatformInfo;
     ugc?: { avgDelivery: string; turnaround: string };
+    multi?: { avgDelivery: string; turnaround: string };
+    all?: { avgDelivery: string; turnaround: string };
   };
   startingPriceEur: number;
   rating: number;
