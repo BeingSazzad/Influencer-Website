@@ -39,15 +39,12 @@ export function Navbar() {
     {
       key: 'header',
       label: (
-        <div className="py-1 px-1 font-sans border-b border-[#E7E7E2] pb-2 min-w-[200px]">
-          <div className="font-black text-[#0A0A0A] text-xs truncate">
+        <div className="py-1.5 px-1 font-sans border-b border-[#E7E7E2] pb-2.5 min-w-[200px]">
+          <div className="font-bold text-[#0A0A0A] text-xs truncate">
             {currentUser?.companyName || currentUser?.name}
           </div>
-          <div className="text-[11px] text-[#73736A] truncate">
+          <div className="text-[11px] text-[#73736A] truncate mt-0.5">
             {currentUser?.email}
-          </div>
-          <div className="inline-flex items-center gap-1 mt-1.5 px-2 py-0.5 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[10px] font-extrabold text-[#0A0A0A] uppercase tracking-wider">
-            {activeRole === 'brand' ? 'Brand Account' : 'Creator Account'}
           </div>
         </div>
       ),
