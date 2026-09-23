@@ -53,7 +53,6 @@ export default function BrandSettingsPage() {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [twoFactorEnabled, setTwoFactorEnabled] = useState(true);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
   const handleSaveCompany = (e: React.FormEvent) => {
@@ -139,44 +138,44 @@ export default function BrandSettingsPage() {
 
       <div className="p-6 sm:p-8 max-w-5xl mx-auto space-y-8">
         {/* Navigation Tabs */}
-        <div className="bg-white rounded-2xl p-1.5 border border-[#E7E7E2] flex flex-wrap gap-1 shadow-2xs">
+        <div className="bg-white rounded-2xl p-1.5 border border-[#E7E7E2] inline-flex items-center gap-1 shadow-2xs w-fit max-w-full overflow-x-auto">
           <button
             type="button"
             onClick={() => setActiveTab('company')}
-            className={`flex-1 py-2.5 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
+            className={`py-2.5 px-4 sm:px-5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 whitespace-nowrap shrink-0 transition-all cursor-pointer ${
               activeTab === 'company'
                 ? 'bg-[#0A0A0A] text-white shadow-xs'
                 : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
             }`}
           >
-            <Building2 className={`w-4 h-4 ${activeTab === 'company' ? 'text-white' : 'text-[#73736A]'}`} />
-            <span>Company Profile</span>
+            <Building2 className={`w-4 h-4 shrink-0 ${activeTab === 'company' ? 'text-white' : 'text-[#73736A]'}`} />
+            <span className="whitespace-nowrap">Company Profile</span>
           </button>
 
           <button
             type="button"
             onClick={() => setActiveTab('billing')}
-            className={`flex-1 py-2.5 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
+            className={`py-2.5 px-4 sm:px-5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 whitespace-nowrap shrink-0 transition-all cursor-pointer ${
               activeTab === 'billing'
                 ? 'bg-[#0A0A0A] text-white shadow-xs'
                 : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
             }`}
           >
-            <Receipt className={`w-4 h-4 ${activeTab === 'billing' ? 'text-white' : 'text-[#73736A]'}`} />
-            <span>Billing & VAT</span>
+            <Receipt className={`w-4 h-4 shrink-0 ${activeTab === 'billing' ? 'text-white' : 'text-[#73736A]'}`} />
+            <span className="whitespace-nowrap">Billing & VAT</span>
           </button>
 
           <button
             type="button"
             onClick={() => setActiveTab('security')}
-            className={`flex-1 py-2.5 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
+            className={`py-2.5 px-4 sm:px-5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 whitespace-nowrap shrink-0 transition-all cursor-pointer ${
               activeTab === 'security'
                 ? 'bg-[#0A0A0A] text-white shadow-xs'
                 : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
             }`}
           >
-            <Shield className={`w-4 h-4 ${activeTab === 'security' ? 'text-white' : 'text-[#73736A]'}`} />
-            <span>Security</span>
+            <Shield className={`w-4 h-4 shrink-0 ${activeTab === 'security' ? 'text-white' : 'text-[#73736A]'}`} />
+            <span className="whitespace-nowrap">Security</span>
           </button>
         </div>
 
@@ -400,28 +399,6 @@ export default function BrandSettingsPage() {
                 </button>
               </div>
             </form>
-
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2 text-base font-bold text-[#0A0A0A]">
-                    <Shield className="w-5 h-5 text-[#23744D]" />
-                    <span>Two-Factor Authentication (2FA)</span>
-                  </div>
-                  <p className="text-xs text-[#73736A]">
-                    Require SMS or Authenticator verification for campaign payments exceeding €2,000.
-                  </p>
-                </div>
-
-                <Switch
-                  checked={twoFactorEnabled}
-                  onChange={(checked) => {
-                    setTwoFactorEnabled(checked);
-                    message.success(checked ? '2FA Protection Enabled' : '2FA Protection Disabled');
-                  }}
-                />
-              </div>
-            </div>
 
             {/* Session Management & Explicit Logout */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-4">

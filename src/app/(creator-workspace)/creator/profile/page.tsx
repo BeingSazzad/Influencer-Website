@@ -420,33 +420,33 @@ function CreatorProfileContent() {
 
       <div className="p-6 sm:p-8 max-w-5xl mx-auto space-y-8">
         {/* Navigation Tabs */}
-        <div className="bg-white rounded-2xl p-1.5 border border-[#E7E7E2] flex gap-1 shadow-2xs max-w-xl">
+        <div className="bg-white rounded-2xl p-1.5 border border-[#E7E7E2] inline-flex items-center gap-1 shadow-2xs w-fit max-w-full overflow-x-auto">
           <button
             type="button"
             onClick={() => setActiveTab('identity')}
-            className={`flex-1 py-2.5 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
+            className={`py-2.5 px-4 sm:px-5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 whitespace-nowrap shrink-0 transition-all cursor-pointer ${
               activeTab === 'identity'
                 ? 'bg-[#0A0A0A] text-white shadow-xs'
                 : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
             }`}
           >
-            <User className={`w-4 h-4 ${activeTab === 'identity' ? 'text-white' : 'text-[#73736A]'}`} />
-            <span>Profile Identity</span>
+            <User className={`w-4 h-4 shrink-0 ${activeTab === 'identity' ? 'text-white' : 'text-[#73736A]'}`} />
+            <span className="whitespace-nowrap">Profile Identity</span>
           </button>
 
           <button
             type="button"
             onClick={() => setActiveTab('gallery')}
-            className={`flex-1 py-2.5 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
+            className={`py-2.5 px-4 sm:px-5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 whitespace-nowrap shrink-0 transition-all cursor-pointer ${
               activeTab === 'gallery'
                 ? 'bg-[#0A0A0A] text-white shadow-xs'
                 : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
             }`}
           >
-            <ImageIcon className={`w-4 h-4 ${activeTab === 'gallery' ? 'text-white' : 'text-[#73736A]'}`} />
-            <span>Aesthetic Gallery</span>
+            <ImageIcon className={`w-4 h-4 shrink-0 ${activeTab === 'gallery' ? 'text-white' : 'text-[#73736A]'}`} />
+            <span className="whitespace-nowrap">Aesthetic Gallery</span>
             <span
-              className={`text-[11px] font-extrabold px-2 py-0.5 rounded-full ${
+              className={`text-[11px] font-extrabold px-2 py-0.5 rounded-full shrink-0 ${
                 activeTab === 'gallery' ? 'bg-white/20 text-white' : 'bg-[#E7E7E2] text-[#0A0A0A]'
               }`}
             >
@@ -457,14 +457,14 @@ function CreatorProfileContent() {
           <button
             type="button"
             onClick={() => setActiveTab('channels')}
-            className={`flex-1 py-2.5 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
+            className={`py-2.5 px-4 sm:px-5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 whitespace-nowrap shrink-0 transition-all cursor-pointer ${
               activeTab === 'channels'
                 ? 'bg-[#0A0A0A] text-white shadow-xs'
                 : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
             }`}
           >
-            <Globe className={`w-4 h-4 ${activeTab === 'channels' ? 'text-white' : 'text-[#73736A]'}`} />
-            <span>Channels</span>
+            <Globe className={`w-4 h-4 shrink-0 ${activeTab === 'channels' ? 'text-white' : 'text-[#73736A]'}`} />
+            <span className="whitespace-nowrap">Channels</span>
           </button>
         </div>
 

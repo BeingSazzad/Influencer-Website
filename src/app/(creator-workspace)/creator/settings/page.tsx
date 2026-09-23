@@ -11,7 +11,6 @@ import {
   Lock,
   KeyRound,
   Bell,
-  Smartphone,
   CheckCircle2,
   AlertTriangle,
   User,
@@ -46,7 +45,6 @@ function CreatorSettingsContent() {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [twoFactorEnabled, setTwoFactorEnabled] = useState(true);
 
   // Notification Preferences States
   const [notifyOffers, setNotifyOffers] = useState(true);
@@ -117,44 +115,44 @@ function CreatorSettingsContent() {
 
       <div className="p-6 sm:p-8 max-w-4xl mx-auto space-y-8">
         {/* Navigation Tabs */}
-        <div className="bg-white rounded-2xl p-1.5 border border-[#E7E7E2] flex gap-1 shadow-2xs max-w-lg">
+        <div className="bg-white rounded-2xl p-1.5 border border-[#E7E7E2] inline-flex items-center gap-1 shadow-2xs w-fit max-w-full overflow-x-auto">
           <button
             type="button"
             onClick={() => setActiveTab('security')}
-            className={`flex-1 py-2.5 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
+            className={`py-2.5 px-4 sm:px-5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 whitespace-nowrap shrink-0 transition-all cursor-pointer ${
               activeTab === 'security'
                 ? 'bg-[#0A0A0A] text-white shadow-xs'
                 : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
             }`}
           >
-            <Shield className={`w-4 h-4 ${activeTab === 'security' ? 'text-white' : 'text-[#73736A]'}`} />
-            <span>Security & Login</span>
+            <Shield className={`w-4 h-4 shrink-0 ${activeTab === 'security' ? 'text-white' : 'text-[#73736A]'}`} />
+            <span className="whitespace-nowrap">Security & Login</span>
           </button>
 
           <button
             type="button"
             onClick={() => setActiveTab('notifications')}
-            className={`flex-1 py-2.5 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
+            className={`py-2.5 px-4 sm:px-5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 whitespace-nowrap shrink-0 transition-all cursor-pointer ${
               activeTab === 'notifications'
                 ? 'bg-[#0A0A0A] text-white shadow-xs'
                 : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
             }`}
           >
-            <Bell className={`w-4 h-4 ${activeTab === 'notifications' ? 'text-white' : 'text-[#73736A]'}`} />
-            <span>Notifications</span>
+            <Bell className={`w-4 h-4 shrink-0 ${activeTab === 'notifications' ? 'text-white' : 'text-[#73736A]'}`} />
+            <span className="whitespace-nowrap">Notifications</span>
           </button>
 
           <button
             type="button"
             onClick={() => setActiveTab('account')}
-            className={`flex-1 py-2.5 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
+            className={`py-2.5 px-4 sm:px-5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 whitespace-nowrap shrink-0 transition-all cursor-pointer ${
               activeTab === 'account'
                 ? 'bg-[#0A0A0A] text-white shadow-xs'
                 : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
             }`}
           >
-            <Lock className={`w-4 h-4 ${activeTab === 'account' ? 'text-white' : 'text-[#73736A]'}`} />
-            <span>Account</span>
+            <Lock className={`w-4 h-4 shrink-0 ${activeTab === 'account' ? 'text-white' : 'text-[#73736A]'}`} />
+            <span className="whitespace-nowrap">Account</span>
           </button>
         </div>
 
@@ -216,40 +214,6 @@ function CreatorSettingsContent() {
                   </Button>
                 </div>
               </form>
-            </div>
-
-            {/* 2-Factor Authentication */}
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
-              <div className="flex items-center justify-between pb-4 border-b border-[#E7E7E2]">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-[#EEF7F2] border border-[#23744D]/20 flex items-center justify-center">
-                    <Smartphone className="w-5 h-5 text-[#23744D]" />
-                  </div>
-                  <div>
-                    <h2 className="text-base font-black text-[#0A0A0A]">Two-Factor Authentication (2FA)</h2>
-                    <p className="text-xs text-[#73736A]">Require an authenticator app code when signing in.</p>
-                  </div>
-                </div>
-
-                <Switch
-                  checked={twoFactorEnabled}
-                  onChange={(checked) => {
-                    setTwoFactorEnabled(checked);
-                    message.info(checked ? '2FA Enabled' : '2FA Disabled');
-                  }}
-                  className={twoFactorEnabled ? 'bg-[#23744D]' : 'bg-[#D2D2CA]'}
-                />
-              </div>
-
-              <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-between text-xs">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#23744D]" />
-                  <span className="font-semibold text-[#0A0A0A]">Authenticator App (Google Authenticator / 1Password)</span>
-                </div>
-                <span className="text-[11px] font-bold text-[#23744D] bg-[#EEF7F2] px-2 py-0.5 rounded-full">
-                  Configured
-                </span>
-              </div>
             </div>
 
             {/* Active Sessions */}
