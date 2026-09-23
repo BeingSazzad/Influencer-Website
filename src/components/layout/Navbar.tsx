@@ -16,6 +16,7 @@ import {
   LogOut,
   LayoutDashboard,
   Briefcase,
+  User,
 } from 'lucide-react';
 
 export function Navbar() {
@@ -63,18 +64,47 @@ export function Navbar() {
         router.push(activeRole === 'brand' ? '/brand/dashboard' : '/creator/dashboard');
       },
     },
-    {
-      key: 'settings',
-      label: (
-        <div className="flex items-center gap-2 py-1 font-sans text-xs font-bold text-[#0A0A0A]">
-          <Settings className="w-3.5 h-3.5 text-[#73736A]" />
-          <span>Profile & Settings</span>
-        </div>
-      ),
-      onClick: () => {
-        router.push(activeRole === 'brand' ? '/brand/settings' : '/creator/settings');
-      },
-    },
+    ...(activeRole === 'creator'
+      ? [
+          {
+            key: 'profile',
+            label: (
+              <div className="flex items-center gap-2 py-1 font-sans text-xs font-bold text-[#0A0A0A]">
+                <User className="w-3.5 h-3.5 text-[#73736A]" />
+                <span>Public Profile</span>
+              </div>
+            ),
+            onClick: () => {
+              router.push('/creator/profile');
+            },
+          },
+          {
+            key: 'settings',
+            label: (
+              <div className="flex items-center gap-2 py-1 font-sans text-xs font-bold text-[#0A0A0A]">
+                <Settings className="w-3.5 h-3.5 text-[#73736A]" />
+                <span>Account Settings</span>
+              </div>
+            ),
+            onClick: () => {
+              router.push('/creator/settings');
+            },
+          },
+        ]
+      : [
+          {
+            key: 'settings',
+            label: (
+              <div className="flex items-center gap-2 py-1 font-sans text-xs font-bold text-[#0A0A0A]">
+                <Settings className="w-3.5 h-3.5 text-[#73736A]" />
+                <span>Brand Settings</span>
+              </div>
+            ),
+            onClick: () => {
+              router.push('/brand/settings');
+            },
+          },
+        ]),
     {
       type: 'divider',
     },
@@ -202,14 +232,35 @@ export function Navbar() {
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
 
-                <Link
-                  href={activeRole === 'brand' ? '/brand/settings' : '/creator/settings'}
-                  onClick={() => setIsDrawerOpen(false)}
-                  className="w-full h-9 rounded-xl bg-white border border-[#E7E7E2] text-[#0A0A0A] font-bold text-xs flex items-center justify-center gap-1.5 hover:border-[#0A0A0A]"
-                >
-                  <Settings className="w-3.5 h-3.5 text-[#73736A]" />
-                  <span>Profile & Settings</span>
-                </Link>
+                {activeRole === 'creator' ? (
+                  <>
+                    <Link
+                      href="/creator/profile"
+                      onClick={() => setIsDrawerOpen(false)}
+                      className="w-full h-9 rounded-xl bg-white border border-[#E7E7E2] text-[#0A0A0A] font-bold text-xs flex items-center justify-center gap-1.5 hover:border-[#0A0A0A]"
+                    >
+                      <User className="w-3.5 h-3.5 text-[#73736A]" />
+                      <span>Public Profile</span>
+                    </Link>
+                    <Link
+                      href="/creator/settings"
+                      onClick={() => setIsDrawerOpen(false)}
+                      className="w-full h-9 rounded-xl bg-white border border-[#E7E7E2] text-[#0A0A0A] font-bold text-xs flex items-center justify-center gap-1.5 hover:border-[#0A0A0A]"
+                    >
+                      <Settings className="w-3.5 h-3.5 text-[#73736A]" />
+                      <span>Account Settings</span>
+                    </Link>
+                  </>
+                ) : (
+                  <Link
+                    href="/brand/settings"
+                    onClick={() => setIsDrawerOpen(false)}
+                    className="w-full h-9 rounded-xl bg-white border border-[#E7E7E2] text-[#0A0A0A] font-bold text-xs flex items-center justify-center gap-1.5 hover:border-[#0A0A0A]"
+                  >
+                    <Settings className="w-3.5 h-3.5 text-[#73736A]" />
+                    <span>Brand Settings</span>
+                  </Link>
+                )}
 
                 <button
                   type="button"

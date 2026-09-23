@@ -396,7 +396,7 @@ export default function CreatorProfilePage() {
               {/* Action Buttons */}
               {isSelfProfile ? (
                 <div className="space-y-2.5">
-                  <Link href="/creator/settings" className="block">
+                  <Link href="/creator/profile" className="block">
                     <button
                       type="button"
                       className="w-full h-11 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white shadow-sm transition-all cursor-pointer flex items-center justify-center gap-2"

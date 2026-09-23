@@ -369,7 +369,7 @@ export default function CreatorDashboardPage() {
                 </Button>
               </Link>
 
-              <Link href="/creator/settings?tab=profile">
+              <Link href="/creator/profile">
                 <Button
                   type="default"
                   className="h-10 px-4 rounded-full font-bold text-xs border-[#D2D2CA] text-[#0A0A0A]"

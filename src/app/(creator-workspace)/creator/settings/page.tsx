@@ -5,355 +5,58 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { WorkspaceHeader } from '@/components/layout/WorkspaceHeader';
-import { updateUserProfile, logout } from '@/redux/slices/authSlice';
+import { logout } from '@/redux/slices/authSlice';
 import {
-  updateCreatorProfileDetails,
-  addCreatorPhoto,
-  deleteCreatorPhoto,
-  addPortfolioItem,
-  updatePortfolioItem,
-  deletePortfolioItem,
-} from '@/redux/slices/creatorSlice';
-import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
-import { ShareProfileModal } from '@/components/shared/ShareProfileModal';
-import { EmptyState } from '@/components/shared/EmptyState';
-import { ImageUpload } from '@/components/shared/ImageUpload';
-import { PortfolioVideoModal } from '@/components/shared/PortfolioVideoModal';
-import { CreatorPhoto, PortfolioItem, PlatformType } from '@/types';
-import {
-  User,
   Shield,
   Lock,
   KeyRound,
-  Instagram,
-  Youtube,
-  Film,
-  Sparkles,
-  Camera,
-  MapPin,
-  CheckCircle2,
-  ExternalLink,
-  Save,
-  Globe,
-  Tag,
-  Palette,
-  Image as ImageIcon,
-  Plus,
-  Trash2,
-  DollarSign,
-  TrendingUp,
+  Bell,
   LogOut,
-  Check,
-  Share2,
-  Edit3,
-  Eye,
-  Play,
-  Heart,
+  Smartphone,
+  CheckCircle2,
+  AlertTriangle,
+  Download,
+  Trash2,
+  User,
   ArrowRight,
-  Layers,
 } from 'lucide-react';
-import { Input, Button, message, Switch, Modal, Popconfirm, Select } from 'antd';
-
-const AVATAR_PRESETS = [
-  {
-    label: 'Sophie Kim (Studio)',
-    url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
-  },
-  {
-    label: 'Elena Rostova (Natural)',
-    url: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80',
-  },
-  {
-    label: 'Maya Chen (Portrait)',
-    url: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=400&q=80',
-  },
-  {
-    label: 'Liam Carter (Editorial)',
-    url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
-  },
-  {
-    label: 'Emma Rossi (Warm Sunset)',
-    url: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80',
-  },
-  {
-    label: 'Chloe Nguyen (Creative)',
-    url: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80',
-  },
-];
+import { Input, Button, message, Switch, Modal } from 'antd';
 
 function CreatorSettingsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
   const { currentUser } = useAppSelector((state) => state.auth);
-  const { creators } = useAppSelector((state) => state.creator);
-  const currentCreator = creators.find((c) => c.id === currentUser?.id) || creators[0];
 
+  // Tab State: security | notifications | account
   const initialTab = searchParams.get('tab');
-  const [activeTab, setActiveTab] = useState<'profile' | 'socials' | 'portfolio' | 'gallery' | 'security'>(() => {
-    if (initialTab === 'portfolio' || initialTab === 'gallery' || initialTab === 'socials' || initialTab === 'security') {
-      return initialTab;
-    }
-    return 'profile';
-  });
+  const [activeTab, setActiveTab] = useState<'security' | 'notifications' | 'account'>('security');
 
   useEffect(() => {
     const tab = searchParams.get('tab');
-    if (tab && ['profile', 'socials', 'portfolio', 'gallery', 'security'].includes(tab)) {
-      setActiveTab(tab as any);
+    if (tab === 'profile' || tab === 'socials') {
+      router.replace('/creator/profile');
+    } else if (tab === 'portfolio' || tab === 'gallery') {
+      router.replace('/creator/portfolio');
+    } else if (tab === 'notifications' || tab === 'account') {
+      setActiveTab(tab);
     }
-  }, [searchParams]);
+  }, [searchParams, router]);
 
-  // Profile Form States
-  const [name, setName] = useState(currentCreator?.name || 'Sophie Kim');
-  const [handle, setHandle] = useState(currentCreator?.handle?.replace('@', '') || 'sophiekim');
-  const [avatar, setAvatar] = useState(currentCreator?.avatar || AVATAR_PRESETS[0].url);
-  const [coverImage, setCoverImage] = useState(currentCreator?.coverImage || '');
-  const [bio, setBio] = useState(currentCreator?.bio || '');
-  const [location, setLocation] = useState(currentCreator?.location || 'Milan & Paris');
-  const [startingPriceEur, setStartingPriceEur] = useState(currentCreator?.startingPriceEur || 850);
-  const [aestheticVibe, setAestheticVibe] = useState(currentCreator?.aestheticVibe || 'Clean Minimalist • Warm Natural Glow');
-  const [categoriesText, setCategoriesText] = useState(currentCreator?.categories ? currentCreator.categories.join(', ') : 'Beauty, Lifestyle, Fashion');
-  const [tagsText, setTagsText] = useState(currentCreator?.tags ? currentCreator.tags.join(', ') : 'Clean Beauty, Skincare Routine, Direct Response UGC, Editorial Makeup');
-
-  // Social Stats Form States
-  const [igHandle, setIgHandle] = useState(currentCreator?.platforms?.instagram?.handle || '@sophiekim');
-  const [igFollowers, setIgFollowers] = useState(currentCreator?.platforms?.instagram?.followersFormatted || '1.2M');
-  const [igEngagement, setIgEngagement] = useState(currentCreator?.platforms?.instagram?.engagementRate || '4.8%');
-  
-  const [ttHandle, setTtHandle] = useState(currentCreator?.platforms?.tiktok?.handle || '@sophie.kim');
-  const [ttFollowers, setTtFollowers] = useState(currentCreator?.platforms?.tiktok?.followersFormatted || '680K');
-  const [ttEngagement, setTtEngagement] = useState(currentCreator?.platforms?.tiktok?.engagementRate || '8.2%');
-
-  const [ytHandle, setYtHandle] = useState(currentCreator?.platforms?.youtube?.handle || 'Sophie Kim Vlogs');
-  const [ytFollowers, setYtFollowers] = useState(currentCreator?.platforms?.youtube?.followersFormatted || '210K');
-
-  // Gallery Photo Modal & States
-  const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false);
-  const [newPhotoUrl, setNewPhotoUrl] = useState('');
-  const [newPhotoCaption, setNewPhotoCaption] = useState('');
-  const [newPhotoRatio, setNewPhotoRatio] = useState<'portrait' | 'landscape' | 'square'>('portrait');
-  const [newPhotoLocation, setNewPhotoLocation] = useState(location || 'Paris, France');
-
-  // Security & Password Form States
+  // Security Form States
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [twoFactorEnabled, setTwoFactorEnabled] = useState(true);
-  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
-  const handleSaveProfile = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name.trim() || !handle.trim()) {
-      message.error('Name and username handle are required.');
-      return;
-    }
+  // Notification Preferences States
+  const [notifyOffers, setNotifyOffers] = useState(true);
+  const [notifyMessages, setNotifyMessages] = useState(true);
+  const [notifyDeliverables, setNotifyDeliverables] = useState(true);
+  const [notifyPayouts, setNotifyPayouts] = useState(true);
 
-    const categoriesArray = categoriesText
-      .split(',')
-      .map((c) => c.trim())
-      .filter((c) => c.length > 0);
-
-    const tagsArray = tagsText
-      .split(',')
-      .map((t) => t.trim())
-      .filter((t) => t.length > 0);
-
-    const cleanHandle = handle.startsWith('@') ? handle.slice(1) : handle;
-
-    const updates = {
-      name,
-      handle: cleanHandle,
-      avatar,
-      coverImage,
-      bio,
-      location,
-      startingPriceEur: Number(startingPriceEur) || 850,
-      aestheticVibe,
-      categories: categoriesArray,
-      tags: tagsArray,
-    };
-
-    dispatch(updateCreatorProfileDetails({ creatorId: currentCreator.id, updates }));
-    dispatch(updateUserProfile({ name, handle: `@${cleanHandle}`, avatar, location, bio }));
-
-    message.success('Creator profile saved and updated live across the marketplace!');
-  };
-
-  const handleSaveSocials = (e: React.FormEvent) => {
-    e.preventDefault();
-    const platformUpdates = {
-      platforms: {
-        ...currentCreator.platforms,
-        instagram: currentCreator.platforms.instagram
-          ? {
-              ...currentCreator.platforms.instagram,
-              handle: igHandle,
-              followersFormatted: igFollowers,
-              engagementRate: igEngagement,
-            }
-          : {
-              followers: 1200000,
-              followersFormatted: igFollowers,
-              handle: igHandle,
-              engagementRate: igEngagement,
-              avgViews: '145K',
-            },
-        tiktok: currentCreator.platforms.tiktok
-          ? {
-              ...currentCreator.platforms.tiktok,
-              handle: ttHandle,
-              followersFormatted: ttFollowers,
-              engagementRate: ttEngagement,
-            }
-          : {
-              followers: 680000,
-              followersFormatted: ttFollowers,
-              handle: ttHandle,
-              engagementRate: ttEngagement,
-              avgViews: '320K',
-            },
-        youtube: currentCreator.platforms.youtube
-          ? {
-              ...currentCreator.platforms.youtube,
-              handle: ytHandle,
-              followersFormatted: ytFollowers,
-            }
-          : {
-              followers: 210000,
-              followersFormatted: ytFollowers,
-              handle: ytHandle,
-              engagementRate: '3.4%',
-              avgViews: '85K',
-            },
-      },
-    };
-
-    dispatch(updateCreatorProfileDetails({ creatorId: currentCreator.id, updates: platformUpdates }));
-    message.success('Connected channels and audience metrics updated!');
-  };
-
-  const handleAddPhoto = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newPhotoUrl.trim()) {
-      message.error('Please provide an image URL for the gallery photo.');
-      return;
-    }
-
-    const photo: CreatorPhoto = {
-      id: `photo-${Date.now()}`,
-      url: newPhotoUrl.trim(),
-      caption: newPhotoCaption.trim() || `${name} • Portfolio Shoot`,
-      category: 'photo',
-      aspectRatio: newPhotoRatio,
-      date: 'Recent Shoot',
-      location: newPhotoLocation || location,
-    };
-
-    dispatch(addCreatorPhoto({ creatorId: currentCreator.id, photo }));
-    message.success('New gallery photo published to your public rate card!');
-    setIsPhotoModalOpen(false);
-    setNewPhotoUrl('');
-    setNewPhotoCaption('');
-  };
-
-  const handleDeletePhoto = (photoId: string) => {
-    dispatch(deleteCreatorPhoto({ creatorId: currentCreator.id, photoId }));
-    message.info('Photo removed from your public gallery.');
-  };
-
-  // Portfolio States
-  const portfolioList = currentCreator?.portfolio || [];
-  const [portfolioPlatformFilter, setPortfolioPlatformFilter] = useState<'all' | PlatformType>('all');
-  const [isPortfolioModalOpen, setIsPortfolioModalOpen] = useState(false);
-  const [editingPortfolioId, setEditingPortfolioId] = useState<string | null>(null);
-  const [previewingPortfolioItem, setPreviewingPortfolioItem] = useState<PortfolioItem | null>(null);
-
-  // Form states for portfolio
-  const [portBrandName, setPortBrandName] = useState('');
-  const [portBrandLogo, setPortBrandLogo] = useState('');
-  const [portCampaignTitle, setPortCampaignTitle] = useState('');
-  const [portPlatform, setPortPlatform] = useState<PlatformType>('instagram');
-  const [portDeliverableType, setPortDeliverableType] = useState('60s 4K Reel with Voiceover');
-  const [portMediaUrl, setPortMediaUrl] = useState('');
-  const [portDuration, setPortDuration] = useState('0:45');
-  const [portViews, setPortViews] = useState('280K');
-  const [portLikes, setPortLikes] = useState('21.4K');
-  const [portEngagementRate, setPortEngagementRate] = useState('8.2%');
-  const [portDescription, setPortDescription] = useState('');
-
-  const openAddPortfolioModal = () => {
-    setEditingPortfolioId(null);
-    setPortBrandName('');
-    setPortBrandLogo('');
-    setPortCampaignTitle('');
-    setPortPlatform('instagram');
-    setPortDeliverableType('60s 4K Reel with Voiceover');
-    setPortMediaUrl('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80');
-    setPortDuration('0:45');
-    setPortViews('280K');
-    setPortLikes('21.4K');
-    setPortEngagementRate('8.2%');
-    setPortDescription('Product demonstration highlighting key features with authentic skin texture and lighting.');
-    setIsPortfolioModalOpen(true);
-  };
-
-  const openEditPortfolioModal = (item: PortfolioItem) => {
-    setEditingPortfolioId(item.id);
-    setPortBrandName(item.brandName);
-    setPortBrandLogo(item.brandLogo || '');
-    setPortCampaignTitle(item.campaignTitle);
-    setPortPlatform(item.platform);
-    setPortDeliverableType(item.deliverableType || '60s 4K Reel with Voiceover');
-    setPortMediaUrl(item.mediaUrl);
-    setPortDuration(item.duration || '0:45');
-    setPortViews(item.views || '200K');
-    setPortLikes(item.likes || '15K');
-    setPortEngagementRate(item.engagementRate || '7.0%');
-    setPortDescription(item.description || '');
-    setIsPortfolioModalOpen(true);
-  };
-
-  const handleSavePortfolio = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!portBrandName.trim() || !portCampaignTitle.trim() || !portMediaUrl.trim()) {
-      message.error('Please fill in the brand name, campaign title, and media URL.');
-      return;
-    }
-
-    const payload: PortfolioItem = {
-      id: editingPortfolioId || `port-${Date.now()}`,
-      brandName: portBrandName.trim(),
-      brandLogo: portBrandLogo.trim() || undefined,
-      campaignTitle: portCampaignTitle.trim(),
-      platform: portPlatform,
-      deliverableType: portDeliverableType.trim(),
-      mediaType: 'video',
-      mediaUrl: portMediaUrl.trim(),
-      aspectRatio: '9:16',
-      duration: portDuration.trim(),
-      views: portViews.trim(),
-      likes: portLikes.trim(),
-      engagementRate: portEngagementRate.trim(),
-      description: portDescription.trim(),
-      completedDate: '2026',
-    };
-
-    if (editingPortfolioId) {
-      dispatch(updatePortfolioItem({ creatorId: currentCreator.id, item: payload }));
-      message.success(`Updated case study for ${portBrandName}!`);
-    } else {
-      dispatch(addPortfolioItem({ creatorId: currentCreator.id, item: payload }));
-      message.success(`Published new case study for ${portBrandName}!`);
-    }
-
-    setIsPortfolioModalOpen(false);
-  };
-
-  const handleDeletePortfolio = (itemId: string, brand: string) => {
-    dispatch(deletePortfolioItem({ creatorId: currentCreator.id, itemId }));
-    message.success(`Removed ${brand} case study from portfolio.`);
-  };
+  // Modal State
+  const [isDeactivateModalOpen, setIsDeactivateModalOpen] = useState(false);
 
   const handleUpdatePassword = (e: React.FormEvent) => {
     e.preventDefault();
@@ -366,110 +69,48 @@ function CreatorSettingsContent() {
       return;
     }
     if (newPassword !== confirmPassword) {
-      message.error('New password and confirmation do not match.');
+      message.error('New passwords do not match.');
       return;
     }
 
+    message.success('Password updated successfully.');
     setCurrentPassword('');
     setNewPassword('');
     setConfirmPassword('');
-    message.success('Security password updated successfully! All active sessions refreshed.');
+  };
+
+  const handleSaveNotifications = () => {
+    message.success('Notification preferences saved.');
   };
 
   const handleLogout = () => {
     dispatch(logout());
-    message.success('Signed out successfully');
+    message.success('Signed out successfully.');
     router.push('/login');
   };
-
-  const photosList = currentCreator?.photos || [];
 
   return (
     <div className="min-h-screen pb-16 font-sans">
       <WorkspaceHeader
-        title="Profile & Settings"
-        subtitle="Manage public rate card profile, connected channels, gallery, and security."
+        title="Account & Security Settings"
+        subtitle="Manage login security, authentication protocols, notifications, and session controls."
         action={
-          activeTab === 'profile' ? (
-            <div className="flex items-center gap-2.5">
-              <Button
-                type="default"
-                onClick={() => setIsShareModalOpen(true)}
-                className="h-10 px-4 rounded-full font-bold text-sm border-[#D2D2CA] text-[#0A0A0A] flex items-center gap-2 hover:border-[#0A0A0A]"
-              >
-                <Share2 className="w-4 h-4 text-[#0A0A0A]" />
-                <span>Share Profile</span>
-              </Button>
-
-              <Link href={`/creators/${currentCreator.id}`} target="_blank">
-                <Button
-                  type="default"
-                  className="h-10 px-4 rounded-full font-bold text-sm border-[#D2D2CA] text-[#0A0A0A] flex items-center gap-2 hover:border-[#0A0A0A]"
-                >
-                  <span>Preview Public</span>
-                  <ExternalLink className="w-4 h-4" />
-                </Button>
-              </Link>
-            </div>
-          ) : undefined
+          <Link href="/creator/profile">
+            <Button
+              type="default"
+              className="h-10 px-4 rounded-full font-bold text-sm border-[#D2D2CA] text-[#0A0A0A] flex items-center gap-2 hover:border-[#0A0A0A]"
+            >
+              <User className="w-4 h-4 text-[#73736A]" />
+              <span>Go to Public Profile</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Button>
+          </Link>
         }
       />
 
-      <div className="p-6 sm:p-8 max-w-5xl mx-auto space-y-8">
+      <div className="p-6 sm:p-8 max-w-4xl mx-auto space-y-8">
         {/* Navigation Tabs */}
-        <div className="bg-white rounded-2xl p-1.5 border border-[#E7E7E2] flex flex-wrap gap-1 shadow-2xs">
-          <button
-            type="button"
-            onClick={() => setActiveTab('profile')}
-            className={`flex-1 py-2.5 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
-              activeTab === 'profile'
-                ? 'bg-[#0A0A0A] text-white shadow-xs'
-                : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
-            }`}
-          >
-            <User className={`w-4 h-4 ${activeTab === 'profile' ? 'text-white' : 'text-[#73736A]'}`} />
-            <span>Profile & Identity</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setActiveTab('socials')}
-            className={`flex-1 py-2.5 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
-              activeTab === 'socials'
-                ? 'bg-[#0A0A0A] text-white shadow-xs'
-                : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
-            }`}
-          >
-            <Globe className={`w-4 h-4 ${activeTab === 'socials' ? 'text-white' : 'text-[#73736A]'}`} />
-            <span>Channels & Reach</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setActiveTab('portfolio')}
-            className={`flex-1 py-2.5 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
-              activeTab === 'portfolio'
-                ? 'bg-[#0A0A0A] text-white shadow-xs'
-                : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
-            }`}
-          >
-            <Film className={`w-4 h-4 ${activeTab === 'portfolio' ? 'text-white' : 'text-[#73736A]'}`} />
-            <span>Case Studies ({portfolioList.length})</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setActiveTab('gallery')}
-            className={`flex-1 py-2.5 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
-              activeTab === 'gallery'
-                ? 'bg-[#0A0A0A] text-white shadow-xs'
-                : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
-            }`}
-          >
-            <ImageIcon className={`w-4 h-4 ${activeTab === 'gallery' ? 'text-white' : 'text-[#73736A]'}`} />
-            <span>Lookbook & Gallery ({photosList.length})</span>
-          </button>
-
+        <div className="bg-white rounded-2xl p-1.5 border border-[#E7E7E2] flex gap-1 shadow-2xs max-w-lg">
           <button
             type="button"
             onClick={() => setActiveTab('security')}
@@ -480,908 +121,295 @@ function CreatorSettingsContent() {
             }`}
           >
             <Shield className={`w-4 h-4 ${activeTab === 'security' ? 'text-white' : 'text-[#73736A]'}`} />
-            <span>Security</span>
+            <span>Security & Login</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('notifications')}
+            className={`flex-1 py-2.5 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
+              activeTab === 'notifications'
+                ? 'bg-[#0A0A0A] text-white shadow-xs'
+                : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
+            }`}
+          >
+            <Bell className={`w-4 h-4 ${activeTab === 'notifications' ? 'text-white' : 'text-[#73736A]'}`} />
+            <span>Notifications</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('account')}
+            className={`flex-1 py-2.5 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
+              activeTab === 'account'
+                ? 'bg-[#0A0A0A] text-white shadow-xs'
+                : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
+            }`}
+          >
+            <Lock className={`w-4 h-4 ${activeTab === 'account' ? 'text-white' : 'text-[#73736A]'}`} />
+            <span>Account</span>
           </button>
         </div>
 
-        {/* TAB 1: PROFILE & IDENTITY */}
-        {activeTab === 'profile' && (
-          <form onSubmit={handleSaveProfile} className="space-y-6">
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
-              <div className="flex items-center justify-between pb-4 border-b border-[#E7E7E2]">
-                <div>
-                  <h2 className="text-lg font-black text-[#0A0A0A] tracking-tight">Public Profile Identity</h2>
-                  <p className="text-xs text-[#73736A] mt-0.5">This information is shown to brands when discovering and vetting creators.</p>
-                </div>
-                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] text-xs font-bold border border-[#23744D]/20">
-                  <VerifiedBadge size="xs" />
-                  <span>Verified Creator</span>
-                </div>
-              </div>
-
-              {/* Profile Avatar Image Upload (Direct File Upload & Drag-and-Drop) */}
-              <div className="p-5 bg-[#FAFAF8] rounded-2xl border border-[#E7E7E2]">
-                <ImageUpload
-                  variant="avatar"
-                  label="Profile Portrait Photo"
-                  description="Upload your high-resolution portrait (PNG, JPG, WEBP up to 10MB). Drag & drop or browse from device."
-                  value={avatar}
-                  onChange={(img) => setAvatar(img)}
-                />
-              </div>
-
-              {/* Name, Handle, Location, Starting Rate */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Full Name</label>
-                  <Input
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="rounded-xl h-10 text-sm font-semibold"
-                    required
-                  />
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Username Handle</label>
-                  <Input
-                    prefix="@"
-                    value={handle}
-                    onChange={(e) => setHandle(e.target.value)}
-                    className="rounded-xl h-10 text-sm font-semibold"
-                    required
-                  />
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Location</label>
-                  <Input
-                    prefix={<MapPin className="w-3.5 h-3.5 text-[#73736A]" />}
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                    className="rounded-xl h-10 text-sm font-semibold"
-                  />
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Starting Rate (EUR)</label>
-                  <Input
-                    prefix="€"
-                    type="number"
-                    value={startingPriceEur}
-                    onChange={(e) => setStartingPriceEur(Number(e.target.value))}
-                    className="rounded-xl h-10 text-sm font-bold"
-                  />
-                </div>
-              </div>
-
-              {/* Bio */}
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Bio & Creative Statement</label>
-                <Input.TextArea
-                  rows={3}
-                  value={bio}
-                  onChange={(e) => setBio(e.target.value)}
-                  className="rounded-xl text-sm font-medium"
-                  placeholder="Tell brands about your aesthetic style, content specialties, and collaboration philosophy..."
-                />
-              </div>
-
-              {/* Aesthetic Signature & Categories */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A] flex items-center gap-1.5">
-                    <Palette className="w-3.5 h-3.5 text-[#73736A]" />
-                    <span>Aesthetic Signature / Visual Vibe</span>
-                  </label>
-                  <Input
-                    value={aestheticVibe}
-                    onChange={(e) => setAestheticVibe(e.target.value)}
-                    placeholder="e.g. Clean Minimalist • Warm Natural Glow"
-                    className="rounded-xl h-10 text-sm font-semibold"
-                  />
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A] flex items-center gap-1.5">
-                    <Tag className="w-3.5 h-3.5 text-[#73736A]" />
-                    <span>Categories / Niches (comma separated)</span>
-                  </label>
-                  <Input
-                    value={categoriesText}
-                    onChange={(e) => setCategoriesText(e.target.value)}
-                    placeholder="Beauty, Skincare, Lifestyle, Fashion"
-                    className="rounded-xl h-10 text-sm font-semibold"
-                  />
-                </div>
-              </div>
-
-              {/* Focus Content Tags */}
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-[#73736A] flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-[#73736A]" />
-                  <span>Content Focus Topics & Deliverable Tags (comma separated)</span>
-                </label>
-                <Input
-                  value={tagsText}
-                  onChange={(e) => setTagsText(e.target.value)}
-                  placeholder="Clean Beauty, Skincare Routine, Direct Response UGC, Editorial Makeup"
-                  className="rounded-xl h-10 text-sm font-semibold"
-                />
-              </div>
-
-              {/* Submit Profile Button */}
-              <div className="pt-4 border-t border-[#E7E7E2] flex items-center justify-end">
-                <button
-                  type="submit"
-                  className="h-11 px-7 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  <Save className="w-4 h-4" />
-                  <span>Save Profile Details</span>
-                </button>
-              </div>
-            </div>
-          </form>
-        )}
-
-        {/* TAB 2: CONNECTED CHANNELS & AUDIENCE */}
-        {activeTab === 'socials' && (
-          <form onSubmit={handleSaveSocials} className="space-y-6">
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
-              <div className="pb-4 border-b border-[#E7E7E2]">
-                <h2 className="text-lg font-black text-[#0A0A0A] tracking-tight">Connected Social Handles & Reach</h2>
-                <p className="text-xs text-[#73736A] mt-0.5">These audience metrics power your search card and verified follower analytics.</p>
-              </div>
-
-              <div className="space-y-4">
-                {/* Instagram */}
-                <div className="p-4 bg-[#FAFAF8] rounded-2xl border border-[#E7E7E2] flex flex-col md:flex-row items-center justify-between gap-4">
-                  <div className="flex items-center gap-3 w-full md:w-auto">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 flex items-center justify-center text-white shrink-0 shadow-xs">
-                      <Instagram className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <div className="text-sm font-bold text-[#0A0A0A]">Instagram Channel</div>
-                      <div className="text-xs text-[#73736A]">Primary photo & reel platform</div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3 w-full md:w-auto flex-wrap">
-                    <Input
-                      value={igHandle}
-                      onChange={(e) => setIgHandle(e.target.value)}
-                      placeholder="@handle"
-                      className="rounded-xl h-10 text-sm font-semibold w-full sm:w-36"
-                    />
-                    <Input
-                      value={igFollowers}
-                      onChange={(e) => setIgFollowers(e.target.value)}
-                      placeholder="1.2M Followers"
-                      className="rounded-xl h-10 text-sm font-bold w-full sm:w-32 text-center"
-                    />
-                    <Input
-                      value={igEngagement}
-                      onChange={(e) => setIgEngagement(e.target.value)}
-                      placeholder="4.8% Eng"
-                      className="rounded-xl h-10 text-sm font-semibold w-full sm:w-28 text-center"
-                    />
-                  </div>
-                </div>
-
-                {/* TikTok */}
-                <div className="p-4 bg-[#FAFAF8] rounded-2xl border border-[#E7E7E2] flex flex-col md:flex-row items-center justify-between gap-4">
-                  <div className="flex items-center gap-3 w-full md:w-auto">
-                    <div className="w-10 h-10 rounded-full bg-[#0A0A0A] flex items-center justify-center text-white shrink-0 shadow-xs">
-                      <Film className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <div className="text-sm font-bold text-[#0A0A0A]">TikTok Channel</div>
-                      <div className="text-xs text-[#73736A]">Short-form vertical video reach</div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3 w-full md:w-auto flex-wrap">
-                    <Input
-                      value={ttHandle}
-                      onChange={(e) => setTtHandle(e.target.value)}
-                      placeholder="@handle"
-                      className="rounded-xl h-10 text-sm font-semibold w-full sm:w-36"
-                    />
-                    <Input
-                      value={ttFollowers}
-                      onChange={(e) => setTtFollowers(e.target.value)}
-                      placeholder="680K Followers"
-                      className="rounded-xl h-10 text-sm font-bold w-full sm:w-32 text-center"
-                    />
-                    <Input
-                      value={ttEngagement}
-                      onChange={(e) => setTtEngagement(e.target.value)}
-                      placeholder="8.2% Eng"
-                      className="rounded-xl h-10 text-sm font-semibold w-full sm:w-28 text-center"
-                    />
-                  </div>
-                </div>
-
-                {/* YouTube */}
-                <div className="p-4 bg-[#FAFAF8] rounded-2xl border border-[#E7E7E2] flex flex-col md:flex-row items-center justify-between gap-4">
-                  <div className="flex items-center gap-3 w-full md:w-auto">
-                    <div className="w-10 h-10 rounded-full bg-[#FF0000] flex items-center justify-center text-white shrink-0 shadow-xs">
-                      <Youtube className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <div className="text-sm font-bold text-[#0A0A0A]">YouTube Channel</div>
-                      <div className="text-xs text-[#73736A]">Longform reviews & mid-roll slots</div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3 w-full md:w-auto flex-wrap">
-                    <Input
-                      value={ytHandle}
-                      onChange={(e) => setYtHandle(e.target.value)}
-                      placeholder="Channel Name"
-                      className="rounded-xl h-10 text-sm font-semibold w-full sm:w-44"
-                    />
-                    <Input
-                      value={ytFollowers}
-                      onChange={(e) => setYtFollowers(e.target.value)}
-                      placeholder="210K Subscribers"
-                      className="rounded-xl h-10 text-sm font-bold w-full sm:w-36 text-center"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-4 border-t border-[#E7E7E2] flex items-center justify-end">
-                <button
-                  type="submit"
-                  className="h-11 px-7 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  <Save className="w-4 h-4" />
-                  <span>Update Channels & Reach</span>
-                </button>
-              </div>
-            </div>
-          </form>
-        )}
-
-        {/* TAB: WORK GALLERY & CASE STUDIES */}
-        {activeTab === 'portfolio' && (
-          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E7E7E2]">
-              <div>
-                <h2 className="text-lg font-black text-[#0A0A0A] tracking-tight">
-                  Public Case Studies & Deliverables ({portfolioList.length})
-                </h2>
-                <p className="text-xs text-[#73736A] mt-0.5">
-                  Verified campaign cards displayed in your public profile Work Gallery.
-                </p>
-              </div>
-
-              <div className="flex items-center gap-2.5 self-start sm:self-auto">
-                <Link href="/creator/portfolio">
-                  <Button
-                    type="default"
-                    className="h-10 px-4 rounded-full font-bold text-xs border-[#D2D2CA] text-[#0A0A0A] flex items-center gap-1.5 hover:border-[#0A0A0A]"
-                  >
-                    <span>Full Studio</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </Button>
-                </Link>
-
-                <button
-                  type="button"
-                  onClick={openAddPortfolioModal}
-                  className="h-10 px-5 rounded-full font-bold text-xs bg-[#0A0A0A] hover:bg-zinc-800 text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer"
-                >
-                  <Plus className="w-4 h-4" />
-                  <span>Add Case Study</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Platform Filter Pills */}
-            <div className="inline-flex items-center p-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] overflow-x-auto shrink-0 max-w-full">
-              {[
-                { key: 'all', label: 'All', count: portfolioList.length },
-                {
-                  key: 'instagram',
-                  label: 'Instagram',
-                  count: portfolioList.filter((i) => i.platform === 'instagram').length,
-                },
-                {
-                  key: 'tiktok',
-                  label: 'TikTok',
-                  count: portfolioList.filter((i) => i.platform === 'tiktok').length,
-                },
-                {
-                  key: 'youtube',
-                  label: 'YouTube',
-                  count: portfolioList.filter((i) => i.platform === 'youtube').length,
-                },
-                {
-                  key: 'ugc',
-                  label: 'UGC',
-                  count: portfolioList.filter((i) => i.platform === 'ugc').length,
-                },
-              ].map((tab) => (
-                <button
-                  key={tab.key}
-                  type="button"
-                  onClick={() => setPortfolioPlatformFilter(tab.key as any)}
-                  className={`px-3.5 py-1 rounded-full text-xs font-bold capitalize transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
-                    portfolioPlatformFilter === tab.key
-                      ? 'bg-[#0A0A0A] text-white shadow-2xs'
-                      : 'text-[#73736A] hover:text-[#0A0A0A]'
-                  }`}
-                >
-                  <span>{tab.label}</span>
-                  <span
-                    className={`text-[10px] px-1.5 py-0.2 rounded-full font-extrabold ${
-                      portfolioPlatformFilter === tab.key ? 'bg-white/20 text-white' : 'bg-[#EAEAE3] text-[#0A0A0A]'
-                    }`}
-                  >
-                    {tab.count}
-                  </span>
-                </button>
-              ))}
-            </div>
-
-            {/* Case Studies Grid */}
-            {(() => {
-              const displayList = portfolioPlatformFilter === 'all'
-                ? portfolioList
-                : portfolioList.filter((i) => i.platform === portfolioPlatformFilter);
-
-              return displayList.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                  {displayList.map((item) => (
-                    <div
-                      key={item.id}
-                      className="rounded-3xl overflow-hidden border border-[#E7E7E2] bg-[#FAFAF8] hover:border-[#0A0A0A] transition-all flex flex-col justify-between shadow-2xs group"
-                    >
-                      <div className="h-44 overflow-hidden relative bg-[#0A0A0A]">
-                        <img
-                          src={item.mediaUrl}
-                          alt={item.campaignTitle}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                        <div className="absolute top-2.5 inset-x-2.5 flex items-center justify-between z-10">
-                          <span className="text-[10px] font-black uppercase tracking-wider bg-black/75 backdrop-blur-md text-white px-2.5 py-0.5 rounded-full">
-                            {item.platform}
-                          </span>
-                          {item.duration && (
-                            <span className="text-[10px] font-extrabold uppercase bg-black/70 backdrop-blur-md text-white px-2 py-0.5 rounded-full">
-                              {item.duration}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
-                        <div className="space-y-1">
-                          <div className="flex items-center justify-between">
-                            <h4 className="font-extrabold text-sm text-[#0A0A0A] truncate">
-                              {item.brandName}
-                            </h4>
-                            <span className="text-[11px] font-bold text-[#23744D] bg-[#EEF7F2] px-2 py-0.5 rounded-md">
-                              {item.views}
-                            </span>
-                          </div>
-                          <p className="text-xs font-semibold text-[#0A0A0A] line-clamp-1">
-                            {item.campaignTitle}
-                          </p>
-                          {item.deliverableType && (
-                            <p className="text-[11px] text-[#73736A] font-medium line-clamp-1">
-                              {item.deliverableType}
-                            </p>
-                          )}
-                        </div>
-
-                        <div className="pt-2 border-t border-[#E7E7E2] flex items-center justify-between">
-                          <button
-                            type="button"
-                            onClick={() => setPreviewingPortfolioItem(item)}
-                            className="text-xs font-bold text-[#73736A] hover:text-[#0A0A0A] flex items-center gap-1 cursor-pointer"
-                          >
-                            <Eye className="w-3.5 h-3.5" />
-                            <span>Preview</span>
-                          </button>
-
-                          <div className="flex items-center gap-1.5">
-                            <button
-                              type="button"
-                              onClick={() => openEditPortfolioModal(item)}
-                              className="h-7 px-2.5 rounded-full text-xs font-bold bg-white border border-[#D2D2CA] text-[#0A0A0A] hover:border-[#0A0A0A] flex items-center gap-1 cursor-pointer"
-                            >
-                              <Edit3 className="w-3 h-3" />
-                              <span>Edit</span>
-                            </button>
-
-                            <Popconfirm
-                              title="Delete case study?"
-                              description="This will remove it from your public profile."
-                              onConfirm={() => handleDeletePortfolio(item.id, item.brandName)}
-                              okText="Delete"
-                              cancelText="Cancel"
-                              okButtonProps={{ danger: true }}
-                            >
-                              <button
-                                type="button"
-                                className="h-7 w-7 rounded-full text-rose-600 hover:bg-rose-50 flex items-center justify-center cursor-pointer"
-                                title="Delete"
-                              >
-                                <Trash2 className="w-3.5 h-3.5" />
-                              </button>
-                            </Popconfirm>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <EmptyState
-                  color="neutral"
-                  icon={<Film className="w-8 h-8" />}
-                  badge="Case Studies"
-                  title="No Case Studies in this Channel"
-                  description="Add high-performing campaign deliverables to show brands your reach and production capability."
-                  primaryAction={{
-                    label: 'Add Case Study',
-                    onClick: openAddPortfolioModal,
-                    icon: <Plus className="w-4 h-4" />,
-                  }}
-                  variant="dashed"
-                />
-              );
-            })()}
-          </div>
-        )}
-
-        {/* TAB 4: GALLERY & LOOKBOOK PHOTOS MANAGEMENT */}
-        {activeTab === 'gallery' && (
-          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E7E7E2]">
-              <div>
-                <h2 className="text-lg font-black text-[#0A0A0A] tracking-tight">Public Lookbook & Photo Gallery</h2>
-                <p className="text-xs text-[#73736A] mt-0.5">
-                  High-resolution portrait stills, headshots, and aesthetic lookbook photos displayed to hiring brands.
-                </p>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => setIsPhotoModalOpen(true)}
-                className="h-10 px-5 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer self-start sm:self-auto"
-              >
-                <Plus className="w-4 h-4" />
-                <span>Add Lookbook Photo</span>
-              </button>
-            </div>
-
-            {photosList.length > 0 ? (
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
-                {photosList.map((photo) => (
-                  <div
-                    key={photo.id}
-                    className="group relative rounded-3xl overflow-hidden border border-[#E7E7E2] bg-[#FAFAF8] shadow-xs hover:border-[#0A0A0A] hover:shadow-md transition-all duration-300 aspect-4/5"
-                  >
-                    <img
-                      src={photo.url}
-                      alt={photo.caption || 'Creator gallery photo'}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-
-                    {/* Gradient Vignette on Hover */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-
-                    {/* Quick Delete Action */}
-                    <button
-                      type="button"
-                      onClick={() => handleDeletePhoto(photo.id)}
-                      className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 text-rose-600 hover:bg-rose-600 hover:text-white flex items-center justify-center shadow-md transition-all cursor-pointer opacity-90 group-hover:opacity-100 z-10"
-                      title="Delete Photo"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <EmptyState
-                color="neutral"
-                icon={<Camera className="w-8 h-8" />}
-                badge="Media Gallery"
-                title="No Gallery Photos Added Yet"
-                description="Upload editorial portraits, studio stills, and aesthetic lifestyle shots to showcase your visual identity to brands."
-                primaryAction={{
-                  label: 'Add First Photo',
-                  onClick: () => setIsPhotoModalOpen(true),
-                  icon: <Plus className="w-4 h-4" />,
-                }}
-                variant="dashed"
-              />
-            )}
-          </div>
-        )}
-
-        {/* TAB 4: SECURITY & PASSWORD */}
+        {/* Tab 1: Security & Login */}
         {activeTab === 'security' && (
           <div className="space-y-6">
-            <form onSubmit={handleUpdatePassword} className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
-              <div className="pb-4 border-b border-[#E7E7E2]">
-                <h2 className="text-lg font-black text-[#0A0A0A] tracking-tight">Change Password</h2>
+            {/* Password Update Card */}
+            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
+              <div className="flex items-center gap-3 pb-4 border-b border-[#E7E7E2]">
+                <div className="w-10 h-10 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-center">
+                  <KeyRound className="w-5 h-5 text-[#0A0A0A]" />
+                </div>
+                <div>
+                  <h2 className="text-base font-black text-[#0A0A0A]">Change Password</h2>
+                  <p className="text-xs text-[#73736A]">Ensure your account is protected with a secure password.</p>
+                </div>
               </div>
 
-              <div className="space-y-4 max-w-md">
+              <form onSubmit={handleUpdatePassword} className="space-y-4 max-w-xl">
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Current Password</label>
                   <Input.Password
                     value={currentPassword}
                     onChange={(e) => setCurrentPassword(e.target.value)}
-                    placeholder="••••••••••••"
-                    className="rounded-xl h-10 text-sm"
-                    required
+                    className="rounded-xl h-10 font-medium"
+                    placeholder="Enter current password"
                   />
                 </div>
 
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">New Password</label>
-                  <Input.Password
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    placeholder="••••••••••••"
-                    className="rounded-xl h-10 text-sm"
-                    required
-                  />
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Confirm New Password</label>
-                  <Input.Password
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="••••••••••••"
-                    className="rounded-xl h-10 text-sm"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="pt-4 border-t border-[#E7E7E2] flex items-center justify-between flex-wrap gap-3">
-                <Link href="/forgot-password" className="text-xs font-bold text-[#73736A] hover:text-[#0A0A0A] transition-colors">
-                  Forgot current password? Reset via email
-                </Link>
-
-                <button
-                  type="submit"
-                  className="h-11 px-7 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  <KeyRound className="w-4 h-4" />
-                  <span>Update Password</span>
-                </button>
-              </div>
-            </form>
-
-            {/* 2-Factor Authentication Security Card */}
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2 text-base font-bold text-[#0A0A0A]">
-                    <Shield className="w-5 h-5 text-[#23744D]" />
-                    <span>Two-Factor Authentication (2FA)</span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">New Password</label>
+                    <Input.Password
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      className="rounded-xl h-10 font-medium"
+                      placeholder="Min. 8 characters"
+                    />
                   </div>
-                  <p className="text-xs text-[#73736A]">
-                    Protect your balance payouts and campaign contracts with SMS/Authenticator security codes.
-                  </p>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Confirm Password</label>
+                    <Input.Password
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      className="rounded-xl h-10 font-medium"
+                      placeholder="Repeat new password"
+                    />
+                  </div>
+                </div>
+
+                <div className="pt-2">
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    className="h-10 px-5 rounded-full font-bold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 !text-white border-none shadow-sm"
+                  >
+                    Update Password
+                  </Button>
+                </div>
+              </form>
+            </div>
+
+            {/* 2-Factor Authentication */}
+            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
+              <div className="flex items-center justify-between pb-4 border-b border-[#E7E7E2]">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-[#EEF7F2] border border-[#23744D]/20 flex items-center justify-center">
+                    <Smartphone className="w-5 h-5 text-[#23744D]" />
+                  </div>
+                  <div>
+                    <h2 className="text-base font-black text-[#0A0A0A]">Two-Factor Authentication (2FA)</h2>
+                    <p className="text-xs text-[#73736A]">Require an authenticator app code when signing in.</p>
+                  </div>
                 </div>
 
                 <Switch
                   checked={twoFactorEnabled}
                   onChange={(checked) => {
                     setTwoFactorEnabled(checked);
-                    message.success(checked ? '2FA Protection Enabled' : '2FA Protection Disabled');
+                    message.info(checked ? '2FA Enabled' : '2FA Disabled');
                   }}
+                  className={twoFactorEnabled ? 'bg-[#23744D]' : 'bg-[#D2D2CA]'}
                 />
+              </div>
+
+              <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-[#23744D]" />
+                  <span className="font-semibold text-[#0A0A0A]">Authenticator App (Google Authenticator / 1Password)</span>
+                </div>
+                <span className="text-[11px] font-bold text-[#23744D] bg-[#EEF7F2] px-2 py-0.5 rounded-full">
+                  Configured
+                </span>
               </div>
             </div>
 
-            {/* Session Management */}
+            {/* Active Sessions */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="space-y-1">
-                  <div className="text-base font-bold text-[#0A0A0A]">Active Account Session</div>
-                  <p className="text-xs text-[#73736A]">
-                    You are currently logged into Creator Studio from this device.
-                  </p>
+              <div className="pb-3 border-b border-[#E7E7E2]">
+                <h2 className="text-base font-black text-[#0A0A0A]">Active Devices & Sessions</h2>
+                <p className="text-xs text-[#73736A]">Review devices currently logged into your creator account.</p>
+              </div>
+
+              <div className="flex items-center justify-between p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
+                <div className="space-y-0.5">
+                  <div className="text-xs font-bold text-[#0A0A0A]">Windows PC • Chrome Browser</div>
+                  <div className="text-[11px] text-[#73736A]">Current active session • Milan, Italy</div>
+                </div>
+                <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#EEF7F2] text-[#23744D]">
+                  This Device
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Tab 2: Notification Preferences */}
+        {activeTab === 'notifications' && (
+          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
+            <div className="pb-4 border-b border-[#E7E7E2]">
+              <h2 className="text-base font-black text-[#0A0A0A]">Email Notifications</h2>
+              <p className="text-xs text-[#73736A]">Choose what alerts you receive in your inbox.</p>
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
+                <div className="space-y-0.5">
+                  <div className="text-xs font-bold text-[#0A0A0A]">New Campaign Offers</div>
+                  <div className="text-[11px] text-[#73736A]">Receive instant emails when brands send direct bookings.</div>
+                </div>
+                <Switch checked={notifyOffers} onChange={setNotifyOffers} />
+              </div>
+
+              <div className="flex items-center justify-between p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
+                <div className="space-y-0.5">
+                  <div className="text-xs font-bold text-[#0A0A0A]">Direct Messages</div>
+                  <div className="text-[11px] text-[#73736A]">Get notified when brand representatives message you.</div>
+                </div>
+                <Switch checked={notifyMessages} onChange={setNotifyMessages} />
+              </div>
+
+              <div className="flex items-center justify-between p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
+                <div className="space-y-0.5">
+                  <div className="text-xs font-bold text-[#0A0A0A]">Deliverable Reviews & Approvals</div>
+                  <div className="text-[11px] text-[#73736A]">Alerts when brands review or request changes on video drafts.</div>
+                </div>
+                <Switch checked={notifyDeliverables} onChange={setNotifyDeliverables} />
+              </div>
+
+              <div className="flex items-center justify-between p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
+                <div className="space-y-0.5">
+                  <div className="text-xs font-bold text-[#0A0A0A]">Payouts & Escrow Releases</div>
+                  <div className="text-[11px] text-[#73736A]">Confirmations when escrow funds are transferred to your bank.</div>
+                </div>
+                <Switch checked={notifyPayouts} onChange={setNotifyPayouts} />
+              </div>
+            </div>
+
+            <div className="pt-2 flex justify-end">
+              <Button
+                type="primary"
+                onClick={handleSaveNotifications}
+                className="h-10 px-5 rounded-full font-bold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 !text-white border-none shadow-sm"
+              >
+                Save Preferences
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {/* Tab 3: Account & Danger Zone */}
+        {activeTab === 'account' && (
+          <div className="space-y-6">
+            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
+              <div className="pb-4 border-b border-[#E7E7E2]">
+                <h2 className="text-base font-black text-[#0A0A0A]">Data & Account Management</h2>
+                <p className="text-xs text-[#73736A]">Export your workspace archive or terminate active logins.</p>
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex items-center justify-between p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
+                  <div className="space-y-0.5">
+                    <div className="text-xs font-bold text-[#0A0A0A]">Export Account Archive</div>
+                    <div className="text-[11px] text-[#73736A]">Download a JSON copy of your profile, orders, and case studies.</div>
+                  </div>
+                  <Button
+                    type="default"
+                    onClick={() => message.success('Export archive generated and downloaded.')}
+                    className="rounded-full text-xs font-bold flex items-center gap-1.5"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Export</span>
+                  </Button>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={handleLogout}
-                  className="h-10 px-5 rounded-full font-bold text-sm bg-[#FAFAF8] border border-[#E7E7E2] hover:border-rose-300 hover:bg-rose-50 text-rose-600 flex items-center gap-2 transition-all cursor-pointer self-start sm:self-auto"
+                <div className="flex items-center justify-between p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
+                  <div className="space-y-0.5">
+                    <div className="text-xs font-bold text-[#0A0A0A]">Sign Out of Workspace</div>
+                    <div className="text-[11px] text-[#73736A]">Safely end this session and return to the login screen.</div>
+                  </div>
+                  <Button
+                    danger
+                    onClick={handleLogout}
+                    className="rounded-full text-xs font-bold flex items-center gap-1.5"
+                  >
+                    <LogOut className="w-3.5 h-3.5" />
+                    <span>Sign Out</span>
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            {/* Danger Zone */}
+            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-red-200 shadow-2xs space-y-4">
+              <div className="flex items-center gap-2 pb-3 border-b border-red-100 text-red-600">
+                <AlertTriangle className="w-5 h-5" />
+                <h2 className="text-base font-black">Danger Zone</h2>
+              </div>
+
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="space-y-0.5">
+                  <div className="text-xs font-bold text-[#0A0A0A]">Deactivate Creator Account</div>
+                  <div className="text-[11px] text-[#73736A]">Temporarily hide your profile from search results and pause incoming offers.</div>
+                </div>
+                <Button
+                  danger
+                  type="primary"
+                  onClick={() => setIsDeactivateModalOpen(true)}
+                  className="rounded-full text-xs font-bold shrink-0"
                 >
-                  <LogOut className="w-4 h-4" />
-                  <span>Log Out of Session</span>
-                </button>
+                  Deactivate Account
+                </Button>
               </div>
             </div>
           </div>
         )}
       </div>
 
-      {/* Add Photo Modal */}
       <Modal
-        title={
-          <div className="font-black text-lg text-[#0A0A0A]">
-            Add Gallery Photo
-          </div>
-        }
-        open={isPhotoModalOpen}
-        onCancel={() => setIsPhotoModalOpen(false)}
-        footer={null}
-        centered
-        className="rounded-3xl"
+        title="Deactivate Creator Account"
+        open={isDeactivateModalOpen}
+        onCancel={() => setIsDeactivateModalOpen(false)}
+        onOk={() => {
+          setIsDeactivateModalOpen(false);
+          message.info('Account deactivation requested. Profile is now hidden from search.');
+        }}
+        okText="Confirm Deactivation"
+        okButtonProps={{ danger: true }}
+        cancelText="Keep Active"
       >
-        <form onSubmit={handleAddPhoto} className="space-y-4 pt-3">
-          <div className="space-y-1.5">
-            <ImageUpload
-              label="Select Photo File"
-              description="PNG, JPG, WEBP up to 10MB. Drag & drop or browse from device."
-              value={newPhotoUrl}
-              onChange={(img) => setNewPhotoUrl(img)}
-            />
-          </div>
-
-          <div className="space-y-1.5">
-            <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
-              Caption & Look Details
-            </label>
-            <Input
-              value={newPhotoCaption}
-              onChange={(e) => setNewPhotoCaption(e.target.value)}
-              placeholder="e.g. Editorial Makeup Look • Paris Studio"
-              className="rounded-xl h-10 text-sm font-medium"
-            />
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
-                Orientation
-              </label>
-              <select
-                value={newPhotoRatio}
-                onChange={(e) => setNewPhotoRatio(e.target.value as any)}
-                className="w-full h-10 px-3 rounded-xl border border-[#E7E7E2] text-sm font-medium bg-white"
-              >
-                <option value="portrait">Portrait (4:5)</option>
-                <option value="landscape">Landscape (16:9)</option>
-                <option value="square">Square (1:1)</option>
-              </select>
-            </div>
-
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
-                Location
-              </label>
-              <Input
-                value={newPhotoLocation}
-                onChange={(e) => setNewPhotoLocation(e.target.value)}
-                placeholder="e.g. Paris, France"
-                className="rounded-xl h-10 text-sm font-medium"
-              />
-            </div>
-          </div>
-
-          <div className="pt-3 border-t border-[#E7E7E2] flex items-center justify-end gap-2.5">
-            <button
-              type="button"
-              onClick={() => setIsPhotoModalOpen(false)}
-              className="h-10 px-4 rounded-full font-bold text-xs border border-[#E7E7E2] text-[#73736A] hover:text-[#0A0A0A] cursor-pointer"
-            >
-              Cancel
-            </button>
-
-            <button
-              type="submit"
-              className="h-10 px-6 rounded-full font-bold text-xs bg-[#0A0A0A] hover:bg-zinc-800 text-white cursor-pointer transition-all"
-            >
-              Publish to Rate Card
-            </button>
-          </div>
-        </form>
+        <p className="text-xs text-[#73736A] pt-2">
+          Are you sure you want to deactivate your profile? Your active orders and escrow balances will remain protected, but you will not appear in brand searches until reactivated.
+        </p>
       </Modal>
-
-      {/* Add / Edit Case Study Modal */}
-      <Modal
-        open={isPortfolioModalOpen}
-        onCancel={() => setIsPortfolioModalOpen(false)}
-        footer={null}
-        width={700}
-        centered
-        className="rounded-3xl overflow-hidden font-sans"
-      >
-        <div className="p-2 sm:p-4 space-y-5">
-          <div className="pb-3 border-b border-[#E7E7E2]">
-            <h3 className="text-lg font-black text-[#0A0A0A] tracking-tight">
-              {editingPortfolioId ? `Edit Case Study: ${portBrandName || 'Campaign'}` : 'Add Brand Case Study'}
-            </h3>
-            <p className="text-xs text-[#73736A] mt-0.5">
-              Highlight your top campaign deliverables, verified engagement, and brand impact.
-            </p>
-          </div>
-
-          <form onSubmit={handleSavePortfolio} className="space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-              <div className="space-y-1">
-                <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Brand Name *</label>
-                <Input
-                  value={portBrandName}
-                  onChange={(e) => setPortBrandName(e.target.value)}
-                  placeholder="e.g. Laneige, Gisou, Rhode"
-                  className="rounded-xl h-10 text-sm font-semibold"
-                  required
-                />
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Platform *</label>
-                <Select
-                  value={portPlatform}
-                  onChange={(val) => setPortPlatform(val)}
-                  className="w-full h-10 font-bold"
-                  options={[
-                    { value: 'instagram', label: 'Instagram' },
-                    { value: 'tiktok', label: 'TikTok' },
-                    { value: 'youtube', label: 'YouTube' },
-                    { value: 'ugc', label: 'UGC Video' },
-                  ]}
-                />
-              </div>
-            </div>
-
-            <div className="space-y-1">
-              <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Campaign Title *</label>
-              <Input
-                value={portCampaignTitle}
-                onChange={(e) => setPortCampaignTitle(e.target.value)}
-                placeholder="e.g. Dewy Glaze Hydration Routine Reel"
-                className="rounded-xl h-10 text-sm font-semibold"
-                required
-              />
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-              <div className="space-y-1">
-                <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Deliverable Format</label>
-                <Input
-                  value={portDeliverableType}
-                  onChange={(e) => setPortDeliverableType(e.target.value)}
-                  placeholder="e.g. 60s 4K Reel with Voiceover"
-                  className="rounded-xl h-10 text-sm font-medium"
-                />
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Duration / Length</label>
-                <Input
-                  value={portDuration}
-                  onChange={(e) => setPortDuration(e.target.value)}
-                  placeholder="e.g. 0:45, 11:45, Carousel"
-                  className="rounded-xl h-10 text-sm font-medium"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-1">
-              <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Media / Cover URL *</label>
-              <Input
-                value={portMediaUrl}
-                onChange={(e) => setPortMediaUrl(e.target.value)}
-                placeholder="https://images.unsplash.com/photo-..."
-                className="rounded-xl h-10 text-sm font-mono"
-                required
-              />
-            </div>
-
-            {/* Metrics Row */}
-            <div className="p-3.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] grid grid-cols-3 gap-3">
-              <div className="space-y-1">
-                <label className="text-[11px] font-bold text-[#73736A]">Views</label>
-                <Input
-                  value={portViews}
-                  onChange={(e) => setPortViews(e.target.value)}
-                  placeholder="320K"
-                  className="rounded-xl text-xs font-bold text-center h-9"
-                />
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-[11px] font-bold text-[#73736A]">Likes</label>
-                <Input
-                  value={portLikes}
-                  onChange={(e) => setPortLikes(e.target.value)}
-                  placeholder="28.4K"
-                  className="rounded-xl text-xs font-bold text-center h-9"
-                />
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-[11px] font-bold text-[#73736A]">Engagement</label>
-                <Input
-                  value={portEngagementRate}
-                  onChange={(e) => setPortEngagementRate(e.target.value)}
-                  placeholder="8.9%"
-                  className="rounded-xl text-xs font-bold text-center h-9"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-1">
-              <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Campaign Brief</label>
-              <Input.TextArea
-                rows={2}
-                value={portDescription}
-                onChange={(e) => setPortDescription(e.target.value)}
-                placeholder="Key strategy, audience reaction, hook technique..."
-                className="rounded-xl text-xs font-medium"
-              />
-            </div>
-
-            <div className="pt-3 border-t border-[#E7E7E2] flex items-center justify-end gap-2.5">
-              <Button
-                type="default"
-                onClick={() => setIsPortfolioModalOpen(false)}
-                className="h-10 px-4 rounded-full font-bold text-xs"
-              >
-                Cancel
-              </Button>
-
-              <button
-                type="submit"
-                className="h-10 px-6 rounded-full font-bold text-xs bg-[#0A0A0A] hover:bg-zinc-800 text-white cursor-pointer transition-all"
-              >
-                {editingPortfolioId ? 'Save Changes' : 'Publish Case Study'}
-              </button>
-            </div>
-          </form>
-        </div>
-      </Modal>
-
-      {/* Case Study Public Preview Modal */}
-      {previewingPortfolioItem && (
-        <PortfolioVideoModal
-          item={previewingPortfolioItem}
-          creator={currentCreator}
-          onClose={() => setPreviewingPortfolioItem(null)}
-          onBookCampaign={() => setPreviewingPortfolioItem(null)}
-        />
-      )}
-
-      {/* Share Profile Modal */}
-      <ShareProfileModal
-        isOpen={isShareModalOpen}
-        onClose={() => setIsShareModalOpen(false)}
-        title={`${name} (@${handle})`}
-        subtitle={`${categoriesText} • Verified Creator Rate Card`}
-        shareUrl={`/creators/${currentCreator.id}`}
-        avatar={avatar}
-        role="creator"
-      />
     </div>
   );
 }
 
 export default function CreatorSettingsPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="min-h-screen bg-[#FAFAF8] flex items-center justify-center p-8">
-          <div className="w-8 h-8 rounded-full border-2 border-[#0A0A0A] border-t-transparent animate-spin" />
-        </div>
-      }
-    >
+    <Suspense fallback={<div className="p-8 text-center text-sm font-bold text-[#73736A]">Loading settings...</div>}>
       <CreatorSettingsContent />
     </Suspense>
   );

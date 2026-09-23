@@ -18,6 +18,7 @@ import {
   CreditCard,
   Settings,
   LogOut,
+  User,
 } from 'lucide-react';
 import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
 
@@ -61,6 +62,22 @@ export function CreatorSidebar() {
       icon: LayoutDashboard,
     },
     {
+      name: 'Profile',
+      href: '/creator/profile',
+      icon: User,
+    },
+    {
+      name: 'Portfolio',
+      href: '/creator/portfolio',
+      icon: Film,
+      badge: currentCreator?.portfolio?.length || undefined,
+    },
+    {
+      name: 'Packages',
+      href: '/creator/packages',
+      icon: Package,
+    },
+    {
       name: 'Campaigns',
       href: '/creator/campaigns',
       icon: Layers,
@@ -71,17 +88,6 @@ export function CreatorSidebar() {
       href: '/creator/messages',
       icon: MessageSquare,
       badge: unreadMessagesCount > 0 ? unreadMessagesCount : undefined,
-    },
-    {
-      name: 'Packages',
-      href: '/creator/packages',
-      icon: Package,
-    },
-    {
-      name: 'Portfolio',
-      href: '/creator/portfolio',
-      icon: Film,
-      badge: currentCreator?.portfolio?.length || undefined,
     },
     {
       name: 'Payouts',
@@ -148,7 +154,7 @@ export function CreatorSidebar() {
         <div className="space-y-1.5">
           {/* Creator User Card */}
           <Link
-            href="/creator/settings"
+            href="/creator/profile"
             className="flex items-center gap-2.5 p-2.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] hover:border-[#0A0A0A] hover:bg-white transition-all group cursor-pointer flex-1 min-w-0"
           >
             <div className="relative shrink-0">
@@ -164,7 +170,7 @@ export function CreatorSidebar() {
                 {creatorName}
               </div>
               <div className="text-[11px] text-[#73736A] font-medium truncate">
-                {creatorHandle.startsWith('@') ? creatorHandle : `@${creatorHandle}`} • Edit
+                {creatorHandle.startsWith('@') ? creatorHandle : `@${creatorHandle}`} • View Profile
               </div>
             </div>
           </Link>
