@@ -55,6 +55,15 @@ export const creatorSlice = createSlice({
         creator.photos.unshift(action.payload.photo);
       }
     },
+    updateCreatorPhoto: (state, action: PayloadAction<{ creatorId: string; photo: CreatorPhoto }>) => {
+      const creator = state.creators.find((c) => c.id === action.payload.creatorId);
+      if (creator && creator.photos) {
+        const index = creator.photos.findIndex((p) => p.id === action.payload.photo.id);
+        if (index !== -1) {
+          creator.photos[index] = action.payload.photo;
+        }
+      }
+    },
     deleteCreatorPhoto: (state, action: PayloadAction<{ creatorId: string; photoId: string }>) => {
       const creator = state.creators.find((c) => c.id === action.payload.creatorId);
       if (creator && creator.photos) {
@@ -120,6 +129,7 @@ export const {
   toggleSaveCreator,
   setSelectedCreator,
   addCreatorPhoto,
+  updateCreatorPhoto,
   deleteCreatorPhoto,
   updateCreatorProfileDetails,
   addCreatorPackage,

@@ -5,20 +5,19 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { WorkspaceHeader } from '@/components/layout/WorkspaceHeader';
-import { logout } from '@/redux/slices/authSlice';
+import { updateUserProfile } from '@/redux/slices/authSlice';
 import {
   Shield,
   Lock,
   KeyRound,
   Bell,
-  LogOut,
   Smartphone,
   CheckCircle2,
   AlertTriangle,
-  Download,
-  Trash2,
   User,
   ArrowRight,
+  Mail,
+  ShieldCheck,
 } from 'lucide-react';
 import { Input, Button, message, Switch, Modal } from 'antd';
 
@@ -55,6 +54,10 @@ function CreatorSettingsContent() {
   const [notifyDeliverables, setNotifyDeliverables] = useState(true);
   const [notifyPayouts, setNotifyPayouts] = useState(true);
 
+  // Account Form State
+  const [accountEmail, setAccountEmail] = useState(currentUser?.email || 'sophie@sophiekim.com');
+  const [accountPhone, setAccountPhone] = useState('+1 (555) 234-5678');
+
   // Modal State
   const [isDeactivateModalOpen, setIsDeactivateModalOpen] = useState(false);
 
@@ -79,14 +82,18 @@ function CreatorSettingsContent() {
     setConfirmPassword('');
   };
 
-  const handleSaveNotifications = () => {
-    message.success('Notification preferences saved.');
+  const handleSaveAccountInfo = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!accountEmail.trim() || !accountEmail.includes('@')) {
+      message.error('Please enter a valid email address.');
+      return;
+    }
+    dispatch(updateUserProfile({ email: accountEmail.trim() }));
+    message.success('Account information updated.');
   };
 
-  const handleLogout = () => {
-    dispatch(logout());
-    message.success('Signed out successfully.');
-    router.push('/login');
+  const handleSaveNotifications = () => {
+    message.success('Notification preferences saved.');
   };
 
   return (
@@ -322,43 +329,58 @@ function CreatorSettingsContent() {
         {/* Tab 3: Account & Danger Zone */}
         {activeTab === 'account' && (
           <div className="space-y-6">
+            {/* Editable Account Information */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
-              <div className="pb-4 border-b border-[#E7E7E2]">
-                <h2 className="text-base font-black text-[#0A0A0A]">Data & Account Management</h2>
-                <p className="text-xs text-[#73736A]">Export your workspace archive or terminate active logins.</p>
-              </div>
-
-              <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
-                  <div className="space-y-0.5">
-                    <div className="text-xs font-bold text-[#0A0A0A]">Export Account Archive</div>
-                    <div className="text-[11px] text-[#73736A]">Download a JSON copy of your profile, orders, and case studies.</div>
-                  </div>
-                  <Button
-                    type="default"
-                    onClick={() => message.success('Export archive generated and downloaded.')}
-                    className="rounded-full text-xs font-bold flex items-center gap-1.5"
-                  >
-                    <Download className="w-3.5 h-3.5" />
-                    <span>Export</span>
-                  </Button>
+              <div className="pb-4 border-b border-[#E7E7E2] flex items-start justify-between gap-4">
+                <div>
+                  <h2 className="text-base font-black text-[#0A0A0A]">Account Information</h2>
+                  <p className="text-xs text-[#73736A]">Update your primary login email and contact details.</p>
                 </div>
-
-                <div className="flex items-center justify-between p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
-                  <div className="space-y-0.5">
-                    <div className="text-xs font-bold text-[#0A0A0A]">Sign Out of Workspace</div>
-                    <div className="text-[11px] text-[#73736A]">Safely end this session and return to the login screen.</div>
-                  </div>
-                  <Button
-                    danger
-                    onClick={handleLogout}
-                    className="rounded-full text-xs font-bold flex items-center gap-1.5"
-                  >
-                    <LogOut className="w-3.5 h-3.5" />
-                    <span>Sign Out</span>
-                  </Button>
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] text-xs font-bold border border-[#23744D]/20 shrink-0">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span>Verified Creator</span>
                 </div>
               </div>
+
+              <form onSubmit={handleSaveAccountInfo} className="space-y-5 max-w-xl">
+                <div>
+                  <label className="text-xs font-bold text-[#0A0A0A] block mb-1.5">
+                    Primary Login Email
+                  </label>
+                  <Input
+                    type="email"
+                    value={accountEmail}
+                    onChange={(e) => setAccountEmail(e.target.value)}
+                    placeholder="creator@example.com"
+                    className="h-11 rounded-xl font-medium text-sm border-[#E7E7E2]"
+                  />
+                  <span className="text-[11px] text-[#73736A] mt-1 block">
+                    Used for platform authentication, order alerts, and payout notifications.
+                  </span>
+                </div>
+
+                <div>
+                  <label className="text-xs font-bold text-[#0A0A0A] block mb-1.5">
+                    Emergency Contact / Phone
+                  </label>
+                  <Input
+                    value={accountPhone}
+                    onChange={(e) => setAccountPhone(e.target.value)}
+                    placeholder="+1 (555) 000-0000"
+                    className="h-11 rounded-xl font-medium text-sm border-[#E7E7E2]"
+                  />
+                </div>
+
+                <div className="pt-2">
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    className="h-10 px-6 rounded-full font-bold text-xs bg-[#0A0A0A] hover:!bg-zinc-800 text-white border-none cursor-pointer"
+                  >
+                    Save Changes
+                  </Button>
+                </div>
+              </form>
             </div>
 
             {/* Danger Zone */}

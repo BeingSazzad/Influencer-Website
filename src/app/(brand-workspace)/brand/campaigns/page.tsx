@@ -26,6 +26,13 @@ import {
 } from 'lucide-react';
 import { Button, Input, Tag } from 'antd';
 
+function formatDeadline(dateStr: string) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return dateStr;
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
 export default function BrandCampaignsPage() {
   const { orders } = useAppSelector((state) => state.order);
   const { currentUser } = useAppSelector((state) => state.auth);
@@ -253,18 +260,14 @@ export default function BrandCampaignsPage() {
                         </div>
 
                         {/* Financial & Deadline Telemetry */}
-                        <div className="flex items-center gap-2.5 flex-wrap text-xs text-[#73736A] font-medium pt-0.5">
-                          <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-white border border-[#E7E7E2] text-[#0A0A0A] font-extrabold text-xs leading-none shadow-2xs">
-                            €{order.totalEur.toLocaleString()} Rate (Escrow Funded)
+                        <div className="flex items-center gap-2 text-xs text-[#73736A] font-medium pt-0.5">
+                          <span className="font-extrabold text-[#0A0A0A] text-sm">
+                            €{order.totalEur.toLocaleString()}
                           </span>
-                          <span className="text-[#C5C5BD] text-xs leading-none select-none">•</span>
-                          <span className="inline-flex items-center text-xs text-[#73736A] leading-none">
-                            Due {order.deadlineDate}
-                          </span>
-                          <span className="text-[#C5C5BD] text-xs leading-none select-none">•</span>
-                          <span className="inline-flex items-center text-xs text-[#73736A] leading-none">
-                            {order.deliverables.length} Deliverable{order.deliverables.length === 1 ? '' : 's'}
-                          </span>
+                          <span className="text-[#D2D2CA]">•</span>
+                          <span>Due {formatDeadline(order.deadlineDate)}</span>
+                          <span className="text-[#D2D2CA]">•</span>
+                          <span>{order.deliverables.length} Deliverable{order.deliverables.length === 1 ? '' : 's'}</span>
                         </div>
                       </div>
                     </div>
@@ -287,7 +290,7 @@ export default function BrandCampaignsPage() {
                               : 'bg-[#0A0A0A] hover:bg-zinc-800 text-white border-none'
                           }`}
                         >
-                          <span>{isReviewReady ? 'Review & Approve' : 'Manage Room'}</span>
+                          <span>{isReviewReady ? 'Review Deliverables' : 'Manage Campaign'}</span>
                           <ArrowRight className="w-3.5 h-3.5" />
                         </button>
                       </Link>
@@ -307,7 +310,7 @@ export default function BrandCampaignsPage() {
                 label: 'Discover Creators',
                 href: '/creators',
               }}
-              variant="dashed"
+              variant="plain"
             />
           )}
         </div>

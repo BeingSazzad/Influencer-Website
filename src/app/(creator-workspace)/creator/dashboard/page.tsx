@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import { Button, Tag, message } from 'antd';
 import { BrandLogo } from '@/components/shared/BrandLogo';
+import { CreatorAnnualAnalytics } from '@/components/shared/CreatorAnnualAnalytics';
 
 export default function CreatorDashboardPage() {
   const dispatch = useAppDispatch();
@@ -72,24 +73,24 @@ export default function CreatorDashboardPage() {
       <div className="p-6 sm:p-8 max-w-6xl mx-auto space-y-7">
         {/* Executive Metric Highlights */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
-          {/* Available Balance */}
+          {/* Total Earned */}
           <div className="bg-white p-5 sm:p-6 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
-                Available Balance
+                Total Earned
               </span>
               <div className="w-8 h-8 rounded-xl bg-[#EEF7F2] text-[#23744D] flex items-center justify-center">
                 <DollarSign className="w-4 h-4" />
               </div>
             </div>
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
-              €{(totalEarnedEur + 3400).toLocaleString()}
+              €28,400
             </div>
             <Link
               href="/creator/payments"
               className="text-xs text-[#23744D] font-bold flex items-center gap-1 hover:underline"
             >
-              <span>Instant Payout</span>
+              <span>View Earnings &amp; Payouts</span>
               <ArrowRight className="w-3 h-3" />
             </Link>
           </div>
@@ -199,6 +200,9 @@ export default function CreatorDashboardPage() {
             </div>
           </div>
         )}
+
+        {/* 12-Month Annual Performance & Brand Collabs Analytics */}
+        <CreatorAnnualAnalytics />
 
         {/* 2-Column Command Center: Fulfillment + Portfolio Showcase */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">

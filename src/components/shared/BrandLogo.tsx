@@ -33,6 +33,18 @@ export function BrandLogo({ name, logoUrl, className = '', size = 'md' }: BrandL
   const lower = name.toLowerCase();
 
   const renderBrandSvg = () => {
+    if (lower.includes('aura')) {
+      return (
+        <div className="flex flex-col items-center justify-center text-center leading-none select-none">
+          <span className="font-serif font-black tracking-widest text-[11px] text-[#0A0A0A] uppercase">
+            AURA
+          </span>
+          <span className="text-[7.5px] font-sans font-extrabold tracking-widest text-[#73736A] uppercase mt-0.5">
+            PARIS
+          </span>
+        </div>
+      );
+    }
     if (lower.includes('sephora')) {
       return (
         <span className="font-editorial font-black tracking-widest text-[11px] text-[#0A0A0A] uppercase">
@@ -73,13 +85,24 @@ export function BrandLogo({ name, logoUrl, className = '', size = 'md' }: BrandL
 
   const specificSvg = renderBrandSvg();
 
-  if (logoUrl && !hasError && !logoUrl.includes('simpleicons.org/sephora')) {
+  if (specificSvg) {
+    return (
+      <div
+        className={`${sizeClasses[size]} rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-center font-extrabold text-[#0A0A0A] select-none shadow-2xs shrink-0 ${className}`}
+        title={name}
+      >
+        {specificSvg}
+      </div>
+    );
+  }
+
+  if (logoUrl && !hasError && !logoUrl.includes('photo-1522337360788-8b13dee7a37e')) {
     return (
       <img
         src={logoUrl}
         alt={name}
         onError={() => setHasError(true)}
-        className={`${sizeClasses[size]} object-contain rounded-lg ${className}`}
+        className={`${sizeClasses[size]} object-cover rounded-2xl border border-[#E7E7E2] shadow-2xs shrink-0 ${className}`}
       />
     );
   }
@@ -87,10 +110,10 @@ export function BrandLogo({ name, logoUrl, className = '', size = 'md' }: BrandL
   // Graceful, stylish fallback badge with crisp brand monogram
   return (
     <div
-      className={`${sizeClasses[size]} rounded-xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-center font-extrabold text-[#0A0A0A] select-none shadow-2xs ${className}`}
+      className={`${sizeClasses[size]} rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-center font-extrabold text-[#0A0A0A] select-none shadow-2xs shrink-0 ${className}`}
       title={name}
     >
-      {specificSvg || getInitials(name)}
+      {getInitials(name)}
     </div>
   );
 }

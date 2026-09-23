@@ -16,12 +16,17 @@ import {
   ArrowRight,
   ExternalLink,
   DollarSign,
-  AlertCircle,
   TrendingUp,
   Search,
-  UploadCloud,
 } from 'lucide-react';
 import { Button, Input, message } from 'antd';
+
+function formatDeadline(dateStr: string) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return dateStr;
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
 
 export default function CreatorCampaignsPage() {
   const dispatch = useAppDispatch();
@@ -82,17 +87,6 @@ export default function CreatorCampaignsPage() {
       <WorkspaceHeader
         title="Brand Campaigns & Deals"
         subtitle="Manage brand partnerships, rate contracts, production milestones, and escrow disbursements."
-        action={
-          <Link href={`/creators/${currentCreator?.id || 'creator-01'}`} target="_blank">
-            <Button
-              type="default"
-              className="h-10 px-4 rounded-full font-bold text-sm border-[#D2D2CA] text-[#0A0A0A] flex items-center gap-2 hover:border-[#0A0A0A]"
-            >
-              <span>Preview Public Rate Card</span>
-              <ExternalLink className="w-4 h-4" />
-            </Button>
-          </Link>
-        }
       />
 
       <div className="p-6 sm:p-8 max-w-6xl mx-auto space-y-7">
@@ -189,18 +183,15 @@ export default function CreatorCampaignsPage() {
         </div>
 
         {/* Campaigns Deals Container */}
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-4">
+        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-5">
           <div className="pb-3 border-b border-[#E7E7E2] flex items-center justify-between">
             <h2 className="text-lg font-black text-[#0A0A0A] tracking-tight">
               Campaign Contracts ({filteredOrders.length})
             </h2>
-            <span className="text-xs text-[#73736A] font-medium">
-              Payouts automatically clear to your balance upon brand approval
-            </span>
           </div>
 
           {filteredOrders.length > 0 ? (
-            <div className="space-y-4">
+            <div className="space-y-3.5">
               {filteredOrders.map((order) => {
                 const isOffer = order.status === 'offer_sent';
                 const isUnderReview = order.status === 'deliverable_submitted';
@@ -208,88 +199,81 @@ export default function CreatorCampaignsPage() {
                 return (
                   <div
                     key={order.id}
-                    className={`p-5 sm:p-6 rounded-2xl border transition-all flex flex-col md:flex-row md:items-center justify-between gap-5 ${
-                      isOffer
-                        ? 'bg-[#FDFBF7] border-[#8C6819]/40 shadow-xs'
-                        : isUnderReview
-                        ? 'bg-[#F4FAF6] border-[#23744D]/30'
-                        : 'bg-[#FAFAF8] border-[#E7E7E2] hover:border-[#0A0A0A]'
-                    }`}
+                    className="p-4 sm:p-5 rounded-2xl bg-white border border-[#E7E7E2] hover:border-[#0A0A0A] transition-all shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-4 group"
                   >
                     {/* Brand Details & Deliverable Title */}
-                    <div className="flex items-center gap-4 sm:gap-5 min-w-0">
+                    <div className="flex items-center gap-3.5 sm:gap-4 min-w-0">
                       <BrandLogo
                         name={order.brandName}
                         logoUrl={order.brandLogo}
                         size="lg"
                       />
-                      <div className="flex flex-col gap-1.5 min-w-0">
+                      <div className="flex flex-col gap-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <h3 className="font-extrabold text-base text-[#0A0A0A] leading-tight">
+                          <h3 className="font-bold text-sm sm:text-base text-[#0A0A0A] leading-tight">
                             {order.brandName}
                           </h3>
-                          <span className="text-[10px] uppercase tracking-wider font-extrabold px-2.5 py-0.5 rounded-full bg-[#EAEAE3] text-[#4A4A45] leading-none ml-1">
+                          <span className="text-[10px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#73736A] leading-none">
                             {order.platform}
                           </span>
                         </div>
 
-                        <p className="text-sm font-semibold text-[#0A0A0A] leading-snug truncate">
+                        <p className="text-xs sm:text-sm font-semibold text-[#0A0A0A] leading-snug truncate">
                           {order.packageTitle}
                         </p>
 
-                        {/* Rate & Escrow Status Telemetry */}
-                        <div className="flex items-center gap-2.5 flex-wrap text-xs text-[#73736A] font-medium pt-0.5">
-                          <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-[#EEF7F2] text-[#23744D] font-extrabold border border-[#23744D]/20 text-xs leading-none shadow-2xs">
-                            €{order.basePriceEur.toLocaleString()} Net Payout (100% Escrow Secured)
+                        <div className="flex items-center gap-2 text-xs text-[#73736A] font-medium pt-0.5">
+                          <span className="font-extrabold text-[#0A0A0A] text-sm">
+                            €{order.basePriceEur.toLocaleString()}
                           </span>
-                          <span className="text-[#C5C5BD] text-xs leading-none select-none">•</span>
-                          <span className="inline-flex items-center text-xs text-[#73736A] leading-none">
-                            Due {order.deadlineDate}
-                          </span>
+                          <span className="text-[#D2D2CA]">•</span>
+                          <span>Due {formatDeadline(order.deadlineDate)}</span>
                         </div>
                       </div>
                     </div>
 
                     {/* Action Controls */}
-                    <div className="flex items-center gap-2.5 self-end md:self-auto shrink-0 mt-2 md:mt-0">
+                    <div className="flex items-center gap-3 self-end md:self-auto shrink-0">
                       {isOffer ? (
-                        <>
+                        <div className="flex items-center gap-2">
                           <Button
                             type="primary"
                             onClick={() => handleAcceptOffer(order.id)}
-                            className="h-10 px-5 rounded-full font-bold text-xs bg-[#0A0A0A] hover:!bg-[#23744D] !text-white border-none cursor-pointer"
+                            className="h-9 sm:h-10 px-4 sm:px-5 rounded-full font-bold text-xs bg-[#0A0A0A] hover:!bg-[#23744D] !text-white border-none cursor-pointer shadow-2xs"
                           >
                             Accept (€{order.basePriceEur})
                           </Button>
                           <Button
                             type="default"
                             onClick={() => handleDeclineOffer(order.id)}
-                            className="h-10 px-4 rounded-full font-bold text-xs border-[#D2D2CA] text-[#73736A] hover:text-rose-600"
+                            className="h-9 sm:h-10 px-3.5 rounded-full font-bold text-xs border-[#E7E7E2] text-[#73736A] hover:text-rose-600 cursor-pointer"
                           >
                             Decline
                           </Button>
-                          <Link href={`/creator/orders/${order.id}`}>
-                            <Button
-                              type="default"
-                              className="h-10 px-4 rounded-full font-bold text-xs border-[#D2D2CA] text-[#0A0A0A]"
-                            >
-                              Brief
-                            </Button>
-                          </Link>
-                        </>
+                        </div>
                       ) : (
-                        <>
-                          <span className="text-xs font-bold px-3 py-1.5 rounded-full bg-[#EEF7F2] text-[#23744D]">
-                            {order.status === 'deliverable_submitted' ? 'Under Brand Review' : order.status === 'completed' ? 'Completed' : 'In Production'}
-                          </span>
+                        <div className="flex items-center gap-3">
+                          {isUnderReview ? (
+                            <span className="text-xs font-bold px-3 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] border border-[#23744D]/20">
+                              Under Review
+                            </span>
+                          ) : order.status === 'completed' ? (
+                            <span className="text-xs font-bold px-3 py-1 rounded-full bg-[#EEF7F2] text-[#23744D]">
+                              Completed
+                            </span>
+                          ) : (
+                            <span className="text-xs font-bold px-3 py-1 rounded-full bg-[#FAF6E8] text-[#8C6819] border border-amber-200/60">
+                              In Production
+                            </span>
+                          )}
+
                           <Link href={`/creator/orders/${order.id}`}>
-                            <button className="h-10 px-5 rounded-full font-bold text-xs bg-[#0A0A0A] hover:bg-zinc-800 text-white border-none flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer active:scale-98">
-                              <UploadCloud className="w-3.5 h-3.5" />
-                              <span>{order.status === 'deliverable_submitted' ? 'View Submission' : 'Fulfillment Room'}</span>
+                            <button className="h-9 sm:h-10 px-4 sm:px-5 rounded-full font-bold text-xs bg-[#0A0A0A] hover:bg-zinc-800 text-white border-none flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer active:scale-95">
+                              <span>{isUnderReview ? 'View Submission' : 'Submit Work'}</span>
                               <ArrowRight className="w-3.5 h-3.5" />
                             </button>
                           </Link>
-                        </>
+                        </div>
                       )}
                     </div>
                   </div>
@@ -307,7 +291,7 @@ export default function CreatorCampaignsPage() {
                 label: 'View Rate Card Packages',
                 href: '/creator/packages',
               }}
-              variant="dashed"
+              variant="plain"
             />
           )}
         </div>

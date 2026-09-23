@@ -23,6 +23,7 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import { Modal, Input, Button, message, Tag } from 'antd';
+import { BrandAnnualAnalytics } from '@/components/shared/BrandAnnualAnalytics';
 
 interface Transaction {
   id: string;
@@ -173,42 +174,60 @@ export default function BrandPaymentsPage() {
     }, 900);
   };
 
+  const handleExportCsv = () => {
+    const headers = ['Transaction ID', 'Date', 'Entity / Creator', 'Campaign Details', 'Type', 'Amount (EUR)', 'Status', 'Invoice Number'];
+    const rows = filteredTransactions.map((t) => [
+      t.id,
+      `"${t.date}"`,
+      `"${t.creatorName}"`,
+      `"${t.campaignTitle.replace(/"/g, '""')}"`,
+      t.type,
+      t.amountEur,
+      t.status,
+      t.invoiceNumber,
+    ]);
+
+    const csvContent =
+      'data:text/csv;charset=utf-8,' +
+      [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `influverse_brand_payments_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    message.success('Ledger exported to CSV successfully!');
+  };
+
   return (
     <div className="space-y-8 font-sans pb-16">
       <WorkspaceHeader
         title="Payments & Escrow Wallet"
         subtitle="Manage available funds, monitor escrow protection on active creator orders, and retrieve tax invoices."
+        action={
+          <div className="flex items-center gap-2.5">
+            <button
+              onClick={handleExportCsv}
+              className="h-10 px-4 rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] bg-white font-bold text-xs text-[#0A0A0A] flex items-center gap-2 transition-all cursor-pointer shadow-2xs hover:bg-[#FAFAF8]"
+            >
+              <Download className="w-3.5 h-3.5 text-[#0A0A0A]" />
+              <span>Export CSV</span>
+            </button>
+            <Button
+              type="primary"
+              onClick={() => setIsTopUpModalOpen(true)}
+              className="h-10 px-5 rounded-full font-bold text-xs bg-[#0A0A0A] hover:!bg-zinc-800 !text-white border-none flex items-center gap-2 shadow-sm cursor-pointer"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Deposit Funds</span>
+            </Button>
+          </div>
+        }
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        {/* 100% Escrow Protection Banner */}
-        <div className="bg-[#0A0A0A] rounded-3xl p-6 sm:p-8 text-white relative overflow-hidden shadow-sm">
-          <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-white/5 to-transparent pointer-events-none" />
-          <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-            <div className="space-y-2 max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-bold uppercase tracking-wider text-[#FF2D78]">
-                <ShieldCheck className="w-4 h-4 text-[#FF2D78]" />
-                <span>Zero Risk • 100% Escrow Protection</span>
-              </div>
-              <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-white font-sans">
-                Funds are protected until you approve deliverables.
-              </h2>
-              <p className="text-sm text-[#A3A39C] leading-relaxed">
-                When you hire a creator or accept an offer, funds are safely held in European regulated escrow. The creator produces the content, submits drafts for your review, and escrow is released only when you click Approve.
-              </p>
-            </div>
-
-            <div className="flex items-center gap-3 shrink-0">
-              <button
-                onClick={() => setIsTopUpModalOpen(true)}
-                className="h-11 px-6 rounded-full bg-[#FF2D78] hover:bg-[#ff1669] text-white text-sm font-bold flex items-center gap-2 transition-all cursor-pointer shadow-md hover:scale-[1.02] active:scale-[0.98]"
-              >
-                <Plus className="w-4 h-4" />
-                <span>Deposit Funds</span>
-              </button>
-            </div>
-          </div>
-        </div>
 
         {/* 4 Financial Metric Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -286,6 +305,9 @@ export default function BrandPaymentsPage() {
             </div>
           </div>
         </div>
+
+        {/* 12-Month Campaign Spend & Creator Hires Analytics */}
+        <BrandAnnualAnalytics />
 
         {/* Payment Methods & Billing Info Row */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

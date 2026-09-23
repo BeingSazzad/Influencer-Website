@@ -21,6 +21,7 @@ import {
   DollarSign,
 } from 'lucide-react';
 import { Button, Tag } from 'antd';
+import { BrandAnnualAnalytics } from '@/components/shared/BrandAnnualAnalytics';
 
 export default function BrandDashboardPage() {
   const dispatch = useAppDispatch();
@@ -138,6 +139,9 @@ export default function BrandDashboardPage() {
             </div>
           </div>
         </div>
+
+        {/* 12-Month Annual Campaign Spend & Creator Hires Analytics */}
+        <BrandAnnualAnalytics />
 
         {/* Active Campaigns Table / List */}
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">

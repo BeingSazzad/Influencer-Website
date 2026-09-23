@@ -24,74 +24,6 @@ import {
 } from 'lucide-react';
 import { Button, Modal, Input, InputNumber, Select, message, Popconfirm } from 'antd';
 
-const PACKAGE_TEMPLATES = [
-  {
-    label: '🚀 360° All-Platform Launch',
-    platform: 'all' as PlatformType,
-    platforms: ['youtube', 'instagram', 'tiktok', 'ugc'] as PlatformType[],
-    title: '360° Multi-Platform Brand Takeover',
-    description: 'Complete cross-channel launch bundle across YouTube, Instagram, and TikTok with organic cross-posts and high-conversion ad rights.',
-    priceEur: 2800,
-    deliveryDays: 7,
-    revisions: 2,
-    usageRights: '90-Day Full Commercial Ad Rights',
-    inclusions: [
-      '1x YouTube Dedicated Integration (60-90s)',
-      '1x 60s Instagram Reel (4K) + 3x Stories',
-      '1x TikTok Sound & Viral Hook Video',
-      'Full Commercial Paid Ads Whitelisting',
-      'Cross-Platform Campaign Analytics Report',
-    ],
-  },
-  {
-    label: '⚡ 60s Reel Bundle',
-    platform: 'instagram' as PlatformType,
-    platforms: ['instagram'] as PlatformType[],
-    title: '60s Dedicated Reel + Story Slides',
-    description: 'High-retention 60s Instagram Reel with authentic product integration, voiceover, and 3x follow-up Story link stickers.',
-    priceEur: 1200,
-    deliveryDays: 5,
-    revisions: 2,
-    usageRights: '30-Day Organic Rights',
-    inclusions: ['1x 60s Dedicated Reel (4K)', '3x Story Slides with Link Sticker', 'Brand Mention & Collab Tag', '24h Performance Screenshot'],
-  },
-  {
-    label: '🔥 TikTok Hook Ad',
-    platform: 'tiktok' as PlatformType,
-    platforms: ['tiktok'] as PlatformType[],
-    title: 'TikTok Viral Sound & Hook Video',
-    description: 'Engaging 30–60s vertical video optimized for TikTok algorithm with trending audio, direct hook, and clear call-to-action.',
-    priceEur: 950,
-    deliveryDays: 4,
-    revisions: 2,
-    usageRights: 'Organic + Spark Ad Authorization',
-    inclusions: ['1x 30-60s TikTok Video', 'Hook Variations Testing', 'Pinned Comment Link', 'Commercial Audio Sync'],
-  },
-  {
-    label: '📦 3x UGC Raw Creatives',
-    platform: 'ugc' as PlatformType,
-    platforms: ['ugc'] as PlatformType[],
-    title: '3x UGC Video Ad Hooks (Paid Media)',
-    description: 'Direct-response UGC video creatives designed specifically for Meta and TikTok paid acquisition campaigns.',
-    priceEur: 850,
-    deliveryDays: 3,
-    revisions: 2,
-    usageRights: '90-Day Full Commercial Ad Rights',
-    inclusions: ['3x Scroll-Stopping Hook Variations', 'High-Res 9:16 Video (4K)', 'Raw Unedited B-Roll Clips', 'Script & Talking Points Included'],
-  },
-  {
-    label: '🎬 YouTube Mid-Roll',
-    platform: 'youtube' as PlatformType,
-    platforms: ['youtube'] as PlatformType[],
-    title: '60–90s Dedicated YouTube Mid-Roll',
-    description: 'Seamless 60–90 second mid-roll segment inside a high-retention longform video with top pinned description link.',
-    priceEur: 1800,
-    deliveryDays: 7,
-    revisions: 2,
-    usageRights: 'Permanent Placement',
-    inclusions: ['60-90s Mid-Roll Segment', 'Pinned Top Comment & Link', 'End-Screen Card Integration', 'Permanent Video Archive'],
-  },
-];
 
 export default function CreatorPackagesPage() {
   const dispatch = useAppDispatch();
@@ -140,27 +72,17 @@ export default function CreatorPackagesPage() {
 
   const handleOpenAddModal = () => {
     setEditingPkgId(null);
-    applyTemplate(PACKAGE_TEMPLATES[0]);
-    setIsModalOpen(true);
-  };
-
-  const applyTemplate = (template: typeof PACKAGE_TEMPLATES[0]) => {
-    setPlatform(template.platform);
-    if (template.platforms) {
-      setSelectedBundledPlatforms(template.platforms);
-    } else if (template.platform === 'all' || template.platform === 'multi') {
-      setSelectedBundledPlatforms(['youtube', 'instagram', 'tiktok', 'ugc']);
-    } else {
-      setSelectedBundledPlatforms([template.platform]);
-    }
-    setTitle(template.title);
-    setDescription(template.description);
-    setPriceEur(template.priceEur);
-    setDeliveryDays(template.deliveryDays);
-    setRevisions(template.revisions);
-    setUsageRights(template.usageRights);
-    setInclusionsText(template.inclusions.join('\n'));
+    setPlatform('instagram');
+    setSelectedBundledPlatforms(['instagram']);
+    setTitle('');
+    setDescription('');
+    setPriceEur(850);
+    setDeliveryDays(5);
+    setRevisions(2);
+    setUsageRights('30-Day Organic Rights');
+    setInclusionsText('1x Dedicated Video Deliverable (4K)\nBrand Mention & Official Tag\nHigh-Res Raw Footage Export');
     setIsPopular(false);
+    setIsModalOpen(true);
   };
 
   const handleOpenEditModal = (pkg: CreatorPackage) => {
@@ -532,26 +454,6 @@ export default function CreatorPackagesPage() {
         className="rounded-3xl"
       >
         <div className="space-y-4 pt-3 font-sans">
-          {/* 1-Click Quick Template Pills (Only when creating new) */}
-          {!editingPkgId && (
-            <div className="space-y-1.5 p-3 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
-              <span className="text-[11px] font-bold text-[#73736A] uppercase tracking-wider">
-                1-Click Preset Templates:
-              </span>
-              <div className="flex items-center gap-2 overflow-x-auto pt-1 pb-1">
-                {PACKAGE_TEMPLATES.map((tmpl) => (
-                  <button
-                    key={tmpl.label}
-                    type="button"
-                    onClick={() => applyTemplate(tmpl)}
-                    className="px-2.5 py-1 rounded-full text-xs font-bold bg-white hover:bg-[#0A0A0A] hover:text-white border border-[#E7E7E2] text-[#0A0A0A] transition-all shrink-0 cursor-pointer"
-                  >
-                    {tmpl.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
 
           {/* Platform & Usage Rights */}
           <div className="grid grid-cols-2 gap-3">
