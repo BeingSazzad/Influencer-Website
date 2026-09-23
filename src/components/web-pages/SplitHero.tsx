@@ -91,7 +91,7 @@ export function SplitHero() {
     if (searchQuery.trim()) params.set('q', searchQuery.trim());
     if (platform !== 'all') params.set('platform', platform);
     if (category !== 'all') params.set('category', category);
-    router.push(`/creators?${params.toString()}`);
+    router.push(`/search?${params.toString()}`);
   };
 
   const platformOptions = [

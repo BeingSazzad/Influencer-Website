@@ -127,8 +127,8 @@ export function BrandSidebar() {
       </div>
 
       {/* Footer Profile with Sign Out */}
-      <div className="p-4 border-t border-[#E7E7E2] space-y-2">
-        <div className="flex items-center gap-2">
+      <div className="border-t border-[#E7E7E2] p-3">
+        <div className="space-y-1.5">
           {/* User Card */}
           <Link
             href="/brand/settings"
@@ -149,14 +149,14 @@ export function BrandSidebar() {
             </div>
           </Link>
 
-          {/* Sign Out Button */}
+          {/* Standard Sign Out Action */}
           <button
             type="button"
             onClick={handleLogout}
-            title="Sign Out"
-            className="w-10 h-10 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] hover:border-rose-300 hover:bg-rose-50 text-[#73736A] hover:text-rose-600 flex items-center justify-center transition-all cursor-pointer shrink-0 active:scale-95 shadow-2xs"
+            className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-xs font-bold text-[#73736A] transition-colors hover:bg-rose-50 hover:text-rose-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-200"
           >
             <LogOut className="w-4 h-4" />
+            <span>Sign out</span>
           </button>
         </div>
       </div>
