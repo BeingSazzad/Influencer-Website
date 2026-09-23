@@ -144,7 +144,7 @@ export function HowItWorksSection() {
               >
                 <div>
                   <div className="flex items-center justify-between mb-6">
-                    <span className="font-editorial text-3xl font-black text-[#D2D2CA] group-hover:text-[#0A0A0A] transition-colors">
+                    <span className="font-sans text-3xl font-black text-[#D2D2CA] group-hover:text-[#0A0A0A] transition-colors tracking-tight">
                       {step.step}
                     </span>
                     <div className="w-12 h-12 rounded-2xl bg-[#F4F4F0] text-[#0A0A0A] flex items-center justify-center group-hover:scale-105 transition-transform shadow-2xs">

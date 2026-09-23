@@ -8,6 +8,7 @@ import {
   sendMessage,
   setActiveConversationId,
   getOrCreateConversation,
+  MessageAttachment,
 } from '@/redux/slices/messageSlice';
 import { WorkspaceHeader } from '@/components/layout/WorkspaceHeader';
 import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
@@ -22,6 +23,12 @@ import {
   Clock,
   CheckCheck,
   Sparkles,
+  Paperclip,
+  FileText,
+  Film,
+  Download,
+  X,
+  UploadCloud,
 } from 'lucide-react';
 import { Button, Input, message } from 'antd';
 
@@ -34,7 +41,10 @@ function BrandMessagesContent() {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [inputText, setInputText] = useState('');
+  const [pendingAttachments, setPendingAttachments] = useState<MessageAttachment[]>([]);
   const [isTyping, setIsTyping] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // If a creatorId query param is provided, open or create conversation with that creator
@@ -72,21 +82,79 @@ function BrandMessagesContent() {
   // Scroll to bottom when messages update
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [activeConv?.messages, isTyping]);
+  }, [activeConv?.messages, isTyping, pendingAttachments]);
 
   const filteredConversations = conversations.filter((c) =>
     c.creatorName.toLowerCase().includes(searchQuery.toLowerCase()) ||
     c.creatorHandle.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    processFiles(Array.from(files));
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  const processFiles = (files: File[]) => {
+    const newItems: MessageAttachment[] = files.map((file) => {
+      const isImage = file.type.startsWith('image/');
+      const isVideo = file.type.startsWith('video/');
+      const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+      const isArchive = file.name.toLowerCase().endsWith('.zip') || file.name.toLowerCase().endsWith('.rar');
+      const type: MessageAttachment['type'] = isImage ? 'image' : isVideo ? 'video' : isPdf ? 'pdf' : isArchive ? 'archive' : 'document';
+
+      const sizeStr =
+        file.size > 1024 * 1024
+          ? `${(file.size / (1024 * 1024)).toFixed(1)} MB`
+          : `${Math.round(file.size / 1024) || 1} KB`;
+
+      return {
+        id: `att-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+        name: file.name,
+        size: sizeStr,
+        type,
+        url: URL.createObjectURL(file),
+      };
+    });
+
+    setPendingAttachments((prev) => [...prev, ...newItems]);
+  };
+
+  const removePendingAttachment = (id: string) => {
+    setPendingAttachments((prev) => prev.filter((a) => a.id !== id));
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      processFiles(Array.from(e.dataTransfer.files));
+    }
+  };
+
   const handleSendMessage = (textToSend?: string) => {
-    const text = (textToSend || inputText).trim();
-    if (!text || !activeConv) return;
+    const text = (textToSend !== undefined ? textToSend : inputText).trim();
+    if ((!text && pendingAttachments.length === 0) || !activeConv) return;
 
     const brandName = currentUser?.companyName || currentUser?.name || 'Aura Skincare Paris';
     const brandAvatar =
       currentUser?.avatar ||
       'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80';
+
+    const attachmentsToSend = pendingAttachments.length > 0 ? [...pendingAttachments] : undefined;
 
     dispatch(
       sendMessage({
@@ -96,23 +164,32 @@ function BrandMessagesContent() {
         senderName: brandName,
         senderAvatar: brandAvatar,
         senderRole: 'brand',
+        attachments: attachmentsToSend,
       })
     );
 
-    if (!textToSend) {
+    if (textToSend === undefined) {
       setInputText('');
     }
+    setPendingAttachments([]);
 
     // Realistic simulated interactive response after 1.2s
     setIsTyping(true);
     setTimeout(() => {
       setIsTyping(false);
-      const responses = [
-        `Thanks for reaching out, ${currentUser?.name?.split(' ')[0] || 'Elena'}! That sounds like a wonderful campaign. I'd love to review your brief requirements.`,
-        `Hi! Yes, I have open production slots next week. Send over the offer details and we can lock in the schedule.`,
-        `Sounds exciting! Could you let me know if product samples will be shipped to Berlin or provided as a promo voucher?`,
-        `Perfect! I've worked with similar organic beauty brands before. Feel free to review my package tiers or send a customized rate offer.`,
-      ];
+      const responses =
+        attachmentsToSend && attachmentsToSend.length > 0
+          ? [
+              `Thanks for attaching "${attachmentsToSend[0].name}"! I've downloaded it and will follow the brief guidelines precisely.`,
+              `Received the campaign materials! Looking over the references now. Everything looks super clear.`,
+              `Files received! I'm prepping the production schedule to deliver on time.`,
+            ]
+          : [
+              `Thanks for reaching out, ${currentUser?.name?.split(' ')[0] || 'Elena'}! That sounds like a wonderful campaign. I'd love to review your brief requirements.`,
+              `Hi! Yes, I have open production slots next week. Send over the offer details and we can lock in the schedule.`,
+              `Sounds exciting! Could you let me know if product samples will be shipped to Berlin or provided as a promo voucher?`,
+              `Perfect! I've worked with similar organic beauty brands before. Feel free to review my package tiers or send a customized rate offer.`,
+            ];
       const randomResponse = responses[Math.floor(Math.random() * responses.length)];
 
       dispatch(
@@ -143,7 +220,7 @@ function BrandMessagesContent() {
             <div className="p-4 border-b border-[#E7E7E2] bg-white space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-black uppercase tracking-wider text-[#73736A]">
-                  Conversations ({conversations.length})
+                  Conversations
                 </span>
                 <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-[#EEF7F2] text-[#23744D]">
                   Active Inbox
@@ -274,7 +351,26 @@ function BrandMessagesContent() {
               </div>
 
               {/* Message Stream */}
-              <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 bg-[#FAFAF8]">
+              <div
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+                className={`flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 bg-[#FAFAF8] relative transition-colors ${
+                  isDragging ? 'bg-[#EEF7F2]/50 border-2 border-dashed border-[#23744D]' : ''
+                }`}
+              >
+                {isDragging && (
+                  <div className="absolute inset-0 bg-white/85 backdrop-blur-xs z-20 flex flex-col items-center justify-center p-6 text-center pointer-events-none">
+                    <div className="w-16 h-16 rounded-3xl bg-[#EEF7F2] text-[#23744D] flex items-center justify-center mb-3 animate-bounce">
+                      <UploadCloud className="w-8 h-8" />
+                    </div>
+                    <p className="font-bold text-base text-[#0A0A0A]">Drop Files Here to Share</p>
+                    <p className="text-xs text-[#73736A] mt-1">
+                      Upload campaign briefs, moodboards, contract drafts, or brand guidelines
+                    </p>
+                  </div>
+                )}
+
                 <div className="text-center my-2">
                   <span className="px-3 py-1 rounded-full bg-[#EAEAE3] text-[#73736A] text-[11px] font-bold uppercase tracking-wider">
                     Collaboration Channel Opened
@@ -286,7 +382,7 @@ function BrandMessagesContent() {
                   return (
                     <div
                       key={msg.id}
-                      className={`flex gap-3 max-w-[85%] sm:max-w-[75%] ${
+                      className={`flex gap-3 max-w-[88%] sm:max-w-[75%] ${
                         isBrand ? 'ml-auto flex-row-reverse' : 'mr-auto'
                       }`}
                     >
@@ -296,22 +392,109 @@ function BrandMessagesContent() {
                         className="w-8 h-8 rounded-full object-cover border border-[#E7E7E2] shrink-0 mt-1"
                       />
 
-                      <div className={`space-y-1 ${isBrand ? 'text-right' : 'text-left'}`}>
+                      <div className={`space-y-1.5 ${isBrand ? 'text-right' : 'text-left'}`}>
                         <div className="flex items-center gap-2 text-[11px] text-[#73736A] font-medium px-1">
                           <span className="font-bold text-[#0A0A0A]">{msg.senderName}</span>
                           <span>•</span>
                           <span>{msg.timestamp}</span>
                         </div>
 
-                        <div
-                          className={`p-3.5 sm:p-4 rounded-2xl text-xs sm:text-sm leading-relaxed ${
-                            isBrand
-                              ? 'bg-[#0A0A0A] text-white rounded-tr-xs'
-                              : 'bg-white text-[#0A0A0A] border border-[#E7E7E2] shadow-2xs rounded-tl-xs'
-                          }`}
-                        >
-                          {msg.text}
-                        </div>
+                        {/* Message Text */}
+                        {msg.text && (
+                          <div
+                            className={`p-3.5 sm:p-4 rounded-2xl text-xs sm:text-sm leading-relaxed ${
+                              isBrand
+                                ? 'bg-[#0A0A0A] text-white rounded-tr-xs'
+                                : 'bg-white text-[#0A0A0A] border border-[#E7E7E2] shadow-2xs rounded-tl-xs'
+                            }`}
+                          >
+                            {msg.text}
+                          </div>
+                        )}
+
+                        {/* File Attachments */}
+                        {msg.attachments && msg.attachments.length > 0 && (
+                          <div className={`flex flex-col gap-2 ${isBrand ? 'items-end' : 'items-start'}`}>
+                            {msg.attachments.map((att) => (
+                              <div key={att.id} className="max-w-[340px] sm:max-w-[380px] w-full">
+                                {att.type === 'image' ? (
+                                  <div className="rounded-2xl overflow-hidden border border-[#E7E7E2] bg-white shadow-2xs group relative">
+                                    <img
+                                      src={att.url}
+                                      alt={att.name}
+                                      className="w-full max-h-56 object-cover group-hover:scale-102 transition-transform duration-300"
+                                    />
+                                    <div className="p-2.5 bg-white border-t border-[#E7E7E2] flex items-center justify-between gap-2">
+                                      <div className="min-w-0 text-left">
+                                        <p className="text-xs font-bold text-[#0A0A0A] truncate">{att.name}</p>
+                                        <p className="text-[10px] text-[#73736A]">{att.size}</p>
+                                      </div>
+                                      <a
+                                        href={att.url}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="p-1.5 rounded-lg bg-[#FAFAF8] hover:bg-zinc-200 text-[#0A0A0A] transition-colors"
+                                        title="Open full size"
+                                      >
+                                        <ExternalLink className="w-3.5 h-3.5" />
+                                      </a>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <div
+                                    className={`p-3 rounded-2xl flex items-center gap-3 transition-all ${
+                                      isBrand
+                                        ? 'bg-[#18181B] text-white border border-zinc-800'
+                                        : 'bg-white text-[#0A0A0A] border border-[#E7E7E2] shadow-2xs'
+                                    }`}
+                                  >
+                                    <div
+                                      className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
+                                        att.type === 'pdf'
+                                          ? 'bg-rose-50 text-rose-600 border border-rose-200'
+                                          : att.type === 'video'
+                                          ? 'bg-purple-50 text-purple-600 border border-purple-200'
+                                          : 'bg-blue-50 text-blue-600 border border-blue-200'
+                                      }`}
+                                    >
+                                      {att.type === 'pdf' ? (
+                                        <FileText className="w-5 h-5" />
+                                      ) : att.type === 'video' ? (
+                                        <Film className="w-5 h-5" />
+                                      ) : (
+                                        <Paperclip className="w-5 h-5" />
+                                      )}
+                                    </div>
+                                    <div className="flex-1 min-w-0 text-left">
+                                      <p className="text-xs font-bold truncate leading-tight">{att.name}</p>
+                                      <p
+                                        className={`text-[10px] font-sans mt-0.5 ${
+                                          isBrand ? 'text-zinc-400' : 'text-[#73736A]'
+                                        }`}
+                                      >
+                                        {att.size} • {att.type.toUpperCase()}
+                                      </p>
+                                    </div>
+                                    <a
+                                      href={att.url}
+                                      download={att.name}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      className={`p-2 rounded-xl transition-all shrink-0 cursor-pointer ${
+                                        isBrand
+                                          ? 'bg-white/10 hover:bg-white/20 text-white'
+                                          : 'bg-[#FAFAF8] hover:bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]'
+                                      }`}
+                                      title="Download file"
+                                    >
+                                      <Download className="w-4 h-4" />
+                                    </a>
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
                   );
@@ -330,14 +513,78 @@ function BrandMessagesContent() {
                 <div ref={messagesEndRef} />
               </div>
 
+              {/* Pending Attachments Preview Tray */}
+              {pendingAttachments.length > 0 && (
+                <div className="px-4 py-2.5 bg-[#FAFAF8] border-t border-[#E7E7E2] flex items-center gap-2 overflow-x-auto">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#73736A] shrink-0">
+                    Files to Send ({pendingAttachments.length}):
+                  </span>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    {pendingAttachments.map((att) => (
+                      <div
+                        key={att.id}
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-[#E7E7E2] shadow-2xs text-xs"
+                      >
+                        {att.type === 'image' ? (
+                          <div className="w-6 h-6 rounded-md overflow-hidden bg-zinc-100 shrink-0 border border-[#E7E7E2]">
+                            <img src={att.url} alt={att.name} className="w-full h-full object-cover" />
+                          </div>
+                        ) : (
+                          <div className="w-6 h-6 rounded-md bg-zinc-100 flex items-center justify-center shrink-0">
+                            {att.type === 'pdf' ? (
+                              <FileText className="w-3.5 h-3.5 text-rose-500" />
+                            ) : att.type === 'video' ? (
+                              <Film className="w-3.5 h-3.5 text-purple-500" />
+                            ) : (
+                              <Paperclip className="w-3.5 h-3.5 text-zinc-600" />
+                            )}
+                          </div>
+                        )}
+                        <div className="max-w-[130px] truncate">
+                          <p className="font-bold text-[#0A0A0A] truncate text-[11px]">{att.name}</p>
+                          <p className="text-[10px] text-[#73736A]">{att.size}</p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => removePendingAttachment(att.id)}
+                          className="p-1 rounded-full hover:bg-zinc-100 text-zinc-400 hover:text-zinc-700 transition-colors cursor-pointer"
+                        >
+                          <X className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Message Input Box */}
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
                   handleSendMessage();
                 }}
-                className="p-3 sm:p-4 border-t border-[#E7E7E2] bg-white flex items-center gap-3"
+                className="p-3 sm:p-4 border-t border-[#E7E7E2] bg-white flex items-center gap-2 sm:gap-3"
               >
+                {/* Hidden File Picker */}
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  multiple
+                  onChange={handleFileSelect}
+                  accept="image/*,video/*,.pdf,.doc,.docx,.zip,.rar,.txt"
+                  className="hidden"
+                />
+
+                {/* File Attachment / Submit Button */}
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  title="Attach Campaign Brief, Moodboard or Files (PDF, Images, Video, Zip)"
+                  className="w-11 h-11 rounded-full bg-[#FAFAF8] hover:bg-[#F4F4F0] border border-[#E7E7E2] hover:border-[#0A0A0A] text-[#73736A] hover:text-[#0A0A0A] flex items-center justify-center transition-all cursor-pointer shrink-0 shadow-2xs group"
+                >
+                  <Paperclip className="w-4 h-4 group-hover:rotate-45 transition-transform duration-200" />
+                </button>
+
                 <input
                   type="text"
                   placeholder={`Write a message to ${activeConv.creatorName}...`}
@@ -348,7 +595,7 @@ function BrandMessagesContent() {
 
                 <button
                   type="submit"
-                  disabled={!inputText.trim()}
+                  disabled={!inputText.trim() && pendingAttachments.length === 0}
                   className="h-11 px-5 rounded-full font-bold text-xs bg-[#0A0A0A] hover:bg-zinc-800 disabled:opacity-40 disabled:cursor-not-allowed text-white flex items-center gap-1.5 transition-all shadow-xs cursor-pointer shrink-0"
                 >
                   <span>Send</span>

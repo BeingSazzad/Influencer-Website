@@ -5,6 +5,7 @@ export interface User {
   id: string;
   name: string;
   email: string;
+  phone?: string;
   role: UserRole;
   avatar: string;
   companyName?: string;
@@ -12,6 +13,9 @@ export interface User {
   location?: string;
   bio?: string;
   balanceEur?: number;
+  isDeactivated?: boolean;
+  deactivatedAt?: string | null;
+  deactivationScheduledFor?: string | null;
 }
 
 export type PlatformType = 'instagram' | 'tiktok' | 'youtube' | 'ugc' | 'all' | 'multi';
@@ -101,6 +105,8 @@ export interface Creator {
   coverImage?: string;
   bio: string;
   location: string;
+  contactEmail?: string;
+  contactPhone?: string;
   verified: boolean;
   categories: string[];
   tags: string[];

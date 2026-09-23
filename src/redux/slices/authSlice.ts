@@ -60,6 +60,22 @@ export const authSlice = createSlice({
         state.currentUser.balanceEur = Math.max(0, (state.currentUser.balanceEur || 0) - action.payload);
       }
     },
+    scheduleDeactivation: (state) => {
+      if (state.currentUser) {
+        state.currentUser.isDeactivated = true;
+        state.currentUser.deactivatedAt = new Date().toISOString();
+        const scheduledDate = new Date();
+        scheduledDate.setDate(scheduledDate.getDate() + 15);
+        state.currentUser.deactivationScheduledFor = scheduledDate.toISOString();
+      }
+    },
+    cancelDeactivation: (state) => {
+      if (state.currentUser) {
+        state.currentUser.isDeactivated = false;
+        state.currentUser.deactivatedAt = null;
+        state.currentUser.deactivationScheduledFor = null;
+      }
+    },
     logout: (state) => {
       state.currentUser = null;
       state.isAuthenticated = false;
@@ -76,6 +92,8 @@ export const {
   updateUserProfile,
   depositBrandFunds,
   withdrawCreatorFunds,
+  scheduleDeactivation,
+  cancelDeactivation,
   logout,
 } = authSlice.actions;
 

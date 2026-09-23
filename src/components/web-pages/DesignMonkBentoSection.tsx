@@ -75,19 +75,19 @@ export function DesignMonkBentoSection() {
               <div className="grid grid-cols-3 gap-3 pt-4 border-t border-white/10">
                 <div className="bg-white/5 rounded-2xl p-4 border border-white/5">
                   <div className="text-sm text-[#A3A39C] font-sans font-medium">Avg. Hook Rate</div>
-                  <div className="font-editorial text-2xl sm:text-3xl font-bold text-white mt-1">48.2%</div>
+                  <div className="font-sans text-2xl sm:text-3xl font-black text-white mt-1 tracking-tight">48.2%</div>
                   <div className="text-sm text-emerald-400 font-sans font-bold mt-0.5">↑ 2.4x vs Industry</div>
                 </div>
 
                 <div className="bg-white/5 rounded-2xl p-4 border border-white/5">
                   <div className="text-sm text-[#A3A39C] font-sans font-medium">Click-Through (CTR)</div>
-                  <div className="font-editorial text-2xl sm:text-3xl font-bold text-white mt-1">3.85%</div>
+                  <div className="font-sans text-2xl sm:text-3xl font-black text-white mt-1 tracking-tight">3.85%</div>
                   <div className="text-sm text-emerald-400 font-sans font-bold mt-0.5">↑ Meta Benchmarks</div>
                 </div>
 
                 <div className="bg-white/5 rounded-2xl p-4 border border-white/5">
                   <div className="text-sm text-[#A3A39C] font-sans font-medium">Turnaround Time</div>
-                  <div className="font-editorial text-2xl sm:text-3xl font-bold text-white mt-1">3-5 Days</div>
+                  <div className="font-sans text-2xl sm:text-3xl font-black text-white mt-1 tracking-tight">3-5 Days</div>
                   <div className="text-sm text-[#FF2D78] font-sans font-bold mt-0.5">⚡ Rapid Delivery</div>
                 </div>
               </div>

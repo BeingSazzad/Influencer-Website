@@ -270,7 +270,7 @@ export default function BrandDashboardPage() {
               href="/brand/saved"
               className="text-sm font-semibold text-[#0A0A0A] hover:text-zinc-600 flex items-center gap-1.5 transition-colors"
             >
-              <span>View all ({savedCreators.length})</span>
+              <span>View All</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

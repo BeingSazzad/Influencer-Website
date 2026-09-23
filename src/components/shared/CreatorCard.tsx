@@ -78,7 +78,7 @@ export function CreatorCard({ creator }: CreatorCardProps) {
               <span className="text-xs font-bold text-[#73736A] uppercase tracking-wider block font-sans">
                 FROM
               </span>
-              <strong className="text-[#0A0A0A] font-editorial text-lg font-bold">
+              <strong className="text-[#0A0A0A] font-sans text-lg font-black tracking-tight">
                 €{creator.startingPriceEur}
               </strong>
             </div>

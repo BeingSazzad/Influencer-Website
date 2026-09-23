@@ -186,7 +186,7 @@ export default function CreatorCampaignsPage() {
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-5">
           <div className="pb-3 border-b border-[#E7E7E2] flex items-center justify-between">
             <h2 className="text-lg font-black text-[#0A0A0A] tracking-tight">
-              Campaign Contracts ({filteredOrders.length})
+              Campaign Contracts
             </h2>
           </div>
 

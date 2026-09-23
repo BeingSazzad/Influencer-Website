@@ -44,7 +44,7 @@ export default function CreatorOffersPage() {
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
           <div className="flex items-center justify-between">
             <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A]">
-              Pending Collaboration Requests ({incomingOffers.length})
+              Pending Collaboration Requests
             </h2>
             <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] text-xs font-bold">
               <ShieldCheck className="w-3.5 h-3.5" />

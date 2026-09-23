@@ -194,7 +194,7 @@ export default function CreatorDashboardPage() {
                   type="default"
                   className="h-10 px-4 rounded-full font-bold text-xs bg-white/10 hover:bg-white/20 text-white border-white/20"
                 >
-                  View All ({incomingOffers.length})
+                  View All
                 </Button>
               </Link>
             </div>
@@ -289,7 +289,7 @@ export default function CreatorDashboardPage() {
               <div className="flex items-center justify-between pb-3 border-b border-[#E7E7E2]">
                 <div>
                   <h2 className="text-base sm:text-lg font-black text-[#0A0A0A] tracking-tight">
-                    Work Gallery ({portfolioItems.length})
+                    Work Gallery
                   </h2>
                   <p className="text-xs text-[#73736A] mt-0.5 font-medium">
                     Verified case studies on public profile

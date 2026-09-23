@@ -195,7 +195,7 @@ export default function BrandCampaignsPage() {
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-4">
           <div className="pb-3 border-b border-[#E7E7E2] flex items-center justify-between">
             <h2 className="text-lg font-black text-[#0A0A0A] tracking-tight">
-              Campaigns ({filteredOrders.length})
+              Campaigns
             </h2>
             <span className="text-xs text-[#73736A] font-medium">
               Funds held securely in Stripe/Wise Escrow until deliverable approval

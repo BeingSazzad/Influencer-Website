@@ -23,6 +23,8 @@ import {
   Youtube,
   Send,
   MessageSquare,
+  Mail,
+  Phone,
   Bookmark,
   Share2,
   Sparkles,
@@ -77,7 +79,6 @@ export default function CreatorProfilePage() {
   );
 
   const [activeTab, setActiveTab] = useState<'overview' | 'packages' | 'portfolio' | 'photos' | 'audience' | 'reviews'>('overview');
-  const [selectedPlatform, setSelectedPlatform] = useState<'all' | PlatformType>('all');
   const [portfolioFilter, setPortfolioFilter] = useState<'all' | PlatformType>('all');
   const [photoFilter, setPhotoFilter] = useState<string>('all');
   const [reviewFilter, setReviewFilter] = useState<'all' | '5' | '4'>('all');
@@ -156,13 +157,7 @@ export default function CreatorProfilePage() {
     handleOpenOffer(matchingPkg);
   };
 
-  const filteredPackages = creator.packages.filter((p) => {
-    if (selectedPlatform === 'all') return true;
-    if (selectedPlatform === 'multi') {
-      return p.platform === 'multi' || p.platform === 'all' || (p.platforms && p.platforms.length > 1);
-    }
-    return p.platform === selectedPlatform || (p.platforms && p.platforms.includes(selectedPlatform));
-  });
+  const filteredPackages = creator.packages;
 
   const filteredPortfolio = portfolioFilter === 'all'
     ? creator.portfolio
@@ -228,11 +223,7 @@ export default function CreatorProfilePage() {
 
   const creatorPhotos = (creator.photos && creator.photos.length > 0) ? creator.photos : defaultPhotos;
 
-  // Platform package counts
-  const instagramPackagesCount = creator.packages.filter((p) => p.platform === 'instagram').length;
-  const tiktokPackagesCount = creator.packages.filter((p) => p.platform === 'tiktok').length;
-  const youtubePackagesCount = creator.packages.filter((p) => p.platform === 'youtube').length;
-  const ugcPackagesCount = creator.packages.filter((p) => p.platform === 'ugc').length;
+
 
   return (
     <div className="bg-[#FAFAF8] min-h-screen py-8 sm:py-10 font-sans">
@@ -451,11 +442,11 @@ export default function CreatorProfilePage() {
           <div className="flex items-center gap-6 sm:gap-8 border-b border-[#E7E7E2] mt-8 sm:mt-10 text-sm font-bold overflow-x-auto no-scrollbar">
             {[
               { key: 'overview', label: 'Overview' },
-              { key: 'packages', label: `Packages (${creator.packages.length})` },
-              { key: 'portfolio', label: `Portfolio (${creator.portfolio.length})` },
-              { key: 'photos', label: `Gallery (${creatorPhotos.length})` },
+              { key: 'packages', label: 'Packages' },
+              { key: 'portfolio', label: 'Portfolio' },
+              { key: 'photos', label: 'Gallery' },
               { key: 'audience', label: 'Audience' },
-              { key: 'reviews', label: `Reviews (${creator.reviewsCount})` },
+              { key: 'reviews', label: 'Reviews' },
             ].map((tab) => (
               <button
                 key={tab.key}
@@ -478,70 +469,21 @@ export default function CreatorProfilePage() {
         {/* TAB 1: OVERVIEW */}
         {activeTab === 'overview' && (
           <div className="space-y-8">
-            {/* Packages Section */}
+            {/* Collaboration Deals & Offerings Section */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">Packages & Pricing</h2>
+                  <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">
+                    Collaboration Deals &amp; Rates
+                  </h2>
                   <p className="text-sm text-[#73736A] mt-1 font-medium">
-                    Choose a platform to view {creator.name.split(' ')[0]}&apos;s ready-to-book collaboration tiers.
+                    Fixed-price verified deliverables with 100% escrow protection and guaranteed turnaround.
                   </p>
-                </div>
-
-                {/* Platform Switcher Tabs - Strict 1 Line */}
-                <div className="inline-flex items-center p-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] whitespace-nowrap overflow-x-auto shrink-0 max-w-full">
-                  <button
-                    onClick={() => setSelectedPlatform('instagram')}
-                    className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-bold transition-all cursor-pointer shrink-0 ${
-                      selectedPlatform === 'instagram'
-                        ? 'bg-[#FDF0ED] text-[#C75D47] shadow-2xs'
-                        : 'text-[#73736A] hover:text-[#0A0A0A]'
-                    }`}
-                  >
-                    <Instagram className="w-3.5 h-3.5" />
-                    <span>Instagram ({instagramPackagesCount})</span>
-                  </button>
-
-                  <button
-                    onClick={() => setSelectedPlatform('tiktok')}
-                    className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-bold transition-all cursor-pointer ${
-                      selectedPlatform === 'tiktok'
-                        ? 'bg-[#0A0A0A] text-white shadow-2xs'
-                        : 'text-[#73736A] hover:text-[#0A0A0A]'
-                    }`}
-                  >
-                    <Film className="w-3.5 h-3.5" />
-                    <span>TikTok ({tiktokPackagesCount})</span>
-                  </button>
-
-                  <button
-                    onClick={() => setSelectedPlatform('youtube')}
-                    className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-bold transition-all cursor-pointer ${
-                      selectedPlatform === 'youtube'
-                        ? 'bg-[#FF0000] text-white shadow-2xs'
-                        : 'text-[#73736A] hover:text-[#0A0A0A]'
-                    }`}
-                  >
-                    <Youtube className="w-3.5 h-3.5" />
-                    <span>YouTube ({youtubePackagesCount})</span>
-                  </button>
-
-                  <button
-                    onClick={() => setSelectedPlatform('ugc')}
-                    className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-bold transition-all cursor-pointer ${
-                      selectedPlatform === 'ugc'
-                        ? 'bg-[#EEF7F2] text-[#23744D] shadow-2xs'
-                        : 'text-[#73736A] hover:text-[#0A0A0A]'
-                    }`}
-                  >
-                    <Sparkles className="w-3.5 h-3.5 text-[#23744D]" />
-                    <span>UGC ({ugcPackagesCount})</span>
-                  </button>
                 </div>
               </div>
 
               {/* Packages Cards Row */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className={`grid grid-cols-1 md:grid-cols-2 ${filteredPackages.length === 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-2 xl:grid-cols-4'} gap-6`}>
                 {filteredPackages.length > 0 ? (
                   filteredPackages.map((pkg) => (
                     <PackageCard
@@ -559,15 +501,15 @@ export default function CreatorProfilePage() {
                 ) : (
                   <div className="col-span-1 md:col-span-2 lg:col-span-3">
                     <EmptyState
-                      color="amber"
-                      icon={<Package className="w-8 h-8" />}
-                      title={`No Standard ${selectedPlatform.toUpperCase()} Packages`}
-                      description="This creator currently accepts custom collaboration offers and multi-deliverable briefs for this channel."
+                      color="neutral"
+                      icon={<Package className="w-8 h-8 text-[#73736A]" />}
+                      title="No Deals In This Category"
+                      description="This creator currently accepts custom collaboration offers and multi-deliverable briefs for this format."
                       primaryAction={{
-                        label: 'Request Custom Brief',
+                        label: 'Request Custom Proposal',
                         onClick: () => handleOpenOffer(),
                       }}
-                      variant="dashed"
+                      variant="plain"
                     />
                   </div>
                 )}
@@ -608,7 +550,7 @@ export default function CreatorProfilePage() {
                   onClick={() => setActiveTab('portfolio')}
                   className="text-sm font-bold text-[#0A0A0A] hover:text-[#FF2D78] flex items-center gap-1.5 cursor-pointer transition-colors"
                 >
-                  <span>View all {creator.portfolio.length} campaigns</span>
+                  <span>View All Campaigns</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -668,7 +610,7 @@ export default function CreatorProfilePage() {
                   onClick={() => setActiveTab('photos')}
                   className="text-sm font-bold text-[#0A0A0A] hover:text-[#FF2D78] flex items-center gap-1.5 cursor-pointer transition-colors"
                 >
-                  <span>View all {creatorPhotos.length} photos</span>
+                  <span>View All Photos</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -867,40 +809,16 @@ export default function CreatorProfilePage() {
         {/* TAB 2: PACKAGES */}
         {activeTab === 'packages' && (
           <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] space-y-8">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#E7E7E2]/60">
               <div>
-                <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A]">All Collaboration Packages ({creator.packages.length})</h2>
-                <p className="text-sm text-[#73736A] mt-1 font-medium">
+                <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A]">All Collaboration Deals</h2>
+                <p className="text-xs sm:text-sm text-[#73736A] mt-1 font-medium">
                   Transparent fixed EUR pricing with escrow protection and clear turnaround times.
                 </p>
               </div>
-
-              {/* Platform Switcher */}
-              <div className="inline-flex p-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] overflow-x-auto max-w-full">
-                {[
-                  { id: 'all' as const, label: 'All' },
-                  { id: 'multi' as const, label: 'Multi-Platform 🌟' },
-                  { id: 'instagram' as const, label: 'Instagram' },
-                  { id: 'tiktok' as const, label: 'TikTok' },
-                  { id: 'youtube' as const, label: 'YouTube' },
-                  { id: 'ugc' as const, label: 'UGC' },
-                ].map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => setSelectedPlatform(item.id)}
-                    className={`px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer shrink-0 ${
-                      selectedPlatform === item.id
-                        ? 'bg-[#0A0A0A] text-white shadow-2xs'
-                        : 'text-[#73736A] hover:text-[#0A0A0A]'
-                    }`}
-                  >
-                    {item.label}
-                  </button>
-                ))}
-              </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className={`grid grid-cols-1 md:grid-cols-2 ${filteredPackages.length === 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-2 xl:grid-cols-4'} gap-6`}>
               {filteredPackages.map((pkg) => (
                 <PackageCard
                   key={pkg.id}
@@ -924,7 +842,7 @@ export default function CreatorProfilePage() {
             <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
               <div>
                 <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A]">
-                  Work Gallery & Case Studies ({filteredPortfolio.length})
+                  Work Gallery & Case Studies
                 </h2>
                 <p className="text-sm text-[#73736A] mt-1 font-medium max-w-xl">
                   {portfolioFilter === 'all'
@@ -1092,7 +1010,7 @@ export default function CreatorProfilePage() {
           <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] space-y-8">
             <div className="pb-6 border-b border-[#E7E7E2]">
               <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A]">
-                Gallery ({creatorPhotos.length})
+                Gallery
               </h2>
               <p className="text-sm text-[#73736A] mt-1 font-medium">
                 Photos and visual profile of {creator.name}.
@@ -1228,7 +1146,7 @@ export default function CreatorProfilePage() {
 
                   <div className="flex items-center gap-3">
                     <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center gap-3.5">
-                      <div className="text-3xl font-black text-[#0A0A0A] font-editorial">
+                      <div className="text-3xl font-black text-[#0A0A0A] font-sans tracking-tight">
                         {creator.rating.toFixed(2)}
                       </div>
                       <div>
@@ -1263,7 +1181,7 @@ export default function CreatorProfilePage() {
                           : 'bg-[#FAFAF8] text-[#555550] hover:bg-[#F4F4F0] border border-[#E7E7E2]'
                       }`}
                     >
-                      All Reviews ({creator.reviews.length})
+                      All Reviews
                     </button>
                     <button
                       onClick={() => {

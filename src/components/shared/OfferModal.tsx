@@ -141,7 +141,7 @@ export function OfferModal() {
             <span className="font-bold text-[#0A0A0A] truncate">{packageTitle}</span>
           </div>
           <span className="text-[11px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#73736A] shrink-0">
-            {platform === 'all' ? 'All Platforms (360°)' : platform === 'multi' ? 'Multi-Platform' : platform}
+            {platform === 'all' ? 'Cross-Platform' : platform === 'multi' ? 'Multi-Platform' : platform === 'ugc' ? 'UGC Video' : platform}
           </span>
         </div>
 
@@ -149,7 +149,7 @@ export function OfferModal() {
         <div className="space-y-4">
           <div className="space-y-1.5">
             <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
-              Campaign / Product Name
+              Campaign Name
             </label>
             <Input
               value={campaignTitle}
@@ -162,7 +162,7 @@ export function OfferModal() {
 
           <div className="space-y-1.5">
             <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
-              Creative Brief & Guidelines
+              Campaign Brief
             </label>
             <Input.TextArea
               rows={3}

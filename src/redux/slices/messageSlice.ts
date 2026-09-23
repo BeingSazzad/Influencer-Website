@@ -1,5 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+export interface MessageAttachment {
+  id: string;
+  name: string;
+  size: string;
+  type: 'image' | 'video' | 'pdf' | 'document' | 'archive' | 'file';
+  url: string;
+}
+
 export interface DirectMessage {
   id: string;
   senderId: string;
@@ -9,6 +17,7 @@ export interface DirectMessage {
   text: string;
   timestamp: string;
   createdAt: number;
+  attachments?: MessageAttachment[];
 }
 
 export interface Conversation {
@@ -95,6 +104,22 @@ const INITIAL_CONVERSATIONS: Conversation[] = [
         text: 'Hi Sophie, just checking in on the dewy glaze video draft. The lighting references looked stellar!',
         timestamp: '2h ago',
         createdAt: Date.now() - 2 * 3600 * 1000,
+        attachments: [
+          {
+            id: 'att-sk-1',
+            name: 'Aura_Autumn_Campaign_Brief.pdf',
+            size: '2.4 MB',
+            type: 'pdf',
+            url: '#',
+          },
+          {
+            id: 'att-sk-2',
+            name: 'Dewy_Glaze_Moodboard.jpg',
+            size: '1.8 MB',
+            type: 'image',
+            url: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80',
+          },
+        ],
       },
       {
         id: 'msg-sk-2',
@@ -167,14 +192,15 @@ export const messageSlice = createSlice({
       state,
       action: PayloadAction<{
         conversationId: string;
-        text: string;
+        text?: string;
         senderId: string;
         senderName: string;
         senderAvatar: string;
         senderRole: 'brand' | 'creator';
+        attachments?: MessageAttachment[];
       }>
     ) => {
-      const { conversationId, text, senderId, senderName, senderAvatar, senderRole } = action.payload;
+      const { conversationId, text = '', senderId, senderName, senderAvatar, senderRole, attachments } = action.payload;
       const conv = state.conversations.find((c) => c.id === conversationId);
       if (conv) {
         const newMsg: DirectMessage = {
@@ -186,9 +212,10 @@ export const messageSlice = createSlice({
           text,
           timestamp: 'Just now',
           createdAt: Date.now(),
+          attachments: attachments && attachments.length > 0 ? attachments : undefined,
         };
         conv.messages.push(newMsg);
-        conv.lastMessage = text;
+        conv.lastMessage = text || (attachments && attachments.length > 0 ? `📎 ${attachments[0].name}` : 'Shared a file');
         conv.lastMessageTimestamp = 'Just now';
         if (senderRole === 'brand') {
           conv.unreadCountCreator += 1;

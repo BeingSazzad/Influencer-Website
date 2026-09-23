@@ -13,9 +13,11 @@ import {
   Video,
   Film,
   Sparkles,
-  Clapperboard,
+  Youtube,
+  Instagram,
   Layers,
   Edit3,
+  ShieldCheck,
 } from 'lucide-react';
 
 interface PackageCardProps {
@@ -30,56 +32,28 @@ interface PackageCardProps {
   onSelect?: (pkg: CreatorPackage) => void;
 }
 
-export function getPackageVisual(pkg: CreatorPackage) {
-  const title = (pkg.title || '').toLowerCase();
-  const desc = (pkg.description || '').toLowerCase();
+export function getPackageChannels(pkg: CreatorPackage): { id: string; label: string; icon: React.ReactNode }[] {
+  const rawPlatforms =
+    pkg.platforms && pkg.platforms.length > 0
+      ? pkg.platforms
+      : pkg.platform === 'all' || pkg.platform === 'multi'
+      ? ['instagram', 'tiktok', 'youtube']
+      : [pkg.platform];
 
-  if (
-    pkg.platform === 'all' ||
-    pkg.platform === 'multi' ||
-    (pkg.platforms && pkg.platforms.length > 1) ||
-    title.includes('omni') ||
-    title.includes('360')
-  ) {
-    return {
-      icon: <Layers className="w-4 h-4 text-amber-600" />,
-      badgeBg: 'bg-gradient-to-r from-amber-50 to-rose-50 border border-amber-200/70',
-      label: pkg.platform === 'all' ? 'All Platforms (360°)' : 'Multi-Platform Bundle',
-    };
-  }
-  if (title.includes('reel') || desc.includes('reel') || pkg.platform === 'instagram') {
-    return {
-      icon: <Film className="w-4 h-4 text-[#FF2D78]" />,
-      badgeBg: 'bg-[#FFF0F5] border border-rose-200/50',
-      label: 'Instagram Reel',
-    };
-  }
-  if (title.includes('tiktok') || desc.includes('tiktok') || pkg.platform === 'tiktok') {
-    return {
-      icon: <Video className="w-4 h-4 text-[#0A0A0A]" />,
-      badgeBg: 'bg-[#F4F4F0] border border-[#E7E7E2]',
-      label: 'TikTok Video',
-    };
-  }
-  if (title.includes('youtube') || desc.includes('youtube') || pkg.platform === 'youtube') {
-    return {
-      icon: <Clapperboard className="w-4 h-4 text-red-500" />,
-      badgeBg: 'bg-red-50 border border-red-200/50',
-      label: 'YouTube Feature',
-    };
-  }
-  if (title.includes('bundle') || title.includes('campaign')) {
-    return {
-      icon: <Layers className="w-4 h-4 text-blue-600" />,
-      badgeBg: 'bg-blue-50 border border-blue-200/50',
-      label: 'Multi-Asset Bundle',
-    };
-  }
-  return {
-    icon: <Sparkles className="w-4 h-4 text-purple-600" />,
-    badgeBg: 'bg-purple-50 border border-purple-200/50',
-    label: 'UGC Creative',
-  };
+  return rawPlatforms.map((p) => {
+    switch (p) {
+      case 'instagram':
+        return { id: 'instagram', label: 'Instagram', icon: <Instagram className="w-3 h-3 text-[#FF2D78]" /> };
+      case 'tiktok':
+        return { id: 'tiktok', label: 'TikTok', icon: <Film className="w-3 h-3 text-[#0A0A0A]" /> };
+      case 'youtube':
+        return { id: 'youtube', label: 'YouTube', icon: <Youtube className="w-3 h-3 text-red-500" /> };
+      case 'ugc':
+        return { id: 'ugc', label: 'UGC', icon: <Sparkles className="w-3 h-3 text-purple-600" /> };
+      default:
+        return { id: p, label: 'Omni', icon: <Layers className="w-3 h-3 text-amber-600" /> };
+    }
+  });
 }
 
 export function PackageCard({ packageItem, pkg, creator, onSelect }: PackageCardProps) {
@@ -90,7 +64,7 @@ export function PackageCard({ packageItem, pkg, creator, onSelect }: PackageCard
 
   if (!currentPkg) return null;
 
-  const visual = getPackageVisual(currentPkg);
+  const channels = getPackageChannels(currentPkg);
 
   const isSelf =
     currentUser?.role === 'creator' &&
@@ -135,17 +109,24 @@ export function PackageCard({ packageItem, pkg, creator, onSelect }: PackageCard
       {currentPkg.popular && (
         <div className="absolute -top-3 left-6 bg-[#0A0A0A] text-white text-[11px] font-extrabold uppercase tracking-wider px-3 py-0.5 rounded-full shadow-xs flex items-center gap-1">
           <Sparkles className="w-3 h-3 text-amber-300" />
-          <span>Most Popular</span>
+          <span>Featured Deal</span>
         </div>
       )}
 
       <div className="space-y-4">
-        {/* Header row: Platform badge + Price */}
-        <div className="flex items-center justify-between">
-          <span className={`text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full flex items-center gap-1.5 ${visual.badgeBg}`}>
-            {visual.icon}
-            <span className="text-[#0A0A0A]">{visual.label}</span>
-          </span>
+        {/* Header row: Channel Tags + Price */}
+        <div className="flex items-center justify-between gap-2 flex-wrap">
+          <div className="flex items-center gap-1.5 flex-wrap">
+            {channels.map((ch) => (
+              <span
+                key={ch.id}
+                className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] inline-flex items-center gap-1"
+              >
+                {ch.icon}
+                <span>{ch.label}</span>
+              </span>
+            ))}
+          </div>
 
           <span className="text-2xl font-black text-[#0A0A0A]">
             €{currentPkg.priceEur.toLocaleString()}
@@ -199,7 +180,7 @@ export function PackageCard({ packageItem, pkg, creator, onSelect }: PackageCard
             </>
           ) : (
             <>
-              <span>Book Package</span>
+              <span>Book Deal</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </>
           )}

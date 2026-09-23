@@ -345,7 +345,7 @@ export default function CreatorOrderFulfilmentPage() {
 
             {/* Existing Submissions List */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-4">
-              <h3 className="text-lg font-bold text-[#0A0A0A] tracking-tight">Submitted Assets ({order.deliverables.length})</h3>
+              <h3 className="text-lg font-bold text-[#0A0A0A] tracking-tight">Submitted Assets</h3>
               {order.deliverables.map((deliv) => (
                 <div key={deliv.id} className="p-4 sm:p-5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-3">
                   <div className="flex justify-between items-center text-sm font-semibold text-[#0A0A0A]">

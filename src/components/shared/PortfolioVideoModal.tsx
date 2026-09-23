@@ -233,7 +233,7 @@ export function PortfolioVideoModal({
                     <span className="text-xs font-bold uppercase tracking-wider text-[#73736A] block">
                       PACKAGE VALUE
                     </span>
-                    <strong className="text-xl font-black text-[#0A0A0A] font-editorial">
+                    <strong className="text-xl font-black text-[#0A0A0A] font-sans tracking-tight">
                       €{item.packagePriceEur.toLocaleString()}
                     </strong>
                   </div>

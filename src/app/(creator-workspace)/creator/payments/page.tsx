@@ -245,8 +245,8 @@ export default function CreatorPaymentsPage() {
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h3 className="text-lg font-black text-[#0A0A0A] tracking-tight">Payout History</h3>
-              <p className="text-xs text-[#73736A] mt-0.5">Records of completed settlements and funds in escrow.</p>
+              <h3 className="text-xl font-bold text-[#0A0A0A] tracking-tight">Payout History</h3>
+              <p className="text-sm text-[#73736A] mt-1">Records of completed settlements and funds in escrow.</p>
             </div>
 
             {/* Filter Tabs */}
@@ -274,28 +274,28 @@ export default function CreatorPaymentsPage() {
 
           {/* Search Input */}
           <div className="relative max-w-sm">
-            <Search className="w-3.5 h-3.5 text-[#73736A] absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-[#73736A] absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search by brand, campaign, or ID..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3.5 py-2 text-xs font-medium text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none focus:border-[#0A0A0A]"
+              className="w-full h-10 pl-10 pr-3.5 text-sm font-medium text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none focus:border-[#0A0A0A] placeholder:text-[#A3A39C] transition-all"
             />
           </div>
 
           {/* Table */}
           <div className="overflow-x-auto -mx-6 sm:mx-0">
-            <table className="w-full text-left text-xs">
+            <table className="w-full text-left">
               <thead>
-                <tr className="border-b border-[#E7E7E2] text-[#73736A] font-bold uppercase tracking-wider text-[11px]">
-                  <th className="pb-3 px-4">Date &amp; ID</th>
-                  <th className="pb-3 px-4">Brand &amp; Campaign</th>
-                  <th className="pb-3 px-4">Deliverables</th>
-                  <th className="pb-3 px-4">Platform Fee</th>
-                  <th className="pb-3 px-4 text-right">Earned (€)</th>
-                  <th className="pb-3 px-4 text-center">Status</th>
-                  <th className="pb-3 px-4 text-right">Statement</th>
+                <tr className="border-b border-[#E7E7E2] text-[#73736A] font-bold uppercase tracking-wider text-xs">
+                  <th className="pb-3.5 px-4">Date &amp; ID</th>
+                  <th className="pb-3.5 px-4">Brand &amp; Campaign</th>
+                  <th className="pb-3.5 px-4">Deliverables</th>
+                  <th className="pb-3.5 px-4">Platform Fee</th>
+                  <th className="pb-3.5 px-4 text-right">Earned (€)</th>
+                  <th className="pb-3.5 px-4 text-center">Status</th>
+                  <th className="pb-3.5 px-4 text-right">Statement</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#F4F4F0]">
@@ -306,60 +306,62 @@ export default function CreatorPaymentsPage() {
                   return (
                     <tr key={payout.id} className="hover:bg-[#FAFAF8] transition-colors">
                       {/* ID & Date */}
-                      <td className="py-3.5 px-4 font-mono font-bold text-[#0A0A0A]">
-                        <div>{payout.id}</div>
-                        <div className="text-[11px] font-sans text-[#73736A] font-normal">{payout.date}</div>
+                      <td className="py-4 px-4 font-sans">
+                        <div className="font-bold text-sm text-[#0A0A0A]">{payout.id}</div>
+                        <div className="text-xs text-[#73736A] font-normal mt-0.5">{payout.date}</div>
                       </td>
 
                       {/* Brand & Campaign */}
-                      <td className="py-3.5 px-4">
-                        <div className="font-bold text-[#0A0A0A]">{payout.brandName}</div>
-                        <div className="text-[11px] text-[#73736A] truncate max-w-xs">{payout.campaignTitle}</div>
+                      <td className="py-4 px-4">
+                        <div className="font-bold text-sm text-[#0A0A0A]">{payout.brandName}</div>
+                        <div className="text-xs text-[#73736A] truncate max-w-xs mt-0.5">{payout.campaignTitle}</div>
                       </td>
 
                       {/* Deliverables */}
-                      <td className="py-3.5 px-4 text-[#73736A] font-medium max-w-xs truncate">
+                      <td className="py-4 px-4 text-sm text-[#52524E] font-medium max-w-xs truncate">
                         {payout.deliverableType}
                       </td>
 
                       {/* Fee */}
-                      <td className="py-3.5 px-4 text-xs font-semibold text-[#23744D]">
-                        0% deducted
+                      <td className="py-4 px-4">
+                        <span className="text-xs font-semibold text-[#23744D] bg-[#EEF7F2] px-2.5 py-1 rounded-full inline-block">
+                          0% deducted
+                        </span>
                       </td>
 
                       {/* Earnings */}
-                      <td className="py-3.5 px-4 text-right font-black text-sm text-[#0A0A0A]">
+                      <td className="py-4 px-4 text-right font-sans font-black text-sm sm:text-base text-[#0A0A0A] tracking-tight">
                         <span className={isPaidOut ? 'text-[#23744D]' : 'text-[#0A0A0A]'}>
                           +€{payout.amountEur.toLocaleString()}
                         </span>
                       </td>
 
                       {/* Status */}
-                      <td className="py-3.5 px-4 text-center">
+                      <td className="py-4 px-4 text-center">
                         {isPaidOut ? (
-                          <span className="px-2.5 py-0.5 rounded-full bg-[#EEF7F2] text-[#23744D] font-bold text-[10px] uppercase">
+                          <span className="px-2.5 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] font-bold text-xs uppercase tracking-wide">
                             Transferred
                           </span>
                         ) : isEscrow ? (
-                          <span className="px-2.5 py-0.5 rounded-full bg-[#FFF0F5] text-[#FF2D78] font-bold text-[10px] uppercase">
+                          <span className="px-2.5 py-1 rounded-full bg-[#FFF0F5] text-[#FF2D78] font-bold text-xs uppercase tracking-wide">
                             In Escrow
                           </span>
                         ) : (
-                          <span className="px-2.5 py-0.5 rounded-full bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] font-bold text-[10px] uppercase">
+                          <span className="px-2.5 py-1 rounded-full bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] font-bold text-xs uppercase tracking-wide">
                             Available
                           </span>
                         )}
                       </td>
 
                       {/* Receipt Action */}
-                      <td className="py-3.5 px-4 text-right">
+                      <td className="py-4 px-4 text-right">
                         <button
                           type="button"
                           onClick={() => setSelectedRemittance(payout)}
-                          className="p-1.5 rounded-lg border border-[#E7E7E2] hover:border-[#0A0A0A] hover:bg-white text-[#73736A] hover:text-[#0A0A0A] transition-colors cursor-pointer"
+                          className="w-8 h-8 rounded-lg border border-[#E7E7E2] hover:border-[#0A0A0A] hover:bg-white text-[#73736A] hover:text-[#0A0A0A] inline-flex items-center justify-center transition-colors cursor-pointer"
                           title="View Statement"
                         >
-                          <FileText className="w-3.5 h-3.5" />
+                          <FileText className="w-4 h-4" />
                         </button>
                       </td>
                     </tr>
@@ -369,7 +371,7 @@ export default function CreatorPaymentsPage() {
             </table>
 
             {filteredPayouts.length === 0 && (
-              <div className="py-12 text-center text-xs text-[#73736A] font-medium">
+              <div className="py-12 text-center text-sm text-[#73736A] font-medium">
                 No payout records match your search criteria.
               </div>
             )}
@@ -390,7 +392,7 @@ export default function CreatorPaymentsPage() {
           <div className="space-y-5 font-sans pt-2">
             <div className="border-b border-[#E7E7E2] pb-3 flex items-start justify-between">
               <div>
-                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#73736A]">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
                   REMITTANCE STATEMENT
                 </span>
                 <h3 className="text-lg font-black text-[#0A0A0A] tracking-tight mt-0.5">
@@ -398,7 +400,7 @@ export default function CreatorPaymentsPage() {
                 </h3>
                 <div className="text-xs text-[#73736A]">{selectedRemittance.date}</div>
               </div>
-              <span className="px-2.5 py-0.5 rounded-full bg-[#EEF7F2] text-[#23744D] font-bold text-[10px] uppercase">
+              <span className="px-2.5 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] font-bold text-xs uppercase tracking-wide">
                 {selectedRemittance.status.replace('_', ' ')}
               </span>
             </div>

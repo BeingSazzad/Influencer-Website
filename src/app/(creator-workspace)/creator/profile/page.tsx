@@ -43,6 +43,9 @@ import {
   Edit3,
   Calendar,
   Eye,
+  Mail,
+  Phone,
+  ShieldCheck,
   ZoomIn,
 } from 'lucide-react';
 import { Input, Button, message, Modal, Select, Popconfirm, Tag } from 'antd';
@@ -725,6 +728,30 @@ function CreatorProfileContent() {
                 </div>
               </div>
 
+              {/* Cross-Link Card to Private Account & Security Settings */}
+              <div className="p-4 sm:p-5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-white border border-[#E7E7E2] flex items-center justify-center text-[#0A0A0A] shrink-0 shadow-2xs">
+                    <ShieldCheck className="w-5 h-5 text-[#23744D]" />
+                  </div>
+                  <div>
+                    <h5 className="text-xs sm:text-sm font-bold text-[#0A0A0A]">
+                      Looking for private login credentials or password change?
+                    </h5>
+                    <p className="text-xs text-[#73736A] mt-0.5">
+                      Your authentication email, login password, and active devices are managed in private settings.
+                    </p>
+                  </div>
+                </div>
+                <Link
+                  href="/creator/settings?tab=account"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0A0A0A] hover:text-[#23744D] bg-white border border-[#D2D2CA] hover:border-[#0A0A0A] px-3.5 py-2 rounded-xl transition-all shadow-2xs whitespace-nowrap"
+                >
+                  <span>Account &amp; Security Settings</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+
               {/* Save Button */}
               <div className="pt-2 flex items-center justify-end">
                 <button
@@ -747,7 +774,7 @@ function CreatorProfileContent() {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#E7E7E2]">
                 <div>
                   <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">
-                    Aesthetic Gallery &amp; Lookbook ({photosList.length})
+                    Aesthetic Gallery &amp; Lookbook
                   </h2>
                   <p className="text-xs sm:text-sm text-[#73736A] mt-1 font-medium">
                     Showcase your lifestyle aesthetics, modeling portfolio, and personal visual identity for brands.
