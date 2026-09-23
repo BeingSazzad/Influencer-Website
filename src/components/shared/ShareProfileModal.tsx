@@ -134,7 +134,7 @@ export function ShareProfileModal({
             <h3 className="text-base font-extrabold text-[#0A0A0A] truncate">
               {title}
             </h3>
-            <p className="text-xs text-[#73736A] truncate">
+            <p className="text-sm text-[#73736A] truncate">
               {subtitle || `Share verified ${role} profile & booking rate card`}
             </p>
           </div>
@@ -149,7 +149,7 @@ export function ShareProfileModal({
             <Input
               value={fullUrl}
               readOnly
-              className="rounded-xl h-11 text-xs font-medium bg-[#FAFAF8] border-[#E7E7E2]"
+              className="rounded-xl h-11 text-sm font-medium bg-[#FAFAF8] border-[#E7E7E2]"
             />
             <button
               type="button"
@@ -192,7 +192,7 @@ export function ShareProfileModal({
                   className={`flex flex-col items-center justify-center p-3 rounded-2xl transition-all ${opt.color} shadow-2xs group cursor-pointer`}
                 >
                   <Icon className="w-5 h-5 mb-1 group-hover:scale-110 transition-transform" />
-                  <span className="text-xs font-bold">{opt.name}</span>
+                  <span className="text-sm font-bold">{opt.name}</span>
                 </a>
               );
             })}
@@ -204,7 +204,7 @@ export function ShareProfileModal({
           <button
             type="button"
             onClick={() => setShowQr(!showQr)}
-            className="text-xs font-bold text-[#73736A] hover:text-[#0A0A0A] flex items-center gap-1.5 cursor-pointer"
+            className="text-sm font-bold text-[#73736A] hover:text-[#0A0A0A] flex items-center gap-1.5 cursor-pointer"
           >
             <QrCode className="w-4 h-4 text-[#FF2D78]" />
             <span>{showQr ? 'Hide QR Code' : 'Show Mobile QR Code'}</span>
@@ -234,7 +234,7 @@ export function ShareProfileModal({
                 className="w-full h-full object-contain"
               />
             </div>
-            <p className="text-[11px] text-[#73736A] font-medium">
+            <p className="text-sm text-[#73736A] font-medium">
               Scan with mobile phone camera to open rate card instantly.
             </p>
           </div>

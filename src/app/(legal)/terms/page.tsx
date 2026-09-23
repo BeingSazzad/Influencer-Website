@@ -81,7 +81,7 @@ export default function TermsPage() {
           Clear, balanced, and transparent terms governing creator hiring, 15% escrow protection, intellectual property usage, and milestone fulfillment.
         </p>
 
-        <div className="pt-2 flex flex-wrap items-center gap-2 text-xs text-[#73736A]">
+        <div className="pt-2 flex flex-wrap items-center gap-2 text-sm text-[#73736A]">
           <span className="font-semibold text-[#0A0A0A]">Last Modified:</span>
           <span>September 2026</span>
           <span>•</span>
@@ -102,11 +102,11 @@ export default function TermsPage() {
             }`}
           >
             <div className="flex items-center justify-between gap-4 mb-4">
-              <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">
+              <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                 {section.title}
               </h2>
               {section.badge && (
-                <span className="px-3 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] text-xs font-bold tracking-wide">
+                <span className="px-3 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] text-sm font-bold tracking-wide">
                   {section.badge}
                 </span>
               )}
@@ -124,10 +124,10 @@ export default function TermsPage() {
       {/* Support Box */}
       <div className="p-6 sm:p-8 rounded-3xl bg-white border border-[#E7E7E2] flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs">
         <div className="space-y-1 text-center sm:text-left">
-          <h3 className="text-base font-bold text-[#0A0A0A]">
+          <h3 className="text-2xl font-extrabold text-[#0A0A0A]">
             Have questions about our escrow or legal framework?
           </h3>
-          <p className="text-xs text-[#73736A]">
+          <p className="text-sm text-[#73736A]">
             Our compliance and trust team is available 24/7 to assist.
           </p>
         </div>

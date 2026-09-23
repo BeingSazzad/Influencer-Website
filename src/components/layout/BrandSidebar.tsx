@@ -140,10 +140,10 @@ export function BrandSidebar() {
               className="w-9 h-9 rounded-full object-cover border border-[#E7E7E2] shrink-0"
             />
             <div className="overflow-hidden min-w-0 flex-1">
-              <div className="text-xs font-bold text-[#0A0A0A] group-hover:text-zinc-600 transition-colors truncate">
+              <div className="text-sm font-bold text-[#0A0A0A] group-hover:text-zinc-600 transition-colors truncate">
                 {currentUser?.name || 'Elena Rostova'}
               </div>
-              <div className="text-[11px] text-[#73736A] font-medium truncate">
+              <div className="text-sm text-[#73736A] font-medium truncate">
                 {currentUser?.companyName || 'Aura Skincare Paris'}
               </div>
             </div>

@@ -75,7 +75,7 @@ export function ValuePropsSection() {
               </div>
 
               <div className="px-1 pt-5">
-                <h3 className="text-lg sm:text-xl font-black text-[#0A0A0A] tracking-tight">
+                <h3 className="text-lg sm:text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                   {prop.title}
                 </h3>
                 <p className="mt-1.5 text-sm text-[#73736A] font-medium leading-relaxed">

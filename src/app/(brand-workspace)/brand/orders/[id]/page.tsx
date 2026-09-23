@@ -134,11 +134,11 @@ export default function BrandOrderDetailPage() {
               />
               <div className="space-y-1">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h2 className="text-xl font-bold text-[#0A0A0A] tracking-tight">{order.creatorName}</h2>
+                  <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">{order.creatorName}</h2>
                   <VerifiedBadge size="sm" />
-                  <span className="text-xs text-[#73736A] font-medium">{order.creatorHandle}</span>
+                  <span className="text-sm text-[#73736A] font-medium">{order.creatorHandle}</span>
                 </div>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-xs text-[#0A0A0A]">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-sm text-[#0A0A0A]">
                   <span className="text-[#73736A]">Package:</span>
                   <span className="font-semibold text-[#0A0A0A]">{order.packageTitle}</span>
                   <span className="text-[#73736A]">({order.platform})</span>
@@ -148,7 +148,7 @@ export default function BrandOrderDetailPage() {
 
             <div className="flex items-center gap-3 self-start sm:self-auto bg-[#FAFAF8] px-5 py-3.5 rounded-2xl border border-[#E7E7E2]">
               <div className="text-left sm:text-right">
-                <div className="text-xs font-semibold text-[#73736A] uppercase tracking-wider">Total Funded in Escrow</div>
+                <div className="text-sm font-semibold text-[#73736A] uppercase tracking-wider">Total Funded in Escrow</div>
                 <div className="text-2xl sm:text-3xl font-extrabold text-[#0A0A0A] tracking-tight">€{order.totalEur.toLocaleString()}</div>
                 <div className="text-xs text-[#23744D] font-semibold">€{order.basePriceEur} creator + €{order.platformFeeEur} fee</div>
               </div>
@@ -158,11 +158,11 @@ export default function BrandOrderDetailPage() {
           {/* Escrow Progress Stepper */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 pt-6 border-t border-[#E7E7E2]">
             <div className="p-4 rounded-2xl bg-[#EEF7F2] border border-[#23744D]/25 space-y-1">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#23744D]">
+              <div className="flex items-center gap-2 text-sm font-bold text-[#23744D]">
                 <CheckCircle2 className="w-4 h-4 shrink-0" />
                 <span>1. Escrow Funded</span>
               </div>
-              <p className="text-xs text-[#555550]">€{order.totalEur} secured</p>
+              <p className="text-sm text-[#555550]">€{order.totalEur} secured</p>
             </div>
 
             <div
@@ -172,11 +172,11 @@ export default function BrandOrderDetailPage() {
                   : 'bg-[#FAF6E8] text-[#8C6819] border-[#F3ECCF]'
               }`}
             >
-              <div className="flex items-center gap-2 text-xs font-bold">
+              <div className="flex items-center gap-2 text-sm font-bold">
                 <CheckCircle2 className="w-4 h-4 shrink-0" />
                 <span>2. Offer Accepted</span>
               </div>
-              <p className="text-xs text-[#555550]">Creator working</p>
+              <p className="text-sm text-[#555550]">Creator working</p>
             </div>
 
             <div
@@ -186,11 +186,11 @@ export default function BrandOrderDetailPage() {
                   : 'bg-[#FAFAF8] text-[#73736A] border-[#E7E7E2]'
               }`}
             >
-              <div className="flex items-center gap-2 text-xs font-bold text-[#0A0A0A]">
+              <div className="flex items-center gap-2 text-sm font-bold text-[#0A0A0A]">
                 <Video className="w-4 h-4 shrink-0" />
                 <span>3. Assets Submitted</span>
               </div>
-              <p className="text-xs text-[#73736A]">{order.deliverables.length} files attached</p>
+              <p className="text-sm text-[#73736A]">{order.deliverables.length} files attached</p>
             </div>
 
             <div
@@ -200,11 +200,11 @@ export default function BrandOrderDetailPage() {
                   : 'bg-[#FAFAF8] text-[#73736A] border-[#E7E7E2]'
               }`}
             >
-              <div className="flex items-center gap-2 text-xs font-bold text-[#0A0A0A]">
+              <div className="flex items-center gap-2 text-sm font-bold text-[#0A0A0A]">
                 <ShieldCheck className="w-4 h-4 shrink-0" />
                 <span>4. Payment Released</span>
               </div>
-              <p className="text-xs text-[#73736A]">
+              <p className="text-sm text-[#73736A]">
                 {order.escrowReleased ? '100% Payout Disbursed' : 'Awaiting approval'}
               </p>
             </div>
@@ -219,10 +219,10 @@ export default function BrandOrderDetailPage() {
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-lg font-bold text-[#0A0A0A] tracking-tight">Creator Deliverables</h3>
+                  <h3 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Creator Deliverables</h3>
                   <p className="text-sm text-[#73736A] mt-0.5">Review submitted assets before releasing payment.</p>
                 </div>
-                <span className="px-3 py-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#0A0A0A] text-xs font-semibold">
+                <span className="px-3 py-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#0A0A0A] text-sm font-semibold">
                   {order.deliverables.length} Files
                 </span>
               </div>
@@ -239,7 +239,7 @@ export default function BrandOrderDetailPage() {
                           <Video className="w-4 h-4 text-[#FF2D78]" />
                           <span className="font-bold text-sm text-[#0A0A0A]">{deliv.title}</span>
                         </div>
-                        <span className="text-xs text-[#73736A] font-medium">{deliv.submittedAt}</span>
+                        <span className="text-sm text-[#73736A] font-medium">{deliv.submittedAt}</span>
                       </div>
 
                       {/* Video Player Preview or Image Preview */}
@@ -273,7 +273,7 @@ export default function BrandOrderDetailPage() {
                             href={deliv.fileUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-[#E7E7E2] text-xs font-bold text-[#0A0A0A] hover:border-[#0A0A0A] hover:text-[#FF2D78] transition-colors shadow-2xs"
+                            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-[#E7E7E2] text-sm font-bold text-[#0A0A0A] hover:border-[#0A0A0A] hover:text-[#FF2D78] transition-colors shadow-2xs"
                           >
                             <Link2 className="w-3.5 h-3.5 text-[#FF2D78]" />
                             <span>
@@ -342,13 +342,13 @@ export default function BrandOrderDetailPage() {
 
             {/* Campaign Brief Summary */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-5">
-              <h3 className="text-lg font-bold text-[#0A0A0A] tracking-tight">Campaign Brief & Scope</h3>
+              <h3 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Campaign Brief & Scope</h3>
               <p className="text-sm text-[#44443E] leading-relaxed bg-[#FAFAF8] p-5 rounded-2xl border border-[#E7E7E2]">
                 {order.brief}
               </p>
 
               <div className="pt-2">
-                <h4 className="text-xs font-semibold uppercase tracking-wider text-[#73736A] mb-3">
+                <h4 className="text-sm font-semibold uppercase tracking-wider text-[#73736A] mb-3">
                   Key Requirements
                 </h4>
                 <ul className="space-y-2.5">
@@ -391,7 +391,7 @@ export default function BrandOrderDetailPage() {
                       key={msg.id}
                       className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}
                     >
-                      <div className="flex items-center gap-1.5 mb-1 text-xs text-[#73736A]">
+                      <div className="flex items-center gap-1.5 mb-1 text-sm text-[#73736A]">
                         <span className="font-semibold text-[#0A0A0A]">{msg.senderName}</span>
                         <span>•</span>
                         <span>{msg.timestamp}</span>
@@ -436,7 +436,7 @@ export default function BrandOrderDetailPage() {
                   <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
                   <h3 className="font-bold text-sm text-[#0A0A0A]">Leave a Review</h3>
                 </div>
-                <p className="text-xs text-[#73736A]">
+                <p className="text-sm text-[#73736A]">
                   Rate {order.creatorName}&apos;s work to finalize the campaign.
                 </p>
 
@@ -477,7 +477,7 @@ export default function BrandOrderDetailPage() {
                 <p className="text-sm text-[#555550] italic bg-[#FAFAF8] p-4 rounded-2xl border border-[#E7E7E2] leading-relaxed">
                   &ldquo;{order.reviewSubmitted.comment}&rdquo;
                 </p>
-                <span className="text-xs text-[#73736A] block">
+                <span className="text-sm text-[#73736A] block">
                   Submitted {order.reviewSubmitted.date}
                 </span>
               </div>
@@ -496,7 +496,7 @@ export default function BrandOrderDetailPage() {
         okButtonProps={{ className: 'bg-[#0A0A0A] rounded-full' }}
       >
         <div className="space-y-3 pt-2">
-          <p className="text-xs text-[#73736A]">
+          <p className="text-sm text-[#73736A]">
             Please clearly describe the timestamps or specific adjustments required for the creator.
           </p>
           <Input.TextArea

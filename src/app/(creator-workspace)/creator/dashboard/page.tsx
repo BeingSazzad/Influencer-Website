@@ -86,13 +86,7 @@ export default function CreatorDashboardPage() {
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
               €28,400
             </div>
-            <Link
-              href="/creator/payments"
-              className="text-xs text-[#23744D] font-bold flex items-center gap-1 hover:underline"
-            >
-              <span>View Earnings &amp; Payouts</span>
-              <ArrowRight className="w-3 h-3" />
-            </Link>
+
           </div>
 
           {/* Locked in Escrow */}
@@ -108,9 +102,7 @@ export default function CreatorDashboardPage() {
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
               €{pendingInEscrowEur.toLocaleString()}
             </div>
-            <div className="text-xs text-[#73736A] font-medium">
-              {activeOrders.length} active order{activeOrders.length === 1 ? '' : 's'} funded
-            </div>
+
           </div>
 
           {/* Incoming Offers */}
@@ -126,13 +118,7 @@ export default function CreatorDashboardPage() {
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
               {incomingOffers.length}
             </div>
-            <Link
-              href="/creator/campaigns"
-              className="text-xs text-[#8C6819] font-bold flex items-center gap-1 hover:underline"
-            >
-              <span>{incomingOffers.length > 0 ? 'Review Proposals' : 'No new offers'}</span>
-              <ArrowRight className="w-3 h-3" />
-            </Link>
+
           </div>
 
           {/* Portfolio & Case Studies Summary */}
@@ -148,13 +134,7 @@ export default function CreatorDashboardPage() {
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
               {portfolioItems.length}
             </div>
-            <Link
-              href="/creator/portfolio"
-              className="text-xs text-[#FF2D78] font-bold flex items-center gap-1 hover:underline"
-            >
-              <span>Manage Portfolio</span>
-              <ArrowRight className="w-3 h-3" />
-            </Link>
+
           </div>
         </div>
 
@@ -172,7 +152,7 @@ export default function CreatorDashboardPage() {
                   </span>
                   <span className="text-xs text-zinc-300 font-medium">Response requested</span>
                 </div>
-                <h3 className="text-base sm:text-lg font-bold text-white mt-1">
+                <h3 className="text-2xl font-extrabold text-white mt-1">
                   {incomingOffers[0].brandName} sent a €{incomingOffers[0].basePriceEur} campaign proposal
                 </h3>
                 <p className="text-xs text-zinc-400 mt-0.5">
@@ -204,22 +184,20 @@ export default function CreatorDashboardPage() {
         {/* 12-Month Annual Performance & Brand Collabs Analytics */}
         <CreatorAnnualAnalytics />
 
-        {/* 2-Column Command Center: Fulfillment + Portfolio Showcase */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Left Column (7 cols): Active Fulfillment Pipeline */}
-          <div className="lg:col-span-7 bg-white rounded-3xl p-6 border border-[#E7E7E2] shadow-2xs space-y-5">
+        {/* Active Fulfillment Pipeline */}
+        <div className="bg-white rounded-3xl p-6 border border-[#E7E7E2] shadow-2xs space-y-5">
             <div className="flex items-center justify-between pb-3 border-b border-[#E7E7E2]">
               <div>
-                <h2 className="text-base sm:text-lg font-black text-[#0A0A0A] tracking-tight">
+                <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                   Active Production Deliverables
                 </h2>
-                <p className="text-xs text-[#73736A] mt-0.5 font-medium">
+                <p className="text-sm text-[#73736A] mt-0.5 font-medium">
                   {activeOrders.length} deliverable{activeOrders.length === 1 ? '' : 's'} currently in progress
                 </p>
               </div>
               <Link
                 href="/creator/campaigns"
-                className="text-xs font-bold text-[#0A0A0A] hover:text-zinc-600 flex items-center gap-1 transition-colors"
+                className="text-sm font-bold text-[#0A0A0A] hover:text-zinc-600 flex items-center gap-1 transition-colors"
               >
                 <span>Campaigns Center</span>
                 <ChevronRight className="w-4 h-4" />
@@ -244,25 +222,25 @@ export default function CreatorDashboardPage() {
                           <h4 className="font-extrabold text-sm text-[#0A0A0A] truncate">
                             {order.brandName}
                           </h4>
-                          <span className="text-[10px] uppercase font-bold px-2 py-0.2 rounded-full bg-[#EAEAE3] text-[#4A4A45]">
+                          <span className="text-xs uppercase font-bold px-2 py-0.2 rounded-full bg-[#EAEAE3] text-[#4A4A45]">
                             {order.platform}
                           </span>
                         </div>
-                        <p className="text-xs text-[#555550] truncate font-medium mt-0.5">
+                        <p className="text-sm text-[#555550] truncate font-medium mt-0.5">
                           {order.packageTitle}
                         </p>
-                        <div className="text-[11px] text-[#73736A] font-medium mt-0.5">
+                        <div className="text-sm text-[#73736A] font-medium mt-0.5">
                           Due: {order.deadlineDate} • €{order.basePriceEur} in escrow
                         </div>
                       </div>
                     </div>
 
                     <div className="shrink-0 flex items-center gap-2">
-                      <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#EEF7F2] text-[#23744D]">
+                      <span className="text-sm font-bold px-2.5 py-1 rounded-full bg-[#EEF7F2] text-[#23744D]">
                         {order.status === 'deliverable_submitted' ? 'In Review' : 'Producing'}
                       </span>
                       <Link href={`/creator/orders/${order.id}`}>
-                        <button className="h-8 px-3 rounded-full text-xs font-bold bg-[#0A0A0A] text-white hover:bg-zinc-800 transition-all cursor-pointer">
+                        <button className="h-8 px-3 rounded-full text-sm font-bold bg-[#0A0A0A] text-white hover:bg-zinc-800 transition-all cursor-pointer">
                           Upload
                         </button>
                       </Link>
@@ -276,87 +254,11 @@ export default function CreatorDashboardPage() {
                   <ShoppingBag className="w-5 h-5" />
                 </div>
                 <div className="text-sm font-bold text-[#0A0A0A]">No Active Production Orders</div>
-                <p className="text-xs text-[#73736A] max-w-sm mx-auto">
+                <p className="text-sm text-[#73736A] max-w-sm mx-auto">
                   Your pipeline is currently clear. Accepted brand proposals will appear here with upload portals.
                 </p>
               </div>
             )}
-          </div>
-
-          {/* Right Column (5 cols): Work Gallery & Case Studies Spotlight */}
-          <div className="lg:col-span-5 bg-white rounded-3xl p-6 border border-[#E7E7E2] shadow-2xs flex flex-col justify-between space-y-5">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-[#E7E7E2]">
-                <div>
-                  <h2 className="text-base sm:text-lg font-black text-[#0A0A0A] tracking-tight">
-                    Work Gallery
-                  </h2>
-                  <p className="text-xs text-[#73736A] mt-0.5 font-medium">
-                    Verified case studies on public profile
-                  </p>
-                </div>
-                <Link
-                  href="/creator/portfolio"
-                  className="text-xs font-bold text-[#FF2D78] hover:underline flex items-center gap-1"
-                >
-                  <span>Edit All</span>
-                  <ArrowRight className="w-3 h-3" />
-                </Link>
-              </div>
-
-              {/* Mini-gallery showcase */}
-              <div className="grid grid-cols-3 gap-2.5">
-                {portfolioItems.slice(0, 3).map((item) => (
-                  <Link
-                    key={item.id}
-                    href="/creator/portfolio"
-                    className="group relative rounded-2xl overflow-hidden border border-[#E7E7E2] bg-[#0A0A0A] aspect-4/5 block"
-                  >
-                    <img
-                      src={item.mediaUrl}
-                      alt={item.brandName}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-2 flex flex-col justify-between">
-                      <span className="text-[9px] font-black uppercase text-white px-1.5 py-0.5 rounded bg-black/60 self-start">
-                        {item.platform}
-                      </span>
-                      <div>
-                        <div className="text-[11px] font-extrabold text-white truncate">
-                          {item.brandName}
-                        </div>
-                        <div className="text-[10px] text-[#23744D] font-bold bg-[#EEF7F2]/90 px-1 rounded inline-block">
-                          {item.views}
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Quick Portfolio Action Buttons */}
-            <div className="pt-4 border-t border-[#E7E7E2] flex items-center gap-2.5">
-              <Link href="/creator/portfolio" className="flex-1">
-                <Button
-                  type="primary"
-                  className="w-full h-10 rounded-full font-bold text-xs bg-[#0A0A0A] hover:!bg-zinc-800 !text-white border-none flex items-center justify-center gap-1.5"
-                >
-                  <Film className="w-3.5 h-3.5" />
-                  <span>Manage Case Studies</span>
-                </Button>
-              </Link>
-
-              <Link href="/creator/profile">
-                <Button
-                  type="default"
-                  className="h-10 px-4 rounded-full font-bold text-xs border-[#D2D2CA] text-[#0A0A0A]"
-                >
-                  Edit Profile
-                </Button>
-              </Link>
-            </div>
-          </div>
         </div>
 
         {/* Quick Utility Shortcuts */}
@@ -369,8 +271,8 @@ export default function CreatorDashboardPage() {
               <Package className="w-4 h-4" />
             </div>
             <div>
-              <div className="text-xs font-bold text-[#0A0A0A]">Rate Card</div>
-              <div className="text-[11px] text-[#73736A]">Packages & pricing</div>
+              <div className="text-sm font-bold text-[#0A0A0A]">Rate Card</div>
+              <div className="text-sm text-[#73736A]">Packages & pricing</div>
             </div>
           </Link>
 
@@ -382,8 +284,8 @@ export default function CreatorDashboardPage() {
               <Film className="w-4 h-4" />
             </div>
             <div>
-              <div className="text-xs font-bold text-[#0A0A0A]">Portfolio Studio</div>
-              <div className="text-[11px] text-[#73736A]">Case studies & metrics</div>
+              <div className="text-sm font-bold text-[#0A0A0A]">Portfolio Studio</div>
+              <div className="text-sm text-[#73736A]">Case studies & metrics</div>
             </div>
           </Link>
 
@@ -395,8 +297,8 @@ export default function CreatorDashboardPage() {
               <CreditCard className="w-4 h-4" />
             </div>
             <div>
-              <div className="text-xs font-bold text-[#0A0A0A]">Payouts</div>
-              <div className="text-[11px] text-[#73736A]">Escrow ledger</div>
+              <div className="text-sm font-bold text-[#0A0A0A]">Payouts</div>
+              <div className="text-sm text-[#73736A]">Escrow ledger</div>
             </div>
           </Link>
 
@@ -408,8 +310,8 @@ export default function CreatorDashboardPage() {
               <MessageSquare className="w-4 h-4" />
             </div>
             <div>
-              <div className="text-xs font-bold text-[#0A0A0A]">Inquiries</div>
-              <div className="text-[11px] text-[#73736A]">Brand direct chat</div>
+              <div className="text-sm font-bold text-[#0A0A0A]">Inquiries</div>
+              <div className="text-sm text-[#73736A]">Brand direct chat</div>
             </div>
           </Link>
         </div>

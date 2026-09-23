@@ -29,13 +29,13 @@ export default function NotFound() {
           <div className="flex items-center gap-3">
             <Link
               href="/"
-              className="px-4 py-2 rounded-full text-xs font-bold text-[#555550] hover:text-[#0A0A0A] hover:bg-[#F4F4F0] transition-all"
+              className="px-4 py-2 rounded-full text-sm font-bold text-[#555550] hover:text-[#0A0A0A] hover:bg-[#F4F4F0] transition-all"
             >
               Browse Marketplace
             </Link>
             <Link
               href="/login"
-              className="px-4 py-2 rounded-full bg-[#0A0A0A] hover:bg-[#FF2D78] text-white text-xs font-bold transition-all"
+              className="px-4 py-2 rounded-full bg-[#0A0A0A] hover:bg-[#FF2D78] text-white text-sm font-bold transition-all"
             >
               Sign In
             </Link>
@@ -56,7 +56,7 @@ export default function NotFound() {
           <span className="text-8xl sm:text-9xl font-black tracking-tighter text-[#0A0A0A] select-none opacity-95">
             404
           </span>
-          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-[#FF2D78] text-white text-[11px] font-black uppercase tracking-widest shadow-md">
+          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-[#FF2D78] text-white text-xs font-black uppercase tracking-widest shadow-md">
             Lost in Space
           </div>
         </div>
@@ -100,7 +100,7 @@ export default function NotFound() {
             <h3 className="font-bold text-sm text-[#0A0A0A] mb-1 group-hover:text-[#FF2D78] transition-colors">
               Creator Catalog
             </h3>
-            <p className="text-xs text-[#73736A] leading-relaxed">
+            <p className="text-sm text-[#73736A] leading-relaxed">
               Explore 500+ vetted UGC, TikTok, & Instagram content creators.
             </p>
           </Link>
@@ -115,7 +115,7 @@ export default function NotFound() {
             <h3 className="font-bold text-sm text-[#0A0A0A] mb-1 group-hover:text-[#23744D] transition-colors">
               Escrow Protection
             </h3>
-            <p className="text-xs text-[#73736A] leading-relaxed">
+            <p className="text-sm text-[#73736A] leading-relaxed">
               Milestone funding with 100% guarantee on approved deliverables.
             </p>
           </Link>
@@ -130,7 +130,7 @@ export default function NotFound() {
             <h3 className="font-bold text-sm text-[#0A0A0A] mb-1 group-hover:text-[#6444A6] transition-colors">
               Marketplace Help
             </h3>
-            <p className="text-xs text-[#73736A] leading-relaxed">
+            <p className="text-sm text-[#73736A] leading-relaxed">
               Read answers about booking, briefs, usage rights, and payouts.
             </p>
           </Link>
@@ -138,7 +138,7 @@ export default function NotFound() {
       </main>
 
       {/* Clean Footer */}
-      <footer className="w-full border-t border-[#E7E7E2] py-6 px-6 text-center text-xs text-[#73736A]">
+      <footer className="w-full border-t border-[#E7E7E2] py-6 px-6 text-center text-sm text-[#73736A]">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
           <span>© {new Date().getFullYear()} Influverse Ltd. All rights reserved.</span>
           <div className="flex items-center gap-4">

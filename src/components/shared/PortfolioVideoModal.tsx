@@ -160,7 +160,7 @@ export function PortfolioVideoModal({
 
             {/* Sound Track Pill */}
             {item.soundTrack && (
-              <div className="absolute bottom-16 left-4 right-4 z-20 flex items-center gap-2 text-white/90 text-xs font-medium bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 truncate">
+              <div className="absolute bottom-16 left-4 right-4 z-20 flex items-center gap-2 text-white/90 text-sm font-medium bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 truncate">
                 <Music2 className="w-3.5 h-3.5 text-amber-300 shrink-0" />
                 <span className="truncate">{item.soundTrack}</span>
               </div>
@@ -177,7 +177,7 @@ export function PortfolioVideoModal({
               </div>
 
               {/* Controls row */}
-              <div className="flex items-center justify-between text-white text-xs font-bold pt-1">
+              <div className="flex items-center justify-between text-white text-sm font-bold pt-1">
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => setIsPlaying(!isPlaying)}
@@ -213,7 +213,7 @@ export function PortfolioVideoModal({
           <div className="space-y-6">
             {/* Header: Brand + Verified Campaign */}
             <div>
-              <div className="flex items-center gap-2 text-xs font-bold text-emerald-700 bg-[#EEF7F2] border border-[#23744D]/20 px-3 py-1 rounded-full w-fit mb-3">
+              <div className="flex items-center gap-2 text-sm font-bold text-emerald-700 bg-[#EEF7F2] border border-[#23744D]/20 px-3 py-1 rounded-full w-fit mb-3">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
                 <span>Verified Brand Campaign • 100% Escrow Cleared</span>
               </div>
@@ -233,7 +233,7 @@ export function PortfolioVideoModal({
                     <span className="text-xs font-bold uppercase tracking-wider text-[#73736A] block">
                       PACKAGE VALUE
                     </span>
-                    <strong className="text-xl font-black text-[#0A0A0A] font-sans tracking-tight">
+                    <strong className="text-2xl font-extrabold text-[#0A0A0A] font-sans tracking-tight">
                       €{item.packagePriceEur.toLocaleString()}
                     </strong>
                   </div>
@@ -249,9 +249,9 @@ export function PortfolioVideoModal({
                   <div className="w-6 h-6 rounded-lg bg-[#EEF7F2] text-[#23744D] flex items-center justify-center shrink-0">
                     <Eye className="w-3.5 h-3.5" />
                   </div>
-                  <span className="text-xs font-bold text-[#73736A] truncate">Views</span>
+                  <span className="text-sm font-bold text-[#73736A] truncate">Views</span>
                 </div>
-                <div className="text-base sm:text-lg font-black text-[#0A0A0A] tracking-tight">
+                <div className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                   {item.views || '350K+'}
                 </div>
               </div>
@@ -262,9 +262,9 @@ export function PortfolioVideoModal({
                   <div className="w-6 h-6 rounded-lg bg-[#FFF0F5] text-[#FF2D78] flex items-center justify-center shrink-0">
                     <Heart className="w-3.5 h-3.5 fill-[#FF2D78]/20 text-[#FF2D78]" />
                   </div>
-                  <span className="text-xs font-bold text-[#73736A] truncate">Likes</span>
+                  <span className="text-sm font-bold text-[#73736A] truncate">Likes</span>
                 </div>
-                <div className="text-base sm:text-lg font-black text-[#0A0A0A] tracking-tight">
+                <div className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                   {item.likes || '28K'}
                 </div>
               </div>
@@ -275,9 +275,9 @@ export function PortfolioVideoModal({
                   <div className="w-6 h-6 rounded-lg bg-[#F1EEF9] text-[#6444A6] flex items-center justify-center shrink-0">
                     <MessageCircle className="w-3.5 h-3.5" />
                   </div>
-                  <span className="text-xs font-bold text-[#73736A] truncate">Comments</span>
+                  <span className="text-sm font-bold text-[#73736A] truncate">Comments</span>
                 </div>
-                <div className="text-base sm:text-lg font-black text-[#0A0A0A] tracking-tight">
+                <div className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                   {item.comments || '1,200'}
                 </div>
               </div>
@@ -288,9 +288,9 @@ export function PortfolioVideoModal({
                   <div className="w-6 h-6 rounded-lg bg-[#FAF6E8] text-[#8C6819] flex items-center justify-center shrink-0">
                     <TrendingUp className="w-3.5 h-3.5" />
                   </div>
-                  <span className="text-xs font-bold text-[#73736A] truncate">Engagement</span>
+                  <span className="text-sm font-bold text-[#73736A] truncate">Engagement</span>
                 </div>
-                <div className="text-base sm:text-lg font-black text-[#0A0A0A] tracking-tight">
+                <div className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                   {item.engagementRate || '8.5%'}
                 </div>
               </div>
@@ -343,7 +343,7 @@ export function PortfolioVideoModal({
                   <span className="font-extrabold text-sm text-[#0A0A0A]">{creator.name}</span>
                   <VerifiedBadge size="xs" />
                 </div>
-                <span className="text-xs text-[#73736A] font-medium">{creator.handle}</span>
+                <span className="text-sm text-[#73736A] font-medium">{creator.handle}</span>
               </div>
             </div>
 

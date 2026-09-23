@@ -43,7 +43,7 @@ export function Navbar() {
           <div className="font-bold text-[#0A0A0A] text-xs truncate">
             {currentUser?.companyName || currentUser?.name}
           </div>
-          <div className="text-[11px] text-[#73736A] truncate mt-0.5">
+          <div className="text-sm text-[#73736A] truncate mt-0.5">
             {currentUser?.email}
           </div>
         </div>
@@ -52,7 +52,7 @@ export function Navbar() {
     {
       key: 'dashboard',
       label: (
-        <div className="flex items-center gap-2 py-1 font-sans text-xs font-bold text-[#0A0A0A]">
+        <div className="flex items-center gap-2 py-1 font-sans text-sm font-bold text-[#0A0A0A]">
           <LayoutDashboard className="w-3.5 h-3.5 text-[#0A0A0A]" />
           <span>{activeRole === 'brand' ? 'Brand Workspace' : 'Creator Workspace'}</span>
         </div>
@@ -66,7 +66,7 @@ export function Navbar() {
           {
             key: 'profile',
             label: (
-              <div className="flex items-center gap-2 py-1 font-sans text-xs font-bold text-[#0A0A0A]">
+              <div className="flex items-center gap-2 py-1 font-sans text-sm font-bold text-[#0A0A0A]">
                 <User className="w-3.5 h-3.5 text-[#73736A]" />
                 <span>Public Profile</span>
               </div>
@@ -78,7 +78,7 @@ export function Navbar() {
           {
             key: 'settings',
             label: (
-              <div className="flex items-center gap-2 py-1 font-sans text-xs font-bold text-[#0A0A0A]">
+              <div className="flex items-center gap-2 py-1 font-sans text-sm font-bold text-[#0A0A0A]">
                 <Settings className="w-3.5 h-3.5 text-[#73736A]" />
                 <span>Account Settings</span>
               </div>
@@ -92,7 +92,7 @@ export function Navbar() {
           {
             key: 'settings',
             label: (
-              <div className="flex items-center gap-2 py-1 font-sans text-xs font-bold text-[#0A0A0A]">
+              <div className="flex items-center gap-2 py-1 font-sans text-sm font-bold text-[#0A0A0A]">
                 <Settings className="w-3.5 h-3.5 text-[#73736A]" />
                 <span>Brand Settings</span>
               </div>
@@ -108,7 +108,7 @@ export function Navbar() {
     {
       key: 'logout',
       label: (
-        <div className="flex items-center gap-2 py-1 font-sans text-xs font-bold text-rose-600">
+        <div className="flex items-center gap-2 py-1 font-sans text-sm font-bold text-rose-600">
           <LogOut className="w-3.5 h-3.5 text-rose-600" />
           <span>Sign Out</span>
         </div>
@@ -164,7 +164,7 @@ export function Navbar() {
                     className="w-7 h-7 rounded-full object-cover border border-[#E7E7E2]"
                   />
                   <div className="flex flex-col text-left">
-                    <span className="text-xs font-bold text-[#0A0A0A] truncate max-w-[120px]">
+                    <span className="text-sm font-bold text-[#0A0A0A] truncate max-w-[120px]">
                       {currentUser.companyName || currentUser.name.split(' ')[0]}
                     </span>
                   </div>
@@ -215,7 +215,7 @@ export function Navbar() {
                 />
                 <div className="min-w-0 flex-1">
                   <div className="font-extrabold text-sm text-[#0A0A0A] truncate">{currentUser.name}</div>
-                  <div className="text-xs text-[#73736A] capitalize">{activeRole} Account</div>
+                  <div className="text-sm text-[#73736A] capitalize">{activeRole} Account</div>
                 </div>
               </div>
 

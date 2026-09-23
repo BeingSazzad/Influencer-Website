@@ -120,7 +120,7 @@ export default function BrandCampaignsPage() {
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
               {inProduction.length} Active
             </div>
-            <div className="text-xs text-[#73736A]">€{Math.round(inEscrowEur).toLocaleString()} currently locked</div>
+            <div className="text-sm text-[#73736A]">€{Math.round(inEscrowEur).toLocaleString()} currently locked</div>
           </div>
 
           <div className="bg-white p-5 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1">
@@ -142,7 +142,7 @@ export default function BrandCampaignsPage() {
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
               {completed.length}
             </div>
-            <div className="text-xs text-[#73736A]">Assets approved & released</div>
+            <div className="text-sm text-[#73736A]">Assets approved & released</div>
           </div>
         </div>
 
@@ -168,7 +168,7 @@ export default function BrandCampaignsPage() {
               >
                 <span>{tab.label}</span>
                 <span
-                  className={`text-[11px] px-1.5 py-0.2 rounded-full font-extrabold ${
+                  className={`text-xs px-1.5 py-0.2 rounded-full font-extrabold ${
                     activeFilter === tab.key ? 'bg-white/20 text-white' : 'bg-[#EAEAE3] text-[#0A0A0A]'
                   }`}
                 >
@@ -185,7 +185,7 @@ export default function BrandCampaignsPage() {
               placeholder="Search creator or package..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="rounded-2xl h-10 text-xs font-semibold"
+              className="rounded-2xl h-10 text-sm font-semibold"
               allowClear
             />
           </div>
@@ -194,10 +194,10 @@ export default function BrandCampaignsPage() {
         {/* Campaigns List Container */}
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-4">
           <div className="pb-3 border-b border-[#E7E7E2] flex items-center justify-between">
-            <h2 className="text-lg font-black text-[#0A0A0A] tracking-tight">
+            <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
               Campaigns
             </h2>
-            <span className="text-xs text-[#73736A] font-medium">
+            <span className="text-sm text-[#73736A] font-medium">
               Funds held securely in Stripe/Wise Escrow until deliverable approval
             </span>
           </div>
@@ -247,10 +247,10 @@ export default function BrandCampaignsPage() {
                             {order.creatorName}
                           </h3>
                           <VerifiedBadge size="xs" />
-                          <span className="text-xs text-[#73736A] font-medium leading-none">
+                          <span className="text-sm text-[#73736A] font-medium leading-none">
                             {order.creatorHandle.startsWith('@') ? order.creatorHandle : `@${order.creatorHandle}`}
                           </span>
-                          <span className="text-[10px] uppercase tracking-wider font-extrabold px-2.5 py-0.5 rounded-full bg-[#EAEAE3] text-[#4A4A45] leading-none ml-1">
+                          <span className="text-xs uppercase tracking-wider font-extrabold px-2.5 py-0.5 rounded-full bg-[#EAEAE3] text-[#4A4A45] leading-none ml-1">
                             {order.platform}
                           </span>
                         </div>
@@ -260,7 +260,7 @@ export default function BrandCampaignsPage() {
                         </div>
 
                         {/* Financial & Deadline Telemetry */}
-                        <div className="flex items-center gap-2 text-xs text-[#73736A] font-medium pt-0.5">
+                        <div className="flex items-center gap-2 text-sm text-[#73736A] font-medium pt-0.5">
                           <span className="font-extrabold text-[#0A0A0A] text-sm">
                             €{order.totalEur.toLocaleString()}
                           </span>
@@ -275,7 +275,7 @@ export default function BrandCampaignsPage() {
                     {/* Status & Direct Action Buttons */}
                     <div className="flex items-center gap-3 self-end md:self-auto shrink-0 mt-2 md:mt-0">
                       <span
-                        className={`text-xs font-bold px-3 py-1.5 rounded-full leading-none inline-flex items-center ${
+                        className={`text-sm font-bold px-3 py-1.5 rounded-full leading-none inline-flex items-center ${
                           statusColors[order.status] || 'bg-[#F4F4F0] text-[#0A0A0A]'
                         }`}
                       >

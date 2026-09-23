@@ -324,7 +324,7 @@ export default function CreatorProfilePage() {
                   {creator.tags.map((tag, idx) => (
                     <span
                       key={tag}
-                      className={`text-xs font-bold px-3.5 py-1.5 rounded-full ${
+                      className={`text-sm font-bold px-3.5 py-1.5 rounded-full ${
                         idx === 0
                           ? 'bg-[#FDF0ED] text-[#C75D47]'
                           : idx === 1
@@ -345,7 +345,7 @@ export default function CreatorProfilePage() {
 
             {/* Right: Social Platform Counts & Action Buttons */}
             <div className="w-full lg:w-80 xl:w-[340px] shrink-0 flex flex-col gap-4 pt-4 lg:pt-0 lg:border-l border-[#E7E7E2] lg:pl-8">
-              <span className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Social Reach</span>
+              <span className="text-sm font-bold text-[#73736A] uppercase tracking-wider">Social Reach</span>
 
               {/* Follower Stats Columns */}
               <div className="grid grid-cols-3 gap-2 sm:gap-2.5 text-center">
@@ -357,7 +357,7 @@ export default function CreatorProfilePage() {
                     <div className="text-sm font-black text-[#0A0A0A]">
                       {creator.platforms.instagram.followersFormatted}
                     </div>
-                    <div className="text-[11px] sm:text-xs font-bold text-[#73736A] tracking-tight">Followers</div>
+                    <div className="text-xs sm:text-sm font-bold text-[#73736A] tracking-tight">Followers</div>
                   </div>
                 )}
 
@@ -371,7 +371,7 @@ export default function CreatorProfilePage() {
                     <div className="text-sm font-black text-[#0A0A0A]">
                       {creator.platforms.tiktok.followersFormatted}
                     </div>
-                    <div className="text-[11px] sm:text-xs font-bold text-[#73736A] tracking-tight">Followers</div>
+                    <div className="text-xs sm:text-sm font-bold text-[#73736A] tracking-tight">Followers</div>
                   </div>
                 )}
 
@@ -383,7 +383,7 @@ export default function CreatorProfilePage() {
                     <div className="text-sm font-black text-[#0A0A0A]">
                       {creator.platforms.youtube.followersFormatted}
                     </div>
-                    <div className="text-[11px] sm:text-xs font-bold text-[#73736A] tracking-tight">Subscribers</div>
+                    <div className="text-xs sm:text-sm font-bold text-[#73736A] tracking-tight">Subscribers</div>
                   </div>
                 )}
               </div>
@@ -473,7 +473,7 @@ export default function CreatorProfilePage() {
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">
+                  <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                     Collaboration Deals &amp; Rates
                   </h2>
                   <p className="text-sm text-[#73736A] mt-1 font-medium">
@@ -522,7 +522,7 @@ export default function CreatorProfilePage() {
                     <Sparkles className="w-5 h-5 text-amber-400" />
                   </div>
                   <div>
-                    <h4 className="text-sm sm:text-base font-black text-[#0A0A0A]">Need a custom campaign or multi-channel rollout?</h4>
+                    <h4 className="text-sm sm:text-2xl font-extrabold text-[#0A0A0A]">Need a custom campaign or multi-channel rollout?</h4>
                     <p className="text-xs sm:text-sm text-[#73736A] mt-0.5">Send a tailored brief with your budget, required deliverables, and licensing timeline.</p>
                   </div>
                 </div>
@@ -540,7 +540,7 @@ export default function CreatorProfilePage() {
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">Featured Portfolio</h2>
+                  <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Featured Portfolio</h2>
                   <p className="text-sm text-[#73736A] mt-1 font-medium">
                     Verified brand collaborations and creative content samples.
                   </p>
@@ -598,7 +598,7 @@ export default function CreatorProfilePage() {
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">
+                  <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                     Gallery
                   </h2>
                   <p className="text-sm text-[#73736A] mt-1 font-medium">
@@ -638,88 +638,14 @@ export default function CreatorProfilePage() {
                   </div>
                 ))}
               </div>
-            </div>
-
-            {/* Audience Demographics Preview */}
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">Audience Intelligence</h2>
-                  <p className="text-sm text-[#73736A] mt-1 font-medium">
-                    First-party authenticated analytics via Instagram Graph API & TikTok Creator Portal.
-                  </p>
-                </div>
-                <button
-                  onClick={() => setActiveTab('audience')}
-                  className="text-sm font-bold text-[#0A0A0A] hover:text-[#FF2D78] flex items-center gap-1.5 cursor-pointer transition-colors"
-                >
-                  <span>Detailed Analytics</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Top Countries */}
-                <div className="p-5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-3">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Top Geographies</h3>
-                  {creator.audience.topCountries.map((c) => (
-                    <div key={c.country} className="space-y-1">
-                      <div className="flex justify-between text-sm font-bold text-[#0A0A0A]">
-                        <span>{c.country}</span>
-                        <span>{c.percentage}%</span>
-                      </div>
-                      <div className="w-full h-2 bg-[#E7E7E2] rounded-full overflow-hidden">
-                        <div className="h-full bg-[#0A0A0A] rounded-full" style={{ width: `${c.percentage}%` }} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Gender Split */}
-                <div className="p-5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-3">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Gender Distribution</h3>
-                  <div className="flex items-center justify-between text-sm font-bold text-[#0A0A0A]">
-                    <span>Female ({creator.audience.genderSplit.female}%)</span>
-                    <span>Male ({creator.audience.genderSplit.male}%)</span>
-                  </div>
-                  <div className="w-full h-3 bg-[#E7E7E2] rounded-full flex overflow-hidden">
-                    <div
-                      className="h-full bg-[#0F766E]"
-                      style={{ width: `${creator.audience.genderSplit.female}%` }}
-                    />
-                    <div
-                      className="h-full bg-[#7C3AED]"
-                      style={{ width: `${creator.audience.genderSplit.male}%` }}
-                    />
-                  </div>
-                  <div className="flex justify-between text-xs text-[#73736A] pt-1 font-bold">
-                    <span className="flex items-center gap-1">
-                      <span className="w-2 h-2 rounded-full bg-[#0F766E]" /> Female
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <span className="w-2 h-2 rounded-full bg-[#7C3AED]" /> Male
-                    </span>
-                  </div>
-                </div>
-
-                {/* Age Bracket */}
-                <div className="p-5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-3">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Core Demographic</h3>
-                  <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A] pt-1">
-                    {creator.audience.topAgeGroup}
-                  </div>
-                  <p className="text-sm text-[#73736A] font-medium leading-relaxed">
-                    Prime working-age demographic with high purchasing power and high digital engagement.
-                  </p>
-                </div>
-              </div>
-            </div>
+    
+          </div>
 
             {/* Verified Brand Reviews Preview */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">Client Reviews & Testimonials</h2>
+                  <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Client Reviews & Testimonials</h2>
                   <p className="text-sm text-[#73736A] mt-1 font-medium">
                     Verified ratings from completed brand escrow contracts.
                   </p>
@@ -742,7 +668,7 @@ export default function CreatorProfilePage() {
                           <BrandLogo name={rev.brandName} logoUrl={rev.brandLogo} size="md" />
                           <div className="min-w-0">
                             <div className="font-bold text-sm text-[#0A0A0A] truncate">{rev.brandName}</div>
-                            <div className="text-xs text-[#73736A] truncate">{rev.campaignName} • {rev.date}</div>
+                            <div className="text-sm text-[#73736A] truncate">{rev.campaignName} • {rev.date}</div>
                           </div>
                         </div>
                         <div className="flex text-amber-500 shrink-0">
@@ -756,7 +682,7 @@ export default function CreatorProfilePage() {
                       </p>
                     </div>
 
-                    <div className="pt-2 border-t border-[#E7E7E2]/60 flex items-center justify-between text-xs text-[#73736A]">
+                    <div className="pt-2 border-t border-[#E7E7E2]/60 flex items-center justify-between text-sm text-[#73736A]">
                       <span className="font-bold text-[#23744D] flex items-center gap-1">
                         <ShieldCheck className="w-3.5 h-3.5" />
                         <span>Escrow Verified</span>
@@ -767,42 +693,6 @@ export default function CreatorProfilePage() {
               </div>
             </div>
 
-            {/* Trust and Escrow Protection Banner */}
-            <div className="p-6 sm:p-8 rounded-3xl bg-[#0A0A0A] text-white space-y-6">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-400">
-                <ShieldCheck className="w-4 h-4" />
-                <span>Influverse Escrow & Quality Guarantee</span>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <div className="space-y-1.5">
-                  <div className="flex items-center gap-2 font-black text-base text-white">
-                    <Lock className="w-4 h-4 text-[#FF2D78]" />
-                    <span>100% Escrow Protection</span>
-                  </div>
-                  <p className="text-sm text-[#A3A39C] leading-relaxed">
-                    Your funds are held securely until you review and approve the submitted content deliverables.
-                  </p>
-                </div>
-                <div className="space-y-1.5">
-                  <div className="flex items-center gap-2 font-black text-base text-white">
-                    <Clock className="w-4 h-4 text-[#23744D]" />
-                    <span>Guaranteed Turnaround</span>
-                  </div>
-                  <p className="text-sm text-[#A3A39C] leading-relaxed">
-                    On-time delivery SLA enforced. Standard delivery within 3-5 business days with rush options.
-                  </p>
-                </div>
-                <div className="space-y-1.5">
-                  <div className="flex items-center gap-2 font-black text-base text-white">
-                    <Award className="w-4 h-4 text-amber-400" />
-                    <span>Commercial Rights Cleared</span>
-                  </div>
-                  <p className="text-sm text-[#A3A39C] leading-relaxed">
-                    Full advertising rights, organic whitelisting, and usage terms clearly defined in every contract.
-                  </p>
-                </div>
-              </div>
-            </div>
           </div>
         )}
 
@@ -811,7 +701,7 @@ export default function CreatorProfilePage() {
           <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] space-y-8">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#E7E7E2]/60">
               <div>
-                <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A]">All Collaboration Deals</h2>
+                <h2 className="text-2xl font-extrabold text-[#0A0A0A]">All Collaboration Deals</h2>
                 <p className="text-xs sm:text-sm text-[#73736A] mt-1 font-medium">
                   Transparent fixed EUR pricing with escrow protection and clear turnaround times.
                 </p>
@@ -841,7 +731,7 @@ export default function CreatorProfilePage() {
           <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] space-y-6">
             <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
               <div>
-                <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A]">
+                <h2 className="text-2xl font-extrabold text-[#0A0A0A]">
                   Work Gallery & Case Studies
                 </h2>
                 <p className="text-sm text-[#73736A] mt-1 font-medium max-w-xl">
@@ -887,7 +777,7 @@ export default function CreatorProfilePage() {
                   >
                     <span>{tab.label}</span>
                     <span
-                      className={`text-[11px] px-1.5 py-0.2 rounded-full font-extrabold ${
+                      className={`text-xs px-1.5 py-0.2 rounded-full font-extrabold ${
                         portfolioFilter === tab.key
                           ? 'bg-white/20 text-white'
                           : 'bg-[#EAEAE3] text-[#0A0A0A]'
@@ -958,14 +848,14 @@ export default function CreatorProfilePage() {
                         </p>
 
                         {item.deliverableType && (
-                          <p className="text-xs text-[#73736A] font-medium line-clamp-1">
+                          <p className="text-sm text-[#73736A] font-medium line-clamp-1">
                             {item.deliverableType}
                           </p>
                         )}
                       </div>
 
                       {/* Footer Metrics & Verified Label */}
-                      <div className="pt-3 border-t border-[#E7E7E2] flex items-center justify-between text-xs font-bold text-[#73736A]">
+                      <div className="pt-3 border-t border-[#E7E7E2] flex items-center justify-between text-sm font-bold text-[#73736A]">
                         <div className="flex items-center gap-3">
                           <span className="flex items-center gap-1 text-[#0A0A0A]">
                             <Heart className="w-3.5 h-3.5 text-[#FF2D78]" />
@@ -1009,7 +899,7 @@ export default function CreatorProfilePage() {
         {activeTab === 'photos' && (
           <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] space-y-8">
             <div className="pb-6 border-b border-[#E7E7E2]">
-              <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A]">
+              <h2 className="text-2xl font-extrabold text-[#0A0A0A]">
                 Gallery
               </h2>
               <p className="text-sm text-[#73736A] mt-1 font-medium">
@@ -1050,7 +940,7 @@ export default function CreatorProfilePage() {
         {activeTab === 'audience' && (
           <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] space-y-8">
             <div>
-              <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A]">Verified Audience Demographics</h2>
+              <h2 className="text-2xl font-extrabold text-[#0A0A0A]">Verified Audience Demographics</h2>
               <p className="text-sm text-[#73736A] mt-1 font-medium">
                 First-party authenticated analytics via Instagram Graph API & TikTok Creator Portal.
               </p>
@@ -1090,7 +980,7 @@ export default function CreatorProfilePage() {
                     style={{ width: `${creator.audience.genderSplit.male}%` }}
                   />
                 </div>
-                <div className="flex justify-between text-xs text-[#73736A] pt-1 font-bold">
+                <div className="flex justify-between text-sm text-[#73736A] pt-1 font-bold">
                   <span className="flex items-center gap-1">
                     <span className="w-2 h-2 rounded-full bg-[#0F766E]" /> Female
                   </span>
@@ -1136,7 +1026,7 @@ export default function CreatorProfilePage() {
               <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-sm">
                 <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                   <div>
-                    <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">
+                    <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                       Brand Reviews & Verified Ratings
                     </h2>
                     <p className="text-sm text-[#73736A] mt-1 font-medium">
@@ -1155,7 +1045,7 @@ export default function CreatorProfilePage() {
                             <Star key={i} className="w-4 h-4 fill-amber-500" />
                           ))}
                         </div>
-                        <div className="text-xs font-bold text-[#73736A] mt-0.5">
+                        <div className="text-sm font-bold text-[#73736A] mt-0.5">
                           {creator.reviewsCount || 42} verified reviews
                         </div>
                       </div>
@@ -1175,7 +1065,7 @@ export default function CreatorProfilePage() {
                         setReviewFilter('all');
                         setReviewPage(1);
                       }}
-                      className={`h-9 px-4 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                      className={`h-9 px-4 rounded-full text-sm font-bold transition-all cursor-pointer ${
                         reviewFilter === 'all'
                           ? 'bg-[#0A0A0A] text-white shadow-xs'
                           : 'bg-[#FAFAF8] text-[#555550] hover:bg-[#F4F4F0] border border-[#E7E7E2]'
@@ -1188,7 +1078,7 @@ export default function CreatorProfilePage() {
                         setReviewFilter('5');
                         setReviewPage(1);
                       }}
-                      className={`h-9 px-4 rounded-full text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                      className={`h-9 px-4 rounded-full text-sm font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                         reviewFilter === '5'
                           ? 'bg-[#0A0A0A] text-white shadow-xs'
                           : 'bg-[#FAFAF8] text-[#555550] hover:bg-[#F4F4F0] border border-[#E7E7E2]'
@@ -1202,7 +1092,7 @@ export default function CreatorProfilePage() {
                         setReviewFilter('4');
                         setReviewPage(1);
                       }}
-                      className={`h-9 px-4 rounded-full text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                      className={`h-9 px-4 rounded-full text-sm font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                         reviewFilter === '4'
                           ? 'bg-[#0A0A0A] text-white shadow-xs'
                           : 'bg-[#FAFAF8] text-[#555550] hover:bg-[#F4F4F0] border border-[#E7E7E2]'
@@ -1213,7 +1103,7 @@ export default function CreatorProfilePage() {
                     </button>
                   </div>
 
-                  <span className="text-xs font-bold text-[#73736A] whitespace-nowrap shrink-0 hidden sm:inline">
+                  <span className="text-sm font-bold text-[#73736A] whitespace-nowrap shrink-0 hidden sm:inline">
                     Showing {filteredReviews.length === 0 ? 0 : reviewPageStart + 1}–{Math.min(reviewPageStart + reviewsPerPage, filteredReviews.length)} of {filteredReviews.length} Verified Reviews
                   </span>
                 </div>
@@ -1228,7 +1118,7 @@ export default function CreatorProfilePage() {
                             <BrandLogo name={rev.brandName} logoUrl={rev.brandLogo} size="md" />
                             <div className="min-w-0">
                               <div className="font-extrabold text-sm text-[#0A0A0A] truncate">{rev.brandName}</div>
-                              <div className="text-xs text-[#73736A] truncate">{rev.campaignName}</div>
+                              <div className="text-sm text-[#73736A] truncate">{rev.campaignName}</div>
                             </div>
                           </div>
                           <div className="flex text-amber-500 shrink-0">
@@ -1243,7 +1133,7 @@ export default function CreatorProfilePage() {
                         </p>
                       </div>
 
-                      <div className="pt-3 border-t border-[#E7E7E2]/80 flex items-center justify-between text-xs text-[#73736A]">
+                      <div className="pt-3 border-t border-[#E7E7E2]/80 flex items-center justify-between text-sm text-[#73736A]">
                         <span className="inline-flex items-center gap-1.5 font-bold text-[#23744D]">
                           <ShieldCheck className="w-3.5 h-3.5" />
                           <span>Verified Escrow Order</span>
@@ -1259,7 +1149,7 @@ export default function CreatorProfilePage() {
                     aria-label="Review pagination"
                     className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-5 border-t border-[#E7E7E2]"
                   >
-                    <p className="text-xs font-semibold text-[#73736A]">
+                    <p className="text-sm font-semibold text-[#73736A]">
                       Page {currentReviewPage} of {reviewPageCount}
                     </p>
 
@@ -1280,7 +1170,7 @@ export default function CreatorProfilePage() {
                           type="button"
                           onClick={() => setReviewPage(page)}
                           aria-current={page === currentReviewPage ? 'page' : undefined}
-                          className={`w-9 h-9 rounded-full text-xs font-bold transition-colors ${
+                          className={`w-9 h-9 rounded-full text-sm font-bold transition-colors ${
                             page === currentReviewPage
                               ? 'bg-[#0A0A0A] text-white'
                               : 'bg-white border border-[#E7E7E2] text-[#555550] hover:border-[#0A0A0A] hover:text-[#0A0A0A]'

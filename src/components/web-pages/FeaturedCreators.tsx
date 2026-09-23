@@ -36,7 +36,7 @@ export function FeaturedCreators() {
 
           <Link
             href="/creators"
-            className="inline-flex items-center gap-2 text-sm sm:text-base font-black text-[#0A0A0A] hover:text-[#FF2D78] transition-colors group self-start sm:self-auto font-sans"
+            className="inline-flex items-center gap-2 text-sm sm:text-2xl font-extrabold text-[#0A0A0A] hover:text-[#FF2D78] transition-colors group self-start sm:self-auto font-sans"
           >
             <span>{t?.featured?.viewAll || 'View all creators'}</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />

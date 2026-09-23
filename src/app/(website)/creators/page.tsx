@@ -463,7 +463,7 @@ function CreatorsDiscoveryContent() {
                       <span className="truncate">{cat.label}</span>
                     </div>
                     <span
-                      className={`text-xs font-bold px-2 py-0.5 rounded-full ${
+                      className={`text-sm font-bold px-2 py-0.5 rounded-full ${
                         isSelected
                           ? 'bg-white/15 text-white'
                           : 'bg-[#FAFAF8] text-[#73736A] border border-[#E7E7E2]'
@@ -482,7 +482,7 @@ function CreatorsDiscoveryContent() {
                 <h4 className="font-black text-base leading-[22px] text-[#0A0A0A] tracking-tight">
                   Are you a creator?
                 </h4>
-                <p className="text-xs text-[#73736A] mt-2 leading-[18px] font-medium">
+                <p className="text-sm text-[#73736A] mt-2 leading-[18px] font-medium">
                   Join thousands of creators and get discovered by top brands worldwide.
                 </p>
               </div>
@@ -503,7 +503,7 @@ function CreatorsDiscoveryContent() {
             {/* Results Header with Count */}
             <div className="flex items-center justify-between font-sans">
               <div>
-                <span className="text-base font-black text-[#0A0A0A]">
+                <span className="text-2xl font-extrabold text-[#0A0A0A]">
                   {filteredCreators.length.toLocaleString()} creators
                 </span>
                 <span className="text-sm text-[#73736A] ml-2.5 hidden sm:inline font-medium">

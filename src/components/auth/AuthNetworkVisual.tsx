@@ -336,7 +336,7 @@ export function AuthNetworkVisual({
                   </div>
 
                   {/* Interactive Tooltip */}
-                  <div className="absolute -top-8 left-1/2 -translate-x-1/2 px-2.5 py-1 rounded-full bg-[#0A0A0A] text-white text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap shadow-xl z-30">
+                  <div className="absolute -top-8 left-1/2 -translate-x-1/2 px-2.5 py-1 rounded-full bg-[#0A0A0A] text-white text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap shadow-xl z-30">
                     {node.name} • {node.category}
                   </div>
                 </div>
@@ -346,7 +346,7 @@ export function AuthNetworkVisual({
                   {node.renderLogo()}
 
                   {/* Interactive Tooltip */}
-                  <div className="absolute -top-8 left-1/2 -translate-x-1/2 px-2.5 py-1 rounded-full bg-[#0A0A0A] text-white text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap shadow-xl z-30">
+                  <div className="absolute -top-8 left-1/2 -translate-x-1/2 px-2.5 py-1 rounded-full bg-[#0A0A0A] text-white text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap shadow-xl z-30">
                     {node.name} • {node.tagline}
                   </div>
                 </div>

@@ -136,7 +136,7 @@ export default function RegisterPage() {
 
                   <div>
                     <h3 className="font-black text-sm text-[#0A0A0A]">Brand / Agency</h3>
-                    <p className="text-xs text-[#73736A] mt-1 leading-relaxed font-medium">
+                    <p className="text-sm text-[#73736A] mt-1 leading-relaxed font-medium">
                       Hire vetted talent with escrow guarantee.
                     </p>
                   </div>
@@ -167,7 +167,7 @@ export default function RegisterPage() {
 
                   <div>
                     <h3 className="font-black text-sm text-[#0A0A0A]">Content Creator</h3>
-                    <p className="text-xs text-[#73736A] mt-1 leading-relaxed font-medium">
+                    <p className="text-sm text-[#73736A] mt-1 leading-relaxed font-medium">
                       Set rates, earn EUR & keep 100%.
                     </p>
                   </div>

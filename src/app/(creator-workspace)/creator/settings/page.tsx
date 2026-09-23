@@ -231,10 +231,10 @@ function CreatorSettingsContent() {
                   </div>
                   <div className="space-y-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="text-base font-black text-amber-950">
+                      <h3 className="text-2xl font-extrabold text-amber-950">
                         Account Deactivation in Progress
                       </h3>
-                      <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-200 text-amber-900 border border-amber-300/80">
+                      <span className="text-sm font-bold px-2.5 py-0.5 rounded-full bg-amber-200 text-amber-900 border border-amber-300/80">
                         {getRemainingDays(currentUser?.deactivationScheduledFor)} Days Left to Undo
                       </span>
                     </div>
@@ -264,14 +264,14 @@ function CreatorSettingsContent() {
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
               <div className="pb-4 border-b border-[#E7E7E2] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-base sm:text-lg font-black text-[#0A0A0A] tracking-tight">
+                  <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                     Account Information
                   </h2>
-                  <p className="text-xs text-[#73736A] mt-0.5 font-medium">
+                  <p className="text-sm text-[#73736A] mt-0.5 font-medium">
                     Update your primary login email and contact details.
                   </p>
                 </div>
-                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] text-xs font-bold border border-[#23744D]/20 shrink-0 w-fit">
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] text-sm font-bold border border-[#23744D]/20 shrink-0 w-fit">
                   <ShieldCheck className="w-3.5 h-3.5" />
                   <span>Verified Creator</span>
                 </div>
@@ -279,7 +279,7 @@ function CreatorSettingsContent() {
 
               <form onSubmit={handleSaveAccountInfo} className="space-y-5 max-w-xl">
                 <div>
-                  <label className="text-xs font-bold text-[#0A0A0A] block mb-1.5">
+                  <label className="text-sm font-bold text-[#0A0A0A] block mb-1.5">
                     Primary Login Email
                   </label>
                   <Input
@@ -290,13 +290,13 @@ function CreatorSettingsContent() {
                     placeholder="sophie@sophiekim.com"
                     className="h-11 rounded-xl font-medium text-sm border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
                   />
-                  <span className="text-xs text-[#73736A] mt-1.5 block">
+                  <span className="text-sm text-[#73736A] mt-1.5 block">
                     Used for platform authentication, order alerts, and payout notifications.
                   </span>
                 </div>
 
                 <div>
-                  <label className="text-xs font-bold text-[#0A0A0A] block mb-1.5">
+                  <label className="text-sm font-bold text-[#0A0A0A] block mb-1.5">
                     Emergency Contact / Phone
                   </label>
                   <Input
@@ -307,21 +307,12 @@ function CreatorSettingsContent() {
                     placeholder="+1 (555) 234-5678"
                     className="h-11 rounded-xl font-medium text-sm border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
                   />
-                  <span className="text-xs text-[#73736A] mt-1.5 block">
+                  <span className="text-sm text-[#73736A] mt-1.5 block">
                     Private phone number for critical security alerts and account recovery.
                   </span>
                 </div>
 
-                <div className="p-3.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] text-xs text-[#52524E] space-y-1.5">
-                  <div className="flex items-center justify-between font-semibold">
-                    <span>Member ID:</span>
-                    <span className="font-sans font-bold text-[#0A0A0A]">{currentUser?.id || 'creator-01'}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span>Account Role:</span>
-                    <span className="capitalize font-sans font-bold text-[#0A0A0A]">{currentUser?.role || 'creator'}</span>
-                  </div>
-                </div>
+
 
                 <div className="pt-1">
                   <Button
@@ -335,32 +326,13 @@ function CreatorSettingsContent() {
               </form>
             </div>
 
-            {/* Cross-Link Card to Public Creator Profile Studio */}
-            <div className="p-5 sm:p-6 rounded-3xl bg-white border border-[#E7E7E2] shadow-2xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <div className="space-y-1">
-                <h4 className="text-sm font-bold text-[#0A0A0A]">
-                  Looking to update your public media kit, editorial bio, or rate card?
-                </h4>
-                <p className="text-xs text-[#73736A]">
-                  Brands see your bio, aesthetic lookbook gallery, and rates in your Public Profile Studio.
-                </p>
-              </div>
-              <Link href="/creator/profile">
-                <button
-                  type="button"
-                  className="inline-flex items-center gap-2 h-10 px-4 rounded-xl border border-[#D2D2CA] hover:border-[#0A0A0A] bg-white hover:bg-[#FAFAF8] text-[#0A0A0A] text-xs font-bold transition-all shadow-2xs whitespace-nowrap cursor-pointer"
-                >
-                  <span>Edit Public Profile Studio</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-              </Link>
-            </div>
+
 
             {/* Danger Zone Card */}
             <div className={`bg-white rounded-3xl p-6 sm:p-8 border shadow-2xs space-y-4 ${currentUser?.isDeactivated ? 'border-amber-300' : 'border-rose-200'}`}>
               <div className={`flex items-center gap-2 pb-3 border-b ${currentUser?.isDeactivated ? 'border-amber-200 text-amber-800' : 'border-rose-100 text-rose-600'}`}>
                 <AlertTriangle className="w-5 h-5" />
-                <h2 className="text-base font-black">
+                <h2 className="text-2xl font-extrabold">
                   {currentUser?.isDeactivated ? 'Account Status: Deactivation Scheduled' : 'Danger Zone'}
                 </h2>
               </div>
@@ -370,7 +342,7 @@ function CreatorSettingsContent() {
                   <div className="text-sm font-bold text-[#0A0A0A]">
                     {currentUser?.isDeactivated ? '15-Day Grace Period is Active' : 'Deactivate Creator Account'}
                   </div>
-                  <div className="text-xs text-[#73736A]">
+                  <div className="text-sm text-[#73736A]">
                     {currentUser?.isDeactivated
                       ? `Your account will be permanently deactivated on ${formatDeactivationDate(currentUser?.deactivationScheduledFor)}. You can undo this anytime before this date.`
                       : 'Temporarily hide your profile from search results and pause incoming offers. Includes a 15-day grace period to undo.'}
@@ -415,14 +387,14 @@ function CreatorSettingsContent() {
                   <KeyRound className="w-5 h-5 text-[#0A0A0A]" />
                 </div>
                 <div>
-                  <h2 className="text-base sm:text-lg font-black text-[#0A0A0A]">Change Password</h2>
-                  <p className="text-xs text-[#73736A] mt-0.5">Ensure your account is protected with a secure password.</p>
+                  <h2 className="text-2xl font-extrabold text-[#0A0A0A]">Change Password</h2>
+                  <p className="text-sm text-[#73736A] mt-0.5">Ensure your account is protected with a secure password.</p>
                 </div>
               </div>
 
               <form onSubmit={handleUpdatePassword} className="space-y-4 max-w-xl">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-[#0A0A0A] block mb-1">Current Password</label>
+                  <label className="text-sm font-bold text-[#0A0A0A] block mb-1">Current Password</label>
                   <Input.Password
                     value={currentPassword}
                     onChange={(e) => setCurrentPassword(e.target.value)}
@@ -433,7 +405,7 @@ function CreatorSettingsContent() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-[#0A0A0A] block mb-1">New Password</label>
+                    <label className="text-sm font-bold text-[#0A0A0A] block mb-1">New Password</label>
                     <Input.Password
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
@@ -443,7 +415,7 @@ function CreatorSettingsContent() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-[#0A0A0A] block mb-1">Confirm Password</label>
+                    <label className="text-sm font-bold text-[#0A0A0A] block mb-1">Confirm Password</label>
                     <Input.Password
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
@@ -468,14 +440,14 @@ function CreatorSettingsContent() {
             {/* Active Sessions */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-4">
               <div className="pb-3 border-b border-[#E7E7E2]">
-                <h2 className="text-base sm:text-lg font-black text-[#0A0A0A]">Active Devices &amp; Sessions</h2>
-                <p className="text-xs text-[#73736A] mt-0.5">Review devices currently logged into your creator account.</p>
+                <h2 className="text-2xl font-extrabold text-[#0A0A0A]">Active Devices &amp; Sessions</h2>
+                <p className="text-sm text-[#73736A] mt-0.5">Review devices currently logged into your creator account.</p>
               </div>
 
               <div className="flex items-center justify-between p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
                 <div className="space-y-0.5">
-                  <div className="text-xs font-bold text-[#0A0A0A]">Windows PC • Chrome Browser</div>
-                  <div className="text-xs text-[#73736A]">Current active session • Milan, Italy</div>
+                  <div className="text-sm font-bold text-[#0A0A0A]">Windows PC • Chrome Browser</div>
+                  <div className="text-sm text-[#73736A]">Current active session • Milan, Italy</div>
                 </div>
                 <span className="text-xs font-bold uppercase px-2.5 py-0.5 rounded-full bg-[#EEF7F2] text-[#23744D]">
                   This Device
@@ -489,15 +461,15 @@ function CreatorSettingsContent() {
         {activeTab === 'notifications' && (
           <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
             <div className="pb-4 border-b border-[#E7E7E2]">
-              <h2 className="text-base sm:text-lg font-black text-[#0A0A0A]">Notification Preferences</h2>
-              <p className="text-xs text-[#73736A] mt-0.5">Choose what alerts you receive in your inbox and dashboard.</p>
+              <h2 className="text-2xl font-extrabold text-[#0A0A0A]">Notification Preferences</h2>
+              <p className="text-sm text-[#73736A] mt-0.5">Choose what alerts you receive in your inbox and dashboard.</p>
             </div>
 
             <div className="space-y-3.5">
               <div className="flex items-center justify-between p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
                 <div className="space-y-0.5">
                   <div className="text-sm font-bold text-[#0A0A0A]">New Campaign Offers</div>
-                  <div className="text-xs text-[#73736A]">Receive instant emails when brands send direct bookings.</div>
+                  <div className="text-sm text-[#73736A]">Receive instant emails when brands send direct bookings.</div>
                 </div>
                 <Switch checked={notifyOffers} onChange={setNotifyOffers} />
               </div>
@@ -505,7 +477,7 @@ function CreatorSettingsContent() {
               <div className="flex items-center justify-between p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
                 <div className="space-y-0.5">
                   <div className="text-sm font-bold text-[#0A0A0A]">Direct Messages</div>
-                  <div className="text-xs text-[#73736A]">Get notified when brand representatives message you.</div>
+                  <div className="text-sm text-[#73736A]">Get notified when brand representatives message you.</div>
                 </div>
                 <Switch checked={notifyMessages} onChange={setNotifyMessages} />
               </div>
@@ -513,7 +485,7 @@ function CreatorSettingsContent() {
               <div className="flex items-center justify-between p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
                 <div className="space-y-0.5">
                   <div className="text-sm font-bold text-[#0A0A0A]">Deliverable Reviews &amp; Approvals</div>
-                  <div className="text-xs text-[#73736A]">Alerts when brands review or request changes on video drafts.</div>
+                  <div className="text-sm text-[#73736A]">Alerts when brands review or request changes on video drafts.</div>
                 </div>
                 <Switch checked={notifyDeliverables} onChange={setNotifyDeliverables} />
               </div>
@@ -521,7 +493,7 @@ function CreatorSettingsContent() {
               <div className="flex items-center justify-between p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
                 <div className="space-y-0.5">
                   <div className="text-sm font-bold text-[#0A0A0A]">Payouts &amp; Escrow Releases</div>
-                  <div className="text-xs text-[#73736A]">Confirmations when escrow funds are transferred to your bank.</div>
+                  <div className="text-sm text-[#73736A]">Confirmations when escrow funds are transferred to your bank.</div>
                 </div>
                 <Switch checked={notifyPayouts} onChange={setNotifyPayouts} />
               </div>
@@ -548,10 +520,10 @@ function CreatorSettingsContent() {
               <AlertTriangle className="w-4 h-4" />
             </div>
             <div>
-              <div className="text-base font-black text-[#0A0A0A] tracking-tight">
+              <div className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                 Deactivate Creator Account
               </div>
-              <div className="text-xs text-[#73736A] font-medium">
+              <div className="text-sm text-[#73736A] font-medium">
                 15-day reversible grace period with password verification
               </div>
             </div>
@@ -594,7 +566,7 @@ function CreatorSettingsContent() {
 
           {/* Password Confirmation */}
           <div className="space-y-1.5">
-            <label className="text-xs font-bold text-[#0A0A0A] flex items-center gap-1.5">
+            <label className="text-sm font-bold text-[#0A0A0A] flex items-center gap-1.5">
               <Lock className="w-3.5 h-3.5 text-[#73736A]" />
               <span>Enter Your Password to Authorize</span>
               <span className="text-rose-500">*</span>
@@ -612,7 +584,7 @@ function CreatorSettingsContent() {
             {deactivateError ? (
               <span className="text-xs text-rose-600 font-semibold block">{deactivateError}</span>
             ) : (
-              <span className="text-xs text-[#73736A] block">
+              <span className="text-sm text-[#73736A] block">
                 Required for security verification before initiating the 15-day grace period.
               </span>
             )}

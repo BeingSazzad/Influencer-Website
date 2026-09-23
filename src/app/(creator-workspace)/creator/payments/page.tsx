@@ -183,7 +183,7 @@ export default function CreatorPaymentsPage() {
           <button
             type="button"
             onClick={handleExportCSV}
-            className="h-10 px-4 rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] bg-white hover:bg-[#FAFAF8] text-[#0A0A0A] text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-2xs"
+            className="h-10 px-4 rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] bg-white hover:bg-[#FAFAF8] text-[#0A0A0A] text-sm font-bold transition-all flex items-center gap-2 cursor-pointer shadow-2xs"
           >
             <Download className="w-3.5 h-3.5 text-[#0A0A0A]" />
             <span>Export CSV</span>
@@ -192,8 +192,8 @@ export default function CreatorPaymentsPage() {
       />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-7">
-        {/* Minimal 3-Metric Overview Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
+        {/* 2-Metric Overview Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
           {/* 1. Total Earned */}
           <div className="p-6 bg-white rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
             <div className="flex items-center justify-between text-[#73736A]">
@@ -205,7 +205,6 @@ export default function CreatorPaymentsPage() {
             <div className="text-3xl font-black text-[#0A0A0A] tracking-tight">
               €{totalEarnedEur.toLocaleString()}
             </div>
-            <div className="text-xs text-[#73736A] font-medium">Across verified collaborations</div>
           </div>
 
           {/* 2. In Escrow */}
@@ -219,22 +218,6 @@ export default function CreatorPaymentsPage() {
             <div className="text-3xl font-black text-[#0A0A0A] tracking-tight">
               €{inEscrowEur.toLocaleString()}
             </div>
-            <div className="text-xs text-[#73736A] font-medium">Funded &amp; awaiting deliverable approval</div>
-          </div>
-
-          {/* 3. Transparent Platform Fee */}
-          <div className="p-6 bg-white rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
-            <div className="flex items-center justify-between text-[#73736A]">
-              <span className="text-xs font-bold uppercase tracking-wider">Platform Fee</span>
-              <div className="w-7 h-7 rounded-xl bg-[#EEF7F2] text-[#23744D] flex items-center justify-center">
-                <Percent className="w-3.5 h-3.5" />
-              </div>
-            </div>
-            <div className="text-3xl font-black text-[#0A0A0A] tracking-tight">15%</div>
-            <div className="text-xs text-[#23744D] font-bold flex items-center gap-1">
-              <CheckCircle2 className="w-3.5 h-3.5" />
-              <span>Paid by brand • 0% creator deduction</span>
-            </div>
           </div>
         </div>
 
@@ -245,7 +228,7 @@ export default function CreatorPaymentsPage() {
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h3 className="text-xl font-bold text-[#0A0A0A] tracking-tight">Payout History</h3>
+              <h3 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Payout History</h3>
               <p className="text-sm text-[#73736A] mt-1">Records of completed settlements and funds in escrow.</p>
             </div>
 
@@ -260,7 +243,7 @@ export default function CreatorPaymentsPage() {
                   key={tab.id}
                   type="button"
                   onClick={() => setActiveFilter(tab.id)}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  className={`px-3.5 py-1.5 rounded-xl text-sm font-bold transition-all cursor-pointer ${
                     activeFilter === tab.id
                       ? 'bg-[#0A0A0A] text-white shadow-2xs'
                       : 'text-[#73736A] hover:text-[#0A0A0A]'
@@ -277,7 +260,7 @@ export default function CreatorPaymentsPage() {
             <Search className="w-4 h-4 text-[#73736A] absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
-              placeholder="Search by brand, campaign, or ID..."
+              placeholder="Search by brand or campaign..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full h-10 pl-10 pr-3.5 text-sm font-medium text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none focus:border-[#0A0A0A] placeholder:text-[#A3A39C] transition-all"
@@ -289,10 +272,8 @@ export default function CreatorPaymentsPage() {
             <table className="w-full text-left">
               <thead>
                 <tr className="border-b border-[#E7E7E2] text-[#73736A] font-bold uppercase tracking-wider text-xs">
-                  <th className="pb-3.5 px-4">Date &amp; ID</th>
                   <th className="pb-3.5 px-4">Brand &amp; Campaign</th>
-                  <th className="pb-3.5 px-4">Deliverables</th>
-                  <th className="pb-3.5 px-4">Platform Fee</th>
+                  <th className="pb-3.5 px-4">Date</th>
                   <th className="pb-3.5 px-4 text-right">Earned (€)</th>
                   <th className="pb-3.5 px-4 text-center">Status</th>
                   <th className="pb-3.5 px-4 text-right">Statement</th>
@@ -305,32 +286,19 @@ export default function CreatorPaymentsPage() {
 
                   return (
                     <tr key={payout.id} className="hover:bg-[#FAFAF8] transition-colors">
-                      {/* ID & Date */}
-                      <td className="py-4 px-4 font-sans">
-                        <div className="font-bold text-sm text-[#0A0A0A]">{payout.id}</div>
-                        <div className="text-xs text-[#73736A] font-normal mt-0.5">{payout.date}</div>
-                      </td>
-
                       {/* Brand & Campaign */}
                       <td className="py-4 px-4">
                         <div className="font-bold text-sm text-[#0A0A0A]">{payout.brandName}</div>
-                        <div className="text-xs text-[#73736A] truncate max-w-xs mt-0.5">{payout.campaignTitle}</div>
+                        <div className="text-sm text-[#73736A] truncate max-w-xs mt-0.5">{payout.campaignTitle}</div>
                       </td>
 
-                      {/* Deliverables */}
-                      <td className="py-4 px-4 text-sm text-[#52524E] font-medium max-w-xs truncate">
-                        {payout.deliverableType}
-                      </td>
-
-                      {/* Fee */}
-                      <td className="py-4 px-4">
-                        <span className="text-xs font-semibold text-[#23744D] bg-[#EEF7F2] px-2.5 py-1 rounded-full inline-block">
-                          0% deducted
-                        </span>
+                      {/* Date */}
+                      <td className="py-4 px-4 text-sm text-[#73736A] font-medium whitespace-nowrap">
+                        {payout.date}
                       </td>
 
                       {/* Earnings */}
-                      <td className="py-4 px-4 text-right font-sans font-black text-sm sm:text-base text-[#0A0A0A] tracking-tight">
+                      <td className="py-4 px-4 text-right font-black text-sm text-[#0A0A0A] tracking-tight">
                         <span className={isPaidOut ? 'text-[#23744D]' : 'text-[#0A0A0A]'}>
                           +€{payout.amountEur.toLocaleString()}
                         </span>
@@ -395,10 +363,10 @@ export default function CreatorPaymentsPage() {
                 <span className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
                   REMITTANCE STATEMENT
                 </span>
-                <h3 className="text-lg font-black text-[#0A0A0A] tracking-tight mt-0.5">
+                <h3 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight mt-0.5">
                   {selectedRemittance.referenceCode}
                 </h3>
-                <div className="text-xs text-[#73736A]">{selectedRemittance.date}</div>
+                <div className="text-sm text-[#73736A]">{selectedRemittance.date}</div>
               </div>
               <span className="px-2.5 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] font-bold text-xs uppercase tracking-wide">
                 {selectedRemittance.status.replace('_', ' ')}
@@ -439,7 +407,7 @@ export default function CreatorPaymentsPage() {
                 message.success(`Statement ${selectedRemittance.referenceCode} downloaded.`);
                 setSelectedRemittance(null);
               }}
-              className="w-full h-10 rounded-xl bg-[#0A0A0A] hover:bg-zinc-800 text-white text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs"
+              className="w-full h-10 rounded-xl bg-[#0A0A0A] hover:bg-zinc-800 text-white text-sm font-bold flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs"
             >
               <Download className="w-3.5 h-3.5" />
               <span>Download Statement</span>

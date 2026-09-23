@@ -119,25 +119,25 @@ export function ImageUpload({
                 }`}
               >
                 <Camera className="w-5 h-5" />
-                <span className="text-[10px] font-bold">Change</span>
+                <span className="text-sm font-bold">Change</span>
               </div>
             </>
           ) : (
             <div className="flex flex-col items-center justify-center text-[#73736A] p-2 text-center">
               <Camera className="w-6 h-6 mb-1 text-[#0A0A0A]" />
-              <span className="text-[9px] font-bold uppercase">Upload</span>
+              <span className="text-xs font-bold uppercase">Upload</span>
             </div>
           )}
         </div>
 
         <div className="space-y-1.5 flex-1">
           {label && <div className="text-sm font-bold text-[#0A0A0A]">{label}</div>}
-          <div className="text-xs text-[#73736A]">{description}</div>
+          <div className="text-sm text-[#73736A]">{description}</div>
           <div className="flex items-center gap-2 pt-1">
             <button
               type="button"
               onClick={handleClick}
-              className="px-3.5 py-1.5 rounded-full bg-[#0A0A0A] hover:bg-zinc-800 text-white text-xs font-bold transition-all shadow-2xs flex items-center gap-1.5 cursor-pointer"
+              className="px-3.5 py-1.5 rounded-full bg-[#0A0A0A] hover:bg-zinc-800 text-white text-sm font-bold transition-all shadow-2xs flex items-center gap-1.5 cursor-pointer"
             >
               <UploadCloud className="w-3.5 h-3.5" />
               <span>{value ? 'Upload New' : 'Choose Image'}</span>
@@ -146,7 +146,7 @@ export function ImageUpload({
               <button
                 type="button"
                 onClick={handleRemove}
-                className="px-3 py-1.5 rounded-full bg-[#F4F4F0] hover:bg-rose-100 text-[#73736A] hover:text-rose-600 text-xs font-semibold transition-all cursor-pointer"
+                className="px-3 py-1.5 rounded-full bg-[#F4F4F0] hover:bg-rose-100 text-[#73736A] hover:text-rose-600 text-sm font-semibold transition-all cursor-pointer"
               >
                 Remove
               </button>
@@ -198,7 +198,7 @@ export function ImageUpload({
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end justify-between p-4 text-white">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                  <span className="text-xs font-bold">Cover Banner Active</span>
+                  <span className="text-sm font-bold">Cover Banner Active</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <button
@@ -207,7 +207,7 @@ export function ImageUpload({
                       e.stopPropagation();
                       handleClick();
                     }}
-                    className="px-3 py-1.5 rounded-full bg-white/90 hover:bg-white text-[#0A0A0A] text-xs font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
+                    className="px-3 py-1.5 rounded-full bg-white/90 hover:bg-white text-[#0A0A0A] text-sm font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
                   >
                     <RefreshCw className="w-3.5 h-3.5" />
                     <span>Change</span>
@@ -232,7 +232,7 @@ export function ImageUpload({
                 <div className="text-sm font-bold text-[#0A0A0A]">
                   Click to upload cover image or drag & drop
                 </div>
-                <div className="text-xs text-[#73736A] font-medium">{description}</div>
+                <div className="text-sm text-[#73736A] font-medium">{description}</div>
               </div>
             </div>
           )}
@@ -291,7 +291,7 @@ export function ImageUpload({
                   e.stopPropagation();
                   handleClick();
                 }}
-                className="px-3 py-1.5 rounded-full bg-white/95 hover:bg-white text-[#0A0A0A] text-xs font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer border border-[#E7E7E2]"
+                className="px-3 py-1.5 rounded-full bg-white/95 hover:bg-white text-[#0A0A0A] text-sm font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer border border-[#E7E7E2]"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
                 <span>Replace</span>
@@ -315,7 +315,7 @@ export function ImageUpload({
               <div className="text-sm font-bold text-[#0A0A0A]">
                 Click to browse or drag & drop image
               </div>
-              <div className="text-xs text-[#73736A] font-medium">{description}</div>
+              <div className="text-sm text-[#73736A] font-medium">{description}</div>
             </div>
           </div>
         )}

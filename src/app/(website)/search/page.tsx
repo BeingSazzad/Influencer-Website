@@ -291,7 +291,7 @@ function SearchResultsContent() {
       <section className="bg-white border-b border-[#E7E7E2] pt-8 pb-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto space-y-6">
           {/* Breadcrumb Navigation */}
-          <div className="flex items-center gap-2 text-xs font-semibold text-[#73736A]">
+          <div className="flex items-center gap-2 text-sm font-semibold text-[#73736A]">
             <Link href="/" className="hover:text-[#0A0A0A] transition-colors">
               Home
             </Link>
@@ -346,7 +346,7 @@ function SearchResultsContent() {
                 {/* Instant Suggestions Dropdown */}
                 {showSuggestions && searchQuery.trim().length > 0 && (
                   <div className="absolute top-full left-0 mt-3 w-[calc(100vw-3rem)] sm:w-[380px] bg-white rounded-2xl border border-[#E7E7E2] shadow-2xl p-3 z-50 animate-in fade-in-0 zoom-in-95 duration-150">
-                    <div className="flex items-center justify-between pb-2 border-b border-[#F4F4F0] px-1 text-[11px] font-bold uppercase tracking-wider text-[#73736A]">
+                    <div className="flex items-center justify-between pb-2 border-b border-[#F4F4F0] px-1 text-xs font-bold uppercase tracking-wider text-[#73736A]">
                       <span>Matching Creators</span>
                       <span className="text-[#FF2D78]">Press Enter</span>
                     </div>
@@ -374,20 +374,20 @@ function SearchResultsContent() {
                                   <span className="truncate">{c.name}</span>
                                   {c.verified && <VerifiedBadge size="xs" />}
                                 </div>
-                                <div className="text-[11px] text-[#73736A] truncate">
+                                <div className="text-sm text-[#73736A] truncate">
                                   @{c.handle.replace('@', '')} • {c.categories[0]}
                                 </div>
                               </div>
                             </div>
                             <div className="text-right shrink-0 pl-2">
                               <div className="text-xs font-black text-[#0A0A0A]">From €{c.startingPriceEur}</div>
-                              <div className="text-[10px] text-[#23744D] font-bold">★ {c.rating}</div>
+                              <div className="text-xs text-[#23744D] font-bold">★ {c.rating}</div>
                             </div>
                           </button>
                         ))}
                       </div>
                     ) : (
-                      <div className="py-3 text-center text-xs text-[#73736A]">
+                      <div className="py-3 text-center text-sm text-[#73736A]">
                         No direct matches. Press search for broader catalog.
                       </div>
                     )}
@@ -523,7 +523,7 @@ function SearchResultsContent() {
 
           {/* Quick Filter Tag Pills */}
           <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none text-xs">
-            <span className="text-[#73736A] font-bold uppercase tracking-wider text-[11px] shrink-0 mr-1">
+            <span className="text-[#73736A] font-bold uppercase tracking-wider text-xs shrink-0 mr-1">
               Popular:
             </span>
             {quickPills.map((pill) => {
@@ -578,11 +578,11 @@ function SearchResultsContent() {
               {/* Sort By Dropdown */}
               <div className="flex items-center gap-2 bg-white px-3 py-2 rounded-2xl border border-[#E7E7E2] shadow-2xs">
                 <ArrowUpDown className="w-3.5 h-3.5 text-[#73736A]" />
-                <span className="text-xs font-bold text-[#73736A]">Sort:</span>
+                <span className="text-sm font-bold text-[#73736A]">Sort:</span>
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as any)}
-                  className="bg-transparent text-xs font-bold text-[#0A0A0A] outline-none cursor-pointer pr-1"
+                  className="bg-transparent text-sm font-bold text-[#0A0A0A] outline-none cursor-pointer pr-1"
                 >
                   <option value="relevance">Most Relevant</option>
                   <option value="rating">Highest Rated (★ 5.0)</option>
@@ -625,10 +625,10 @@ function SearchResultsContent() {
           {/* Active Filter Chips */}
           {hasActiveFilters && (
             <div className="flex items-center gap-2 flex-wrap pt-1">
-              <span className="text-xs font-bold text-[#73736A]">Active filters:</span>
+              <span className="text-sm font-bold text-[#73736A]">Active filters:</span>
 
               {searchQuery.trim() && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E7E7E2] text-xs font-bold text-[#0A0A0A] shadow-2xs">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E7E7E2] text-sm font-bold text-[#0A0A0A] shadow-2xs">
                   <span>Query: &ldquo;{searchQuery}&rdquo;</span>
                   <button
                     type="button"
@@ -644,7 +644,7 @@ function SearchResultsContent() {
               )}
 
               {platform !== 'all' && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E7E7E2] text-xs font-bold text-[#0A0A0A] shadow-2xs">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E7E7E2] text-sm font-bold text-[#0A0A0A] shadow-2xs">
                   <span>Platform: {platformOptions.find((p) => p.value === platform)?.label}</span>
                   <button
                     type="button"
@@ -660,7 +660,7 @@ function SearchResultsContent() {
               )}
 
               {category !== 'all' && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E7E7E2] text-xs font-bold text-[#0A0A0A] shadow-2xs">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E7E7E2] text-sm font-bold text-[#0A0A0A] shadow-2xs">
                   <span>Category: {categoryOptions.find((c) => c.value === category)?.label}</span>
                   <button
                     type="button"
@@ -678,7 +678,7 @@ function SearchResultsContent() {
               <button
                 type="button"
                 onClick={clearAllFilters}
-                className="text-xs font-bold text-rose-600 hover:text-rose-700 hover:underline cursor-pointer ml-1"
+                className="text-sm font-bold text-rose-600 hover:text-rose-700 hover:underline cursor-pointer ml-1"
               >
                 Clear all
               </button>
@@ -716,16 +716,16 @@ function SearchResultsContent() {
                       <div className="flex items-center gap-2 flex-wrap">
                         <Link
                           href={`/creators/${creator.id}`}
-                          className="text-base sm:text-lg font-black text-[#0A0A0A] hover:text-[#FF2D78] transition-colors truncate"
+                          className="text-2xl font-extrabold text-[#0A0A0A] hover:text-[#FF2D78] transition-colors truncate"
                         >
                           {creator.name}
                         </Link>
-                        <span className="text-xs font-bold text-[#73736A]">
+                        <span className="text-sm font-bold text-[#73736A]">
                           @{creator.handle.replace('@', '')}
                         </span>
                       </div>
 
-                      <div className="flex items-center gap-2 text-xs font-semibold text-[#73736A] mt-1">
+                      <div className="flex items-center gap-2 text-sm font-semibold text-[#73736A] mt-1">
                         <MapPin className="w-3.5 h-3.5" />
                         <span>{creator.location}</span>
                         <span>•</span>
@@ -740,7 +740,7 @@ function SearchResultsContent() {
                         {creator.categories.map((cat) => (
                           <span
                             key={cat}
-                            className="px-2.5 py-0.5 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[11px] font-bold text-[#555550]"
+                            className="px-2.5 py-0.5 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-sm font-bold text-[#555550]"
                           >
                             {cat}
                           </span>
@@ -756,7 +756,7 @@ function SearchResultsContent() {
                         <div className="text-xs font-black text-[#0A0A0A]">
                           {creator.platforms.instagram.followersFormatted}
                         </div>
-                        <div className="text-[10px] font-bold text-[#73736A]">Instagram</div>
+                        <div className="text-sm font-bold text-[#73736A]">Instagram</div>
                       </div>
                     )}
                     {creator.platforms.tiktok && (
@@ -764,7 +764,7 @@ function SearchResultsContent() {
                         <div className="text-xs font-black text-[#0A0A0A]">
                           {creator.platforms.tiktok.followersFormatted}
                         </div>
-                        <div className="text-[10px] font-bold text-[#73736A]">TikTok</div>
+                        <div className="text-sm font-bold text-[#73736A]">TikTok</div>
                       </div>
                     )}
                     {creator.platforms.youtube && (
@@ -772,7 +772,7 @@ function SearchResultsContent() {
                         <div className="text-xs font-black text-[#0A0A0A]">
                           {creator.platforms.youtube.followersFormatted}
                         </div>
-                        <div className="text-[10px] font-bold text-[#73736A]">YouTube</div>
+                        <div className="text-sm font-bold text-[#73736A]">YouTube</div>
                       </div>
                     )}
                   </div>
@@ -780,17 +780,17 @@ function SearchResultsContent() {
                   {/* Right: Pricing & CTA */}
                   <div className="flex items-center justify-between md:justify-end gap-4 w-full md:w-auto pt-4 md:pt-0 border-t md:border-t-0 border-[#F4F4F0]">
                     <div className="text-left md:text-right">
-                      <span className="text-[10px] font-bold text-[#73736A] uppercase tracking-wider block">
+                      <span className="text-sm font-bold text-[#73736A] uppercase tracking-wider block">
                         Packages From
                       </span>
-                      <span className="text-xl font-black text-[#0A0A0A]">
+                      <span className="text-2xl font-extrabold text-[#0A0A0A]">
                         €{creator.startingPriceEur}
                       </span>
                     </div>
 
                     <Link
                       href={`/creators/${creator.id}`}
-                      className="h-10 px-5 rounded-full bg-[#0A0A0A] hover:bg-zinc-800 text-white text-xs font-bold transition-all flex items-center gap-1.5 shadow-2xs hover:scale-105 active:scale-95"
+                      className="h-10 px-5 rounded-full bg-[#0A0A0A] hover:bg-zinc-800 text-white text-sm font-bold transition-all flex items-center gap-1.5 shadow-2xs hover:scale-105 active:scale-95"
                     >
                       <span>View Profile</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -808,7 +808,7 @@ function SearchResultsContent() {
             </div>
 
             <div className="space-y-2">
-              <h3 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">
+              <h3 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                 No creators matched your search criteria
               </h3>
               <p className="text-sm text-[#73736A] max-w-md mx-auto leading-relaxed">
@@ -832,7 +832,7 @@ function SearchResultsContent() {
                       setPlatform('all');
                       handleExecuteSearch('', 'all', cat);
                     }}
-                    className="px-4 py-2 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] hover:border-[#0A0A0A] hover:bg-white text-xs font-bold text-[#0A0A0A] transition-all cursor-pointer"
+                    className="px-4 py-2 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] hover:border-[#0A0A0A] hover:bg-white text-sm font-bold text-[#0A0A0A] transition-all cursor-pointer"
                   >
                     {cat} Creators
                   </button>
@@ -844,7 +844,7 @@ function SearchResultsContent() {
               <button
                 type="button"
                 onClick={clearAllFilters}
-                className="h-11 px-6 rounded-full bg-[#0A0A0A] hover:bg-zinc-800 text-white text-xs font-bold transition-all inline-flex items-center gap-2 cursor-pointer shadow-sm hover:scale-105 active:scale-95"
+                className="h-11 px-6 rounded-full bg-[#0A0A0A] hover:bg-zinc-800 text-white text-sm font-bold transition-all inline-flex items-center gap-2 cursor-pointer shadow-sm hover:scale-105 active:scale-95"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
                 <span>Reset All Filters & View All</span>

@@ -434,7 +434,7 @@ function CreatorPortfolioContent() {
           {/* Header & Platform Filter Pills */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#E7E7E2]">
             <div>
-              <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">
+              <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                 Deliverables Portfolio
               </h2>
               <p className="text-xs sm:text-sm text-[#73736A] mt-1 font-medium">
@@ -471,7 +471,7 @@ function CreatorPortfolioContent() {
                   key={tab.key}
                   type="button"
                   onClick={() => setPlatformFilter(tab.key as any)}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold capitalize transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
+                  className={`px-3.5 py-1.5 rounded-full text-sm font-bold capitalize transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
                     platformFilter === tab.key
                       ? 'bg-[#0A0A0A] text-white shadow-2xs'
                       : 'text-[#73736A] hover:text-[#0A0A0A]'
@@ -479,7 +479,7 @@ function CreatorPortfolioContent() {
                 >
                   <span>{tab.label}</span>
                   <span
-                    className={`text-[10px] px-1.5 py-0.2 rounded-full font-extrabold ${
+                    className={`text-xs px-1.5 py-0.2 rounded-full font-extrabold ${
                       platformFilter === tab.key ? 'bg-white/20 text-white' : 'bg-[#EAEAE3] text-[#0A0A0A]'
                     }`}
                   >
@@ -546,7 +546,7 @@ function CreatorPortfolioContent() {
                             className="w-4 h-4 rounded-full object-cover"
                           />
                         )}
-                        <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#73736A]">
+                        <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
                           {item.brandName}
                         </span>
                       </div>
@@ -556,7 +556,7 @@ function CreatorPortfolioContent() {
                       </h3>
 
                       {item.deliverableType && (
-                        <div className="text-xs text-[#73736A] font-medium line-clamp-1">
+                        <div className="text-sm text-[#73736A] font-medium line-clamp-1">
                           {item.deliverableType}
                         </div>
                       )}
@@ -565,15 +565,15 @@ function CreatorPortfolioContent() {
                     {/* Metrics Row */}
                     <div className="grid grid-cols-3 gap-2 py-3 px-3.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] text-center">
                       <div>
-                        <div className="text-[10px] uppercase font-bold text-[#73736A]">Views</div>
+                        <div className="text-xs uppercase font-bold text-[#73736A]">Views</div>
                         <div className="text-xs font-black text-[#0A0A0A]">{item.views || '—'}</div>
                       </div>
                       <div>
-                        <div className="text-[10px] uppercase font-bold text-[#73736A]">Likes</div>
+                        <div className="text-xs uppercase font-bold text-[#73736A]">Likes</div>
                         <div className="text-xs font-black text-[#0A0A0A]">{item.likes || '—'}</div>
                       </div>
                       <div>
-                        <div className="text-[10px] uppercase font-bold text-[#73736A]">Eng. Rate</div>
+                        <div className="text-xs uppercase font-bold text-[#73736A]">Eng. Rate</div>
                         <div className="text-xs font-black text-[#23744D]">{item.engagementRate || '—'}</div>
                       </div>
                     </div>
@@ -583,7 +583,7 @@ function CreatorPortfolioContent() {
                       <button
                         type="button"
                         onClick={() => handleQuickMediaReplaceClick(item.id)}
-                        className="text-xs font-bold text-[#0A0A0A] hover:text-[#2563EB] flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer"
+                        className="text-sm font-bold text-[#0A0A0A] hover:text-[#2563EB] flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer"
                         title="Replace media image"
                       >
                         <Upload className="w-3.5 h-3.5" />
@@ -641,14 +641,14 @@ function CreatorPortfolioContent() {
       <Modal
         title={
           <div className="flex items-center gap-2.5 pb-1">
-            <div className="w-8 h-8 rounded-full bg-[#0A0A0A] text-white flex items-center justify-center text-xs font-bold shrink-0">
+            <div className="w-8 h-8 rounded-full bg-[#0A0A0A] text-white flex items-center justify-center text-sm font-bold shrink-0">
               <Film className="w-4 h-4" />
             </div>
             <div>
-              <div className="text-base font-black text-[#0A0A0A] tracking-tight">
+              <div className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                 {editingItemId ? 'Edit Client Deliverable' : 'Add Client Deliverable'}
               </div>
-              <div className="text-xs text-[#73736A] font-medium">
+              <div className="text-sm text-[#73736A] font-medium">
                 Showcase verified brand deliverables, production specs, and engagement metrics.
               </div>
             </div>
@@ -670,13 +670,13 @@ function CreatorPortfolioContent() {
                 <Sparkles className="w-3.5 h-3.5" />
               </div>
               <div>
-                <div className="text-xs font-bold text-[#0A0A0A] flex items-center gap-1.5">
+                <div className="text-sm font-bold text-[#0A0A0A] flex items-center gap-1.5">
                   <span>1-Click Autofill from Brand Deals</span>
-                  <span className="text-[10px] font-black uppercase tracking-wider px-1.5 py-0.2 bg-emerald-100 text-emerald-800 rounded">
+                  <span className="text-xs font-black uppercase tracking-wider px-1.5 py-0.2 bg-emerald-100 text-emerald-800 rounded">
                     Time Saver
                   </span>
                 </div>
-                <p className="text-[11px] text-[#73736A] mt-0.5">
+                <p className="text-sm text-[#73736A] mt-0.5">
                   Select a past campaign to pre-populate brand, title, platform, and brief
                 </p>
               </div>
@@ -691,7 +691,7 @@ function CreatorPortfolioContent() {
                 label: (
                   <div className="flex items-center gap-2 text-xs py-0.5">
                     <span className="font-bold text-[#0A0A0A] truncate">{o.brandName}</span>
-                    <span className="text-[11px] text-[#73736A] truncate">({o.packageTitle})</span>
+                    <span className="text-sm text-[#73736A] truncate">({o.packageTitle})</span>
                   </div>
                 ),
               }))}
@@ -702,12 +702,12 @@ function CreatorPortfolioContent() {
             {/* Section 2: Media Asset & Automated Specs */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-bold text-[#0A0A0A] flex items-center gap-1.5">
+                <label className="text-sm font-bold text-[#0A0A0A] flex items-center gap-1.5">
                   <span>Deliverable Media Asset</span>
-                  <span className="text-[10px] text-[#73736A] font-medium">(Video or Cover Image)</span>
+                  <span className="text-sm text-[#73736A] font-medium">(Video or Cover Image)</span>
                 </label>
                 {detectedSpecs && (
-                  <span className="text-[11px] font-bold text-[#23744D] bg-[#E8F5E9] px-2 py-0.5 rounded-full flex items-center gap-1">
+                  <span className="text-sm font-bold text-[#23744D] bg-[#E8F5E9] px-2 py-0.5 rounded-full flex items-center gap-1">
                     <CheckCircle2 className="w-3 h-3" /> Auto-detected technical specs
                   </span>
                 )}
@@ -730,14 +730,14 @@ function CreatorPortfolioContent() {
                   />
                   {/* Spec badges overlay */}
                   <div className="absolute top-3 left-3 flex flex-wrap items-center gap-1.5 z-10">
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/60 text-white backdrop-blur-md flex items-center gap-1">
+                    <span className="text-sm font-bold px-2 py-0.5 rounded-full bg-black/60 text-white backdrop-blur-md flex items-center gap-1">
                       <VideoIcon className="w-3 h-3" /> {aspectRatio}
                     </span>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/60 text-white backdrop-blur-md">
+                    <span className="text-sm font-bold px-2 py-0.5 rounded-full bg-black/60 text-white backdrop-blur-md">
                       ⏱ {duration}
                     </span>
                     {detectedSpecs?.resolution && (
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-600/80 text-white backdrop-blur-md">
+                      <span className="text-sm font-bold px-2 py-0.5 rounded-full bg-emerald-600/80 text-white backdrop-blur-md">
                         {detectedSpecs.resolution}
                       </span>
                     )}
@@ -748,7 +748,7 @@ function CreatorPortfolioContent() {
                     <Button
                       type="default"
                       onClick={() => modalMediaFileInputRef.current?.click()}
-                      className="h-9 px-4 rounded-full text-xs font-bold bg-white text-[#0A0A0A] border-none flex items-center gap-1.5 shadow-md hover:!bg-zinc-100"
+                      className="h-9 px-4 rounded-full text-sm font-bold bg-white text-[#0A0A0A] border-none flex items-center gap-1.5 shadow-md hover:!bg-zinc-100"
                     >
                       <Upload className="w-3.5 h-3.5" />
                       <span>Replace File</span>
@@ -760,7 +760,7 @@ function CreatorPortfolioContent() {
                         setMediaUrl('');
                         setDetectedSpecs(null);
                       }}
-                      className="h-9 px-4 rounded-full text-xs font-bold bg-white border-none flex items-center gap-1.5 shadow-md"
+                      className="h-9 px-4 rounded-full text-sm font-bold bg-white border-none flex items-center gap-1.5 shadow-md"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                       <span>Remove</span>
@@ -775,10 +775,10 @@ function CreatorPortfolioContent() {
                   <div className="w-11 h-11 rounded-full bg-white border border-[#E7E7E2] group-hover:border-[#0A0A0A] group-hover:scale-105 transition-all flex items-center justify-center mx-auto text-[#0A0A0A] shadow-2xs">
                     <Upload className="w-5 h-5" />
                   </div>
-                  <div className="text-xs font-bold text-[#0A0A0A]">
+                  <div className="text-sm font-bold text-[#0A0A0A]">
                     Click to upload deliverable video or cover image
                   </div>
-                  <p className="text-[11px] text-[#73736A] max-w-sm mx-auto">
+                  <p className="text-sm text-[#73736A] max-w-sm mx-auto">
                     ⚡ <strong>Smart Auto-Extractor</strong>: Video duration, aspect ratio, and filename will be detected automatically!
                   </p>
                 </div>
@@ -789,14 +789,14 @@ function CreatorPortfolioContent() {
                 <button
                   type="button"
                   onClick={() => setShowUrlInput(!showUrlInput)}
-                  className="text-xs text-[#73736A] hover:text-[#0A0A0A] font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
+                  className="text-sm text-[#73736A] hover:text-[#0A0A0A] font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
                 >
                   <Link2 className="w-3.5 h-3.5" />
                   <span>{showUrlInput ? 'Hide URL link input' : 'Paste media link instead (URL)'}</span>
                   {showUrlInput ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                 </button>
                 {mediaUrl && (
-                  <span className="text-[11px] text-[#23744D] font-bold flex items-center gap-1">
+                  <span className="text-xs text-[#23744D] font-bold flex items-center gap-1">
                     <CheckCircle2 className="w-3 h-3" /> Media loaded & ready
                   </span>
                 )}
@@ -808,7 +808,7 @@ function CreatorPortfolioContent() {
                     value={mediaUrl}
                     onChange={(e) => setMediaUrl(e.target.value)}
                     placeholder="https://images.unsplash.com/... or hosted video URL"
-                    className="rounded-xl h-10 text-xs font-medium border-[#E7E7E2]"
+                    className="rounded-xl h-10 text-sm font-medium border-[#E7E7E2]"
                     prefix={<Link2 className="w-3.5 h-3.5 text-[#73736A]" />}
                     allowClear
                   />
@@ -819,7 +819,7 @@ function CreatorPortfolioContent() {
             {/* Section 3: Brand Name & Campaign Title */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
               <div className="space-y-1">
-                <label className="text-xs font-bold text-[#0A0A0A] block">
+                <label className="text-sm font-bold text-[#0A0A0A] block">
                   Brand / Client Name <span className="text-rose-500">*</span>
                 </label>
                 <Input
@@ -832,7 +832,7 @@ function CreatorPortfolioContent() {
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-[#0A0A0A] block">
+                <label className="text-sm font-bold text-[#0A0A0A] block">
                   Campaign / Content Title <span className="text-rose-500">*</span>
                 </label>
                 <Input
@@ -849,7 +849,7 @@ function CreatorPortfolioContent() {
             <div className="space-y-2">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="space-y-1">
-                  <label className="text-xs font-bold text-[#0A0A0A] block">Platform</label>
+                  <label className="text-sm font-bold text-[#0A0A0A] block">Platform</label>
                   <Select
                     value={platform}
                     onChange={(val) => setPlatform(val)}
@@ -864,7 +864,7 @@ function CreatorPortfolioContent() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-xs font-bold text-[#0A0A0A] block">Deliverable Format</label>
+                  <label className="text-sm font-bold text-[#0A0A0A] block">Deliverable Format</label>
                   <Input
                     value={deliverableType}
                     onChange={(e) => setDeliverableType(e.target.value)}
@@ -875,7 +875,7 @@ function CreatorPortfolioContent() {
 
                 <div className="grid grid-cols-2 gap-2">
                   <div className="space-y-1">
-                    <label className="text-xs font-bold text-[#0A0A0A] block">Duration</label>
+                    <label className="text-sm font-bold text-[#0A0A0A] block">Duration</label>
                     <Input
                       value={duration}
                       onChange={(e) => setDuration(e.target.value)}
@@ -884,7 +884,7 @@ function CreatorPortfolioContent() {
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-xs font-bold text-[#0A0A0A] block">Aspect</label>
+                    <label className="text-sm font-bold text-[#0A0A0A] block">Aspect</label>
                     <Select
                       value={aspectRatio}
                       onChange={(val) => setAspectRatio(val)}
@@ -901,7 +901,7 @@ function CreatorPortfolioContent() {
 
               {/* Platform Preset Chips */}
               <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
-                <span className="text-[11px] font-bold text-[#73736A] flex items-center gap-1 mr-1">
+                <span className="text-sm font-bold text-[#73736A] flex items-center gap-1 mr-1">
                   <Wand2 className="w-3 h-3 text-[#0A0A0A]" /> Quick Formats:
                 </span>
                 {PLATFORM_PRESETS[platform]?.map((preset, idx) => (
@@ -909,7 +909,7 @@ function CreatorPortfolioContent() {
                     key={idx}
                     type="button"
                     onClick={() => handleSelectPreset(preset)}
-                    className={`text-[11px] px-2.5 py-1 rounded-full border transition-all cursor-pointer ${
+                    className={`text-xs px-2.5 py-1 rounded-full border transition-all cursor-pointer ${
                       deliverableType === preset.label
                         ? 'bg-[#0A0A0A] text-white border-[#0A0A0A] font-bold shadow-2xs'
                         : 'bg-[#FAFAF8] text-[#52524E] border-[#E7E7E2] hover:border-[#0A0A0A] hover:text-[#0A0A0A] font-medium'
@@ -924,16 +924,16 @@ function CreatorPortfolioContent() {
             {/* Section 5: Performance Metrics & Real-time Auto-Calculated Engagement Rate */}
             <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-3">
               <div className="flex items-center justify-between">
-                <div className="text-xs font-bold text-[#0A0A0A] flex items-center gap-1.5">
+                <div className="text-sm font-bold text-[#0A0A0A] flex items-center gap-1.5">
                   <span>Verified Performance Metrics</span>
-                  <span className="text-[10px] text-[#73736A] font-normal">(Views, Likes, Comments)</span>
+                  <span className="text-sm text-[#73736A] font-normal">(Views, Likes, Comments)</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-[11px] text-[#73736A] font-medium">Auto-Calculate:</span>
+                  <span className="text-sm text-[#73736A] font-medium">Auto-Calculate:</span>
                   <button
                     type="button"
                     onClick={() => setIsAutoEngRate(!isAutoEngRate)}
-                    className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full transition-colors flex items-center gap-1 cursor-pointer ${
+                    className={`text-sm font-bold px-2.5 py-0.5 rounded-full transition-colors flex items-center gap-1 cursor-pointer ${
                       isAutoEngRate
                         ? 'bg-emerald-100 text-emerald-800 border border-emerald-300/50'
                         : 'bg-[#E7E7E2] text-[#52524E] border border-[#D2D2CA]'
@@ -953,40 +953,40 @@ function CreatorPortfolioContent() {
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <div className="space-y-1">
-                  <label className="text-[11px] font-bold uppercase tracking-wider text-[#73736A]">Views</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Views</label>
                   <Input
                     value={views}
                     onChange={(e) => setViews(e.target.value)}
                     placeholder="280K"
-                    className="rounded-xl h-9.5 text-xs font-bold"
+                    className="rounded-xl h-9.5 text-sm font-bold"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[11px] font-bold uppercase tracking-wider text-[#73736A]">Likes</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Likes</label>
                   <Input
                     value={likes}
                     onChange={(e) => setLikes(e.target.value)}
                     placeholder="21.4K"
-                    className="rounded-xl h-9.5 text-xs font-bold"
+                    className="rounded-xl h-9.5 text-sm font-bold"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[11px] font-bold uppercase tracking-wider text-[#73736A]">Comments</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Comments</label>
                   <Input
                     value={comments}
                     onChange={(e) => setComments(e.target.value)}
                     placeholder="920"
-                    className="rounded-xl h-9.5 text-xs font-bold"
+                    className="rounded-xl h-9.5 text-sm font-bold"
                   />
                 </div>
 
                 <div className="space-y-1">
                   <div className="flex items-center justify-between">
-                    <label className="text-[11px] font-bold uppercase tracking-wider text-[#73736A]">Eng. Rate</label>
+                    <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Eng. Rate</label>
                     {isAutoEngRate && (
-                      <span className="text-[9px] font-black text-emerald-700 uppercase bg-emerald-100 px-1 rounded">
+                      <span className="text-xs font-black text-emerald-700 uppercase bg-emerald-100 px-1 rounded">
                         Live
                       </span>
                     )}
@@ -996,7 +996,7 @@ function CreatorPortfolioContent() {
                     onChange={(e) => setEngagementRate(e.target.value)}
                     readOnly={isAutoEngRate}
                     placeholder="8.0%"
-                    className={`rounded-xl h-9.5 text-xs font-bold ${
+                    className={`rounded-xl h-9.5 text-sm font-bold ${
                       isAutoEngRate
                         ? 'bg-emerald-50/60 text-emerald-700 border-emerald-200 cursor-default'
                         : 'text-[#0A0A0A]'
@@ -1005,17 +1005,17 @@ function CreatorPortfolioContent() {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between text-[11px] text-[#73736A] pt-0.5">
+              <div className="flex items-center justify-between text-sm text-[#73736A] pt-0.5">
                 <span className="flex items-center gap-1.5">
                   <Calculator className="w-3.5 h-3.5 text-emerald-600" />
                   <span>Formula: <strong>(Likes + Comments) ÷ Views × 100</strong></span>
                 </span>
                 {isAutoEngRate ? (
-                  <span className="text-[10px] text-emerald-700 font-semibold flex items-center gap-1">
+                  <span className="text-xs text-emerald-700 font-semibold flex items-center gap-1">
                     <RefreshCw className="w-2.5 h-2.5 animate-spin" style={{ animationDuration: '4s' }} /> Computed from metrics
                   </span>
                 ) : (
-                  <span className="text-[10px] text-amber-700 font-semibold">Custom manual value</span>
+                  <span className="text-xs text-amber-700 font-semibold">Custom manual value</span>
                 )}
               </div>
             </div>
@@ -1023,7 +1023,7 @@ function CreatorPortfolioContent() {
             {/* Section 6: Narrative Strategy & Deal Rate */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
               <div className="sm:col-span-2 space-y-1.5">
-                <label className="text-xs font-bold text-[#0A0A0A] block">
+                <label className="text-sm font-bold text-[#0A0A0A] block">
                   Deliverable Narrative & Strategy
                 </label>
                 <Input.TextArea
@@ -1036,7 +1036,7 @@ function CreatorPortfolioContent() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-[#0A0A0A] block">
+                <label className="text-sm font-bold text-[#0A0A0A] block">
                   Deal / Package Rate (€)
                 </label>
                 <Input
@@ -1047,7 +1047,7 @@ function CreatorPortfolioContent() {
                   placeholder="1200"
                   className="rounded-xl h-10 font-bold text-sm"
                 />
-                <p className="text-[11px] text-[#73736A]">
+                <p className="text-sm text-[#73736A]">
                   Positions your production value when prospective brands view your case studies.
                 </p>
               </div>

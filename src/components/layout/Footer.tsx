@@ -182,7 +182,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#73736A]">
+        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-[#73736A]">
           <div className="flex items-center gap-2">
             <span>© {new Date().getFullYear()} Influverse Inc. All rights reserved.</span>
             <span>•</span>

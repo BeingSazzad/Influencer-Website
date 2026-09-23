@@ -184,7 +184,7 @@ export default function BrandSettingsPage() {
           <form onSubmit={handleSaveCompany} className="space-y-6">
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
               <div className="pb-4 border-b border-[#E7E7E2]">
-                <h2 className="text-lg font-black text-[#0A0A0A] tracking-tight">Brand Identity</h2>
+                <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Brand Identity</h2>
               </div>
 
               {/* Brand Logo Image Upload */}
@@ -294,7 +294,7 @@ export default function BrandSettingsPage() {
           <form onSubmit={handleSaveBilling} className="space-y-6">
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
               <div className="pb-4 border-b border-[#E7E7E2]">
-                <h2 className="text-lg font-black text-[#0A0A0A] tracking-tight">Billing & VAT</h2>
+                <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Billing & VAT</h2>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -347,7 +347,7 @@ export default function BrandSettingsPage() {
           <div className="space-y-6">
             <form onSubmit={handleUpdatePassword} className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
               <div className="pb-4 border-b border-[#E7E7E2]">
-                <h2 className="text-lg font-black text-[#0A0A0A] tracking-tight">Password & Authentication</h2>
+                <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Password & Authentication</h2>
               </div>
 
               <div className="space-y-4 max-w-md">
@@ -386,7 +386,7 @@ export default function BrandSettingsPage() {
               </div>
 
               <div className="pt-4 border-t border-[#E7E7E2] flex items-center justify-between flex-wrap gap-3">
-                <Link href="/forgot-password" className="text-xs font-bold text-[#73736A] hover:text-[#0A0A0A] transition-colors">
+                <Link href="/forgot-password" className="text-sm font-bold text-[#73736A] hover:text-[#0A0A0A] transition-colors">
                   Forgot current password? Reset via email
                 </Link>
 
@@ -404,8 +404,8 @@ export default function BrandSettingsPage() {
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="space-y-1">
-                  <div className="text-base font-bold text-[#0A0A0A]">Active Brand Session</div>
-                  <p className="text-xs text-[#73736A]">
+                  <div className="text-2xl font-extrabold text-[#0A0A0A]">Active Brand Session</div>
+                  <p className="text-sm text-[#73736A]">
                     You are currently authenticated in Brand Workspace from this browser.
                   </p>
                 </div>

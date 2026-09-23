@@ -69,16 +69,16 @@ export function CreatorCard({ creator }: CreatorCardProps) {
                 </h3>
                 {creator.verified && <VerifiedBadge size="sm" />}
               </Link>
-              <span className="text-xs font-medium text-[#73736A] block mt-0.5">
+              <span className="text-sm font-medium text-[#73736A] block mt-0.5">
                 {creator.location}
               </span>
             </div>
 
             <div className="text-right shrink-0">
-              <span className="text-xs font-bold text-[#73736A] uppercase tracking-wider block font-sans">
+              <span className="text-sm font-bold text-[#73736A] uppercase tracking-wider block font-sans">
                 FROM
               </span>
-              <strong className="text-[#0A0A0A] font-sans text-lg font-black tracking-tight">
+              <strong className="text-[#0A0A0A] font-sans text-2xl font-extrabold tracking-tight">
                 €{creator.startingPriceEur}
               </strong>
             </div>
@@ -89,7 +89,7 @@ export function CreatorCard({ creator }: CreatorCardProps) {
             {creator.categories.slice(0, 3).map((cat, idx) => (
               <span
                 key={cat}
-                className={`text-xs font-bold px-2.5 py-0.5 rounded-full font-sans ${
+                className={`text-sm font-bold px-2.5 py-0.5 rounded-full font-sans ${
                   idx === 0
                     ? 'bg-[#F1EEF9] text-[#6444A6]'
                     : idx === 1
@@ -103,7 +103,7 @@ export function CreatorCard({ creator }: CreatorCardProps) {
           </div>
 
           {/* Social Platform Follower Counts Bar with crisp icons & proper sizes */}
-          <div className="flex items-center justify-between text-xs font-bold text-[#0A0A0A] pt-3 border-t border-[#F0F0EB] font-sans">
+          <div className="flex items-center justify-between text-sm font-bold text-[#0A0A0A] pt-3 border-t border-[#F0F0EB] font-sans">
             {creator.platforms.instagram && (
               <div className="flex items-center gap-1.5">
                 <span className="w-5 h-5 rounded-full bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF] flex items-center justify-center text-white shrink-0 shadow-2xs">

@@ -199,8 +199,8 @@ function NewHireContent() {
           {/* Left Column: Scope & Brief Form */}
           <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
             <div>
-              <h2 className="text-base font-black text-[#0A0A0A] tracking-tight">Campaign Details</h2>
-              <p className="text-xs text-[#73736A] mt-0.5">Customize your brief, deliverables, and collaboration terms</p>
+              <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Campaign Details</h2>
+              <p className="text-sm text-[#73736A] mt-0.5">Customize your brief, deliverables, and collaboration terms</p>
             </div>
 
             {/* Select Creator */}
@@ -237,18 +237,18 @@ function NewHireContent() {
                         <span className="font-extrabold text-[#0A0A0A] text-sm leading-tight">
                           {currentCreator.name}
                         </span>
-                        <span className="text-xs text-[#73736A]">@{currentCreator.handle}</span>
+                        <span className="text-sm text-[#73736A]">@{currentCreator.handle}</span>
                       </div>
                       <div className="flex items-center gap-1.5 mt-1">
                         {currentCreator.categories?.slice(0, 2).map((cat) => (
                           <span
                             key={cat}
-                            className="text-[10px] font-bold px-2 py-0.5 bg-white border border-[#E7E7E2] rounded-md text-[#73736A]"
+                            className="text-sm font-bold px-2 py-0.5 bg-white border border-[#E7E7E2] rounded-md text-[#73736A]"
                           >
                             {cat}
                           </span>
                         ))}
-                        <span className="text-[11px] font-bold text-[#0A0A0A] ml-1">
+                        <span className="text-sm font-bold text-[#0A0A0A] ml-1">
                           From €{currentCreator.startingPriceEur}
                         </span>
                       </div>
@@ -257,7 +257,7 @@ function NewHireContent() {
                   <Link
                     href={`/creators/${currentCreator.id}`}
                     target="_blank"
-                    className="text-xs font-bold text-[#0A0A0A] hover:text-[#FF2D78] flex items-center gap-1 transition-colors px-3 py-1.5 bg-white rounded-xl border border-[#E7E7E2]"
+                    className="text-sm font-bold text-[#0A0A0A] hover:text-[#FF2D78] flex items-center gap-1 transition-colors px-3 py-1.5 bg-white rounded-xl border border-[#E7E7E2]"
                   >
                     <span>View Profile</span>
                     <ExternalLink className="w-3 h-3 text-[#73736A]" />
@@ -273,7 +273,7 @@ function NewHireContent() {
                   <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
                     Package Preset
                   </label>
-                  <span className="text-[11px] text-[#73736A] font-medium">1-Click Autofill</span>
+                  <span className="text-sm text-[#73736A] font-medium">1-Click Autofill</span>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
@@ -292,16 +292,16 @@ function NewHireContent() {
                       >
                         <div>
                           <div className="flex items-center justify-between gap-1">
-                            <span className="text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-zinc-100 text-[#73736A]">
+                            <span className="text-xs font-extrabold uppercase px-1.5 py-0.5 rounded bg-zinc-100 text-[#73736A]">
                               {pkg.platform === 'all' ? 'Bundle' : pkg.platform}
                             </span>
                             {pkg.popular && (
-                              <span className="text-[9px] font-extrabold bg-[#FF2D78]/10 text-[#FF2D78] px-1.5 py-0.5 rounded-full">
+                              <span className="text-xs font-extrabold bg-[#FF2D78]/10 text-[#FF2D78] px-1.5 py-0.5 rounded-full">
                                 Popular
                               </span>
                             )}
                           </div>
-                          <div className="text-xs font-bold text-[#0A0A0A] mt-2 line-clamp-1 leading-snug">
+                          <div className="text-sm font-bold text-[#0A0A0A] mt-2 line-clamp-1 leading-snug">
                             {pkg.title}
                           </div>
                         </div>
@@ -309,7 +309,7 @@ function NewHireContent() {
                           <span className="text-xs font-black text-[#0A0A0A]">
                             €{pkg.priceEur.toLocaleString()}
                           </span>
-                          <span className="text-[10px] text-[#73736A] font-semibold">
+                          <span className="text-sm text-[#73736A] font-semibold">
                             {pkg.deliveryDays}d
                           </span>
                         </div>
@@ -374,7 +374,7 @@ function NewHireContent() {
                 <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
                   Deliverables & Requirements
                 </label>
-                <span className="text-[11px] text-[#73736A]">One guideline per line</span>
+                <span className="text-sm text-[#73736A]">One guideline per line</span>
               </div>
               <Input.TextArea
                 rows={3}
@@ -392,7 +392,7 @@ function NewHireContent() {
                 <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
                   Delivery Turnaround
                 </label>
-                <span className="text-xs font-bold text-[#0A0A0A]">
+                <span className="text-sm font-bold text-[#0A0A0A]">
                   Est. {formattedDeadline} ({deadlineDays} days)
                 </span>
               </div>
@@ -405,7 +405,7 @@ function NewHireContent() {
                       setDeadlineDays(days);
                       setIsCustomDeadline(false);
                     }}
-                    className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
+                    className={`flex-1 py-2 rounded-xl text-sm font-bold transition-all cursor-pointer border ${
                       !isCustomDeadline && deadlineDays === days
                         ? 'bg-[#0A0A0A] text-white border-[#0A0A0A] shadow-xs'
                         : 'bg-[#FAFAF8] text-[#73736A] border-[#E7E7E2] hover:text-[#0A0A0A] hover:bg-white'
@@ -417,7 +417,7 @@ function NewHireContent() {
                 <button
                   type="button"
                   onClick={() => setIsCustomDeadline(true)}
-                  className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
+                  className={`px-3.5 py-2 rounded-xl text-sm font-bold transition-all cursor-pointer border ${
                     isCustomDeadline
                       ? 'bg-[#0A0A0A] text-white border-[#0A0A0A] shadow-xs'
                       : 'bg-[#FAFAF8] text-[#73736A] border-[#E7E7E2] hover:text-[#0A0A0A] hover:bg-white'
@@ -433,10 +433,10 @@ function NewHireContent() {
                     max={60}
                     value={deadlineDays}
                     onChange={(val) => setDeadlineDays(val || 7)}
-                    className="w-24 rounded-lg text-xs font-bold"
+                    className="w-24 rounded-lg text-sm font-bold"
                     size="small"
                   />
-                  <span className="text-xs text-[#73736A]">days from offer acceptance</span>
+                  <span className="text-sm text-[#73736A]">days from offer acceptance</span>
                 </div>
               )}
             </div>
@@ -446,8 +446,8 @@ function NewHireContent() {
           <div className="lg:col-span-5 space-y-6">
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6 sticky top-6">
               <div>
-                <h2 className="text-base font-black text-[#0A0A0A] tracking-tight">Escrow Summary</h2>
-                <p className="text-xs text-[#73736A] mt-0.5">Transparent deposit held safely until approval</p>
+                <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Escrow Summary</h2>
+                <p className="text-sm text-[#73736A] mt-0.5">Transparent deposit held safely until approval</p>
               </div>
 
               {/* Creator Rate Slider & Input */}
@@ -476,7 +476,7 @@ function NewHireContent() {
                   onChange={(v) => setBasePriceEur(v)}
                   tooltip={{ formatter: (val) => `€${val?.toLocaleString()}` }}
                 />
-                <div className="flex justify-between text-[11px] font-semibold text-[#73736A]">
+                <div className="flex justify-between text-sm font-semibold text-[#73736A]">
                   <span>Min €100</span>
                   <span>Standard €850</span>
                   <span>Max €5,000+</span>
@@ -503,11 +503,11 @@ function NewHireContent() {
 
               {/* Escrow Protection Notice */}
               <div className="p-4 bg-[#F0FDF4] rounded-2xl border border-[#86EFAC]/50 space-y-1">
-                <div className="flex items-center gap-1.5 text-xs font-bold text-[#166534]">
+                <div className="flex items-center gap-1.5 text-sm font-bold text-[#166534]">
                   <ShieldCheck className="w-4 h-4 text-[#166534] shrink-0" />
                   <span>100% Escrow Protected</span>
                 </div>
-                <p className="text-[11px] text-[#374151] leading-relaxed">
+                <p className="text-xs text-[#374151] leading-relaxed">
                   Funds are safely locked in escrow and released only after you review and approve the submitted deliverables.
                 </p>
               </div>
@@ -522,7 +522,7 @@ function NewHireContent() {
                   <Lock className="w-4 h-4 text-[#FF2D78]" />
                   <span>Deposit €{totalCostEur.toLocaleString()} & Send Offer</span>
                 </Button>
-                <p className="text-[11px] text-center text-[#73736A]">
+                <p className="text-xs text-center text-[#73736A]">
                   Free cancellation anytime before creator accepts
                 </p>
               </div>

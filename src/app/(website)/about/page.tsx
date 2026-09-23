@@ -11,7 +11,7 @@ export default function AboutPage() {
       {/* 1. HERO SECTION */}
       <section className="pt-12 sm:pt-16 pb-14 sm:pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Label Badge */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#E7E7E2] text-xs font-bold text-[#0A0A0A] shadow-2xs mb-6">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#E7E7E2] text-sm font-bold text-[#0A0A0A] shadow-2xs mb-6">
           <Sparkles className="w-3.5 h-3.5 text-[#FF2D78]" />
           <span className="tracking-wider uppercase">About Influverse</span>
         </div>
@@ -53,7 +53,7 @@ export default function AboutPage() {
               </h2>
             </div>
             <div className="lg:col-span-7 lg:border-l lg:border-[#E7E7E2] lg:pl-12">
-              <h3 className="text-xl sm:text-2xl font-bold text-[#0A0A0A] mb-3">
+              <h3 className="text-xl sm:text-2xl font-extrabold text-[#0A0A0A] mb-3">
                 Finding the right collaborator should feel simple.
               </h3>
               <p className="text-base sm:text-lg text-[#73736A] font-medium leading-[28px]">
@@ -151,7 +151,7 @@ export default function AboutPage() {
                 <span className="text-xs font-black tracking-widest text-[#FF2D78] uppercase mb-2.5 block">
                   01
                 </span>
-                <h3 className="text-lg font-black text-[#0A0A0A] mb-1.5">
+                <h3 className="text-2xl font-extrabold text-[#0A0A0A] mb-1.5">
                   Clear expectations
                 </h3>
                 <p className="text-sm text-[#73736A] font-medium leading-[22px]">
@@ -162,7 +162,7 @@ export default function AboutPage() {
                 <span className="text-xs font-black tracking-widest text-[#FF2D78] uppercase mb-2.5 block">
                   02
                 </span>
-                <h3 className="text-lg font-black text-[#0A0A0A] mb-1.5">
+                <h3 className="text-2xl font-extrabold text-[#0A0A0A] mb-1.5">
                   Shared visibility
                 </h3>
                 <p className="text-sm text-[#73736A] font-medium leading-[22px]">
@@ -173,7 +173,7 @@ export default function AboutPage() {
                 <span className="text-xs font-black tracking-widest text-[#FF2D78] uppercase mb-2.5 block">
                   03
                 </span>
-                <h3 className="text-lg font-black text-[#0A0A0A] mb-1.5">
+                <h3 className="text-2xl font-extrabold text-[#0A0A0A] mb-1.5">
                   Creative respect
                 </h3>
                 <p className="text-sm text-[#73736A] font-medium leading-[22px]">

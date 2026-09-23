@@ -447,9 +447,9 @@ function CreatorProfileContent() {
             }`}
           >
             <ImageIcon className={`w-4 h-4 shrink-0 ${activeTab === 'gallery' ? 'text-white' : 'text-[#73736A]'}`} />
-            <span className="whitespace-nowrap">Aesthetic Gallery</span>
+            <span className="whitespace-nowrap">Gallery</span>
             <span
-              className={`text-[11px] font-extrabold px-2 py-0.5 rounded-full shrink-0 ${
+              className={`text-xs font-extrabold px-2 py-0.5 rounded-full shrink-0 ${
                 activeTab === 'gallery' ? 'bg-white/20 text-white' : 'bg-[#E7E7E2] text-[#0A0A0A]'
               }`}
             >
@@ -478,7 +478,7 @@ function CreatorProfileContent() {
               {/* Header */}
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">
+                  <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                     Identity &amp; Appearance
                   </h2>
                   <p className="text-xs sm:text-sm text-[#73736A] mt-1">
@@ -486,7 +486,7 @@ function CreatorProfileContent() {
                   </p>
                 </div>
 
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#EBF5FF] text-[#1E40AF] text-xs font-semibold border border-[#BFDBFE] shrink-0">
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#EBF5FF] text-[#1E40AF] text-sm font-semibold border border-[#BFDBFE] shrink-0">
                   <div className="w-4 h-4 rounded-full bg-[#2563EB] flex items-center justify-center text-white shrink-0">
                     <Check className="w-2.5 h-2.5 stroke-[3]" />
                   </div>
@@ -516,8 +516,8 @@ function CreatorProfileContent() {
 
                 <div className="space-y-2">
                   <div>
-                    <h4 className="text-sm sm:text-base font-bold text-[#0A0A0A]">Portrait photo</h4>
-                    <p className="text-xs text-[#73736A] mt-0.5">PNG, JPG or WEBP · Max 10 MB</p>
+                    <h4 className="text-sm sm:text-2xl font-extrabold text-[#0A0A0A]">Portrait photo</h4>
+                    <p className="text-sm text-[#73736A] mt-0.5">PNG, JPG or WEBP · Max 10 MB</p>
                   </div>
 
                   <div className="flex items-center gap-3">
@@ -547,13 +547,13 @@ function CreatorProfileContent() {
 
               {/* Basic information Section */}
               <div className="space-y-4">
-                <h3 className="text-sm sm:text-base font-bold text-[#0A0A0A] tracking-tight">
+                <h3 className="text-sm sm:text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                   Basic information
                 </h3>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-semibold text-[#52524E]">Full name</label>
+                    <label className="block text-sm font-semibold text-[#52524E]">Full name</label>
                     <Input
                       value={name}
                       onChange={(e) => setName(e.target.value)}
@@ -564,7 +564,7 @@ function CreatorProfileContent() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-semibold text-[#52524E]">Username</label>
+                    <label className="block text-sm font-semibold text-[#52524E]">Username</label>
                     <Input
                       prefix={<span className="text-[#73736A] text-sm font-medium mr-0.5">@</span>}
                       value={handle}
@@ -576,7 +576,7 @@ function CreatorProfileContent() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-semibold text-[#52524E]">Location</label>
+                    <label className="block text-sm font-semibold text-[#52524E]">Location</label>
                     <Input
                       prefix={<MapPin className="w-4 h-4 text-[#73736A] mr-0.5" />}
                       value={location}
@@ -587,7 +587,7 @@ function CreatorProfileContent() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-semibold text-[#52524E]">Starting rate (EUR)</label>
+                    <label className="block text-sm font-semibold text-[#52524E]">Starting rate (EUR)</label>
                     <Input
                       prefix={<span className="text-[#73736A] text-sm font-medium mr-0.5">€</span>}
                       type="number"
@@ -604,13 +604,13 @@ function CreatorProfileContent() {
 
               {/* Creator details Section */}
               <div className="space-y-5">
-                <h3 className="text-sm sm:text-base font-bold text-[#0A0A0A] tracking-tight">
+                <h3 className="text-sm sm:text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                   Creator details
                 </h3>
 
                 {/* Aesthetic vibe */}
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold text-[#52524E]">
+                  <label className="block text-sm font-semibold text-[#52524E]">
                     Aesthetic vibe &amp; signature tone
                   </label>
                   <Input
@@ -625,14 +625,14 @@ function CreatorProfileContent() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
                   {/* Primary Niches */}
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-semibold text-[#52524E]">
+                    <label className="block text-sm font-semibold text-[#52524E]">
                       Primary niches (comma-separated)
                     </label>
                     <div className="min-h-[46px] rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] focus-within:border-[#0A0A0A] bg-white p-2 flex flex-wrap items-center gap-1.5 transition-all shadow-2xs">
                       {categories.map((cat) => (
                         <span
                           key={cat}
-                          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#FAFAF8] border border-[#E7E7E2] text-xs font-semibold text-[#0A0A0A]"
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#FAFAF8] border border-[#E7E7E2] text-sm font-semibold text-[#0A0A0A]"
                         >
                           <span>{cat}</span>
                           <button
@@ -669,14 +669,14 @@ function CreatorProfileContent() {
 
                   {/* Specialty Tags */}
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-semibold text-[#52524E]">
+                    <label className="block text-sm font-semibold text-[#52524E]">
                       Specialty tags (comma-separated)
                     </label>
                     <div className="min-h-[46px] rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] focus-within:border-[#0A0A0A] bg-white p-2 flex flex-wrap items-center gap-1.5 transition-all shadow-2xs">
                       {tags.map((tag) => (
                         <span
                           key={tag}
-                          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#FAFAF8] border border-[#E7E7E2] text-xs font-semibold text-[#0A0A0A]"
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#FAFAF8] border border-[#E7E7E2] text-sm font-semibold text-[#0A0A0A]"
                         >
                           <span>{tag}</span>
                           <button
@@ -714,7 +714,7 @@ function CreatorProfileContent() {
 
                 {/* Editorial Bio */}
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold text-[#52524E]">Editorial bio</label>
+                  <label className="block text-sm font-semibold text-[#52524E]">Editorial bio</label>
                   <textarea
                     rows={4}
                     value={bio}
@@ -722,35 +722,13 @@ function CreatorProfileContent() {
                     placeholder="I create authentic, relatable content about beauty, wellness and everyday life. I love working with brands that share my values and believe in meaningful, long-term partnerships."
                     className="w-full rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A] focus:outline-none p-3.5 text-sm font-normal text-[#0A0A0A] leading-relaxed transition-all resize-y shadow-2xs"
                   />
-                  <div className="text-right text-[11px] text-[#73736A] mt-1 font-medium">
+                  <div className="text-right text-sm text-[#73736A] mt-1 font-medium">
                     {bio.length} characters
                   </div>
                 </div>
               </div>
 
-              {/* Cross-Link Card to Private Account & Security Settings */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                <div className="flex items-center gap-3.5">
-                  <div className="w-10 h-10 rounded-xl bg-white border border-[#E7E7E2] flex items-center justify-center text-[#0A0A0A] shrink-0 shadow-2xs">
-                    <ShieldCheck className="w-5 h-5 text-[#23744D]" />
-                  </div>
-                  <div>
-                    <h5 className="text-xs sm:text-sm font-bold text-[#0A0A0A]">
-                      Looking for private login credentials or password change?
-                    </h5>
-                    <p className="text-xs text-[#73736A] mt-0.5">
-                      Your authentication email, login password, and active devices are managed in private settings.
-                    </p>
-                  </div>
-                </div>
-                <Link
-                  href="/creator/settings?tab=account"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0A0A0A] hover:text-[#23744D] bg-white border border-[#D2D2CA] hover:border-[#0A0A0A] px-3.5 py-2 rounded-xl transition-all shadow-2xs whitespace-nowrap"
-                >
-                  <span>Account &amp; Security Settings</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
+
 
               {/* Save Button */}
               <div className="pt-2 flex items-center justify-end">
@@ -773,11 +751,11 @@ function CreatorProfileContent() {
               {/* Header */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#E7E7E2]">
                 <div>
-                  <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">
-                    Aesthetic Gallery &amp; Lookbook
+                  <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
+                    Gallery
                   </h2>
                   <p className="text-xs sm:text-sm text-[#73736A] mt-1 font-medium">
-                    Showcase your lifestyle aesthetics, modeling portfolio, and personal visual identity for brands.
+                    Manage your photo gallery for brand visibility.
                   </p>
                 </div>
 
@@ -807,8 +785,8 @@ function CreatorProfileContent() {
                     <ImageIcon className="w-8 h-8" />
                   </div>
                   <div className="space-y-1">
-                    <h3 className="text-base font-bold text-[#0A0A0A]">No Gallery Photos Yet</h3>
-                    <p className="text-xs text-[#73736A] max-w-sm mx-auto">
+                    <h3 className="text-2xl font-extrabold text-[#0A0A0A]">No Gallery Photos Yet</h3>
+                    <p className="text-sm text-[#73736A] max-w-sm mx-auto">
                       Add editorial shoots, lifestyle portraits, or behind-the-scenes visuals to make your creator profile stand out.
                     </p>
                   </div>
@@ -828,7 +806,7 @@ function CreatorProfileContent() {
                       className="rounded-3xl border border-[#E7E7E2] bg-[#FAFAF8] overflow-hidden hover:border-[#0A0A0A] hover:shadow-md transition-all duration-200 flex flex-col group"
                     >
                       {/* Photo Image with Lightbox Trigger */}
-                      <div className="relative aspect-4/5 w-full overflow-hidden bg-zinc-100 cursor-pointer">
+                      <div className="relative aspect-square w-full overflow-hidden bg-zinc-100 cursor-pointer">
                         <img
                           src={photo.url}
                           alt={photo.caption || 'Creator gallery photo'}
@@ -836,12 +814,7 @@ function CreatorProfileContent() {
                           onClick={() => setLightboxPhoto(photo)}
                         />
 
-                        {/* Top Badges */}
-                        <div className="absolute top-3 left-3 flex items-center gap-1.5 z-10 pointer-events-none">
-                          <span className="bg-black/75 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
-                            {photo.category || 'Lifestyle'}
-                          </span>
-                        </div>
+
 
                         {/* Hover Overlay */}
                         <div
@@ -856,40 +829,10 @@ function CreatorProfileContent() {
                       </div>
 
                       {/* Photo Details */}
-                      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3 bg-white">
-                        <div className="space-y-2">
-                          <h4 className="font-bold text-sm text-[#0A0A0A] line-clamp-2 leading-snug">
-                            {photo.caption || 'Editorial Shoot'}
-                          </h4>
-
-                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-[#73736A]">
-                            {photo.location && (
-                              <span className="flex items-center gap-1">
-                                <MapPin className="w-3 h-3 text-[#73736A]" />
-                                <span>{photo.location}</span>
-                              </span>
-                            )}
-                            {photo.date && (
-                              <span className="flex items-center gap-1">
-                                <Calendar className="w-3 h-3 text-[#73736A]" />
-                                <span>{photo.date}</span>
-                              </span>
-                            )}
-                          </div>
-
-                          {photo.tags && photo.tags.length > 0 && (
-                            <div className="flex flex-wrap gap-1 pt-1">
-                              {photo.tags.slice(0, 3).map((tag, idx) => (
-                                <span
-                                  key={idx}
-                                  className="text-[10px] font-semibold text-[#73736A] bg-[#FAFAF8] border border-[#E7E7E2] px-2 py-0.5 rounded-full"
-                                >
-                                  #{tag}
-                                </span>
-                              ))}
-                            </div>
-                          )}
-                        </div>
+                      <div className="p-4 bg-white">
+                        <h4 className="font-extrabold text-sm text-[#0A0A0A] line-clamp-2 leading-snug">
+                          {photo.caption || 'Editorial Shoot'}
+                        </h4>
 
                         {/* Actions Toolbar */}
                         <div className="pt-3 border-t border-[#E7E7E2] flex items-center justify-between gap-2">
@@ -897,7 +840,7 @@ function CreatorProfileContent() {
                           <button
                             type="button"
                             onClick={() => handleQuickReplaceClick(photo.id)}
-                            className="text-xs font-bold text-[#0A0A0A] hover:text-[#2563EB] flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer"
+                            className="text-sm font-bold text-[#0A0A0A] hover:text-[#2563EB] flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer"
                             title="Replace this photo with a new image"
                           >
                             <Upload className="w-3.5 h-3.5" />
@@ -909,7 +852,7 @@ function CreatorProfileContent() {
                             <button
                               type="button"
                               onClick={() => openEditPhotoModal(photo)}
-                              className="text-xs font-bold text-[#0A0A0A] hover:text-[#0A0A0A] p-2 rounded-lg hover:bg-[#FAFAF8] transition-colors cursor-pointer"
+                              className="text-sm font-bold text-[#0A0A0A] hover:text-[#0A0A0A] p-2 rounded-lg hover:bg-[#FAFAF8] transition-colors cursor-pointer"
                               title="Edit photo details"
                             >
                               <Edit3 className="w-3.5 h-3.5" />
@@ -926,7 +869,7 @@ function CreatorProfileContent() {
                             >
                               <button
                                 type="button"
-                                className="text-xs font-bold text-red-500 hover:text-red-700 p-2 rounded-lg hover:bg-red-50 transition-colors cursor-pointer"
+                                className="text-sm font-bold text-red-500 hover:text-red-700 p-2 rounded-lg hover:bg-red-50 transition-colors cursor-pointer"
                                 title="Delete photo"
                               >
                                 <Trash2 className="w-3.5 h-3.5" />
@@ -948,8 +891,8 @@ function CreatorProfileContent() {
           <form onSubmit={handleSaveProfile} className="space-y-6">
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
               <div className="pb-4 border-b border-[#E7E7E2]">
-                <h2 className="text-lg font-black text-[#0A0A0A] tracking-tight">Connected Channels & Audience Reach</h2>
-                <p className="text-xs text-[#73736A] mt-0.5">Verified follower metrics and engagement benchmarks shown to brand marketing managers.</p>
+                <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Connected Channels & Audience Reach</h2>
+                <p className="text-sm text-[#73736A] mt-0.5">Verified follower metrics and engagement benchmarks shown to brand marketing managers.</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -960,37 +903,37 @@ function CreatorProfileContent() {
                       <Instagram className="w-5 h-5 text-[#FF2D78]" />
                       <span>Instagram</span>
                     </div>
-                    <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#EEF7F2] text-[#23744D]">
+                    <span className="text-xs font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#EEF7F2] text-[#23744D]">
                       Active
                     </span>
                   </div>
 
                   <div className="space-y-3">
                     <div className="space-y-1">
-                      <label className="text-[11px] font-bold text-[#73736A] uppercase tracking-wider">Account Handle</label>
+                      <label className="text-sm font-bold text-[#73736A] uppercase tracking-wider">Account Handle</label>
                       <Input
                         value={igHandle}
                         onChange={(e) => setIgHandle(e.target.value)}
-                        className="rounded-xl h-9 text-xs font-semibold"
+                        className="rounded-xl h-9 text-sm font-semibold"
                         placeholder="@sophiekim"
                       />
                     </div>
                     <div className="grid grid-cols-2 gap-2">
                       <div className="space-y-1">
-                        <label className="text-[11px] font-bold text-[#73736A] uppercase tracking-wider">Followers</label>
+                        <label className="text-sm font-bold text-[#73736A] uppercase tracking-wider">Followers</label>
                         <Input
                           value={igFollowers}
                           onChange={(e) => setIgFollowers(e.target.value)}
-                          className="rounded-xl h-9 text-xs font-semibold"
+                          className="rounded-xl h-9 text-sm font-semibold"
                           placeholder="1.2M"
                         />
                       </div>
                       <div className="space-y-1">
-                        <label className="text-[11px] font-bold text-[#73736A] uppercase tracking-wider">Engagement</label>
+                        <label className="text-sm font-bold text-[#73736A] uppercase tracking-wider">Engagement</label>
                         <Input
                           value={igEngagement}
                           onChange={(e) => setIgEngagement(e.target.value)}
-                          className="rounded-xl h-9 text-xs font-semibold"
+                          className="rounded-xl h-9 text-sm font-semibold"
                           placeholder="4.8%"
                         />
                       </div>
@@ -1005,37 +948,37 @@ function CreatorProfileContent() {
                       <Film className="w-5 h-5 text-[#0A0A0A]" />
                       <span>TikTok</span>
                     </div>
-                    <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#EEF7F2] text-[#23744D]">
+                    <span className="text-xs font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#EEF7F2] text-[#23744D]">
                       Active
                     </span>
                   </div>
 
                   <div className="space-y-3">
                     <div className="space-y-1">
-                      <label className="text-[11px] font-bold text-[#73736A] uppercase tracking-wider">Account Handle</label>
+                      <label className="text-sm font-bold text-[#73736A] uppercase tracking-wider">Account Handle</label>
                       <Input
                         value={ttHandle}
                         onChange={(e) => setTtHandle(e.target.value)}
-                        className="rounded-xl h-9 text-xs font-semibold"
+                        className="rounded-xl h-9 text-sm font-semibold"
                         placeholder="@sophie.kim"
                       />
                     </div>
                     <div className="grid grid-cols-2 gap-2">
                       <div className="space-y-1">
-                        <label className="text-[11px] font-bold text-[#73736A] uppercase tracking-wider">Followers</label>
+                        <label className="text-sm font-bold text-[#73736A] uppercase tracking-wider">Followers</label>
                         <Input
                           value={ttFollowers}
                           onChange={(e) => setTtFollowers(e.target.value)}
-                          className="rounded-xl h-9 text-xs font-semibold"
+                          className="rounded-xl h-9 text-sm font-semibold"
                           placeholder="680K"
                         />
                       </div>
                       <div className="space-y-1">
-                        <label className="text-[11px] font-bold text-[#73736A] uppercase tracking-wider">Engagement</label>
+                        <label className="text-sm font-bold text-[#73736A] uppercase tracking-wider">Engagement</label>
                         <Input
                           value={ttEngagement}
                           onChange={(e) => setTtEngagement(e.target.value)}
-                          className="rounded-xl h-9 text-xs font-semibold"
+                          className="rounded-xl h-9 text-sm font-semibold"
                           placeholder="8.2%"
                         />
                       </div>
@@ -1050,27 +993,27 @@ function CreatorProfileContent() {
                       <Youtube className="w-5 h-5 text-red-500" />
                       <span>YouTube</span>
                     </div>
-                    <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#EEF7F2] text-[#23744D]">
+                    <span className="text-xs font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#EEF7F2] text-[#23744D]">
                       Active
                     </span>
                   </div>
 
                   <div className="space-y-3">
                     <div className="space-y-1">
-                      <label className="text-[11px] font-bold text-[#73736A] uppercase tracking-wider">Channel Handle</label>
+                      <label className="text-sm font-bold text-[#73736A] uppercase tracking-wider">Channel Handle</label>
                       <Input
                         value={ytHandle}
                         onChange={(e) => setYtHandle(e.target.value)}
-                        className="rounded-xl h-9 text-xs font-semibold"
+                        className="rounded-xl h-9 text-sm font-semibold"
                         placeholder="Sophie Kim Vlogs"
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="text-[11px] font-bold text-[#73736A] uppercase tracking-wider">Subscribers</label>
+                      <label className="text-sm font-bold text-[#73736A] uppercase tracking-wider">Subscribers</label>
                       <Input
                         value={ytFollowers}
                         onChange={(e) => setYtFollowers(e.target.value)}
-                        className="rounded-xl h-9 text-xs font-semibold"
+                        className="rounded-xl h-9 text-sm font-semibold"
                         placeholder="210K"
                       />
                     </div>
@@ -1115,7 +1058,7 @@ function CreatorProfileContent() {
         <form onSubmit={handleSavePhoto} className="space-y-4 pt-2">
           {/* Image Upload / Preview */}
           <div className="space-y-1.5">
-            <label className="text-xs font-bold text-[#0A0A0A] block">Photo Image</label>
+            <label className="text-sm font-bold text-[#0A0A0A] block">Photo Image</label>
             <input
               ref={modalPhotoFileInputRef}
               type="file"
@@ -1131,7 +1074,7 @@ function CreatorProfileContent() {
                   <Button
                     type="default"
                     onClick={() => modalPhotoFileInputRef.current?.click()}
-                    className="h-9 px-3 rounded-full text-xs font-bold bg-white text-[#0A0A0A] border-none flex items-center gap-1.5"
+                    className="h-9 px-3 rounded-full text-sm font-bold bg-white text-[#0A0A0A] border-none flex items-center gap-1.5"
                   >
                     <Upload className="w-3.5 h-3.5" />
                     <span>Upload Different</span>
@@ -1140,7 +1083,7 @@ function CreatorProfileContent() {
                     type="default"
                     danger
                     onClick={() => setPhotoUrl('')}
-                    className="h-9 px-3 rounded-full text-xs font-bold bg-white border-none flex items-center gap-1.5"
+                    className="h-9 px-3 rounded-full text-sm font-bold bg-white border-none flex items-center gap-1.5"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                     <span>Clear</span>
@@ -1155,8 +1098,8 @@ function CreatorProfileContent() {
                 <div className="w-10 h-10 rounded-full bg-white border border-[#E7E7E2] flex items-center justify-center mx-auto text-[#0A0A0A]">
                   <Upload className="w-5 h-5" />
                 </div>
-                <div className="text-xs font-bold text-[#0A0A0A]">Click to upload an image</div>
-                <div className="text-[11px] text-[#73736A]">Supports PNG, JPG, WEBP up to 10MB</div>
+                <div className="text-sm font-bold text-[#0A0A0A]">Click to upload an image</div>
+                <div className="text-sm text-[#73736A]">Supports PNG, JPG, WEBP up to 10MB</div>
               </div>
             )}
 
@@ -1166,26 +1109,26 @@ function CreatorProfileContent() {
                 value={photoUrl}
                 onChange={(e) => setPhotoUrl(e.target.value)}
                 placeholder="Or paste high-res image URL (https://...)"
-                className="rounded-xl h-10 text-xs font-medium border-[#E7E7E2]"
+                className="rounded-xl h-10 text-sm font-medium border-[#E7E7E2]"
               />
             </div>
           </div>
 
           {/* Caption */}
           <div>
-            <label className="text-xs font-bold text-[#0A0A0A] block mb-1">Photo Caption / Title</label>
+            <label className="text-sm font-bold text-[#0A0A0A] block mb-1">Photo Caption / Title</label>
             <Input
               value={photoCaption}
               onChange={(e) => setPhotoCaption(e.target.value)}
               placeholder="e.g. Paris Fashion Week Street Style • Natural Light"
-              className="rounded-xl h-10 text-xs font-medium border-[#E7E7E2]"
+              className="rounded-xl h-10 text-sm font-medium border-[#E7E7E2]"
             />
           </div>
 
           {/* Category & Location */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="text-xs font-bold text-[#0A0A0A] block mb-1">Visual Category</label>
+              <label className="text-sm font-bold text-[#0A0A0A] block mb-1">Visual Category</label>
               <Select
                 value={photoCategory}
                 onChange={(v) => setPhotoCategory(v)}
@@ -1202,12 +1145,12 @@ function CreatorProfileContent() {
             </div>
 
             <div>
-              <label className="text-xs font-bold text-[#0A0A0A] block mb-1">Location</label>
+              <label className="text-sm font-bold text-[#0A0A0A] block mb-1">Location</label>
               <Input
                 value={photoLocation}
                 onChange={(e) => setPhotoLocation(e.target.value)}
                 placeholder="e.g. Los Angeles, CA"
-                className="rounded-xl h-10 text-xs font-medium border-[#E7E7E2]"
+                className="rounded-xl h-10 text-sm font-medium border-[#E7E7E2]"
               />
             </div>
           </div>
@@ -1215,22 +1158,22 @@ function CreatorProfileContent() {
           {/* Date & Tags */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="text-xs font-bold text-[#0A0A0A] block mb-1">Shoot Date</label>
+              <label className="text-sm font-bold text-[#0A0A0A] block mb-1">Shoot Date</label>
               <Input
                 value={photoDate}
                 onChange={(e) => setPhotoDate(e.target.value)}
                 placeholder="e.g. February 2026"
-                className="rounded-xl h-10 text-xs font-medium border-[#E7E7E2]"
+                className="rounded-xl h-10 text-sm font-medium border-[#E7E7E2]"
               />
             </div>
 
             <div>
-              <label className="text-xs font-bold text-[#0A0A0A] block mb-1">Style Tags (comma-separated)</label>
+              <label className="text-sm font-bold text-[#0A0A0A] block mb-1">Style Tags (comma-separated)</label>
               <Input
                 value={photoTags}
                 onChange={(e) => setPhotoTags(e.target.value)}
                 placeholder="e.g. Clean Beauty, Minimalist"
-                className="rounded-xl h-10 text-xs font-medium border-[#E7E7E2]"
+                className="rounded-xl h-10 text-sm font-medium border-[#E7E7E2]"
               />
             </div>
           </div>

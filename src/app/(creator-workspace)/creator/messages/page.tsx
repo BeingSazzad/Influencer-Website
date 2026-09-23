@@ -188,7 +188,7 @@ export default function CreatorMessagesPage() {
                 <span className="text-xs font-black uppercase tracking-wider text-[#73736A]">
                   Conversations
                 </span>
-                <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-[#EEF7F2] text-[#23744D]">
+                <span className="text-sm font-bold px-2 py-0.5 rounded-full bg-[#EEF7F2] text-[#23744D]">
                   Direct Chat
                 </span>
               </div>
@@ -199,7 +199,7 @@ export default function CreatorMessagesPage() {
                   placeholder="Search brands..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full h-10 pl-9 pr-3 text-xs font-medium rounded-xl border border-[#E7E7E2] bg-[#FAFAF8] outline-none focus:border-[#0A0A0A] focus:bg-white transition-all"
+                  className="w-full h-10 pl-9 pr-3 text-sm font-medium rounded-xl border border-[#E7E7E2] bg-[#FAFAF8] outline-none focus:border-[#0A0A0A] focus:bg-white transition-all"
                 />
               </div>
             </div>
@@ -232,12 +232,12 @@ export default function CreatorMessagesPage() {
                           <span className="text-sm font-bold text-[#0A0A0A] truncate">
                             {conv.brandName}
                           </span>
-                          <span className="text-[11px] text-[#73736A] shrink-0 font-medium">
+                          <span className="text-sm text-[#73736A] shrink-0 font-medium">
                             {conv.lastMessageTimestamp}
                           </span>
                         </div>
 
-                        <div className="text-xs text-[#73736A] truncate leading-snug">
+                        <div className="text-sm text-[#73736A] truncate leading-snug">
                           {conv.lastMessage}
                         </div>
                       </div>
@@ -245,7 +245,7 @@ export default function CreatorMessagesPage() {
                   );
                 })
               ) : (
-                <div className="p-8 text-center text-xs text-[#73736A] font-medium">
+                <div className="p-8 text-center text-sm text-[#73736A] font-medium">
                   No conversations match your search.
                 </div>
               )}
@@ -263,10 +263,10 @@ export default function CreatorMessagesPage() {
                     className="w-10 h-10 rounded-full object-cover border border-[#E7E7E2] shrink-0"
                   />
                   <div className="truncate">
-                    <h2 className="text-sm sm:text-base font-bold text-[#0A0A0A] truncate">
+                    <h2 className="text-sm sm:text-2xl font-extrabold text-[#0A0A0A] truncate">
                       {activeConv.brandName}
                     </h2>
-                    <div className="text-xs text-[#73736A]">Verified Brand Partner</div>
+                    <div className="text-sm text-[#73736A]">Verified Brand Partner</div>
                   </div>
                 </div>
 
@@ -274,7 +274,7 @@ export default function CreatorMessagesPage() {
                   <Link href="/creator/orders">
                     <Button
                       type="default"
-                      className="h-9 px-3.5 rounded-full text-xs font-bold border-[#E7E7E2] text-[#0A0A0A] hover:border-[#0A0A0A] flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                      className="h-9 px-3.5 rounded-full text-sm font-bold border-[#E7E7E2] text-[#0A0A0A] hover:border-[#0A0A0A] flex items-center gap-1.5 cursor-pointer shadow-2xs"
                     >
                       <ShoppingBag className="w-3.5 h-3.5 text-[#73736A]" />
                       <span className="hidden sm:inline">Active Orders</span>
@@ -298,14 +298,14 @@ export default function CreatorMessagesPage() {
                       <UploadCloud className="w-8 h-8" />
                     </div>
                     <p className="font-bold text-base text-[#0A0A0A]">Drop Files Here to Submit</p>
-                    <p className="text-xs text-[#73736A] mt-1">
+                    <p className="text-sm text-[#73736A] mt-1">
                       Upload campaign briefs, raw footage, video edits, images, or documents
                     </p>
                   </div>
                 )}
 
                 <div className="text-center my-2">
-                  <span className="px-3 py-1 rounded-full bg-[#EAEAE3] text-[#73736A] text-[11px] font-bold uppercase tracking-wider">
+                  <span className="px-3 py-1 rounded-full bg-[#EAEAE3] text-[#73736A] text-xs font-bold uppercase tracking-wider">
                     Direct Brand Channel
                   </span>
                 </div>
@@ -326,7 +326,7 @@ export default function CreatorMessagesPage() {
                       />
 
                       <div className={`space-y-1.5 ${isCreator ? 'text-right' : 'text-left'}`}>
-                        <div className="flex items-center gap-2 text-[11px] text-[#73736A] font-medium px-1">
+                        <div className="flex items-center gap-2 text-sm text-[#73736A] font-medium px-1">
                           <span className="font-bold text-[#0A0A0A]">{msg.senderName}</span>
                           <span>•</span>
                           <span>{msg.timestamp}</span>
@@ -359,8 +359,8 @@ export default function CreatorMessagesPage() {
                                     />
                                     <div className="p-2.5 bg-white border-t border-[#E7E7E2] flex items-center justify-between gap-2">
                                       <div className="min-w-0 text-left">
-                                        <p className="text-xs font-bold text-[#0A0A0A] truncate">{att.name}</p>
-                                        <p className="text-[10px] text-[#73736A]">{att.size}</p>
+                                        <p className="text-sm font-bold text-[#0A0A0A] truncate">{att.name}</p>
+                                        <p className="text-sm text-[#73736A]">{att.size}</p>
                                       </div>
                                       <a
                                         href={att.url}
@@ -399,9 +399,9 @@ export default function CreatorMessagesPage() {
                                       )}
                                     </div>
                                     <div className="flex-1 min-w-0 text-left">
-                                      <p className="text-xs font-bold truncate leading-tight">{att.name}</p>
+                                      <p className="text-sm font-bold truncate leading-tight">{att.name}</p>
                                       <p
-                                        className={`text-[10px] font-sans mt-0.5 ${
+                                        className={`text-xs font-sans mt-0.5 ${
                                           isCreator ? 'text-zinc-400' : 'text-[#73736A]'
                                         }`}
                                       >
@@ -434,7 +434,7 @@ export default function CreatorMessagesPage() {
                 })}
 
                 {isTyping && (
-                  <div className="flex gap-2 items-center text-xs text-[#73736A] italic bg-white px-3 py-2 rounded-full border border-[#E7E7E2] w-fit shadow-2xs">
+                  <div className="flex gap-2 items-center text-sm text-[#73736A] italic bg-white px-3 py-2 rounded-full border border-[#E7E7E2] w-fit shadow-2xs">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#73736A] animate-bounce" />
                     <span className="w-1.5 h-1.5 rounded-full bg-[#73736A] animate-bounce [animation-delay:0.2s]" />
                     <span className="w-1.5 h-1.5 rounded-full bg-[#73736A] animate-bounce [animation-delay:0.4s]" />
@@ -448,7 +448,7 @@ export default function CreatorMessagesPage() {
               {/* Pending Attachments Preview Tray */}
               {pendingAttachments.length > 0 && (
                 <div className="px-4 py-2.5 bg-[#FAFAF8] border-t border-[#E7E7E2] flex items-center gap-2 overflow-x-auto">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#73736A] shrink-0">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#73736A] shrink-0">
                     Files to Submit ({pendingAttachments.length}):
                   </span>
                   <div className="flex items-center gap-2 flex-wrap">
@@ -473,8 +473,8 @@ export default function CreatorMessagesPage() {
                           </div>
                         )}
                         <div className="max-w-[130px] truncate">
-                          <p className="font-bold text-[#0A0A0A] truncate text-[11px]">{att.name}</p>
-                          <p className="text-[10px] text-[#73736A]">{att.size}</p>
+                          <p className="font-bold text-[#0A0A0A] truncate text-xs">{att.name}</p>
+                          <p className="text-sm text-[#73736A]">{att.size}</p>
                         </div>
                         <button
                           type="button"

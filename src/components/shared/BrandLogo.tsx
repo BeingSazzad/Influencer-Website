@@ -14,7 +14,7 @@ export function BrandLogo({ name, logoUrl, className = '', size = 'md' }: BrandL
 
   // Size definitions
   const sizeClasses = {
-    sm: 'w-7 h-7 text-[10px]',
+    sm: 'w-7 h-7 text-xs',
     md: 'w-10 h-10 text-xs',
     lg: 'w-12 h-12 text-sm',
   };
@@ -36,7 +36,7 @@ export function BrandLogo({ name, logoUrl, className = '', size = 'md' }: BrandL
     if (lower.includes('aura')) {
       return (
         <div className="flex flex-col items-center justify-center text-center leading-none select-none">
-          <span className="font-serif font-black tracking-widest text-[11px] text-[#0A0A0A] uppercase">
+          <span className="font-serif font-black tracking-widest text-sm text-[#0A0A0A] uppercase">
             AURA
           </span>
           <span className="text-[7.5px] font-sans font-extrabold tracking-widest text-[#73736A] uppercase mt-0.5">
@@ -47,14 +47,14 @@ export function BrandLogo({ name, logoUrl, className = '', size = 'md' }: BrandL
     }
     if (lower.includes('sephora')) {
       return (
-        <span className="font-editorial font-black tracking-widest text-[11px] text-[#0A0A0A] uppercase">
+        <span className="font-editorial font-black tracking-widest text-sm text-[#0A0A0A] uppercase">
           S
         </span>
       );
     }
     if (lower.includes('dior')) {
       return (
-        <span className="font-serif font-black tracking-tighter text-[11px] text-[#0A0A0A] uppercase">
+        <span className="font-serif font-black tracking-tighter text-sm text-[#0A0A0A] uppercase">
           DIOR
         </span>
       );
@@ -68,14 +68,14 @@ export function BrandLogo({ name, logoUrl, className = '', size = 'md' }: BrandL
     }
     if (lower.includes('gymshark')) {
       return (
-        <span className="font-sans font-black tracking-tighter text-[10px] text-[#0A0A0A] uppercase">
+        <span className="font-sans font-black tracking-tighter text-sm text-[#0A0A0A] uppercase">
           GS
         </span>
       );
     }
     if (lower.includes('patagonia') || lower.includes('gopro')) {
       return (
-        <span className="font-sans font-black text-[10px] text-[#0A0A0A] uppercase">
+        <span className="font-sans font-black text-sm text-[#0A0A0A] uppercase">
           {getInitials(name)}
         </span>
       );

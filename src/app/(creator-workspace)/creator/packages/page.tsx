@@ -272,7 +272,7 @@ export default function CreatorPackagesPage() {
             className="h-10 px-5 rounded-full font-bold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 !text-white border-none flex items-center gap-2 shadow-sm cursor-pointer"
           >
             <Plus className="w-4 h-4" />
-            <span>New Collaboration Deal</span>
+            <span>Add Package</span>
           </Button>
         }
       />
@@ -286,18 +286,18 @@ export default function CreatorPackagesPage() {
               <Package className="w-4 h-4 text-[#0A0A0A]" />
             </div>
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">{packages.length}</div>
-            <div className="text-xs text-[#73736A]">Published on public storefront</div>
+            <div className="text-sm text-[#73736A]">Published on public storefront</div>
           </div>
 
           <div className="bg-white p-5 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1">
             <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#73736A]">
               <span>Starting Rate</span>
-              <span className="text-xs font-bold text-[#23744D] bg-[#EEF7F2] px-2 py-0.5 rounded-full">
+              <span className="text-sm font-bold text-[#23744D] bg-[#EEF7F2] px-2 py-0.5 rounded-full">
                 Entry Tier
               </span>
             </div>
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">€{minPrice.toLocaleString()}</div>
-            <div className="text-xs text-[#73736A]">Base price for direct bookings</div>
+            <div className="text-sm text-[#73736A]">Base price for direct bookings</div>
           </div>
 
           <div className="bg-white p-5 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1">
@@ -306,7 +306,7 @@ export default function CreatorPackagesPage() {
               <Clock className="w-4 h-4 text-[#6444A6]" />
             </div>
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">{avgDelivery} Days</div>
-            <div className="text-xs text-[#73736A]">Average deliverable production</div>
+            <div className="text-sm text-[#73736A]">Average deliverable production</div>
           </div>
         </div>
 
@@ -315,11 +315,11 @@ export default function CreatorPackagesPage() {
           {/* Header Controls: Search & Category Filter */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E7E7E2]">
             <div>
-              <h2 className="text-lg sm:text-xl font-black text-[#0A0A0A] tracking-tight">
-                Rate Card Offerings
+              <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
+                Packages
               </h2>
-              <p className="text-xs text-[#73736A] mt-0.5 font-medium">
-                Deals can cover one or multiple channels without rigid platform restrictions.
+              <p className="text-sm text-[#73736A] mt-0.5 font-medium">
+                Fixed-price offerings brands can book directly with escrow protection.
               </p>
             </div>
 
@@ -332,7 +332,7 @@ export default function CreatorPackagesPage() {
                   placeholder="Search deals..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full h-9 pl-9 pr-3 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-xs font-semibold placeholder:text-[#73736A] focus:outline-none focus:border-[#0A0A0A] transition-colors"
+                  className="w-full h-9 pl-9 pr-3 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-sm font-semibold placeholder:text-[#73736A] focus:outline-none focus:border-[#0A0A0A] transition-colors"
                 />
               </div>
             </div>
@@ -359,30 +359,15 @@ export default function CreatorPackagesPage() {
                     }`}
                   >
                     {pkg.popular && (
-                      <div className="absolute -top-3 left-6 bg-[#0A0A0A] text-white text-[11px] font-extrabold uppercase tracking-wider px-3 py-0.5 rounded-full shadow-xs flex items-center gap-1">
+                      <div className="absolute -top-3 left-6 bg-[#0A0A0A] text-white text-xs font-extrabold uppercase tracking-wider px-3 py-0.5 rounded-full shadow-xs flex items-center gap-1">
                         <Sparkles className="w-3 h-3 text-amber-300" />
                         <span>Featured Deal</span>
                       </div>
                     )}
 
                     <div className="space-y-4">
-                      {/* Channels row & Price */}
-                      <div className="flex items-center justify-between gap-2 flex-wrap">
-                        <div className="flex items-center gap-1.5 flex-wrap">
-                          {channels.map((ch) => {
-                            const opt = CHANNEL_OPTIONS.find((c) => c.id === ch);
-                            return (
-                              <span
-                                key={ch}
-                                className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] inline-flex items-center gap-1"
-                              >
-                                {opt?.icon || <Layers className="w-3 h-3 text-amber-600" />}
-                                <span>{opt?.label || ch}</span>
-                              </span>
-                            );
-                          })}
-                        </div>
-
+                      {/* Price */}
+                      <div className="flex items-center justify-between">
                         <span className="text-2xl font-black text-[#0A0A0A]">
                           €{pkg.priceEur.toLocaleString()}
                         </span>
@@ -390,10 +375,10 @@ export default function CreatorPackagesPage() {
 
                       {/* Title & Description */}
                       <div>
-                        <h3 className="text-base font-black text-[#0A0A0A] leading-snug">
+                        <h3 className="text-2xl font-extrabold text-[#0A0A0A] leading-snug">
                           {pkg.title}
                         </h3>
-                        <p className="text-xs text-[#73736A] mt-1.5 line-clamp-2 leading-relaxed">
+                        <p className="text-sm text-[#73736A] mt-1.5 line-clamp-2 leading-relaxed">
                           {pkg.description}
                         </p>
                       </div>
@@ -413,7 +398,7 @@ export default function CreatorPackagesPage() {
 
                     {/* Footer Turnaround, Revisions & Actions */}
                     <div className="pt-4 mt-4 border-t border-[#E7E7E2] space-y-3">
-                      <div className="flex items-center justify-between text-xs text-[#73736A] font-bold">
+                      <div className="flex items-center justify-between text-sm text-[#73736A] font-bold">
                         <span className="flex items-center gap-1">
                           <Clock className="w-3.5 h-3.5 text-[#73736A]" />
                           {pkg.deliveryDays}d turnaround
@@ -429,7 +414,7 @@ export default function CreatorPackagesPage() {
                         <button
                           type="button"
                           onClick={() => handleOpenEditModal(pkg)}
-                          className="flex-1 h-9 rounded-full bg-[#0A0A0A] hover:bg-zinc-800 text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs"
+                          className="flex-1 h-9 rounded-full bg-[#0A0A0A] hover:bg-zinc-800 text-white text-sm font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs"
                         >
                           <Edit3 className="w-3.5 h-3.5" />
                           <span>Edit Deal</span>
@@ -485,7 +470,7 @@ export default function CreatorPackagesPage() {
       <Modal
         title={
           <div className="pb-3 border-b border-[#E7E7E2]">
-            <span className="text-lg font-black text-[#0A0A0A]">
+            <span className="text-2xl font-extrabold text-[#0A0A0A]">
               {editingPkgId ? 'Edit Collaboration Deal' : 'Create Collaboration Deal'}
             </span>
           </div>
@@ -501,7 +486,7 @@ export default function CreatorPackagesPage() {
           {/* Quick Presets (Only shown when creating new) */}
           {!editingPkgId && (
             <div className="p-3 bg-[#FAFAF8] rounded-2xl border border-[#E7E7E2] space-y-2">
-              <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#73736A] flex items-center gap-1">
+              <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A] flex items-center gap-1">
                 <Zap className="w-3.5 h-3.5 text-[#0A0A0A]" />
                 <span>Quick Deal Starters (1-Click Fill)</span>
               </span>
@@ -511,7 +496,7 @@ export default function CreatorPackagesPage() {
                     key={preset.label}
                     type="button"
                     onClick={() => handleApplyPreset(preset)}
-                    className="px-3 py-1 rounded-xl text-xs font-bold bg-white hover:bg-[#0A0A0A] hover:text-white text-[#0A0A0A] border border-[#E7E7E2] transition-all cursor-pointer shadow-2xs"
+                    className="px-3 py-1 rounded-xl text-sm font-bold bg-white hover:bg-[#0A0A0A] hover:text-white text-[#0A0A0A] border border-[#E7E7E2] transition-all cursor-pointer shadow-2xs"
                   >
                     {preset.label}
                   </button>
@@ -538,7 +523,7 @@ export default function CreatorPackagesPage() {
               <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
                 Delivery Channels
               </label>
-              <span className="text-[11px] text-[#73736A]">Select one or multiple</span>
+              <span className="text-sm text-[#73736A]">Select one or multiple</span>
             </div>
             <div className="flex flex-wrap gap-2">
               {CHANNEL_OPTIONS.map((ch) => {
@@ -558,7 +543,7 @@ export default function CreatorPackagesPage() {
                         setSelectedChannels([...selectedChannels, ch.id]);
                       }
                     }}
-                    className={`px-3.5 py-2 rounded-xl text-xs font-bold border transition-all flex items-center gap-1.5 cursor-pointer ${
+                    className={`px-3.5 py-2 rounded-xl text-sm font-bold border transition-all flex items-center gap-1.5 cursor-pointer ${
                       isSelected
                         ? 'bg-[#0A0A0A] text-white border-[#0A0A0A] shadow-2xs'
                         : 'bg-[#FAFAF8] text-[#73736A] border-[#E7E7E2] hover:border-[#0A0A0A] hover:text-[#0A0A0A]'
@@ -654,7 +639,7 @@ export default function CreatorPackagesPage() {
           </div>
 
           {/* Featured Deal Toggle */}
-          <label className="flex items-center gap-2 text-xs font-bold text-[#0A0A0A] cursor-pointer pt-1">
+          <label className="flex items-center gap-2 text-sm font-bold text-[#0A0A0A] cursor-pointer pt-1">
             <input
               type="checkbox"
               checked={isPopular}

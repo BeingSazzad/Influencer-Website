@@ -251,7 +251,7 @@ export function SplitHero() {
                   {/* Live Suggestions Dropdown */}
                   {showSuggestions && searchQuery.trim().length > 0 && (
                     <div className="absolute top-full left-0 mt-3 w-[calc(100vw-3rem)] sm:w-[380px] bg-white rounded-2xl border border-[#E7E7E2] shadow-2xl p-3 z-50 animate-in fade-in-0 zoom-in-95 duration-150">
-                      <div className="flex items-center justify-between pb-2 border-b border-[#F4F4F0] px-1 text-[11px] font-bold uppercase tracking-wider text-[#73736A]">
+                      <div className="flex items-center justify-between pb-2 border-b border-[#F4F4F0] px-1 text-xs font-bold uppercase tracking-wider text-[#73736A]">
                         <span>Suggested Creators</span>
                         <span className="text-[#FF2D78]">Press Enter to search</span>
                       </div>
@@ -279,14 +279,14 @@ export function SplitHero() {
                                     <span className="truncate">{c.name}</span>
                                     {c.verified && <VerifiedBadge size="sm" />}
                                   </div>
-                                  <div className="text-[11px] text-[#73736A] truncate">
+                                  <div className="text-sm text-[#73736A] truncate">
                                     @{c.handle.replace('@', '')} • {c.categories[0]}
                                   </div>
                                 </div>
                               </div>
                               <div className="text-right shrink-0 pl-2">
                                 <div className="text-xs font-black text-[#0A0A0A]">From €{c.startingPriceEur}</div>
-                                <div className="text-[10px] text-[#23744D] font-bold">★ {c.rating}</div>
+                                <div className="text-xs text-[#23744D] font-bold">★ {c.rating}</div>
                               </div>
                             </button>
                           ))}
@@ -301,7 +301,7 @@ export function SplitHero() {
                           </button>
                         </div>
                       ) : (
-                        <div className="py-4 text-center text-xs text-[#73736A] space-y-2">
+                        <div className="py-4 text-center text-sm text-[#73736A] space-y-2">
                           <p>No creators directly matching &ldquo;{searchQuery}&rdquo;</p>
                           <button
                             type="button"

@@ -79,10 +79,10 @@ export default function LoginPage() {
             {/* Quick 1-Click Demo Accounts */}
             <div className="space-y-2.5 p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
               <div className="flex items-center justify-between">
-                <span className="text-[11px] font-black text-[#73736A] uppercase tracking-wider">
+                <span className="text-xs font-black text-[#73736A] uppercase tracking-wider">
                   1-Click Instant Demo Access
                 </span>
-                <span className="text-[11px] font-bold text-[#23744D] bg-[#EEF7F2] px-2 py-0.5 rounded-full border border-[#23744D]/20">
+                <span className="text-sm font-bold text-[#23744D] bg-[#EEF7F2] px-2 py-0.5 rounded-full border border-[#23744D]/20">
                   Instant Test
                 </span>
               </div>
@@ -94,14 +94,14 @@ export default function LoginPage() {
                   className="p-3 rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] bg-white hover:bg-[#F4F4F0] text-left transition-all cursor-pointer group shadow-2xs"
                 >
                   <div className="flex items-center gap-2 mb-1">
-                    <div className="w-5 h-5 rounded-md bg-[#0A0A0A] text-white flex items-center justify-center font-bold text-[10px]">
+                    <div className="w-5 h-5 rounded-md bg-[#0A0A0A] text-white flex items-center justify-center font-bold text-xs">
                       B
                     </div>
                     <span className="text-xs font-black text-[#0A0A0A] group-hover:text-black transition-colors">
                       Brand Demo
                     </span>
                   </div>
-                  <div className="text-[11px] text-[#73736A] truncate font-medium">Elena Rostova</div>
+                  <div className="text-sm text-[#73736A] truncate font-medium">Elena Rostova</div>
                 </button>
 
                 <button
@@ -110,21 +110,21 @@ export default function LoginPage() {
                   className="p-3 rounded-xl border border-[#E7E7E2] hover:border-[#FF2D78] bg-white hover:bg-[#FFF0F5] text-left transition-all cursor-pointer group shadow-2xs"
                 >
                   <div className="flex items-center gap-2 mb-1">
-                    <div className="w-5 h-5 rounded-md bg-[#FF2D78] text-white flex items-center justify-center font-bold text-[10px]">
+                    <div className="w-5 h-5 rounded-md bg-[#FF2D78] text-white flex items-center justify-center font-bold text-xs">
                       C
                     </div>
                     <span className="text-xs font-black text-[#0A0A0A] group-hover:text-[#FF2D78] transition-colors">
                       Creator Demo
                     </span>
                   </div>
-                  <div className="text-[11px] text-[#73736A] truncate font-medium">Sophie Kim</div>
+                  <div className="text-sm text-[#73736A] truncate font-medium">Sophie Kim</div>
                 </button>
               </div>
             </div>
 
             <div className="relative flex items-center justify-center">
               <div className="border-t border-[#E7E7E2] w-full" />
-              <span className="bg-white px-3 text-[11px] font-bold text-[#A3A39C] uppercase tracking-wider absolute">
+              <span className="bg-white px-3 text-sm font-bold text-[#A3A39C] uppercase tracking-wider absolute">
                 or log in with email
               </span>
             </div>
@@ -183,7 +183,7 @@ export default function LoginPage() {
                 >
                   Remember me
                 </Checkbox>
-                <Link href="/forgot-password" className="text-xs text-[#73736A] hover:text-[#0A0A0A] font-bold transition-colors">
+                <Link href="/forgot-password" className="text-sm text-[#73736A] hover:text-[#0A0A0A] font-bold transition-colors">
                   Forgot password?
                 </Link>
               </div>

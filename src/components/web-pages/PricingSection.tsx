@@ -44,7 +44,7 @@ export function PricingSection() {
                   Interactive Fee Calculator
                 </h3>
               </div>
-              <span className="self-start sm:self-auto px-3.5 py-1.5 rounded-full bg-[#EEF7F2] text-[#23744D] text-xs font-bold font-sans whitespace-nowrap">
+              <span className="self-start sm:self-auto px-3.5 py-1.5 rounded-full bg-[#EEF7F2] text-[#23744D] text-sm font-bold font-sans whitespace-nowrap">
                 15% Flat Platform Fee
               </span>
             </div>
@@ -67,7 +67,7 @@ export function PricingSection() {
                 trackStyle={{ backgroundColor: '#0A0A0A' }}
                 handleStyle={{ borderColor: '#0A0A0A' }}
               />
-              <div className="flex justify-between gap-2 text-[10px] sm:text-xs text-[#A3A39C] mt-1 font-sans font-medium">
+              <div className="flex justify-between gap-2 text-xs sm:text-xs text-[#A3A39C] mt-1 font-sans font-medium">
                 <span>€200 (Micro)</span>
                 <span>€2,500 (Mid-tier)</span>
                 <span>€5,000+ (Macro)</span>
@@ -78,13 +78,13 @@ export function PricingSection() {
             <div className="space-y-3.5 pt-4 border-t border-[#E7E7E2] font-sans">
               <div className="flex flex-col min-[420px]:flex-row min-[420px]:justify-between gap-1 text-sm text-[#555550]">
                 <span>Creator Earnings (100% Payout):</span>
-                <span className="font-sans text-base font-bold text-[#0A0A0A]">€{budgetEur.toLocaleString()}</span>
+                <span className="font-sans text-2xl font-extrabold text-[#0A0A0A]">€{budgetEur.toLocaleString()}</span>
               </div>
               <div className="flex flex-col min-[420px]:flex-row min-[420px]:justify-between gap-1 text-sm text-[#555550]">
                 <span>Influverse Escrow & Guarantee Fee (15%):</span>
-                <span className="font-sans text-base font-bold text-[#FF2D78]">+€{platformFeeEur.toLocaleString()}</span>
+                <span className="font-sans text-2xl font-extrabold text-[#FF2D78]">+€{platformFeeEur.toLocaleString()}</span>
               </div>
-              <div className="flex flex-col min-[420px]:flex-row min-[420px]:items-center min-[420px]:justify-between gap-1 text-base font-black text-[#0A0A0A] pt-3 border-t border-[#E7E7E2]">
+              <div className="flex flex-col min-[420px]:flex-row min-[420px]:items-center min-[420px]:justify-between gap-1 text-2xl font-extrabold text-[#0A0A0A] pt-3 border-t border-[#E7E7E2]">
                 <span>Total Brand Cost (Funded in Escrow):</span>
                 <span className="font-sans text-2xl font-black text-[#0A0A0A]">€{totalCostEur.toLocaleString()}</span>
               </div>
@@ -124,7 +124,7 @@ export function PricingSection() {
                   'EU VAT Invoices & Compliance Receipts',
                   'Free to Sign Up & Search Catalog',
                 ].map((item, idx) => (
-                  <li key={idx} className="flex items-center gap-3 text-sm sm:text-base font-bold text-white font-sans">
+                  <li key={idx} className="flex items-center gap-3 text-sm sm:text-2xl font-extrabold text-white font-sans">
                     <div className="w-5 h-5 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center shrink-0">
                       <Check className="w-3.5 h-3.5 text-emerald-400" />
                     </div>

@@ -147,7 +147,7 @@ export function EmptyState({
 
       {/* Title & Description */}
       <div className="space-y-2 max-w-md mx-auto">
-        <h3 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight leading-snug">
+        <h3 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight leading-snug">
           {title}
         </h3>
         {typeof description === 'string' ? (
@@ -207,7 +207,7 @@ export function EmptyState({
       {/* Suggested Quick Chips */}
       {suggestions && suggestions.length > 0 && (
         <div className="pt-4 border-t border-[#E7E7E2]/70 space-y-2">
-          <p className="text-xs font-bold text-[#73736A] uppercase tracking-wider">
+          <p className="text-sm font-bold text-[#73736A] uppercase tracking-wider">
             {suggestionsLabel}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-2">
@@ -216,7 +216,7 @@ export function EmptyState({
                 key={idx}
                 type="button"
                 onClick={item.onClick}
-                className="px-3.5 py-1.5 rounded-full bg-[#FAFAF8] hover:bg-[#F0F0EB] text-[#0A0A0A] border border-[#E7E7E2] text-xs font-semibold transition-colors cursor-pointer"
+                className="px-3.5 py-1.5 rounded-full bg-[#FAFAF8] hover:bg-[#F0F0EB] text-[#0A0A0A] border border-[#E7E7E2] text-sm font-semibold transition-colors cursor-pointer"
               >
                 {item.label}
               </button>

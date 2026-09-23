@@ -210,7 +210,7 @@ export default function BrandPaymentsPage() {
           <div className="flex items-center gap-2.5">
             <button
               onClick={handleExportCsv}
-              className="h-10 px-4 rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] bg-white font-bold text-xs text-[#0A0A0A] flex items-center gap-2 transition-all cursor-pointer shadow-2xs hover:bg-[#FAFAF8]"
+              className="h-10 px-4 rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] bg-white font-bold text-sm text-[#0A0A0A] flex items-center gap-2 transition-all cursor-pointer shadow-2xs hover:bg-[#FAFAF8]"
             >
               <Download className="w-3.5 h-3.5 text-[#0A0A0A]" />
               <span>Export CSV</span>
@@ -263,7 +263,7 @@ export default function BrandPaymentsPage() {
             <div className="text-3xl font-black text-[#0A0A0A] tracking-tight">
               €{activeEscrowEur.toLocaleString()}
             </div>
-            <div className="text-xs text-[#73736A] font-medium flex items-center gap-1">
+            <div className="text-sm text-[#73736A] font-medium flex items-center gap-1">
               <Clock className="w-3.5 h-3.5 text-[#FF2D78]" />
               <span>Held across active creator orders</span>
             </div>
@@ -282,7 +282,7 @@ export default function BrandPaymentsPage() {
             <div className="text-3xl font-black text-[#0A0A0A] tracking-tight">
               €14,250
             </div>
-            <div className="text-xs text-[#73736A] font-medium">
+            <div className="text-sm text-[#73736A] font-medium">
               Across 8 completed campaigns
             </div>
           </div>
@@ -300,7 +300,7 @@ export default function BrandPaymentsPage() {
             <div className="text-3xl font-black text-[#0A0A0A] tracking-tight">
               15.0%
             </div>
-            <div className="text-xs text-[#73736A] font-medium">
+            <div className="text-sm text-[#73736A] font-medium">
               Tax-compliant EU VAT invoices
             </div>
           </div>
@@ -315,7 +315,7 @@ export default function BrandPaymentsPage() {
           <div className="p-6 bg-white rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="font-black text-base text-[#0A0A0A]">Primary Payment Method</h3>
-              <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#EEF7F2] text-[#23744D]">
+              <span className="text-sm font-bold px-2.5 py-0.5 rounded-full bg-[#EEF7F2] text-[#23744D]">
                 Active
               </span>
             </div>
@@ -325,7 +325,7 @@ export default function BrandPaymentsPage() {
               </div>
               <div className="min-w-0 flex-1">
                 <div className="font-bold text-sm text-[#0A0A0A]">Corporate Visa •••• 4242</div>
-                <div className="text-xs text-[#73736A]">Expires 12/28 • Default Billing</div>
+                <div className="text-sm text-[#73736A]">Expires 12/28 • Default Billing</div>
               </div>
             </div>
             <div className="flex items-center justify-between text-xs pt-1">
@@ -345,7 +345,7 @@ export default function BrandPaymentsPage() {
               <h3 className="font-black text-base text-[#0A0A0A]">Tax & Invoicing Details</h3>
               <Link
                 href="/brand/settings"
-                className="text-xs font-bold text-[#0A0A0A] hover:text-[#FF2D78] flex items-center gap-1"
+                className="text-sm font-bold text-[#0A0A0A] hover:text-[#FF2D78] flex items-center gap-1"
               >
                 Edit Details <ExternalLink className="w-3 h-3" />
               </Link>
@@ -371,7 +371,7 @@ export default function BrandPaymentsPage() {
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h3 className="text-xl font-black text-[#0A0A0A] tracking-tight">
+              <h3 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                 Transaction & Escrow Ledger
               </h3>
               <p className="text-sm text-[#73736A] mt-1">
@@ -390,7 +390,7 @@ export default function BrandPaymentsPage() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveFilter(tab.id)}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                  className={`px-3.5 py-1.5 rounded-full text-sm font-bold transition-all cursor-pointer ${
                     activeFilter === tab.id
                       ? 'bg-[#0A0A0A] text-white shadow-xs'
                       : 'bg-[#F4F4F0] text-[#73736A] hover:text-[#0A0A0A]'
@@ -439,13 +439,13 @@ export default function BrandPaymentsPage() {
                       {/* ID & Date */}
                       <td className="py-4 px-4 font-sans">
                         <div className="font-bold text-sm text-[#0A0A0A]">{txn.id}</div>
-                        <div className="text-xs text-[#73736A] font-normal mt-0.5">{txn.date}</div>
+                        <div className="text-sm text-[#73736A] font-normal mt-0.5">{txn.date}</div>
                       </td>
 
                       {/* Campaign & Creator */}
                       <td className="py-4 px-4">
                         <div className="font-bold text-sm text-[#0A0A0A]">{txn.creatorName}</div>
-                        <div className="text-xs text-[#73736A] truncate max-w-xs mt-0.5">{txn.campaignTitle}</div>
+                        <div className="text-sm text-[#73736A] truncate max-w-xs mt-0.5">{txn.campaignTitle}</div>
                       </td>
 
                       {/* Type Badge */}
@@ -530,20 +530,20 @@ export default function BrandPaymentsPage() {
         width={480}
       >
         <div className="space-y-5 font-sans pt-3">
-          <p className="text-xs text-[#73736A] leading-relaxed">
+          <p className="text-sm text-[#73736A] leading-relaxed">
             Funds deposited to your Brand Wallet are available immediately to hire verified creators and fund escrow campaigns.
           </p>
 
           {/* Quick Preset Buttons */}
           <div className="space-y-2">
-            <label className="text-xs font-bold text-[#0A0A0A]">Select Deposit Amount (EUR)</label>
+            <label className="text-sm font-bold text-[#0A0A0A]">Select Deposit Amount (EUR)</label>
             <div className="grid grid-cols-4 gap-2">
               {[500, 1000, 2500, 5000].map((preset) => (
                 <button
                   key={preset}
                   type="button"
                   onClick={() => setTopUpAmount(preset)}
-                  className={`py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
+                  className={`py-2 rounded-xl text-sm font-bold transition-all cursor-pointer border ${
                     topUpAmount === preset
                       ? 'border-[#0A0A0A] bg-[#0A0A0A] text-white shadow-xs'
                       : 'border-[#E7E7E2] bg-white text-[#0A0A0A] hover:bg-[#FAFAF8]'
@@ -557,7 +557,7 @@ export default function BrandPaymentsPage() {
 
           {/* Custom Amount Input */}
           <div className="space-y-1.5">
-            <label className="text-xs font-bold text-[#0A0A0A]">Or Enter Custom Amount (€)</label>
+            <label className="text-sm font-bold text-[#0A0A0A]">Or Enter Custom Amount (€)</label>
             <div className="relative">
               <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-bold text-[#73736A]">€</span>
               <input
@@ -572,7 +572,7 @@ export default function BrandPaymentsPage() {
 
           {/* Payment Method Selector */}
           <div className="space-y-2">
-            <label className="text-xs font-bold text-[#0A0A0A]">Payment Source</label>
+            <label className="text-sm font-bold text-[#0A0A0A]">Payment Source</label>
             <div className="space-y-2">
               {[
                 { id: 'card', name: 'Corporate Visa (•••• 4242)', desc: 'Instant • Verified', icon: CreditCard },
@@ -590,8 +590,8 @@ export default function BrandPaymentsPage() {
                   <div className="flex items-center gap-3">
                     <m.icon className="w-4 h-4 text-[#0A0A0A]" />
                     <div>
-                      <div className="text-xs font-bold text-[#0A0A0A]">{m.name}</div>
-                      <div className="text-[11px] text-[#73736A]">{m.desc}</div>
+                      <div className="text-sm font-bold text-[#0A0A0A]">{m.name}</div>
+                      <div className="text-sm text-[#73736A]">{m.desc}</div>
                     </div>
                   </div>
                   <div
@@ -607,7 +607,7 @@ export default function BrandPaymentsPage() {
           </div>
 
           {/* Escrow note */}
-          <div className="p-3 bg-[#EEF7F2] rounded-xl border border-[#D9EDE2] text-[11px] text-[#23744D] flex items-center gap-2">
+          <div className="p-3 bg-[#EEF7F2] rounded-xl border border-[#D9EDE2] text-xs text-[#23744D] flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 shrink-0" />
             <span>Regulated by European Payment Institution guidelines. Funds are 100% segregated.</span>
           </div>
@@ -639,13 +639,13 @@ export default function BrandPaymentsPage() {
             {/* Header */}
             <div className="border-b border-[#E7E7E2] pb-4 flex items-start justify-between">
               <div>
-                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#73736A]">
+                <span className="text-xs font-extrabold uppercase tracking-widest text-[#73736A]">
                   OFFICIAL TAX INVOICE
                 </span>
-                <h3 className="text-xl font-black text-[#0A0A0A] tracking-tight mt-0.5">
+                <h3 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight mt-0.5">
                   {selectedInvoice.invoiceNumber}
                 </h3>
-                <div className="text-xs text-[#73736A]">Issued on {selectedInvoice.date}</div>
+                <div className="text-sm text-[#73736A]">Issued on {selectedInvoice.date}</div>
               </div>
               <span className="px-3 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] font-bold text-xs">
                 Paid / Settled

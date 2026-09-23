@@ -80,7 +80,7 @@ export default function BrandDashboardPage() {
             <div className="text-3xl sm:text-4xl font-black text-[#0A0A0A] tracking-tight">
               €{Math.round(activeSpendEur).toLocaleString()}
             </div>
-            <div className="text-xs text-[#73736A] font-medium">
+            <div className="text-sm text-[#73736A] font-medium">
               Held securely for {activeOrders.length} active campaigns
             </div>
           </div>
@@ -98,7 +98,7 @@ export default function BrandDashboardPage() {
             <div className="text-3xl sm:text-4xl font-black text-[#0A0A0A] tracking-tight">
               {activeOrders.length}
             </div>
-            <div className="text-xs text-[#73736A] font-medium">
+            <div className="text-sm text-[#73736A] font-medium">
               {activeOrders.filter((o) => o.status === 'deliverable_submitted').length} pending review
             </div>
           </div>
@@ -116,7 +116,7 @@ export default function BrandDashboardPage() {
             <div className="text-3xl sm:text-4xl font-black text-[#0A0A0A] tracking-tight">
               €{Math.round(totalEscrowFundedEur).toLocaleString()}
             </div>
-            <div className="text-xs text-[#73736A] font-medium">
+            <div className="text-sm text-[#73736A] font-medium">
               Includes standard 15% platform fee
             </div>
           </div>
@@ -134,7 +134,7 @@ export default function BrandDashboardPage() {
             <div className="text-3xl sm:text-4xl font-black text-[#0A0A0A] tracking-tight">
               {savedCreatorIds.length} creators
             </div>
-            <div className="text-xs text-[#73736A] font-medium">
+            <div className="text-sm text-[#73736A] font-medium">
               Ready for campaign outreach
             </div>
           </div>
@@ -147,7 +147,7 @@ export default function BrandDashboardPage() {
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg sm:text-xl font-bold text-[#0A0A0A] tracking-tight">
+              <h2 className="text-lg sm:text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                 Active Brand Campaigns
               </h2>
               <p className="text-sm text-[#73736A] mt-0.5 font-medium">
@@ -207,26 +207,26 @@ export default function BrandDashboardPage() {
                           {order.creatorName}
                         </h3>
                         <VerifiedBadge size="xs" />
-                        <span className="text-xs text-[#73736A] font-medium leading-none">
+                        <span className="text-sm text-[#73736A] font-medium leading-none">
                           {order.creatorHandle.startsWith('@') ? order.creatorHandle : `@${order.creatorHandle}`}
                         </span>
-                        <span className="text-[11px] uppercase tracking-wider font-bold px-2.5 py-0.5 rounded-full bg-[#EAEAE3] text-[#4A4A45] leading-none ml-1">
+                        <span className="text-xs uppercase tracking-wider font-bold px-2.5 py-0.5 rounded-full bg-[#EAEAE3] text-[#4A4A45] leading-none ml-1">
                           {platformLabels[order.platform] || order.platform}
                         </span>
                       </div>
                       <div className="text-sm font-semibold text-[#0A0A0A] leading-snug">
                         {order.packageTitle}
                       </div>
-                      <div className="flex items-center gap-2.5 flex-wrap text-xs text-[#73736A] font-medium pt-0.5">
+                      <div className="flex items-center gap-2.5 flex-wrap text-sm text-[#73736A] font-medium pt-0.5">
                         <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-white border border-[#E7E7E2] text-[#0A0A0A] font-semibold text-xs leading-none shadow-2xs">
                           €{order.totalEur.toLocaleString()} Escrow Funded
                         </span>
                         <span className="text-[#C5C5BD] text-xs leading-none select-none">•</span>
-                        <span className="inline-flex items-center text-xs text-[#73736A] leading-none">
+                        <span className="inline-flex items-center text-sm text-[#73736A] leading-none">
                           Due {order.deadlineDate}
                         </span>
                         <span className="text-[#C5C5BD] text-xs leading-none select-none">•</span>
-                        <span className="inline-flex items-center text-xs text-[#73736A] leading-none">
+                        <span className="inline-flex items-center text-sm text-[#73736A] leading-none">
                           {order.deliverables.length} Deliverable{order.deliverables.length === 1 ? '' : 's'}
                         </span>
                       </div>
@@ -235,7 +235,7 @@ export default function BrandDashboardPage() {
 
                   <div className="flex items-center gap-3 self-end md:self-auto shrink-0 mt-2 md:mt-0">
                     <span
-                      className={`text-xs font-semibold px-3.5 py-1.5 rounded-full leading-none inline-flex items-center ${
+                      className={`text-sm font-semibold px-3.5 py-1.5 rounded-full leading-none inline-flex items-center ${
                         statusColors[order.status] || 'bg-[#F4F4F0] text-[#0A0A0A]'
                       }`}
                     >
@@ -259,7 +259,7 @@ export default function BrandDashboardPage() {
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg sm:text-xl font-bold text-[#0A0A0A] tracking-tight">
+              <h2 className="text-lg sm:text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                 Saved Creator Shortlist
               </h2>
               <p className="text-sm text-[#73736A] mt-0.5 font-medium">

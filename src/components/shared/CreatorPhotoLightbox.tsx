@@ -67,7 +67,7 @@ export function CreatorPhotoLightbox({
       >
         {/* Top Controls: Counter & Close Button */}
         <div className="w-full flex items-center justify-between pb-3 px-2 z-30">
-          <span className="px-3.5 py-1 rounded-full bg-white/10 backdrop-blur-md text-white text-xs font-bold tracking-wide border border-white/10">
+          <span className="px-3.5 py-1 rounded-full bg-white/10 backdrop-blur-md text-white text-sm font-bold tracking-wide border border-white/10">
             {currentIndex + 1} / {photos.length}
           </span>
           <button

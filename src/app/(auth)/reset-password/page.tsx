@@ -131,7 +131,7 @@ export default function ResetPasswordPage() {
                 {/* Password strength meter */}
                 {newPassword.length > 0 && (
                   <div className="mt-2.5 space-y-1.5">
-                    <div className="flex items-center justify-between text-xs font-semibold">
+                    <div className="flex items-center justify-between text-sm font-semibold">
                       <span className="text-[#73736A]">Strength:</span>
                       <span className={strengthScore >= 3 ? 'text-emerald-600' : strengthScore >= 2 ? 'text-amber-600' : 'text-red-500'}>
                         {getStrengthLabel()}
@@ -176,7 +176,7 @@ export default function ResetPasswordPage() {
               </div>
 
               {/* Rules Checklist */}
-              <div className="p-3.5 bg-[#FAFAF8] rounded-2xl border border-[#E7E7E2] space-y-1.5 text-xs text-[#73736A]">
+              <div className="p-3.5 bg-[#FAFAF8] rounded-2xl border border-[#E7E7E2] space-y-1.5 text-sm text-[#73736A]">
                 <div className="font-bold text-[#0A0A0A] mb-1">Password must include:</div>
                 <div className={`flex items-center gap-1.5 ${hasMinLength ? 'text-emerald-700 font-semibold' : ''}`}>
                   <div className={`w-1.5 h-1.5 rounded-full ${hasMinLength ? 'bg-emerald-600' : 'bg-[#D2D2CA]'}`} />
@@ -204,7 +204,7 @@ export default function ResetPasswordPage() {
               <div className="text-center pt-2">
                 <Link
                   href="/login"
-                  className="text-xs text-[#73736A] hover:text-[#0A0A0A] font-semibold transition-colors"
+                  className="text-sm text-[#73736A] hover:text-[#0A0A0A] font-semibold transition-colors"
                 >
                   Back to sign in
                 </Link>

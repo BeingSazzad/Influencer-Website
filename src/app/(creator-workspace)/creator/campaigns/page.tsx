@@ -100,7 +100,6 @@ export default function CreatorCampaignsPage() {
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
               €{totalPipelineRateEur.toLocaleString()}
             </div>
-            <div className="text-xs text-[#23744D] font-bold">100% Guaranteed Payout Rate</div>
           </div>
 
           <div className="bg-white p-5 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1">
@@ -111,7 +110,6 @@ export default function CreatorCampaignsPage() {
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
               €{lockedInEscrowEur.toLocaleString()}
             </div>
-            <div className="text-xs text-[#73736A]">{inProductionOrders.length} active campaigns producing</div>
           </div>
 
           <div className="bg-white p-5 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1">
@@ -122,7 +120,6 @@ export default function CreatorCampaignsPage() {
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
               {pendingOffers.length}
             </div>
-            <div className="text-xs text-[#8C6819] font-bold">Requires response in 48h</div>
           </div>
 
           <div className="bg-white p-5 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1">
@@ -133,7 +130,6 @@ export default function CreatorCampaignsPage() {
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
               {completedOrders.length}
             </div>
-            <div className="text-xs text-[#73736A]">Escrow successfully released</div>
           </div>
         </div>
 
@@ -159,7 +155,7 @@ export default function CreatorCampaignsPage() {
               >
                 <span>{tab.label}</span>
                 <span
-                  className={`text-[11px] px-1.5 py-0.2 rounded-full font-extrabold ${
+                  className={`text-xs px-1.5 py-0.2 rounded-full font-extrabold ${
                     activeFilter === tab.key ? 'bg-white/20 text-white' : 'bg-[#EAEAE3] text-[#0A0A0A]'
                   }`}
                 >
@@ -176,7 +172,7 @@ export default function CreatorCampaignsPage() {
               placeholder="Search brand or package..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="rounded-2xl h-10 text-xs font-semibold"
+              className="rounded-2xl h-10 text-sm font-semibold"
               allowClear
             />
           </div>
@@ -185,7 +181,7 @@ export default function CreatorCampaignsPage() {
         {/* Campaigns Deals Container */}
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-5">
           <div className="pb-3 border-b border-[#E7E7E2] flex items-center justify-between">
-            <h2 className="text-lg font-black text-[#0A0A0A] tracking-tight">
+            <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
               Campaign Contracts
             </h2>
           </div>
@@ -213,7 +209,7 @@ export default function CreatorCampaignsPage() {
                           <h3 className="font-bold text-sm sm:text-base text-[#0A0A0A] leading-tight">
                             {order.brandName}
                           </h3>
-                          <span className="text-[10px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#73736A] leading-none">
+                          <span className="text-xs uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#73736A] leading-none">
                             {order.platform}
                           </span>
                         </div>
@@ -222,7 +218,7 @@ export default function CreatorCampaignsPage() {
                           {order.packageTitle}
                         </p>
 
-                        <div className="flex items-center gap-2 text-xs text-[#73736A] font-medium pt-0.5">
+                        <div className="flex items-center gap-2 text-sm text-[#73736A] font-medium pt-0.5">
                           <span className="font-extrabold text-[#0A0A0A] text-sm">
                             €{order.basePriceEur.toLocaleString()}
                           </span>
@@ -254,15 +250,15 @@ export default function CreatorCampaignsPage() {
                       ) : (
                         <div className="flex items-center gap-3">
                           {isUnderReview ? (
-                            <span className="text-xs font-bold px-3 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] border border-[#23744D]/20">
+                            <span className="text-sm font-bold px-3 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] border border-[#23744D]/20">
                               Under Review
                             </span>
                           ) : order.status === 'completed' ? (
-                            <span className="text-xs font-bold px-3 py-1 rounded-full bg-[#EEF7F2] text-[#23744D]">
+                            <span className="text-sm font-bold px-3 py-1 rounded-full bg-[#EEF7F2] text-[#23744D]">
                               Completed
                             </span>
                           ) : (
-                            <span className="text-xs font-bold px-3 py-1 rounded-full bg-[#FAF6E8] text-[#8C6819] border border-amber-200/60">
+                            <span className="text-sm font-bold px-3 py-1 rounded-full bg-[#FAF6E8] text-[#8C6819] border border-amber-200/60">
                               In Production
                             </span>
                           )}
@@ -284,11 +280,10 @@ export default function CreatorCampaignsPage() {
             <EmptyState
               color="neutral"
               icon={<Layers className="w-8 h-8" />}
-              badge="Campaigns"
               title="No Campaigns Found in This Filter"
-              description="When brands book your rate card packages or issue custom proposals, they will appear here with escrow payout milestones."
+              description="When brands book your packages or issue custom proposals, they will appear here with escrow payout milestones."
               primaryAction={{
-                label: 'View Rate Card Packages',
+                label: 'View Packages',
                 href: '/creator/packages',
               }}
               variant="plain"

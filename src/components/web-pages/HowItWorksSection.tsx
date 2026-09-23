@@ -151,7 +151,7 @@ export function HowItWorksSection() {
                       <Icon className="w-5 h-5" />
                     </div>
                   </div>
-                  <h3 className="text-base font-bold text-[#0A0A0A] mb-2 font-sans">
+                  <h3 className="text-2xl font-extrabold text-[#0A0A0A] mb-2 font-sans">
                     {step.title}
                   </h3>
                   <p className="text-sm text-[#555550] leading-[22px] font-sans font-medium">

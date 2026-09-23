@@ -107,7 +107,7 @@ export function PackageCard({ packageItem, pkg, creator, onSelect }: PackageCard
       }`}
     >
       {currentPkg.popular && (
-        <div className="absolute -top-3 left-6 bg-[#0A0A0A] text-white text-[11px] font-extrabold uppercase tracking-wider px-3 py-0.5 rounded-full shadow-xs flex items-center gap-1">
+        <div className="absolute -top-3 left-6 bg-[#0A0A0A] text-white text-xs font-extrabold uppercase tracking-wider px-3 py-0.5 rounded-full shadow-xs flex items-center gap-1">
           <Sparkles className="w-3 h-3 text-amber-300" />
           <span>Featured Deal</span>
         </div>
@@ -120,7 +120,7 @@ export function PackageCard({ packageItem, pkg, creator, onSelect }: PackageCard
             {channels.map((ch) => (
               <span
                 key={ch.id}
-                className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] inline-flex items-center gap-1"
+                className="text-sm font-bold px-2.5 py-1 rounded-full bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] inline-flex items-center gap-1"
               >
                 {ch.icon}
                 <span>{ch.label}</span>
@@ -138,7 +138,7 @@ export function PackageCard({ packageItem, pkg, creator, onSelect }: PackageCard
           <h4 className="font-black text-[#0A0A0A] text-base group-hover:text-zinc-700 transition-colors leading-snug">
             {currentPkg.title}
           </h4>
-          <p className="text-xs text-[#73736A] mt-1.5 leading-relaxed line-clamp-2">
+          <p className="text-sm text-[#73736A] mt-1.5 leading-relaxed line-clamp-2">
             {currentPkg.description}
           </p>
         </div>
@@ -158,7 +158,7 @@ export function PackageCard({ packageItem, pkg, creator, onSelect }: PackageCard
 
       {/* Footer Specs & CTA */}
       <div className="pt-4 mt-4 border-t border-[#E7E7E2] space-y-3">
-        <div className="flex items-center justify-between text-xs text-[#73736A] font-bold">
+        <div className="flex items-center justify-between text-sm text-[#73736A] font-bold">
           <span className="flex items-center gap-1">
             <Clock className="w-3.5 h-3.5 text-[#73736A]" />
             {currentPkg.deliveryDays}d turnaround

@@ -43,10 +43,10 @@ export default function CreatorOffersPage() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A]">
+            <h2 className="text-2xl font-extrabold text-[#0A0A0A]">
               Pending Collaboration Requests
             </h2>
-            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] text-xs font-bold">
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] text-sm font-bold">
               <ShieldCheck className="w-3.5 h-3.5" />
               <span>100% Escrow Funded</span>
             </div>
@@ -71,7 +71,7 @@ export default function CreatorOffersPage() {
                           <h3 className="font-bold text-base text-[#0A0A0A] leading-tight">
                             {offer.brandName}
                           </h3>
-                          <span className="text-[11px] uppercase tracking-wider font-bold px-2.5 py-0.5 rounded-full bg-[#EAEAE3] text-[#4A4A45] leading-none ml-1">
+                          <span className="text-xs uppercase tracking-wider font-bold px-2.5 py-0.5 rounded-full bg-[#EAEAE3] text-[#4A4A45] leading-none ml-1">
                             {offer.platform}
                           </span>
                         </div>
@@ -80,8 +80,8 @@ export default function CreatorOffersPage() {
                     </div>
 
                     <div className="text-left sm:text-right">
-                      <span className="text-xs font-semibold text-[#73736A] uppercase tracking-wider">Creator Net Payout</span>
-                      <div className="text-2xl font-bold text-[#0A0A0A] tracking-tight">
+                      <span className="text-sm font-semibold text-[#73736A] uppercase tracking-wider">Creator Net Payout</span>
+                      <div className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                         €{offer.basePriceEur}
                       </div>
                       <span className="text-xs text-[#23744D] font-semibold">Zero Creator Fee (100% Payout)</span>
@@ -89,14 +89,14 @@ export default function CreatorOffersPage() {
                   </div>
 
                   <div className="p-4 bg-white rounded-2xl border border-[#E7E7E2] space-y-1.5">
-                    <div className="text-xs font-semibold uppercase tracking-wider text-[#73736A]">Creative Concept & Brief</div>
+                    <div className="text-sm font-semibold uppercase tracking-wider text-[#73736A]">Creative Concept & Brief</div>
                     <p className="text-sm text-[#44443E] leading-relaxed">
                       {offer.brief}
                     </p>
                   </div>
 
                   <div>
-                    <div className="text-xs font-semibold uppercase tracking-wider text-[#73736A] mb-2">Campaign Requirements</div>
+                    <div className="text-sm font-semibold uppercase tracking-wider text-[#73736A] mb-2">Campaign Requirements</div>
                     <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-[#0A0A0A]">
                       {offer.requirements.map((req, idx) => (
                         <li key={idx} className="flex items-center gap-2">

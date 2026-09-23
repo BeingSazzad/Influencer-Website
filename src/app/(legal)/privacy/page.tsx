@@ -72,7 +72,7 @@ export default function PrivacyPage() {
           How Influverse collects, protects, and handles personal data, verified creator analytics, and payment information in strict compliance with GDPR.
         </p>
 
-        <div className="pt-2 flex flex-wrap items-center gap-2 text-xs text-[#73736A]">
+        <div className="pt-2 flex flex-wrap items-center gap-2 text-sm text-[#73736A]">
           <span className="font-semibold text-[#0A0A0A]">Effective Date:</span>
           <span>September 2026</span>
           <span>•</span>
@@ -88,11 +88,11 @@ export default function PrivacyPage() {
             className="p-6 sm:p-8 rounded-3xl bg-white border border-[#E7E7E2] shadow-xs space-y-4"
           >
             <div className="flex items-center justify-between gap-4">
-              <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">
+              <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                 {section.title}
               </h2>
               {section.badge && (
-                <span className="px-3 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] text-xs font-bold">
+                <span className="px-3 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] text-sm font-bold">
                   {section.badge}
                 </span>
               )}
@@ -110,10 +110,10 @@ export default function PrivacyPage() {
       {/* Contact box */}
       <div className="p-6 sm:p-8 rounded-3xl bg-white border border-[#E7E7E2] flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs">
         <div className="space-y-1 text-center sm:text-left">
-          <h3 className="text-base font-bold text-[#0A0A0A]">
+          <h3 className="text-2xl font-extrabold text-[#0A0A0A]">
             Need a data export or deletion request?
           </h3>
-          <p className="text-xs text-[#73736A]">
+          <p className="text-sm text-[#73736A]">
             You can manage connected profiles in your Settings or contact our Data Protection Officer.
           </p>
         </div>
