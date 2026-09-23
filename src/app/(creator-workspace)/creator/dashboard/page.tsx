@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { useAppSelector, useAppDispatch } from '@/redux/hooks';
 import { updateOrderStatus } from '@/redux/slices/orderSlice';
@@ -13,12 +13,10 @@ import {
   CheckCircle2,
   Clock,
   ArrowRight,
-  ExternalLink,
   Sparkles,
   Package,
   Film,
   Plus,
-  Share2,
   ChevronRight,
   TrendingUp,
   Layers,
@@ -28,14 +26,12 @@ import {
 } from 'lucide-react';
 import { Button, Tag, message } from 'antd';
 import { BrandLogo } from '@/components/shared/BrandLogo';
-import { ShareProfileModal } from '@/components/shared/ShareProfileModal';
 
 export default function CreatorDashboardPage() {
   const dispatch = useAppDispatch();
   const { orders } = useAppSelector((state) => state.order);
   const { currentUser } = useAppSelector((state) => state.auth);
   const { creators } = useAppSelector((state) => state.creator);
-  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
   // Current creator details
   const targetCreatorId = currentUser?.role === 'creator' ? currentUser.id : 'creator-01';
@@ -71,28 +67,6 @@ export default function CreatorDashboardPage() {
       <WorkspaceHeader
         title="Creator Dashboard"
         subtitle={`${creatorDisplayName} (@${creatorDisplayHandle.replace('@', '')}) • Active Studio`}
-        action={
-          <div className="flex items-center gap-2.5">
-            <Button
-              type="default"
-              onClick={() => setIsShareModalOpen(true)}
-              className="h-10 px-4 rounded-full font-bold text-sm border-[#D2D2CA] text-[#0A0A0A] flex items-center gap-2 hover:border-[#0A0A0A]"
-            >
-              <Share2 className="w-4 h-4 text-[#0A0A0A]" />
-              <span>Share Profile</span>
-            </Button>
-
-            <Link href={`/creators/${currentCreator?.id || 'creator-01'}`} target="_blank">
-              <Button
-                type="default"
-                className="h-10 px-4 rounded-full font-bold text-sm border-[#D2D2CA] text-[#0A0A0A] flex items-center gap-2 hover:border-[#0A0A0A]"
-              >
-                <span>Preview Public</span>
-                <ExternalLink className="w-4 h-4" />
-              </Button>
-            </Link>
-          </div>
-        }
       />
 
       <div className="p-6 sm:p-8 max-w-6xl mx-auto space-y-7">
@@ -436,17 +410,6 @@ export default function CreatorDashboardPage() {
           </Link>
         </div>
       </div>
-
-      {/* Share Profile Modal */}
-      <ShareProfileModal
-        isOpen={isShareModalOpen}
-        onClose={() => setIsShareModalOpen(false)}
-        title={`${creatorDisplayName} (@${creatorDisplayHandle.replace('@', '')})`}
-        subtitle={`${currentCreator?.categories?.join(' & ') || 'Lifestyle'} • Verified Creator Rate Card`}
-        shareUrl={`/creators/${currentCreator?.id || 'creator-01'}`}
-        avatar={currentCreator?.avatar}
-        role="creator"
-      />
     </div>
   );
 }
