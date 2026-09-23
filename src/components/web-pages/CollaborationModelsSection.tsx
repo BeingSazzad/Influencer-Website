@@ -29,7 +29,7 @@ export function CollaborationModelsSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {/* Model 1: UGC & Content Creation */}
-          <div className="rounded-3xl p-8 sm:p-10 bg-[#FAFAF8] border border-[#E7E7E2] hover:border-[#0A0A0A] hover:shadow-xl transition-all duration-300 flex flex-col justify-between relative group">
+          <div className="rounded-3xl p-6 sm:p-8 lg:p-10 bg-[#FAFAF8] border border-[#E7E7E2] hover:border-[#0A0A0A] hover:shadow-xl transition-all duration-300 flex flex-col justify-between relative group">
             <div className="space-y-6">
               <div className="w-14 h-14 rounded-2xl bg-[#EEF7F2] text-[#23744D] flex items-center justify-center shadow-2xs group-hover:scale-105 transition-transform">
                 <Video className="w-7 h-7" />
@@ -47,15 +47,15 @@ export function CollaborationModelsSection() {
                 </p>
               </div>
 
-              <div className="space-y-3.5 pt-4 border-t border-[#E7E7E2]">
+              <div className="space-y-3 pt-4 border-t border-[#E7E7E2]">
                 {[
-                  'Full commercial usage & whitelisting rights included',
-                  'Multiple hook variations and raw asset handoffs',
-                  'Fast 3-5 day production turnaround',
-                  'Escrow funded & protected until you approve final cut',
+                  'Commercial & paid ad usage rights',
+                  'Multiple hook cuts & raw footage',
+                  'Fast 3–5 day average turnaround',
+                  'Escrow release on final approval',
                 ].map((feature, idx) => (
-                  <div key={idx} className="flex items-start gap-3 text-sm sm:text-base font-bold text-[#0A0A0A]">
-                    <Check className="w-5 h-5 text-[#23744D] shrink-0 mt-0.5" />
+                  <div key={idx} className="flex items-center gap-2.5 text-sm sm:text-[15px] font-bold text-[#0A0A0A]">
+                    <Check className="w-4.5 h-4.5 text-[#23744D] shrink-0" />
                     <span>{feature}</span>
                   </div>
                 ))}
@@ -74,7 +74,7 @@ export function CollaborationModelsSection() {
           </div>
 
           {/* Model 2: Sponsored Posting */}
-          <div className="rounded-3xl p-8 sm:p-10 overflow-hidden bg-[#0A0A0A] bg-gradient-to-b from-[#141414] to-[#0D0D0D] text-white border border-white/10 hover:border-white/20 shadow-2xl transition-all duration-300 flex flex-col justify-between relative group">
+          <div className="rounded-3xl p-6 sm:p-8 lg:p-10 overflow-hidden bg-[#0A0A0A] bg-gradient-to-b from-[#141414] to-[#0D0D0D] text-white border border-white/10 hover:border-white/20 shadow-2xl transition-all duration-300 flex flex-col justify-between relative group">
             <div className="absolute -right-24 -bottom-24 w-80 h-80 rounded-full bg-[#FF2D78]/20 blur-[95px] pointer-events-none transition-opacity duration-500 group-hover:opacity-90" />
             <div className="absolute -top-20 right-10 w-52 h-52 rounded-full bg-[#7C3AED]/10 blur-[90px] pointer-events-none" />
 
@@ -95,15 +95,15 @@ export function CollaborationModelsSection() {
                 </p>
               </div>
 
-              <div className="space-y-3.5 pt-4 border-t border-white/10">
+              <div className="space-y-3 pt-4 border-t border-white/10">
                 {[
-                  'Guaranteed organic feed or story placement',
-                  'Authentic audience endorsement & bio link tracking',
-                  'Verified audience demographics & engagement proof',
-                  '15% transparent platform fee with escrow release on post',
+                  'Guaranteed feed or story placement',
+                  'Dedicated bio link & tracking',
+                  'Verified audience demographics',
+                  'Escrow release upon live posting',
                 ].map((feature, idx) => (
-                  <div key={idx} className="flex items-start gap-3 text-sm sm:text-base font-bold text-white">
-                    <Check className="w-5 h-5 text-[#FF2D78] shrink-0 mt-0.5" />
+                  <div key={idx} className="flex items-center gap-2.5 text-sm sm:text-[15px] font-bold text-white">
+                    <Check className="w-4.5 h-4.5 text-[#FF2D78] shrink-0" />
                     <span>{feature}</span>
                   </div>
                 ))}
