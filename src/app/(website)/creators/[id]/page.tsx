@@ -404,7 +404,7 @@ export default function CreatorProfilePage() {
                       type="button"
                       className="w-full h-11 rounded-full font-bold text-xs sm:text-sm bg-white border border-[#E7E7E2] text-[#0A0A0A] flex items-center justify-center gap-2 hover:border-[#0A0A0A] hover:bg-[#FAFAF8] transition-all cursor-pointer shadow-2xs"
                     >
-                      <span>Manage Rate Cards</span>
+                      <span>Manage Packages</span>
                     </button>
                   </Link>
                 </div>

@@ -104,6 +104,8 @@ function CreatorProfileContent() {
   );
   const [newCategoryInput, setNewCategoryInput] = useState('');
   const [newTagInput, setNewTagInput] = useState('');
+  const [contactEmail, setContactEmail] = useState(currentCreator?.contactEmail || '');
+  const [contactPhone, setContactPhone] = useState(currentCreator?.contactPhone || '');
 
   // Aesthetic Gallery States
   const photosList: CreatorPhoto[] = currentCreator?.photos || [];
@@ -320,7 +322,8 @@ function CreatorProfileContent() {
       bio: bio.trim(),
       location: location.trim(),
       startingPriceEur: Number(startingPriceEur) || 500,
-      aestheticVibe: aestheticVibe.trim(),
+      contactEmail: contactEmail.trim(),
+      contactPhone: contactPhone.trim(),
       categories: categories,
       tags: tags,
       platforms: {
@@ -597,6 +600,28 @@ function CreatorProfileContent() {
                       placeholder="500"
                     />
                   </div>
+
+                  <div className="space-y-1.5">
+                    <label className="block text-sm font-semibold text-[#52524E]">Contact email</label>
+                    <Input
+                      type="email"
+                      value={contactEmail}
+                      onChange={(e) => setContactEmail(e.target.value)}
+                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
+                      placeholder="collabs@yourname.com"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="block text-sm font-semibold text-[#52524E]">Contact phone</label>
+                    <Input
+                      type="tel"
+                      value={contactPhone}
+                      onChange={(e) => setContactPhone(e.target.value)}
+                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
+                      placeholder="+1 (555) 234-5678"
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -607,19 +632,6 @@ function CreatorProfileContent() {
                 <h3 className="text-sm sm:text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                   Creator details
                 </h3>
-
-                {/* Aesthetic vibe */}
-                <div className="space-y-1.5">
-                  <label className="block text-sm font-semibold text-[#52524E]">
-                    Aesthetic vibe &amp; signature tone
-                  </label>
-                  <Input
-                    value={aestheticVibe}
-                    onChange={(e) => setAestheticVibe(e.target.value)}
-                    className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
-                    placeholder="Clean Minimalist · Warm Sun-Drenched Natural Glow"
-                  />
-                </div>
 
                 {/* Niches and Specialty Tags */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
