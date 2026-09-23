@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { WorkspaceHeader } from '@/components/layout/WorkspaceHeader';
 import { EmptyState } from '@/components/shared/EmptyState';
@@ -19,7 +18,6 @@ import {
   RotateCcw,
   Trash2,
   Edit3,
-  ExternalLink,
   ShieldCheck,
   Zap,
 } from 'lucide-react';
@@ -205,26 +203,14 @@ export default function CreatorPackagesPage() {
         title="Service Packages & Rates"
         subtitle="Manage fixed-price collaboration tiers displayed on your public rate card."
         action={
-          <div className="flex items-center gap-2.5">
-            <Link href={`/creators/${currentCreator.id}`} target="_blank">
-              <Button
-                type="default"
-                className="h-10 px-4 rounded-full font-bold text-sm border-[#D2D2CA] text-[#0A0A0A] flex items-center gap-2 hover:border-[#0A0A0A]"
-              >
-                <span>Preview Rate Card</span>
-                <ExternalLink className="w-4 h-4" />
-              </Button>
-            </Link>
-
-            <Button
-              type="primary"
-              onClick={handleOpenAddModal}
-              className="h-10 px-5 rounded-full font-bold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 !text-white border-none flex items-center gap-2 shadow-sm"
-            >
-              <Plus className="w-4 h-4" />
-              <span>Add Package</span>
-            </Button>
-          </div>
+          <Button
+            type="primary"
+            onClick={handleOpenAddModal}
+            className="h-10 px-5 rounded-full font-bold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 !text-white border-none flex items-center gap-2 shadow-sm"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Add Package</span>
+          </Button>
         }
       />
 
