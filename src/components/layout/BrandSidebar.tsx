@@ -126,37 +126,37 @@ export function BrandSidebar() {
         </nav>
       </div>
 
-      {/* Footer Profile with Sign Out */}
+      {/* Standard Sidebar User Footer */}
       <div className="border-t border-[#E7E7E2] p-3">
-        <div className="space-y-1.5">
-          {/* User Card */}
+        <div className="flex items-center justify-between p-2 rounded-2xl bg-[#FAFAF8] hover:bg-white border border-[#E7E7E2] hover:border-[#0A0A0A] transition-all group">
           <Link
             href="/brand/settings"
-            className="flex items-center gap-2.5 p-2.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] hover:border-[#0A0A0A] hover:bg-white transition-all group cursor-pointer flex-1 min-w-0"
+            className="flex items-center gap-2.5 min-w-0 flex-1 pr-1.5 cursor-pointer"
+            title="Account Settings"
           >
             <img
               src={currentUser?.avatar || 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80'}
               alt={currentUser?.name || 'Brand'}
               className="w-9 h-9 rounded-full object-cover border border-[#E7E7E2] shrink-0"
             />
-            <div className="overflow-hidden flex-1 min-w-0">
-              <div className="text-xs font-extrabold text-[#0A0A0A] group-hover:text-zinc-600 transition-colors truncate">
+            <div className="overflow-hidden min-w-0 flex-1">
+              <div className="text-xs font-bold text-[#0A0A0A] group-hover:text-zinc-600 transition-colors truncate">
                 {currentUser?.name || 'Elena Rostova'}
               </div>
               <div className="text-[11px] text-[#73736A] font-medium truncate">
-                {currentUser?.companyName || 'Aura Skincare Paris'} • Edit
+                {currentUser?.companyName || 'Aura Skincare Paris'}
               </div>
             </div>
           </Link>
 
-          {/* Standard Sign Out Action */}
           <button
             type="button"
             onClick={handleLogout}
-            className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-xs font-bold text-[#73736A] transition-colors hover:bg-rose-50 hover:text-rose-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-200"
+            title="Sign Out"
+            className="w-8 h-8 rounded-xl text-[#73736A] hover:text-rose-600 hover:bg-rose-50 flex items-center justify-center transition-colors cursor-pointer shrink-0"
+            aria-label="Sign out"
           >
             <LogOut className="w-4 h-4" />
-            <span>Sign out</span>
           </button>
         </div>
       </div>

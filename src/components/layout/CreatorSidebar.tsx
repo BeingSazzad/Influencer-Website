@@ -149,13 +149,13 @@ export function CreatorSidebar() {
         </nav>
       </div>
 
-      {/* Footer Profile with Sign Out */}
+      {/* Standard Sidebar User Footer */}
       <div className="border-t border-[#E7E7E2] p-3">
-        <div className="space-y-1.5">
-          {/* Creator User Card */}
+        <div className="flex items-center justify-between p-2 rounded-2xl bg-[#FAFAF8] hover:bg-white border border-[#E7E7E2] hover:border-[#0A0A0A] transition-all group">
           <Link
             href="/creator/profile"
-            className="flex items-center gap-2.5 p-2.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] hover:border-[#0A0A0A] hover:bg-white transition-all group cursor-pointer flex-1 min-w-0"
+            className="flex items-center gap-2.5 min-w-0 flex-1 pr-1.5 cursor-pointer"
+            title="View Profile"
           >
             <div className="relative shrink-0">
               <img
@@ -165,24 +165,24 @@ export function CreatorSidebar() {
               />
               <VerifiedBadge className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5" />
             </div>
-            <div className="overflow-hidden flex-1 min-w-0">
-              <div className="text-xs font-extrabold text-[#0A0A0A] group-hover:text-zinc-600 transition-colors truncate">
+            <div className="overflow-hidden min-w-0 flex-1">
+              <div className="text-xs font-bold text-[#0A0A0A] group-hover:text-zinc-600 transition-colors truncate">
                 {creatorName}
               </div>
               <div className="text-[11px] text-[#73736A] font-medium truncate">
-                {creatorHandle.startsWith('@') ? creatorHandle : `@${creatorHandle}`} • View Profile
+                {creatorHandle.startsWith('@') ? creatorHandle : `@${creatorHandle}`}
               </div>
             </div>
           </Link>
 
-          {/* Standard Sign Out Action */}
           <button
             type="button"
             onClick={handleLogout}
-            className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-xs font-bold text-[#73736A] transition-colors hover:bg-rose-50 hover:text-rose-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-200"
+            title="Sign Out"
+            className="w-8 h-8 rounded-xl text-[#73736A] hover:text-rose-600 hover:bg-rose-50 flex items-center justify-center transition-colors cursor-pointer shrink-0"
+            aria-label="Sign out"
           >
             <LogOut className="w-4 h-4" />
-            <span>Sign out</span>
           </button>
         </div>
       </div>
