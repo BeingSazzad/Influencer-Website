@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { closeOfferModal, createOffer } from '@/redux/slices/orderSlice';
-import { Modal, Input, InputNumber, message } from 'antd';
-import { ShieldCheck, Calendar, Lock } from 'lucide-react';
+import { Modal, Input, InputNumber, message, Button } from 'antd';
+import { ShieldCheck, Calendar, Lock, CheckCircle2, Sparkles, Clock, X } from 'lucide-react';
 import { Order, PlatformType } from '@/types';
-import { useRouter } from 'next/navigation';
+import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
 
 export function OfferModal() {
   const router = useRouter();
@@ -14,36 +15,34 @@ export function OfferModal() {
   const { isOfferModalOpen, selectedCreatorForOffer } = useAppSelector((state) => state.order);
   const { currentUser } = useAppSelector((state) => state.auth);
 
-  const [collabType, setCollabType] = useState<'sponsored_post' | 'content_creation'>('sponsored_post');
+  const [campaignTitle, setCampaignTitle] = useState('New Product Launch Campaign');
+  const [packageTitle, setPackageTitle] = useState('');
   const [platform, setPlatform] = useState<PlatformType>('instagram');
-  const [packageTitle, setPackageTitle] = useState(selectedCreatorForOffer?.packageTitle || 'Instagram Reel Campaign');
-  const [basePrice, setBasePrice] = useState<number>(selectedCreatorForOffer?.priceEur || 950);
-  const [brief, setBrief] = useState('We would like an authentic 30–60s video featuring our new product launch with key value propositions and tracking link.');
+  const [basePrice, setBasePrice] = useState<number>(950);
+  const [brief, setBrief] = useState('');
   const [deadlineDays, setDeadlineDays] = useState<number>(7);
   const [isCustomDeadline, setIsCustomDeadline] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Synchronize when selected creator opens
-  React.useEffect(() => {
+  useEffect(() => {
     if (selectedCreatorForOffer) {
-      if (selectedCreatorForOffer.packageTitle) {
-        setPackageTitle(selectedCreatorForOffer.packageTitle);
-      }
-      if (selectedCreatorForOffer.priceEur) {
-        setBasePrice(selectedCreatorForOffer.priceEur);
-      }
-      if (selectedCreatorForOffer.platform) {
-        setPlatform(selectedCreatorForOffer.platform);
-      }
+      setPackageTitle(selectedCreatorForOffer.packageTitle || 'Custom Collaboration Brief');
+      setBasePrice(selectedCreatorForOffer.priceEur || 850);
+      setPlatform(selectedCreatorForOffer.platform || 'instagram');
+      setCampaignTitle(`${selectedCreatorForOffer.packageTitle || 'Custom Campaign'} Collab`);
+      setBrief('Highlight product features with authentic voiceover and a clear call-to-action link.');
     }
   }, [selectedCreatorForOffer]);
+
+  if (!selectedCreatorForOffer) return null;
 
   const platformFee = Math.round(basePrice * 0.15 * 100) / 100;
   const totalInvoiceEur = Math.round((basePrice + platformFee) * 100) / 100;
 
   const handleSendOffer = () => {
-    if (!brief.trim() || !basePrice) {
-      message.error('Please enter budget and campaign brief.');
+    if (!campaignTitle.trim() || !brief.trim() || !basePrice) {
+      message.error('Please complete campaign title and brief.');
       return;
     }
 
@@ -58,19 +57,19 @@ export function OfferModal() {
         brandId: currentUser?.id || 'user_brand_01',
         brandName: currentUser?.companyName || 'Aura Skincare Paris',
         brandLogo: currentUser?.avatar || 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=200&q=80',
-        creatorId: selectedCreatorForOffer?.id || 'creator-01',
-        creatorName: selectedCreatorForOffer?.name || 'Sophie Kim',
-        creatorHandle: selectedCreatorForOffer?.handle || '@sophiekim',
-        creatorAvatar: selectedCreatorForOffer?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
+        creatorId: selectedCreatorForOffer.id,
+        creatorName: selectedCreatorForOffer.name,
+        creatorHandle: selectedCreatorForOffer.handle,
+        creatorAvatar: selectedCreatorForOffer.avatar,
         packageTitle: packageTitle,
-        collaborationType: collabType,
+        collaborationType: platform === 'ugc' ? 'content_creation' : 'sponsored_post',
         platform: platform,
         basePriceEur: basePrice,
         platformFeeEur: platformFee,
         totalEur: totalInvoiceEur,
         status: 'offer_sent',
-        brief: brief,
-        requirements: ['Follow brand aesthetic', 'Submit draft before publishing', 'Provide analytics screenshot'],
+        brief: brief.trim(),
+        requirements: ['Follow brand aesthetic guidelines', 'Submit draft before publishing', 'Provide analytics screenshot'],
         deadlineDate: deadlineDateFormatted,
         createdAt: new Date().toISOString().split('T')[0],
         escrowFunded: true,
@@ -80,10 +79,10 @@ export function OfferModal() {
           {
             id: `msg-${Date.now()}`,
             senderId: currentUser?.id || 'user_brand_01',
-            senderName: currentUser?.name || 'Elena',
+            senderName: currentUser?.name || 'Brand Manager',
             senderAvatar: currentUser?.avatar || 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=100&q=80',
             senderRole: 'brand',
-            text: `Offer sent: ${packageTitle} for €${totalInvoiceEur} (Escrow Funded).`,
+            text: `Offer submitted for ${packageTitle} (€${totalInvoiceEur} Escrow Funded). Looking forward to collaborating!`,
             timestamp: 'Just now',
           },
         ],
@@ -92,113 +91,96 @@ export function OfferModal() {
       dispatch(createOffer(newOrder));
       setIsSubmitting(false);
       dispatch(closeOfferModal());
-      message.success('Offer created and Escrow funded! You can track progress in your Brand Workspace.');
+      message.success('Campaign offer submitted and Escrow funded!');
       router.push('/brand/orders');
-    }, 600);
+    }, 500);
   };
-
-  if (!selectedCreatorForOffer) return null;
 
   return (
     <Modal
-      title={null}
       open={isOfferModalOpen}
       onCancel={() => dispatch(closeOfferModal())}
       footer={null}
-      width={560}
+      width={520}
       centered
+      destroyOnClose
+      className="rounded-3xl"
     >
       <div className="pt-2 pb-1 space-y-5 font-sans">
-        {/* Header */}
-        <div className="pb-4 border-b border-[#E7E7E2]">
-          <h3 className="text-xl font-black text-[#0A0A0A] tracking-tight">
-            Send Offer to {selectedCreatorForOffer.name}
-          </h3>
-        </div>
+        {/* Creator & Package Summary Header */}
+        <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <img
+                src={selectedCreatorForOffer.avatar}
+                alt={selectedCreatorForOffer.name}
+                className="w-11 h-11 rounded-full object-cover border border-[#E7E7E2]"
+              />
+              <VerifiedBadge className="absolute -bottom-0.5 -right-0.5 w-4 h-4" />
+            </div>
+            <div>
+              <h3 className="font-extrabold text-[#0A0A0A] text-sm leading-tight">
+                {selectedCreatorForOffer.name}
+              </h3>
+              <p className="text-xs text-[#73736A] font-medium">
+                {selectedCreatorForOffer.handle}
+              </p>
+            </div>
+          </div>
 
-        {/* 1. Collaboration Model Selection */}
-        <div className="space-y-2">
-          <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
-            Collaboration Type
-          </label>
-          <div className="grid grid-cols-2 gap-2.5">
-            <button
-              type="button"
-              onClick={() => setCollabType('sponsored_post')}
-              className={`p-3 rounded-2xl border text-left transition-all cursor-pointer ${
-                collabType === 'sponsored_post'
-                  ? 'bg-[#0A0A0A] text-white border-[#0A0A0A] shadow-xs'
-                  : 'bg-[#FAFAF8] text-[#555550] border-[#E7E7E2] hover:border-[#0A0A0A] hover:bg-white'
-              }`}
-            >
-              <div className="text-sm font-bold flex items-center justify-between">
-                <span>Sponsored Post</span>
-                {collabType === 'sponsored_post' && (
-                  <span className="w-2 h-2 rounded-full bg-[#FF2D78]" />
-                )}
-              </div>
-              <div className="text-xs mt-0.5 opacity-80 font-normal">
-                Published to creator's feed
-              </div>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setCollabType('content_creation')}
-              className={`p-3 rounded-2xl border text-left transition-all cursor-pointer ${
-                collabType === 'content_creation'
-                  ? 'bg-[#0A0A0A] text-white border-[#0A0A0A] shadow-xs'
-                  : 'bg-[#FAFAF8] text-[#555550] border-[#E7E7E2] hover:border-[#0A0A0A] hover:bg-white'
-              }`}
-            >
-              <div className="text-sm font-bold flex items-center justify-between">
-                <span>Content Creation (UGC)</span>
-                {collabType === 'content_creation' && (
-                  <span className="w-2 h-2 rounded-full bg-[#FF2D78]" />
-                )}
-              </div>
-              <div className="text-xs mt-0.5 opacity-80 font-normal">
-                Raw assets for brand ads
-              </div>
-            </button>
+          <div className="text-right">
+            <div className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Package Rate</div>
+            <div className="text-lg font-black text-[#0A0A0A]">€{basePrice.toLocaleString()}</div>
           </div>
         </div>
 
-        {/* 2. Package / Deliverable Name */}
-        <div className="space-y-1.5">
-          <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
-            Deliverable Name
-          </label>
-          <Input
-            value={packageTitle}
-            onChange={(e) => setPackageTitle(e.target.value)}
-            className="rounded-xl h-11 text-sm font-medium"
-            placeholder="e.g. 1x 60s High-Energy Reel with Link Sticker"
-          />
+        {/* Selected Package Badge */}
+        <div className="flex items-center justify-between text-xs p-3 rounded-xl bg-white border border-[#E7E7E2]">
+          <div className="flex items-center gap-2 truncate">
+            <Sparkles className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+            <span className="font-bold text-[#0A0A0A] truncate">{packageTitle}</span>
+          </div>
+          <span className="text-[11px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#73736A] shrink-0">
+            {platform}
+          </span>
         </div>
 
-        {/* 3. Campaign Brief & Requirements */}
-        <div className="space-y-1.5">
-          <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
-            Brief & Key Instructions
-          </label>
-          <Input.TextArea
-            rows={3}
-            value={brief}
-            onChange={(e) => setBrief(e.target.value)}
-            className="rounded-xl text-sm font-medium"
-            placeholder="Describe product talking points, preferred aesthetic, do's/don'ts, and call to action..."
-          />
-        </div>
+        {/* Campaign Info */}
+        <div className="space-y-4">
+          <div className="space-y-1.5">
+            <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
+              Campaign / Product Name
+            </label>
+            <Input
+              value={campaignTitle}
+              onChange={(e) => setCampaignTitle(e.target.value)}
+              className="rounded-xl h-10 text-sm font-semibold"
+              placeholder="e.g. Summer Skincare Drop"
+              required
+            />
+          </div>
 
-        {/* 4. Delivery Turnaround */}
-        <div className="p-3 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2] text-xs space-y-2.5">
-          <div className="flex items-center justify-between">
-            <span className="font-bold text-[#73736A] flex items-center gap-1.5">
-              <Calendar className="w-3.5 h-3.5 text-[#FF2D78]" />
-              Target Turnaround
-            </span>
-            <div className="flex items-center gap-1.5">
+          <div className="space-y-1.5">
+            <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
+              Creative Brief & Guidelines
+            </label>
+            <Input.TextArea
+              rows={3}
+              value={brief}
+              onChange={(e) => setBrief(e.target.value)}
+              className="rounded-xl text-sm leading-relaxed p-3"
+              placeholder="Outline your talking points, aesthetic tone, and required call-to-action..."
+              required
+            />
+          </div>
+
+          {/* Turnaround Selector */}
+          <div className="space-y-1.5">
+            <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#73736A]">
+              <span>Delivery Turnaround</span>
+              <span className="text-[#0A0A0A] font-extrabold lowercase">{deadlineDays} days</span>
+            </div>
+            <div className="flex items-center gap-2">
               {[5, 7, 14].map((days) => (
                 <button
                   key={days}
@@ -207,106 +189,90 @@ export function OfferModal() {
                     setDeadlineDays(days);
                     setIsCustomDeadline(false);
                   }}
-                  className={`px-2.5 py-1 rounded-full font-bold transition-all cursor-pointer ${
+                  className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
                     !isCustomDeadline && deadlineDays === days
-                      ? 'bg-[#0A0A0A] text-white shadow-2xs'
-                      : 'bg-white text-[#73736A] border border-[#E7E7E2] hover:text-[#0A0A0A]'
+                      ? 'bg-[#0A0A0A] text-white border-[#0A0A0A] shadow-2xs'
+                      : 'bg-[#FAFAF8] text-[#73736A] border-[#E7E7E2] hover:text-[#0A0A0A]'
                   }`}
                 >
-                  {days} days
+                  {days} Days
                 </button>
               ))}
               <button
                 type="button"
                 onClick={() => setIsCustomDeadline(true)}
-                className={`px-2.5 py-1 rounded-full font-bold transition-all cursor-pointer ${
+                className={`px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
                   isCustomDeadline
-                    ? 'bg-[#0A0A0A] text-white shadow-2xs'
-                    : 'bg-white text-[#73736A] border border-[#E7E7E2] hover:text-[#0A0A0A]'
+                    ? 'bg-[#0A0A0A] text-white border-[#0A0A0A] shadow-2xs'
+                    : 'bg-[#FAFAF8] text-[#73736A] border-[#E7E7E2] hover:text-[#0A0A0A]'
                 }`}
               >
                 Custom
               </button>
             </div>
-          </div>
 
-          {isCustomDeadline && (
-            <div className="flex items-center justify-between pt-2 border-t border-[#E7E7E2] animate-fade-in">
-              <span className="text-xs text-[#73736A] font-medium">Custom duration (days):</span>
-              <div className="flex items-center gap-1.5">
+            {isCustomDeadline && (
+              <div className="pt-2 flex items-center gap-2">
                 <InputNumber
                   min={1}
-                  max={90}
+                  max={60}
                   value={deadlineDays}
-                  onChange={(val) => setDeadlineDays(val || 1)}
-                  className="w-20 text-xs font-bold rounded-lg"
+                  onChange={(val) => setDeadlineDays(val || 7)}
+                  className="w-24 rounded-lg text-xs font-bold"
                   size="small"
                 />
-                <span className="text-xs font-semibold text-[#0A0A0A]">days turnaround</span>
+                <span className="text-xs text-[#73736A]">days from offer acceptance</span>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
-        {/* 5. Minimalist Clean Pricing & Escrow Summary */}
-        <div className="p-4 bg-[#FAFAF8] border border-[#E7E7E2] rounded-2xl space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-sm font-bold text-[#0A0A0A]">Creator Compensation</span>
-            <div className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-xl border border-[#E7E7E2]">
-              <span className="text-sm font-bold text-[#73736A]">€</span>
-              <InputNumber
-                min={50}
-                max={50000}
-                value={basePrice}
-                onChange={(val) => setBasePrice(val || 100)}
-                bordered={false}
-                className="w-24 text-sm font-extrabold text-[#0A0A0A] p-0"
-              />
-            </div>
+        {/* Transparent Escrow Breakdown */}
+        <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-2 text-xs">
+          <div className="flex items-center justify-between text-[#73736A]">
+            <span>Creator Fee:</span>
+            <span className="font-bold text-[#0A0A0A]">€{basePrice.toLocaleString()}</span>
           </div>
 
-          <div className="flex items-center justify-between text-xs text-[#73736A] font-medium">
-            <span>Escrow Guarantee & Service (15%)</span>
-            <span className="font-semibold text-[#0A0A0A]">+ €{platformFee.toFixed(2)}</span>
+          <div className="flex items-center justify-between text-[#73736A]">
+            <span>Escrow & Buyer Protection (15%):</span>
+            <span className="font-bold text-[#0A0A0A]">€{platformFee.toFixed(2)}</span>
           </div>
 
-          <div className="pt-2.5 border-t border-[#E7E7E2] flex items-center justify-between">
+          <div className="pt-2 border-t border-[#E7E7E2] flex items-center justify-between">
             <div>
-              <div className="text-xs text-[#73736A] font-bold uppercase tracking-wider">
-                Total Escrow Locked
-              </div>
-              <div className="text-xs text-[#23744D] font-semibold flex items-center gap-1 mt-0.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#23744D]" />
-                <span>Held safely until your sign-off</span>
+              <div className="text-xs font-black text-[#0A0A0A]">Total Escrow Funded</div>
+              <div className="text-[11px] text-[#23744D] font-bold flex items-center gap-1 mt-0.5">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>Released only upon deliverable approval</span>
               </div>
             </div>
-            <span className="text-2xl font-black text-[#0A0A0A] font-sans">
+            <div className="text-2xl font-black text-[#0A0A0A]">
               €{totalInvoiceEur.toFixed(2)}
-            </span>
+            </div>
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="pt-2 flex items-center justify-end gap-3">
-          <button
-            type="button"
+        {/* Actions */}
+        <div className="pt-2 flex items-center justify-end gap-2.5">
+          <Button
             onClick={() => dispatch(closeOfferModal())}
-            className="h-11 px-5 rounded-full text-sm font-bold text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8] transition-all cursor-pointer"
+            className="rounded-full h-11 px-5 font-bold text-xs"
           >
             Cancel
-          </button>
-          <button
-            type="button"
-            disabled={isSubmitting}
+          </Button>
+
+          <Button
+            type="primary"
+            loading={isSubmitting}
             onClick={handleSendOffer}
-            className="h-11 px-6 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-[#FF2D78] text-white transition-all shadow-sm cursor-pointer disabled:opacity-50 flex items-center gap-2 hover:scale-[1.02] active:scale-[0.98]"
+            className="h-11 px-6 rounded-full font-bold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 !text-white border-none flex items-center gap-2 shadow-sm"
           >
-            <Lock className="w-4 h-4 text-[#FF2D78]" />
-            <span>{isSubmitting ? 'Securing Escrow...' : `Fund Escrow & Send Offer (€${totalInvoiceEur.toFixed(2)})`}</span>
-          </button>
+            <Lock className="w-3.5 h-3.5 text-[#FF2D78]" />
+            <span>Fund Escrow & Send Offer</span>
+          </Button>
         </div>
       </div>
     </Modal>
   );
 }
-
