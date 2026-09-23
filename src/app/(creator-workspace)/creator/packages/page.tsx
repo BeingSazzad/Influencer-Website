@@ -22,7 +22,6 @@ import {
   Layers,
   Search,
   ShieldCheck,
-  Zap,
 } from 'lucide-react';
 import { Button, Modal, Input, InputNumber, Select, message, Popconfirm } from 'antd';
 
@@ -339,9 +338,9 @@ export default function CreatorPackagesPage() {
           </div>
 
           {/* Deal Cards Grid */}
-          {filteredPackages.length > 0 ? (
-            <div className={`grid grid-cols-1 md:grid-cols-2 ${filteredPackages.length === 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-2 xl:grid-cols-4'} gap-6`}>
-              {filteredPackages.map((pkg) => {
+          {filteredPackages.slice(0, 3).length > 0 ? (
+            <div className={`grid grid-cols-1 ${filteredPackages.slice(0,3).length === 1 ? 'md:grid-cols-1 max-w-sm' : filteredPackages.slice(0,3).length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3'} gap-5`}>
+              {filteredPackages.slice(0, 3).map((pkg) => {
                 const channels =
                   pkg.platforms && pkg.platforms.length > 0
                     ? pkg.platforms
@@ -365,30 +364,28 @@ export default function CreatorPackagesPage() {
                       </div>
                     )}
 
-                    <div className="space-y-4">
-                      {/* Price */}
-                      <div className="flex items-center justify-between">
-                        <span className="text-2xl font-black text-[#0A0A0A]">
-                          €{pkg.priceEur.toLocaleString()}
-                        </span>
+                    <div className="space-y-3">
+                      {/* Price label */}
+                      <div className="text-sm font-bold text-[#73736A]">
+                        €{pkg.priceEur.toLocaleString()}
                       </div>
 
-                      {/* Title & Description */}
+                      {/* Title — dominant */}
                       <div>
-                        <h3 className="text-2xl font-extrabold text-[#0A0A0A] leading-snug">
+                        <h3 className="text-lg font-black text-[#0A0A0A] leading-snug tracking-tight">
                           {pkg.title}
                         </h3>
-                        <p className="text-sm text-[#73736A] mt-1.5 line-clamp-2 leading-relaxed">
+                        <p className="text-sm text-[#73736A] mt-1.5 line-clamp-2 leading-relaxed font-medium">
                           {pkg.description}
                         </p>
                       </div>
 
                       {/* Inclusions List */}
                       {pkg.inclusions && pkg.inclusions.length > 0 && (
-                        <div className="pt-3 border-t border-[#F4F4F0] space-y-2 text-xs">
+                        <div className="pt-3 border-t border-[#F4F4F0] space-y-1.5 text-xs">
                           {pkg.inclusions.slice(0, 4).map((inc, i) => (
-                            <div key={i} className="flex items-center gap-2 text-[#44443E]">
-                              <Check className="w-3.5 h-3.5 text-[#23744D] shrink-0" />
+                            <div key={i} className="flex items-center gap-2 text-[#52524E]">
+                              <Check className="w-3 h-3 text-[#23744D] shrink-0" />
                               <span className="truncate font-medium">{inc}</span>
                             </div>
                           ))}
@@ -483,27 +480,6 @@ export default function CreatorPackagesPage() {
         className="rounded-3xl"
       >
         <div className="space-y-4 pt-3 font-sans">
-          {/* Quick Presets (Only shown when creating new) */}
-          {!editingPkgId && (
-            <div className="p-3 bg-[#FAFAF8] rounded-2xl border border-[#E7E7E2] space-y-2">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A] flex items-center gap-1">
-                <Zap className="w-3.5 h-3.5 text-[#0A0A0A]" />
-                <span>Quick Deal Starters (1-Click Fill)</span>
-              </span>
-              <div className="flex flex-wrap gap-1.5">
-                {QUICK_DEAL_PRESETS.map((preset) => (
-                  <button
-                    key={preset.label}
-                    type="button"
-                    onClick={() => handleApplyPreset(preset)}
-                    className="px-3 py-1 rounded-xl text-sm font-bold bg-white hover:bg-[#0A0A0A] hover:text-white text-[#0A0A0A] border border-[#E7E7E2] transition-all cursor-pointer shadow-2xs"
-                  >
-                    {preset.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
 
           {/* Deal Title */}
           <div className="space-y-1.5">
@@ -549,7 +525,6 @@ export default function CreatorPackagesPage() {
                         : 'bg-[#FAFAF8] text-[#73736A] border-[#E7E7E2] hover:border-[#0A0A0A] hover:text-[#0A0A0A]'
                     }`}
                   >
-                    {ch.icon}
                     <span>{ch.label}</span>
                     {isSelected && <Check className="w-3.5 h-3.5 text-emerald-400" />}
                   </button>

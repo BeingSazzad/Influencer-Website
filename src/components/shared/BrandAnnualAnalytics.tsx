@@ -188,7 +188,7 @@ export function BrandAnnualAnalytics() {
 
       {/* 12-Month Bar Chart */}
       <div className="space-y-3 pt-2">
-        <div className="h-56 w-full flex items-end justify-between gap-1.5 sm:gap-3 px-1 pt-6 pb-2 border-b border-[#E7E7E2] relative">
+        <div className="h-72 w-full flex items-end justify-between gap-1.5 sm:gap-3 px-1 pt-6 pb-2 border-b border-[#E7E7E2] relative">
           {/* Subtle grid lines */}
           <div className="absolute inset-x-0 top-6 border-b border-dashed border-[#EAEAE3] pointer-events-none" />
           <div className="absolute inset-x-0 top-1/2 border-b border-dashed border-[#EAEAE3] pointer-events-none" />
