@@ -476,7 +476,7 @@ function CreatorProfileContent() {
               </div>
 
               {/* Portrait photo Section */}
-              <div className="flex items-center gap-5 sm:gap-6 pt-1">
+              <div className="flex items-center gap-5">
                 <input
                   ref={fileInputRef}
                   type="file"
@@ -485,7 +485,7 @@ function CreatorProfileContent() {
                   onChange={handleFileUpload}
                 />
 
-                <div className="relative w-20 h-20 sm:w-22 sm:h-22 rounded-full overflow-hidden bg-[#FAFAF8] border border-[#E7E7E2] shrink-0 shadow-2xs">
+                <div className="relative w-20 h-20 rounded-full overflow-hidden bg-[#FAFAF8] border border-[#E7E7E2] shrink-0 shadow-2xs">
                   {avatar ? (
                     <img src={avatar} alt={name} className="w-full h-full object-cover" />
                   ) : (
@@ -495,17 +495,17 @@ function CreatorProfileContent() {
                   )}
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-1.5">
                   <div>
-                    <h4 className="text-sm sm:text-2xl font-extrabold text-[#0A0A0A]">Portrait photo</h4>
-                    <p className="text-sm text-[#73736A] mt-0.5">PNG, JPG or WEBP · Max 10 MB</p>
+                    <h4 className="text-base font-bold text-[#0A0A0A]">Portrait photo</h4>
+                    <p className="text-sm text-[#73736A] font-medium">PNG, JPG or WEBP · Max 10 MB</p>
                   </div>
 
                   <div className="flex items-center gap-3">
                     <button
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
-                      className="h-9 px-3.5 rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] bg-white hover:bg-[#FAFAF8] text-[#0A0A0A] text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 cursor-pointer shadow-2xs"
+                      className="h-8 px-3 rounded-lg border border-[#E7E7E2] hover:border-[#0A0A0A] bg-white hover:bg-[#FAFAF8] text-[#0A0A0A] text-sm font-semibold transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs"
                     >
                       <Upload className="w-3.5 h-3.5 text-[#0A0A0A]" />
                       <span>Upload new</span>
@@ -515,7 +515,7 @@ function CreatorProfileContent() {
                       <button
                         type="button"
                         onClick={() => setAvatar('')}
-                        className="text-xs sm:text-sm font-medium text-[#73736A] hover:text-rose-600 transition-colors cursor-pointer px-1 py-1"
+                        className="text-sm font-medium text-[#73736A] hover:text-rose-600 transition-colors cursor-pointer"
                       >
                         Remove
                       </button>
@@ -528,7 +528,7 @@ function CreatorProfileContent() {
 
               {/* Basic information Section */}
               <div className="space-y-4">
-                <h3 className="text-sm sm:text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
+                <h3 className="text-base font-bold text-[#0A0A0A] tracking-tight">
                   Basic information
                 </h3>
 
@@ -607,7 +607,7 @@ function CreatorProfileContent() {
 
               {/* Creator details Section */}
               <div className="space-y-5">
-                <h3 className="text-sm sm:text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
+                <h3 className="text-base font-bold text-[#0A0A0A] tracking-tight">
                   Creator details
                 </h3>
 
