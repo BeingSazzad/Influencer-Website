@@ -86,7 +86,7 @@ export default function CreatorCampaignsPage() {
     <div className="min-h-screen pb-16 font-sans">
       <WorkspaceHeader
         title="Brand Campaigns & Deals"
-        subtitle="Manage brand partnerships, rate contracts, production milestones, and escrow disbursements."
+        subtitle="Your active brand partnerships and deals."
       />
 
       <div className="p-6 sm:p-8 max-w-6xl mx-auto space-y-7">

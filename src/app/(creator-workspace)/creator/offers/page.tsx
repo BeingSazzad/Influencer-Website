@@ -37,7 +37,7 @@ export default function CreatorOffersPage() {
     <div className="min-h-screen bg-[#FAFAF8]">
       <WorkspaceHeader
         title="Incoming Offers"
-        subtitle="Review collaboration briefs, verify escrow funding, and accept campaigns."
+        subtitle="Review and accept incoming brand collaboration offers."
       />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">

@@ -263,7 +263,7 @@ export default function CreatorPackagesPage() {
     <div className="min-h-screen pb-16 font-sans">
       <WorkspaceHeader
         title="Collaboration Deals & Rate Card"
-        subtitle="Manage fixed-price deliverable offerings that brands can book with escrow protection."
+        subtitle="Fixed-price deals brands can book directly."
         action={
           <Button
             type="primary"

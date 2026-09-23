@@ -258,8 +258,9 @@ export function BrandAnnualAnalytics() {
           })}
         </div>
 
-
       </div>
+
+    </div>
 
   );
 }

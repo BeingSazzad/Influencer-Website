@@ -389,7 +389,7 @@ function CreatorProfileContent() {
     <div className="min-h-screen pb-16 font-sans">
       <WorkspaceHeader
         title="Public Profile & Identity"
-        subtitle="Manage your marketplace storefront, editorial bio, starting rate, and verified channels."
+        subtitle="Your public creator profile."
         action={
           <Button
             type="primary"
@@ -720,16 +720,6 @@ function CreatorProfileContent() {
 
 
 
-              {/* Save Button */}
-              <div className="pt-2 flex items-center justify-end">
-                <button
-                  type="submit"
-                  className="h-11 px-6 rounded-xl font-bold text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white flex items-center gap-2 shadow-sm transition-all cursor-pointer hover:scale-102 active:scale-98"
-                >
-                  <Save className="w-4 h-4 text-white" />
-                  <span>Save profile</span>
-                </button>
-              </div>
             </div>
           </form>
         )}
@@ -1092,80 +1082,17 @@ function CreatorProfileContent() {
                 <div className="text-sm text-[#73736A]">Supports PNG, JPG, WEBP up to 10MB</div>
               </div>
             )}
-
-            {/* Direct Image URL Option */}
-            <div className="pt-1">
-              <Input
-                value={photoUrl}
-                onChange={(e) => setPhotoUrl(e.target.value)}
-                placeholder="Or paste high-res image URL (https://...)"
-                className="rounded-xl h-10 text-sm font-medium border-[#E7E7E2]"
-              />
-            </div>
           </div>
 
           {/* Caption */}
           <div>
-            <label className="text-sm font-bold text-[#0A0A0A] block mb-1">Photo Caption / Title</label>
+            <label className="text-sm font-bold text-[#0A0A0A] block mb-1">Caption</label>
             <Input
               value={photoCaption}
               onChange={(e) => setPhotoCaption(e.target.value)}
-              placeholder="e.g. Paris Fashion Week Street Style • Natural Light"
+              placeholder="e.g. Paris Fashion Week Street Style"
               className="rounded-xl h-10 text-sm font-medium border-[#E7E7E2]"
             />
-          </div>
-
-          {/* Category & Location */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <label className="text-sm font-bold text-[#0A0A0A] block mb-1">Visual Category</label>
-              <Select
-                value={photoCategory}
-                onChange={(v) => setPhotoCategory(v)}
-                className="w-full h-10"
-                options={[
-                  { label: 'Lifestyle', value: 'lifestyle' },
-                  { label: 'Headshot & Portrait', value: 'headshot' },
-                  { label: 'Modeling & Fashion', value: 'modeling' },
-                  { label: 'Behind The Scenes (BTS)', value: 'bts' },
-                  { label: 'Studio Shoot', value: 'studio' },
-                  { label: 'Outdoors & Travel', value: 'outdoors' },
-                ]}
-              />
-            </div>
-
-            <div>
-              <label className="text-sm font-bold text-[#0A0A0A] block mb-1">Location</label>
-              <Input
-                value={photoLocation}
-                onChange={(e) => setPhotoLocation(e.target.value)}
-                placeholder="e.g. Los Angeles, CA"
-                className="rounded-xl h-10 text-sm font-medium border-[#E7E7E2]"
-              />
-            </div>
-          </div>
-
-          {/* Date & Tags */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <label className="text-sm font-bold text-[#0A0A0A] block mb-1">Shoot Date</label>
-              <Input
-                value={photoDate}
-                onChange={(e) => setPhotoDate(e.target.value)}
-                placeholder="e.g. February 2026"
-                className="rounded-xl h-10 text-sm font-medium border-[#E7E7E2]"
-              />
-            </div>
-
-            <div>
-              <label className="text-sm font-bold text-[#0A0A0A] block mb-1">Style Tags (comma-separated)</label>
-              <Input
-                value={photoTags}
-                onChange={(e) => setPhotoTags(e.target.value)}
-                placeholder="e.g. Clean Beauty, Minimalist"
-                className="rounded-xl h-10 text-sm font-medium border-[#E7E7E2]"
-              />
-            </div>
           </div>
 
           <div className="pt-4 border-t border-[#E7E7E2] flex items-center justify-end gap-2.5">

@@ -161,7 +161,7 @@ function CreatorSettingsContent() {
     <div className="min-h-screen pb-16 font-sans">
       <WorkspaceHeader
         title="Account & Security Settings"
-        subtitle="Manage private login credentials, security recovery phone, notifications, and active devices."
+        subtitle="Login, security, and notification settings."
         action={
           <Link href="/creator/profile">
             <Button

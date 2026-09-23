@@ -178,7 +178,7 @@ export default function CreatorPaymentsPage() {
     <div className="space-y-7 font-sans pb-16">
       <WorkspaceHeader
         title="Earnings & Payouts"
-        subtitle="Overview of campaign earnings, platform fees, and payouts ledger."
+        subtitle="Your earnings and payout history."
         action={
           <button
             type="button"

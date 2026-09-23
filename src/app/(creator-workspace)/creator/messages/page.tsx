@@ -176,7 +176,7 @@ export default function CreatorMessagesPage() {
     <div className="min-h-screen pb-12 font-sans flex flex-col">
       <WorkspaceHeader
         title="Brand Messages"
-        subtitle="Communicate directly with campaign managers and discuss creative briefs."
+        subtitle="Direct messages with brand managers."
       />
 
       <div className="p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto flex-1">

@@ -406,7 +406,7 @@ function CreatorPortfolioContent() {
     <div className="min-h-screen pb-16 font-sans">
       <WorkspaceHeader
         title="Client Work & Deliverables"
-        subtitle="Manage verified UGC video ads, sponsored brand deliverables, and performance metrics."
+        subtitle="Your brand deliverables and past work."
         action={
           <Button
             type="primary"
