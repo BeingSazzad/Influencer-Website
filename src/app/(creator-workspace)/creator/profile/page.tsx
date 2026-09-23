@@ -25,7 +25,6 @@ import {
   Film,
   ExternalLink,
   Save,
-  Share2,
   DollarSign,
   TrendingUp,
   MapPin,
@@ -392,35 +391,14 @@ function CreatorProfileContent() {
         title="Public Profile & Identity"
         subtitle="Manage your marketplace storefront, editorial bio, starting rate, and verified channels."
         action={
-          <div className="flex items-center gap-2.5">
-            <Button
-              type="default"
-              onClick={() => setIsShareModalOpen(true)}
-              className="h-10 px-4 rounded-full font-bold text-sm border-[#D2D2CA] text-[#0A0A0A] flex items-center gap-2 hover:border-[#0A0A0A]"
-            >
-              <Share2 className="w-4 h-4 text-[#0A0A0A]" />
-              <span className="hidden sm:inline">Share</span>
-            </Button>
-
-            <Link href={`/creators/${currentCreator.id}`} target="_blank">
-              <Button
-                type="default"
-                className="h-10 px-4 rounded-full font-bold text-sm border-[#D2D2CA] text-[#0A0A0A] flex items-center gap-2 hover:border-[#0A0A0A]"
-              >
-                <span>Preview</span>
-                <ExternalLink className="w-4 h-4" />
-              </Button>
-            </Link>
-
-            <Button
-              type="primary"
-              onClick={() => handleSaveProfile()}
-              className="h-10 px-5 rounded-full font-bold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 !text-white border-none flex items-center gap-2 shadow-sm cursor-pointer"
-            >
-              <Save className="w-4 h-4" />
-              <span>Save Profile</span>
-            </Button>
-          </div>
+          <Button
+            type="primary"
+            onClick={() => handleSaveProfile()}
+            className="h-10 px-5 rounded-full font-bold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 !text-white border-none flex items-center gap-2 shadow-sm cursor-pointer"
+          >
+            <Save className="w-4 h-4" />
+            <span>Save Profile</span>
+          </Button>
         }
       />
 
