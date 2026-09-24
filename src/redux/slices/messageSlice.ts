@@ -17,6 +17,7 @@ export interface DirectMessage {
   text: string;
   timestamp: string;
   createdAt: number;
+  status?: 'sent' | 'delivered' | 'read';
   attachments?: MessageAttachment[];
 }
 
@@ -67,6 +68,7 @@ const INITIAL_CONVERSATIONS: Conversation[] = [
         text: "Hi Noah! We're planning our Berlin autumn skincare launch and your styling aesthetic aligns perfectly with Aura Skincare's clean minimalist line.",
         timestamp: '15m ago',
         createdAt: Date.now() - 15 * 60 * 1000,
+        status: 'read',
       },
       {
         id: 'msg-nb-2',
@@ -77,6 +79,7 @@ const INITIAL_CONVERSATIONS: Conversation[] = [
         text: "Hello Elena! Thanks for reaching out. Berlin is home for me, and I love Aura's clean formulations. What deliverables are you looking for?",
         timestamp: '10m ago',
         createdAt: Date.now() - 10 * 60 * 1000,
+        status: 'delivered',
       },
     ],
   },
@@ -104,6 +107,7 @@ const INITIAL_CONVERSATIONS: Conversation[] = [
         text: 'Hi Sophie, just checking in on the dewy glaze video draft. The lighting references looked stellar!',
         timestamp: '2h ago',
         createdAt: Date.now() - 2 * 3600 * 1000,
+        status: 'read',
         attachments: [
           {
             id: 'att-sk-1',
@@ -130,6 +134,7 @@ const INITIAL_CONVERSATIONS: Conversation[] = [
         text: "Hi Elena! Editing the final cut right now. I'll have the 4K raw video draft uploaded to the order workspace tomorrow morning!",
         timestamp: '1h ago',
         createdAt: Date.now() - 1 * 3600 * 1000,
+        status: 'read',
       },
     ],
   },
@@ -157,6 +162,7 @@ const INITIAL_CONVERSATIONS: Conversation[] = [
         text: 'Hello Maya! Are you currently accepting commercial partnerships for luxury skincare?',
         timestamp: 'Yesterday',
         createdAt: Date.now() - 24 * 3600 * 1000,
+        status: 'read',
       },
       {
         id: 'msg-mc-2',
@@ -167,6 +173,7 @@ const INITIAL_CONVERSATIONS: Conversation[] = [
         text: 'Yes, my October calendar opens next Monday. Feel free to review my package tiers.',
         timestamp: 'Yesterday',
         createdAt: Date.now() - 23 * 3600 * 1000,
+        status: 'read',
       },
     ],
   },
@@ -197,12 +204,20 @@ export const messageSlice = createSlice({
         senderName: string;
         senderAvatar: string;
         senderRole: 'brand' | 'creator';
+        status?: 'sent' | 'delivered' | 'read';
         attachments?: MessageAttachment[];
       }>
     ) => {
-      const { conversationId, text = '', senderId, senderName, senderAvatar, senderRole, attachments } = action.payload;
+      const { conversationId, text = '', senderId, senderName, senderAvatar, senderRole, status, attachments } = action.payload;
       const conv = state.conversations.find((c) => c.id === conversationId);
       if (conv) {
+        // When a reply arrives, previous messages from the opposing role have been read
+        conv.messages.forEach((m) => {
+          if (m.senderRole !== senderRole) {
+            m.status = 'read';
+          }
+        });
+
         const newMsg: DirectMessage = {
           id: `msg-${Date.now()}`,
           senderId,
@@ -212,6 +227,7 @@ export const messageSlice = createSlice({
           text,
           timestamp: 'Just now',
           createdAt: Date.now(),
+          status: status || 'delivered',
           attachments: attachments && attachments.length > 0 ? attachments : undefined,
         };
         conv.messages.push(newMsg);
@@ -222,6 +238,67 @@ export const messageSlice = createSlice({
         } else {
           conv.unreadCountBrand += 1;
         }
+      }
+    },
+    updateMessageStatus: (
+      state,
+      action: PayloadAction<{ conversationId: string; messageId: string; status: 'sent' | 'delivered' | 'read' }>
+    ) => {
+      const { conversationId, messageId, status } = action.payload;
+      const conv = state.conversations.find((c) => c.id === conversationId);
+      if (conv) {
+        const msg = conv.messages.find((m) => m.id === messageId);
+        if (msg) {
+          msg.status = status;
+        }
+      }
+    },
+    markConversationAsRead: (
+      state,
+      action: PayloadAction<{ conversationId: string; role: 'brand' | 'creator' }>
+    ) => {
+      const { conversationId, role } = action.payload;
+      const conv = state.conversations.find((c) => c.id === conversationId);
+      if (conv) {
+        if (role === 'brand') {
+          conv.unreadCountBrand = 0;
+        } else {
+          conv.unreadCountCreator = 0;
+        }
+        conv.messages.forEach((m) => {
+          if (m.senderRole !== role) {
+            m.status = 'read';
+          }
+        });
+      }
+    },
+    deleteMessage: (
+      state,
+      action: PayloadAction<{ conversationId: string; messageId: string }>
+    ) => {
+      const { conversationId, messageId } = action.payload;
+      const conv = state.conversations.find((c) => c.id === conversationId);
+      if (conv) {
+        conv.messages = conv.messages.filter((m) => m.id !== messageId);
+        if (conv.messages.length > 0) {
+          const last = conv.messages[conv.messages.length - 1];
+          conv.lastMessage =
+            last.text ||
+            (last.attachments && last.attachments.length > 0
+              ? `📎 ${last.attachments[0].name}`
+              : 'Shared an attachment');
+          conv.lastMessageTimestamp = last.timestamp;
+        } else {
+          conv.lastMessage = 'No messages in this chat';
+          conv.lastMessageTimestamp = 'Just now';
+        }
+      }
+    },
+    deleteConversation: (state, action: PayloadAction<{ conversationId: string }>) => {
+      const { conversationId } = action.payload;
+      state.conversations = state.conversations.filter((c) => c.id !== conversationId);
+      if (state.activeConversationId === conversationId) {
+        state.activeConversationId = state.conversations.length > 0 ? state.conversations[0].id : null;
       }
     },
     getOrCreateConversation: (
@@ -274,6 +351,7 @@ export const messageSlice = createSlice({
               text: `Hi! Thanks for checking out my profile. Feel free to ask about custom packages, delivery timelines, or campaign ideas.`,
               timestamp: 'Just now',
               createdAt: Date.now(),
+              status: 'read',
             },
           ],
         };
@@ -284,5 +362,13 @@ export const messageSlice = createSlice({
   },
 });
 
-export const { setActiveConversationId, sendMessage, getOrCreateConversation } = messageSlice.actions;
+export const {
+  setActiveConversationId,
+  sendMessage,
+  updateMessageStatus,
+  markConversationAsRead,
+  deleteMessage,
+  deleteConversation,
+  getOrCreateConversation,
+} = messageSlice.actions;
 export default messageSlice.reducer;

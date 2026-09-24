@@ -8,6 +8,9 @@ import {
   sendMessage,
   setActiveConversationId,
   getOrCreateConversation,
+  markConversationAsRead,
+  deleteMessage,
+  deleteConversation,
   MessageAttachment,
 } from '@/redux/slices/messageSlice';
 import { WorkspaceHeader } from '@/components/layout/WorkspaceHeader';
@@ -26,8 +29,11 @@ import {
   Download,
   X,
   UploadCloud,
+  Check,
+  CheckCheck,
+  Trash2,
 } from 'lucide-react';
-import { Button } from 'antd';
+import { Button, Popconfirm, message } from 'antd';
 
 function BrandMessagesContent() {
   const dispatch = useAppDispatch();
@@ -75,6 +81,13 @@ function BrandMessagesContent() {
 
   const activeConv =
     conversations.find((c) => c.id === activeConversationId) || conversations[0] || null;
+
+  // Mark incoming messages as read when viewing this conversation
+  useEffect(() => {
+    if (activeConv && activeConv.unreadCountBrand > 0) {
+      dispatch(markConversationAsRead({ conversationId: activeConv.id, role: 'brand' }));
+    }
+  }, [activeConv?.id, activeConv?.unreadCountBrand, dispatch]);
 
   // Scroll to bottom when messages update
   useEffect(() => {
@@ -241,10 +254,10 @@ function BrandMessagesContent() {
                 filteredConversations.map((conv) => {
                   const isSelected = activeConv?.id === conv.id;
                   return (
-                    <button
+                    <div
                       key={conv.id}
                       onClick={() => dispatch(setActiveConversationId(conv.id))}
-                      className={`w-full p-4 flex items-start gap-3 text-left transition-all cursor-pointer ${
+                      className={`group w-full p-3.5 sm:p-4 flex items-start gap-3 text-left transition-all cursor-pointer relative ${
                         isSelected
                           ? 'bg-white border-l-4 border-l-[#0A0A0A] shadow-2xs'
                           : 'hover:bg-[#F4F4F0]'
@@ -267,20 +280,53 @@ function BrandMessagesContent() {
                             </span>
                             <VerifiedBadge size="xs" />
                           </div>
-                          <span className="text-sm text-[#73736A] shrink-0 font-medium">
+                          <span className="text-xs text-[#73736A] shrink-0 font-medium">
                             {conv.lastMessageTimestamp}
                           </span>
                         </div>
 
-                        <div className="text-sm text-[#73736A] truncate leading-snug">
+                        <div className="text-xs text-[#73736A] font-medium truncate mb-1">
+                          @{conv.creatorHandle}
+                        </div>
+
+                        <div className="text-xs text-[#73736A] truncate leading-snug">
                           {conv.lastMessage}
                         </div>
                       </div>
 
-                      {conv.unreadCountBrand > 0 && (
-                        <span className="w-2.5 h-2.5 rounded-full bg-[#0A0A0A] shrink-0 mt-2" />
-                      )}
-                    </button>
+                      <div className="flex flex-col items-end justify-between self-stretch shrink-0 pl-1">
+                        {conv.unreadCountBrand > 0 ? (
+                          <span className="min-w-[18px] h-[18px] px-1 rounded-full bg-[#0A0A0A] text-white text-[10px] font-bold flex items-center justify-center">
+                            {conv.unreadCountBrand}
+                          </span>
+                        ) : (
+                          <span className="w-2 h-2" />
+                        )}
+
+                        <div onClick={(e) => e.stopPropagation()}>
+                          <Popconfirm
+                            title="Delete conversation?"
+                            description="Remove this thread from your inbox?"
+                            okText="Delete"
+                            cancelText="Cancel"
+                            okButtonProps={{ danger: true, size: 'small' }}
+                            cancelButtonProps={{ size: 'small' }}
+                            onConfirm={() => {
+                              dispatch(deleteConversation({ conversationId: conv.id }));
+                              message.success('Conversation removed');
+                            }}
+                          >
+                            <button
+                              type="button"
+                              className="opacity-0 group-hover:opacity-100 p-1 rounded-md text-zinc-400 hover:text-rose-600 hover:bg-rose-50 transition-all cursor-pointer"
+                              title="Delete conversation"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </Popconfirm>
+                        </div>
+                      </div>
+                    </div>
                   );
                 })
               ) : (
@@ -325,6 +371,28 @@ function BrandMessagesContent() {
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0">
+                  <Popconfirm
+                    title="Delete entire conversation?"
+                    description="Permanently delete this entire conversation and message history?"
+                    okText="Delete Thread"
+                    cancelText="Cancel"
+                    okButtonProps={{ danger: true }}
+                    onConfirm={() => {
+                      dispatch(deleteConversation({ conversationId: activeConv.id }));
+                      message.success('Conversation deleted');
+                    }}
+                  >
+                    <Button
+                      type="default"
+                      danger
+                      className="h-9 px-3 rounded-full text-sm font-semibold border-rose-200 text-rose-600 hover:border-rose-400 hover:bg-rose-50 flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                      title="Delete entire conversation"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                      <span className="hidden xl:inline">Delete Thread</span>
+                    </Button>
+                  </Popconfirm>
+
                   <Link href={`/creators/${activeConv.creatorId}`}>
                     <Button
                       type="default"
@@ -379,7 +447,7 @@ function BrandMessagesContent() {
                   return (
                     <div
                       key={msg.id}
-                      className={`flex gap-3 max-w-[88%] sm:max-w-[75%] ${
+                      className={`group flex gap-2.5 sm:gap-3 max-w-[88%] sm:max-w-[75%] relative ${
                         isBrand ? 'ml-auto flex-row-reverse' : 'mr-auto'
                       }`}
                     >
@@ -390,108 +458,181 @@ function BrandMessagesContent() {
                       />
 
                       <div className={`space-y-1.5 ${isBrand ? 'text-right' : 'text-left'}`}>
-                        <div className="flex items-center gap-2 text-sm text-[#73736A] font-medium px-1">
+                        {/* Header: Sender name, timestamp, and read status for outgoing messages */}
+                        <div
+                          className={`flex items-center gap-1.5 text-xs text-[#73736A] font-medium px-1 ${
+                            isBrand ? 'justify-end' : 'justify-start'
+                          }`}
+                        >
                           <span className="font-bold text-[#0A0A0A]">{msg.senderName}</span>
                           <span>•</span>
                           <span>{msg.timestamp}</span>
+
+                          {/* Read/Delivered/Sent status badge for own brand messages */}
+                          {isBrand && (
+                            <span className="inline-flex items-center gap-0.5 ml-1">
+                              {msg.status === 'read' ? (
+                                <span
+                                  className="inline-flex items-center gap-0.5 text-sky-500 font-semibold"
+                                  title="Read by creator"
+                                >
+                                  <CheckCheck className="w-3.5 h-3.5" />
+                                  <span className="text-[10px]">Read</span>
+                                </span>
+                              ) : msg.status === 'delivered' ? (
+                                <span
+                                  className="inline-flex items-center gap-0.5 text-zinc-400"
+                                  title="Delivered to creator"
+                                >
+                                  <CheckCheck className="w-3.5 h-3.5" />
+                                  <span className="text-[10px]">Delivered</span>
+                                </span>
+                              ) : (
+                                <span
+                                  className="inline-flex items-center gap-0.5 text-zinc-400"
+                                  title="Sent"
+                                >
+                                  <Check className="w-3.5 h-3.5" />
+                                  <span className="text-[10px]">Sent</span>
+                                </span>
+                              )}
+                            </span>
+                          )}
                         </div>
 
-                        {/* Message Text */}
-                        {msg.text && (
-                          <div
-                            className={`p-3.5 sm:p-4 rounded-2xl text-xs sm:text-sm leading-relaxed ${
-                              isBrand
-                                ? 'bg-[#0A0A0A] text-white rounded-tr-xs'
-                                : 'bg-white text-[#0A0A0A] border border-[#E7E7E2] shadow-2xs rounded-tl-xs'
-                            }`}
-                          >
-                            {msg.text}
-                          </div>
-                        )}
+                        {/* Message content wrapper with Delete action on hover */}
+                        <div
+                          className={`flex items-center gap-2 ${
+                            isBrand ? 'flex-row-reverse' : 'flex-row'
+                          }`}
+                        >
+                          <div className="space-y-2">
+                            {/* Message Text */}
+                            {msg.text && (
+                              <div
+                                className={`p-3.5 sm:p-4 rounded-2xl text-xs sm:text-sm leading-relaxed ${
+                                  isBrand
+                                    ? 'bg-[#0A0A0A] text-white rounded-tr-xs'
+                                    : 'bg-white text-[#0A0A0A] border border-[#E7E7E2] shadow-2xs rounded-tl-xs'
+                                }`}
+                              >
+                                {msg.text}
+                              </div>
+                            )}
 
-                        {/* File Attachments */}
-                        {msg.attachments && msg.attachments.length > 0 && (
-                          <div className={`flex flex-col gap-2 ${isBrand ? 'items-end' : 'items-start'}`}>
-                            {msg.attachments.map((att) => (
-                              <div key={att.id} className="max-w-[340px] sm:max-w-[380px] w-full">
-                                {att.type === 'image' ? (
-                                  <div className="rounded-2xl overflow-hidden border border-[#E7E7E2] bg-white shadow-2xs group relative">
-                                    <img
-                                      src={att.url}
-                                      alt={att.name}
-                                      className="w-full max-h-56 object-cover group-hover:scale-102 transition-transform duration-300"
-                                    />
-                                    <div className="p-2.5 bg-white border-t border-[#E7E7E2] flex items-center justify-between gap-2">
-                                      <div className="min-w-0 text-left">
-                                        <p className="text-sm font-bold text-[#0A0A0A] truncate">{att.name}</p>
-                                        <p className="text-sm text-[#73736A]">{att.size}</p>
+                            {/* File Attachments */}
+                            {msg.attachments && msg.attachments.length > 0 && (
+                              <div
+                                className={`flex flex-col gap-2 ${
+                                  isBrand ? 'items-end' : 'items-start'
+                                }`}
+                              >
+                                {msg.attachments.map((att) => (
+                                  <div key={att.id} className="max-w-[340px] sm:max-w-[380px] w-full">
+                                    {att.type === 'image' ? (
+                                      <div className="rounded-2xl overflow-hidden border border-[#E7E7E2] bg-white shadow-2xs group/img relative">
+                                        <img
+                                          src={att.url}
+                                          alt={att.name}
+                                          className="w-full max-h-56 object-cover group-hover/img:scale-102 transition-transform duration-300"
+                                        />
+                                        <div className="p-2.5 bg-white border-t border-[#E7E7E2] flex items-center justify-between gap-2">
+                                          <div className="min-w-0 text-left">
+                                            <p className="text-sm font-bold text-[#0A0A0A] truncate">{att.name}</p>
+                                            <p className="text-sm text-[#73736A]">{att.size}</p>
+                                          </div>
+                                          <a
+                                            href={att.url}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="p-1.5 rounded-lg bg-[#FAFAF8] hover:bg-zinc-200 text-[#0A0A0A] transition-colors"
+                                            title="Open full size"
+                                          >
+                                            <ExternalLink className="w-3.5 h-3.5" />
+                                          </a>
+                                        </div>
                                       </div>
-                                      <a
-                                        href={att.url}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        className="p-1.5 rounded-lg bg-[#FAFAF8] hover:bg-zinc-200 text-[#0A0A0A] transition-colors"
-                                        title="Open full size"
-                                      >
-                                        <ExternalLink className="w-3.5 h-3.5" />
-                                      </a>
-                                    </div>
-                                  </div>
-                                ) : (
-                                  <div
-                                    className={`p-3 rounded-2xl flex items-center gap-3 transition-all ${
-                                      isBrand
-                                        ? 'bg-[#18181B] text-white border border-zinc-800'
-                                        : 'bg-white text-[#0A0A0A] border border-[#E7E7E2] shadow-2xs'
-                                    }`}
-                                  >
-                                    <div
-                                      className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
-                                        att.type === 'pdf'
-                                          ? 'bg-rose-50 text-rose-600 border border-rose-200'
-                                          : att.type === 'video'
-                                          ? 'bg-purple-50 text-purple-600 border border-purple-200'
-                                          : 'bg-blue-50 text-blue-600 border border-blue-200'
-                                      }`}
-                                    >
-                                      {att.type === 'pdf' ? (
-                                        <FileText className="w-5 h-5" />
-                                      ) : att.type === 'video' ? (
-                                        <Film className="w-5 h-5" />
-                                      ) : (
-                                        <Paperclip className="w-5 h-5" />
-                                      )}
-                                    </div>
-                                    <div className="flex-1 min-w-0 text-left">
-                                      <p className="text-sm font-bold truncate leading-tight">{att.name}</p>
-                                      <p
-                                        className={`text-xs font-sans mt-0.5 ${
-                                          isBrand ? 'text-zinc-400' : 'text-[#73736A]'
+                                    ) : (
+                                      <div
+                                        className={`p-3 rounded-2xl flex items-center gap-3 transition-all ${
+                                          isBrand
+                                            ? 'bg-[#18181B] text-white border border-zinc-800'
+                                            : 'bg-white text-[#0A0A0A] border border-[#E7E7E2] shadow-2xs'
                                         }`}
                                       >
-                                        {att.size} • {att.type.toUpperCase()}
-                                      </p>
-                                    </div>
-                                    <a
-                                      href={att.url}
-                                      download={att.name}
-                                      target="_blank"
-                                      rel="noreferrer"
-                                      className={`p-2 rounded-xl transition-all shrink-0 cursor-pointer ${
-                                        isBrand
-                                          ? 'bg-white/10 hover:bg-white/20 text-white'
-                                          : 'bg-[#FAFAF8] hover:bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]'
-                                      }`}
-                                      title="Download file"
-                                    >
-                                      <Download className="w-4 h-4" />
-                                    </a>
+                                        <div
+                                          className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
+                                            att.type === 'pdf'
+                                              ? 'bg-rose-50 text-rose-600 border border-rose-200'
+                                              : att.type === 'video'
+                                              ? 'bg-purple-50 text-purple-600 border border-purple-200'
+                                              : 'bg-blue-50 text-blue-600 border border-blue-200'
+                                          }`}
+                                        >
+                                          {att.type === 'pdf' ? (
+                                            <FileText className="w-5 h-5" />
+                                          ) : att.type === 'video' ? (
+                                            <Film className="w-5 h-5" />
+                                          ) : (
+                                            <Paperclip className="w-5 h-5" />
+                                          )}
+                                        </div>
+                                        <div className="flex-1 min-w-0 text-left">
+                                          <p className="text-sm font-bold truncate leading-tight">{att.name}</p>
+                                          <p
+                                            className={`text-xs font-sans mt-0.5 ${
+                                              isBrand ? 'text-zinc-400' : 'text-[#73736A]'
+                                            }`}
+                                          >
+                                            {att.size} • {att.type.toUpperCase()}
+                                          </p>
+                                        </div>
+                                        <a
+                                          href={att.url}
+                                          download={att.name}
+                                          target="_blank"
+                                          rel="noreferrer"
+                                          className={`p-2 rounded-xl transition-all shrink-0 cursor-pointer ${
+                                            isBrand
+                                              ? 'bg-white/10 hover:bg-white/20 text-white'
+                                              : 'bg-[#FAFAF8] hover:bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]'
+                                          }`}
+                                          title="Download file"
+                                        >
+                                          <Download className="w-4 h-4" />
+                                        </a>
+                                      </div>
+                                    )}
                                   </div>
-                                )}
+                                ))}
                               </div>
-                            ))}
+                            )}
                           </div>
-                        )}
+
+                          {/* Delete Single Message Action */}
+                          <div className="opacity-0 group-hover:opacity-100 transition-opacity self-center shrink-0">
+                            <Popconfirm
+                              title="Delete message?"
+                              description="Remove this message from chat history?"
+                              okText="Delete"
+                              cancelText="Cancel"
+                              okButtonProps={{ danger: true, size: 'small' }}
+                              cancelButtonProps={{ size: 'small' }}
+                              onConfirm={() => {
+                                dispatch(deleteMessage({ conversationId: activeConv.id, messageId: msg.id }));
+                                message.success('Message deleted');
+                              }}
+                            >
+                              <button
+                                type="button"
+                                className="p-1.5 rounded-lg text-zinc-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
+                                title="Delete message"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </Popconfirm>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   );
