@@ -17,41 +17,24 @@ import { CreatorProfileSkeleton } from '@/components/shared/Skeleton';
 import { EmptyState } from '@/components/shared/EmptyState';
 import { CreatorPackage, PlatformType, PortfolioItem, CreatorPhoto } from '@/types';
 import {
-  Check,
   MapPin,
   Instagram,
   Youtube,
-  Send,
   MessageSquare,
-  Mail,
-  Phone,
   Bookmark,
   Share2,
   Sparkles,
   ArrowRight,
   ShieldCheck,
   Star,
-  ExternalLink,
   ChevronLeft,
   ChevronRight,
   TrendingUp,
   Users,
   Film,
-  Lock,
-  Clock,
-  Award,
   Play,
-  Eye,
   Heart,
-  MessageCircle,
-  Camera,
   ZoomIn,
-  Layers,
-  SlidersHorizontal,
-  Image as ImageIcon,
-  Maximize2,
-  Aperture,
-  Palette,
   Home,
   Package,
 } from 'lucide-react';
@@ -80,7 +63,6 @@ export default function CreatorProfilePage() {
 
   const [activeTab, setActiveTab] = useState<'overview' | 'packages' | 'portfolio' | 'photos' | 'audience' | 'reviews'>('overview');
   const [portfolioFilter, setPortfolioFilter] = useState<'all' | PlatformType>('all');
-  const [photoFilter, setPhotoFilter] = useState<string>('all');
   const [reviewFilter, setReviewFilter] = useState<'all' | '5' | '4'>('all');
   const [reviewPage, setReviewPage] = useState(1);
   const [selectedPortfolioItem, setSelectedPortfolioItem] = useState<PortfolioItem | null>(null);
@@ -522,7 +504,7 @@ export default function CreatorProfilePage() {
                     <Sparkles className="w-5 h-5 text-amber-400" />
                   </div>
                   <div>
-                    <h4 className="text-sm sm:text-2xl font-extrabold text-[#0A0A0A]">Need a custom campaign or multi-channel rollout?</h4>
+                    <h4 className="text-sm sm:text-base font-bold text-[#0A0A0A]">Need a custom campaign or multi-channel rollout?</h4>
                     <p className="text-xs sm:text-sm text-[#73736A] mt-0.5">Send a tailored brief with your budget, required deliverables, and licensing timeline.</p>
                   </div>
                 </div>

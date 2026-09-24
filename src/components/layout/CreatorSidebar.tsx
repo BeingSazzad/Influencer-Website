@@ -9,8 +9,6 @@ import { logout } from '@/redux/slices/authSlice';
 import { message } from 'antd';
 import {
   LayoutDashboard,
-  Inbox,
-  ShoppingBag,
   Layers,
   Package,
   Film,

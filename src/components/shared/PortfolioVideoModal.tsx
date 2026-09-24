@@ -9,23 +9,17 @@ import {
   Pause,
   Volume2,
   VolumeX,
-  Maximize2,
   Eye,
   Heart,
   MessageCircle,
-  Share2,
   TrendingUp,
   Sparkles,
   ShieldCheck,
-  Clock,
   ArrowRight,
   Instagram,
   Youtube,
-  Film,
   Music2,
-  CheckCircle2,
 } from 'lucide-react';
-import { Button } from 'antd';
 
 interface PortfolioVideoModalProps {
   item: PortfolioItem | null;

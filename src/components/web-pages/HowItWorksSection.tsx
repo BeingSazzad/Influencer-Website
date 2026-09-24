@@ -2,12 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useAppSelector } from '@/redux/hooks';
 import { Search, Send, CheckCircle2, ShieldCheck, CreditCard, Sparkles, Video, ArrowRight } from 'lucide-react';
-import { Button } from 'antd';
 
 export function HowItWorksSection() {
-  const { t } = useAppSelector((state) => state.lang);
   const [activeTab, setActiveTab] = useState<'brand' | 'creator'>('brand');
 
   useEffect(() => {

@@ -9,7 +9,6 @@ import {
   ShieldCheck,
   HelpCircle,
   Home,
-  Search,
 } from 'lucide-react';
 
 export const metadata = {

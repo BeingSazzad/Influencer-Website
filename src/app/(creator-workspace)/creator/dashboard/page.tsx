@@ -9,23 +9,15 @@ import {
   DollarSign,
   Inbox,
   ShoppingBag,
-  Star,
-  CheckCircle2,
   Clock,
-  ArrowRight,
   Sparkles,
   Package,
   Film,
-  Plus,
   ChevronRight,
-  TrendingUp,
-  Layers,
-  Settings,
   CreditCard,
   MessageSquare,
 } from 'lucide-react';
-import { Button, Tag, message } from 'antd';
-import { BrandLogo } from '@/components/shared/BrandLogo';
+import { Button, message } from 'antd';
 import { CreatorAnnualAnalytics } from '@/components/shared/CreatorAnnualAnalytics';
 
 export default function CreatorDashboardPage() {
@@ -46,13 +38,11 @@ export default function CreatorDashboardPage() {
   const activeOrders = creatorOrders.filter((o) =>
     ['accepted', 'in_production', 'deliverable_submitted'].includes(o.status)
   );
-  const completedOrders = creatorOrders.filter((o) => ['approved', 'completed'].includes(o.status));
 
   // Portfolio items
   const portfolioItems = currentCreator?.portfolio || [];
 
   // Earnings calculations
-  const totalEarnedEur = completedOrders.reduce((acc, curr) => acc + curr.basePriceEur, 0);
   const pendingInEscrowEur = activeOrders.reduce((acc, curr) => acc + curr.basePriceEur, 0);
 
   const handleAcceptOffer = (orderId: string) => {

@@ -12,12 +12,8 @@ import {
   Check,
   Sparkles,
   ArrowRight,
-  TrendingUp,
-  ShieldCheck,
-  Zap,
   ChevronDown,
   Globe,
-  User,
 } from 'lucide-react';
 import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
 
@@ -192,17 +188,6 @@ export function SplitHero() {
       </span>
     );
   };
-
-  const tickerKeywords = [
-    '✨ Beauty & Skincare',
-    '👗 High Fashion & Luxury',
-    '✈️ Travel & Cinematic Vlog',
-    '⚡ Fitness & Wellness',
-    '🍽️ Food & Culinary UGC',
-    '🎮 Tech & Gaming Unboxings',
-    '🎨 Digital Art & Visuals',
-    '💼 Founder & SaaS UGC',
-  ];
 
   return (
     <section className="relative overflow-hidden pt-10 pb-16 lg:pt-16 lg:pb-24 bg-[#FAFAF8]">

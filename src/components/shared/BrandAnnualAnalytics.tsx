@@ -2,13 +2,9 @@
 
 import React, { useState } from 'react';
 import {
-  TrendingUp,
   DollarSign,
   Users,
-  Calendar,
-  Sparkles,
   ArrowUpRight,
-  ShieldCheck,
   ChevronDown,
 } from 'lucide-react';
 
@@ -108,9 +104,6 @@ export function BrandAnnualAnalytics() {
   const maxCreators = Math.max(...yearData.months.map((m) => m.creatorsCount));
   const currentMax = activeMetric === 'spend' ? maxSpend : maxCreators;
 
-  // Monthly average spend
-  const avgMonthlySpend = Math.round(yearData.totalSpendEur / 12);
-
   // Highest performing month
   const peakMonthRecord = yearData.months.reduce((prev, current) => {
     if (activeMetric === 'spend') {
@@ -118,9 +111,6 @@ export function BrandAnnualAnalytics() {
     }
     return current.creatorsCount > prev.creatorsCount ? current : prev;
   });
-
-  // Active month inspector (hovered or current/peak)
-  const activeInspector = hoveredMonth || yearData.months.find((m) => m.isCurrent) || peakMonthRecord;
 
   return (
     <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#E7E7E2] shadow-2xs space-y-6">

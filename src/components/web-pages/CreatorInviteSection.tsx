@@ -4,7 +4,6 @@ import React from 'react';
 import Link from 'next/link';
 import { useAppSelector } from '@/redux/hooks';
 import { Sparkles, ArrowRight, ShieldCheck, DollarSign, Award } from 'lucide-react';
-import { Button } from 'antd';
 
 export function CreatorInviteSection() {
   const { t } = useAppSelector((state) => state.lang);
@@ -33,15 +32,15 @@ export function CreatorInviteSection() {
             </p>
 
             <div className="flex flex-wrap items-center gap-y-3 gap-x-6 sm:gap-x-8 mb-8">
-              <div className="flex items-center gap-2.5 text-sm sm:text-2xl font-extrabold text-[#FAFAF8] whitespace-nowrap">
+              <div className="flex items-center gap-2.5 text-sm sm:text-[15px] font-semibold text-[#FAFAF8] whitespace-nowrap">
                 <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" />
                 <span>100% Escrow Protection</span>
               </div>
-              <div className="flex items-center gap-2.5 text-sm sm:text-2xl font-extrabold text-[#FAFAF8] whitespace-nowrap">
+              <div className="flex items-center gap-2.5 text-sm sm:text-[15px] font-semibold text-[#FAFAF8] whitespace-nowrap">
                 <DollarSign className="w-5 h-5 text-[#FF2D78] shrink-0" />
                 <span>Zero Creator Fee (Keep 100%)</span>
               </div>
-              <div className="flex items-center gap-2.5 text-sm sm:text-2xl font-extrabold text-[#FAFAF8] whitespace-nowrap">
+              <div className="flex items-center gap-2.5 text-sm sm:text-[15px] font-semibold text-[#FAFAF8] whitespace-nowrap">
                 <Award className="w-5 h-5 text-amber-300 shrink-0" />
                 <span>Vetted Global Brands</span>
               </div>

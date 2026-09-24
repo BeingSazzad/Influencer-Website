@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import { UploadCloud, Image as ImageIcon, X, Check, Camera, RefreshCw } from 'lucide-react';
+import { UploadCloud, X, Camera, RefreshCw } from 'lucide-react';
 import { message } from 'antd';
 
 interface ImageUploadProps {

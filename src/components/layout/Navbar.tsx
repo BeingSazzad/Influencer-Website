@@ -15,7 +15,6 @@ import {
   ArrowRight,
   LogOut,
   LayoutDashboard,
-  Briefcase,
   User,
 } from 'lucide-react';
 

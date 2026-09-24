@@ -19,7 +19,6 @@ import {
   Trash2,
   Play,
   Upload,
-  ArrowRight,
   Instagram,
   Youtube,
   Sparkles,

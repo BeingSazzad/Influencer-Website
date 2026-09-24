@@ -19,9 +19,7 @@ import {
   Trash2,
   Edit3,
   Copy,
-  Layers,
   Search,
-  ShieldCheck,
 } from 'lucide-react';
 import { Button, Modal, Input, InputNumber, Select, message, Popconfirm } from 'antd';
 
@@ -30,53 +28,6 @@ const CHANNEL_OPTIONS: { id: PlatformType; label: string; icon: React.ReactNode 
   { id: 'tiktok', label: 'TikTok', icon: <Film className="w-3.5 h-3.5 text-[#0A0A0A]" /> },
   { id: 'youtube', label: 'YouTube', icon: <Youtube className="w-3.5 h-3.5 text-red-500" /> },
   { id: 'ugc', label: 'UGC Video', icon: <Sparkles className="w-3.5 h-3.5 text-purple-600" /> },
-];
-
-const QUICK_DEAL_PRESETS = [
-  {
-    label: 'Starter Shortform Deal',
-    title: '1x Dedicated Video / Reel Feature',
-    channels: ['instagram', 'tiktok'] as PlatformType[],
-    priceEur: 850,
-    deliveryDays: 4,
-    revisions: 1,
-    usageRights: '30-Day Organic Rights',
-    inclusions: '1x Dedicated 4K Video (60s)\nProduct Demonstration & Hook\nBrand Tag & Official Mention\n30-Day Organic Rights',
-    description: 'High-energy organic demonstration highlighting key brand benefits with authentic integration.',
-  },
-  {
-    label: 'Signature Collab Bundle',
-    title: 'Signature Reel + Story Sequence Bundle',
-    channels: ['instagram', 'tiktok'] as PlatformType[],
-    priceEur: 1450,
-    deliveryDays: 5,
-    revisions: 2,
-    usageRights: '60-Day Spark Ad Whitelisting',
-    inclusions: '1x 60s Dedicated 4K Reel\n3x Story Sequence with Link Stickers\nTikTok Cross-Posting & Audio Whitelist\n60-Day Spark Ad Authorization Code',
-    description: 'Our highest-converting organic partnership combining shortform feed placement with high-intent story link stickers.',
-  },
-  {
-    label: '360° All-Platform Takeover',
-    title: '360° All-Platform Brand Takeover',
-    channels: ['youtube', 'instagram', 'tiktok'] as PlatformType[],
-    priceEur: 3200,
-    deliveryDays: 7,
-    revisions: 2,
-    usageRights: '90-Day Full Commercial Ad Rights',
-    inclusions: '1x YouTube Dedicated Integration (60-90s)\n1x 60s Instagram Reel (4K) + 3x Stories\n1x High-Retention TikTok Hook Video\n90-Day Full Commercial Ad Whitelisting\nCross-Platform Performance Analytics',
-    description: 'Complete cross-channel launch bundle across YouTube, Instagram, and TikTok with organic cross-posts and high-conversion ad rights.',
-  },
-  {
-    label: 'Direct-Response UGC Ad Kit',
-    title: 'Direct-Response UGC Ad Kit (3 Variations)',
-    channels: ['ugc'] as PlatformType[],
-    priceEur: 950,
-    deliveryDays: 3,
-    revisions: 2,
-    usageRights: 'Full Commercial Ad Rights (1 Year)',
-    inclusions: '3x Scroll-Stopping Hook Variations (4K 9:16)\nClean Master Audio & Raw B-Roll Footage\n1-Year Full Paid Media Commercial License\nMeta & TikTok Safe-Zone Captioning',
-    description: 'Performance-tested UGC creative assets (Problem/Solution, Unboxing, 3-Reasons Why) filmed in 4K specifically for Meta & TikTok paid media.',
-  },
 ];
 
 export default function CreatorPackagesPage() {
@@ -134,18 +85,6 @@ export default function CreatorPackagesPage() {
     setInclusionsText('1x Dedicated Video Deliverable (4K)\nBrand Mention & Official Tag\nCommercial Music Sync\n30-Day Organic Rights');
     setIsPopular(false);
     setIsModalOpen(true);
-  };
-
-  const handleApplyPreset = (preset: typeof QUICK_DEAL_PRESETS[0]) => {
-    setTitle(preset.title);
-    setDescription(preset.description);
-    setSelectedChannels(preset.channels);
-    setPriceEur(preset.priceEur);
-    setDeliveryDays(preset.deliveryDays);
-    setRevisions(preset.revisions);
-    setUsageRights(preset.usageRights);
-    setInclusionsText(preset.inclusions);
-    message.success(`Loaded "${preset.label}" template`);
   };
 
   const handleOpenEditModal = (pkg: CreatorPackage) => {
@@ -340,23 +279,15 @@ export default function CreatorPackagesPage() {
           {/* Deal Cards Grid */}
           {filteredPackages.slice(0, 3).length > 0 ? (
             <div className={`grid grid-cols-1 ${filteredPackages.slice(0,3).length === 1 ? 'md:grid-cols-1 max-w-sm' : filteredPackages.slice(0,3).length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3'} gap-5`}>
-              {filteredPackages.slice(0, 3).map((pkg) => {
-                const channels =
-                  pkg.platforms && pkg.platforms.length > 0
-                    ? pkg.platforms
-                    : pkg.platform === 'all' || pkg.platform === 'multi'
-                    ? (['instagram', 'tiktok', 'youtube'] as PlatformType[])
-                    : [pkg.platform];
-
-                return (
-                  <div
-                    key={pkg.id}
-                    className={`rounded-3xl border p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-md relative bg-white ${
-                      pkg.popular
-                        ? 'border-[#0A0A0A] ring-1 ring-[#0A0A0A]'
-                        : 'border-[#E7E7E2] hover:border-[#0A0A0A]'
-                    }`}
-                  >
+              {filteredPackages.slice(0, 3).map((pkg) => (
+                <div
+                  key={pkg.id}
+                  className={`rounded-3xl border p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-md relative bg-white ${
+                    pkg.popular
+                      ? 'border-[#0A0A0A] ring-1 ring-[#0A0A0A]'
+                      : 'border-[#E7E7E2] hover:border-[#0A0A0A]'
+                  }`}
+                >
                     {pkg.popular && (
                       <div className="absolute -top-3 left-6 bg-[#0A0A0A] text-white text-xs font-extrabold uppercase tracking-wider px-3 py-0.5 rounded-full shadow-xs flex items-center gap-1">
                         <Sparkles className="w-3 h-3 text-amber-300" />
@@ -445,8 +376,7 @@ export default function CreatorPackagesPage() {
                       </div>
                     </div>
                   </div>
-                );
-              })}
+                ))}
             </div>
           ) : (
             <EmptyState

@@ -20,9 +20,8 @@ import {
   Plus,
   Lock,
   ExternalLink,
-  ChevronRight,
 } from 'lucide-react';
-import { Modal, Input, Button, message, Tag } from 'antd';
+import { Modal, Button, message } from 'antd';
 import { BrandAnnualAnalytics } from '@/components/shared/BrandAnnualAnalytics';
 
 interface Transaction {

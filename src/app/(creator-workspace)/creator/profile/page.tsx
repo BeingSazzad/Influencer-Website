@@ -1,8 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, Suspense } from 'react';
-import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { WorkspaceHeader } from '@/components/layout/WorkspaceHeader';
 import { updateUserProfile } from '@/redux/slices/authSlice';
@@ -13,26 +12,16 @@ import {
   deleteCreatorPhoto,
 } from '@/redux/slices/creatorSlice';
 import { CreatorPhoto } from '@/types';
-import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
 import { ShareProfileModal } from '@/components/shared/ShareProfileModal';
 import { CreatorPhotoLightbox } from '@/components/shared/CreatorPhotoLightbox';
-import { ImageUpload } from '@/components/shared/ImageUpload';
 import {
   User,
   Globe,
   Instagram,
   Youtube,
   Film,
-  ExternalLink,
   Save,
-  DollarSign,
-  TrendingUp,
   MapPin,
-  AtSign,
-  Sparkles,
-  Camera,
-  Layers,
-  ArrowRight,
   Upload,
   X,
   Check,
@@ -40,17 +29,11 @@ import {
   Plus,
   Trash2,
   Edit3,
-  Calendar,
-  Eye,
-  Mail,
-  Phone,
-  ShieldCheck,
   ZoomIn,
 } from 'lucide-react';
-import { Input, Button, message, Modal, Select, Popconfirm, Tag } from 'antd';
+import { Input, Button, message, Modal, Popconfirm } from 'antd';
 
 function CreatorProfileContent() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
   const { currentUser } = useAppSelector((state) => state.auth);
@@ -88,9 +71,6 @@ function CreatorProfileContent() {
   );
   const [location, setLocation] = useState(currentCreator?.location || 'Los Angeles, CA');
   const [startingPriceEur, setStartingPriceEur] = useState(currentCreator?.startingPriceEur || 500);
-  const [aestheticVibe, setAestheticVibe] = useState(
-    currentCreator?.aestheticVibe || 'Clean Minimalist · Warm Sun-Drenched Natural Glow'
-  );
   const [categories, setCategories] = useState<string[]>(
     currentCreator?.categories && currentCreator.categories.length > 0
       ? currentCreator.categories

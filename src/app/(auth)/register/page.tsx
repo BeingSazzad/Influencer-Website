@@ -13,7 +13,6 @@ import {
   User as UserIcon,
   Briefcase,
   Sparkles,
-  ArrowRight,
   Building,
   AtSign,
   Check,

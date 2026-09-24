@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { closeOfferModal, createOffer } from '@/redux/slices/orderSlice';
 import { Modal, Input, InputNumber, message, Button } from 'antd';
-import { ShieldCheck, Calendar, Lock, CheckCircle2, Sparkles, Clock, X } from 'lucide-react';
+import { ShieldCheck, Lock, Sparkles } from 'lucide-react';
 import { Order, PlatformType } from '@/types';
 import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
 

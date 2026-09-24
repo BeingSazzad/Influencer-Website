@@ -4,16 +4,11 @@ import React, { useState } from 'react';
 import { useAppSelector } from '@/redux/hooks';
 import { WorkspaceHeader } from '@/components/layout/WorkspaceHeader';
 import {
-  Wallet,
   ArrowDownLeft,
   FileText,
   Search,
-  CheckCircle2,
   Clock,
   Download,
-  Percent,
-  Receipt,
-  ShieldCheck,
 } from 'lucide-react';
 import { Modal, message } from 'antd';
 import { CreatorAnnualAnalytics } from '@/components/shared/CreatorAnnualAnalytics';

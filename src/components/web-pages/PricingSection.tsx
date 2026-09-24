@@ -2,12 +2,10 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useAppSelector } from '@/redux/hooks';
-import { Check, Calculator, ShieldCheck, Sparkles, ArrowRight } from 'lucide-react';
-import { Button, Slider } from 'antd';
+import { Check, Calculator, ShieldCheck, Sparkles } from 'lucide-react';
+import { Slider } from 'antd';
 
 export function PricingSection() {
-  const { t } = useAppSelector((state) => state.lang);
   const [budgetEur, setBudgetEur] = useState<number>(1000);
 
   const platformFeeEur = Math.round(budgetEur * 0.15);
@@ -75,18 +73,18 @@ export function PricingSection() {
             </div>
 
             {/* Financial Breakdown Table */}
-            <div className="space-y-3.5 pt-4 border-t border-[#E7E7E2] font-sans">
+            <div className="space-y-3 pt-4 border-t border-[#E7E7E2] font-sans">
               <div className="flex flex-col min-[420px]:flex-row min-[420px]:justify-between gap-1 text-sm text-[#555550]">
                 <span>Creator Earnings (100% Payout):</span>
-                <span className="font-sans text-2xl font-extrabold text-[#0A0A0A]">€{budgetEur.toLocaleString()}</span>
+                <span className="font-sans text-sm sm:text-base font-bold text-[#0A0A0A]">€{budgetEur.toLocaleString()}</span>
               </div>
               <div className="flex flex-col min-[420px]:flex-row min-[420px]:justify-between gap-1 text-sm text-[#555550]">
                 <span>Influverse Escrow & Guarantee Fee (15%):</span>
-                <span className="font-sans text-2xl font-extrabold text-[#FF2D78]">+€{platformFeeEur.toLocaleString()}</span>
+                <span className="font-sans text-sm sm:text-base font-bold text-[#FF2D78]">+€{platformFeeEur.toLocaleString()}</span>
               </div>
-              <div className="flex flex-col min-[420px]:flex-row min-[420px]:items-center min-[420px]:justify-between gap-1 text-2xl font-extrabold text-[#0A0A0A] pt-3 border-t border-[#E7E7E2]">
+              <div className="flex flex-col min-[420px]:flex-row min-[420px]:items-center min-[420px]:justify-between gap-1 text-sm sm:text-base font-extrabold text-[#0A0A0A] pt-3 border-t border-[#E7E7E2]">
                 <span>Total Brand Cost (Funded in Escrow):</span>
-                <span className="font-sans text-2xl font-black text-[#0A0A0A]">€{totalCostEur.toLocaleString()}</span>
+                <span className="font-sans text-lg sm:text-xl font-black text-[#0A0A0A]">€{totalCostEur.toLocaleString()}</span>
               </div>
             </div>
 
@@ -124,7 +122,7 @@ export function PricingSection() {
                   'EU VAT Invoices & Compliance Receipts',
                   'Free to Sign Up & Search Catalog',
                 ].map((item, idx) => (
-                  <li key={idx} className="flex items-center gap-3 text-sm sm:text-2xl font-extrabold text-white font-sans">
+                  <li key={idx} className="flex items-center gap-3 text-sm sm:text-[15px] font-semibold text-white/90 font-sans">
                     <div className="w-5 h-5 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center shrink-0">
                       <Check className="w-3.5 h-3.5 text-emerald-400" />
                     </div>

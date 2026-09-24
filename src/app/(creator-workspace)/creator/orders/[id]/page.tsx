@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from '@/redux/hooks';
 import {
@@ -14,17 +13,10 @@ import {
   Video,
   Upload,
   Send,
-  CheckCircle2,
-  Clock,
-  ShieldCheck,
   ExternalLink,
   MessageSquare,
-  FileCheck,
-  Sparkles,
   Link2,
   Film,
-  X,
-  Play,
 } from 'lucide-react';
 import { Button, Input, message } from 'antd';
 import { BrandLogo } from '@/components/shared/BrandLogo';
@@ -40,7 +32,6 @@ export default function CreatorOrderFulfilmentPage() {
   const [delivTitle, setDelivTitle] = useState('Campaign Final Video Cut (9:16 4K)');
   const [submissionMode, setSubmissionMode] = useState<'drive' | 'direct'>('drive');
   const [delivFileUrl, setDelivFileUrl] = useState('https://drive.google.com/drive/folders/influverse-demo-draft');
-  const [directVideoFile, setDirectVideoFile] = useState<File | null>(null);
   const [directVideoUrl, setDirectVideoUrl] = useState<string>('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4');
   const [directVideoName, setDirectVideoName] = useState<string>('Sophie_NordicGlow_FinalCut_4K.mp4');
   const [directVideoSize, setDirectVideoSize] = useState<string>('38.6 MB');
@@ -52,7 +43,6 @@ export default function CreatorOrderFulfilmentPage() {
   const handleVideoFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setDirectVideoFile(file);
       setDirectVideoName(file.name);
       setDirectVideoSize(`${(file.size / (1024 * 1024)).toFixed(1)} MB`);
       const objectUrl = URL.createObjectURL(file);
@@ -93,7 +83,6 @@ export default function CreatorOrderFulfilmentPage() {
       setDelivTitle('');
       setDelivFileUrl('');
       setDelivNotes('');
-      setDirectVideoFile(null);
       setDirectVideoUrl('');
       setDirectVideoName('');
       setDirectVideoSize('');

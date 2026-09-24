@@ -20,9 +20,6 @@ import {
   PlusCircle,
   ExternalLink,
   MapPin,
-  Clock,
-  CheckCheck,
-  Sparkles,
   Paperclip,
   FileText,
   Film,
@@ -30,7 +27,7 @@ import {
   X,
   UploadCloud,
 } from 'lucide-react';
-import { Button, Input, message } from 'antd';
+import { Button } from 'antd';
 
 function BrandMessagesContent() {
   const dispatch = useAppDispatch();
@@ -307,7 +304,7 @@ function BrandMessagesContent() {
                   />
                   <div className="truncate">
                     <div className="flex items-center gap-1.5">
-                      <h2 className="text-sm sm:text-2xl font-extrabold text-[#0A0A0A] truncate">
+                      <h2 className="text-sm sm:text-base font-bold text-[#0A0A0A] truncate">
                         {activeConv.creatorName}
                       </h2>
                       <VerifiedBadge size="xs" />

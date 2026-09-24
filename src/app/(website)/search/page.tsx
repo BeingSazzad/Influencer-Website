@@ -3,22 +3,18 @@
 import React, { useState, useMemo, useEffect, useRef, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { useAppSelector, useAppDispatch } from '@/redux/hooks';
+import { useAppSelector } from '@/redux/hooks';
 import { CreatorCard } from '@/components/shared/CreatorCard';
-import { CreatorGridSkeleton } from '@/components/shared/Skeleton';
 import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
-import { Creator, PlatformType } from '@/types';
+import { PlatformType } from '@/types';
 import {
   Search,
-  SlidersHorizontal,
   Sparkles,
   MapPin,
   Instagram,
   Youtube,
-  Users,
   ArrowUpDown,
   RotateCcw,
-  ExternalLink,
   ChevronDown,
   Globe,
   Film,
@@ -28,9 +24,6 @@ import {
   List,
   Star,
   ArrowRight,
-  TrendingUp,
-  Tag,
-  Share2,
 } from 'lucide-react';
 import { Pagination } from 'antd';
 

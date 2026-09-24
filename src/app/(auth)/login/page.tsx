@@ -10,9 +10,6 @@ import { AuthNetworkVisual } from '@/components/auth/AuthNetworkVisual';
 import {
   Lock,
   Mail,
-  ArrowRight,
-  ShieldCheck,
-  Sparkles,
   Eye,
   EyeOff,
 } from 'lucide-react';

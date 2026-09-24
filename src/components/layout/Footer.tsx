@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Logo } from '@/components/shared/Logo';
 import { LanguageSwitcher } from '@/components/shared/LanguageSwitcher';
-import { ArrowUpRight, Instagram, Youtube, Linkedin, Heart } from 'lucide-react';
+import { ArrowUpRight, Instagram, Youtube, Linkedin } from 'lucide-react';
 
 export function Footer() {
   const pathname = usePathname();

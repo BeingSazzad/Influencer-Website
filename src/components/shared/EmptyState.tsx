@@ -5,14 +5,6 @@ import Link from 'next/link';
 import {
   Sparkles,
   ArrowRight,
-  Search,
-  Inbox,
-  ShoppingBag,
-  Heart,
-  Bookmark,
-  Package,
-  Layers,
-  FileQuestion,
 } from 'lucide-react';
 
 export type EmptyStateVariant = 'card' | 'plain' | 'dashed';

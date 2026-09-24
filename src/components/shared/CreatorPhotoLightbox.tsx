@@ -20,10 +20,8 @@ interface CreatorPhotoLightboxProps {
 export function CreatorPhotoLightbox({
   photo,
   photos,
-  creator,
   onClose,
   onSelectPhoto,
-  onBookCampaign,
 }: CreatorPhotoLightboxProps) {
   useEffect(() => {
     if (!photo) return;

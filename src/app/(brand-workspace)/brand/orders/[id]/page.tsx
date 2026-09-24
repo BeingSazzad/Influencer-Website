@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from '@/redux/hooks';
 import {
@@ -16,17 +15,11 @@ import {
   CheckCircle2,
   Clock,
   Video,
-  Film,
   Link2,
-  Download,
   Send,
   ExternalLink,
   MessageSquare,
-  AlertCircle,
-  FileText,
   Star,
-  Sparkles,
-  ArrowLeft,
   RotateCcw,
 } from 'lucide-react';
 import { Button, Input, Modal, Rate, message } from 'antd';

@@ -1,20 +1,16 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import {
   Sparkles,
   TrendingUp,
-  ShieldCheck,
-  Zap,
   Check,
   ArrowRight,
   Lock,
 } from 'lucide-react';
 
 export function DesignMonkBentoSection() {
-  const [activePlatform, setActivePlatform] = useState<'all' | 'reels' | 'tiktok' | 'youtube'>('reels');
-
   return (
     <section className="py-24 bg-[#0A0A0A] text-white relative overflow-hidden border-t border-[#1F1F1F]">
       {/* Background ambient radial gradients matching DesignMonk reference */}

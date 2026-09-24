@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { useAppSelector } from '@/redux/hooks';
 import { ArrowLeft } from 'lucide-react';
 
 interface WorkspaceHeaderProps {
@@ -18,8 +17,6 @@ export function WorkspaceHeader({
   backHref,
   action,
 }: WorkspaceHeaderProps) {
-  const { currentUser, activeRole } = useAppSelector((state) => state.auth);
-
   return (
     <header className="bg-white border-b border-[#E7E7E2] px-6 py-4 sticky top-0 z-30 flex items-center justify-between">
       <div className="flex items-center gap-4">

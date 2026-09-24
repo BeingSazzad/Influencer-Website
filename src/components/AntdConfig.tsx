@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ConfigProvider, theme } from 'antd';
+import { ConfigProvider } from 'antd';
 
 export function AntdConfig({ children }: { children: React.ReactNode }) {
   return (

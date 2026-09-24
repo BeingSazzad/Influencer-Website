@@ -10,14 +10,12 @@ import {
   Check,
   Clock,
   RotateCcw,
-  Video,
   Film,
   Sparkles,
   Youtube,
   Instagram,
   Layers,
   Edit3,
-  ShieldCheck,
 } from 'lucide-react';
 
 interface PackageCardProps {

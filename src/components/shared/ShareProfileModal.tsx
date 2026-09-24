@@ -6,13 +6,11 @@ import {
   Share2,
   Copy,
   Check,
-  Send,
   MessageCircle,
   Twitter,
   Linkedin,
   Mail,
   QrCode,
-  Sparkles,
 } from 'lucide-react';
 
 interface ShareProfileModalProps {

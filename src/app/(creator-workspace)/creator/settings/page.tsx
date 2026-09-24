@@ -20,7 +20,6 @@ import {
   Mail,
   Phone,
   ShieldCheck,
-  CheckCircle2,
   Clock,
   Calendar,
   RotateCcw,

@@ -12,11 +12,8 @@ import {
   Clock,
   CheckCircle2,
   Inbox,
-  ShoppingBag,
   ArrowRight,
-  ExternalLink,
   DollarSign,
-  TrendingUp,
   Search,
 } from 'lucide-react';
 import { Button, Input, message } from 'antd';
@@ -32,14 +29,12 @@ export default function CreatorCampaignsPage() {
   const dispatch = useAppDispatch();
   const { orders } = useAppSelector((state) => state.order);
   const { currentUser } = useAppSelector((state) => state.auth);
-  const { creators } = useAppSelector((state) => state.creator);
 
   const [activeFilter, setActiveFilter] = useState<'all' | 'pending' | 'active' | 'review' | 'completed'>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
   // Target creator
   const targetCreatorId = currentUser?.role === 'creator' ? currentUser.id : 'creator-01';
-  const currentCreator = creators.find((c) => c.id === targetCreatorId) || creators[0];
 
   const creatorOrders = orders.filter(
     (o) => o.creatorId === targetCreatorId || (o.creatorId === 'creator-01' && (!currentUser || currentUser?.role === 'creator'))

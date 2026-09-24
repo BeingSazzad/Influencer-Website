@@ -2,29 +2,23 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { useAppSelector, useAppDispatch } from '@/redux/hooks';
-import { openOfferModal } from '@/redux/slices/orderSlice';
+import { useAppSelector } from '@/redux/hooks';
 import { WorkspaceHeader } from '@/components/layout/WorkspaceHeader';
 import { CreatorCard } from '@/components/shared/CreatorCard';
 import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
 import { EmptyState } from '@/components/shared/EmptyState';
 import {
   ShoppingBag,
-  Clock,
-  CheckCircle2,
   TrendingUp,
   ArrowRight,
   ShieldCheck,
   PlusCircle,
   Bookmark,
-  ExternalLink,
-  DollarSign,
 } from 'lucide-react';
-import { Button, Tag } from 'antd';
+import { Button } from 'antd';
 import { BrandAnnualAnalytics } from '@/components/shared/BrandAnnualAnalytics';
 
 export default function BrandDashboardPage() {
-  const dispatch = useAppDispatch();
   const { currentUser } = useAppSelector((state) => state.auth);
   const { orders } = useAppSelector((state) => state.order);
   const { creators, savedCreatorIds } = useAppSelector((state) => state.creator);
@@ -37,7 +31,6 @@ export default function BrandDashboardPage() {
   const activeOrders = brandOrders.filter(
     (o) => o.status !== 'completed' && o.status !== 'declined'
   );
-  const completedOrders = brandOrders.filter((o) => o.status === 'completed');
 
   // Calculate totals
   const totalEscrowFundedEur = brandOrders.reduce((acc, curr) => acc + curr.totalEur, 0);

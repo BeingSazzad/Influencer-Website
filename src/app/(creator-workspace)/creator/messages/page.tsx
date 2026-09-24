@@ -10,23 +10,18 @@ import {
 } from '@/redux/slices/messageSlice';
 import { WorkspaceHeader } from '@/components/layout/WorkspaceHeader';
 import { EmptyState } from '@/components/shared/EmptyState';
-import { BrandLogo } from '@/components/shared/BrandLogo';
 import {
   MessageSquare,
   Search,
   Send,
-  Building2,
   ExternalLink,
   ShoppingBag,
-  Sparkles,
   Paperclip,
   FileText,
   Film,
   Download,
   X,
   UploadCloud,
-  Image as ImageIcon,
-  CheckCircle2,
 } from 'lucide-react';
 import { Button } from 'antd';
 
@@ -263,7 +258,7 @@ export default function CreatorMessagesPage() {
                     className="w-10 h-10 rounded-full object-cover border border-[#E7E7E2] shrink-0"
                   />
                   <div className="truncate">
-                    <h2 className="text-sm sm:text-2xl font-extrabold text-[#0A0A0A] truncate">
+                    <h2 className="text-sm sm:text-base font-bold text-[#0A0A0A] truncate">
                       {activeConv.brandName}
                     </h2>
                     <div className="text-sm text-[#73736A]">Verified Brand Partner</div>

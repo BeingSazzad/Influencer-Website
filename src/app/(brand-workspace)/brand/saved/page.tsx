@@ -6,7 +6,7 @@ import { useAppSelector } from '@/redux/hooks';
 import { WorkspaceHeader } from '@/components/layout/WorkspaceHeader';
 import { CreatorCard } from '@/components/shared/CreatorCard';
 import { EmptyState } from '@/components/shared/EmptyState';
-import { Bookmark, Search, ArrowRight } from 'lucide-react';
+import { Bookmark, Search } from 'lucide-react';
 import { Button } from 'antd';
 
 export default function BrandSavedShortlistPage() {

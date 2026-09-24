@@ -3,8 +3,6 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { setLanguage } from '@/redux/slices/langSlice';
-import { Language } from '@/types';
-import { Globe } from 'lucide-react';
 
 export function LanguageSwitcher() {
   const dispatch = useAppDispatch();

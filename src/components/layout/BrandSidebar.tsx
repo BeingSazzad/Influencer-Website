@@ -10,7 +10,6 @@ import { message } from 'antd';
 import {
   LayoutDashboard,
   Bookmark,
-  ShoppingBag,
   Layers,
   PlusCircle,
   MessageSquare,

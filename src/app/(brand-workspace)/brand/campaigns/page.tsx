@@ -10,21 +10,13 @@ import {
   Layers,
   Clock,
   CheckCircle2,
-  ShieldCheck,
   PlusCircle,
   ArrowRight,
-  ExternalLink,
-  MessageSquare,
-  Sparkles,
   DollarSign,
-  TrendingUp,
   AlertCircle,
-  Film,
-  Instagram,
-  Youtube,
   Search,
 } from 'lucide-react';
-import { Button, Input, Tag } from 'antd';
+import { Button, Input } from 'antd';
 
 function formatDeadline(dateStr: string) {
   if (!dateStr) return '';

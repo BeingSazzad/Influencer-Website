@@ -2,27 +2,18 @@
 
 import React, { useState, useMemo, useEffect, Suspense } from 'react';
 import Link from 'next/link';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from '@/redux/hooks';
 import { setFilter, resetFilters } from '@/redux/slices/creatorSlice';
 import { CreatorCard } from '@/components/shared/CreatorCard';
 import { CreatorGridSkeleton } from '@/components/shared/Skeleton';
 import { EmptyState } from '@/components/shared/EmptyState';
-import { Creator, PlatformType, CreatorFilterState } from '@/types';
+import { PlatformType, CreatorFilterState } from '@/types';
 import {
   Search,
-  SlidersHorizontal,
   Sparkles,
-  MapPin,
-  Instagram,
-  Youtube,
-  Users,
-  ArrowUpDown,
   RotateCcw,
-  PlusCircle,
-  ExternalLink,
   ChevronDown,
-  Globe,
   Shirt,
   Dumbbell,
   Plane,
@@ -34,10 +25,9 @@ import {
   Layers,
   X,
 } from 'lucide-react';
-import { Input, Select, Pagination, Button } from 'antd';
+import { Pagination } from 'antd';
 
 function CreatorsDiscoveryContent() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
   const { creators, filters } = useAppSelector((state) => state.creator);

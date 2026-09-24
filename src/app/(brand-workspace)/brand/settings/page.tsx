@@ -9,23 +9,18 @@ import { updateUserProfile, logout } from '@/redux/slices/authSlice';
 import {
   Building2,
   Shield,
-  CreditCard,
   KeyRound,
   Globe,
   MapPin,
   Mail,
-  Camera,
   Save,
-  CheckCircle2,
   Receipt,
-  FileText,
   LogOut,
-  Sparkles,
   Share2,
 } from 'lucide-react';
 import { ShareProfileModal } from '@/components/shared/ShareProfileModal';
 import { ImageUpload } from '@/components/shared/ImageUpload';
-import { Input, Button, message, Switch } from 'antd';
+import { Input, message } from 'antd';
 
 export default function BrandSettingsPage() {
   const router = useRouter();

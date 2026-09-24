@@ -2,12 +2,9 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { useAppSelector } from '@/redux/hooks';
-import { Video, Share2, Check, ArrowRight, Sparkles } from 'lucide-react';
+import { Video, Share2, Check, Sparkles } from 'lucide-react';
 
 export function CollaborationModelsSection() {
-  const { t } = useAppSelector((state) => state.lang);
-
   return (
     <section className="py-24 bg-white border-y border-[#E7E7E2] font-sans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

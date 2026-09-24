@@ -11,11 +11,7 @@ import { PlatformType, Order, CreatorPackage } from '@/types';
 import {
   ShieldCheck,
   Lock,
-  Sparkles,
   ExternalLink,
-  ArrowRight,
-  Clock,
-  CheckCircle2,
 } from 'lucide-react';
 import { Input, Select, Button, message, Slider, InputNumber } from 'antd';
 

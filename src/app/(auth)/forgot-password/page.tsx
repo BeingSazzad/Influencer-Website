@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Logo } from '@/components/shared/Logo';
-import { Mail, ArrowLeft, CheckCircle2, ArrowRight, KeyRound } from 'lucide-react';
+import { Mail, ArrowLeft, CheckCircle2, ArrowRight } from 'lucide-react';
 import { Input, Button, message } from 'antd';
 
 export default function ForgotPasswordPage() {
