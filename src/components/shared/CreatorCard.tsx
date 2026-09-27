@@ -86,16 +86,10 @@ export function CreatorCard({ creator }: CreatorCardProps) {
 
           {/* Category Tags Pills */}
           <div className="flex flex-wrap gap-1.5 mb-3.5">
-            {creator.categories.slice(0, 3).map((cat, idx) => (
+            {creator.categories.slice(0, 3).map((cat) => (
               <span
                 key={cat}
-                className={`text-sm font-bold px-2.5 py-0.5 rounded-full font-sans ${
-                  idx === 0
-                    ? 'bg-[#F1EEF9] text-[#6444A6]'
-                    : idx === 1
-                    ? 'bg-[#EEF7F2] text-[#23744D]'
-                    : 'bg-[#FAF6E8] text-[#8C6819]'
-                }`}
+                className="text-xs font-bold px-2.5 py-0.5 rounded-full font-sans bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]"
               >
                 {cat}
               </span>

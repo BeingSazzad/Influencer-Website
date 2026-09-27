@@ -101,40 +101,40 @@ export default function BrandCampaignsPage() {
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
               €{Math.round(totalBudgetEur).toLocaleString()}
             </div>
-            <div className="text-xs text-[#23744D] font-bold">100% Escrow Protected</div>
+            <div className="text-xs text-[#73736A] font-semibold">100% Escrow Protected</div>
           </div>
 
           <div className="bg-white p-5 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1">
             <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#73736A]">
               <span>In Production</span>
-              <Clock className="w-4 h-4 text-[#6444A6]" />
+              <Clock className="w-4 h-4 text-[#0A0A0A]" />
             </div>
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
               {inProduction.length} Active
             </div>
-            <div className="text-sm text-[#73736A]">€{Math.round(inEscrowEur).toLocaleString()} currently locked</div>
+            <div className="text-sm text-[#73736A]">€{Math.round(inEscrowEur).toLocaleString()} locked in escrow</div>
           </div>
 
           <div className="bg-white p-5 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1">
             <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#73736A]">
               <span>Pending Acceptance</span>
-              <AlertCircle className="w-4 h-4 text-[#8C6819]" />
+              <AlertCircle className="w-4 h-4 text-[#FF2D78]" />
             </div>
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
               {pendingOffers.length}
             </div>
-            <div className="text-xs text-[#8C6819] font-bold">Awaiting creator review</div>
+            <div className="text-xs text-[#73736A] font-medium">Awaiting creator review</div>
           </div>
 
           <div className="bg-white p-5 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1">
             <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#73736A]">
               <span>Completed Deals</span>
-              <CheckCircle2 className="w-4 h-4 text-[#23744D]" />
+              <CheckCircle2 className="w-4 h-4 text-[#0A0A0A]" />
             </div>
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
               {completed.length}
             </div>
-            <div className="text-sm text-[#73736A]">Assets approved & released</div>
+            <div className="text-sm text-[#73736A]">Assets approved &amp; released</div>
           </div>
         </div>
 
@@ -174,7 +174,7 @@ export default function BrandCampaignsPage() {
           <div className="w-full sm:w-64 shrink-0">
             <Input
               prefix={<Search className="w-3.5 h-3.5 text-[#73736A]" />}
-              placeholder="Search creator or package..."
+              placeholder="Search brand or package..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="rounded-2xl h-10 text-sm font-semibold"
@@ -198,12 +198,12 @@ export default function BrandCampaignsPage() {
             <div className="space-y-4">
               {filteredOrders.map((order) => {
                 const statusColors: Record<string, string> = {
-                  offer_sent: 'bg-[#FAF6E8] text-[#8C6819]',
-                  accepted: 'bg-[#F1EEF9] text-[#6444A6]',
-                  in_production: 'bg-[#F1EEF9] text-[#6444A6]',
-                  deliverable_submitted: 'bg-[#EEF7F2] text-[#23744D] font-black animate-pulse',
-                  approved: 'bg-[#EEF7F2] text-[#23744D]',
-                  completed: 'bg-[#F4F4F0] text-[#0A0A0A]',
+                  offer_sent: 'bg-[#F4F4F0] text-[#73736A] border border-[#E7E7E2]',
+                  accepted: 'bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]',
+                  in_production: 'bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]',
+                  deliverable_submitted: 'bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 font-bold',
+                  approved: 'bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]',
+                  completed: 'bg-[#F4F4F0] text-[#73736A] border border-[#E7E7E2]',
                 };
 
                 const statusLabels: Record<string, string> = {
@@ -220,11 +220,7 @@ export default function BrandCampaignsPage() {
                 return (
                   <div
                     key={order.id}
-                    className={`p-5 sm:p-6 rounded-2xl border transition-all flex flex-col md:flex-row md:items-center justify-between gap-5 ${
-                      isReviewReady
-                        ? 'bg-[#F4FAF6] border-[#23744D] shadow-xs'
-                        : 'bg-[#FAFAF8] border-[#E7E7E2] hover:border-[#0A0A0A]'
-                    }`}
+                    className="p-5 sm:p-6 rounded-2xl bg-white border border-[#E7E7E2] hover:border-[#0A0A0A] transition-all flex flex-col md:flex-row md:items-center justify-between gap-5 shadow-2xs"
                   >
                     {/* Creator Details & Deliverable */}
                     <div className="flex items-center gap-4 sm:gap-5 min-w-0">
@@ -268,20 +264,14 @@ export default function BrandCampaignsPage() {
                     <div className="flex items-center gap-3 self-end md:self-auto shrink-0 mt-2 md:mt-0">
                       <span
                         className={`text-sm font-bold px-3 py-1.5 rounded-full leading-none inline-flex items-center ${
-                          statusColors[order.status] || 'bg-[#F4F4F0] text-[#0A0A0A]'
+                          statusColors[order.status] || 'bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]'
                         }`}
                       >
                         {statusLabels[order.status] || order.status}
                       </span>
 
                       <Link href={`/brand/orders/${order.id}`}>
-                        <button
-                          className={`h-10 px-5 rounded-full font-bold text-xs flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer active:scale-98 ${
-                            isReviewReady
-                              ? 'bg-[#23744D] hover:bg-[#1c5f3e] text-white border-none'
-                              : 'bg-[#0A0A0A] hover:bg-zinc-800 text-white border-none'
-                          }`}
-                        >
+                        <button className="h-10 px-5 rounded-full font-bold text-xs bg-[#0A0A0A] hover:bg-[#FF2D78] text-white border-none flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer active:scale-98">
                           <span>{isReviewReady ? 'Review Deliverables' : 'Manage Campaign'}</span>
                           <ArrowRight className="w-3.5 h-3.5" />
                         </button>

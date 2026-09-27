@@ -144,7 +144,7 @@ export default function CreatorOrderFulfilmentPage() {
               <div className="text-left sm:text-right">
                 <div className="text-sm font-semibold text-[#73736A] uppercase tracking-wider">Your Guaranteed Payout</div>
                 <div className="text-2xl sm:text-3xl font-extrabold text-[#0A0A0A] tracking-tight">€{order.basePriceEur}</div>
-                <div className="text-xs text-[#23744D] font-semibold">100% Escrow Funded by Brand</div>
+                <div className="text-xs text-[#73736A] font-semibold">100% Escrow Funded by Brand</div>
               </div>
             </div>
           </div>
@@ -165,7 +165,7 @@ export default function CreatorOrderFulfilmentPage() {
                     Upload or link your completed video draft for brand sign-off.
                   </p>
                 </div>
-                <div className="w-10 h-10 rounded-2xl bg-[#EEF7F2] text-[#23744D] flex items-center justify-center shadow-2xs">
+                <div className="w-10 h-10 rounded-2xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center shadow-2xs">
                   <Upload className="w-5 h-5" />
                 </div>
               </div>
@@ -325,7 +325,7 @@ export default function CreatorOrderFulfilmentPage() {
                   htmlType="submit"
                   loading={isSubmitting}
                   block
-                  className="h-11 rounded-full font-bold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 !text-white hover:!text-white border-none shadow-xs cursor-pointer"
+                  className="h-11 rounded-full font-bold text-sm bg-[#0A0A0A] hover:!bg-[#FF2D78] !text-white hover:!text-white border-none shadow-xs cursor-pointer"
                 >
                   Submit for Brand Sign-Off & Escrow Release
                 </Button>
@@ -408,8 +408,8 @@ export default function CreatorOrderFulfilmentPage() {
                     Brand Chat
                   </h3>
                 </div>
-                <div className="flex items-center gap-1.5 text-xs text-[#23744D] font-semibold">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <div className="flex items-center gap-1.5 text-xs text-[#73736A] font-semibold">
+                  <span className="w-2 h-2 rounded-full bg-[#0A0A0A]" />
                   <span>Active</span>
                 </div>
               </div>
@@ -451,7 +451,7 @@ export default function CreatorOrderFulfilmentPage() {
                 />
                 <button
                   type="submit"
-                  className="h-10 w-10 rounded-full bg-[#0A0A0A] hover:bg-zinc-800 text-white flex items-center justify-center transition-colors cursor-pointer shrink-0 shadow-xs"
+                  className="h-10 w-10 rounded-full bg-[#0A0A0A] hover:bg-[#FF2D78] text-white flex items-center justify-center transition-colors cursor-pointer shrink-0 shadow-xs"
                   aria-label="Send message"
                 >
                   <Send className="w-4 h-4" />

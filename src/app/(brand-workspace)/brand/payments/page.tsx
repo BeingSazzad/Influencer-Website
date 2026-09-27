@@ -236,15 +236,15 @@ export default function BrandPaymentsPage() {
               <span className="text-xs font-extrabold text-[#73736A] uppercase tracking-wider">
                 Available Wallet
               </span>
-              <div className="w-8 h-8 rounded-xl bg-[#EEF7F2] text-[#23744D] flex items-center justify-center">
+              <div className="w-8 h-8 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center">
                 <Wallet className="w-4 h-4" />
               </div>
             </div>
             <div className="text-3xl font-black text-[#0A0A0A] tracking-tight">
               €{balanceEur.toLocaleString()}
             </div>
-            <div className="text-xs text-[#23744D] font-bold flex items-center gap-1">
-              <CheckCircle2 className="w-3.5 h-3.5" />
+            <div className="text-xs text-[#73736A] font-bold flex items-center gap-1">
+              <CheckCircle2 className="w-3.5 h-3.5 text-[#0A0A0A]" />
               <span>Ready for immediate campaigns</span>
             </div>
           </div>
@@ -314,7 +314,7 @@ export default function BrandPaymentsPage() {
           <div className="p-6 bg-white rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="font-black text-base text-[#0A0A0A]">Primary Payment Method</h3>
-              <span className="text-sm font-bold px-2.5 py-0.5 rounded-full bg-[#EEF7F2] text-[#23744D]">
+              <span className="text-sm font-bold px-2.5 py-0.5 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]">
                 Active
               </span>
             </div>
@@ -450,7 +450,7 @@ export default function BrandPaymentsPage() {
                       {/* Type Badge */}
                       <td className="py-4 px-4">
                         {isTopUp ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] font-bold text-xs">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2] font-bold text-xs">
                             <ArrowDownLeft className="w-3.5 h-3.5" /> Wallet Deposit
                           </span>
                         ) : isEscrow ? (
@@ -476,7 +476,7 @@ export default function BrandPaymentsPage() {
                       {/* Amount */}
                       <td className="py-4 px-4 text-right font-sans font-black text-sm sm:text-base text-[#0A0A0A]">
                         {isTopUp ? (
-                          <span className="text-[#23744D]">+€{txn.amountEur.toLocaleString()}</span>
+                          <span className="text-[#0A0A0A]">+€{txn.amountEur.toLocaleString()}</span>
                         ) : (
                           <span>-€{txn.amountEur.toLocaleString()}</span>
                         )}
@@ -489,7 +489,7 @@ export default function BrandPaymentsPage() {
                             Held in Escrow
                           </span>
                         ) : (
-                          <span className="px-2.5 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] font-bold text-xs uppercase tracking-wide">
+                          <span className="px-2.5 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2] font-bold text-xs uppercase tracking-wide">
                             Settled
                           </span>
                         )}
@@ -606,8 +606,8 @@ export default function BrandPaymentsPage() {
           </div>
 
           {/* Escrow note */}
-          <div className="p-3 bg-[#EEF7F2] rounded-xl border border-[#D9EDE2] text-xs text-[#23744D] flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 shrink-0" />
+          <div className="p-3 bg-[#FAFAF8] rounded-xl border border-[#E7E7E2] text-xs text-[#73736A] flex items-center gap-2">
+            <ShieldCheck className="w-4 h-4 shrink-0 text-[#0A0A0A]" />
             <span>Regulated by European Payment Institution guidelines. Funds are 100% segregated.</span>
           </div>
 
@@ -646,7 +646,7 @@ export default function BrandPaymentsPage() {
                 </h3>
                 <div className="text-sm text-[#73736A]">Issued on {selectedInvoice.date}</div>
               </div>
-              <span className="px-3 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] font-bold text-xs">
+              <span className="px-3 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2] font-bold text-xs">
                 Paid / Settled
               </span>
             </div>

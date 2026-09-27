@@ -100,7 +100,7 @@ export default function CreatorCampaignsPage() {
           <div className="bg-white p-5 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1">
             <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#73736A]">
               <span>Locked in Escrow</span>
-              <Clock className="w-4 h-4 text-[#6444A6]" />
+              <Clock className="w-4 h-4 text-[#0A0A0A]" />
             </div>
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
               €{lockedInEscrowEur.toLocaleString()}
@@ -110,7 +110,7 @@ export default function CreatorCampaignsPage() {
           <div className="bg-white p-5 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1">
             <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#73736A]">
               <span>Pending Proposals</span>
-              <Inbox className="w-4 h-4 text-[#8C6819]" />
+              <Inbox className="w-4 h-4 text-[#FF2D78]" />
             </div>
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
               {pendingOffers.length}
@@ -120,7 +120,7 @@ export default function CreatorCampaignsPage() {
           <div className="bg-white p-5 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1">
             <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#73736A]">
               <span>Completed Campaigns</span>
-              <CheckCircle2 className="w-4 h-4 text-[#23744D]" />
+              <CheckCircle2 className="w-4 h-4 text-[#0A0A0A]" />
             </div>
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
               {completedOrders.length}
@@ -230,14 +230,14 @@ export default function CreatorCampaignsPage() {
                           <Button
                             type="primary"
                             onClick={() => handleAcceptOffer(order.id)}
-                            className="h-9 sm:h-10 px-4 sm:px-5 rounded-full font-bold text-xs bg-[#0A0A0A] hover:!bg-[#23744D] !text-white border-none cursor-pointer shadow-2xs"
+                            className="h-9 sm:h-10 px-4 sm:px-5 rounded-full font-bold text-xs bg-[#0A0A0A] hover:!bg-[#FF2D78] !text-white border-none cursor-pointer shadow-2xs"
                           >
                             Accept (€{order.basePriceEur})
                           </Button>
                           <Button
                             type="default"
                             onClick={() => handleDeclineOffer(order.id)}
-                            className="h-9 sm:h-10 px-3.5 rounded-full font-bold text-xs border-[#E7E7E2] text-[#73736A] hover:text-rose-600 cursor-pointer"
+                            className="h-9 sm:h-10 px-3.5 rounded-full font-bold text-xs border-[#E7E7E2] text-[#73736A] hover:text-[#0A0A0A] cursor-pointer"
                           >
                             Decline
                           </Button>
@@ -245,21 +245,21 @@ export default function CreatorCampaignsPage() {
                       ) : (
                         <div className="flex items-center gap-3">
                           {isUnderReview ? (
-                            <span className="text-sm font-bold px-3 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] border border-[#23744D]/20">
+                            <span className="text-sm font-bold px-3 py-1 rounded-full bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25">
                               Under Review
                             </span>
                           ) : order.status === 'completed' ? (
-                            <span className="text-sm font-bold px-3 py-1 rounded-full bg-[#EEF7F2] text-[#23744D]">
+                            <span className="text-sm font-bold px-3 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]">
                               Completed
                             </span>
                           ) : (
-                            <span className="text-sm font-bold px-3 py-1 rounded-full bg-[#FAF6E8] text-[#8C6819] border border-amber-200/60">
+                            <span className="text-sm font-bold px-3 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]">
                               In Production
                             </span>
                           )}
 
                           <Link href={`/creator/orders/${order.id}`}>
-                            <button className="h-9 sm:h-10 px-4 sm:px-5 rounded-full font-bold text-xs bg-[#0A0A0A] hover:bg-zinc-800 text-white border-none flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer active:scale-95">
+                            <button className="h-9 sm:h-10 px-4 sm:px-5 rounded-full font-bold text-xs bg-[#0A0A0A] hover:bg-[#FF2D78] text-white border-none flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer active:scale-95">
                               <span>{isUnderReview ? 'View Submission' : 'Submit Work'}</span>
                               <ArrowRight className="w-3.5 h-3.5" />
                             </button>

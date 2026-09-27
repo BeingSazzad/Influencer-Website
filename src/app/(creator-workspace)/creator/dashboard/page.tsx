@@ -69,7 +69,7 @@ export default function CreatorDashboardPage() {
               <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
                 Total Earned
               </span>
-              <div className="w-8 h-8 rounded-xl bg-[#EEF7F2] text-[#23744D] flex items-center justify-center">
+              <div className="w-8 h-8 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center">
                 <DollarSign className="w-4 h-4" />
               </div>
             </div>
@@ -85,7 +85,7 @@ export default function CreatorDashboardPage() {
               <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
                 In Production
               </span>
-              <div className="w-8 h-8 rounded-xl bg-[#F1EEF9] text-[#6444A6] flex items-center justify-center">
+              <div className="w-8 h-8 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center">
                 <Clock className="w-4 h-4" />
               </div>
             </div>
@@ -101,7 +101,7 @@ export default function CreatorDashboardPage() {
               <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
                 Pending Offers
               </span>
-              <div className="w-8 h-8 rounded-xl bg-[#FAF6E8] text-[#8C6819] flex items-center justify-center">
+              <div className="w-8 h-8 rounded-xl bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 flex items-center justify-center">
                 <Inbox className="w-4 h-4" />
               </div>
             </div>
@@ -117,7 +117,7 @@ export default function CreatorDashboardPage() {
               <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
                 Case Studies
               </span>
-              <div className="w-8 h-8 rounded-xl bg-[#FDF0ED] text-[#FF2D78] flex items-center justify-center">
+              <div className="w-8 h-8 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center">
                 <Film className="w-4 h-4" />
               </div>
             </div>
@@ -226,11 +226,17 @@ export default function CreatorDashboardPage() {
                     </div>
 
                     <div className="shrink-0 flex items-center gap-2">
-                      <span className="text-sm font-bold px-2.5 py-1 rounded-full bg-[#EEF7F2] text-[#23744D]">
+                      <span
+                        className={`text-sm font-bold px-2.5 py-1 rounded-full ${
+                          order.status === 'deliverable_submitted'
+                            ? 'bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25'
+                            : 'bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]'
+                        }`}
+                      >
                         {order.status === 'deliverable_submitted' ? 'In Review' : 'Producing'}
                       </span>
                       <Link href={`/creator/orders/${order.id}`}>
-                        <button className="h-8 px-3 rounded-full text-sm font-bold bg-[#0A0A0A] text-white hover:bg-zinc-800 transition-all cursor-pointer">
+                        <button className="h-8 px-3 rounded-full text-sm font-bold bg-[#0A0A0A] text-white hover:bg-[#FF2D78] transition-all cursor-pointer">
                           Upload
                         </button>
                       </Link>

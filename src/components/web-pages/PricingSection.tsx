@@ -16,7 +16,7 @@ export function PricingSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F1EEF9] text-[#6444A6] text-xs font-bold uppercase tracking-wider font-sans mb-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 text-xs font-bold uppercase tracking-wider font-sans mb-4">
             <Sparkles className="w-4 h-4" />
             Zero Subscription Fees
           </div>
@@ -42,7 +42,7 @@ export function PricingSection() {
                   Interactive Fee Calculator
                 </h3>
               </div>
-              <span className="self-start sm:self-auto px-3.5 py-1.5 rounded-full bg-[#EEF7F2] text-[#23744D] text-sm font-bold font-sans whitespace-nowrap">
+              <span className="self-start sm:self-auto px-3.5 py-1.5 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2] text-sm font-bold font-sans whitespace-nowrap">
                 15% Flat Platform Fee
               </span>
             </div>

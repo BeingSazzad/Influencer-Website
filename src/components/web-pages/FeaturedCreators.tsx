@@ -19,7 +19,7 @@ export function FeaturedCreators() {
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-14 gap-6">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F1EEF9] text-[#6444A6] text-xs font-bold uppercase tracking-wider mb-4 font-sans">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 text-xs font-bold uppercase tracking-wider mb-4 font-sans">
               <Sparkles className="w-3.5 h-3.5" />
               Verified Marketplace Talent
             </div>

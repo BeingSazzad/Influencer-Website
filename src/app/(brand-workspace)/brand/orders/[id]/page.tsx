@@ -143,44 +143,44 @@ export default function BrandOrderDetailPage() {
               <div className="text-left sm:text-right">
                 <div className="text-sm font-semibold text-[#73736A] uppercase tracking-wider">Total Funded in Escrow</div>
                 <div className="text-2xl sm:text-3xl font-extrabold text-[#0A0A0A] tracking-tight">€{order.totalEur.toLocaleString()}</div>
-                <div className="text-xs text-[#23744D] font-semibold">€{order.basePriceEur} creator + €{order.platformFeeEur} fee</div>
+                <div className="text-xs text-[#73736A] font-semibold">€{order.basePriceEur} creator + €{order.platformFeeEur} fee</div>
               </div>
             </div>
           </div>
 
           {/* Escrow Progress Stepper */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 pt-6 border-t border-[#E7E7E2]">
-            <div className="p-4 rounded-2xl bg-[#EEF7F2] border border-[#23744D]/25 space-y-1">
-              <div className="flex items-center gap-2 text-sm font-bold text-[#23744D]">
-                <CheckCircle2 className="w-4 h-4 shrink-0" />
+            <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#0A0A0A] space-y-1">
+              <div className="flex items-center gap-2 text-sm font-bold text-[#0A0A0A]">
+                <CheckCircle2 className="w-4 h-4 shrink-0 text-[#FF2D78]" />
                 <span>1. Escrow Funded</span>
               </div>
-              <p className="text-sm text-[#555550]">€{order.totalEur} secured</p>
+              <p className="text-sm text-[#73736A]">€{order.totalEur} secured</p>
             </div>
 
             <div
               className={`p-4 rounded-2xl border space-y-1 ${
                 order.status !== 'offer_sent'
-                  ? 'bg-[#EEF7F2] text-[#23744D] border-[#23744D]/25'
-                  : 'bg-[#FAF6E8] text-[#8C6819] border-[#F3ECCF]'
+                  ? 'bg-[#FAFAF8] text-[#0A0A0A] border-[#0A0A0A]'
+                  : 'bg-[#FFF0F5] text-[#FF2D78] border-[#FF2D78]/25'
               }`}
             >
               <div className="flex items-center gap-2 text-sm font-bold">
-                <CheckCircle2 className="w-4 h-4 shrink-0" />
+                <CheckCircle2 className={`w-4 h-4 shrink-0 ${order.status !== 'offer_sent' ? 'text-[#FF2D78]' : 'text-[#73736A]'}`} />
                 <span>2. Offer Accepted</span>
               </div>
-              <p className="text-sm text-[#555550]">Creator working</p>
+              <p className="text-sm text-[#73736A]">Creator working</p>
             </div>
 
             <div
               className={`p-4 rounded-2xl border space-y-1 ${
                 ['deliverable_submitted', 'approved', 'completed'].includes(order.status)
-                  ? 'bg-[#EEF7F2] text-[#23744D] border-[#23744D]/25'
+                  ? 'bg-[#FAFAF8] text-[#0A0A0A] border-[#0A0A0A]'
                   : 'bg-[#FAFAF8] text-[#73736A] border-[#E7E7E2]'
               }`}
             >
               <div className="flex items-center gap-2 text-sm font-bold text-[#0A0A0A]">
-                <Video className="w-4 h-4 shrink-0" />
+                <Video className={`w-4 h-4 shrink-0 ${['deliverable_submitted', 'approved', 'completed'].includes(order.status) ? 'text-[#FF2D78]' : 'text-[#73736A]'}`} />
                 <span>3. Assets Submitted</span>
               </div>
               <p className="text-sm text-[#73736A]">{order.deliverables.length} files attached</p>
@@ -189,12 +189,12 @@ export default function BrandOrderDetailPage() {
             <div
               className={`p-4 rounded-2xl border space-y-1 ${
                 order.escrowReleased
-                  ? 'bg-[#EEF7F2] text-[#23744D] border-[#23744D]/25'
+                  ? 'bg-[#FAFAF8] text-[#0A0A0A] border-[#0A0A0A]'
                   : 'bg-[#FAFAF8] text-[#73736A] border-[#E7E7E2]'
               }`}
             >
               <div className="flex items-center gap-2 text-sm font-bold text-[#0A0A0A]">
-                <ShieldCheck className="w-4 h-4 shrink-0" />
+                <ShieldCheck className={`w-4 h-4 shrink-0 ${order.escrowReleased ? 'text-[#FF2D78]' : 'text-[#73736A]'}`} />
                 <span>4. Payment Released</span>
               </div>
               <p className="text-sm text-[#73736A]">
@@ -293,7 +293,7 @@ export default function BrandOrderDetailPage() {
                         <Button
                           type="primary"
                           onClick={handleApproveDeliverables}
-                          className="h-10 px-5 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:!bg-[#23744D] !text-white hover:!text-white border-none flex items-center gap-2 shadow-xs cursor-pointer"
+                          className="h-10 px-5 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:!bg-[#FF2D78] !text-white hover:!text-white border-none flex items-center gap-2 shadow-xs cursor-pointer"
                         >
                           <CheckCircle2 className="w-4 h-4" />
                           <span>Approve & Release Escrow Payment</span>
@@ -312,9 +312,9 @@ export default function BrandOrderDetailPage() {
                   )}
 
                   {order.escrowReleased && (
-                    <div className="p-4 bg-[#EEF7F2] rounded-2xl border border-[#23744D]/20 flex items-center gap-3">
-                      <ShieldCheck className="w-5 h-5 text-[#23744D] shrink-0" />
-                      <div className="text-sm text-[#23744D] font-semibold">
+                    <div className="p-4 bg-[#FAFAF8] rounded-2xl border border-[#E7E7E2] flex items-center gap-3">
+                      <ShieldCheck className="w-5 h-5 text-[#FF2D78] shrink-0" />
+                      <div className="text-sm text-[#0A0A0A] font-semibold">
                         Payment of €{order.basePriceEur} has been released to {order.creatorName}&apos;s wallet.
                       </div>
                     </div>
@@ -322,7 +322,7 @@ export default function BrandOrderDetailPage() {
                 </div>
               ) : (
                 <div className="p-10 text-center bg-[#FAFAF8] rounded-2xl border border-[#E7E7E2] space-y-2.5">
-                  <div className="w-12 h-12 rounded-2xl bg-[#EEF7F2] text-[#23744D] flex items-center justify-center mx-auto shadow-2xs">
+                  <div className="w-12 h-12 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] text-[#0A0A0A] flex items-center justify-center mx-auto shadow-2xs">
                     <Clock className="w-6 h-6" />
                   </div>
                   <p className="font-bold text-sm text-[#0A0A0A]">Deliverables In Progress</p>
@@ -369,8 +369,8 @@ export default function BrandOrderDetailPage() {
                     Order Messaging
                   </h3>
                 </div>
-                <div className="flex items-center gap-1.5 text-xs text-[#23744D] font-semibold">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <div className="flex items-center gap-1.5 text-xs text-[#73736A] font-semibold">
+                  <span className="w-2 h-2 rounded-full bg-[#0A0A0A]" />
                   <span>Active</span>
                 </div>
               </div>

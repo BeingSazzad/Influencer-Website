@@ -44,7 +44,7 @@ export function ValuePropsSection() {
     <section className="border-b border-[#E7E7E2] bg-white py-20 font-sans sm:py-24">
       <div className="mx-auto max-w-[1500px] px-5 sm:px-8 lg:px-10 xl:px-12">
         <div className="mx-auto mb-14 max-w-3xl text-center sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F1EEF9] text-[#6444A6] text-xs font-bold uppercase tracking-wider mb-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 text-xs font-bold uppercase tracking-wider mb-4">
             <Sparkles className="w-4 h-4 text-[#FF2D78]" aria-hidden="true" />
             <span>Made for Collaboration</span>
           </div>

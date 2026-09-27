@@ -66,7 +66,7 @@ export default function BrandDashboardPage() {
               <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
                 In Escrow (Active)
               </span>
-              <div className="w-9 h-9 rounded-xl bg-[#EEF7F2] text-[#23744D] flex items-center justify-center">
+              <div className="w-9 h-9 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center">
                 <ShieldCheck className="w-4 h-4" />
               </div>
             </div>
@@ -84,7 +84,7 @@ export default function BrandDashboardPage() {
               <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
                 Active Hires
               </span>
-              <div className="w-9 h-9 rounded-xl bg-[#F1EEF9] text-[#6444A6] flex items-center justify-center">
+              <div className="w-9 h-9 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center">
                 <ShoppingBag className="w-4 h-4" />
               </div>
             </div>
@@ -102,7 +102,7 @@ export default function BrandDashboardPage() {
               <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
                 Total Lifetime Spend
               </span>
-              <div className="w-9 h-9 rounded-xl bg-[#FAF6E8] text-[#8C6819] flex items-center justify-center">
+              <div className="w-9 h-9 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center">
                 <TrendingUp className="w-4 h-4" />
               </div>
             </div>
@@ -120,7 +120,7 @@ export default function BrandDashboardPage() {
               <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
                 Shortlisted
               </span>
-              <div className="w-9 h-9 rounded-xl bg-[#FDF0ED] text-[#C75D47] flex items-center justify-center">
+              <div className="w-9 h-9 rounded-xl bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 flex items-center justify-center">
                 <Bookmark className="w-4 h-4" />
               </div>
             </div>
@@ -159,12 +159,12 @@ export default function BrandDashboardPage() {
           <div className="space-y-3">
             {activeOrders.map((order) => {
               const statusColors: Record<string, string> = {
-                offer_sent: 'bg-[#FAF6E8] text-[#8C6819]',
-                accepted: 'bg-[#F1EEF9] text-[#6444A6]',
-                in_production: 'bg-[#F1EEF9] text-[#6444A6]',
-                deliverable_submitted: 'bg-[#EEF7F2] text-[#23744D] font-extrabold animate-pulse',
-                approved: 'bg-[#EEF7F2] text-[#23744D]',
-                completed: 'bg-[#F4F4F0] text-[#0A0A0A]',
+                offer_sent: 'bg-[#F4F4F0] text-[#73736A] border border-[#E7E7E2]',
+                accepted: 'bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]',
+                in_production: 'bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]',
+                deliverable_submitted: 'bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 font-bold',
+                approved: 'bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]',
+                completed: 'bg-[#F4F4F0] text-[#73736A] border border-[#E7E7E2]',
               };
 
               const statusLabels: Record<string, string> = {
@@ -236,7 +236,7 @@ export default function BrandDashboardPage() {
                     </span>
 
                     <Link href={`/brand/orders/${order.id}`}>
-                      <button className="h-10 px-5 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white border-none flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer active:scale-98">
+                      <button className="h-10 px-5 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:bg-[#FF2D78] text-white border-none flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer active:scale-98">
                         <span>Manage</span>
                         <ArrowRight className="w-4 h-4" />
                       </button>

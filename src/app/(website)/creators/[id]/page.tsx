@@ -303,20 +303,10 @@ export default function CreatorProfilePage() {
 
                 {/* Category Pills matching pastel tags in reference */}
                 <div className="flex flex-wrap gap-2 pt-1">
-                  {creator.tags.map((tag, idx) => (
+                  {creator.tags.map((tag) => (
                     <span
                       key={tag}
-                      className={`text-sm font-bold px-3.5 py-1.5 rounded-full ${
-                        idx === 0
-                          ? 'bg-[#FDF0ED] text-[#C75D47]'
-                          : idx === 1
-                          ? 'bg-[#EEF7F2] text-[#23744D]'
-                          : idx === 2
-                          ? 'bg-[#F1EEF9] text-[#6444A6]'
-                          : idx === 3
-                          ? 'bg-[#FAF6E8] text-[#8C6819]'
-                          : 'bg-[#EBF3FE] text-[#FF2D78]'
-                      }`}
+                      className="text-xs font-bold px-3.5 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]"
                     >
                       {tag}
                     </span>

@@ -135,7 +135,7 @@ export function CreatorSidebar() {
                 {item.badge !== undefined && (
                   <span
                     className={`px-2 py-0.5 rounded-full text-xs font-extrabold ${
-                      isActive ? 'bg-white/20 text-white' : 'bg-[#F1EEF9] text-[#6444A6]'
+                      isActive ? 'bg-white/20 text-white' : 'bg-[#EAEAE3] text-[#0A0A0A]'
                     }`}
                   >
                     {item.badge}

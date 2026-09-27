@@ -121,8 +121,8 @@ export function CreatorAnnualAnalytics() {
             <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
               Earnings Performance
             </h2>
-            <span className="text-xs font-extrabold px-2.5 py-0.5 rounded-full bg-[#EEF7F2] text-[#23744D] inline-flex items-center gap-1">
-              <ArrowUpRight className="w-3 h-3" />
+            <span className="text-xs font-extrabold px-2.5 py-0.5 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2] inline-flex items-center gap-1">
+              <ArrowUpRight className="w-3 h-3 text-[#FF2D78]" />
               <span>+{yearData.growthRatePct}% YoY</span>
             </span>
           </div>
@@ -202,7 +202,7 @@ export function CreatorAnnualAnalytics() {
                     className={`absolute -top-7 px-2 py-0.5 rounded-md text-xs font-black tracking-tight whitespace-nowrap z-20 pointer-events-none transition-all ${
                       isHovered
                         ? 'bg-[#0A0A0A] text-white shadow-md -translate-y-1'
-                        : 'bg-[#EEF7F2] text-[#23744D] border border-[#23744D]/20'
+                        : 'bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25'
                     }`}
                   >
                     {activeMetric === 'income' ? `€${val.toLocaleString()}` : `${val} Brands`}
@@ -218,9 +218,7 @@ export function CreatorAnnualAnalytics() {
                       isHovered
                         ? 'bg-[#0A0A0A] scale-102'
                         : isPeak
-                        ? activeMetric === 'income'
-                          ? 'bg-[#23744D]'
-                          : 'bg-[#6444A6]'
+                        ? 'bg-[#FF2D78]'
                         : item.isCurrent
                         ? 'bg-[#0A0A0A]'
                         : 'bg-[#D2D2CA] group-hover:bg-[#0A0A0A]'
@@ -241,7 +239,7 @@ export function CreatorAnnualAnalytics() {
 
                 {/* Current Month Under-dot */}
                 {item.isCurrent && selectedYear === 2026 && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#23744D] absolute -bottom-2" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF2D78] absolute -bottom-2" />
                 )}
               </div>
             );

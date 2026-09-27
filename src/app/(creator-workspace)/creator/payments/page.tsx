@@ -294,7 +294,7 @@ export default function CreatorPaymentsPage() {
 
                       {/* Earnings */}
                       <td className="py-4 px-4 text-right font-black text-sm text-[#0A0A0A] tracking-tight">
-                        <span className={isPaidOut ? 'text-[#23744D]' : 'text-[#0A0A0A]'}>
+                        <span>
                           +€{payout.amountEur.toLocaleString()}
                         </span>
                       </td>
@@ -302,11 +302,11 @@ export default function CreatorPaymentsPage() {
                       {/* Status */}
                       <td className="py-4 px-4 text-center">
                         {isPaidOut ? (
-                          <span className="px-2.5 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] font-bold text-xs uppercase tracking-wide">
+                          <span className="px-2.5 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2] font-bold text-xs uppercase tracking-wide">
                             Transferred
                           </span>
                         ) : isEscrow ? (
-                          <span className="px-2.5 py-1 rounded-full bg-[#FFF0F5] text-[#FF2D78] font-bold text-xs uppercase tracking-wide">
+                          <span className="px-2.5 py-1 rounded-full bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 font-bold text-xs uppercase tracking-wide">
                             In Escrow
                           </span>
                         ) : (
@@ -363,7 +363,7 @@ export default function CreatorPaymentsPage() {
                 </h3>
                 <div className="text-sm text-[#73736A]">{selectedRemittance.date}</div>
               </div>
-              <span className="px-2.5 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] font-bold text-xs uppercase tracking-wide">
+              <span className="px-2.5 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2] font-bold text-xs uppercase tracking-wide">
                 {selectedRemittance.status.replace('_', ' ')}
               </span>
             </div>
@@ -392,7 +392,7 @@ export default function CreatorPaymentsPage() {
               </div>
               <div className="border-t border-[#E7E7E2] pt-2 flex justify-between font-black text-sm text-[#0A0A0A]">
                 <span>Net Earnings</span>
-                <span className="text-[#23744D]">€{selectedRemittance.amountEur.toLocaleString()}</span>
+                <span className="text-[#0A0A0A]">€{selectedRemittance.amountEur.toLocaleString()}</span>
               </div>
             </div>
 
@@ -402,7 +402,7 @@ export default function CreatorPaymentsPage() {
                 message.success(`Statement ${selectedRemittance.referenceCode} downloaded.`);
                 setSelectedRemittance(null);
               }}
-              className="w-full h-10 rounded-xl bg-[#0A0A0A] hover:bg-zinc-800 text-white text-sm font-bold flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs"
+              className="w-full h-10 rounded-xl bg-[#0A0A0A] hover:bg-[#FF2D78] text-white text-sm font-bold flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs"
             >
               <Download className="w-3.5 h-3.5" />
               <span>Download Statement</span>
