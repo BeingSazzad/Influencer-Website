@@ -14,7 +14,6 @@ import {
   MapPin,
   Mail,
   Save,
-  Receipt,
   LogOut,
   Share2,
 } from 'lucide-react';
@@ -27,7 +26,7 @@ export default function BrandSettingsPage() {
   const dispatch = useAppDispatch();
   const { currentUser } = useAppSelector((state) => state.auth);
 
-  const [activeTab, setActiveTab] = useState<'company' | 'billing' | 'security'>('company');
+  const [activeTab, setActiveTab] = useState<'company' | 'security'>('company');
 
   // Company Profile Form States
   const [companyName, setCompanyName] = useState(currentUser?.companyName || 'Aura Skincare Paris');
@@ -38,11 +37,6 @@ export default function BrandSettingsPage() {
   const [location, setLocation] = useState(currentUser?.location || 'Berlin & Paris');
   const [bio, setBio] = useState(currentUser?.bio || 'Brand Lead at Aura Skincare developing organic beauty and wellness product launches.');
   const [industry, setIndustry] = useState('Beauty, Cosmetics & Wellness');
-
-  // Billing & VAT Form States
-  const [legalEntity, setLegalEntity] = useState('Aura Cosmetics SAS');
-  const [vatNumber, setVatNumber] = useState('FR84920194832');
-  const [billingAddress, setBillingAddress] = useState('24 Rue du Faubourg Saint-Honoré, 75008 Paris, France');
 
   // Security Form States
   const [currentPassword, setCurrentPassword] = useState('');
@@ -69,11 +63,6 @@ export default function BrandSettingsPage() {
     );
 
     message.success('Brand organization details updated successfully!');
-  };
-
-  const handleSaveBilling = (e: React.FormEvent) => {
-    e.preventDefault();
-    message.success('Billing & EU VAT details saved for automated invoice generation!');
   };
 
   const handleUpdatePassword = (e: React.FormEvent) => {
@@ -107,7 +96,7 @@ export default function BrandSettingsPage() {
     <div className="min-h-screen pb-16 font-sans">
       <WorkspaceHeader
         title="Organization Settings"
-        subtitle="Manage brand profile, billing details, and account security."
+        subtitle="Manage brand profile, contact information, and account security."
         action={
           <div className="flex items-center gap-3">
             <button
@@ -147,18 +136,6 @@ export default function BrandSettingsPage() {
             <span className="whitespace-nowrap">Company Profile</span>
           </button>
 
-          <button
-            type="button"
-            onClick={() => setActiveTab('billing')}
-            className={`py-2.5 px-4 sm:px-5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 whitespace-nowrap shrink-0 transition-all cursor-pointer ${
-              activeTab === 'billing'
-                ? 'bg-[#0A0A0A] text-white shadow-xs'
-                : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
-            }`}
-          >
-            <Receipt className={`w-4 h-4 shrink-0 ${activeTab === 'billing' ? 'text-white' : 'text-[#73736A]'}`} />
-            <span className="whitespace-nowrap">Billing & VAT</span>
-          </button>
 
           <button
             type="button"
@@ -284,58 +261,6 @@ export default function BrandSettingsPage() {
           </form>
         )}
 
-        {/* TAB 2: BILLING & EU VAT */}
-        {activeTab === 'billing' && (
-          <form onSubmit={handleSaveBilling} className="space-y-6">
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
-              <div className="pb-4 border-b border-[#E7E7E2]">
-                <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Billing & VAT</h2>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Legal Entity Name</label>
-                  <Input
-                    value={legalEntity}
-                    onChange={(e) => setLegalEntity(e.target.value)}
-                    className="rounded-xl h-10 text-sm font-semibold"
-                    required
-                  />
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">VAT ID Number</label>
-                  <Input
-                    value={vatNumber}
-                    onChange={(e) => setVatNumber(e.target.value)}
-                    placeholder="e.g. FR84920194832"
-                    className="rounded-xl h-10 text-sm font-semibold"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Billing Address</label>
-                <Input.TextArea
-                  rows={2}
-                  value={billingAddress}
-                  onChange={(e) => setBillingAddress(e.target.value)}
-                  className="rounded-xl text-sm font-medium"
-                />
-              </div>
-
-              <div className="pt-4 border-t border-[#E7E7E2] flex items-center justify-end">
-                <button
-                  type="submit"
-                  className="h-11 px-7 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  <Save className="w-4 h-4" />
-                  <span>Save Billing Details</span>
-                </button>
-              </div>
-            </div>
-          </form>
-        )}
 
         {/* TAB 3: SECURITY & PASSWORD */}
         {activeTab === 'security' && (
