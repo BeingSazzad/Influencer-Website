@@ -92,7 +92,7 @@ export default function PrivacyPage() {
                 {section.title}
               </h2>
               {section.badge && (
-                <span className="px-3 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] text-sm font-bold">
+                <span className="px-3 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2] text-sm font-bold">
                   {section.badge}
                 </span>
               )}

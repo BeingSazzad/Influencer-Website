@@ -154,7 +154,7 @@ export function ShareProfileModal({
               onClick={handleCopyLink}
               className={`h-11 px-4 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer shrink-0 shadow-2xs ${
                 copied
-                  ? 'bg-[#23744D] text-white'
+                  ? 'bg-[#FF2D78] text-white'
                   : 'bg-[#0A0A0A] text-white hover:bg-[#FF2D78]'
               }`}
             >

@@ -207,8 +207,8 @@ export function PortfolioVideoModal({
           <div className="space-y-6">
             {/* Header: Brand + Verified Campaign */}
             <div>
-              <div className="flex items-center gap-2 text-sm font-bold text-emerald-700 bg-[#EEF7F2] border border-[#23744D]/20 px-3 py-1 rounded-full w-fit mb-3">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+              <div className="flex items-center gap-2 text-sm font-bold text-[#0A0A0A] bg-[#F4F4F0] border border-[#E7E7E2] px-3 py-1 rounded-full w-fit mb-3">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#0A0A0A]" />
                 <span>Verified Brand Campaign • 100% Escrow Cleared</span>
               </div>
 
@@ -240,7 +240,7 @@ export function PortfolioVideoModal({
               {/* Views */}
               <div className="p-3 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex flex-col justify-between space-y-2">
                 <div className="flex items-center gap-1.5 min-w-0">
-                  <div className="w-6 h-6 rounded-lg bg-[#EEF7F2] text-[#23744D] flex items-center justify-center shrink-0">
+                  <div className="w-6 h-6 rounded-lg bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center shrink-0">
                     <Eye className="w-3.5 h-3.5" />
                   </div>
                   <span className="text-sm font-bold text-[#73736A] truncate">Views</span>
@@ -306,7 +306,7 @@ export function PortfolioVideoModal({
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="font-semibold text-[#73736A]">Commercial Rights:</span>
-                  <span className="font-bold text-[#23744D]">Full Commercial Ad Whitelisting</span>
+                  <span className="font-bold text-[#0A0A0A]">Full Commercial Ad Whitelisting</span>
                 </div>
               </div>
             </div>

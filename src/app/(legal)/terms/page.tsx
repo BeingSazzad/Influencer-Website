@@ -68,8 +68,8 @@ export default function TermsPage() {
     <div className="space-y-8 font-sans">
       {/* Header Banner */}
       <div className="bg-white rounded-3xl p-8 sm:p-12 border border-[#E7E7E2] shadow-xs space-y-4">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EEF7F2] text-[#23744D] text-xs font-bold uppercase tracking-wider">
-          <ShieldCheck className="w-4 h-4" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2] text-xs font-bold uppercase tracking-wider">
+          <ShieldCheck className="w-4 h-4 text-[#0A0A0A]" />
           <span>Marketplace & Escrow Agreement</span>
         </div>
 
@@ -97,7 +97,7 @@ export default function TermsPage() {
             id={section.id}
             className={`p-6 sm:p-8 rounded-3xl transition-all ${
               section.highlight
-                ? 'bg-[#FAFAF8] border-2 border-[#23744D]/20 shadow-xs'
+                ? 'bg-[#FAFAF8] border-2 border-[#0A0A0A]/20 shadow-xs'
                 : 'bg-white border border-[#E7E7E2] shadow-xs'
             }`}
           >
@@ -106,7 +106,7 @@ export default function TermsPage() {
                 {section.title}
               </h2>
               {section.badge && (
-                <span className="px-3 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] text-sm font-bold tracking-wide">
+                <span className="px-3 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2] text-sm font-bold tracking-wide">
                   {section.badge}
                 </span>
               )}

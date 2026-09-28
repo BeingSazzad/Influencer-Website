@@ -232,7 +232,7 @@ function BrandMessagesContent() {
                 <span className="text-xs font-black uppercase tracking-wider text-[#73736A]">
                   Conversations
                 </span>
-                <span className="text-sm font-bold px-2 py-0.5 rounded-full bg-[#EEF7F2] text-[#23744D]">
+                <span className="text-sm font-bold px-2.5 py-0.5 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]">
                   Active Inbox
                 </span>
               </div>
@@ -421,12 +421,12 @@ function BrandMessagesContent() {
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
                 className={`flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 bg-[#FAFAF8] relative transition-colors ${
-                  isDragging ? 'bg-[#EEF7F2]/50 border-2 border-dashed border-[#23744D]' : ''
+                  isDragging ? 'bg-[#FFF0F5]/60 border-2 border-dashed border-[#FF2D78]' : ''
                 }`}
               >
                 {isDragging && (
                   <div className="absolute inset-0 bg-white/85 backdrop-blur-xs z-20 flex flex-col items-center justify-center p-6 text-center pointer-events-none">
-                    <div className="w-16 h-16 rounded-3xl bg-[#EEF7F2] text-[#23744D] flex items-center justify-center mb-3 animate-bounce">
+                    <div className="w-16 h-16 rounded-3xl bg-[#FFF0F5] text-[#FF2D78] flex items-center justify-center mb-3 animate-bounce">
                       <UploadCloud className="w-8 h-8" />
                     </div>
                     <p className="font-bold text-base text-[#0A0A0A]">Drop Files Here to Share</p>

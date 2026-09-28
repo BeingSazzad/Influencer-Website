@@ -108,10 +108,10 @@ export default function NotFound() {
             href="/terms"
             className="p-5 rounded-3xl bg-white border border-[#E7E7E2] hover:border-[#0A0A0A] transition-all group shadow-xs"
           >
-            <div className="w-10 h-10 rounded-2xl bg-[#EEF7F2] text-[#23744D] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+            <div className="w-10 h-10 rounded-2xl bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
               <ShieldCheck className="w-5 h-5" />
             </div>
-            <h3 className="font-bold text-sm text-[#0A0A0A] mb-1 group-hover:text-[#23744D] transition-colors">
+            <h3 className="font-bold text-sm text-[#0A0A0A] mb-1 group-hover:text-[#FF2D78] transition-colors">
               Escrow Protection
             </h3>
             <p className="text-sm text-[#73736A] leading-relaxed">

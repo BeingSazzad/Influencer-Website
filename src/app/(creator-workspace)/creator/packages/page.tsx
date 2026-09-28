@@ -230,7 +230,7 @@ export default function CreatorPackagesPage() {
           <div className="bg-white p-5 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1">
             <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#73736A]">
               <span>Starting Rate</span>
-              <span className="text-sm font-bold text-[#23744D] bg-[#EEF7F2] px-2 py-0.5 rounded-full">
+              <span className="text-xs font-bold text-[#0A0A0A] bg-[#F4F4F0] border border-[#E7E7E2] px-2.5 py-0.5 rounded-full">
                 Entry Tier
               </span>
             </div>
@@ -241,7 +241,7 @@ export default function CreatorPackagesPage() {
           <div className="bg-white p-5 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1">
             <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#73736A]">
               <span>Avg. Turnaround</span>
-              <Clock className="w-4 h-4 text-[#6444A6]" />
+              <Clock className="w-4 h-4 text-[#0A0A0A]" />
             </div>
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">{avgDelivery} Days</div>
             <div className="text-sm text-[#73736A]">Average deliverable production</div>
@@ -316,7 +316,7 @@ export default function CreatorPackagesPage() {
                         <div className="pt-3 border-t border-[#F4F4F0] space-y-1.5 text-xs">
                           {pkg.inclusions.slice(0, 4).map((inc, i) => (
                             <div key={i} className="flex items-center gap-2 text-[#52524E]">
-                              <Check className="w-3 h-3 text-[#23744D] shrink-0" />
+                              <Check className="w-3 h-3 text-[#FF2D78] shrink-0" />
                               <span className="truncate font-medium">{inc}</span>
                             </div>
                           ))}

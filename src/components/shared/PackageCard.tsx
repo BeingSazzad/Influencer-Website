@@ -146,7 +146,7 @@ export function PackageCard({ packageItem, pkg, creator, onSelect }: PackageCard
           <ul className="space-y-1.5 border-t border-[#F4F4F0] pt-3 text-xs text-[#44443E]">
             {currentPkg.inclusions.slice(0, 3).map((item, idx) => (
               <li key={idx} className="flex items-center gap-2">
-                <Check className="w-3.5 h-3.5 text-[#23744D] shrink-0" />
+                <Check className="w-3.5 h-3.5 text-[#FF2D78] shrink-0" />
                 <span className="truncate font-medium">{item}</span>
               </li>
             ))}

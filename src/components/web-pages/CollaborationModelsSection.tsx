@@ -28,11 +28,11 @@ export function CollaborationModelsSection() {
           {/* Model 1: UGC & Content Creation */}
           <div className="rounded-3xl p-6 sm:p-8 lg:p-10 bg-[#FAFAF8] border border-[#E7E7E2] hover:border-[#0A0A0A] hover:shadow-xl transition-all duration-300 flex flex-col justify-between relative group">
             <div className="space-y-6">
-              <div className="w-14 h-14 rounded-2xl bg-[#EEF7F2] text-[#23744D] flex items-center justify-center shadow-2xs group-hover:scale-105 transition-transform">
+              <div className="w-14 h-14 rounded-2xl bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center shadow-2xs group-hover:scale-105 transition-transform">
                 <Video className="w-7 h-7" />
               </div>
               <div>
-                <span className="text-xs font-extrabold uppercase tracking-wider text-[#23744D]">
+                <span className="text-xs font-extrabold uppercase tracking-wider text-[#0A0A0A]">
                   Ad Creatives & Organic
                 </span>
                 <h3 className="text-2xl sm:text-3xl font-black text-[#0A0A0A] mt-1">
@@ -52,7 +52,7 @@ export function CollaborationModelsSection() {
                   'Escrow release on final approval',
                 ].map((feature, idx) => (
                   <div key={idx} className="flex items-center gap-2.5 text-sm sm:text-[15px] font-bold text-[#0A0A0A]">
-                    <Check className="w-4.5 h-4.5 text-[#23744D] shrink-0" />
+                    <Check className="w-4.5 h-4.5 text-[#FF2D78] shrink-0" />
                     <span>{feature}</span>
                   </div>
                 ))}

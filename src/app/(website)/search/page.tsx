@@ -124,7 +124,7 @@ function SearchResultsContent() {
       value: 'ugc',
       label: 'UGC Creative',
       icon: (
-        <span className="w-5 h-5 rounded-full bg-[#23744D] flex items-center justify-center text-white shrink-0 shadow-2xs">
+        <span className="w-5 h-5 rounded-full bg-[#FF2D78] flex items-center justify-center text-white shrink-0 shadow-2xs">
           <Sparkles className="w-3 h-3 text-white" />
         </span>
       ),
@@ -374,7 +374,7 @@ function SearchResultsContent() {
                             </div>
                             <div className="text-right shrink-0 pl-2">
                               <div className="text-xs font-black text-[#0A0A0A]">From €{c.startingPriceEur}</div>
-                              <div className="text-xs text-[#23744D] font-bold">★ {c.rating}</div>
+                              <div className="text-xs font-bold text-[#0A0A0A] flex items-center justify-end gap-0.5"><span className="text-amber-400">★</span> {c.rating}</div>
                             </div>
                           </button>
                         ))}

@@ -45,8 +45,8 @@ export default function CreatorOffersPage() {
             <h2 className="text-2xl font-extrabold text-[#0A0A0A]">
               Pending Collaboration Requests
             </h2>
-            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] text-sm font-bold">
-              <ShieldCheck className="w-3.5 h-3.5" />
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] text-sm font-bold border border-[#E7E7E2]">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#0A0A0A]" />
               <span>100% Escrow Funded</span>
             </div>
           </div>
@@ -83,7 +83,7 @@ export default function CreatorOffersPage() {
                       <div className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                         €{offer.basePriceEur}
                       </div>
-                      <span className="text-xs text-[#23744D] font-semibold">Zero Creator Fee (100% Payout)</span>
+                      <span className="text-xs text-[#73736A] font-semibold">Zero Creator Fee (100% Payout)</span>
                     </div>
                   </div>
 
@@ -115,7 +115,7 @@ export default function CreatorOffersPage() {
                       <Button
                         type="primary"
                         onClick={() => handleAccept(offer.id)}
-                        className="flex-1 sm:flex-initial h-10 px-6 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:!bg-[#23744D] !text-white hover:!text-white border-none cursor-pointer shadow-xs"
+                        className="flex-1 sm:flex-initial h-10 px-6 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:!bg-[#FF2D78] !text-white hover:!text-white border-none cursor-pointer shadow-xs"
                       >
                         Accept Offer (€{offer.basePriceEur})
                       </Button>

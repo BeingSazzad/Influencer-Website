@@ -199,10 +199,10 @@ export function CreatorAnnualAnalytics() {
                 {/* Floating Micro-Value on Hover or Peak */}
                 {(isHovered || isPeak) && (
                   <div
-                    className={`absolute -top-7 px-2 py-0.5 rounded-md text-xs font-black tracking-tight whitespace-nowrap z-20 pointer-events-none transition-all ${
+                    className={`absolute -top-7 px-2.5 py-0.5 rounded-md text-xs font-black tracking-tight whitespace-nowrap z-20 pointer-events-none transition-all ${
                       isHovered
-                        ? 'bg-[#0A0A0A] text-white shadow-md -translate-y-1'
-                        : 'bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25'
+                        ? 'bg-[#FF2D78] text-white shadow-md -translate-y-1'
+                        : 'bg-[#0A0A0A] text-white shadow-xs'
                     }`}
                   >
                     {activeMetric === 'income' ? `€${val.toLocaleString()}` : `${val} Brands`}
@@ -216,10 +216,8 @@ export function CreatorAnnualAnalytics() {
                     style={{ height: `${pct}%` }}
                     className={`w-full rounded-md transition-all duration-300 ${
                       isHovered
-                        ? 'bg-[#0A0A0A] scale-102'
-                        : isPeak
-                        ? 'bg-[#FF2D78]'
-                        : item.isCurrent
+                        ? 'bg-[#FF2D78] scale-102'
+                        : (item.isCurrent || isPeak)
                         ? 'bg-[#0A0A0A]'
                         : 'bg-[#D2D2CA] group-hover:bg-[#0A0A0A]'
                     }`}

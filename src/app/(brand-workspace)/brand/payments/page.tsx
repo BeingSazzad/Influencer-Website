@@ -19,10 +19,9 @@ import {
   Download,
   Plus,
   Lock,
-  ExternalLink,
 } from 'lucide-react';
 import { Modal, Button, message } from 'antd';
-import { BrandAnnualAnalytics } from '@/components/shared/BrandAnnualAnalytics';
+
 
 interface Transaction {
   id: string;
@@ -305,66 +304,7 @@ export default function BrandPaymentsPage() {
           </div>
         </div>
 
-        {/* 12-Month Campaign Spend & Creator Hires Analytics */}
-        <BrandAnnualAnalytics />
 
-        {/* Payment Methods & Billing Info Row */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Card: Payment Method on File */}
-          <div className="p-6 bg-white rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-4">
-            <div className="flex items-center justify-between">
-              <h3 className="font-black text-base text-[#0A0A0A]">Primary Payment Method</h3>
-              <span className="text-sm font-bold px-2.5 py-0.5 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]">
-                Active
-              </span>
-            </div>
-            <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center gap-4">
-              <div className="w-12 h-9 rounded-xl bg-[#0A0A0A] text-white flex items-center justify-center font-black text-xs">
-                VISA
-              </div>
-              <div className="min-w-0 flex-1">
-                <div className="font-bold text-sm text-[#0A0A0A]">Corporate Visa •••• 4242</div>
-                <div className="text-sm text-[#73736A]">Expires 12/28 • Default Billing</div>
-              </div>
-            </div>
-            <div className="flex items-center justify-between text-xs pt-1">
-              <span className="text-[#73736A]">Secondary: SEPA Direct Debit</span>
-              <button
-                onClick={() => setIsTopUpModalOpen(true)}
-                className="font-bold text-[#0A0A0A] hover:text-[#FF2D78] transition-colors cursor-pointer"
-              >
-                Change Method
-              </button>
-            </div>
-          </div>
-
-          {/* Card: Billing Entity */}
-          <div className="p-6 bg-white rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-4 lg:col-span-2">
-            <div className="flex items-center justify-between">
-              <h3 className="font-black text-base text-[#0A0A0A]">Tax & Invoicing Details</h3>
-              <Link
-                href="/brand/settings"
-                className="text-sm font-bold text-[#0A0A0A] hover:text-[#FF2D78] flex items-center gap-1"
-              >
-                Edit Details <ExternalLink className="w-3 h-3" />
-              </Link>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-              <div className="p-3.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-1">
-                <span className="text-[#73736A] font-semibold block">Legal Entity</span>
-                <span className="font-bold text-[#0A0A0A] block">{currentUser?.companyName || 'Aura Skincare Paris S.A.S.'}</span>
-              </div>
-              <div className="p-3.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-1">
-                <span className="text-[#73736A] font-semibold block">EU VAT ID</span>
-                <span className="font-bold text-[#0A0A0A] block">FR 89 342 981 002</span>
-              </div>
-              <div className="p-3.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-1">
-                <span className="text-[#73736A] font-semibold block">Billing Address</span>
-                <span className="font-bold text-[#0A0A0A] block">75008 Paris, France</span>
-              </div>
-            </div>
-          </div>
-        </div>
 
         {/* Transaction History & Escrow Ledger */}
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">

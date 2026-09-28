@@ -34,7 +34,7 @@ export default function BrandSavedShortlistPage() {
 
       <div className="p-6 sm:p-8 max-w-[1600px] mx-auto space-y-6">
         {savedCreators.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
             {savedCreators.map((creator) => (
               <CreatorCard key={creator.id} creator={creator} />
             ))}

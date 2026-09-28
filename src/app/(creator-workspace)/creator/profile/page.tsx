@@ -863,7 +863,7 @@ function CreatorProfileContent() {
                       <Instagram className="w-5 h-5 text-[#FF2D78]" />
                       <span>Instagram</span>
                     </div>
-                    <span className="text-xs font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#EEF7F2] text-[#23744D]">
+                    <span className="text-xs font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]">
                       Active
                     </span>
                   </div>
@@ -908,7 +908,7 @@ function CreatorProfileContent() {
                       <Film className="w-5 h-5 text-[#0A0A0A]" />
                       <span>TikTok</span>
                     </div>
-                    <span className="text-xs font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#EEF7F2] text-[#23744D]">
+                    <span className="text-xs font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]">
                       Active
                     </span>
                   </div>
@@ -953,7 +953,7 @@ function CreatorProfileContent() {
                       <Youtube className="w-5 h-5 text-red-500" />
                       <span>YouTube</span>
                     </div>
-                    <span className="text-xs font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#EEF7F2] text-[#23744D]">
+                    <span className="text-xs font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]">
                       Active
                     </span>
                   </div>

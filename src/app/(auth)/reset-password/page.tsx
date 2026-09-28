@@ -372,9 +372,9 @@ function ResetPasswordContent() {
           {step === 'otp' && (
             <form onSubmit={handleVerifyOtp} className="space-y-5">
               {/* Demo Hint Banner */}
-              <div className="p-3 bg-[#EEF7F2] border border-[#23744D]/20 rounded-2xl flex items-center justify-between text-xs text-[#23744D]">
+              <div className="p-3 bg-[#FFF0F5] border border-[#FF2D78]/25 rounded-2xl flex items-center justify-between text-xs text-[#FF2D78]">
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#23744D] animate-ping" />
+                  <span className="w-2 h-2 rounded-full bg-[#FF2D78] animate-ping" />
                   <span>
                     Demo OTP: <strong className="font-mono text-sm tracking-wider">{generatedOtp}</strong>
                   </span>
@@ -382,7 +382,7 @@ function ResetPasswordContent() {
                 <button
                   type="button"
                   onClick={handleAutoFill}
-                  className="font-bold underline hover:text-[#185336] cursor-pointer"
+                  className="font-bold underline hover:text-[#0A0A0A] cursor-pointer"
                 >
                   Auto-fill
                 </button>
@@ -606,8 +606,8 @@ function ResetPasswordContent() {
           {/* STEP 4: Success Confirmation */}
           {step === 'success' && (
             <div className="text-center space-y-5 py-4">
-              <div className="w-16 h-16 rounded-full bg-[#EEF7F2] text-[#23744D] flex items-center justify-center mx-auto shadow-inner">
-                <CheckCircle2 className="w-8 h-8" />
+              <div className="w-16 h-16 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-center mx-auto shadow-inner">
+                <CheckCircle2 className="w-8 h-8 text-[#FF2D78]" />
               </div>
               <div className="space-y-2">
                 <h3 className="font-extrabold text-2xl text-[#0A0A0A]">Password Reset Done</h3>

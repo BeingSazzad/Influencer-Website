@@ -291,8 +291,8 @@ export default function CreatorProfilePage() {
                     {creator.location}
                   </span>
                   <span>•</span>
-                  <span className="flex items-center gap-1 text-[#23744D]">
-                    <Star className="w-3.5 h-3.5 fill-[#23744D]" />
+                  <span className="flex items-center gap-1 text-[#0A0A0A] font-bold">
+                    <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                     {creator.rating} ({creator.reviewsCount} reviews)
                   </span>
                 </div>
@@ -655,8 +655,8 @@ export default function CreatorProfilePage() {
                     </div>
 
                     <div className="pt-2 border-t border-[#E7E7E2]/60 flex items-center justify-between text-sm text-[#73736A]">
-                      <span className="font-bold text-[#23744D] flex items-center gap-1">
-                        <ShieldCheck className="w-3.5 h-3.5" />
+                      <span className="font-bold text-[#0A0A0A] flex items-center gap-1">
+                        <ShieldCheck className="w-3.5 h-3.5 text-[#0A0A0A]" />
                         <span>Escrow Verified</span>
                       </span>
                     </div>
@@ -810,7 +810,7 @@ export default function CreatorProfilePage() {
                           <h3 className="font-extrabold text-base text-[#0A0A0A] group-hover:text-[#FF2D78] transition-colors">
                             {item.brandName}
                           </h3>
-                          <span className="text-xs font-black text-[#23744D] bg-[#EEF7F2] px-2.5 py-0.5 rounded-md border border-[#23744D]/15">
+                          <span className="text-xs font-extrabold text-[#0A0A0A] bg-[#F4F4F0] px-2.5 py-0.5 rounded-md border border-[#E7E7E2]">
                             {item.views} Views
                           </span>
                         </div>
@@ -834,8 +834,8 @@ export default function CreatorProfilePage() {
                             {item.likes}
                           </span>
                           {item.engagementRate && (
-                            <span className="flex items-center gap-1 text-[#23744D]">
-                              <TrendingUp className="w-3.5 h-3.5" />
+                            <span className="flex items-center gap-1 text-[#0A0A0A]">
+                              <TrendingUp className="w-3.5 h-3.5 text-[#FF2D78]" />
                               {item.engagementRate}
                             </span>
                           )}
@@ -1106,8 +1106,8 @@ export default function CreatorProfilePage() {
                       </div>
 
                       <div className="pt-3 border-t border-[#E7E7E2]/80 flex items-center justify-between text-sm text-[#73736A]">
-                        <span className="inline-flex items-center gap-1.5 font-bold text-[#23744D]">
-                          <ShieldCheck className="w-3.5 h-3.5" />
+                        <span className="inline-flex items-center gap-1.5 font-bold text-[#0A0A0A]">
+                          <ShieldCheck className="w-3.5 h-3.5 text-[#0A0A0A]" />
                           <span>Verified Escrow Order</span>
                         </span>
                         <span className="font-medium text-[#A3A39C]">{rev.date}</span>

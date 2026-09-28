@@ -79,7 +79,7 @@ export default function LoginPage() {
                 <span className="text-xs font-black text-[#73736A] uppercase tracking-wider">
                   1-Click Instant Demo Access
                 </span>
-                <span className="text-sm font-bold text-[#23744D] bg-[#EEF7F2] px-2 py-0.5 rounded-full border border-[#23744D]/20">
+                <span className="text-xs font-bold text-[#0A0A0A] bg-[#F4F4F0] px-2 py-0.5 rounded-full border border-[#E7E7E2]">
                   Instant Test
                 </span>
               </div>

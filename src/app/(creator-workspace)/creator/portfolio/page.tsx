@@ -573,7 +573,7 @@ function CreatorPortfolioContent() {
                       </div>
                       <div>
                         <div className="text-xs uppercase font-bold text-[#73736A]">Eng. Rate</div>
-                        <div className="text-xs font-black text-[#23744D]">{item.engagementRate || '—'}</div>
+                        <div className="text-xs font-black text-[#0A0A0A]">{item.engagementRate || '—'}</div>
                       </div>
                     </div>
 
@@ -706,8 +706,8 @@ function CreatorPortfolioContent() {
                   <span className="text-sm text-[#73736A] font-medium">(Video or Cover Image)</span>
                 </label>
                 {detectedSpecs && (
-                  <span className="text-sm font-bold text-[#23744D] bg-[#E8F5E9] px-2 py-0.5 rounded-full flex items-center gap-1">
-                    <CheckCircle2 className="w-3 h-3" /> Auto-detected technical specs
+                  <span className="text-xs font-bold text-[#0A0A0A] bg-[#F4F4F0] border border-[#E7E7E2] px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                    <CheckCircle2 className="w-3 h-3 text-[#FF2D78]" /> Auto-detected technical specs
                   </span>
                 )}
               </div>
@@ -795,8 +795,8 @@ function CreatorPortfolioContent() {
                   {showUrlInput ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                 </button>
                 {mediaUrl && (
-                  <span className="text-xs text-[#23744D] font-bold flex items-center gap-1">
-                    <CheckCircle2 className="w-3 h-3" /> Media loaded & ready
+                  <span className="text-xs text-[#73736A] font-bold flex items-center gap-1">
+                    <CheckCircle2 className="w-3 h-3 text-[#FF2D78]" /> Media loaded & ready
                   </span>
                 )}
               </div>

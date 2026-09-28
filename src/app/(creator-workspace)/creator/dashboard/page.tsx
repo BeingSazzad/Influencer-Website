@@ -155,7 +155,7 @@ export default function CreatorDashboardPage() {
               <Button
                 type="primary"
                 onClick={() => handleAcceptOffer(incomingOffers[0].id)}
-                className="h-10 px-5 rounded-full font-bold text-xs bg-[#23744D] hover:!bg-[#1c5f3e] !text-white border-none cursor-pointer"
+                className="h-10 px-5 rounded-full font-bold text-xs bg-[#FF2D78] hover:!bg-[#E01E69] !text-white border-none cursor-pointer shadow-sm"
               >
                 Accept Offer
               </Button>

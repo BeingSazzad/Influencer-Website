@@ -270,8 +270,8 @@ function CreatorSettingsContent() {
                     Update your primary login email and contact details.
                   </p>
                 </div>
-                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] text-sm font-bold border border-[#23744D]/20 shrink-0 w-fit">
-                  <ShieldCheck className="w-3.5 h-3.5" />
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] text-sm font-bold border border-[#E7E7E2] shrink-0 w-fit">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#0A0A0A]" />
                   <span>Verified Creator</span>
                 </div>
               </div>
@@ -448,7 +448,7 @@ function CreatorSettingsContent() {
                   <div className="text-sm font-bold text-[#0A0A0A]">Windows PC • Chrome Browser</div>
                   <div className="text-sm text-[#73736A]">Current active session • Milan, Italy</div>
                 </div>
-                <span className="text-xs font-bold uppercase px-2.5 py-0.5 rounded-full bg-[#EEF7F2] text-[#23744D]">
+                <span className="text-xs font-bold uppercase px-2.5 py-0.5 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]">
                   This Device
                 </span>
               </div>

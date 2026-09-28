@@ -242,8 +242,8 @@ export function OfferModal() {
           <div className="pt-2 border-t border-[#E7E7E2] flex items-center justify-between">
             <div>
               <div className="text-xs font-black text-[#0A0A0A]">Total Escrow Funded</div>
-              <div className="text-xs text-[#23744D] font-bold flex items-center gap-1 mt-0.5">
-                <ShieldCheck className="w-3.5 h-3.5" />
+              <div className="text-xs text-[#73736A] font-bold flex items-center gap-1 mt-0.5">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#0A0A0A]" />
                 <span>Released only upon deliverable approval</span>
               </div>
             </div>
