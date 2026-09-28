@@ -9,6 +9,7 @@ import { updateUserProfile, logout } from '@/redux/slices/authSlice';
 import {
   Building2,
   Shield,
+  ShieldCheck,
   KeyRound,
   Globe,
   MapPin,
@@ -262,82 +263,152 @@ export default function BrandSettingsPage() {
         )}
 
 
-        {/* TAB 3: SECURITY & PASSWORD */}
+        {/* TAB 2: SECURITY & PASSWORD */}
         {activeTab === 'security' && (
-          <div className="space-y-6">
+          <div className="space-y-8">
+            {/* Password Update Card */}
             <form onSubmit={handleUpdatePassword} className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
-              <div className="pb-4 border-b border-[#E7E7E2]">
-                <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Password & Authentication</h2>
-              </div>
-
-              <div className="space-y-4 max-w-md">
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Current Password</label>
-                  <Input.Password
-                    value={currentPassword}
-                    onChange={(e) => setCurrentPassword(e.target.value)}
-                    placeholder="••••••••••••"
-                    className="rounded-xl h-10 text-sm"
-                    required
-                  />
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">New Password</label>
-                  <Input.Password
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    placeholder="••••••••••••"
-                    className="rounded-xl h-10 text-sm"
-                    required
-                  />
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Confirm New Password</label>
-                  <Input.Password
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="••••••••••••"
-                    className="rounded-xl h-10 text-sm"
-                    required
-                  />
+              <div className="flex items-start justify-between gap-4 pb-4 border-b border-[#E7E7E2]">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-center shrink-0">
+                    <KeyRound className="w-5 h-5 text-[#0A0A0A]" />
+                  </div>
+                  <div>
+                    <h2 className="text-xl sm:text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
+                      Password & Authentication
+                    </h2>
+                    <p className="text-sm text-[#73736A] mt-0.5">
+                      Ensure your account is protected with a secure password and credential hygiene.
+                    </p>
+                  </div>
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-[#E7E7E2] flex items-center justify-between flex-wrap gap-3">
-                <Link href="/forgot-password" className="text-sm font-bold text-[#73736A] hover:text-[#0A0A0A] transition-colors">
-                  Forgot current password? Reset via email
-                </Link>
+              {/* Form Content - 2-Column Responsive Layout */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                {/* Left side: Inputs */}
+                <div className="lg:col-span-7 space-y-5">
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <label className="text-sm font-bold text-[#0A0A0A]">Current Password</label>
+                      <Link
+                        href="/forgot-password"
+                        className="text-xs font-bold text-[#73736A] hover:text-[#FF2D78] transition-colors"
+                      >
+                        Forgot current password?
+                      </Link>
+                    </div>
+                    <Input.Password
+                      value={currentPassword}
+                      onChange={(e) => setCurrentPassword(e.target.value)}
+                      placeholder="••••••••••••"
+                      className="rounded-xl h-11 text-sm font-medium"
+                      required
+                    />
+                  </div>
 
-                <button
-                  type="submit"
-                  className="h-11 px-7 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  <KeyRound className="w-4 h-4" />
-                  <span>Update Password</span>
-                </button>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="text-sm font-bold text-[#0A0A0A]">New Password</label>
+                      <Input.Password
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        placeholder="Min. 8 characters"
+                        className="rounded-xl h-11 text-sm font-medium"
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-sm font-bold text-[#0A0A0A]">Confirm New Password</label>
+                      <Input.Password
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        placeholder="Repeat new password"
+                        className="rounded-xl h-11 text-sm font-medium"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="pt-2">
+                    <button
+                      type="submit"
+                      className="h-11 px-7 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                      <KeyRound className="w-4 h-4" />
+                      <span>Update Password</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Right side: Security Requirements Guide Card */}
+                <div className="lg:col-span-5 bg-[#FAFAF8] rounded-2xl p-5 border border-[#E7E7E2] space-y-3">
+                  <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-[#0A0A0A]">
+                    <ShieldCheck className="w-4 h-4 text-[#FF2D78]" />
+                    <span>Password Security Guidelines</span>
+                  </div>
+                  <ul className="space-y-2 text-xs font-medium text-[#73736A]">
+                    <li className="flex items-center gap-2">
+                      <span className={`w-1.5 h-1.5 rounded-full ${newPassword.length >= 8 ? 'bg-[#0A0A0A]' : 'bg-[#D2D2CA]'}`} />
+                      <span>Minimum 8 characters in length</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className={`w-1.5 h-1.5 rounded-full ${/[0-9]/.test(newPassword) ? 'bg-[#0A0A0A]' : 'bg-[#D2D2CA]'}`} />
+                      <span>Include at least one number (0–9)</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className={`w-1.5 h-1.5 rounded-full ${newPassword && newPassword === confirmPassword ? 'bg-[#0A0A0A]' : 'bg-[#D2D2CA]'}`} />
+                      <span>New passwords must match</span>
+                    </li>
+                  </ul>
+                  <div className="pt-2 border-t border-[#E7E7E2] text-[11px] text-[#73736A] leading-relaxed">
+                    Strong passwords protect your brand campaign agreements, escrow funds, and team communications.
+                  </div>
+                </div>
               </div>
             </form>
 
-            {/* Session Management & Explicit Logout */}
+            {/* Session Management & Devices Card */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="space-y-1">
-                  <div className="text-2xl font-extrabold text-[#0A0A0A]">Active Brand Session</div>
-                  <p className="text-sm text-[#73736A]">
-                    You are currently authenticated in Brand Workspace from this browser.
-                  </p>
+              <div className="flex items-center justify-between pb-4 border-b border-[#E7E7E2]">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-center shrink-0">
+                    <Shield className="w-5 h-5 text-[#0A0A0A]" />
+                  </div>
+                  <div>
+                    <h2 className="text-xl sm:text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
+                      Active Brand Session
+                    </h2>
+                    <p className="text-sm text-[#73736A] mt-0.5">
+                      Review devices authenticated in your brand workspace.
+                    </p>
+                  </div>
                 </div>
+              </div>
 
-                <button
-                  type="button"
-                  onClick={handleLogout}
-                  className="h-10 px-5 rounded-full font-bold text-sm bg-[#FAFAF8] border border-[#E7E7E2] hover:border-rose-300 hover:bg-rose-50 text-rose-600 flex items-center gap-2 transition-all cursor-pointer self-start sm:self-auto"
-                >
-                  <LogOut className="w-4 h-4" />
-                  <span>Log Out of Session</span>
-                </button>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] gap-4">
+                <div className="space-y-0.5">
+                  <div className="text-sm font-bold text-[#0A0A0A]">
+                    Windows PC • Chrome Browser
+                  </div>
+                  <div className="text-sm text-[#73736A]">
+                    Current active session • Paris, France
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-bold uppercase px-2.5 py-0.5 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]">
+                    This Device
+                  </span>
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="h-9 px-4 rounded-full font-bold text-xs bg-white border border-[#E7E7E2] hover:border-rose-300 hover:bg-rose-50 text-rose-600 flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs"
+                  >
+                    <LogOut className="w-3.5 h-3.5" />
+                    <span>Sign Out</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
