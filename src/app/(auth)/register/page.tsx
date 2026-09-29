@@ -45,7 +45,7 @@ export default function RegisterPage() {
   const [creatorEmail, setCreatorEmail] = useState('');
   const [creatorPassword, setCreatorPassword] = useState('');
   const [creatorPlatform, setCreatorPlatform] = useState('instagram');
-  const [creatorCategory, setCreatorCategory] = useState('Beauty');
+  const [creatorCategory, setCreatorCategory] = useState('Beauty & Skincare');
 
   // Username Uniqueness Logic
   const cleanCreatorHandle = creatorHandle.replace('@', '').trim().toLowerCase();
@@ -213,7 +213,7 @@ export default function RegisterPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     <div>
                       <label className="block text-sm font-bold text-[#0A0A0A] mb-1.5">
-                        Brand Name
+                        Brand name
                       </label>
                       <div className="relative flex items-center">
                         <Building className="w-4 h-4 text-[#73736A] absolute left-3.5 pointer-events-none" />
@@ -230,7 +230,7 @@ export default function RegisterPage() {
 
                     <div>
                       <label className="block text-sm font-bold text-[#0A0A0A] mb-1.5">
-                        Your Full Name
+                        Full name
                       </label>
                       <div className="relative flex items-center">
                         <UserIcon className="w-4 h-4 text-[#73736A] absolute left-3.5 pointer-events-none" />
@@ -249,7 +249,7 @@ export default function RegisterPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     <div>
                       <label className="block text-sm font-bold text-[#0A0A0A] mb-1.5">
-                        Work Email
+                        Email
                       </label>
                       <div className="relative flex items-center">
                         <Mail className="w-4 h-4 text-[#73736A] absolute left-3.5 pointer-events-none" />
@@ -317,7 +317,7 @@ export default function RegisterPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     <div>
                       <label className="block text-sm font-bold text-[#0A0A0A] mb-1.5">
-                        Creator Name
+                        Full name
                       </label>
                       <div className="relative flex items-center">
                         <UserIcon className="w-4 h-4 text-[#73736A] absolute left-3.5 pointer-events-none" />
@@ -335,7 +335,7 @@ export default function RegisterPage() {
                     <div>
                       <div className="flex items-center justify-between mb-1.5">
                         <label className="block text-sm font-bold text-[#0A0A0A]">
-                          Username Handle
+                          Username
                         </label>
                         {cleanCreatorHandle && (
                           isCreatorHandleTaken ? (
@@ -408,7 +408,7 @@ export default function RegisterPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     <div>
                       <label className="block text-sm font-bold text-[#0A0A0A] mb-1.5">
-                        Email Address
+                        Email
                       </label>
                       <div className="relative flex items-center">
                         <Mail className="w-4 h-4 text-[#73736A] absolute left-3.5 pointer-events-none" />
@@ -463,7 +463,7 @@ export default function RegisterPage() {
                           <option value="instagram">Instagram</option>
                           <option value="tiktok">TikTok</option>
                           <option value="youtube">YouTube</option>
-                          <option value="ugc">UGC Content Creator</option>
+                          <option value="ugc">UGC Ads</option>
                         </select>
                         <ChevronDown className="w-4 h-4 text-[#73736A] absolute right-3.5 pointer-events-none" />
                       </div>
@@ -471,7 +471,7 @@ export default function RegisterPage() {
 
                     <div>
                       <label className="block text-sm font-bold text-[#0A0A0A] mb-1.5">
-                        Content Category
+                        Niche
                       </label>
                       <div className="relative flex items-center">
                         <select
@@ -479,12 +479,12 @@ export default function RegisterPage() {
                           onChange={(e) => setCreatorCategory(e.target.value)}
                           className="w-full h-12 px-4 pr-10 bg-white border border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A] focus:ring-2 focus:ring-[#0A0A0A]/10 rounded-xl text-sm font-sans text-[#0A0A0A] appearance-none outline-none cursor-pointer transition-all"
                         >
-                          <option value="Beauty">Beauty & Skincare</option>
-                          <option value="Fashion">Fashion & Style</option>
-                          <option value="Fitness">Fitness & Health</option>
-                          <option value="Travel">Travel & Outdoor</option>
-                          <option value="Food">Food & Cuisine</option>
-                          <option value="Tech">Tech & Gadgets</option>
+                          <option value="Beauty & Skincare">Beauty & Skincare</option>
+                          <option value="Fashion & Style">Fashion & Style</option>
+                          <option value="Fitness & Health">Fitness & Health</option>
+                          <option value="Travel & Outdoor">Travel & Outdoor</option>
+                          <option value="Food & Cuisine">Food & Cuisine</option>
+                          <option value="Tech & Gadgets">Tech & Gadgets</option>
                           <option value="Lifestyle">Lifestyle</option>
                         </select>
                         <ChevronDown className="w-4 h-4 text-[#73736A] absolute right-3.5 pointer-events-none" />

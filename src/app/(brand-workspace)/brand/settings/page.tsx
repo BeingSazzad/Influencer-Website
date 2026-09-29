@@ -34,10 +34,10 @@ export default function BrandSettingsPage() {
   const [contactName, setContactName] = useState(currentUser?.name || 'Elena Rostova');
   const [email, setEmail] = useState(currentUser?.email || 'elena@aura-cosmetics.com');
   const [avatar, setAvatar] = useState(currentUser?.avatar || '');
-  const [website, setWebsite] = useState('https://aura-skincare.com');
+  const [website, setWebsite] = useState(currentUser?.website || 'https://aura-skincare.com');
   const [location, setLocation] = useState(currentUser?.location || 'Berlin & Paris');
   const [bio, setBio] = useState(currentUser?.bio || 'Brand Lead at Aura Skincare developing organic beauty and wellness product launches.');
-  const [industry, setIndustry] = useState('Beauty, Cosmetics & Wellness');
+  const [industry, setIndustry] = useState(currentUser?.industry || 'Beauty, Cosmetics & Wellness');
 
   // Security Form States
   const [currentPassword, setCurrentPassword] = useState('');
@@ -48,18 +48,20 @@ export default function BrandSettingsPage() {
   const handleSaveCompany = (e: React.FormEvent) => {
     e.preventDefault();
     if (!companyName.trim() || !contactName.trim()) {
-      message.error('Company name and contact person are required.');
+      message.error('Brand name and full name are required.');
       return;
     }
 
     dispatch(
       updateUserProfile({
-        name: contactName,
-        companyName,
-        email,
+        name: contactName.trim(),
+        companyName: companyName.trim(),
+        email: email.trim(),
         avatar,
-        location,
-        bio,
+        location: location.trim(),
+        website: website.trim(),
+        industry: industry.trim(),
+        bio: bio.trim(),
       })
     );
 
@@ -174,7 +176,7 @@ export default function BrandSettingsPage() {
               {/* Company Name & Contact Name */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Company / Brand Name</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Brand name</label>
                   <Input
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
@@ -184,7 +186,7 @@ export default function BrandSettingsPage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Contact Person</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Full name</label>
                   <Input
                     value={contactName}
                     onChange={(e) => setContactName(e.target.value)}
@@ -197,7 +199,7 @@ export default function BrandSettingsPage() {
               {/* Email, Website & Location */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Work Email</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Email</label>
                   <Input
                     prefix={<Mail className="w-3.5 h-3.5 text-[#73736A]" />}
                     value={email}
@@ -239,7 +241,7 @@ export default function BrandSettingsPage() {
               </div>
 
               <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Brand Story</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Bio</label>
                 <Input.TextArea
                   rows={3}
                   value={bio}
@@ -411,7 +413,9 @@ export default function BrandSettingsPage() {
         isOpen={isShareModalOpen}
         onClose={() => setIsShareModalOpen(false)}
         title={companyName}
-        subtitle={`${industry} • Verified Brand on Influverse`}
+        subtitle={[industry, location].filter(Boolean).join(' • ')}
+        description={bio}
+        link={website}
         shareUrl="/brand/settings"
         avatar={avatar}
         role="brand"

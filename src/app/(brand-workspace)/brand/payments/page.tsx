@@ -481,9 +481,11 @@ export default function BrandPaymentsPage() {
             <div className="grid grid-cols-2 gap-4 text-xs">
               <div>
                 <span className="text-[#73736A] font-semibold block mb-1">Billed To</span>
-                <strong className="text-[#0A0A0A] block">{currentUser?.companyName || 'Aura Skincare Paris S.A.S.'}</strong>
-                <span className="text-[#73736A] block">FR 89 342 981 002</span>
-                <span className="text-[#73736A] block">Paris, France</span>
+                <strong className="text-[#0A0A0A] block">{currentUser?.companyName || 'Aura Skincare Paris'}</strong>
+                {currentUser?.email && (
+                  <span className="text-[#73736A] block">{currentUser.email}</span>
+                )}
+                <span className="text-[#73736A] block">{currentUser?.location || 'Berlin & Paris'}</span>
               </div>
               <div>
                 <span className="text-[#73736A] font-semibold block mb-1">Platform Issuer</span>

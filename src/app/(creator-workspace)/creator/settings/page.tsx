@@ -10,6 +10,7 @@ import {
   scheduleDeactivation,
   cancelDeactivation,
 } from '@/redux/slices/authSlice';
+import { updateCreatorProfileDetails } from '@/redux/slices/creatorSlice';
 import {
   Shield,
   KeyRound,
@@ -32,6 +33,12 @@ function CreatorSettingsContent() {
   const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
   const { currentUser } = useAppSelector((state) => state.auth);
+  const { creators } = useAppSelector((state) => state.creator);
+  const currentCreator = creators.find(
+    (c) =>
+      c.handle.replace('@', '').toLowerCase() ===
+      (currentUser?.handle || '').replace('@', '').toLowerCase()
+  );
 
   // Tab State: account | security | notifications
   const initialTab = searchParams.get('tab');
@@ -128,6 +135,14 @@ function CreatorSettingsContent() {
       return;
     }
     dispatch(updateUserProfile({ email: accountEmail.trim(), phone: accountPhone.trim() }));
+    if (currentCreator) {
+      dispatch(
+        updateCreatorProfileDetails({
+          creatorId: currentCreator.id,
+          updates: { contactPhone: accountPhone.trim() },
+        })
+      );
+    }
     message.success('Account credentials updated successfully.');
   };
 
@@ -281,7 +296,7 @@ function CreatorSettingsContent() {
 
                 <div>
                   <label className="text-sm font-bold text-[#0A0A0A] block mb-1.5">
-                    Emergency Contact / Phone
+                    Phone
                   </label>
                   <Input
                     prefix={<Phone className="w-4 h-4 text-[#73736A] mr-0.5" />}

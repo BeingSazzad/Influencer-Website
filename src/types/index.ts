@@ -12,6 +12,8 @@ export interface User {
   handle?: string;
   location?: string;
   bio?: string;
+  website?: string;
+  industry?: string;
   gender?: 'female' | 'male' | 'non-binary' | 'other' | string;
   balanceEur?: number;
   isDeactivated?: boolean;

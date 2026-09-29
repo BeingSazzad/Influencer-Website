@@ -506,8 +506,12 @@ function BrandMessagesContent() {
                             isBrand ? 'justify-end' : 'justify-start'
                           }`}
                         >
-                          <span className="font-bold text-[#0A0A0A]">{msg.senderName}</span>
-                          <span>•</span>
+                          {!isBrand && (
+                            <>
+                              <span className="font-bold text-[#0A0A0A]">{msg.senderName}</span>
+                              <span>•</span>
+                            </>
+                          )}
                           <span>{msg.timestamp}</span>
 
                           {/* Read/Delivered/Sent status badge for own brand messages */}

@@ -92,7 +92,6 @@ function CreatorProfileContent() {
   );
   const [location, setLocation] = useState(currentCreator?.location || 'Los Angeles, CA');
   const [startingPriceEur, setStartingPriceEur] = useState(currentCreator?.startingPriceEur || 500);
-  const [currency, setCurrency] = useState('EUR');
   const [gender, setGender] = useState<string>(currentCreator?.gender || 'female');
   const [categories, setCategories] = useState<string[]>(
     currentCreator?.categories && currentCreator.categories.length > 0
@@ -107,7 +106,9 @@ function CreatorProfileContent() {
   const [newCategoryInput, setNewCategoryInput] = useState('');
   const [newTagInput, setNewTagInput] = useState('');
   const [contactEmail, setContactEmail] = useState(currentCreator?.contactEmail || '');
-  const [contactPhone, setContactPhone] = useState(currentCreator?.contactPhone || '');
+  const [contactPhone, setContactPhone] = useState(
+    currentCreator?.contactPhone || currentUser?.phone || ''
+  );
 
   // Aesthetic Gallery States
   const photosList: CreatorPhoto[] = currentCreator?.photos || [];
@@ -139,7 +140,7 @@ function CreatorProfileContent() {
 
   const [ttHandle, setTtHandle] = useState(currentCreator?.platforms?.tiktok?.handle || '@sophie.kim');
   const [ttFollowers, setTtFollowers] = useState(currentCreator?.platforms?.tiktok?.followersFormatted || '680K');
-  const [ttEngagement, setTtEngagement] = useState(currentCreator?.platforms?.tiktok?.engagementRate || '8.2%');
+  const [ttEngagement, setTtEngagement] = useState(currentCreator?.platforms?.tiktok?.engagementRate || '6.2%');
   const [ttUrl, setTtUrl] = useState(
     currentCreator?.platforms?.tiktok?.url ||
       (currentCreator?.platforms?.tiktok?.handle
@@ -149,6 +150,7 @@ function CreatorProfileContent() {
 
   const [ytHandle, setYtHandle] = useState(currentCreator?.platforms?.youtube?.handle || 'Sophie Kim Vlogs');
   const [ytFollowers, setYtFollowers] = useState(currentCreator?.platforms?.youtube?.followersFormatted || '210K');
+  const [ytEngagement, setYtEngagement] = useState(currentCreator?.platforms?.youtube?.engagementRate || '8.4%');
   const [ytUrl, setYtUrl] = useState(
     currentCreator?.platforms?.youtube?.url || 'https://youtube.com/@sophiekimvlogs'
   );
@@ -383,7 +385,7 @@ function CreatorProfileContent() {
               followersFormatted: ttFollowers.trim(),
               handle: ttHandle.trim(),
               engagementRate: ttEngagement.trim(),
-              avgViews: '320K',
+              avgViews: '410K',
               url: ttUrl.trim(),
             },
         youtube: currentCreator.platforms.youtube
@@ -391,14 +393,15 @@ function CreatorProfileContent() {
               ...currentCreator.platforms.youtube,
               handle: ytHandle.trim(),
               followersFormatted: ytFollowers.trim(),
+              engagementRate: ytEngagement.trim(),
               url: ytUrl.trim(),
             }
           : {
               followers: 210000,
               followersFormatted: ytFollowers.trim(),
               handle: ytHandle.trim(),
-              engagementRate: '3.4%',
-              avgViews: '85K',
+              engagementRate: ytEngagement.trim(),
+              avgViews: '95K',
               url: ytUrl.trim(),
             },
       },
@@ -413,6 +416,7 @@ function CreatorProfileContent() {
         avatar,
         location: location.trim(),
         bio: bio.trim(),
+        phone: contactPhone.trim(),
       })
     );
 
@@ -645,7 +649,7 @@ function CreatorProfileContent() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-[#52524E]">Contact phone</label>
+                    <label className="block text-sm font-semibold text-[#52524E]">Phone</label>
                     <Input
                       type="tel"
                       value={contactPhone}
@@ -682,7 +686,6 @@ function CreatorProfileContent() {
                     />
                   </div>
 
-                  {/* Row 4: Starting rate & Currency */}
                   <div className="space-y-1.5">
                     <label className="block text-sm font-semibold text-[#52524E]">Starting rate (EUR)</label>
                     <Input
@@ -692,20 +695,6 @@ function CreatorProfileContent() {
                       onChange={(e) => setStartingPriceEur(Number(e.target.value) || 0)}
                       className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
                       placeholder="500"
-                    />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-[#52524E]">Currency</label>
-                    <Select
-                      value={currency}
-                      onChange={(val) => setCurrency(val)}
-                      className="w-full h-11 rounded-xl"
-                      options={[
-                        { value: 'EUR', label: 'EUR (€) - European Euro' },
-                        { value: 'USD', label: 'USD ($) - US Dollar' },
-                        { value: 'GBP', label: 'GBP (£) - British Pound' },
-                      ]}
                     />
                   </div>
                 </div>
@@ -724,7 +713,7 @@ function CreatorProfileContent() {
                   {/* Primary Niches */}
                   <div className="space-y-1.5">
                     <label className="block text-sm font-semibold text-[#52524E]">
-                      Primary niches (comma-separated)
+                      Niches
                     </label>
                     <div className="min-h-[46px] rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] focus-within:border-[#0A0A0A] bg-white p-2 flex flex-wrap items-center gap-1.5 transition-all shadow-2xs">
                       {categories.map((cat) => (
@@ -768,7 +757,7 @@ function CreatorProfileContent() {
                   {/* Specialty Tags */}
                   <div className="space-y-1.5">
                     <label className="block text-sm font-semibold text-[#52524E]">
-                      Specialty tags (comma-separated)
+                      Tags
                     </label>
                     <div className="min-h-[46px] rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] focus-within:border-[#0A0A0A] bg-white p-2 flex flex-wrap items-center gap-1.5 transition-all shadow-2xs">
                       {tags.map((tag) => (
@@ -812,7 +801,7 @@ function CreatorProfileContent() {
 
                 {/* Editorial Bio */}
                 <div className="space-y-1.5">
-                  <label className="block text-sm font-semibold text-[#52524E]">Editorial bio</label>
+                  <label className="block text-sm font-semibold text-[#52524E]">Bio</label>
                   <textarea
                     rows={4}
                     value={bio}
@@ -978,8 +967,8 @@ function CreatorProfileContent() {
           <form onSubmit={handleSaveProfile} className="space-y-6">
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
               <div className="pb-4 border-b border-[#E7E7E2]">
-                <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Connected Channels & Audience Reach</h2>
-                <p className="text-sm text-[#73736A] mt-0.5">Social metrics and direct profile links shown to brands.</p>
+                <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Social reach</h2>
+                <p className="text-sm text-[#73736A] mt-0.5">Handles, followers, and links shown on your public profile.</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -994,7 +983,7 @@ function CreatorProfileContent() {
 
                   <div className="space-y-3">
                     <div className="space-y-1">
-                      <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Account Handle</label>
+                      <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Handle</label>
                       <Input
                         value={igHandle}
                         onChange={(e) => setIgHandle(e.target.value)}
@@ -1045,7 +1034,7 @@ function CreatorProfileContent() {
 
                   <div className="space-y-3">
                     <div className="space-y-1">
-                      <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Account Handle</label>
+                      <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Handle</label>
                       <Input
                         value={ttHandle}
                         onChange={(e) => setTtHandle(e.target.value)}
@@ -1078,7 +1067,7 @@ function CreatorProfileContent() {
                           value={ttEngagement}
                           onChange={(e) => setTtEngagement(e.target.value)}
                           className="rounded-xl h-9 text-sm font-semibold"
-                          placeholder="8.2%"
+                          placeholder="6.2%"
                         />
                       </div>
                     </div>
@@ -1096,7 +1085,7 @@ function CreatorProfileContent() {
 
                   <div className="space-y-3">
                     <div className="space-y-1">
-                      <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Channel Handle</label>
+                      <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Handle</label>
                       <Input
                         value={ytHandle}
                         onChange={(e) => setYtHandle(e.target.value)}
@@ -1113,14 +1102,25 @@ function CreatorProfileContent() {
                         placeholder="https://youtube.com/@sophiekimvlogs"
                       />
                     </div>
-                    <div className="space-y-1">
-                      <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Subscribers</label>
-                      <Input
-                        value={ytFollowers}
-                        onChange={(e) => setYtFollowers(e.target.value)}
-                        className="rounded-xl h-9 text-sm font-semibold"
-                        placeholder="210K"
-                      />
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Subscribers</label>
+                        <Input
+                          value={ytFollowers}
+                          onChange={(e) => setYtFollowers(e.target.value)}
+                          className="rounded-xl h-9 text-sm font-semibold"
+                          placeholder="210K"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Engagement</label>
+                        <Input
+                          value={ytEngagement}
+                          onChange={(e) => setYtEngagement(e.target.value)}
+                          className="rounded-xl h-9 text-sm font-semibold"
+                          placeholder="8.4%"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>

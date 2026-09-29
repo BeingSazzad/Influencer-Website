@@ -41,6 +41,22 @@ import {
 } from 'lucide-react';
 import { Button, message } from 'antd';
 
+function platformLabel(platform: string) {
+  if (platform === 'all' || platform === 'multi') return 'All platforms';
+  if (platform === 'ugc') return 'UGC Ads';
+  if (platform === 'instagram') return 'Instagram';
+  if (platform === 'tiktok') return 'TikTok';
+  if (platform === 'youtube') return 'YouTube';
+  return platform;
+}
+
+function genderLabel(gender?: string) {
+  if (gender === 'female') return 'Female';
+  if (gender === 'male') return 'Male';
+  if (gender === 'non-binary' || gender === 'other') return 'Non-binary';
+  return null;
+}
+
 export default function CreatorProfilePage() {
   const params = useParams();
   const router = useRouter();
@@ -292,6 +308,12 @@ export default function CreatorProfilePage() {
                     <MapPin className="w-3.5 h-3.5 text-[#A3A39C]" />
                     {creator.location}
                   </span>
+                  {genderLabel(creator.gender) && (
+                    <>
+                      <span>•</span>
+                      <span>{genderLabel(creator.gender)}</span>
+                    </>
+                  )}
                   <span>•</span>
                   <span className="flex items-center gap-1 text-[#0A0A0A] font-bold">
                     <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
@@ -302,6 +324,20 @@ export default function CreatorProfilePage() {
                 <p className="text-sm sm:text-base text-[#555550] leading-[26px] font-medium">
                   {creator.bio}
                 </p>
+
+                {(creator.contactEmail || creator.contactPhone) && (
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-semibold text-[#0A0A0A]">
+                    {creator.contactEmail && (
+                      <a href={`mailto:${creator.contactEmail}`} className="hover:text-[#FF2D78]">
+                        {creator.contactEmail}
+                      </a>
+                    )}
+                    {creator.contactEmail && creator.contactPhone && (
+                      <span className="text-[#A3A39C]">•</span>
+                    )}
+                    {creator.contactPhone && <span>{creator.contactPhone}</span>}
+                  </div>
+                )}
 
                 {/* Category Pills matching pastel tags in reference */}
                 <div className="flex flex-wrap gap-2 pt-1">
@@ -342,6 +378,11 @@ export default function CreatorProfilePage() {
                       <ExternalLink className="w-2.5 h-2.5 text-[#73736A] opacity-0 group-hover/item:opacity-100 transition-opacity" />
                     </div>
                     <div className="text-xs sm:text-sm font-bold text-[#73736A] tracking-tight">Followers</div>
+                    {creator.platforms.instagram.engagementRate && (
+                      <div className="text-[11px] font-bold text-[#0A0A0A] tracking-tight">
+                        {creator.platforms.instagram.engagementRate}
+                      </div>
+                    )}
                   </a>
                 )}
 
@@ -366,6 +407,11 @@ export default function CreatorProfilePage() {
                       <ExternalLink className="w-2.5 h-2.5 text-[#73736A] opacity-0 group-hover/item:opacity-100 transition-opacity" />
                     </div>
                     <div className="text-xs sm:text-sm font-bold text-[#73736A] tracking-tight">Followers</div>
+                    {creator.platforms.tiktok.engagementRate && (
+                      <div className="text-[11px] font-bold text-[#0A0A0A] tracking-tight">
+                        {creator.platforms.tiktok.engagementRate}
+                      </div>
+                    )}
                   </a>
                 )}
 
@@ -388,8 +434,18 @@ export default function CreatorProfilePage() {
                       <ExternalLink className="w-2.5 h-2.5 text-[#73736A] opacity-0 group-hover/item:opacity-100 transition-opacity" />
                     </div>
                     <div className="text-xs sm:text-sm font-bold text-[#73736A] tracking-tight">Subscribers</div>
+                    {creator.platforms.youtube.engagementRate && (
+                      <div className="text-[11px] font-bold text-[#0A0A0A] tracking-tight">
+                        {creator.platforms.youtube.engagementRate}
+                      </div>
+                    )}
                   </a>
                 )}
+              </div>
+
+              <div className="flex items-center justify-between px-1">
+                <span className="text-sm font-bold text-[#73736A]">Starting rate</span>
+                <span className="text-lg font-black text-[#0A0A0A]">€{creator.startingPriceEur}</span>
               </div>
 
               {/* Action Buttons */}
@@ -592,7 +648,7 @@ export default function CreatorProfilePage() {
                       <div className="flex items-center justify-between">
                         <div>
                           <span className="text-xs font-black uppercase tracking-wider text-amber-400">
-                            {item.platform}
+                            {platformLabel(item.platform)}
                           </span>
                           <div className="font-extrabold text-sm text-white">{item.brandName}</div>
                           <div className="text-xs text-[#D2D2CA] line-clamp-1">{item.campaignTitle}</div>
@@ -751,7 +807,7 @@ export default function CreatorProfilePage() {
                 <p className="text-sm text-[#73736A] mt-1 font-medium max-w-xl">
                   {portfolioFilter === 'all'
                     ? 'Browse previous brand campaigns, engagement reach, and visual deliverables across all platforms.'
-                    : `Filtered by ${portfolioFilter.toUpperCase()} campaigns and deliverables produced by ${creator.name}.`}
+                    : `Filtered by ${platformLabel(portfolioFilter)} campaigns and deliverables produced by ${creator.name}.`}
                 </p>
               </div>
 
@@ -776,7 +832,7 @@ export default function CreatorProfilePage() {
                   },
                   {
                     key: 'ugc',
-                    label: 'UGC',
+                    label: 'UGC Ads',
                     count: creator.portfolio.filter((i) => i.platform === 'ugc').length,
                   },
                 ].map((tab) => (
@@ -827,7 +883,7 @@ export default function CreatorProfilePage() {
                           {item.platform === 'tiktok' && <Film className="w-3 h-3 text-white" />}
                           {item.platform === 'youtube' && <Youtube className="w-3 h-3 text-red-500" />}
                           {item.platform === 'ugc' && <Sparkles className="w-3 h-3 text-purple-400" />}
-                          <span>{item.platform}</span>
+                          <span>{platformLabel(item.platform)}</span>
                         </span>
 
                         {item.duration && (
@@ -1237,8 +1293,8 @@ export default function CreatorProfilePage() {
       <ShareProfileModal
         isOpen={isShareModalOpen}
         onClose={() => setIsShareModalOpen(false)}
-        title={`${creator.name} (${creator.handle})`}
-        subtitle={`${creator.categories.join(' • ')} • Verified Creator on Influverse`}
+        title={creator.name}
+        subtitle={`@${creator.handle.replace('@', '')} • ${creator.categories.join(' • ')}`}
         shareUrl={`/creators/${creator.id}`}
         avatar={creator.avatar}
         role="creator"

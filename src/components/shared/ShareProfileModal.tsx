@@ -18,6 +18,8 @@ interface ShareProfileModalProps {
   onClose: () => void;
   title: string;
   subtitle?: string;
+  description?: string;
+  link?: string;
   shareUrl: string;
   avatar?: string;
   role?: 'creator' | 'brand';
@@ -28,6 +30,8 @@ export function ShareProfileModal({
   onClose,
   title,
   subtitle,
+  description,
+  link,
   shareUrl,
   avatar,
   role = 'creator',
@@ -135,6 +139,12 @@ export function ShareProfileModal({
             <p className="text-sm text-[#73736A] truncate">
               {subtitle || `Share verified ${role} profile & booking rate card`}
             </p>
+            {link && (
+              <p className="text-xs font-semibold text-[#0A0A0A] truncate">{link}</p>
+            )}
+            {description && (
+              <p className="text-sm text-[#555550] leading-snug line-clamp-2 mt-1">{description}</p>
+            )}
           </div>
         </div>
 
