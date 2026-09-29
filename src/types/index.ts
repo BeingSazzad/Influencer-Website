@@ -12,6 +12,7 @@ export interface User {
   handle?: string;
   location?: string;
   bio?: string;
+  gender?: 'female' | 'male' | 'non-binary' | 'other' | string;
   balanceEur?: number;
   isDeactivated?: boolean;
   deactivatedAt?: string | null;
@@ -26,6 +27,7 @@ export interface CreatorPlatformInfo {
   handle: string;
   engagementRate: string;
   avgViews: string;
+  url?: string;
 }
 
 export interface CreatorPackage {
@@ -110,6 +112,7 @@ export interface Creator {
   verified: boolean;
   categories: string[];
   tags: string[];
+  gender?: 'female' | 'male' | 'non-binary' | 'other' | string;
   platforms: {
     instagram?: CreatorPlatformInfo;
     tiktok?: CreatorPlatformInfo;
@@ -199,5 +202,6 @@ export interface CreatorFilterState {
   minPrice: number;
   maxPrice: number;
   followerRange: 'all' | 'nano' | 'micro' | 'macro' | 'mega';
+  gender?: 'all' | 'female' | 'male' | 'non-binary' | string;
   sortBy: 'relevance' | 'price_asc' | 'price_desc' | 'followers' | 'rating';
 }

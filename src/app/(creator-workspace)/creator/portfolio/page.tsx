@@ -23,15 +23,11 @@ import {
   Youtube,
   Sparkles,
   Link2,
-  CheckCircle2,
   ChevronDown,
   ChevronUp,
-  Calculator,
-  Wand2,
-  Video as VideoIcon,
-  RefreshCw,
+  MoreVertical,
 } from 'lucide-react';
-import { Button, Modal, Input, Select, message, Popconfirm } from 'antd';
+import { Button, Modal, Input, Select, message, Dropdown } from 'antd';
 
 function CreatorPortfolioContent() {
   const router = useRouter();
@@ -63,7 +59,7 @@ function CreatorPortfolioContent() {
   const [editingItemId, setEditingItemId] = useState<string | null>(null);
   const [previewingItem, setPreviewingItem] = useState<PortfolioItem | null>(null);
 
-  // Video Form states
+  // Video Form states (minimal, clean & product-designed)
   const [brandName, setBrandName] = useState('');
   const [brandLogo, setBrandLogo] = useState('');
   const [campaignTitle, setCampaignTitle] = useState('');
@@ -72,114 +68,31 @@ function CreatorPortfolioContent() {
   const [mediaType, setMediaType] = useState<'video' | 'image'>('video');
   const [mediaUrl, setMediaUrl] = useState('');
   const [aspectRatio, setAspectRatio] = useState<'9:16' | '16:9' | '1:1'>('9:16');
-  const [duration, setDuration] = useState('0:45');
-  const [views, setViews] = useState('280K');
-  const [likes, setLikes] = useState('21.4K');
-  const [comments, setComments] = useState('920');
-  const [engagementRate, setEngagementRate] = useState('8.0%');
+  const [duration, setDuration] = useState('');
   const [description, setDescription] = useState('');
-  const [soundTrack, setSoundTrack] = useState('');
-  const [packagePriceEur, setPackagePriceEur] = useState<number | undefined>(1100);
-
-  // Automation & Smart UX States
-  const [isAutoEngRate, setIsAutoEngRate] = useState(true);
   const [showUrlInput, setShowUrlInput] = useState(false);
-  const [detectedSpecs, setDetectedSpecs] = useState<{
-    duration?: string;
-    aspect?: string;
-    resolution?: string;
-    fileName?: string;
-    fileSize?: string;
-  } | null>(null);
 
-  // Platform deliverable quick presets
-  const PLATFORM_PRESETS: Partial<Record<PlatformType, { label: string; duration: string; aspect: '9:16' | '16:9' | '1:1' }[]>> = {
-    instagram: [
-      { label: '60s 4K Reel (Voiceover)', duration: '0:60', aspect: '9:16' },
-      { label: '3x Story Sequence with Link', duration: '0:45', aspect: '9:16' },
-      { label: 'Carousel Post (Multi-Slide)', duration: 'Static', aspect: '1:1' },
-      { label: 'Product Showcase Reel', duration: '0:30', aspect: '9:16' },
-    ],
-    tiktok: [
-      { label: 'Trending Hook UGC Video', duration: '0:35', aspect: '9:16' },
-      { label: 'Native Spark Ad Creative', duration: '0:45', aspect: '9:16' },
-      { label: 'Unboxing & First Impression', duration: '0:50', aspect: '9:16' },
-      { label: 'Problem-Solution Demo', duration: '0:40', aspect: '9:16' },
-    ],
-    youtube: [
-      { label: '60s Vertical YouTube Short', duration: '0:60', aspect: '9:16' },
-      { label: 'Dedicated Product Deep Dive', duration: '8:30', aspect: '16:9' },
-      { label: '90s Mid-Roll Integration', duration: '1:30', aspect: '16:9' },
-    ],
-    ugc: [
-      { label: 'High-Converting UGC Ad Hook', duration: '0:30', aspect: '9:16' },
-      { label: 'Direct Testimonial / Review', duration: '0:45', aspect: '9:16' },
-      { label: 'A/B Testing Creative Pair', duration: '0:30', aspect: '9:16' },
-    ],
-  };
-
-  // Helper to parse human metric strings like '280K', '1.5M', '920'
-  const parseMetricValue = (val: string): number => {
-    if (!val) return 0;
-    const clean = val.trim().toUpperCase().replace(/,/g, '');
-    if (clean.endsWith('M')) {
-      const num = parseFloat(clean.replace('M', ''));
-      return isNaN(num) ? 0 : num * 1000000;
-    }
-    if (clean.endsWith('K')) {
-      const num = parseFloat(clean.replace('K', ''));
-      return isNaN(num) ? 0 : num * 1000;
-    }
-    const num = parseFloat(clean);
-    return isNaN(num) ? 0 : num;
-  };
-
-  // Real-time automatic engagement rate calculation: (Likes + Comments) / Views * 100
-  useEffect(() => {
-    if (!isAutoEngRate) return;
-    const v = parseMetricValue(views);
-    const l = parseMetricValue(likes);
-    const c = parseMetricValue(comments);
-
-    if (v > 0) {
-      const rate = ((l + c) / v) * 100;
-      const formatted = rate >= 10 ? `${rate.toFixed(1)}%` : rate >= 1 ? `${rate.toFixed(1)}%` : `${rate.toFixed(2)}%`;
-      setEngagementRate(formatted);
-    }
-  }, [views, likes, comments, isAutoEngRate]);
-
-  // Handle Preset format selection
-  const handleSelectPreset = (preset: { label: string; duration: string; aspect: '9:16' | '16:9' | '1:1' }) => {
-    setDeliverableType(preset.label);
-    setDuration(preset.duration);
-    setAspectRatio(preset.aspect);
-    message.info(`Applied format: ${preset.label}`);
-  };
-
-  // 1-Click Autofill from Completed Orders / Deals
+  // 1-Click Import from Completed Campaign / Order
   const handleAutofillFromOrder = (orderId: string) => {
     const order = orders.find((o) => o.id === orderId);
     if (!order) return;
 
     setBrandName(order.brandName);
     setBrandLogo(order.brandLogo || '');
-    setCampaignTitle(order.packageTitle || `${order.brandName} Sponsored Collaboration`);
+    setCampaignTitle(order.packageTitle || `${order.brandName} Collaboration`);
     setPlatform(order.platform);
     setDeliverableType(order.packageTitle);
-    setPackagePriceEur(order.basePriceEur);
     if (order.brief) {
       setDescription(order.brief);
     }
     if (order.deliverables && order.deliverables.length > 0 && order.deliverables[0].fileUrl) {
       setMediaUrl(order.deliverables[0].fileUrl);
     }
-    message.success(`⚡ Auto-filled specs from ${order.brandName} order!`);
+    message.success(`Imported details from ${order.brandName} campaign!`);
   };
 
   // File upload refs
   const modalMediaFileInputRef = useRef<HTMLInputElement>(null);
-  const quickReplaceMediaInputRef = useRef<HTMLInputElement>(null);
-  const [replacingItemId, setReplacingItemId] = useState<string | null>(null);
 
   // Calculate filtered list
   const filteredVideoList =
@@ -193,49 +106,33 @@ function CreatorPortfolioContent() {
     setBrandLogo('');
     setCampaignTitle('');
     setPlatform('instagram');
-    setDeliverableType('60s 4K Reel (Voiceover)');
+    setDeliverableType('');
     setMediaType('video');
     setMediaUrl('');
     setAspectRatio('9:16');
-    setDuration('0:45');
-    setViews('280K');
-    setLikes('21.4K');
-    setComments('920');
-    setEngagementRate('8.0%');
+    setDuration('');
     setDescription('');
-    setSoundTrack('Original Audio • Voiceover');
-    setPackagePriceEur(1100);
-    setIsAutoEngRate(true);
     setShowUrlInput(false);
-    setDetectedSpecs(null);
     setIsVideoModalOpen(true);
   };
 
   const openEditVideoModal = (item: PortfolioItem) => {
     setEditingItemId(item.id);
-    setBrandName(item.brandName);
+    setBrandName(item.brandName || '');
     setBrandLogo(item.brandLogo || '');
     setCampaignTitle(item.campaignTitle);
     setPlatform(item.platform);
-    setDeliverableType(item.deliverableType || '60s 4K Reel with Voiceover');
+    setDeliverableType(item.deliverableType || '');
     setMediaType(item.mediaType || 'video');
     setMediaUrl(item.mediaUrl);
     setAspectRatio(item.aspectRatio || '9:16');
-    setDuration(item.duration || '0:45');
-    setViews(item.views || '200K');
-    setLikes(item.likes || '15K');
-    setComments(item.comments || '500');
-    setEngagementRate(item.engagementRate || '7.0%');
+    setDuration(item.duration || '');
     setDescription(item.description || '');
-    setSoundTrack(item.soundTrack || '');
-    setPackagePriceEur(item.packagePriceEur || 1000);
-    setIsAutoEngRate(false); // keep existing custom value when editing
     setShowUrlInput(false);
-    setDetectedSpecs(null);
     setIsVideoModalOpen(true);
   };
 
-  // Browser-native automatic file inspection & metadata extraction
+  // Browser-native automatic file inspection (silent, auto-detects aspect and duration)
   const handleModalMediaUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -243,7 +140,6 @@ function CreatorPortfolioContent() {
     const isVideo = file.type.startsWith('video') || /\.(mp4|mov|webm|m4v)$/i.test(file.name);
     const isImage = file.type.startsWith('image') || /\.(jpg|jpeg|png|webp)$/i.test(file.name);
 
-    // Clean human title from file name (strips extensions, trailing v1/v2/copy/draft)
     const cleanName = file.name
       .replace(/\.[^/.]+$/, '')
       .replace(/[_-]+/g, ' ')
@@ -273,19 +169,6 @@ function CreatorPortfolioContent() {
         if (!campaignTitle.trim() && cleanName) {
           setCampaignTitle(cleanName);
         }
-        if (!deliverableType.trim()) {
-          setDeliverableType(
-            detectedAspect === '9:16' ? `Vertical 9:16 Reel (${formattedDuration})` : `Widescreen Video (${formattedDuration})`
-          );
-        }
-        setDetectedSpecs({
-          duration: formattedDuration,
-          aspect: detectedAspect,
-          resolution: `${w} × ${h}px`,
-          fileName: file.name,
-          fileSize: `${(file.size / (1024 * 1024)).toFixed(1)} MB`,
-        });
-        message.success(`⚡ Auto-extracted: ${formattedDuration} duration, ${detectedAspect} format`);
       };
     } else if (isImage) {
       const img = new Image();
@@ -298,24 +181,13 @@ function CreatorPortfolioContent() {
         const detectedAspect: '9:16' | '16:9' | '1:1' =
           h > w * 1.15 ? '9:16' : w > h * 1.15 ? '16:9' : '1:1';
 
-        setDuration('Static');
+        setDuration('');
         setAspectRatio(detectedAspect);
         setMediaType('image');
 
         if (!campaignTitle.trim() && cleanName) {
           setCampaignTitle(cleanName);
         }
-        if (!deliverableType.trim()) {
-          setDeliverableType(detectedAspect === '9:16' ? 'Vertical Story / Photo' : 'Post / Banner Image');
-        }
-        setDetectedSpecs({
-          duration: 'Static',
-          aspect: detectedAspect,
-          resolution: `${w} × ${h}px`,
-          fileName: file.name,
-          fileSize: `${(file.size / (1024 * 1024)).toFixed(1)} MB`,
-        });
-        message.success(`⚡ Auto-extracted: ${detectedAspect} image format`);
       };
     }
 
@@ -329,83 +201,49 @@ function CreatorPortfolioContent() {
     reader.readAsDataURL(file);
   };
 
-  const handleQuickMediaReplaceClick = (itemId: string) => {
-    setReplacingItemId(itemId);
-    quickReplaceMediaInputRef.current?.click();
-  };
-
-  const handleQuickMediaChosen = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file || !replacingItemId) return;
-    const reader = new FileReader();
-    reader.onload = (uploadEvent) => {
-      const result = uploadEvent.target?.result as string;
-      if (result) {
-        const existing = portfolioList.find((i) => i.id === replacingItemId);
-        if (existing) {
-          dispatch(
-            updatePortfolioItem({
-              creatorId: targetCreatorId,
-              item: { ...existing, mediaUrl: result },
-            })
-          );
-          message.success('Deliverable media replaced successfully!');
-        }
-      }
-      setReplacingItemId(null);
-    };
-    reader.readAsDataURL(file);
-  };
-
   const handleSaveVideo = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!brandName.trim() || !campaignTitle.trim() || !mediaUrl.trim()) {
-      message.error('Please complete brand name, campaign title, and media image or URL.');
+    if (!campaignTitle.trim() || !mediaUrl.trim()) {
+      message.error('Please enter a project title and upload or provide a media URL.');
       return;
     }
 
     const payload: PortfolioItem = {
       id: editingItemId || `port-${Date.now()}`,
-      brandName: brandName.trim(),
+      brandName: brandName.trim() || 'Personal Work',
       brandLogo: brandLogo.trim() || undefined,
       campaignTitle: campaignTitle.trim(),
       platform,
-      deliverableType: deliverableType.trim(),
+      deliverableType: deliverableType.trim() || (platform === 'instagram' ? 'Reel / Post' : 'Video / Content'),
       mediaType,
       mediaUrl: mediaUrl.trim(),
       aspectRatio,
       duration: duration.trim(),
-      views: views.trim(),
-      likes: likes.trim(),
-      comments: comments.trim() || undefined,
-      engagementRate: engagementRate.trim(),
       description: description.trim(),
-      soundTrack: soundTrack.trim() || undefined,
-      packagePriceEur,
       completedDate: '2026',
     };
 
     if (editingItemId) {
       dispatch(updatePortfolioItem({ creatorId: targetCreatorId, item: payload }));
-      message.success(`Updated ${brandName} deliverable!`);
+      message.success(`Updated "${campaignTitle}" in portfolio!`);
     } else {
       dispatch(addPortfolioItem({ creatorId: targetCreatorId, item: payload }));
-      message.success(`Added ${brandName} deliverable to your portfolio!`);
+      message.success(`Added "${campaignTitle}" to portfolio!`);
     }
 
     setIsVideoModalOpen(false);
   };
 
-  const handleDeleteVideo = (itemId: string, brand: string) => {
+  const handleDeleteVideo = (itemId: string, title: string) => {
     dispatch(deletePortfolioItem({ creatorId: targetCreatorId, itemId }));
-    message.success(`Removed ${brand} deliverable from portfolio.`);
+    message.success(`Removed "${title}" from portfolio.`);
   };
 
   return (
     <div className="min-h-screen pb-16 font-sans">
       <WorkspaceHeader
-        title="Client Work & Deliverables"
-        subtitle="Your brand deliverables and past work."
+        title="Portfolio"
+        subtitle="Your creative projects and brand collaborations."
         action={
           <Button
             type="primary"
@@ -413,99 +251,67 @@ function CreatorPortfolioContent() {
             className="h-10 px-5 rounded-full font-bold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 !text-white border-none flex items-center gap-2 shadow-sm cursor-pointer"
           >
             <Plus className="w-4 h-4" />
-            <span>Add Deliverable</span>
+            <span>Add Work</span>
           </Button>
         }
-      />
-
-      {/* Hidden input for quick media replacement */}
-      <input
-        ref={quickReplaceMediaInputRef}
-        type="file"
-        accept="image/*,video/*"
-        className="hidden"
-        onChange={handleQuickMediaChosen}
       />
 
       <div className="p-6 sm:p-8 max-w-6xl mx-auto space-y-6">
         {/* Deliverables Card Container */}
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
-          {/* Header & Platform Filter Pills */}
+          {/* Header & Platform Filter Pills (No Numbering Badges) */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#E7E7E2]">
             <div>
               <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
-                Deliverables Portfolio
+                Portfolio
               </h2>
               <p className="text-xs sm:text-sm text-[#73736A] mt-1 font-medium">
-                Verified brand deliverables showcasing your production quality and conversion power.
+                Showcase of your past work and collaborations.
               </p>
             </div>
 
-            {/* Platform Filter Pills */}
+            {/* Clean Platform Filter Pills without number badges */}
             <div className="inline-flex items-center p-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] overflow-x-auto shrink-0 max-w-full">
               {[
-                { key: 'all', label: 'All', count: portfolioList.length },
-                {
-                  key: 'instagram',
-                  label: 'Instagram',
-                  count: portfolioList.filter((i) => i.platform === 'instagram').length,
-                },
-                {
-                  key: 'tiktok',
-                  label: 'TikTok',
-                  count: portfolioList.filter((i) => i.platform === 'tiktok').length,
-                },
-                {
-                  key: 'youtube',
-                  label: 'YouTube',
-                  count: portfolioList.filter((i) => i.platform === 'youtube').length,
-                },
-                {
-                  key: 'ugc',
-                  label: 'UGC Ads',
-                  count: portfolioList.filter((i) => i.platform === 'ugc').length,
-                },
+                { key: 'all', label: 'All' },
+                { key: 'instagram', label: 'Instagram' },
+                { key: 'tiktok', label: 'TikTok' },
+                { key: 'youtube', label: 'YouTube' },
+                { key: 'ugc', label: 'UGC Ads' },
               ].map((tab) => (
                 <button
                   key={tab.key}
                   type="button"
                   onClick={() => setPlatformFilter(tab.key as any)}
-                  className={`px-3.5 py-1.5 rounded-full text-sm font-bold capitalize transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
+                  className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
                     platformFilter === tab.key
                       ? 'bg-[#0A0A0A] text-white shadow-2xs'
                       : 'text-[#73736A] hover:text-[#0A0A0A]'
                   }`}
                 >
                   <span>{tab.label}</span>
-                  <span
-                    className={`text-xs px-1.5 py-0.2 rounded-full font-extrabold ${
-                      platformFilter === tab.key ? 'bg-white/20 text-white' : 'bg-[#EAEAE3] text-[#0A0A0A]'
-                    }`}
-                  >
-                    {tab.count}
-                  </span>
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Deliverables Grid */}
+          {/* Cards Grid */}
           {filteredVideoList.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredVideoList.map((item) => (
                 <div
                   key={item.id}
-                  className="rounded-3xl overflow-hidden border border-[#E7E7E2] bg-[#FAFAF8] hover:border-[#0A0A0A] transition-all duration-300 flex flex-col justify-between group shadow-2xs hover:shadow-md"
+                  className="rounded-3xl border border-[#E7E7E2] bg-white overflow-hidden shadow-2xs hover:shadow-md hover:border-[#0A0A0A] transition-all flex flex-col group h-full"
                 >
-                  {/* Thumbnail Container */}
-                  <div className="h-56 overflow-hidden relative bg-[#0A0A0A]">
+                  {/* Media Thumbnail Container (Standard Uniform Size) */}
+                  <div className="relative h-52 sm:h-56 w-full bg-[#0A0A0A] overflow-hidden shrink-0">
                     <img
                       src={item.mediaUrl}
                       alt={item.campaignTitle}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500"
                     />
 
-                    {/* Platform & Duration Badges */}
+                    {/* Platform Badge & Video Timestamp */}
                     <div className="absolute top-3 inset-x-3 flex items-center justify-between z-10 pointer-events-none">
                       <span className="text-xs font-black uppercase tracking-wider bg-black/75 backdrop-blur-md text-white px-3 py-1 rounded-full border border-white/15 flex items-center gap-1.5 shadow-sm">
                         {item.platform === 'instagram' && <Instagram className="w-3 h-3 text-[#FF2D78]" />}
@@ -515,7 +321,7 @@ function CreatorPortfolioContent() {
                         <span>{item.platform}</span>
                       </span>
 
-                      {item.duration && (
+                      {item.duration && item.duration.includes(':') && (
                         <span className="text-xs font-bold uppercase tracking-wider bg-black/70 backdrop-blur-md text-white px-2.5 py-1 rounded-full border border-white/10">
                           {item.duration}
                         </span>
@@ -535,19 +341,64 @@ function CreatorPortfolioContent() {
                   </div>
 
                   {/* Card Body */}
-                  <div className="p-5 flex-1 flex flex-col justify-between space-y-4 bg-white">
+                  <div className="p-5 flex-1 flex flex-col justify-between bg-white">
                     <div className="space-y-1.5">
-                      <div className="flex items-center gap-2">
-                        {item.brandLogo && (
-                          <img
-                            src={item.brandLogo}
-                            alt={item.brandName}
-                            className="w-4 h-4 rounded-full object-cover"
-                          />
-                        )}
-                        <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
-                          {item.brandName}
-                        </span>
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-2 min-w-0">
+                          {item.brandLogo && (
+                            <img
+                              src={item.brandLogo}
+                              alt={item.brandName}
+                              className="w-4 h-4 rounded-full object-cover shrink-0"
+                            />
+                          )}
+                          <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A] truncate">
+                            {item.brandName || 'Creator Work'}
+                          </span>
+                        </div>
+
+                        {/* 3-dot dropdown menu */}
+                        <Dropdown
+                          menu={{
+                            items: [
+                              {
+                                key: 'edit',
+                                icon: <Edit3 className="w-4 h-4" />,
+                                label: 'Edit Work',
+                                onClick: () => openEditVideoModal(item),
+                              },
+                              {
+                                type: 'divider',
+                              },
+                              {
+                                key: 'delete',
+                                icon: <Trash2 className="w-4 h-4" />,
+                                label: 'Delete Work',
+                                danger: true,
+                                onClick: () => {
+                                  Modal.confirm({
+                                    title: 'Delete Work',
+                                    content: `Are you sure you want to remove "${item.campaignTitle}" from your portfolio?`,
+                                    okText: 'Delete',
+                                    okType: 'danger',
+                                    cancelText: 'Cancel',
+                                    onOk: () => handleDeleteVideo(item.id, item.campaignTitle),
+                                  });
+                                },
+                              },
+                            ],
+                          }}
+                          trigger={['click']}
+                          placement="bottomRight"
+                        >
+                          <button
+                            type="button"
+                            className="p-1 rounded-lg text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8] transition-colors cursor-pointer shrink-0"
+                            title="Work options"
+                          >
+                            <MoreVertical className="w-4 h-4" />
+                          </button>
+                        </Dropdown>
                       </div>
 
                       <h3 className="font-bold text-sm text-[#0A0A0A] line-clamp-1 leading-snug">
@@ -555,67 +406,10 @@ function CreatorPortfolioContent() {
                       </h3>
 
                       {item.deliverableType && (
-                        <div className="text-sm text-[#73736A] font-medium line-clamp-1">
+                        <div className="text-xs text-[#73736A] font-medium line-clamp-1">
                           {item.deliverableType}
                         </div>
                       )}
-                    </div>
-
-                    {/* Metrics Row */}
-                    <div className="grid grid-cols-3 gap-2 py-3 px-3.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] text-center">
-                      <div>
-                        <div className="text-xs uppercase font-bold text-[#73736A]">Views</div>
-                        <div className="text-xs font-black text-[#0A0A0A]">{item.views || '—'}</div>
-                      </div>
-                      <div>
-                        <div className="text-xs uppercase font-bold text-[#73736A]">Likes</div>
-                        <div className="text-xs font-black text-[#0A0A0A]">{item.likes || '—'}</div>
-                      </div>
-                      <div>
-                        <div className="text-xs uppercase font-bold text-[#73736A]">Eng. Rate</div>
-                        <div className="text-xs font-black text-[#0A0A0A]">{item.engagementRate || '—'}</div>
-                      </div>
-                    </div>
-
-                    {/* Card Footer Actions */}
-                    <div className="pt-3 flex items-center justify-between border-t border-[#E7E7E2]">
-                      <button
-                        type="button"
-                        onClick={() => handleQuickMediaReplaceClick(item.id)}
-                        className="text-sm font-bold text-[#0A0A0A] hover:text-[#2563EB] flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer"
-                        title="Replace media image"
-                      >
-                        <Upload className="w-3.5 h-3.5" />
-                        <span>Replace Media</span>
-                      </button>
-
-                      <div className="flex items-center gap-1">
-                        <button
-                          type="button"
-                          onClick={() => openEditVideoModal(item)}
-                          className="p-2 rounded-xl text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8] border border-transparent hover:border-[#E7E7E2] transition-all cursor-pointer"
-                          title="Edit deliverable details"
-                        >
-                          <Edit3 className="w-3.5 h-3.5" />
-                        </button>
-
-                        <Popconfirm
-                          title="Delete Deliverable"
-                          description={`Remove ${item.brandName} deliverable from your portfolio?`}
-                          onConfirm={() => handleDeleteVideo(item.id, item.brandName)}
-                          okText="Delete"
-                          cancelText="Cancel"
-                          okButtonProps={{ danger: true }}
-                        >
-                          <button
-                            type="button"
-                            className="p-2 rounded-xl text-[#73736A] hover:text-red-600 hover:bg-red-50 border border-transparent hover:border-red-100 transition-all cursor-pointer"
-                            title="Delete deliverable"
-                          >
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
-                        </Popconfirm>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -624,10 +418,10 @@ function CreatorPortfolioContent() {
           ) : (
             <EmptyState
               icon={<Film className="w-8 h-8 text-[#73736A]" />}
-              title="No deliverables found"
-              description="You haven't added any deliverables for this platform filter yet."
+              title="No work found"
+              description="Upload your creative projects or import directly from completed campaigns."
               primaryAction={{
-                label: 'Add First Deliverable',
+                label: 'Add First Work',
                 onClick: openAddVideoModal,
                 icon: <Plus className="w-4 h-4" />,
               }}
@@ -636,441 +430,223 @@ function CreatorPortfolioContent() {
         </div>
       </div>
 
-      {/* Add / Edit Deliverable Modal */}
+      {/* Add / Edit Work Modal (Clean, Minimal & Trimmed) */}
       <Modal
         title={
-          <div className="flex items-center gap-2.5 pb-1">
-            <div className="w-8 h-8 rounded-full bg-[#0A0A0A] text-white flex items-center justify-center text-sm font-bold shrink-0">
-              <Film className="w-4 h-4" />
-            </div>
-            <div>
-              <div className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
-                {editingItemId ? 'Edit Client Deliverable' : 'Add Client Deliverable'}
-              </div>
-              <div className="text-sm text-[#73736A] font-medium">
-                Showcase verified brand deliverables, production specs, and engagement metrics.
-              </div>
-            </div>
+          <div className="pb-1">
+            <h2 className="text-xl font-bold text-[#0A0A0A] tracking-tight">
+              {editingItemId ? 'Edit Work' : 'Add Work'}
+            </h2>
+            <p className="text-xs text-[#73736A] mt-0.5 font-medium">
+              Showcase your creative content and brand collaborations.
+            </p>
           </div>
         }
         open={isVideoModalOpen}
         onCancel={() => setIsVideoModalOpen(false)}
         footer={null}
-        width={720}
+        width={560}
         centered
         destroyOnClose
         className="rounded-3xl"
       >
-        <div className="py-2 space-y-4">
-          {/* Section 1: 1-Click Autofill from Brand Deals / Orders */}
-          <div className="p-3.5 rounded-2xl bg-gradient-to-r from-emerald-50/80 via-[#FAFAF8] to-emerald-50/40 border border-emerald-200/70 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
-            <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-xs">
-                <Sparkles className="w-3.5 h-3.5" />
-              </div>
-              <div>
-                <div className="text-sm font-bold text-[#0A0A0A] flex items-center gap-1.5">
-                  <span>1-Click Autofill from Brand Deals</span>
-                  <span className="text-xs font-black uppercase tracking-wider px-1.5 py-0.2 bg-emerald-100 text-emerald-800 rounded">
-                    Time Saver
-                  </span>
+        <form onSubmit={handleSaveVideo} className="py-2 space-y-4">
+          {/* Optional: Import from Campaign */}
+          {orders && orders.length > 0 && (
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider flex items-center justify-between">
+                <span>Import from Campaign (Optional)</span>
+                <span className="text-[11px] font-normal text-[#A3A39C]">Auto-fills title, brand & media</span>
+              </label>
+              <Select
+                placeholder="Select a campaign to import..."
+                className="w-full h-10"
+                onChange={handleAutofillFromOrder}
+                allowClear
+                options={orders.map((o) => ({
+                  value: o.id,
+                  label: `${o.brandName} — ${o.packageTitle}`,
+                }))}
+              />
+            </div>
+          )}
+
+          {/* Media Asset (Video or Image) */}
+          <div className="space-y-1.5">
+            <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider block">
+              Media Asset (Video or Image) <span className="text-rose-500">*</span>
+            </label>
+
+            <input
+              ref={modalMediaFileInputRef}
+              type="file"
+              accept="image/*,video/*"
+              className="hidden"
+              onChange={handleModalMediaUpload}
+            />
+
+            {mediaUrl ? (
+              <div className="relative rounded-2xl overflow-hidden border border-[#E7E7E2] bg-[#0A0A0A] h-44 flex items-center justify-center group shadow-inner">
+                <img
+                  src={mediaUrl}
+                  alt="Work preview"
+                  className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300 opacity-90"
+                />
+                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 backdrop-blur-[2px]">
+                  <Button
+                    type="default"
+                    onClick={() => modalMediaFileInputRef.current?.click()}
+                    className="h-9 px-4 rounded-full text-xs font-bold bg-white text-[#0A0A0A] border-none flex items-center gap-1.5 shadow-md hover:!bg-zinc-100 cursor-pointer"
+                  >
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>Change Media</span>
+                  </Button>
+                  <Button
+                    type="default"
+                    danger
+                    onClick={() => setMediaUrl('')}
+                    className="h-9 px-4 rounded-full text-xs font-bold bg-white border-none flex items-center gap-1.5 shadow-md cursor-pointer"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>Remove</span>
+                  </Button>
                 </div>
-                <p className="text-sm text-[#73736A] mt-0.5">
-                  Select a past campaign to pre-populate brand, title, platform, and brief
+              </div>
+            ) : (
+              <div
+                onClick={() => modalMediaFileInputRef.current?.click()}
+                className="border-2 border-dashed border-[#D2D2CA] hover:border-[#0A0A0A] rounded-2xl p-6 text-center cursor-pointer transition-all bg-[#FAFAF8] hover:bg-[#F5F5F0] space-y-2 group"
+              >
+                <div className="w-10 h-10 rounded-full bg-white border border-[#E7E7E2] group-hover:border-[#0A0A0A] group-hover:scale-105 transition-all flex items-center justify-center mx-auto text-[#0A0A0A] shadow-2xs">
+                  <Upload className="w-4 h-4" />
+                </div>
+                <div className="text-sm font-bold text-[#0A0A0A]">
+                  Click to upload image or video
+                </div>
+                <p className="text-xs text-[#73736A]">
+                  Supports MP4, MOV, WEBM, PNG, JPG (Auto-detects format)
                 </p>
               </div>
-            </div>
-            <Select
-              placeholder="⚡ Select brand deal..."
-              className="w-full sm:w-64"
-              onChange={handleAutofillFromOrder}
-              allowClear
-              options={orders.map((o) => ({
-                value: o.id,
-                label: (
-                  <div className="flex items-center gap-2 text-xs py-0.5">
-                    <span className="font-bold text-[#0A0A0A] truncate">{o.brandName}</span>
-                    <span className="text-sm text-[#73736A] truncate">({o.packageTitle})</span>
-                  </div>
-                ),
-              }))}
-            />
-          </div>
+            )}
 
-          <form onSubmit={handleSaveVideo} className="space-y-4">
-            {/* Section 2: Media Asset & Automated Specs */}
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <label className="text-sm font-bold text-[#0A0A0A] flex items-center gap-1.5">
-                  <span>Deliverable Media Asset</span>
-                  <span className="text-sm text-[#73736A] font-medium">(Video or Cover Image)</span>
-                </label>
-                {detectedSpecs && (
-                  <span className="text-xs font-bold text-[#0A0A0A] bg-[#F4F4F0] border border-[#E7E7E2] px-2.5 py-0.5 rounded-full flex items-center gap-1">
-                    <CheckCircle2 className="w-3 h-3 text-[#FF2D78]" /> Auto-detected technical specs
-                  </span>
-                )}
-              </div>
-
-              <input
-                ref={modalMediaFileInputRef}
-                type="file"
-                accept="image/*,video/*"
-                className="hidden"
-                onChange={handleModalMediaUpload}
-              />
-
-              {mediaUrl ? (
-                <div className="relative rounded-2xl overflow-hidden border border-[#E7E7E2] bg-[#0A0A0A] h-48 flex items-center justify-center group shadow-inner">
-                  <img
-                    src={mediaUrl}
-                    alt="Deliverable preview"
-                    className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300 opacity-90"
-                  />
-                  {/* Spec badges overlay */}
-                  <div className="absolute top-3 left-3 flex flex-wrap items-center gap-1.5 z-10">
-                    <span className="text-sm font-bold px-2 py-0.5 rounded-full bg-black/60 text-white backdrop-blur-md flex items-center gap-1">
-                      <VideoIcon className="w-3 h-3" /> {aspectRatio}
-                    </span>
-                    <span className="text-sm font-bold px-2 py-0.5 rounded-full bg-black/60 text-white backdrop-blur-md">
-                      ⏱ {duration}
-                    </span>
-                    {detectedSpecs?.resolution && (
-                      <span className="text-sm font-bold px-2 py-0.5 rounded-full bg-emerald-600/80 text-white backdrop-blur-md">
-                        {detectedSpecs.resolution}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Hover action overlay */}
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 backdrop-blur-[2px]">
-                    <Button
-                      type="default"
-                      onClick={() => modalMediaFileInputRef.current?.click()}
-                      className="h-9 px-4 rounded-full text-sm font-bold bg-white text-[#0A0A0A] border-none flex items-center gap-1.5 shadow-md hover:!bg-zinc-100"
-                    >
-                      <Upload className="w-3.5 h-3.5" />
-                      <span>Replace File</span>
-                    </Button>
-                    <Button
-                      type="default"
-                      danger
-                      onClick={() => {
-                        setMediaUrl('');
-                        setDetectedSpecs(null);
-                      }}
-                      className="h-9 px-4 rounded-full text-sm font-bold bg-white border-none flex items-center gap-1.5 shadow-md"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                      <span>Remove</span>
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <div
-                  onClick={() => modalMediaFileInputRef.current?.click()}
-                  className="border-2 border-dashed border-[#D2D2CA] hover:border-[#0A0A0A] rounded-2xl p-6 text-center cursor-pointer transition-all bg-[#FAFAF8] hover:bg-[#F5F5F0] space-y-2 group"
-                >
-                  <div className="w-11 h-11 rounded-full bg-white border border-[#E7E7E2] group-hover:border-[#0A0A0A] group-hover:scale-105 transition-all flex items-center justify-center mx-auto text-[#0A0A0A] shadow-2xs">
-                    <Upload className="w-5 h-5" />
-                  </div>
-                  <div className="text-sm font-bold text-[#0A0A0A]">
-                    Click to upload deliverable video or cover image
-                  </div>
-                  <p className="text-sm text-[#73736A] max-w-sm mx-auto">
-                    ⚡ <strong>Smart Auto-Extractor</strong>: Video duration, aspect ratio, and filename will be detected automatically!
-                  </p>
-                </div>
-              )}
-
-              {/* Collapsible raw URL option */}
-              <div className="flex items-center justify-between pt-1">
-                <button
-                  type="button"
-                  onClick={() => setShowUrlInput(!showUrlInput)}
-                  className="text-sm text-[#73736A] hover:text-[#0A0A0A] font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
-                >
-                  <Link2 className="w-3.5 h-3.5" />
-                  <span>{showUrlInput ? 'Hide URL link input' : 'Paste media link instead (URL)'}</span>
-                  {showUrlInput ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
-                </button>
-                {mediaUrl && (
-                  <span className="text-xs text-[#73736A] font-bold flex items-center gap-1">
-                    <CheckCircle2 className="w-3 h-3 text-[#FF2D78]" /> Media loaded & ready
-                  </span>
-                )}
-              </div>
+            {/* URL Toggle */}
+            <div className="pt-0.5">
+              <button
+                type="button"
+                onClick={() => setShowUrlInput(!showUrlInput)}
+                className="text-xs text-[#73736A] hover:text-[#0A0A0A] font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
+              >
+                <Link2 className="w-3 h-3" />
+                <span>{showUrlInput ? 'Hide URL input' : 'Paste media link instead (URL)'}</span>
+                {showUrlInput ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+              </button>
 
               {showUrlInput && (
                 <div className="pt-1.5">
                   <Input
                     value={mediaUrl}
                     onChange={(e) => setMediaUrl(e.target.value)}
-                    placeholder="https://images.unsplash.com/... or hosted video URL"
-                    className="rounded-xl h-10 text-sm font-medium border-[#E7E7E2]"
-                    prefix={<Link2 className="w-3.5 h-3.5 text-[#73736A]" />}
+                    placeholder="https://images.unsplash.com/... or hosted media URL"
+                    className="rounded-xl h-9 text-xs font-medium border-[#E7E7E2]"
+                    prefix={<Link2 className="w-3 h-3 text-[#73736A]" />}
                     allowClear
                   />
                 </div>
               )}
             </div>
+          </div>
 
-            {/* Section 3: Brand Name & Campaign Title */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-              <div className="space-y-1">
-                <label className="text-sm font-bold text-[#0A0A0A] block">
-                  Brand / Client Name <span className="text-rose-500">*</span>
-                </label>
-                <Input
-                  value={brandName}
-                  onChange={(e) => setBrandName(e.target.value)}
-                  placeholder="e.g. Glossier, Laneige, Dyson"
-                  className="rounded-xl h-10 font-semibold text-sm"
-                  required
-                />
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-sm font-bold text-[#0A0A0A] block">
-                  Campaign / Content Title <span className="text-rose-500">*</span>
-                </label>
-                <Input
-                  value={campaignTitle}
-                  onChange={(e) => setCampaignTitle(e.target.value)}
-                  placeholder="e.g. Dewy Hydration Routine Reel"
-                  className="rounded-xl h-10 font-semibold text-sm"
-                  required
-                />
-              </div>
+          {/* Work Title & Platform */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider block">
+                Work Title <span className="text-rose-500">*</span>
+              </label>
+              <Input
+                value={campaignTitle}
+                onChange={(e) => setCampaignTitle(e.target.value)}
+                placeholder="e.g. Dewy Hydration Routine"
+                className="rounded-xl h-10 font-semibold text-sm"
+                required
+              />
             </div>
 
-            {/* Section 4: Platform, Deliverable Format, Duration & Quick Presets */}
-            <div className="space-y-2">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div className="space-y-1">
-                  <label className="text-sm font-bold text-[#0A0A0A] block">Platform</label>
-                  <Select
-                    value={platform}
-                    onChange={(val) => setPlatform(val)}
-                    className="w-full h-10"
-                    options={[
-                      { value: 'instagram', label: 'Instagram' },
-                      { value: 'tiktok', label: 'TikTok' },
-                      { value: 'youtube', label: 'YouTube' },
-                      { value: 'ugc', label: 'Direct UGC' },
-                    ]}
-                  />
-                </div>
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider block">
+                Platform
+              </label>
+              <Select
+                value={platform}
+                onChange={(val) => setPlatform(val)}
+                className="w-full h-10"
+                options={[
+                  { value: 'instagram', label: 'Instagram' },
+                  { value: 'tiktok', label: 'TikTok' },
+                  { value: 'youtube', label: 'YouTube' },
+                  { value: 'ugc', label: 'UGC Ads' },
+                ]}
+              />
+            </div>
+          </div>
 
-                <div className="space-y-1">
-                  <label className="text-sm font-bold text-[#0A0A0A] block">Deliverable Format</label>
-                  <Input
-                    value={deliverableType}
-                    onChange={(e) => setDeliverableType(e.target.value)}
-                    placeholder="60s 4K Reel (Voiceover)"
-                    className="rounded-xl h-10 font-semibold text-sm"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="space-y-1">
-                    <label className="text-sm font-bold text-[#0A0A0A] block">Duration</label>
-                    <Input
-                      value={duration}
-                      onChange={(e) => setDuration(e.target.value)}
-                      placeholder="0:45"
-                      className="rounded-xl h-10 font-semibold text-sm"
-                    />
-                  </div>
-                  <div className="space-y-1">
-                    <label className="text-sm font-bold text-[#0A0A0A] block">Aspect</label>
-                    <Select
-                      value={aspectRatio}
-                      onChange={(val) => setAspectRatio(val)}
-                      className="w-full h-10"
-                      options={[
-                        { value: '9:16', label: '9:16' },
-                        { value: '16:9', label: '16:9' },
-                        { value: '1:1', label: '1:1' },
-                      ]}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Platform Preset Chips */}
-              <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
-                <span className="text-sm font-bold text-[#73736A] flex items-center gap-1 mr-1">
-                  <Wand2 className="w-3 h-3 text-[#0A0A0A]" /> Quick Formats:
-                </span>
-                {PLATFORM_PRESETS[platform]?.map((preset, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => handleSelectPreset(preset)}
-                    className={`text-xs px-2.5 py-1 rounded-full border transition-all cursor-pointer ${
-                      deliverableType === preset.label
-                        ? 'bg-[#0A0A0A] text-white border-[#0A0A0A] font-bold shadow-2xs'
-                        : 'bg-[#FAFAF8] text-[#52524E] border-[#E7E7E2] hover:border-[#0A0A0A] hover:text-[#0A0A0A] font-medium'
-                    }`}
-                  >
-                    {preset.label}
-                  </button>
-                ))}
-              </div>
+          {/* Brand Name (Optional) & Deliverable Format (Optional) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider block">
+                Brand / Client (Optional)
+              </label>
+              <Input
+                value={brandName}
+                onChange={(e) => setBrandName(e.target.value)}
+                placeholder="e.g. Laneige, Gisou (or leave empty)"
+                className="rounded-xl h-10 font-semibold text-sm"
+              />
             </div>
 
-            {/* Section 5: Performance Metrics & Real-time Auto-Calculated Engagement Rate */}
-            <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="text-sm font-bold text-[#0A0A0A] flex items-center gap-1.5">
-                  <span>Verified Performance Metrics</span>
-                  <span className="text-sm text-[#73736A] font-normal">(Views, Likes, Comments)</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="text-sm text-[#73736A] font-medium">Auto-Calculate:</span>
-                  <button
-                    type="button"
-                    onClick={() => setIsAutoEngRate(!isAutoEngRate)}
-                    className={`text-sm font-bold px-2.5 py-0.5 rounded-full transition-colors flex items-center gap-1 cursor-pointer ${
-                      isAutoEngRate
-                        ? 'bg-emerald-100 text-emerald-800 border border-emerald-300/50'
-                        : 'bg-[#E7E7E2] text-[#52524E] border border-[#D2D2CA]'
-                    }`}
-                  >
-                    {isAutoEngRate ? (
-                      <>
-                        <Sparkles className="w-3 h-3 text-emerald-600" />
-                        <span>Auto</span>
-                      </>
-                    ) : (
-                      <span>Manual Edit</span>
-                    )}
-                  </button>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div className="space-y-1">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Views</label>
-                  <Input
-                    value={views}
-                    onChange={(e) => setViews(e.target.value)}
-                    placeholder="280K"
-                    className="rounded-xl h-9.5 text-sm font-bold"
-                  />
-                </div>
-
-                <div className="space-y-1">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Likes</label>
-                  <Input
-                    value={likes}
-                    onChange={(e) => setLikes(e.target.value)}
-                    placeholder="21.4K"
-                    className="rounded-xl h-9.5 text-sm font-bold"
-                  />
-                </div>
-
-                <div className="space-y-1">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Comments</label>
-                  <Input
-                    value={comments}
-                    onChange={(e) => setComments(e.target.value)}
-                    placeholder="920"
-                    className="rounded-xl h-9.5 text-sm font-bold"
-                  />
-                </div>
-
-                <div className="space-y-1">
-                  <div className="flex items-center justify-between">
-                    <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Eng. Rate</label>
-                    {isAutoEngRate && (
-                      <span className="text-xs font-black text-emerald-700 uppercase bg-emerald-100 px-1 rounded">
-                        Live
-                      </span>
-                    )}
-                  </div>
-                  <Input
-                    value={engagementRate}
-                    onChange={(e) => setEngagementRate(e.target.value)}
-                    readOnly={isAutoEngRate}
-                    placeholder="8.0%"
-                    className={`rounded-xl h-9.5 text-sm font-bold ${
-                      isAutoEngRate
-                        ? 'bg-emerald-50/60 text-emerald-700 border-emerald-200 cursor-default'
-                        : 'text-[#0A0A0A]'
-                    }`}
-                  />
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between text-sm text-[#73736A] pt-0.5">
-                <span className="flex items-center gap-1.5">
-                  <Calculator className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Formula: <strong>(Likes + Comments) ÷ Views × 100</strong></span>
-                </span>
-                {isAutoEngRate ? (
-                  <span className="text-xs text-emerald-700 font-semibold flex items-center gap-1">
-                    <RefreshCw className="w-2.5 h-2.5 animate-spin" style={{ animationDuration: '4s' }} /> Computed from metrics
-                  </span>
-                ) : (
-                  <span className="text-xs text-amber-700 font-semibold">Custom manual value</span>
-                )}
-              </div>
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider block">
+                Format (Optional)
+              </label>
+              <Input
+                value={deliverableType}
+                onChange={(e) => setDeliverableType(e.target.value)}
+                placeholder="e.g. 60s Reel, Story Series"
+                className="rounded-xl h-10 font-semibold text-sm"
+              />
             </div>
+          </div>
 
-            {/* Section 6: Narrative Strategy & Deal Rate */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-              <div className="sm:col-span-2 space-y-1.5">
-                <label className="text-sm font-bold text-[#0A0A0A] block">
-                  Deliverable Narrative & Strategy
-                </label>
-                <Input.TextArea
-                  rows={3}
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Describe your hook, visual direction, audio choice, and why this deliverable drove strong conversion..."
-                  className="rounded-2xl p-3 text-xs border-[#E7E7E2] leading-relaxed"
-                />
-              </div>
+          {/* Details / Description */}
+          <div className="space-y-1">
+            <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider block">
+              Project Details & Notes (Optional)
+            </label>
+            <Input.TextArea
+              rows={3}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Write any details about this project, creative direction, results, or brand involvement..."
+              className="rounded-2xl p-3 text-xs border-[#E7E7E2] leading-relaxed"
+            />
+          </div>
 
-              <div className="space-y-1.5">
-                <label className="text-sm font-bold text-[#0A0A0A] block">
-                  Deal / Package Rate (€)
-                </label>
-                <Input
-                  type="number"
-                  value={packagePriceEur}
-                  onChange={(e) => setPackagePriceEur(Number(e.target.value))}
-                  prefix="€"
-                  placeholder="1200"
-                  className="rounded-xl h-10 font-bold text-sm"
-                />
-                <p className="text-sm text-[#73736A]">
-                  Positions your production value when prospective brands view your case studies.
-                </p>
-              </div>
-            </div>
-
-            {/* Section 7: Modal Footer Actions */}
-            <div className="pt-3 border-t border-[#E7E7E2] flex items-center justify-end gap-2.5">
-              <Button
-                onClick={() => setIsVideoModalOpen(false)}
-                className="rounded-full h-10 px-5 font-bold text-xs"
-              >
-                Cancel
-              </Button>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="h-10 px-6 rounded-full font-bold text-xs bg-[#0A0A0A] hover:!bg-zinc-800 !text-white border-none shadow-sm cursor-pointer flex items-center gap-1.5"
-              >
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>{editingItemId ? 'Update Deliverable' : 'Publish to Portfolio'}</span>
-              </Button>
-            </div>
-          </form>
-        </div>
+          {/* Footer Actions */}
+          <div className="pt-2 border-t border-[#E7E7E2] flex items-center justify-end gap-2.5">
+            <Button
+              onClick={() => setIsVideoModalOpen(false)}
+              className="rounded-full h-9 px-4 font-bold text-xs"
+            >
+              Cancel
+            </Button>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="rounded-full h-9 px-5 font-bold text-xs bg-[#0A0A0A] hover:!bg-zinc-800 !text-white border-none shadow-xs cursor-pointer"
+            >
+              {editingItemId ? 'Update Work' : 'Save Work'}
+            </Button>
+          </div>
+        </form>
       </Modal>
 
       {/* Video Lightbox Preview Modal */}
@@ -1094,7 +670,7 @@ export default function CreatorPortfolioPage() {
     <Suspense
       fallback={
         <div className="p-8 text-center text-sm font-bold text-[#73736A]">
-          Loading client deliverables...
+          Loading portfolio...
         </div>
       }
     >

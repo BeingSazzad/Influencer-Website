@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import {
   DollarSign,
   Building2,
-  ArrowUpRight,
   ChevronDown,
 } from 'lucide-react';
 
@@ -22,6 +21,7 @@ interface YearCreatorData {
   totalIncomeEur: number;
   totalBrandsCount: number;
   growthRatePct: number;
+  brandsGrowthRatePct: number;
   peakMonth: string;
   months: MonthlyCreatorRecord[];
 }
@@ -32,6 +32,7 @@ const CREATOR_ANALYTICS_DATA: Record<number, YearCreatorData> = {
     totalIncomeEur: 28400,
     totalBrandsCount: 24,
     growthRatePct: 25.6,
+    brandsGrowthRatePct: 26.3,
     peakMonth: 'March',
     months: [
       { month: 'Jan', fullName: 'January 2026', incomeEur: 2100, brandsCount: 2, brands: ['Aura Skincare Paris', 'Nord Minimal Studios'] },
@@ -53,6 +54,7 @@ const CREATOR_ANALYTICS_DATA: Record<number, YearCreatorData> = {
     totalIncomeEur: 22600,
     totalBrandsCount: 19,
     growthRatePct: 52.7,
+    brandsGrowthRatePct: 58.3,
     peakMonth: 'November',
     months: [
       { month: 'Jan', fullName: 'January 2025', incomeEur: 1200, brandsCount: 1, brands: ['Aura Skincare Paris'] },
@@ -74,6 +76,7 @@ const CREATOR_ANALYTICS_DATA: Record<number, YearCreatorData> = {
     totalIncomeEur: 14800,
     totalBrandsCount: 12,
     growthRatePct: 0,
+    brandsGrowthRatePct: 0,
     peakMonth: 'December',
     months: [
       { month: 'Jan', fullName: 'January 2024', incomeEur: 600, brandsCount: 1, brands: ['Local Studio'] },
@@ -113,21 +116,17 @@ export function CreatorAnnualAnalytics() {
   });
 
   return (
-    <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#E7E7E2] shadow-2xs space-y-6">
-      {/* Top Header: Title, Year Tabs & Metric Toggle */}
+    <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#E7E7E2] shadow-2xs space-y-6 font-sans">
+      {/* Top Header: Title, Growth Badge, Metric Toggle & Year Dropdown */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#E7E7E2]">
         <div>
-          <div className="flex items-center gap-2">
-            <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
-              Earnings Performance
-            </h2>
-            <span className="text-xs font-extrabold px-2.5 py-0.5 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2] inline-flex items-center gap-1">
-              <ArrowUpRight className="w-3 h-3 text-[#FF2D78]" />
-              <span>+{yearData.growthRatePct}% YoY</span>
-            </span>
-          </div>
-          <p className="text-sm text-[#73736A] mt-1.5 font-medium">
-            Brand deal earnings and collaboration volume for {selectedYear}.
+          <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
+            {activeMetric === 'income' ? 'Earnings Performance' : 'Brand Collaborations'}
+          </h2>
+          <p className="text-sm text-[#73736A] mt-1 font-medium">
+            {activeMetric === 'income'
+              ? `Brand deal earnings for ${selectedYear}.`
+              : `Brand collaboration volume for ${selectedYear}.`}
           </p>
         </div>
 
@@ -174,11 +173,9 @@ export function CreatorAnnualAnalytics() {
         </div>
       </div>
 
-
-
       {/* 12-Month Bar Chart */}
-      <div className="space-y-3 pt-2">
-        <div className="h-72 w-full flex items-end justify-between gap-1.5 sm:gap-3 px-1 pt-6 pb-2 border-b border-[#E7E7E2] relative">
+      <div className="pt-2">
+        <div className="h-72 w-full flex items-end justify-between gap-1.5 sm:gap-3 px-1 pt-6 pb-2 relative">
           {/* Subtle grid lines */}
           <div className="absolute inset-x-0 top-6 border-b border-dashed border-[#EAEAE3] pointer-events-none" />
           <div className="absolute inset-x-0 top-1/2 border-b border-dashed border-[#EAEAE3] pointer-events-none" />
@@ -201,11 +198,15 @@ export function CreatorAnnualAnalytics() {
                   <div
                     className={`absolute -top-7 px-2.5 py-0.5 rounded-md text-xs font-black tracking-tight whitespace-nowrap z-20 pointer-events-none transition-all ${
                       isHovered
-                        ? 'bg-[#FF2D78] text-white shadow-md -translate-y-1'
+                        ? activeMetric === 'income'
+                          ? 'bg-[#FF2D78] text-white shadow-md -translate-y-1'
+                          : 'bg-[#0A0A0A] text-white shadow-md -translate-y-1'
                         : 'bg-[#0A0A0A] text-white shadow-xs'
                     }`}
                   >
-                    {activeMetric === 'income' ? `€${val.toLocaleString()}` : `${val} Brands`}
+                    {activeMetric === 'income'
+                      ? `€${val.toLocaleString()}`
+                      : `${val} Brand${val === 1 ? '' : 's'}`}
                   </div>
                 )}
 
@@ -216,7 +217,9 @@ export function CreatorAnnualAnalytics() {
                     style={{ height: `${pct}%` }}
                     className={`w-full rounded-md transition-all duration-300 ${
                       isHovered
-                        ? 'bg-[#FF2D78] scale-102'
+                        ? activeMetric === 'income'
+                          ? 'bg-[#FF2D78] scale-102'
+                          : 'bg-[#0A0A0A] scale-102 ring-2 ring-emerald-400/50'
                         : (item.isCurrent || isPeak)
                         ? 'bg-[#0A0A0A]'
                         : 'bg-[#D2D2CA] group-hover:bg-[#0A0A0A]'
@@ -243,8 +246,6 @@ export function CreatorAnnualAnalytics() {
             );
           })}
         </div>
-
-
       </div>
     </div>
   );

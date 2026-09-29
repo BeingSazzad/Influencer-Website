@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, useMemo, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { WorkspaceHeader } from '@/components/layout/WorkspaceHeader';
@@ -25,13 +25,16 @@ import {
   Upload,
   X,
   Check,
+  AlertCircle,
   Image as ImageIcon,
   Plus,
   Trash2,
   Edit3,
   ZoomIn,
+  MoreVertical,
+  ExternalLink,
 } from 'lucide-react';
-import { Input, Button, message, Modal, Popconfirm } from 'antd';
+import { Input, Button, message, Modal, Popconfirm, Select, Dropdown } from 'antd';
 
 function CreatorProfileContent() {
   const searchParams = useSearchParams();
@@ -61,6 +64,24 @@ function CreatorProfileContent() {
   // Profile Form States
   const [name, setName] = useState(currentCreator?.name || 'Sophie Kim');
   const [handle, setHandle] = useState(currentCreator?.handle?.replace('@', '') || 'sophiekim');
+
+  // Username uniqueness and validation
+  const initialCleanHandle = (currentCreator?.handle?.replace('@', '') || 'sophiekim').toLowerCase();
+  const cleanHandle = handle.replace('@', '').trim().toLowerCase();
+
+  const isUsernameTaken = useMemo(() => {
+    if (!cleanHandle || cleanHandle === initialCleanHandle) return false;
+    return creators.some(
+      (c) =>
+        c.id !== currentCreator.id &&
+        c.handle.replace('@', '').toLowerCase() === cleanHandle
+    );
+  }, [cleanHandle, creators, currentCreator.id, initialCleanHandle]);
+
+  const isUsernameValidFormat = useMemo(() => {
+    if (!cleanHandle) return true;
+    return /^[a-z0-9_.]+$/.test(cleanHandle) && cleanHandle.length >= 3;
+  }, [cleanHandle]);
   const [avatar, setAvatar] = useState(
     currentCreator?.avatar ||
       'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'
@@ -71,6 +92,7 @@ function CreatorProfileContent() {
   );
   const [location, setLocation] = useState(currentCreator?.location || 'Los Angeles, CA');
   const [startingPriceEur, setStartingPriceEur] = useState(currentCreator?.startingPriceEur || 500);
+  const [gender, setGender] = useState<string>(currentCreator?.gender || 'female');
   const [categories, setCategories] = useState<string[]>(
     currentCreator?.categories && currentCreator.categories.length > 0
       ? currentCreator.categories
@@ -107,13 +129,28 @@ function CreatorProfileContent() {
   const [igHandle, setIgHandle] = useState(currentCreator?.platforms?.instagram?.handle || '@sophiekim');
   const [igFollowers, setIgFollowers] = useState(currentCreator?.platforms?.instagram?.followersFormatted || '1.2M');
   const [igEngagement, setIgEngagement] = useState(currentCreator?.platforms?.instagram?.engagementRate || '4.8%');
+  const [igUrl, setIgUrl] = useState(
+    currentCreator?.platforms?.instagram?.url ||
+      (currentCreator?.platforms?.instagram?.handle
+        ? `https://instagram.com/${currentCreator.platforms.instagram.handle.replace('@', '')}`
+        : 'https://instagram.com/sophiekim')
+  );
 
   const [ttHandle, setTtHandle] = useState(currentCreator?.platforms?.tiktok?.handle || '@sophie.kim');
   const [ttFollowers, setTtFollowers] = useState(currentCreator?.platforms?.tiktok?.followersFormatted || '680K');
   const [ttEngagement, setTtEngagement] = useState(currentCreator?.platforms?.tiktok?.engagementRate || '8.2%');
+  const [ttUrl, setTtUrl] = useState(
+    currentCreator?.platforms?.tiktok?.url ||
+      (currentCreator?.platforms?.tiktok?.handle
+        ? `https://tiktok.com/@${currentCreator.platforms.tiktok.handle.replace('@', '')}`
+        : 'https://tiktok.com/@sophie.kim')
+  );
 
   const [ytHandle, setYtHandle] = useState(currentCreator?.platforms?.youtube?.handle || 'Sophie Kim Vlogs');
   const [ytFollowers, setYtFollowers] = useState(currentCreator?.platforms?.youtube?.followersFormatted || '210K');
+  const [ytUrl, setYtUrl] = useState(
+    currentCreator?.platforms?.youtube?.url || 'https://youtube.com/@sophiekimvlogs'
+  );
 
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
@@ -292,11 +329,20 @@ function CreatorProfileContent() {
       return;
     }
 
-    const cleanHandle = handle.startsWith('@') ? handle.slice(1) : handle;
+    if (!isUsernameValidFormat) {
+      message.error('Username must be at least 3 characters and contain only letters, numbers, underscores (_), or dots (.).');
+      return;
+    }
+
+    if (isUsernameTaken) {
+      message.error(`Username @${cleanHandle} is already taken by another creator. Please choose a unique username.`);
+      return;
+    }
 
     const updates = {
       name: name.trim(),
       handle: cleanHandle,
+      gender,
       avatar,
       bio: bio.trim(),
       location: location.trim(),
@@ -313,6 +359,7 @@ function CreatorProfileContent() {
               handle: igHandle.trim(),
               followersFormatted: igFollowers.trim(),
               engagementRate: igEngagement.trim(),
+              url: igUrl.trim(),
             }
           : {
               followers: 1200000,
@@ -320,6 +367,7 @@ function CreatorProfileContent() {
               handle: igHandle.trim(),
               engagementRate: igEngagement.trim(),
               avgViews: '145K',
+              url: igUrl.trim(),
             },
         tiktok: currentCreator.platforms.tiktok
           ? {
@@ -327,6 +375,7 @@ function CreatorProfileContent() {
               handle: ttHandle.trim(),
               followersFormatted: ttFollowers.trim(),
               engagementRate: ttEngagement.trim(),
+              url: ttUrl.trim(),
             }
           : {
               followers: 680000,
@@ -334,12 +383,14 @@ function CreatorProfileContent() {
               handle: ttHandle.trim(),
               engagementRate: ttEngagement.trim(),
               avgViews: '320K',
+              url: ttUrl.trim(),
             },
         youtube: currentCreator.platforms.youtube
           ? {
               ...currentCreator.platforms.youtube,
               handle: ytHandle.trim(),
               followersFormatted: ytFollowers.trim(),
+              url: ytUrl.trim(),
             }
           : {
               followers: 210000,
@@ -347,6 +398,7 @@ function CreatorProfileContent() {
               handle: ytHandle.trim(),
               engagementRate: '3.4%',
               avgViews: '85K',
+              url: ytUrl.trim(),
             },
       },
     };
@@ -356,6 +408,7 @@ function CreatorProfileContent() {
       updateUserProfile({
         name: name.trim(),
         handle: `@${cleanHandle}`,
+        gender,
         avatar,
         location: location.trim(),
         bio: bio.trim(),
@@ -368,8 +421,8 @@ function CreatorProfileContent() {
   return (
     <div className="min-h-screen pb-16 font-sans">
       <WorkspaceHeader
-        title="Public Profile & Identity"
-        subtitle="Your public creator profile."
+        title="Profile"
+        subtitle="Manage your creator profile."
         action={
           <Button
             type="primary"
@@ -395,7 +448,7 @@ function CreatorProfileContent() {
             }`}
           >
             <User className={`w-4 h-4 shrink-0 ${activeTab === 'identity' ? 'text-white' : 'text-[#73736A]'}`} />
-            <span className="whitespace-nowrap">Profile Identity</span>
+            <span className="whitespace-nowrap">Basic Info</span>
           </button>
 
           <button
@@ -409,13 +462,6 @@ function CreatorProfileContent() {
           >
             <ImageIcon className={`w-4 h-4 shrink-0 ${activeTab === 'gallery' ? 'text-white' : 'text-[#73736A]'}`} />
             <span className="whitespace-nowrap">Gallery</span>
-            <span
-              className={`text-xs font-extrabold px-2 py-0.5 rounded-full shrink-0 ${
-                activeTab === 'gallery' ? 'bg-white/20 text-white' : 'bg-[#E7E7E2] text-[#0A0A0A]'
-              }`}
-            >
-              {photosList.length}
-            </span>
           </button>
 
           <button
@@ -432,7 +478,7 @@ function CreatorProfileContent() {
           </button>
         </div>
 
-        {/* Tab 1: Profile Identity */}
+        {/* Tab 1: Profile Basic Info */}
         {activeTab === 'identity' && (
           <form onSubmit={handleSaveProfile} className="space-y-6">
             <div className="bg-white rounded-3xl p-6 sm:p-10 border border-[#E7E7E2] shadow-2xs space-y-7 max-w-4xl mx-auto">
@@ -440,18 +486,18 @@ function CreatorProfileContent() {
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
-                    Identity &amp; Appearance
+                    Profile Details
                   </h2>
                   <p className="text-xs sm:text-sm text-[#73736A] mt-1">
-                    Manage how brands see you.
+                    Manage how brands see your profile.
                   </p>
                 </div>
 
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#EBF5FF] text-[#1E40AF] text-sm font-semibold border border-[#BFDBFE] shrink-0">
-                  <div className="w-4 h-4 rounded-full bg-[#2563EB] flex items-center justify-center text-white shrink-0">
-                    <Check className="w-2.5 h-2.5 stroke-[3]" />
+                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] text-xs font-bold border border-[#E7E7E2] shrink-0">
+                  <div className="w-3.5 h-3.5 rounded-full bg-[#2563EB] flex items-center justify-center text-white shrink-0">
+                    <Check className="w-2 h-2 stroke-[3]" />
                   </div>
-                  <span>Verified Creator</span>
+                  <span>Verified</span>
                 </div>
               </div>
 
@@ -525,15 +571,74 @@ function CreatorProfileContent() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-[#52524E]">Username</label>
+                    <div className="flex items-center justify-between">
+                      <label className="block text-sm font-semibold text-[#52524E]">Username</label>
+                      {cleanHandle && (
+                        isUsernameTaken ? (
+                          <span className="text-xs font-bold text-rose-500 flex items-center gap-1">
+                            <X className="w-3.5 h-3.5" />
+                            Unavailable
+                          </span>
+                        ) : !isUsernameValidFormat ? (
+                          <span className="text-xs font-bold text-amber-600 flex items-center gap-1">
+                            <AlertCircle className="w-3.5 h-3.5" />
+                            Invalid Format
+                          </span>
+                        ) : cleanHandle !== initialCleanHandle ? (
+                          <span className="text-xs font-bold text-emerald-600 flex items-center gap-1">
+                            <Check className="w-3.5 h-3.5" />
+                            Available
+                          </span>
+                        ) : (
+                          <span className="text-xs font-semibold text-[#73736A]">Current handle</span>
+                        )
+                      )}
+                    </div>
                     <Input
                       prefix={<span className="text-[#73736A] text-sm font-medium mr-0.5">@</span>}
+                      suffix={
+                        cleanHandle ? (
+                          isUsernameTaken ? (
+                            <X className="w-4 h-4 text-rose-500" />
+                          ) : !isUsernameValidFormat ? (
+                            <AlertCircle className="w-4 h-4 text-amber-500" />
+                          ) : cleanHandle !== initialCleanHandle ? (
+                            <Check className="w-4 h-4 text-emerald-600" />
+                          ) : null
+                        ) : null
+                      }
                       value={handle}
-                      onChange={(e) => setHandle(e.target.value)}
-                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
+                      onChange={(e) => setHandle(e.target.value.toLowerCase().replace(/\s+/g, ''))}
+                      className={`rounded-xl h-11 text-sm font-medium text-[#0A0A0A] ${
+                        isUsernameTaken
+                          ? '!border-rose-400 focus:!border-rose-500'
+                          : !isUsernameValidFormat && cleanHandle
+                          ? '!border-amber-400 focus:!border-amber-500'
+                          : cleanHandle && cleanHandle !== initialCleanHandle
+                          ? '!border-emerald-500 focus:!border-emerald-600'
+                          : 'border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]'
+                      }`}
                       placeholder="sophiekim"
                       required
                     />
+                    {isUsernameTaken && (
+                      <p className="text-xs font-semibold text-rose-500 mt-1 flex items-center gap-1">
+                        <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                        <span>@{cleanHandle} is already taken by another creator. Usernames must be unique.</span>
+                      </p>
+                    )}
+                    {!isUsernameValidFormat && cleanHandle && (
+                      <p className="text-xs font-medium text-amber-600 mt-1 flex items-center gap-1">
+                        <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                        <span>Must be at least 3 characters (lowercase letters, numbers, _, .).</span>
+                      </p>
+                    )}
+                    {cleanHandle && cleanHandle !== initialCleanHandle && !isUsernameTaken && isUsernameValidFormat && (
+                      <p className="text-xs font-semibold text-emerald-600 mt-1 flex items-center gap-1">
+                        <Check className="w-3.5 h-3.5 shrink-0" />
+                        <span>@{cleanHandle} is unique and available.</span>
+                      </p>
+                    )}
                   </div>
 
                   <div className="space-y-1.5">
@@ -544,6 +649,21 @@ function CreatorProfileContent() {
                       onChange={(e) => setLocation(e.target.value)}
                       className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
                       placeholder="Los Angeles, CA"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="block text-sm font-semibold text-[#52524E]">Gender</label>
+                    <Select
+                      value={gender}
+                      onChange={(val) => setGender(val)}
+                      className="w-full h-11 rounded-xl"
+                      options={[
+                        { value: 'female', label: 'Female' },
+                        { value: 'male', label: 'Male' },
+                        { value: 'non-binary', label: 'Non-binary / Other' },
+                        { value: 'prefer_not_to_say', label: 'Prefer not to say' },
+                      ]}
                     />
                   </div>
 
@@ -788,55 +908,59 @@ function CreatorProfileContent() {
                         </div>
                       </div>
 
-                      {/* Photo Details */}
-                      <div className="p-4 bg-white">
-                        <h4 className="font-extrabold text-sm text-[#0A0A0A] line-clamp-2 leading-snug">
+                      {/* Photo Details with 3-dot Menu */}
+                      <div className="p-4 bg-white flex items-center justify-between gap-3">
+                        <h4 className="font-extrabold text-sm text-[#0A0A0A] line-clamp-2 leading-snug flex-1">
                           {photo.caption || 'Editorial Shoot'}
                         </h4>
 
-                        {/* Actions Toolbar */}
-                        <div className="pt-3 border-t border-[#E7E7E2] flex items-center justify-between gap-2">
-                          {/* Replace Image Button */}
+                        <Dropdown
+                          menu={{
+                            items: [
+                              {
+                                key: 'edit',
+                                icon: <Edit3 className="w-4 h-4" />,
+                                label: 'Edit Details',
+                                onClick: () => openEditPhotoModal(photo),
+                              },
+                              {
+                                key: 'replace',
+                                icon: <Upload className="w-4 h-4" />,
+                                label: 'Replace Image',
+                                onClick: () => handleQuickReplaceClick(photo.id),
+                              },
+                              {
+                                type: 'divider',
+                              },
+                              {
+                                key: 'delete',
+                                icon: <Trash2 className="w-4 h-4" />,
+                                label: 'Delete Photo',
+                                danger: true,
+                                onClick: () => {
+                                  Modal.confirm({
+                                    title: 'Delete Photo',
+                                    content: 'Are you sure you want to delete this photo from your gallery?',
+                                    okText: 'Delete',
+                                    okType: 'danger',
+                                    cancelText: 'Cancel',
+                                    onOk: () => handleDeletePhoto(photo.id),
+                                  });
+                                },
+                              },
+                            ],
+                          }}
+                          trigger={['click']}
+                          placement="bottomRight"
+                        >
                           <button
                             type="button"
-                            onClick={() => handleQuickReplaceClick(photo.id)}
-                            className="text-sm font-bold text-[#0A0A0A] hover:text-[#2563EB] flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer"
-                            title="Replace this photo with a new image"
+                            className="p-1.5 rounded-lg text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8] border border-transparent hover:border-[#E7E7E2] transition-colors cursor-pointer shrink-0"
+                            title="Photo options"
                           >
-                            <Upload className="w-3.5 h-3.5" />
-                            <span>Replace</span>
+                            <MoreVertical className="w-4 h-4" />
                           </button>
-
-                          <div className="flex items-center gap-1">
-                            {/* Edit Details Button */}
-                            <button
-                              type="button"
-                              onClick={() => openEditPhotoModal(photo)}
-                              className="text-sm font-bold text-[#0A0A0A] hover:text-[#0A0A0A] p-2 rounded-lg hover:bg-[#FAFAF8] transition-colors cursor-pointer"
-                              title="Edit photo details"
-                            >
-                              <Edit3 className="w-3.5 h-3.5" />
-                            </button>
-
-                            {/* Delete Button */}
-                            <Popconfirm
-                              title="Remove Photo"
-                              description="Are you sure you want to delete this photo from your gallery?"
-                              onConfirm={() => handleDeletePhoto(photo.id)}
-                              okText="Delete"
-                              cancelText="Cancel"
-                              okButtonProps={{ danger: true }}
-                            >
-                              <button
-                                type="button"
-                                className="text-sm font-bold text-red-500 hover:text-red-700 p-2 rounded-lg hover:bg-red-50 transition-colors cursor-pointer"
-                                title="Delete photo"
-                              >
-                                <Trash2 className="w-3.5 h-3.5" />
-                              </button>
-                            </Popconfirm>
-                          </div>
-                        </div>
+                        </Dropdown>
                       </div>
                     </div>
                   ))}
@@ -852,7 +976,7 @@ function CreatorProfileContent() {
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
               <div className="pb-4 border-b border-[#E7E7E2]">
                 <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Connected Channels & Audience Reach</h2>
-                <p className="text-sm text-[#73736A] mt-0.5">Verified follower metrics and engagement benchmarks shown to brand marketing managers.</p>
+                <p className="text-sm text-[#73736A] mt-0.5">Social metrics and direct profile links shown to brands.</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -870,7 +994,7 @@ function CreatorProfileContent() {
 
                   <div className="space-y-3">
                     <div className="space-y-1">
-                      <label className="text-sm font-bold text-[#73736A] uppercase tracking-wider">Account Handle</label>
+                      <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Account Handle</label>
                       <Input
                         value={igHandle}
                         onChange={(e) => setIgHandle(e.target.value)}
@@ -878,9 +1002,18 @@ function CreatorProfileContent() {
                         placeholder="@sophiekim"
                       />
                     </div>
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">URL</label>
+                      <Input
+                        value={igUrl}
+                        onChange={(e) => setIgUrl(e.target.value)}
+                        className="rounded-xl h-9 text-sm font-semibold"
+                        placeholder="https://instagram.com/sophiekim"
+                      />
+                    </div>
                     <div className="grid grid-cols-2 gap-2">
                       <div className="space-y-1">
-                        <label className="text-sm font-bold text-[#73736A] uppercase tracking-wider">Followers</label>
+                        <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Followers</label>
                         <Input
                           value={igFollowers}
                           onChange={(e) => setIgFollowers(e.target.value)}
@@ -889,7 +1022,7 @@ function CreatorProfileContent() {
                         />
                       </div>
                       <div className="space-y-1">
-                        <label className="text-sm font-bold text-[#73736A] uppercase tracking-wider">Engagement</label>
+                        <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Engagement</label>
                         <Input
                           value={igEngagement}
                           onChange={(e) => setIgEngagement(e.target.value)}
@@ -915,7 +1048,7 @@ function CreatorProfileContent() {
 
                   <div className="space-y-3">
                     <div className="space-y-1">
-                      <label className="text-sm font-bold text-[#73736A] uppercase tracking-wider">Account Handle</label>
+                      <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Account Handle</label>
                       <Input
                         value={ttHandle}
                         onChange={(e) => setTtHandle(e.target.value)}
@@ -923,9 +1056,18 @@ function CreatorProfileContent() {
                         placeholder="@sophie.kim"
                       />
                     </div>
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">URL</label>
+                      <Input
+                        value={ttUrl}
+                        onChange={(e) => setTtUrl(e.target.value)}
+                        className="rounded-xl h-9 text-sm font-semibold"
+                        placeholder="https://tiktok.com/@sophie.kim"
+                      />
+                    </div>
                     <div className="grid grid-cols-2 gap-2">
                       <div className="space-y-1">
-                        <label className="text-sm font-bold text-[#73736A] uppercase tracking-wider">Followers</label>
+                        <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Followers</label>
                         <Input
                           value={ttFollowers}
                           onChange={(e) => setTtFollowers(e.target.value)}
@@ -934,7 +1076,7 @@ function CreatorProfileContent() {
                         />
                       </div>
                       <div className="space-y-1">
-                        <label className="text-sm font-bold text-[#73736A] uppercase tracking-wider">Engagement</label>
+                        <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Engagement</label>
                         <Input
                           value={ttEngagement}
                           onChange={(e) => setTtEngagement(e.target.value)}
@@ -960,7 +1102,7 @@ function CreatorProfileContent() {
 
                   <div className="space-y-3">
                     <div className="space-y-1">
-                      <label className="text-sm font-bold text-[#73736A] uppercase tracking-wider">Channel Handle</label>
+                      <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Channel Handle</label>
                       <Input
                         value={ytHandle}
                         onChange={(e) => setYtHandle(e.target.value)}
@@ -969,7 +1111,16 @@ function CreatorProfileContent() {
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="text-sm font-bold text-[#73736A] uppercase tracking-wider">Subscribers</label>
+                      <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">URL</label>
+                      <Input
+                        value={ytUrl}
+                        onChange={(e) => setYtUrl(e.target.value)}
+                        className="rounded-xl h-9 text-sm font-semibold"
+                        placeholder="https://youtube.com/@sophiekimvlogs"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Subscribers</label>
                       <Input
                         value={ytFollowers}
                         onChange={(e) => setYtFollowers(e.target.value)}

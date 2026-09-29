@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from '@/redux/hooks';
 import {
   sendMessage,
@@ -28,10 +29,13 @@ import {
   Check,
   CheckCheck,
   Trash2,
+  MoreVertical,
+  RotateCcw,
 } from 'lucide-react';
-import { Button, Popconfirm, message } from 'antd';
+import { Button, Popconfirm, message, Dropdown, Modal } from 'antd';
 
 export default function CreatorMessagesPage() {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const { conversations, activeConversationId } = useAppSelector((state) => state.message);
   const { currentUser } = useAppSelector((state) => state.auth);
@@ -183,8 +187,8 @@ export default function CreatorMessagesPage() {
   return (
     <div className="min-h-screen pb-12 font-sans flex flex-col">
       <WorkspaceHeader
-        title="Brand Messages"
-        subtitle="Direct messages with brand managers."
+        title="Messages"
+        subtitle="Direct conversations with brands."
       />
 
       <div className="p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto flex-1">
@@ -195,9 +199,6 @@ export default function CreatorMessagesPage() {
               <div className="flex items-center justify-between">
                 <span className="text-xs font-black uppercase tracking-wider text-[#73736A]">
                   Conversations
-                </span>
-                <span className="text-sm font-bold px-2.5 py-0.5 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]">
-                  Direct Chat
                 </span>
               </div>
               <div className="relative">
@@ -316,37 +317,68 @@ export default function CreatorMessagesPage() {
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0">
-                  <Popconfirm
-                    title="Delete entire conversation?"
-                    description="Permanently delete this entire conversation and message history?"
-                    okText="Delete Thread"
-                    cancelText="Cancel"
-                    okButtonProps={{ danger: true }}
-                    onConfirm={() => {
-                      dispatch(deleteConversation({ conversationId: activeConv.id }));
-                      message.success('Conversation deleted');
+                  {/* 3-Dot Options Dropdown */}
+                  <Dropdown
+                    menu={{
+                      items: [
+                        {
+                          key: 'orders',
+                          icon: <ShoppingBag className="w-4 h-4" />,
+                          label: 'Active Orders',
+                          onClick: () => router.push('/creator/orders'),
+                        },
+                        {
+                          key: 'clear',
+                          icon: <RotateCcw className="w-4 h-4" />,
+                          label: 'Clear Chat History',
+                          onClick: () => {
+                            Modal.confirm({
+                              title: 'Clear Chat History?',
+                              content: 'Are you sure you want to clear messages in this chat conversation?',
+                              okText: 'Clear Messages',
+                              okType: 'danger',
+                              cancelText: 'Cancel',
+                              onOk: () => {
+                                message.success('Chat history cleared');
+                              },
+                            });
+                          },
+                        },
+                        {
+                          type: 'divider',
+                        },
+                        {
+                          key: 'delete',
+                          icon: <Trash2 className="w-4 h-4" />,
+                          label: 'Delete Thread',
+                          danger: true,
+                          onClick: () => {
+                            Modal.confirm({
+                              title: 'Delete entire conversation?',
+                              content: 'Are you sure you want to permanently delete this entire conversation and message history? This action cannot be undone.',
+                              okText: 'Delete Thread',
+                              okType: 'danger',
+                              cancelText: 'Cancel',
+                              onOk: () => {
+                                dispatch(deleteConversation({ conversationId: activeConv.id }));
+                                message.success('Conversation deleted');
+                              },
+                            });
+                          },
+                        },
+                      ],
                     }}
+                    trigger={['click']}
+                    placement="bottomRight"
                   >
-                    <Button
-                      type="default"
-                      danger
-                      className="h-9 px-3 rounded-full text-sm font-semibold border-rose-200 text-rose-600 hover:border-rose-400 hover:bg-rose-50 flex items-center gap-1.5 cursor-pointer shadow-2xs"
-                      title="Delete entire conversation"
+                    <button
+                      type="button"
+                      className="w-9 h-9 rounded-full border border-[#E7E7E2] hover:border-[#0A0A0A] bg-white hover:bg-[#FAFAF8] text-[#73736A] hover:text-[#0A0A0A] flex items-center justify-center transition-all cursor-pointer shadow-2xs"
+                      title="More options"
                     >
-                      <Trash2 className="w-3.5 h-3.5" />
-                      <span className="hidden xl:inline">Delete Thread</span>
-                    </Button>
-                  </Popconfirm>
-
-                  <Link href="/creator/orders">
-                    <Button
-                      type="default"
-                      className="h-9 px-3.5 rounded-full text-sm font-bold border-[#E7E7E2] text-[#0A0A0A] hover:border-[#0A0A0A] flex items-center gap-1.5 cursor-pointer shadow-2xs"
-                    >
-                      <ShoppingBag className="w-3.5 h-3.5 text-[#73736A]" />
-                      <span className="hidden sm:inline">Active Orders</span>
-                    </Button>
-                  </Link>
+                      <MoreVertical className="w-4 h-4" />
+                    </button>
+                  </Dropdown>
                 </div>
               </div>
 
@@ -371,11 +403,6 @@ export default function CreatorMessagesPage() {
                   </div>
                 )}
 
-                <div className="text-center my-2">
-                  <span className="px-3 py-1 rounded-full bg-[#EAEAE3] text-[#73736A] text-xs font-bold uppercase tracking-wider">
-                    Direct Brand Channel
-                  </span>
-                </div>
 
                 {activeConv.messages.map((msg) => {
                   const isCreator = msg.senderRole === 'creator';

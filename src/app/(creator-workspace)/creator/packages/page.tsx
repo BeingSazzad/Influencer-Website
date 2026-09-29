@@ -67,12 +67,6 @@ export default function CreatorPackagesPage() {
     return true;
   });
 
-  // KPI Metrics
-  const minPrice = packages.length > 0 ? Math.min(...packages.map((p) => p.priceEur)) : 0;
-  const avgDelivery = packages.length > 0
-    ? Math.round(packages.reduce((acc, p) => acc + p.deliveryDays, 0) / packages.length)
-    : 0;
-
   const handleOpenAddModal = () => {
     setEditingPkgId(null);
     setTitle('');
@@ -201,8 +195,8 @@ export default function CreatorPackagesPage() {
   return (
     <div className="min-h-screen pb-16 font-sans">
       <WorkspaceHeader
-        title="Collaboration Deals & Rate Card"
-        subtitle="Fixed-price deals brands can book directly."
+        title="Packages"
+        subtitle="Pricing and deliverables."
         action={
           <Button
             type="primary"
@@ -216,38 +210,6 @@ export default function CreatorPackagesPage() {
       />
 
       <div className="p-6 sm:p-8 max-w-6xl mx-auto space-y-7">
-        {/* Minimal 3-Metric KPI Strip */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="bg-white p-5 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1">
-            <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#73736A]">
-              <span>Active Deals</span>
-              <Package className="w-4 h-4 text-[#0A0A0A]" />
-            </div>
-            <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">{packages.length}</div>
-            <div className="text-sm text-[#73736A]">Published on public storefront</div>
-          </div>
-
-          <div className="bg-white p-5 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1">
-            <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#73736A]">
-              <span>Starting Rate</span>
-              <span className="text-xs font-bold text-[#0A0A0A] bg-[#F4F4F0] border border-[#E7E7E2] px-2.5 py-0.5 rounded-full">
-                Entry Tier
-              </span>
-            </div>
-            <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">€{minPrice.toLocaleString()}</div>
-            <div className="text-sm text-[#73736A]">Base price for direct bookings</div>
-          </div>
-
-          <div className="bg-white p-5 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1">
-            <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#73736A]">
-              <span>Avg. Turnaround</span>
-              <Clock className="w-4 h-4 text-[#0A0A0A]" />
-            </div>
-            <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">{avgDelivery} Days</div>
-            <div className="text-sm text-[#73736A]">Average deliverable production</div>
-          </div>
-        </div>
-
         {/* Deals Management Container */}
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
           {/* Header Controls: Search & Category Filter */}
@@ -257,7 +219,7 @@ export default function CreatorPackagesPage() {
                 Packages
               </h2>
               <p className="text-sm text-[#73736A] mt-0.5 font-medium">
-                Fixed-price offerings brands can book directly with escrow protection.
+                Manage your packages and deliverables.
               </p>
             </div>
 

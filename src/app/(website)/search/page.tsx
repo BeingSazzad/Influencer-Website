@@ -24,6 +24,7 @@ import {
   List,
   Star,
   ArrowRight,
+  Users,
 } from 'lucide-react';
 import { Pagination } from 'antd';
 
@@ -36,10 +37,12 @@ function SearchResultsContent() {
   const initialQuery = searchParams.get('q') || searchParams.get('search') || '';
   const initialPlatform = searchParams.get('platform') || 'all';
   const initialCategory = searchParams.get('category') || 'all';
+  const initialGender = searchParams.get('gender') || 'all';
 
   const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [platform, setPlatform] = useState(initialPlatform);
   const [category, setCategory] = useState(initialCategory);
+  const [gender, setGender] = useState(initialGender);
   const [sortBy, setSortBy] = useState<'relevance' | 'rating' | 'followers' | 'price_asc' | 'price_desc'>('relevance');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -59,10 +62,12 @@ function SearchResultsContent() {
     const q = searchParams.get('q') || searchParams.get('search') || '';
     const plat = searchParams.get('platform') || 'all';
     const cat = searchParams.get('category') || 'all';
+    const gen = searchParams.get('gender') || 'all';
 
     setSearchQuery(q);
     setPlatform(plat);
     setCategory(cat);
+    setGender(gen);
     setCurrentPage(1);
   }, [searchParams]);
 
@@ -156,7 +161,7 @@ function SearchResultsContent() {
   ];
 
   // Execute in-page search
-  const handleExecuteSearch = (newQ?: string, newPlat?: string, newCat?: string) => {
+  const handleExecuteSearch = (newQ?: string, newPlat?: string, newCat?: string, newGen?: string) => {
     setShowSuggestions(false);
     setIsPlatformOpen(false);
     setIsCategoryOpen(false);
@@ -164,11 +169,13 @@ function SearchResultsContent() {
     const qVal = newQ !== undefined ? newQ : searchQuery;
     const platVal = newPlat !== undefined ? newPlat : platform;
     const catVal = newCat !== undefined ? newCat : category;
+    const genVal = newGen !== undefined ? newGen : gender;
 
     const params = new URLSearchParams();
     if (qVal.trim()) params.set('q', qVal.trim());
     if (platVal !== 'all') params.set('platform', platVal);
     if (catVal !== 'all') params.set('category', catVal);
+    if (genVal !== 'all') params.set('gender', genVal);
 
     router.push(`/search?${params.toString()}`);
   };
@@ -177,6 +184,7 @@ function SearchResultsContent() {
     setSearchQuery('');
     setPlatform('all');
     setCategory('all');
+    setGender('all');
     setSortBy('relevance');
     router.push('/search');
   };
@@ -200,6 +208,13 @@ function SearchResultsContent() {
   const filteredCreators = useMemo(() => {
     return creators
       .filter((c) => {
+        // Gender filter
+        if (gender !== 'all') {
+          if (!c.gender || c.gender.toLowerCase() !== gender.toLowerCase()) {
+            return false;
+          }
+        }
+
         // Category filter
         if (category !== 'all') {
           const hasCat = c.categories.some(
@@ -251,7 +266,7 @@ function SearchResultsContent() {
         }
         return 0; // relevance
       });
-  }, [creators, searchQuery, category, platform, sortBy]);
+  }, [creators, searchQuery, category, platform, gender, sortBy]);
 
   // Paginated Creators
   const paginatedCreators = useMemo(() => {
@@ -264,19 +279,23 @@ function SearchResultsContent() {
     if (searchQuery.trim()) {
       return `Search results for "${searchQuery.trim()}"`;
     }
+    const genderPrefix = gender === 'female' ? 'Female ' : gender === 'male' ? 'Male ' : '';
     if (category !== 'all' && platform !== 'all') {
-      return `${category} Creators on ${platform.toUpperCase()}`;
+      return `${genderPrefix}${category} Creators on ${platform.toUpperCase()}`;
     }
     if (category !== 'all') {
-      return `${category} Creators`;
+      return `${genderPrefix}${category} Creators`;
     }
     if (platform !== 'all') {
-      return `Verified ${platform.toUpperCase()} Creators`;
+      return `Verified ${genderPrefix}${platform.toUpperCase()} Creators`;
+    }
+    if (gender !== 'all') {
+      return `${genderPrefix}Creators`;
     }
     return 'Search All Creators';
-  }, [searchQuery, category, platform]);
+  }, [searchQuery, category, platform, gender]);
 
-  const hasActiveFilters = searchQuery.trim() !== '' || platform !== 'all' || category !== 'all';
+  const hasActiveFilters = searchQuery.trim() !== '' || platform !== 'all' || category !== 'all' || gender !== 'all';
 
   return (
     <div className="min-h-screen bg-[#FAFAF8] text-[#0A0A0A] font-sans selection:bg-zinc-200 selection:text-[#0A0A0A]">
@@ -568,6 +587,25 @@ function SearchResultsContent() {
 
             {/* Sorting & Layout Switcher */}
             <div className="flex items-center gap-3 self-start md:self-auto">
+              {/* Gender Filter Dropdown */}
+              <div className="flex items-center gap-2 bg-white px-3 py-2 rounded-2xl border border-[#E7E7E2] shadow-2xs">
+                <Users className="w-3.5 h-3.5 text-[#73736A]" />
+                <span className="text-sm font-bold text-[#73736A]">Gender:</span>
+                <select
+                  value={gender}
+                  onChange={(e) => {
+                    setGender(e.target.value);
+                    handleExecuteSearch(undefined, undefined, undefined, e.target.value);
+                  }}
+                  className="bg-transparent text-sm font-bold text-[#0A0A0A] outline-none cursor-pointer pr-1"
+                >
+                  <option value="all">All Genders</option>
+                  <option value="female">Female</option>
+                  <option value="male">Male</option>
+                  <option value="non-binary">Non-binary</option>
+                </select>
+              </div>
+
               {/* Sort By Dropdown */}
               <div className="flex items-center gap-2 bg-white px-3 py-2 rounded-2xl border border-[#E7E7E2] shadow-2xs">
                 <ArrowUpDown className="w-3.5 h-3.5 text-[#73736A]" />
@@ -660,6 +698,22 @@ function SearchResultsContent() {
                     onClick={() => {
                       setCategory('all');
                       handleExecuteSearch(undefined, undefined, 'all');
+                    }}
+                    className="hover:text-rose-500 cursor-pointer"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </span>
+              )}
+
+              {gender !== 'all' && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E7E7E2] text-sm font-bold text-[#0A0A0A] shadow-2xs">
+                  <span>Gender: {gender === 'female' ? 'Female' : gender === 'male' ? 'Male' : gender}</span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setGender('all');
+                      handleExecuteSearch(undefined, undefined, undefined, 'all');
                     }}
                     className="hover:text-rose-500 cursor-pointer"
                   >

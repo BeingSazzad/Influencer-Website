@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useAppDispatch } from '@/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { setUser, switchRole } from '@/redux/slices/authSlice';
 import { Logo } from '@/components/shared/Logo';
 import { AuthNetworkVisual } from '@/components/auth/AuthNetworkVisual';
@@ -19,12 +19,15 @@ import {
   Eye,
   EyeOff,
   ChevronDown,
+  AlertCircle,
+  X,
 } from 'lucide-react';
 import { message } from 'antd';
 
 export default function RegisterPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const { creators } = useAppSelector((state) => state.creator);
 
   const [role, setRole] = useState<'brand' | 'creator'>('brand');
   const [showPassword, setShowPassword] = useState(false);
@@ -43,6 +46,20 @@ export default function RegisterPage() {
   const [creatorPassword, setCreatorPassword] = useState('');
   const [creatorPlatform, setCreatorPlatform] = useState('instagram');
   const [creatorCategory, setCreatorCategory] = useState('Beauty');
+
+  // Username Uniqueness Logic
+  const cleanCreatorHandle = creatorHandle.replace('@', '').trim().toLowerCase();
+  const isCreatorHandleTaken = React.useMemo(() => {
+    if (!cleanCreatorHandle) return false;
+    return creators.some(
+      (c) => c.handle.replace('@', '').toLowerCase() === cleanCreatorHandle
+    );
+  }, [cleanCreatorHandle, creators]);
+
+  const isCreatorHandleValidFormat = React.useMemo(() => {
+    if (!cleanCreatorHandle) return true;
+    return /^[a-z0-9_.]+$/.test(cleanCreatorHandle) && cleanCreatorHandle.length >= 3;
+  }, [cleanCreatorHandle]);
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,13 +82,21 @@ export default function RegisterPage() {
       message.success(`Welcome to Influverse, ${brandContactName || companyName}! Your Brand Workspace is ready.`);
       router.push('/brand/dashboard');
     } else {
-      const cleanHandle = creatorHandle.startsWith('@') ? creatorHandle : `@${creatorHandle}`;
+      if (!isCreatorHandleValidFormat) {
+        message.error('Username must be at least 3 characters and contain only letters, numbers, underscores (_), or dots (.).');
+        return;
+      }
+      if (isCreatorHandleTaken) {
+        message.error(`Username @${cleanCreatorHandle} is already registered. Please choose a unique handle.`);
+        return;
+      }
+      const cleanHandle = `@${cleanCreatorHandle || 'creator'}`;
       const newCreatorUser = {
         id: `user_creator_${Date.now()}`,
         name: creatorName || 'Content Creator',
         email: creatorEmail || 'creator@influverse.com',
         role: 'creator' as const,
-        handle: cleanHandle || '@creator',
+        handle: cleanHandle,
         avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
         location: 'Milan & Paris',
         bio: `Verified content creator focusing on ${creatorCategory}.`,
@@ -308,20 +333,75 @@ export default function RegisterPage() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-bold text-[#0A0A0A] mb-1.5">
-                        Social Handle
-                      </label>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label className="block text-sm font-bold text-[#0A0A0A]">
+                          Username Handle
+                        </label>
+                        {cleanCreatorHandle && (
+                          isCreatorHandleTaken ? (
+                            <span className="text-xs font-bold text-rose-500 flex items-center gap-1">
+                              <X className="w-3 h-3" />
+                              Taken
+                            </span>
+                          ) : !isCreatorHandleValidFormat ? (
+                            <span className="text-xs font-bold text-amber-600 flex items-center gap-1">
+                              <AlertCircle className="w-3 h-3" />
+                              Invalid
+                            </span>
+                          ) : (
+                            <span className="text-xs font-bold text-emerald-600 flex items-center gap-1">
+                              <Check className="w-3 h-3" />
+                              Available
+                            </span>
+                          )
+                        )}
+                      </div>
                       <div className="relative flex items-center">
                         <AtSign className="w-4 h-4 text-[#73736A] absolute left-3.5 pointer-events-none" />
                         <input
                           type="text"
-                          placeholder="e.g. @sophiekim"
+                          placeholder="sophiekim"
                           value={creatorHandle}
-                          onChange={(e) => setCreatorHandle(e.target.value)}
-                          className="w-full h-12 pl-10 pr-4 bg-white border border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A] focus:ring-2 focus:ring-[#0A0A0A]/10 rounded-xl text-sm font-sans text-[#0A0A0A] placeholder-[#9E9E94] outline-none transition-all"
+                          onChange={(e) => setCreatorHandle(e.target.value.toLowerCase().replace(/\s+/g, ''))}
+                          className={`w-full h-12 pl-10 pr-10 bg-white border rounded-xl text-sm font-sans text-[#0A0A0A] placeholder-[#9E9E94] outline-none transition-all ${
+                            isCreatorHandleTaken
+                              ? 'border-rose-400 focus:border-rose-500 focus:ring-2 focus:ring-rose-200'
+                              : !isCreatorHandleValidFormat && cleanCreatorHandle
+                              ? 'border-amber-400 focus:border-amber-500 focus:ring-2 focus:ring-amber-200'
+                              : cleanCreatorHandle && !isCreatorHandleTaken
+                              ? 'border-emerald-500 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-200'
+                              : 'border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A] focus:ring-2 focus:ring-[#0A0A0A]/10'
+                          }`}
                           required
                         />
+                        {cleanCreatorHandle && (
+                          <div className="absolute right-3.5 pointer-events-none">
+                            {isCreatorHandleTaken ? (
+                              <X className="w-4 h-4 text-rose-500" />
+                            ) : !isCreatorHandleValidFormat ? (
+                              <AlertCircle className="w-4 h-4 text-amber-500" />
+                            ) : (
+                              <Check className="w-4 h-4 text-emerald-500" />
+                            )}
+                          </div>
+                        )}
                       </div>
+                      {isCreatorHandleTaken && (
+                        <p className="text-xs font-semibold text-rose-500 mt-1 flex items-center gap-1">
+                          <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                          <span>@{cleanCreatorHandle} is already registered. Choose another username.</span>
+                        </p>
+                      )}
+                      {!isCreatorHandleValidFormat && cleanCreatorHandle && (
+                        <p className="text-xs font-medium text-amber-600 mt-1">
+                          Must be at least 3 characters (letters, numbers, _, .).
+                        </p>
+                      )}
+                      {cleanCreatorHandle && !isCreatorHandleTaken && isCreatorHandleValidFormat && (
+                        <p className="text-xs font-semibold text-emerald-600 mt-1">
+                          @{cleanCreatorHandle} is available.
+                        </p>
+                      )}
                     </div>
                   </div>
 

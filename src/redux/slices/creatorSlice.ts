@@ -17,6 +17,7 @@ const initialFilters: CreatorFilterState = {
   minPrice: 0,
   maxPrice: 5000,
   followerRange: 'all',
+  gender: 'all',
   sortBy: 'relevance',
 };
 

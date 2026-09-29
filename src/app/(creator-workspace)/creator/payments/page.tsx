@@ -11,7 +11,6 @@ import {
   Download,
 } from 'lucide-react';
 import { Modal, message } from 'antd';
-import { CreatorAnnualAnalytics } from '@/components/shared/CreatorAnnualAnalytics';
 
 interface PayoutRecord {
   id: string;
@@ -88,7 +87,6 @@ export default function CreatorPaymentsPage() {
   const { orders } = useAppSelector((state) => state.order);
 
   const [payouts] = useState<PayoutRecord[]>(INITIAL_PAYOUTS);
-  const [activeFilter, setActiveFilter] = useState<'all' | 'paid_out' | 'in_escrow'>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedRemittance, setSelectedRemittance] = useState<PayoutRecord | null>(null);
 
@@ -106,9 +104,6 @@ export default function CreatorPaymentsPage() {
   const totalEarnedEur = 28400;
 
   const filteredPayouts = payouts.filter((p) => {
-    if (activeFilter === 'paid_out' && p.status !== 'paid_out') return false;
-    if (activeFilter === 'in_escrow' && p.status !== 'in_escrow') return false;
-
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase().trim();
       return (
@@ -172,8 +167,8 @@ export default function CreatorPaymentsPage() {
   return (
     <div className="space-y-7 font-sans pb-16">
       <WorkspaceHeader
-        title="Earnings & Payouts"
-        subtitle="Your earnings and payout history."
+        title="Payouts"
+        subtitle="Track earnings and payout history."
         action={
           <button
             type="button"
@@ -216,9 +211,6 @@ export default function CreatorPaymentsPage() {
           </div>
         </div>
 
-        {/* 12-Month Annual Performance & Brand Collabs Analytics */}
-        <CreatorAnnualAnalytics />
-
         {/* Clean Transactions Table Card */}
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -227,39 +219,17 @@ export default function CreatorPaymentsPage() {
               <p className="text-sm text-[#73736A] mt-1">Records of completed settlements and funds in escrow.</p>
             </div>
 
-            {/* Filter Tabs */}
-            <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
-              {[
-                { id: 'all' as const, label: 'All' },
-                { id: 'paid_out' as const, label: 'Transferred' },
-                { id: 'in_escrow' as const, label: 'In Escrow' },
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  type="button"
-                  onClick={() => setActiveFilter(tab.id)}
-                  className={`px-3.5 py-1.5 rounded-xl text-sm font-bold transition-all cursor-pointer ${
-                    activeFilter === tab.id
-                      ? 'bg-[#0A0A0A] text-white shadow-2xs'
-                      : 'text-[#73736A] hover:text-[#0A0A0A]'
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
+            {/* Search Input */}
+            <div className="relative w-full sm:max-w-xs">
+              <Search className="w-4 h-4 text-[#73736A] absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                placeholder="Search by brand or campaign..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full h-10 pl-10 pr-3.5 text-sm font-medium text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none focus:border-[#0A0A0A] placeholder:text-[#A3A39C] transition-all"
+              />
             </div>
-          </div>
-
-          {/* Search Input */}
-          <div className="relative max-w-sm">
-            <Search className="w-4 h-4 text-[#73736A] absolute left-3.5 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              placeholder="Search by brand or campaign..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full h-10 pl-10 pr-3.5 text-sm font-medium text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none focus:border-[#0A0A0A] placeholder:text-[#A3A39C] transition-all"
-            />
           </div>
 
           {/* Table */}

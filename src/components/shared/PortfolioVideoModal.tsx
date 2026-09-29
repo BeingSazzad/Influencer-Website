@@ -9,12 +9,7 @@ import {
   Pause,
   Volume2,
   VolumeX,
-  Eye,
-  Heart,
-  MessageCircle,
-  TrendingUp,
   Sparkles,
-  ShieldCheck,
   ArrowRight,
   Instagram,
   Youtube,
@@ -202,130 +197,64 @@ export function PortfolioVideoModal({
           </div>
         </div>
 
-        {/* RIGHT / BOTTOM: Campaign Case Study Details */}
+        {/* RIGHT / BOTTOM: Campaign Portfolio Details */}
         <div className="flex-1 p-6 sm:p-8 overflow-y-auto max-h-[85vh] lg:max-h-[580px] space-y-6 flex flex-col justify-between bg-white font-sans">
           <div className="space-y-6">
-            {/* Header: Brand + Verified Campaign */}
-            <div>
-              <div className="flex items-center gap-2 text-sm font-bold text-[#0A0A0A] bg-[#F4F4F0] border border-[#E7E7E2] px-3 py-1 rounded-full w-fit mb-3">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#0A0A0A]" />
-                <span>Verified Brand Campaign • 100% Escrow Cleared</span>
-              </div>
-
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <h2 className="text-2xl sm:text-3xl font-black text-[#0A0A0A] tracking-tight">
+            {/* Header: Brand + Campaign Title + Format / Platform Chips */}
+            <div className="space-y-3">
+              {item.brandName && (
+                <div className="flex items-center gap-2">
+                  {item.brandLogo && (
+                    <img
+                      src={item.brandLogo}
+                      alt={item.brandName}
+                      className="w-5 h-5 rounded-full object-cover border border-[#E7E7E2]"
+                    />
+                  )}
+                  <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
                     {item.brandName}
-                  </h2>
-                  <p className="text-sm font-bold text-[#73736A] mt-0.5">
-                    {item.campaignTitle}
-                  </p>
+                  </span>
                 </div>
+              )}
 
-                {item.packagePriceEur && (
-                  <div className="text-right shrink-0">
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#73736A] block">
-                      PACKAGE VALUE
-                    </span>
-                    <strong className="text-2xl font-extrabold text-[#0A0A0A] font-sans tracking-tight">
-                      €{item.packagePriceEur.toLocaleString()}
-                    </strong>
-                  </div>
+              <h2 className="text-2xl sm:text-3xl font-black text-[#0A0A0A] tracking-tight leading-snug">
+                {item.campaignTitle}
+              </h2>
+
+              {/* Tags: Platform & Format */}
+              <div className="flex flex-wrap items-center gap-2 pt-1">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F4F4F0] border border-[#E7E7E2] text-xs font-bold text-[#0A0A0A] capitalize">
+                  {platformIcons[item.platform]}
+                  <span>{item.platform}</span>
+                </span>
+
+                {item.deliverableType && (
+                  <span className="px-3 py-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-xs font-semibold text-[#73736A]">
+                    {item.deliverableType}
+                  </span>
                 )}
               </div>
             </div>
 
-            {/* Performance Analytics Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-              {/* Views */}
-              <div className="p-3 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex flex-col justify-between space-y-2">
-                <div className="flex items-center gap-1.5 min-w-0">
-                  <div className="w-6 h-6 rounded-lg bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center shrink-0">
-                    <Eye className="w-3.5 h-3.5" />
-                  </div>
-                  <span className="text-sm font-bold text-[#73736A] truncate">Views</span>
-                </div>
-                <div className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
-                  {item.views || '350K+'}
-                </div>
-              </div>
-
-              {/* Likes */}
-              <div className="p-3 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex flex-col justify-between space-y-2">
-                <div className="flex items-center gap-1.5 min-w-0">
-                  <div className="w-6 h-6 rounded-lg bg-[#FFF0F5] text-[#FF2D78] flex items-center justify-center shrink-0">
-                    <Heart className="w-3.5 h-3.5 fill-[#FF2D78]/20 text-[#FF2D78]" />
-                  </div>
-                  <span className="text-sm font-bold text-[#73736A] truncate">Likes</span>
-                </div>
-                <div className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
-                  {item.likes || '28K'}
-                </div>
-              </div>
-
-              {/* Comments */}
-              <div className="p-3 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex flex-col justify-between space-y-2">
-                <div className="flex items-center gap-1.5 min-w-0">
-                  <div className="w-6 h-6 rounded-lg bg-[#F1EEF9] text-[#6444A6] flex items-center justify-center shrink-0">
-                    <MessageCircle className="w-3.5 h-3.5" />
-                  </div>
-                  <span className="text-sm font-bold text-[#73736A] truncate">Comments</span>
-                </div>
-                <div className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
-                  {item.comments || '1,200'}
-                </div>
-              </div>
-
-              {/* Engagement */}
-              <div className="p-3 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex flex-col justify-between space-y-2">
-                <div className="flex items-center gap-1.5 min-w-0">
-                  <div className="w-6 h-6 rounded-lg bg-[#FAF6E8] text-[#8C6819] flex items-center justify-center shrink-0">
-                    <TrendingUp className="w-3.5 h-3.5" />
-                  </div>
-                  <span className="text-sm font-bold text-[#73736A] truncate">Engagement</span>
-                </div>
-                <div className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
-                  {item.engagementRate || '8.5%'}
-                </div>
-              </div>
-            </div>
-
-            {/* Deliverable Details List */}
-            <div className="space-y-3">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
-                Deliverable Specifications
-              </h3>
-              <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-2 text-sm text-[#555550]">
-                <div className="flex items-center justify-between">
-                  <span className="font-semibold text-[#73736A]">Format & Type:</span>
-                  <span className="font-bold text-[#0A0A0A]">{item.deliverableType || '4K Video Creative'}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="font-semibold text-[#73736A]">Aspect Ratio:</span>
-                  <span className="font-bold text-[#0A0A0A]">{item.aspectRatio === '16:9' ? '16:9 Widescreen' : '9:16 Vertical Video'}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="font-semibold text-[#73736A]">Commercial Rights:</span>
-                  <span className="font-bold text-[#0A0A0A]">Full Commercial Ad Whitelisting</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Campaign Brief Summary */}
-            {item.description && (
+            {/* Campaign Narrative / Description */}
+            {item.description ? (
               <div className="space-y-2">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
-                  Creative Strategy & Execution
+                  About This Project
                 </h3>
-                <p className="text-sm text-[#555550] leading-relaxed font-medium bg-[#FAFAF8] p-4 rounded-2xl border border-[#E7E7E2]">
-                  &ldquo;{item.description}&rdquo;
-                </p>
+                <div className="text-sm text-[#3A3A35] leading-relaxed font-medium bg-[#FAFAF8] p-5 rounded-2xl border border-[#E7E7E2] whitespace-pre-line">
+                  {item.description}
+                </div>
+              </div>
+            ) : (
+              <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] text-xs text-[#73736A] italic">
+                No additional project details provided.
               </div>
             )}
           </div>
 
           {/* Creator Attribution & Book CTA */}
-          <div className="pt-4 border-t border-[#E7E7E2] flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="pt-5 border-t border-[#E7E7E2] flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3 w-full sm:w-auto">
               <img
                 src={creator.avatar}
@@ -337,16 +266,16 @@ export function PortfolioVideoModal({
                   <span className="font-extrabold text-sm text-[#0A0A0A]">{creator.name}</span>
                   <VerifiedBadge size="xs" />
                 </div>
-                <span className="text-sm text-[#73736A] font-medium">{creator.handle}</span>
+                <span className="text-xs text-[#73736A] font-medium">{creator.handle}</span>
               </div>
             </div>
 
             <button
               onClick={() => onBookCampaign(item)}
-              className="w-full sm:w-auto h-11 px-6 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-[#FF2D78] text-white shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-102 active:scale-98"
+              className="w-full sm:w-auto h-10 px-5 rounded-full font-bold text-xs bg-[#0A0A0A] hover:bg-[#FF2D78] text-white shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-102 active:scale-98"
             >
               <span>Book Similar Campaign</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>

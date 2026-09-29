@@ -19,6 +19,7 @@ export const MOCK_USERS: User[] = [
     phone: '+1 (555) 234-5678',
     role: 'creator',
     handle: '@sophiekim',
+    gender: 'female',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
     location: 'Los Angeles, CA',
     bio: 'I create authentic, relatable content about beauty, wellness and everyday life. I love working with brands that share my values and believe in meaningful, long-term partnerships.',
@@ -31,6 +32,7 @@ export const MOCK_CREATORS: Creator[] = [
     id: 'creator-01',
     name: 'Sophie Kim',
     handle: 'sophiekim',
+    gender: 'female',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80',
     coverImage: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=80',
     bio: 'I create authentic, relatable content about beauty, wellness and everyday life. I love working with brands that share my values and believe in meaningful, long-term partnerships.',
@@ -47,6 +49,7 @@ export const MOCK_CREATORS: Creator[] = [
         handle: '@sophiekim',
         engagementRate: '4.8%',
         avgViews: '240K',
+        url: 'https://instagram.com/sophiekim',
       },
       tiktok: {
         followers: 680000,
@@ -54,6 +57,7 @@ export const MOCK_CREATORS: Creator[] = [
         handle: '@sophie.kim',
         engagementRate: '6.2%',
         avgViews: '410K',
+        url: 'https://tiktok.com/@sophie.kim',
       },
       youtube: {
         followers: 210000,
@@ -61,6 +65,7 @@ export const MOCK_CREATORS: Creator[] = [
         handle: 'Sophie Kim Vlogs',
         engagementRate: '8.4%',
         avgViews: '95K',
+        url: 'https://youtube.com/@sophiekimvlogs',
       },
       ugc: {
         avgDelivery: '3 Days',
@@ -202,7 +207,6 @@ export const MOCK_CREATORS: Creator[] = [
         comments: '720',
         shares: '3,200',
         engagementRate: '6.8%',
-        duration: 'Carousel',
         aspectRatio: '1:1',
         platform: 'instagram',
         deliverableType: '4-Slide High-Res Carousel Post',
@@ -474,6 +478,7 @@ export const MOCK_CREATORS: Creator[] = [
     id: 'creator-02',
     name: 'Liam Carter',
     handle: 'liamcarter',
+    gender: 'male',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80',
     coverImage: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80',
     bio: 'Professional outdoor cinematographer, mountaineer, and drone pilot. Capturing untamed wilderness stories across Europe and North America.',
@@ -488,6 +493,7 @@ export const MOCK_CREATORS: Creator[] = [
         handle: '@liam.outdoors',
         engagementRate: '5.8%',
         avgViews: '420K',
+        url: 'https://instagram.com/liam.outdoors',
       },
       tiktok: {
         followers: 640000,
@@ -495,6 +501,7 @@ export const MOCK_CREATORS: Creator[] = [
         handle: '@liamcarter',
         engagementRate: '7.4%',
         avgViews: '750K',
+        url: 'https://tiktok.com/@liamcarter',
       },
       youtube: {
         followers: 850000,
@@ -502,6 +509,7 @@ export const MOCK_CREATORS: Creator[] = [
         handle: 'Liam Carter Cinema',
         engagementRate: '9.2%',
         avgViews: '980K',
+        url: 'https://youtube.com/@liamcartercinema',
       },
       ugc: {
         avgDelivery: '3 Days',
@@ -839,6 +847,7 @@ export const MOCK_CREATORS: Creator[] = [
     id: 'creator-03',
     name: 'Maya Chen',
     handle: 'mayachen',
+    gender: 'female',
     avatar: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=600&q=80',
     coverImage: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1200&q=80',
     bio: 'Certified strength trainer and holistic wellness advocate. Helping over 2M+ followers build sustainable habits and athletic performance.',
@@ -853,6 +862,7 @@ export const MOCK_CREATORS: Creator[] = [
         handle: '@maya.chen.fit',
         engagementRate: '5.1%',
         avgViews: '380K',
+        url: 'https://instagram.com/maya.chen.fit',
       },
       tiktok: {
         followers: 920000,
@@ -860,6 +870,7 @@ export const MOCK_CREATORS: Creator[] = [
         handle: '@mayachen',
         engagementRate: '6.8%',
         avgViews: '620K',
+        url: 'https://tiktok.com/@mayachen',
       },
       youtube: {
         followers: 410000,
@@ -867,6 +878,7 @@ export const MOCK_CREATORS: Creator[] = [
         handle: 'Maya Chen Fitness',
         engagementRate: '7.9%',
         avgViews: '180K',
+        url: 'https://youtube.com/@mayachenfitness',
       },
       ugc: {
         avgDelivery: '3 Days',
@@ -1057,6 +1069,7 @@ export const MOCK_CREATORS: Creator[] = [
     id: 'creator-04',
     name: 'Noah Becker',
     handle: 'noahbecker',
+    gender: 'male',
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80',
     coverImage: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1200&q=80',
     bio: 'Contemporary menswear stylist and creative director. Curating clean minimalist aesthetics and capsule wardrobes.',
@@ -1071,6 +1084,7 @@ export const MOCK_CREATORS: Creator[] = [
         handle: '@noah.becker',
         engagementRate: '4.6%',
         avgViews: '140K',
+        url: 'https://instagram.com/noah.becker',
       },
       tiktok: {
         followers: 310000,
@@ -1078,6 +1092,7 @@ export const MOCK_CREATORS: Creator[] = [
         handle: '@noahbeckerstyle',
         engagementRate: '5.9%',
         avgViews: '210K',
+        url: 'https://tiktok.com/@noahbeckerstyle',
       },
       youtube: {
         followers: 180000,
@@ -1085,6 +1100,7 @@ export const MOCK_CREATORS: Creator[] = [
         handle: 'Noah Becker Style',
         engagementRate: '6.5%',
         avgViews: '80K',
+        url: 'https://youtube.com/@noahbeckerstyle',
       },
       ugc: {
         avgDelivery: '3 Days',
@@ -1227,6 +1243,7 @@ export const MOCK_CREATORS: Creator[] = [
     id: 'creator-05',
     name: 'Emma Rossi',
     handle: 'emmarossi',
+    gender: 'female',
     avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80',
     coverImage: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80',
     bio: 'Pastry chef and culinary creator crafting approachable gourmet recipes, kitchen equipment tests, and dining guides.',
@@ -1241,6 +1258,7 @@ export const MOCK_CREATORS: Creator[] = [
         handle: '@emmarossi.table',
         engagementRate: '5.8%',
         avgViews: '290K',
+        url: 'https://instagram.com/emmarossi.table',
       },
       tiktok: {
         followers: 390000,
@@ -1248,6 +1266,7 @@ export const MOCK_CREATORS: Creator[] = [
         handle: '@emmarossicooks',
         engagementRate: '6.4%',
         avgViews: '380K',
+        url: 'https://tiktok.com/@emmarossicooks',
       },
       youtube: {
         followers: 120000,
@@ -1255,6 +1274,7 @@ export const MOCK_CREATORS: Creator[] = [
         handle: 'Emma Rossi Kitchen',
         engagementRate: '8.1%',
         avgViews: '70K',
+        url: 'https://youtube.com/@emmarossikitchen',
       },
       ugc: {
         avgDelivery: '3 Days',
@@ -1396,6 +1416,7 @@ export const MOCK_CREATORS: Creator[] = [
     id: 'creator-06',
     name: 'Daniel Park',
     handle: 'danielpark',
+    gender: 'male',
     avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80',
     coverImage: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80',
     bio: 'Software engineer and desk setup enthusiast reviewing developer tools, productivity gadgets, and AI hardware.',
@@ -1410,6 +1431,7 @@ export const MOCK_CREATORS: Creator[] = [
         handle: '@danielpark.tech',
         engagementRate: '4.2%',
         avgViews: '190K',
+        url: 'https://instagram.com/danielpark.tech',
       },
       tiktok: {
         followers: 790000,
@@ -1417,6 +1439,7 @@ export const MOCK_CREATORS: Creator[] = [
         handle: '@danielparktech',
         engagementRate: '7.8%',
         avgViews: '550K',
+        url: 'https://tiktok.com/@danielparktech',
       },
       youtube: {
         followers: 340000,
@@ -1424,6 +1447,7 @@ export const MOCK_CREATORS: Creator[] = [
         handle: 'Daniel Park Tech',
         engagementRate: '8.6%',
         avgViews: '140K',
+        url: 'https://youtube.com/@danielparktech',
       },
       ugc: {
         avgDelivery: '3 Days',
@@ -1566,6 +1590,7 @@ export const MOCK_CREATORS: Creator[] = [
     id: 'creator-07',
     name: 'Isabella Torres',
     handle: 'isabellatorres',
+    gender: 'female',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80',
     coverImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80',
     bio: 'Sun-drenched Mediterranean lifestyle, boutique resort showcases, and sustainable summer fashion.',
@@ -1580,6 +1605,7 @@ export const MOCK_CREATORS: Creator[] = [
         handle: '@isabella.torres',
         engagementRate: '5.2%',
         avgViews: '220K',
+        url: 'https://instagram.com/isabella.torres',
       },
       tiktok: {
         followers: 480000,
@@ -1587,6 +1613,7 @@ export const MOCK_CREATORS: Creator[] = [
         handle: '@isabellatorres',
         engagementRate: '6.0%',
         avgViews: '310K',
+        url: 'https://tiktok.com/@isabellatorres',
       },
       youtube: {
         followers: 210000,
@@ -1594,6 +1621,7 @@ export const MOCK_CREATORS: Creator[] = [
         handle: 'Isabella Summer Diaries',
         engagementRate: '7.4%',
         avgViews: '90K',
+        url: 'https://youtube.com/@isabellasummerdiaries',
       },
       ugc: {
         avgDelivery: '3 Days',
@@ -1736,6 +1764,7 @@ export const MOCK_CREATORS: Creator[] = [
     id: 'creator-08',
     name: 'Chloe Nguyen',
     handle: 'chloenguyen',
+    gender: 'female',
     avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80',
     coverImage: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1200&q=80',
     bio: 'Visual artist and interior designer transforming everyday spaces through thoughtful ceramics, paintings, and studio vlogs.',
@@ -1750,6 +1779,7 @@ export const MOCK_CREATORS: Creator[] = [
         handle: '@chloe.nguyen.art',
         engagementRate: '6.7%',
         avgViews: '180K',
+        url: 'https://instagram.com/chloe.nguyen.art',
       },
       tiktok: {
         followers: 310000,
@@ -1757,6 +1787,7 @@ export const MOCK_CREATORS: Creator[] = [
         handle: '@chloeartstudio',
         engagementRate: '8.2%',
         avgViews: '290K',
+        url: 'https://tiktok.com/@chloeartstudio',
       },
       youtube: {
         followers: 150000,
@@ -1764,6 +1795,7 @@ export const MOCK_CREATORS: Creator[] = [
         handle: 'Chloe Nguyen Studio',
         engagementRate: '9.0%',
         avgViews: '85K',
+        url: 'https://youtube.com/@chloenguyenstudio',
       },
       ugc: {
         avgDelivery: '3 Days',

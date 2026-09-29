@@ -37,6 +37,7 @@ import {
   ZoomIn,
   Home,
   Package,
+  ExternalLink,
 } from 'lucide-react';
 import { Button, message } from 'antd';
 
@@ -322,41 +323,71 @@ export default function CreatorProfilePage() {
               {/* Follower Stats Columns */}
               <div className="grid grid-cols-3 gap-2 sm:gap-2.5 text-center">
                 {creator.platforms.instagram && (
-                  <div className="py-3 px-2 sm:px-2.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] hover:border-[#E1306C]/40 transition-colors">
-                    <div className="w-6 h-6 mx-auto mb-1 rounded-full bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 flex items-center justify-center text-white shadow-2xs">
+                  <a
+                    href={
+                      creator.platforms.instagram.url ||
+                      `https://instagram.com/${creator.platforms.instagram.handle.replace('@', '')}`
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="py-3 px-2 sm:px-2.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] hover:border-[#E1306C] hover:bg-rose-50/20 transition-all group/item block cursor-pointer"
+                    title={`Visit ${creator.name}'s Instagram (@${creator.platforms.instagram.handle.replace('@', '')})`}
+                  >
+                    <div className="w-6 h-6 mx-auto mb-1 rounded-full bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 flex items-center justify-center text-white shadow-2xs group-hover/item:scale-110 transition-transform">
                       <Instagram className="w-3.5 h-3.5" />
                     </div>
-                    <div className="text-sm font-black text-[#0A0A0A]">
-                      {creator.platforms.instagram.followersFormatted}
+                    <div className="text-sm font-black text-[#0A0A0A] flex items-center justify-center gap-1">
+                      <span>{creator.platforms.instagram.followersFormatted}</span>
+                      <ExternalLink className="w-2.5 h-2.5 text-[#73736A] opacity-0 group-hover/item:opacity-100 transition-opacity" />
                     </div>
                     <div className="text-xs sm:text-sm font-bold text-[#73736A] tracking-tight">Followers</div>
-                  </div>
+                  </a>
                 )}
 
                 {creator.platforms.tiktok && (
-                  <div className="py-3 px-2 sm:px-2.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] hover:border-[#0A0A0A]/40 transition-colors">
-                    <div className="w-6 h-6 mx-auto mb-1 rounded-full bg-[#0A0A0A] flex items-center justify-center text-white shadow-2xs">
+                  <a
+                    href={
+                      creator.platforms.tiktok.url ||
+                      `https://tiktok.com/@${creator.platforms.tiktok.handle.replace('@', '')}`
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="py-3 px-2 sm:px-2.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] hover:border-[#0A0A0A] hover:bg-zinc-100/40 transition-all group/item block cursor-pointer"
+                    title={`Visit ${creator.name}'s TikTok (@${creator.platforms.tiktok.handle.replace('@', '')})`}
+                  >
+                    <div className="w-6 h-6 mx-auto mb-1 rounded-full bg-[#0A0A0A] flex items-center justify-center text-white shadow-2xs group-hover/item:scale-110 transition-transform">
                       <svg className="w-3 h-3 fill-white" viewBox="0 0 24 24">
                         <path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-2.891 2.887 2.896 2.896 0 0 1-2.891-2.887 2.896 2.896 0 0 1 2.891-2.887c.28 0 .546.04.8.113V9.37a6.31 6.31 0 0 0-.8-.052 6.333 6.333 0 0 0-6.333 6.333 6.333 6.333 0 0 0 6.333 6.333 6.333 6.333 0 0 0 6.333-6.333V9.01a8.172 8.172 0 0 0 4.968 1.666V7.231a4.8 4.8 0 0 1-1.19-.545z" />
                       </svg>
                     </div>
-                    <div className="text-sm font-black text-[#0A0A0A]">
-                      {creator.platforms.tiktok.followersFormatted}
+                    <div className="text-sm font-black text-[#0A0A0A] flex items-center justify-center gap-1">
+                      <span>{creator.platforms.tiktok.followersFormatted}</span>
+                      <ExternalLink className="w-2.5 h-2.5 text-[#73736A] opacity-0 group-hover/item:opacity-100 transition-opacity" />
                     </div>
                     <div className="text-xs sm:text-sm font-bold text-[#73736A] tracking-tight">Followers</div>
-                  </div>
+                  </a>
                 )}
 
                 {creator.platforms.youtube && (
-                  <div className="py-3 px-2 sm:px-2.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] hover:border-[#FF0000]/40 transition-colors">
-                    <div className="w-6 h-6 mx-auto mb-1 rounded-full bg-[#FF0000] flex items-center justify-center text-white shadow-2xs">
+                  <a
+                    href={
+                      creator.platforms.youtube.url ||
+                      `https://youtube.com/@${creator.platforms.youtube.handle.replace(/[\s@]/g, '').toLowerCase()}`
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="py-3 px-2 sm:px-2.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] hover:border-[#FF0000] hover:bg-red-50/20 transition-all group/item block cursor-pointer"
+                    title={`Visit ${creator.name}'s YouTube (${creator.platforms.youtube.handle})`}
+                  >
+                    <div className="w-6 h-6 mx-auto mb-1 rounded-full bg-[#FF0000] flex items-center justify-center text-white shadow-2xs group-hover/item:scale-110 transition-transform">
                       <Youtube className="w-3.5 h-3.5" />
                     </div>
-                    <div className="text-sm font-black text-[#0A0A0A]">
-                      {creator.platforms.youtube.followersFormatted}
+                    <div className="text-sm font-black text-[#0A0A0A] flex items-center justify-center gap-1">
+                      <span>{creator.platforms.youtube.followersFormatted}</span>
+                      <ExternalLink className="w-2.5 h-2.5 text-[#73736A] opacity-0 group-hover/item:opacity-100 transition-opacity" />
                     </div>
                     <div className="text-xs sm:text-sm font-bold text-[#73736A] tracking-tight">Subscribers</div>
-                  </div>
+                  </a>
                 )}
               </div>
 
@@ -452,12 +483,22 @@ export default function CreatorProfilePage() {
                     Fixed-price verified deliverables with 100% escrow protection and guaranteed turnaround.
                   </p>
                 </div>
+
+                {filteredPackages.length > 3 && (
+                  <button
+                    onClick={() => setActiveTab('packages')}
+                    className="text-sm font-bold text-[#0A0A0A] hover:text-[#FF2D78] flex items-center gap-1.5 cursor-pointer transition-colors shrink-0"
+                  >
+                    <span>View All Deals ({filteredPackages.length})</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                )}
               </div>
 
-              {/* Packages Cards Row */}
-              <div className={`grid grid-cols-1 md:grid-cols-2 ${filteredPackages.length === 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-2 xl:grid-cols-4'} gap-6`}>
+              {/* Packages Cards Row (Highest 3 Deals) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredPackages.length > 0 ? (
-                  filteredPackages.map((pkg) => (
+                  filteredPackages.slice(0, 3).map((pkg) => (
                     <PackageCard
                       key={pkg.id}
                       packageItem={pkg}
@@ -680,7 +721,7 @@ export default function CreatorProfilePage() {
               </div>
             </div>
 
-            <div className={`grid grid-cols-1 md:grid-cols-2 ${filteredPackages.length === 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-2 xl:grid-cols-4'} gap-6`}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredPackages.map((pkg) => (
                 <PackageCard
                   key={pkg.id}
@@ -704,7 +745,7 @@ export default function CreatorProfilePage() {
             <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
               <div>
                 <h2 className="text-2xl font-extrabold text-[#0A0A0A]">
-                  Work Gallery & Case Studies
+                  Work Gallery & Portfolio
                 </h2>
                 <p className="text-sm text-[#73736A] mt-1 font-medium max-w-xl">
                   {portfolioFilter === 'all'
@@ -842,7 +883,7 @@ export default function CreatorProfilePage() {
                         </div>
 
                         <span className="text-[#0A0A0A] group-hover:text-[#FF2D78] flex items-center gap-1 font-extrabold transition-colors">
-                          <span>Preview Case Study</span>
+                          <span>Preview Portfolio</span>
                           <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
                         </span>
                       </div>
@@ -856,7 +897,7 @@ export default function CreatorProfilePage() {
                 icon={<Film className="w-8 h-8" />}
                 badge="Portfolio Filter"
                 title={`No Works Found for ${portfolioFilter.toUpperCase()}`}
-                description="This creator has not tagged case studies specifically for this platform yet. Switch to 'All Works' to preview their full portfolio."
+                description="This creator has not tagged portfolio items specifically for this platform yet. Switch to 'All Works' to preview their full portfolio."
                 primaryAction={{
                   label: 'View All Works',
                   onClick: () => setPortfolioFilter('all'),
@@ -1170,7 +1211,7 @@ export default function CreatorProfilePage() {
         })()}
       </div>
 
-      {/* Interactive Video Showcase & Case Study Modal */}
+      {/* Interactive Video Showcase & Portfolio Modal */}
       <PortfolioVideoModal
         item={selectedPortfolioItem}
         creator={creator}

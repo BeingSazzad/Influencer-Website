@@ -56,8 +56,8 @@ export default function CreatorDashboardPage() {
   return (
     <div className="min-h-screen pb-16 font-sans">
       <WorkspaceHeader
-        title="Creator Dashboard"
-        subtitle={`${creatorDisplayName} (@${creatorDisplayHandle.replace('@', '')}) • Active Studio`}
+        title="Dashboard"
+        subtitle={`${creatorDisplayName} (@${creatorDisplayHandle.replace('@', '')})`}
       />
 
       <div className="p-6 sm:p-8 max-w-6xl mx-auto space-y-7">
@@ -111,11 +111,11 @@ export default function CreatorDashboardPage() {
 
           </div>
 
-          {/* Portfolio & Case Studies Summary */}
+          {/* Portfolio Summary */}
           <div className="bg-white p-5 sm:p-6 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
-                Case Studies
+                Portfolio
               </span>
               <div className="w-8 h-8 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center">
                 <Film className="w-4 h-4" />
@@ -124,7 +124,6 @@ export default function CreatorDashboardPage() {
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
               {portfolioItems.length}
             </div>
-
           </div>
         </div>
 
@@ -179,17 +178,17 @@ export default function CreatorDashboardPage() {
             <div className="flex items-center justify-between pb-3 border-b border-[#E7E7E2]">
               <div>
                 <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
-                  Active Production Deliverables
+                  Active Deliverables
                 </h2>
                 <p className="text-sm text-[#73736A] mt-0.5 font-medium">
-                  {activeOrders.length} deliverable{activeOrders.length === 1 ? '' : 's'} currently in progress
+                  {activeOrders.length} in progress
                 </p>
               </div>
               <Link
                 href="/creator/campaigns"
                 className="text-sm font-bold text-[#0A0A0A] hover:text-zinc-600 flex items-center gap-1 transition-colors"
               >
-                <span>Campaigns Center</span>
+                <span>View All</span>
                 <ChevronRight className="w-4 h-4" />
               </Link>
             </div>
@@ -281,7 +280,7 @@ export default function CreatorDashboardPage() {
             </div>
             <div>
               <div className="text-sm font-bold text-[#0A0A0A]">Portfolio Studio</div>
-              <div className="text-sm text-[#73736A]">Case studies & metrics</div>
+              <div className="text-sm text-[#73736A]">Campaigns & media</div>
             </div>
           </Link>
 

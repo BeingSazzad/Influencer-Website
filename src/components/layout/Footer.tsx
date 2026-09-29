@@ -193,7 +193,7 @@ export function Footer() {
             <span className="flex items-center gap-1 text-[#A3A39C]">
               EUR (€) Standard Marketplace
             </span>
-            {pathname === '/' && <LanguageSwitcher />}
+            <LanguageSwitcher />
           </div>
         </div>
       </div>

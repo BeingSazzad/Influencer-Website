@@ -159,20 +159,8 @@ function CreatorSettingsContent() {
   return (
     <div className="min-h-screen pb-16 font-sans">
       <WorkspaceHeader
-        title="Account & Security Settings"
-        subtitle="Login, security, and notification settings."
-        action={
-          <Link href="/creator/profile">
-            <Button
-              type="default"
-              className="h-10 px-4 rounded-full font-bold text-sm border-[#D2D2CA] text-[#0A0A0A] flex items-center gap-2 hover:border-[#0A0A0A]"
-            >
-              <User className="w-4 h-4 text-[#73736A]" />
-              <span>Go to Public Profile</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Button>
-          </Link>
-        }
+        title="Settings"
+        subtitle="Manage your account, security, and preferences."
       />
 
       <div className="p-6 sm:p-8 max-w-4xl mx-auto space-y-8">
@@ -188,7 +176,7 @@ function CreatorSettingsContent() {
             }`}
           >
             <Shield className={`w-4 h-4 shrink-0 ${activeTab === 'security' ? 'text-white' : 'text-[#73736A]'}`} />
-            <span>Security &amp; Login</span>
+            <span>Security</span>
           </button>
 
           <button
@@ -253,7 +241,7 @@ function CreatorSettingsContent() {
                     className="h-10 px-5 rounded-full font-bold text-xs bg-[#0A0A0A] hover:bg-zinc-800 text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer"
                   >
                     <RotateCcw className="w-3.5 h-3.5" />
-                    <span>Undo Deactivation &amp; Keep Account</span>
+                    <span>Undo Deactivation</span>
                   </button>
                 </div>
               </div>
@@ -264,15 +252,15 @@ function CreatorSettingsContent() {
               <div className="pb-4 border-b border-[#E7E7E2] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                   <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
-                    Account Information
+                    Account
                   </h2>
                   <p className="text-sm text-[#73736A] mt-0.5 font-medium">
                     Update your primary login email and contact details.
                   </p>
                 </div>
-                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] text-sm font-bold border border-[#E7E7E2] shrink-0 w-fit">
+                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] text-xs font-bold border border-[#E7E7E2] shrink-0 w-fit">
                   <ShieldCheck className="w-3.5 h-3.5 text-[#0A0A0A]" />
-                  <span>Verified Creator</span>
+                  <span>Verified</span>
                 </div>
               </div>
 
@@ -289,9 +277,6 @@ function CreatorSettingsContent() {
                     placeholder="sophie@sophiekim.com"
                     className="h-11 rounded-xl font-medium text-sm border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
                   />
-                  <span className="text-sm text-[#73736A] mt-1.5 block">
-                    Used for platform authentication, order alerts, and payout notifications.
-                  </span>
                 </div>
 
                 <div>
@@ -306,9 +291,6 @@ function CreatorSettingsContent() {
                     placeholder="+1 (555) 234-5678"
                     className="h-11 rounded-xl font-medium text-sm border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
                   />
-                  <span className="text-sm text-[#73736A] mt-1.5 block">
-                    Private phone number for critical security alerts and account recovery.
-                  </span>
                 </div>
 
 
@@ -537,7 +519,6 @@ function CreatorSettingsContent() {
         footer={null}
         width={540}
         centered
-        destroyOnClose
         className="rounded-3xl"
       >
         <div className="py-3 space-y-4 font-sans">
@@ -608,7 +589,7 @@ function CreatorSettingsContent() {
               className="h-10 px-6 rounded-full font-bold text-xs bg-rose-600 hover:!bg-rose-700 text-white border-none shadow-xs cursor-pointer flex items-center gap-1.5"
             >
               <AlertTriangle className="w-3.5 h-3.5" />
-              <span>Authorize &amp; Deactivate (15 Days)</span>
+              <span>Deactivate Account</span>
             </Button>
           </div>
         </div>

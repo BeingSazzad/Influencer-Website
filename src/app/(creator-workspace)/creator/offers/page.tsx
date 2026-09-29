@@ -35,19 +35,19 @@ export default function CreatorOffersPage() {
   return (
     <div className="min-h-screen bg-[#FAFAF8]">
       <WorkspaceHeader
-        title="Incoming Offers"
-        subtitle="Review and accept incoming brand collaboration offers."
+        title="Offers"
+        subtitle="Brand collaboration requests."
       />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-extrabold text-[#0A0A0A]">
-              Pending Collaboration Requests
+              Incoming Offers
             </h2>
             <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] text-sm font-bold border border-[#E7E7E2]">
               <ShieldCheck className="w-3.5 h-3.5 text-[#0A0A0A]" />
-              <span>100% Escrow Funded</span>
+              <span>Escrow Protected</span>
             </div>
           </div>
 
@@ -79,23 +79,23 @@ export default function CreatorOffersPage() {
                     </div>
 
                     <div className="text-left sm:text-right">
-                      <span className="text-sm font-semibold text-[#73736A] uppercase tracking-wider">Creator Net Payout</span>
+                      <span className="text-sm font-semibold text-[#73736A] uppercase tracking-wider">Net Payout</span>
                       <div className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                         €{offer.basePriceEur}
                       </div>
-                      <span className="text-xs text-[#73736A] font-semibold">Zero Creator Fee (100% Payout)</span>
+                      <span className="text-xs text-[#73736A] font-semibold">0% Platform Fee</span>
                     </div>
                   </div>
 
                   <div className="p-4 bg-white rounded-2xl border border-[#E7E7E2] space-y-1.5">
-                    <div className="text-sm font-semibold uppercase tracking-wider text-[#73736A]">Creative Concept & Brief</div>
+                    <div className="text-sm font-semibold uppercase tracking-wider text-[#73736A]">Brief</div>
                     <p className="text-sm text-[#44443E] leading-relaxed">
                       {offer.brief}
                     </p>
                   </div>
 
                   <div>
-                    <div className="text-sm font-semibold uppercase tracking-wider text-[#73736A] mb-2">Campaign Requirements</div>
+                    <div className="text-sm font-semibold uppercase tracking-wider text-[#73736A] mb-2">Requirements</div>
                     <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-[#0A0A0A]">
                       {offer.requirements.map((req, idx) => (
                         <li key={idx} className="flex items-center gap-2">

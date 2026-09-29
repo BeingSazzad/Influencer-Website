@@ -150,8 +150,8 @@ export function Navbar() {
 
           {/* Desktop Right Actions */}
           <div className="hidden lg:flex items-center gap-4">
-            {/* Language Switcher - Only on Home Screen */}
-            {pathname === '/' && <LanguageSwitcher />}
+            {/* Language Switcher - Present on all pages */}
+            <LanguageSwitcher />
 
             {/* Auth State */}
             {currentUser ? (
@@ -183,7 +183,7 @@ export function Navbar() {
 
           {/* Mobile Menu Icon */}
           <div className="flex lg:hidden items-center gap-2">
-            {pathname === '/' && <LanguageSwitcher />}
+            <LanguageSwitcher />
             <button
               onClick={() => setIsDrawerOpen(true)}
               className="p-2 text-[#0A0A0A] hover:bg-[#EFEFEA] rounded-xl cursor-pointer"
@@ -303,6 +303,12 @@ export function Navbar() {
                 {link.name}
               </Link>
             ))}
+          </div>
+
+          {/* Language Switcher in Drawer */}
+          <div className="pt-3 border-t border-[#E7E7E2] flex items-center justify-between">
+            <span className="text-xs font-bold text-[#73736A]">Language</span>
+            <LanguageSwitcher />
           </div>
         </div>
       </Drawer>

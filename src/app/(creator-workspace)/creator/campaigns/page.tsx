@@ -9,11 +9,7 @@ import { BrandLogo } from '@/components/shared/BrandLogo';
 import { EmptyState } from '@/components/shared/EmptyState';
 import {
   Layers,
-  Clock,
-  CheckCircle2,
-  Inbox,
   ArrowRight,
-  DollarSign,
   Search,
 } from 'lucide-react';
 import { Button, Input, message } from 'antd';
@@ -40,11 +36,7 @@ export default function CreatorCampaignsPage() {
     (o) => o.creatorId === targetCreatorId || (o.creatorId === 'creator-01' && (!currentUser || currentUser?.role === 'creator'))
   );
 
-  // Telemetry & Financial calculations
-  const totalPipelineRateEur = creatorOrders.reduce((sum, o) => sum + o.basePriceEur, 0);
   const inProductionOrders = creatorOrders.filter((o) => ['accepted', 'in_production'].includes(o.status));
-  const lockedInEscrowEur = inProductionOrders.reduce((sum, o) => sum + o.basePriceEur, 0);
-
   const pendingOffers = creatorOrders.filter((o) => o.status === 'offer_sent');
   const reviewReady = creatorOrders.filter((o) => o.status === 'deliverable_submitted');
   const completedOrders = creatorOrders.filter((o) => ['completed', 'approved'].includes(o.status));
@@ -80,61 +72,18 @@ export default function CreatorCampaignsPage() {
   return (
     <div className="min-h-screen pb-16 font-sans">
       <WorkspaceHeader
-        title="Brand Campaigns & Deals"
-        subtitle="Your active brand partnerships and deals."
+        title="Campaigns"
+        subtitle="Active brand partnerships."
       />
 
       <div className="p-6 sm:p-8 max-w-6xl mx-auto space-y-7">
-        {/* Executive Rate & Status Telemetry Bar */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-white p-5 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1">
-            <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#73736A]">
-              <span>Pipeline Deal Value</span>
-              <DollarSign className="w-4 h-4 text-[#0A0A0A]" />
-            </div>
-            <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
-              €{totalPipelineRateEur.toLocaleString()}
-            </div>
-          </div>
-
-          <div className="bg-white p-5 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1">
-            <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#73736A]">
-              <span>Locked in Escrow</span>
-              <Clock className="w-4 h-4 text-[#0A0A0A]" />
-            </div>
-            <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
-              €{lockedInEscrowEur.toLocaleString()}
-            </div>
-          </div>
-
-          <div className="bg-white p-5 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1">
-            <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#73736A]">
-              <span>Pending Proposals</span>
-              <Inbox className="w-4 h-4 text-[#FF2D78]" />
-            </div>
-            <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
-              {pendingOffers.length}
-            </div>
-          </div>
-
-          <div className="bg-white p-5 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1">
-            <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#73736A]">
-              <span>Completed Campaigns</span>
-              <CheckCircle2 className="w-4 h-4 text-[#0A0A0A]" />
-            </div>
-            <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
-              {completedOrders.length}
-            </div>
-          </div>
-        </div>
-
         {/* Search & Status Filter Controls */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           {/* Status Tabs */}
           <div className="inline-flex items-center p-1 rounded-2xl bg-white border border-[#E7E7E2] shadow-2xs overflow-x-auto no-scrollbar max-w-full">
             {[
-              { key: 'all', label: 'All Deals', count: creatorOrders.length },
-              { key: 'pending', label: 'Pending Proposals', count: pendingOffers.length },
+              { key: 'all', label: 'All', count: creatorOrders.length },
+              { key: 'pending', label: 'Pending', count: pendingOffers.length },
               { key: 'active', label: 'In Production', count: inProductionOrders.length },
               { key: 'review', label: 'Under Review', count: reviewReady.length },
               { key: 'completed', label: 'Completed', count: completedOrders.length },
@@ -177,7 +126,7 @@ export default function CreatorCampaignsPage() {
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-5">
           <div className="pb-3 border-b border-[#E7E7E2] flex items-center justify-between">
             <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
-              Campaign Contracts
+              Contracts
             </h2>
           </div>
 
