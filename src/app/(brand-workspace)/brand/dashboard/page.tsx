@@ -58,7 +58,7 @@ export default function BrandDashboardPage() {
       />
 
       <div className="p-6 sm:p-8 max-w-6xl mx-auto space-y-7 font-sans">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
           <div className="bg-white p-5 sm:p-6 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
@@ -71,6 +71,7 @@ export default function BrandDashboardPage() {
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
               €{Math.round(activeSpendEur).toLocaleString()}
             </div>
+            <div className="text-sm text-[#73736A] font-medium">Locked on active hires</div>
           </div>
 
           <div className="bg-white p-5 sm:p-6 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
@@ -85,12 +86,13 @@ export default function BrandDashboardPage() {
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
               {activeOrders.length}
             </div>
+            <div className="text-sm text-[#73736A] font-medium">Campaigns in progress</div>
           </div>
 
           <div className="bg-white p-5 sm:p-6 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
-                Total Spend
+                Lifetime Spend
               </span>
               <div className="w-8 h-8 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center">
                 <TrendingUp className="w-4 h-4" />
@@ -99,20 +101,7 @@ export default function BrandDashboardPage() {
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
               €{Math.round(totalEscrowFundedEur).toLocaleString()}
             </div>
-          </div>
-
-          <div className="bg-white p-5 sm:p-6 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
-                Shortlist
-              </span>
-              <div className="w-8 h-8 rounded-xl bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 flex items-center justify-center">
-                <Bookmark className="w-4 h-4" />
-              </div>
-            </div>
-            <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
-              {savedCreatorIds.length}
-            </div>
+            <div className="text-sm text-[#73736A] font-medium">All funded campaigns</div>
           </div>
         </div>
 

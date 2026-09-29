@@ -11,7 +11,6 @@ import {
   LayoutDashboard,
   Bookmark,
   Layers,
-  PlusCircle,
   MessageSquare,
   CreditCard,
   Settings,
@@ -23,12 +22,6 @@ export function BrandSidebar() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { currentUser } = useAppSelector((state) => state.auth);
-  const { savedCreatorIds } = useAppSelector((state) => state.creator);
-  const { orders } = useAppSelector((state) => state.order);
-  const { conversations } = useAppSelector((state) => state.message);
-
-  const brandOrdersCount = orders.filter((o) => o.brandId === currentUser?.id || o.brandId === 'user_brand_01').length;
-  const unreadMessagesCount = conversations.reduce((acc, c) => acc + (c.unreadCountBrand || 0), 0);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -51,23 +44,16 @@ export function BrandSidebar() {
       name: 'Messages',
       href: '/brand/messages',
       icon: MessageSquare,
-      badge: unreadMessagesCount > 0 ? unreadMessagesCount : undefined,
     },
     {
       name: 'Saved',
       href: '/brand/saved',
       icon: Bookmark,
-      badge: savedCreatorIds.length > 0 ? savedCreatorIds.length : undefined,
     },
     {
       name: 'Payments',
       href: '/brand/payments',
       icon: CreditCard,
-    },
-    {
-      name: 'New Offer',
-      href: '/brand/hire/new',
-      icon: PlusCircle,
     },
     {
       name: 'Settings',
@@ -99,25 +85,14 @@ export function BrandSidebar() {
               <Link
                 key={item.name}
                 href={item.href}
-                className={`flex items-center justify-between px-4 py-3 rounded-2xl text-sm leading-[20px] font-bold transition-all ${
+                className={`flex items-center gap-3 px-4 py-3 rounded-2xl text-sm leading-[20px] font-bold transition-all ${
                   isActive
                     ? 'bg-[#0A0A0A] text-white shadow-sm'
                     : 'text-[#555550] hover:text-[#0A0A0A] hover:bg-[#F4F4F0]'
                 }`}
               >
-                <div className="flex items-center gap-3">
-                  <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-[#73736A]'}`} />
-                  <span>{item.name}</span>
-                </div>
-                {item.badge !== undefined && (
-                  <span
-                    className={`px-2 py-0.5 rounded-full text-xs font-extrabold ${
-                      isActive ? 'bg-white/20 text-white' : 'bg-[#EAEAE3] text-[#0A0A0A]'
-                    }`}
-                  >
-                    {item.badge}
-                  </span>
-                )}
+                <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-[#73736A]'}`} />
+                <span>{item.name}</span>
               </Link>
             );
           })}

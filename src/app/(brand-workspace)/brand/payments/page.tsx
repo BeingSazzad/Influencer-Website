@@ -7,8 +7,6 @@ import { WorkspaceHeader } from '@/components/layout/WorkspaceHeader';
 import {
   Wallet,
   ShieldCheck,
-  ArrowUpRight,
-  ArrowDownLeft,
   CreditCard,
   Building2,
   FileText,
@@ -272,10 +270,8 @@ export default function BrandPaymentsPage() {
             <table className="w-full text-left">
               <thead>
                 <tr className="border-b border-[#E7E7E2] text-[#73736A] font-bold uppercase tracking-wider text-xs">
-                  <th className="pb-3.5 px-4">Transaction / Date</th>
-                  <th className="pb-3.5 px-4">Campaign &amp; Recipient</th>
-                  <th className="pb-3.5 px-4">Type</th>
-                  <th className="pb-3.5 px-4">Method</th>
+                  <th className="pb-3.5 px-4">Creator &amp; Campaign</th>
+                  <th className="pb-3.5 px-4">Date</th>
                   <th className="pb-3.5 px-4 text-right">Amount (€)</th>
                   <th className="pb-3.5 px-4 text-center">Status</th>
                   <th className="pb-3.5 px-4 text-right">Invoice</th>
@@ -284,72 +280,42 @@ export default function BrandPaymentsPage() {
               <tbody className="divide-y divide-[#F4F4F0]">
                 {filteredTransactions.map((txn) => {
                   const isTopUp = txn.type === 'top_up';
-                  const isEscrow = txn.type === 'escrow_deposit';
-                  const isRelease = txn.type === 'escrow_release';
+                  const isEscrow = txn.status === 'in_escrow';
+                  const statusLabel = isEscrow
+                    ? 'In Escrow'
+                    : isTopUp
+                    ? 'Deposited'
+                    : txn.type === 'escrow_release'
+                    ? 'Released'
+                    : 'Settled';
 
                   return (
                     <tr key={txn.id} className="hover:bg-[#FAFAF8] transition-colors">
-                      {/* ID & Date */}
-                      <td className="py-4 px-4 font-sans">
-                        <div className="font-bold text-sm text-[#0A0A0A]">{txn.id}</div>
-                        <div className="text-sm text-[#73736A] font-normal mt-0.5">{txn.date}</div>
-                      </td>
-
-                      {/* Campaign & Creator */}
                       <td className="py-4 px-4">
                         <div className="font-bold text-sm text-[#0A0A0A]">{txn.creatorName}</div>
                         <div className="text-sm text-[#73736A] truncate max-w-xs mt-0.5">{txn.campaignTitle}</div>
                       </td>
 
-                      {/* Type Badge */}
-                      <td className="py-4 px-4">
-                        {isTopUp ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2] font-bold text-xs">
-                            <ArrowDownLeft className="w-3.5 h-3.5" /> Wallet Deposit
-                          </span>
-                        ) : isEscrow ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#FFF0F5] text-[#FF2D78] font-bold text-xs">
-                            <Lock className="w-3.5 h-3.5" /> In Escrow
-                          </span>
-                        ) : isRelease ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] font-bold text-xs">
-                            <ArrowUpRight className="w-3.5 h-3.5" /> Escrow Released
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#F4F4F0] text-[#73736A] font-bold text-xs">
-                            Platform Fee (15%)
-                          </span>
-                        )}
+                      <td className="py-4 px-4 text-sm text-[#73736A] font-medium whitespace-nowrap">
+                        {txn.date}
                       </td>
 
-                      {/* Method */}
-                      <td className="py-4 px-4 text-sm text-[#73736A] font-medium">
-                        {txn.method}
+                      <td className="py-4 px-4 text-right font-black text-sm text-[#0A0A0A] tracking-tight whitespace-nowrap">
+                        {isTopUp ? '+' : '−'}€{txn.amountEur.toLocaleString()}
                       </td>
 
-                      {/* Amount */}
-                      <td className="py-4 px-4 text-right font-sans font-black text-sm sm:text-base text-[#0A0A0A]">
-                        {isTopUp ? (
-                          <span className="text-[#0A0A0A]">+€{txn.amountEur.toLocaleString()}</span>
-                        ) : (
-                          <span>-€{txn.amountEur.toLocaleString()}</span>
-                        )}
-                      </td>
-
-                      {/* Status Badge */}
                       <td className="py-4 px-4 text-center">
-                        {txn.status === 'in_escrow' ? (
-                          <span className="px-2.5 py-1 rounded-full bg-[#FFF0F5] text-[#FF2D78] font-bold text-xs uppercase tracking-wide">
-                            Held in Escrow
-                          </span>
-                        ) : (
-                          <span className="px-2.5 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2] font-bold text-xs uppercase tracking-wide">
-                            Settled
-                          </span>
-                        )}
+                        <span
+                          className={`px-2.5 py-1 rounded-full font-bold text-xs uppercase tracking-wide whitespace-nowrap ${
+                            isEscrow
+                              ? 'bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25'
+                              : 'bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]'
+                          }`}
+                        >
+                          {statusLabel}
+                        </span>
                       </td>
 
-                      {/* Invoice Link */}
                       <td className="py-4 px-4 text-right">
                         <button
                           onClick={() => setSelectedInvoice(txn)}
