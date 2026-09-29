@@ -16,6 +16,7 @@ import {
 import { WorkspaceHeader } from '@/components/layout/WorkspaceHeader';
 import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
 import { EmptyState } from '@/components/shared/EmptyState';
+import { CustomOfferCard } from '@/components/shared/CustomOfferCard';
 import {
   MessageSquare,
   Search,
@@ -554,6 +555,28 @@ function BrandMessagesContent() {
                         >
                           <div className="space-y-2">
                             {/* Message Text */}
+                            {msg.customOffer && (
+                              <div className={isBrand ? 'flex justify-end' : 'flex justify-start'}>
+                                <CustomOfferCard
+                                  offer={msg.customOffer}
+                                  viewer="brand"
+                                  conversationId={activeConv.id}
+                                  messageId={msg.id}
+                                  brand={{
+                                    id: activeConv.brandId,
+                                    name: activeConv.brandName,
+                                    avatar: activeConv.brandAvatar,
+                                  }}
+                                  creator={{
+                                    id: activeConv.creatorId,
+                                    name: activeConv.creatorName,
+                                    handle: activeConv.creatorHandle,
+                                    avatar: activeConv.creatorAvatar,
+                                  }}
+                                />
+                              </div>
+                            )}
+
                             {msg.text && (
                               <div
                                 className={`p-3.5 sm:p-4 rounded-2xl text-xs sm:text-sm leading-relaxed ${

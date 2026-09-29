@@ -1,4 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { PlatformType } from '@/types';
+
+export interface ChatCustomOffer {
+  id: string;
+  title: string;
+  deliverables: string[];
+  priceEur: number;
+  platform: PlatformType;
+  status: 'pending' | 'accepted' | 'declined';
+  orderId?: string;
+}
 
 export interface MessageAttachment {
   id: string;
@@ -19,6 +30,7 @@ export interface DirectMessage {
   createdAt: number;
   status?: 'sent' | 'delivered' | 'read';
   attachments?: MessageAttachment[];
+  customOffer?: ChatCustomOffer;
 }
 
 export interface Conversation {
@@ -93,8 +105,8 @@ const INITIAL_CONVERSATIONS: Conversation[] = [
     creatorHandle: 'sophiekim',
     creatorAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80',
     creatorLocation: 'Los Angeles, CA',
-    lastMessage: "I'll have the 4K raw video draft uploaded to the order workspace tomorrow morning!",
-    lastMessageTimestamp: '1h ago',
+    lastMessage: 'Custom offer · €950',
+    lastMessageTimestamp: 'Just now',
     unreadCountBrand: 0,
     unreadCountCreator: 0,
     messages: [
@@ -135,6 +147,25 @@ const INITIAL_CONVERSATIONS: Conversation[] = [
         timestamp: '1h ago',
         createdAt: Date.now() - 1 * 3600 * 1000,
         status: 'read',
+      },
+      {
+        id: 'msg-sk-offer',
+        senderId: 'creator-01',
+        senderName: 'Sophie Kim',
+        senderAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80',
+        senderRole: 'creator',
+        text: '',
+        timestamp: 'Just now',
+        createdAt: Date.now() - 5 * 60 * 1000,
+        status: 'delivered',
+        customOffer: {
+          id: 'offer-sk-demo',
+          title: 'Reel and 3 stories',
+          deliverables: ['1 Reel', '3 Stories'],
+          priceEur: 950,
+          platform: 'instagram',
+          status: 'pending',
+        },
       },
     ],
   },
@@ -206,9 +237,10 @@ export const messageSlice = createSlice({
         senderRole: 'brand' | 'creator';
         status?: 'sent' | 'delivered' | 'read';
         attachments?: MessageAttachment[];
+        customOffer?: ChatCustomOffer;
       }>
     ) => {
-      const { conversationId, text = '', senderId, senderName, senderAvatar, senderRole, status, attachments } = action.payload;
+      const { conversationId, text = '', senderId, senderName, senderAvatar, senderRole, status, attachments, customOffer } = action.payload;
       const conv = state.conversations.find((c) => c.id === conversationId);
       if (conv) {
         // When a reply arrives, previous messages from the opposing role have been read
@@ -229,9 +261,12 @@ export const messageSlice = createSlice({
           createdAt: Date.now(),
           status: status || 'delivered',
           attachments: attachments && attachments.length > 0 ? attachments : undefined,
+          customOffer,
         };
         conv.messages.push(newMsg);
-        conv.lastMessage = text || (attachments && attachments.length > 0 ? `📎 ${attachments[0].name}` : 'Shared a file');
+        conv.lastMessage = customOffer
+          ? `Custom offer · €${customOffer.priceEur}`
+          : text || (attachments && attachments.length > 0 ? `📎 ${attachments[0].name}` : 'Shared a file');
         conv.lastMessageTimestamp = 'Just now';
         if (senderRole === 'brand') {
           conv.unreadCountCreator += 1;
@@ -282,11 +317,12 @@ export const messageSlice = createSlice({
         conv.messages = conv.messages.filter((m) => m.id !== messageId);
         if (conv.messages.length > 0) {
           const last = conv.messages[conv.messages.length - 1];
-          conv.lastMessage =
-            last.text ||
-            (last.attachments && last.attachments.length > 0
-              ? `📎 ${last.attachments[0].name}`
-              : 'Shared an attachment');
+          conv.lastMessage = last.customOffer
+            ? `Custom offer · €${last.customOffer.priceEur}`
+            : last.text ||
+              (last.attachments && last.attachments.length > 0
+                ? `📎 ${last.attachments[0].name}`
+                : 'Shared an attachment');
           conv.lastMessageTimestamp = last.timestamp;
         } else {
           conv.lastMessage = 'No messages in this chat';
@@ -299,6 +335,30 @@ export const messageSlice = createSlice({
       state.conversations = state.conversations.filter((c) => c.id !== conversationId);
       if (state.activeConversationId === conversationId) {
         state.activeConversationId = state.conversations.length > 0 ? state.conversations[0].id : null;
+      }
+    },
+    updateCustomOfferStatus: (
+      state,
+      action: PayloadAction<{
+        conversationId: string;
+        messageId: string;
+        status: 'accepted' | 'declined';
+        orderId?: string;
+      }>
+    ) => {
+      const { conversationId, messageId, status, orderId } = action.payload;
+      const conv = state.conversations.find((c) => c.id === conversationId);
+      const msg = conv?.messages.find((m) => m.id === messageId);
+      if (!conv || !msg?.customOffer || msg.customOffer.status !== 'pending') return;
+      msg.customOffer.status = status;
+      if (orderId) msg.customOffer.orderId = orderId;
+      const last = conv.messages[conv.messages.length - 1];
+      if (last?.id === messageId) {
+        conv.lastMessage =
+          status === 'accepted'
+            ? `Custom offer accepted · €${msg.customOffer.priceEur}`
+            : 'Custom offer declined';
+        conv.lastMessageTimestamp = 'Just now';
       }
     },
     getOrCreateConversation: (
@@ -369,6 +429,7 @@ export const {
   markConversationAsRead,
   deleteMessage,
   deleteConversation,
+  updateCustomOfferStatus,
   getOrCreateConversation,
 } = messageSlice.actions;
 export default messageSlice.reducer;

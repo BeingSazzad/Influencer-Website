@@ -11,9 +11,11 @@ import {
   deleteMessage,
   deleteConversation,
   MessageAttachment,
+  ChatCustomOffer,
 } from '@/redux/slices/messageSlice';
 import { WorkspaceHeader } from '@/components/layout/WorkspaceHeader';
 import { EmptyState } from '@/components/shared/EmptyState';
+import { CustomOfferCard } from '@/components/shared/CustomOfferCard';
 import {
   MessageSquare,
   Search,
@@ -31,8 +33,10 @@ import {
   Trash2,
   MoreVertical,
   RotateCcw,
+  Tag,
 } from 'lucide-react';
-import { Button, Popconfirm, message, Dropdown, Modal } from 'antd';
+import { Button, Popconfirm, message, Dropdown, Modal, Input, Select } from 'antd';
+import { PlatformType } from '@/types';
 
 export default function CreatorMessagesPage() {
   const router = useRouter();
@@ -45,6 +49,11 @@ export default function CreatorMessagesPage() {
   const [pendingAttachments, setPendingAttachments] = useState<MessageAttachment[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [isOfferOpen, setIsOfferOpen] = useState(false);
+  const [offerTitle, setOfferTitle] = useState('');
+  const [offerDeliverables, setOfferDeliverables] = useState('');
+  const [offerPrice, setOfferPrice] = useState<number | null>(null);
+  const [offerPlatform, setOfferPlatform] = useState<PlatformType>('instagram');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -182,6 +191,47 @@ export default function CreatorMessagesPage() {
         })
       );
     }, 1200);
+  };
+
+  const handleSendOffer = () => {
+    if (!activeConv) return;
+    const title = offerTitle.trim();
+    const deliverables = offerDeliverables
+      .split('\n')
+      .map((line) => line.trim())
+      .filter(Boolean);
+    if (!title || deliverables.length === 0 || !offerPrice || offerPrice <= 0) {
+      message.error('Add a title, at least one deliverable, and a price.');
+      return;
+    }
+
+    const customOffer: ChatCustomOffer = {
+      id: `offer-${Date.now()}`,
+      title,
+      deliverables,
+      priceEur: offerPrice,
+      platform: offerPlatform,
+      status: 'pending',
+    };
+
+    dispatch(
+      sendMessage({
+        conversationId: activeConv.id,
+        text: '',
+        senderId: activeConv.creatorId,
+        senderName: activeConv.creatorName,
+        senderAvatar: activeConv.creatorAvatar,
+        senderRole: 'creator',
+        customOffer,
+      })
+    );
+
+    setIsOfferOpen(false);
+    setOfferTitle('');
+    setOfferDeliverables('');
+    setOfferPrice(null);
+    setOfferPlatform('instagram');
+    message.success('Custom offer sent.');
   };
 
   return (
@@ -474,6 +524,28 @@ export default function CreatorMessagesPage() {
                         >
                           <div className="space-y-2">
                             {/* Text Content */}
+                            {msg.customOffer && (
+                              <div className={isCreator ? 'flex justify-end' : 'flex justify-start'}>
+                                <CustomOfferCard
+                                  offer={msg.customOffer}
+                                  viewer="creator"
+                                  conversationId={activeConv.id}
+                                  messageId={msg.id}
+                                  brand={{
+                                    id: activeConv.brandId,
+                                    name: activeConv.brandName,
+                                    avatar: activeConv.brandAvatar,
+                                  }}
+                                  creator={{
+                                    id: activeConv.creatorId,
+                                    name: activeConv.creatorName,
+                                    handle: activeConv.creatorHandle,
+                                    avatar: activeConv.creatorAvatar,
+                                  }}
+                                />
+                              </div>
+                            )}
+
                             {msg.text && (
                               <div
                                 className={`p-3.5 sm:p-4 rounded-2xl text-xs sm:text-sm leading-relaxed ${
@@ -688,6 +760,16 @@ export default function CreatorMessagesPage() {
                   <Paperclip className="w-4 h-4 group-hover:rotate-45 transition-transform duration-200" />
                 </button>
 
+                <button
+                  type="button"
+                  onClick={() => setIsOfferOpen(true)}
+                  title="Send a custom offer"
+                  className="h-11 px-3.5 rounded-full bg-[#FAFAF8] hover:bg-[#F4F4F0] border border-[#E7E7E2] hover:border-[#0A0A0A] text-[#0A0A0A] flex items-center gap-1.5 text-xs font-bold transition-all cursor-pointer shrink-0"
+                >
+                  <Tag className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Offer</span>
+                </button>
+
                 <input
                   type="text"
                   placeholder={`Write a reply to ${activeConv.brandName}...`}
@@ -720,6 +802,81 @@ export default function CreatorMessagesPage() {
           )}
         </div>
       </div>
+
+      <Modal
+        open={isOfferOpen}
+        onCancel={() => setIsOfferOpen(false)}
+        footer={null}
+        centered
+        width={440}
+        title={<span className="text-base font-extrabold text-[#0A0A0A]">Custom offer</span>}
+      >
+        <div className="space-y-4 pt-2">
+          <div className="space-y-1.5">
+            <label className="text-sm font-semibold text-[#52524E]">Title</label>
+            <Input
+              value={offerTitle}
+              onChange={(e) => setOfferTitle(e.target.value)}
+              placeholder="Reel and 3 stories"
+              className="rounded-xl h-11"
+            />
+          </div>
+          <div className="space-y-1.5">
+            <label className="text-sm font-semibold text-[#52524E]">Deliverables</label>
+            <Input.TextArea
+              rows={4}
+              value={offerDeliverables}
+              onChange={(e) => setOfferDeliverables(e.target.value)}
+              placeholder={'1 Reel\n3 Stories\nUsage rights for 30 days'}
+              className="rounded-xl"
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-1.5">
+              <label className="text-sm font-semibold text-[#52524E]">Price (EUR)</label>
+              <Input
+                type="number"
+                prefix={<span className="text-[#73736A]">€</span>}
+                value={offerPrice ?? ''}
+                onChange={(e) => setOfferPrice(e.target.value ? Number(e.target.value) : null)}
+                placeholder="950"
+                className="rounded-xl h-11"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <label className="text-sm font-semibold text-[#52524E]">Platform</label>
+              <Select
+                value={offerPlatform}
+                onChange={(value) => setOfferPlatform(value)}
+                className="w-full h-11"
+                options={[
+                  { value: 'instagram', label: 'Instagram' },
+                  { value: 'tiktok', label: 'TikTok' },
+                  { value: 'youtube', label: 'YouTube' },
+                  { value: 'ugc', label: 'UGC Ads' },
+                  { value: 'all', label: 'All platforms' },
+                ]}
+              />
+            </div>
+          </div>
+          <div className="flex justify-end gap-2 pt-1">
+            <button
+              type="button"
+              onClick={() => setIsOfferOpen(false)}
+              className="h-10 px-4 rounded-full text-sm font-bold border border-[#E7E7E2] text-[#0A0A0A] hover:border-[#0A0A0A] cursor-pointer"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              onClick={handleSendOffer}
+              className="h-10 px-5 rounded-full text-sm font-bold bg-[#0A0A0A] text-white hover:bg-zinc-800 cursor-pointer"
+            >
+              Send Offer
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }
