@@ -185,8 +185,8 @@ function NewHireContent() {
   return (
     <div className="min-h-screen pb-16 font-sans">
       <WorkspaceHeader
-        title="Create Campaign Offer"
-        subtitle="Configure campaign scope, deliverables, and safely fund escrow."
+        title="New Campaign"
+        subtitle="Scope, deliverables, and escrow."
         backHref="/brand/campaigns"
       />
 
@@ -194,10 +194,7 @@ function NewHireContent() {
         <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Left Column: Scope & Brief Form */}
           <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
-            <div>
-              <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Campaign Details</h2>
-              <p className="text-sm text-[#73736A] mt-0.5">Customize your brief, deliverables, and collaboration terms</p>
-            </div>
+            <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Campaign Details</h2>
 
             {/* Select Creator */}
             <div className="space-y-2">
@@ -265,14 +262,11 @@ function NewHireContent() {
             {/* Quick Package Presets */}
             {currentCreator?.packages && currentCreator.packages.length > 0 && (
               <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
-                    Package Preset
-                  </label>
-                  <span className="text-sm text-[#73736A] font-medium">1-Click Autofill</span>
-                </div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#73736A]">
+                  Package Preset
+                </label>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                <div className="grid grid-cols-2 gap-2.5">
                   {currentCreator.packages.map((pkg) => {
                     const isSelected = selectedPackageId === pkg.id;
                     return (
@@ -287,16 +281,9 @@ function NewHireContent() {
                         }`}
                       >
                         <div>
-                          <div className="flex items-center justify-between gap-1">
-                            <span className="text-xs font-extrabold uppercase px-1.5 py-0.5 rounded bg-zinc-100 text-[#73736A]">
-                              {pkg.platform === 'all' ? 'Bundle' : pkg.platform}
-                            </span>
-                            {pkg.popular && (
-                              <span className="text-xs font-extrabold bg-[#FF2D78]/10 text-[#FF2D78] px-1.5 py-0.5 rounded-full">
-                                Popular
-                              </span>
-                            )}
-                          </div>
+                          <span className="text-xs font-extrabold uppercase px-1.5 py-0.5 rounded bg-zinc-100 text-[#73736A]">
+                            {pkg.platform === 'all' ? 'Bundle' : pkg.platform}
+                          </span>
                           <div className="text-sm font-bold text-[#0A0A0A] mt-2 line-clamp-1 leading-snug">
                             {pkg.title}
                           </div>
@@ -366,12 +353,9 @@ function NewHireContent() {
 
             {/* Deliverables & Requirements */}
             <div className="space-y-1.5">
-              <div className="flex items-center justify-between">
-                <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
-                  Deliverables & Requirements
-                </label>
-                <span className="text-sm text-[#73736A]">One guideline per line</span>
-              </div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#73736A]">
+                Deliverables & Requirements
+              </label>
               <Input.TextArea
                 rows={3}
                 value={requirements}
@@ -441,10 +425,7 @@ function NewHireContent() {
           {/* Right Column: Escrow Financials & Checkout */}
           <div className="lg:col-span-5 space-y-6">
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6 sticky top-6">
-              <div>
-                <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Escrow Summary</h2>
-                <p className="text-sm text-[#73736A] mt-0.5">Transparent deposit held safely until approval</p>
-              </div>
+              <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Escrow Summary</h2>
 
               {/* Creator Rate Slider & Input */}
               <div className="space-y-3">
@@ -473,9 +454,8 @@ function NewHireContent() {
                   tooltip={{ formatter: (val) => `€${val?.toLocaleString()}` }}
                 />
                 <div className="flex justify-between text-sm font-semibold text-[#73736A]">
-                  <span>Min €100</span>
-                  <span>Standard €850</span>
-                  <span>Max €5,000+</span>
+                  <span>€100</span>
+                  <span>€5,000+</span>
                 </div>
               </div>
 
@@ -498,17 +478,12 @@ function NewHireContent() {
               </div>
 
               {/* Escrow Protection Notice */}
-              <div className="p-4 bg-[#F0FDF4] rounded-2xl border border-[#86EFAC]/50 space-y-1">
-                <div className="flex items-center gap-1.5 text-sm font-bold text-[#166534]">
-                  <ShieldCheck className="w-4 h-4 text-[#166534] shrink-0" />
-                  <span>100% Escrow Protected</span>
-                </div>
-                <p className="text-xs text-[#374151] leading-relaxed">
-                  Funds are safely locked in escrow and released only after you review and approve the submitted deliverables.
-                </p>
+              <div className="p-3 bg-[#FAFAF8] rounded-xl border border-[#E7E7E2] flex items-center gap-2 text-sm font-bold text-[#0A0A0A]">
+                <ShieldCheck className="w-4 h-4 text-[#0A0A0A] shrink-0" />
+                <span>Released only after you approve</span>
               </div>
 
-              <div className="space-y-2">
+              <div>
                 <Button
                   type="primary"
                   htmlType="submit"
@@ -518,9 +493,6 @@ function NewHireContent() {
                   <Lock className="w-4 h-4 text-[#FF2D78]" />
                   <span>Deposit €{totalCostEur.toLocaleString()} & Send Offer</span>
                 </Button>
-                <p className="text-xs text-center text-[#73736A]">
-                  Free cancellation anytime before creator accepts
-                </p>
               </div>
             </div>
           </div>

@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
 import { useAppSelector, useAppDispatch } from '@/redux/hooks';
 import { depositBrandFunds } from '@/redux/slices/authSlice';
 import { WorkspaceHeader } from '@/components/layout/WorkspaceHeader';
@@ -14,8 +13,6 @@ import {
   Building2,
   FileText,
   Search,
-  CheckCircle2,
-  Clock,
   Download,
   Plus,
   Lock,
@@ -110,7 +107,6 @@ export default function BrandPaymentsPage() {
   const { orders } = useAppSelector((state) => state.order);
 
   const [transactions, setTransactions] = useState<Transaction[]>(INITIAL_TRANSACTIONS);
-  const [activeFilter, setActiveFilter] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
   // Top-Up Modal State
@@ -130,10 +126,6 @@ export default function BrandPaymentsPage() {
     .reduce((acc, o) => acc + (o.totalEur || 0), 0) || 2990;
 
   const filteredTransactions = transactions.filter((t) => {
-    if (activeFilter === 'escrow' && t.type !== 'escrow_deposit') return false;
-    if (activeFilter === 'releases' && t.type !== 'escrow_release') return false;
-    if (activeFilter === 'top_up' && t.type !== 'top_up') return false;
-
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
       return (
@@ -200,10 +192,10 @@ export default function BrandPaymentsPage() {
   };
 
   return (
-    <div className="space-y-8 font-sans pb-16">
+    <div className="space-y-7 font-sans pb-16">
       <WorkspaceHeader
-        title="Payments & Escrow Wallet"
-        subtitle="Manage available funds, monitor escrow protection on active creator orders, and retrieve tax invoices."
+        title="Payments"
+        subtitle="Track wallet balance and payment history."
         action={
           <div className="flex items-center gap-2.5">
             <button
@@ -225,132 +217,54 @@ export default function BrandPaymentsPage() {
         }
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-
-        {/* 4 Financial Metric Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {/* Card 1: Available Wallet */}
-          <div className="p-6 bg-white rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-extrabold text-[#73736A] uppercase tracking-wider">
-                Available Wallet
-              </span>
-              <div className="w-8 h-8 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center">
-                <Wallet className="w-4 h-4" />
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-7">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+          <div className="p-6 bg-white rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
+            <div className="flex items-center justify-between text-[#73736A]">
+              <span className="text-xs font-bold uppercase tracking-wider">Available Wallet</span>
+              <div className="w-7 h-7 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-center text-[#0A0A0A]">
+                <Wallet className="w-3.5 h-3.5" />
               </div>
             </div>
-            <div className="text-3xl font-black text-[#0A0A0A] tracking-tight">
+            <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A] tracking-tight">
               €{balanceEur.toLocaleString()}
             </div>
-            <div className="text-xs text-[#73736A] font-bold flex items-center gap-1">
-              <CheckCircle2 className="w-3.5 h-3.5 text-[#0A0A0A]" />
-              <span>Ready for immediate campaigns</span>
-            </div>
           </div>
 
-          {/* Card 2: Active in Escrow */}
-          <div className="p-6 bg-white rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-extrabold text-[#73736A] uppercase tracking-wider">
-                Locked in Escrow
-              </span>
-              <div className="w-8 h-8 rounded-xl bg-[#FFF0F5] text-[#FF2D78] flex items-center justify-center">
-                <Lock className="w-4 h-4" />
+          <div className="p-6 bg-white rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
+            <div className="flex items-center justify-between text-[#73736A]">
+              <span className="text-xs font-bold uppercase tracking-wider">Locked in Escrow</span>
+              <div className="w-7 h-7 rounded-xl bg-[#FFF0F5] text-[#FF2D78] flex items-center justify-center">
+                <Lock className="w-3.5 h-3.5" />
               </div>
             </div>
-            <div className="text-3xl font-black text-[#0A0A0A] tracking-tight">
+            <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A] tracking-tight">
               €{activeEscrowEur.toLocaleString()}
-            </div>
-            <div className="text-sm text-[#73736A] font-medium flex items-center gap-1">
-              <Clock className="w-3.5 h-3.5 text-[#FF2D78]" />
-              <span>Held across active creator orders</span>
-            </div>
-          </div>
-
-          {/* Card 3: Total Collaborations Paid */}
-          <div className="p-6 bg-white rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-extrabold text-[#73736A] uppercase tracking-wider">
-                Disbursed to Talent
-              </span>
-              <div className="w-8 h-8 rounded-xl bg-[#F4F4F0] text-[#0A0A0A] flex items-center justify-center">
-                <ArrowUpRight className="w-4 h-4" />
-              </div>
-            </div>
-            <div className="text-3xl font-black text-[#0A0A0A] tracking-tight">
-              €14,250
-            </div>
-            <div className="text-sm text-[#73736A] font-medium">
-              Across 8 completed campaigns
-            </div>
-          </div>
-
-          {/* Card 4: Platform Fee Standard */}
-          <div className="p-6 bg-white rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-extrabold text-[#73736A] uppercase tracking-wider">
-                Platform Escrow Fee
-              </span>
-              <div className="w-8 h-8 rounded-xl bg-[#F4F4F0] text-[#0A0A0A] flex items-center justify-center">
-                <FileText className="w-4 h-4" />
-              </div>
-            </div>
-            <div className="text-3xl font-black text-[#0A0A0A] tracking-tight">
-              15.0%
-            </div>
-            <div className="text-sm text-[#73736A] font-medium">
-              Tax-compliant EU VAT invoices
             </div>
           </div>
         </div>
 
-
-
-        {/* Transaction History & Escrow Ledger */}
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <h3 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
-                Transaction & Escrow Ledger
+                Payment History
               </h3>
               <p className="text-sm text-[#73736A] mt-1">
-                Complete record of wallet deposits, escrow locks, release payouts, and platform fee invoices.
+                Deposits, escrow locks, and released payouts.
               </p>
             </div>
 
-            {/* Omni Filter Buttons */}
-            <div className="flex flex-wrap items-center gap-2">
-              {[
-                { id: 'all', label: 'All Activity' },
-                { id: 'escrow', label: 'In Escrow' },
-                { id: 'releases', label: 'Released' },
-                { id: 'top_up', label: 'Deposits' },
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveFilter(tab.id)}
-                  className={`px-3.5 py-1.5 rounded-full text-sm font-bold transition-all cursor-pointer ${
-                    activeFilter === tab.id
-                      ? 'bg-[#0A0A0A] text-white shadow-xs'
-                      : 'bg-[#F4F4F0] text-[#73736A] hover:text-[#0A0A0A]'
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
+            <div className="relative w-full sm:max-w-xs">
+              <Search className="w-4 h-4 text-[#73736A] absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                placeholder="Search by creator or invoice..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full h-10 pl-10 pr-3.5 text-sm font-medium text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none focus:border-[#0A0A0A] placeholder:text-[#A3A39C] transition-all"
+              />
             </div>
-          </div>
-
-          {/* Search Bar */}
-          <div className="relative max-w-md">
-            <Search className="w-4 h-4 text-[#73736A] absolute left-3.5 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              placeholder="Search by ID, creator, or invoice..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full h-10 pl-10 pr-4 text-sm font-medium text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none focus:border-[#0A0A0A] placeholder:text-[#A3A39C] transition-all"
-            />
           </div>
 
           {/* Table Container */}
@@ -450,6 +364,12 @@ export default function BrandPaymentsPage() {
                 })}
               </tbody>
             </table>
+
+            {filteredTransactions.length === 0 && (
+              <div className="py-12 text-center text-sm text-[#73736A] font-medium">
+                No payment records match your search.
+              </div>
+            )}
           </div>
         </div>
       </div>

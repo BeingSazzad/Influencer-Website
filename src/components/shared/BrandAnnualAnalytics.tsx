@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import {
   DollarSign,
   Users,
-  ArrowUpRight,
   ChevronDown,
 } from 'lucide-react';
 
@@ -113,21 +112,16 @@ export function BrandAnnualAnalytics() {
   });
 
   return (
-    <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#E7E7E2] shadow-2xs space-y-6">
-      {/* Top Header: Title, Year Tabs & Metric Toggle */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E7E7E2]">
+    <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#E7E7E2] shadow-2xs space-y-6 font-sans">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#E7E7E2]">
         <div>
-          <div className="flex items-center gap-2.5">
-            <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
-              Campaign Spend
-            </h2>
-            <span className="text-xs font-extrabold px-2.5 py-0.5 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2] inline-flex items-center gap-1">
-              <ArrowUpRight className="w-3 h-3 text-[#FF2D78]" />
-              <span>+{yearData.growthRatePct}% YoY Scale</span>
-            </span>
-          </div>
-          <p className="text-sm text-[#73736A] mt-1.5 font-medium">
-            Influencer spend and creator hires for {selectedYear}.
+          <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
+            {activeMetric === 'spend' ? 'Campaign Spend' : 'Creator Hires'}
+          </h2>
+          <p className="text-sm text-[#73736A] mt-1 font-medium">
+            {activeMetric === 'spend'
+              ? `Influencer spend for ${selectedYear}.`
+              : `Creators hired for ${selectedYear}.`}
           </p>
         </div>
 
@@ -143,7 +137,7 @@ export function BrandAnnualAnalytics() {
               }`}
             >
               <DollarSign className="w-3.5 h-3.5" />
-              <span>Total Spend (€)</span>
+              <span>Spend (€)</span>
             </button>
             <button
               onClick={() => setActiveMetric('creators')}
@@ -177,8 +171,8 @@ export function BrandAnnualAnalytics() {
 
 
       {/* 12-Month Bar Chart */}
-      <div className="space-y-3 pt-2">
-        <div className="h-72 w-full flex items-end justify-between gap-1.5 sm:gap-3 px-1 pt-6 pb-2 border-b border-[#E7E7E2] relative">
+      <div className="pt-2">
+        <div className="h-72 w-full flex items-end justify-between gap-1.5 sm:gap-3 px-1 pt-6 pb-2 relative">
           {/* Subtle grid lines */}
           <div className="absolute inset-x-0 top-6 border-b border-dashed border-[#EAEAE3] pointer-events-none" />
           <div className="absolute inset-x-0 top-1/2 border-b border-dashed border-[#EAEAE3] pointer-events-none" />
@@ -201,11 +195,15 @@ export function BrandAnnualAnalytics() {
                   <div
                     className={`absolute -top-7 px-2.5 py-0.5 rounded-md text-xs font-black tracking-tight whitespace-nowrap z-20 pointer-events-none transition-all ${
                       isHovered
-                        ? 'bg-[#FF2D78] text-white shadow-md -translate-y-1'
+                        ? activeMetric === 'spend'
+                          ? 'bg-[#FF2D78] text-white shadow-md -translate-y-1'
+                          : 'bg-[#0A0A0A] text-white shadow-md -translate-y-1'
                         : 'bg-[#0A0A0A] text-white shadow-xs'
                     }`}
                   >
-                    {activeMetric === 'spend' ? `€${val.toLocaleString()}` : `${val} Creators`}
+                    {activeMetric === 'spend'
+                      ? `€${val.toLocaleString()}`
+                      : `${val} Creator${val === 1 ? '' : 's'}`}
                   </div>
                 )}
 
@@ -216,7 +214,9 @@ export function BrandAnnualAnalytics() {
                     style={{ height: `${pct}%` }}
                     className={`w-full rounded-md transition-all duration-300 ${
                       isHovered
-                        ? 'bg-[#FF2D78] scale-102'
+                        ? activeMetric === 'spend'
+                          ? 'bg-[#FF2D78] scale-102'
+                          : 'bg-[#0A0A0A] scale-102 ring-2 ring-emerald-400/50'
                         : (item.isCurrent || isPeak)
                         ? 'bg-[#0A0A0A]'
                         : 'bg-[#D2D2CA] group-hover:bg-[#0A0A0A]'

@@ -17,8 +17,8 @@ export default function BrandSavedShortlistPage() {
   return (
     <div className="min-h-screen pb-16 font-sans">
       <WorkspaceHeader
-        title="Saved Creator Shortlist"
-        subtitle={`You have ${savedCreators.length} bookmarked creators ready for outreach.`}
+        title="Shortlist"
+        subtitle={`${savedCreators.length} saved creators`}
         action={
           <Link href="/creators">
             <Button
@@ -26,7 +26,7 @@ export default function BrandSavedShortlistPage() {
               className="h-10 px-5 rounded-full font-bold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 !text-white hover:!text-white border-none flex items-center gap-1.5 shadow-sm cursor-pointer"
             >
               <Search className="w-4 h-4" />
-              <span>Explore More Creators</span>
+              <span>Find Creators</span>
             </Button>
           </Link>
         }

@@ -96,8 +96,8 @@ export default function BrandSettingsPage() {
   return (
     <div className="min-h-screen pb-16 font-sans">
       <WorkspaceHeader
-        title="Organization Settings"
-        subtitle="Manage brand profile, contact information, and account security."
+        title="Settings"
+        subtitle="Brand profile and account security."
         action={
           <div className="flex items-center gap-3">
             <button
@@ -239,7 +239,7 @@ export default function BrandSettingsPage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Brand Story & Guidelines</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Brand Story</label>
                 <Input.TextArea
                   rows={3}
                   value={bio}
@@ -275,11 +275,8 @@ export default function BrandSettingsPage() {
                   </div>
                   <div>
                     <h2 className="text-xl sm:text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
-                      Password & Authentication
+                      Change Password
                     </h2>
-                    <p className="text-sm text-[#73736A] mt-0.5">
-                      Ensure your account is protected with a secure password and credential hygiene.
-                    </p>
                   </div>
                 </div>
               </div>
@@ -351,20 +348,17 @@ export default function BrandSettingsPage() {
                   <ul className="space-y-2 text-xs font-medium text-[#73736A]">
                     <li className="flex items-center gap-2">
                       <span className={`w-1.5 h-1.5 rounded-full ${newPassword.length >= 8 ? 'bg-[#0A0A0A]' : 'bg-[#D2D2CA]'}`} />
-                      <span>Minimum 8 characters in length</span>
+                      <span>Minimum 8 characters</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <span className={`w-1.5 h-1.5 rounded-full ${/[0-9]/.test(newPassword) ? 'bg-[#0A0A0A]' : 'bg-[#D2D2CA]'}`} />
-                      <span>Include at least one number (0–9)</span>
+                      <span>At least one number</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <span className={`w-1.5 h-1.5 rounded-full ${newPassword && newPassword === confirmPassword ? 'bg-[#0A0A0A]' : 'bg-[#D2D2CA]'}`} />
-                      <span>New passwords must match</span>
+                      <span>Passwords must match</span>
                     </li>
                   </ul>
-                  <div className="pt-2 border-t border-[#E7E7E2] text-[11px] text-[#73736A] leading-relaxed">
-                    Strong passwords protect your brand campaign agreements, escrow funds, and team communications.
-                  </div>
                 </div>
               </div>
             </form>
@@ -378,11 +372,8 @@ export default function BrandSettingsPage() {
                   </div>
                   <div>
                     <h2 className="text-xl sm:text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
-                      Active Brand Session
+                      Active Session
                     </h2>
-                    <p className="text-sm text-[#73736A] mt-0.5">
-                      Review devices authenticated in your brand workspace.
-                    </p>
                   </div>
                 </div>
               </div>

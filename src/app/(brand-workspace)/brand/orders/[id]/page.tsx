@@ -110,7 +110,7 @@ export default function BrandOrderDetailPage() {
   return (
     <div className="min-h-screen pb-16">
       <WorkspaceHeader
-        title={`Order Workspace: ${order.creatorName}`}
+        title={order.creatorName}
         subtitle={`Order #${order.id.toUpperCase()} • ${order.packageTitle}`}
         backHref="/brand/orders"
       />
@@ -141,9 +141,8 @@ export default function BrandOrderDetailPage() {
 
             <div className="flex items-center gap-3 self-start sm:self-auto bg-[#FAFAF8] px-5 py-3.5 rounded-2xl border border-[#E7E7E2]">
               <div className="text-left sm:text-right">
-                <div className="text-sm font-semibold text-[#73736A] uppercase tracking-wider">Total Funded in Escrow</div>
-                <div className="text-2xl sm:text-3xl font-extrabold text-[#0A0A0A] tracking-tight">€{order.totalEur.toLocaleString()}</div>
-                <div className="text-xs text-[#73736A] font-semibold">€{order.basePriceEur} creator + €{order.platformFeeEur} fee</div>
+                <div className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Escrow</div>
+                <div className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">€{order.totalEur.toLocaleString()}</div>
               </div>
             </div>
           </div>

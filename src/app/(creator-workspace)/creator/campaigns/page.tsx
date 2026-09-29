@@ -11,6 +11,7 @@ import {
   Layers,
   ArrowRight,
   Search,
+  ChevronRight,
 } from 'lucide-react';
 import { Button, Input, message } from 'antd';
 
@@ -137,86 +138,94 @@ export default function CreatorCampaignsPage() {
                 const isUnderReview = order.status === 'deliverable_submitted';
 
                 return (
-                  <div
+                  <Link
                     key={order.id}
-                    className="p-4 sm:p-5 rounded-2xl bg-white border border-[#E7E7E2] hover:border-[#0A0A0A] transition-all shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-4 group"
+                    href={`/creator/orders/${order.id}`}
+                    className="block group cursor-pointer"
                   >
-                    {/* Brand Details & Deliverable Title */}
-                    <div className="flex items-center gap-3.5 sm:gap-4 min-w-0">
-                      <BrandLogo
-                        name={order.brandName}
-                        logoUrl={order.brandLogo}
-                        size="lg"
-                      />
-                      <div className="flex flex-col gap-1 min-w-0">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <h3 className="font-bold text-sm sm:text-base text-[#0A0A0A] leading-tight">
-                            {order.brandName}
-                          </h3>
-                          <span className="text-xs uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#73736A] leading-none">
-                            {order.platform}
-                          </span>
-                        </div>
+                    <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#E7E7E2] group-hover:border-[#0A0A0A] group-hover:shadow-md transition-all shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+                      {/* Brand Details & Deliverable Title */}
+                      <div className="flex items-center gap-3.5 sm:gap-4 min-w-0">
+                        <BrandLogo
+                          name={order.brandName}
+                          logoUrl={order.brandLogo}
+                          size="lg"
+                        />
+                        <div className="flex flex-col gap-1 min-w-0">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <h3 className="font-bold text-sm sm:text-base text-[#0A0A0A] leading-tight">
+                              {order.brandName}
+                            </h3>
+                            <span className="text-xs uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#73736A] leading-none">
+                              {order.platform}
+                            </span>
+                          </div>
 
-                        <p className="text-xs sm:text-sm font-semibold text-[#0A0A0A] leading-snug truncate">
-                          {order.packageTitle}
-                        </p>
+                          <p className="text-xs sm:text-sm font-semibold text-[#0A0A0A] leading-snug truncate">
+                            {order.packageTitle}
+                          </p>
 
-                        <div className="flex items-center gap-2 text-sm text-[#73736A] font-medium pt-0.5">
-                          <span className="font-extrabold text-[#0A0A0A] text-sm">
-                            €{order.basePriceEur.toLocaleString()}
-                          </span>
-                          <span className="text-[#D2D2CA]">•</span>
-                          <span>Due {formatDeadline(order.deadlineDate)}</span>
+                          <div className="flex items-center gap-2 text-sm text-[#73736A] font-medium pt-0.5">
+                            <span className="font-extrabold text-[#0A0A0A] text-sm">
+                              €{order.basePriceEur.toLocaleString()}
+                            </span>
+                            <span className="text-[#D2D2CA]">•</span>
+                            <span>Due {formatDeadline(order.deadlineDate)}</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    {/* Action Controls */}
-                    <div className="flex items-center gap-3 self-end md:self-auto shrink-0">
-                      {isOffer ? (
-                        <div className="flex items-center gap-2">
-                          <Button
-                            type="primary"
-                            onClick={() => handleAcceptOffer(order.id)}
-                            className="h-9 sm:h-10 px-4 sm:px-5 rounded-full font-bold text-xs bg-[#0A0A0A] hover:!bg-[#FF2D78] !text-white border-none cursor-pointer shadow-2xs"
-                          >
-                            Accept (€{order.basePriceEur})
-                          </Button>
-                          <Button
-                            type="default"
-                            onClick={() => handleDeclineOffer(order.id)}
-                            className="h-9 sm:h-10 px-3.5 rounded-full font-bold text-xs border-[#E7E7E2] text-[#73736A] hover:text-[#0A0A0A] cursor-pointer"
-                          >
-                            Decline
-                          </Button>
-                        </div>
-                      ) : (
-                        <div className="flex items-center gap-3">
-                          {isUnderReview ? (
-                            <span className="text-sm font-bold px-3 py-1 rounded-full bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25">
-                              Under Review
-                            </span>
-                          ) : order.status === 'completed' ? (
-                            <span className="text-sm font-bold px-3 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]">
-                              Completed
-                            </span>
-                          ) : (
-                            <span className="text-sm font-bold px-3 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]">
-                              In Production
-                            </span>
-                          )}
+                      {/* Action Controls & Status */}
+                      <div className="flex items-center gap-3 self-end md:self-auto shrink-0">
+                        {isOffer ? (
+                          <div className="flex items-center gap-2">
+                            <Button
+                              type="primary"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                handleAcceptOffer(order.id);
+                              }}
+                              className="h-9 sm:h-10 px-4 sm:px-5 rounded-full font-bold text-xs bg-[#0A0A0A] hover:!bg-[#FF2D78] !text-white border-none cursor-pointer shadow-2xs"
+                            >
+                              Accept (€{order.basePriceEur})
+                            </Button>
+                            <Button
+                              type="default"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                handleDeclineOffer(order.id);
+                              }}
+                              className="h-9 sm:h-10 px-3.5 rounded-full font-bold text-xs border-[#E7E7E2] text-[#73736A] hover:text-[#0A0A0A] cursor-pointer"
+                            >
+                              Decline
+                            </Button>
+                          </div>
+                        ) : (
+                          <div className="flex items-center gap-3">
+                            {isUnderReview ? (
+                              <span className="text-sm font-bold px-3 py-1 rounded-full bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25">
+                                Under Review
+                              </span>
+                            ) : order.status === 'completed' ? (
+                              <span className="text-sm font-bold px-3 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]">
+                                Completed
+                              </span>
+                            ) : (
+                              <span className="text-sm font-bold px-3 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]">
+                                In Production
+                              </span>
+                            )}
 
-                          <Link href={`/creator/orders/${order.id}`}>
-                            <button className="h-9 sm:h-10 px-4 sm:px-5 rounded-full font-bold text-xs bg-[#0A0A0A] hover:bg-[#FF2D78] text-white border-none flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer active:scale-95">
-                              <span>{isUnderReview ? 'View Submission' : 'Submit Work'}</span>
-                              <ArrowRight className="w-3.5 h-3.5" />
-                            </button>
-                          </Link>
-                        </div>
-                      )}
+                            <div className="w-8 h-8 rounded-full bg-[#FAFAF8] group-hover:bg-[#0A0A0A] group-hover:text-white text-[#73736A] flex items-center justify-center transition-all border border-[#E7E7E2] group-hover:border-[#0A0A0A]">
+                              <ChevronRight className="w-4 h-4 translate-x-0.5" />
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 );
               })}
             </div>

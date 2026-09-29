@@ -92,6 +92,7 @@ function CreatorProfileContent() {
   );
   const [location, setLocation] = useState(currentCreator?.location || 'Los Angeles, CA');
   const [startingPriceEur, setStartingPriceEur] = useState(currentCreator?.startingPriceEur || 500);
+  const [currency, setCurrency] = useState('EUR');
   const [gender, setGender] = useState<string>(currentCreator?.gender || 'female');
   const [categories, setCategories] = useState<string[]>(
     currentCreator?.categories && currentCreator.categories.length > 0
@@ -481,17 +482,12 @@ function CreatorProfileContent() {
         {/* Tab 1: Profile Basic Info */}
         {activeTab === 'identity' && (
           <form onSubmit={handleSaveProfile} className="space-y-6">
-            <div className="bg-white rounded-3xl p-6 sm:p-10 border border-[#E7E7E2] shadow-2xs space-y-7 max-w-4xl mx-auto">
+            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-7">
               {/* Header */}
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
-                    Profile Details
-                  </h2>
-                  <p className="text-xs sm:text-sm text-[#73736A] mt-1">
-                    Manage how brands see your profile.
-                  </p>
-                </div>
+              <div className="flex items-center justify-between gap-4">
+                <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
+                  Profile Details
+                </h2>
 
                 <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] text-xs font-bold border border-[#E7E7E2] shrink-0">
                   <div className="w-3.5 h-3.5 rounded-full bg-[#2563EB] flex items-center justify-center text-white shrink-0">
@@ -521,11 +517,8 @@ function CreatorProfileContent() {
                   )}
                 </div>
 
-                <div className="space-y-1.5">
-                  <div>
-                    <h4 className="text-base font-bold text-[#0A0A0A]">Portrait photo</h4>
-                    <p className="text-sm text-[#73736A] font-medium">PNG, JPG or WEBP · Max 10 MB</p>
-                  </div>
+                <div className="space-y-2">
+                  <h4 className="text-base font-bold text-[#0A0A0A]">Portrait photo</h4>
 
                   <div className="flex items-center gap-3">
                     <button
@@ -589,9 +582,7 @@ function CreatorProfileContent() {
                             <Check className="w-3.5 h-3.5" />
                             Available
                           </span>
-                        ) : (
-                          <span className="text-xs font-semibold text-[#73736A]">Current handle</span>
-                        )
+                        ) : null
                       )}
                     </div>
                     <Input
@@ -641,6 +632,30 @@ function CreatorProfileContent() {
                     )}
                   </div>
 
+                  {/* Row 2: Contact email & Contact phone */}
+                  <div className="space-y-1.5">
+                    <label className="block text-sm font-semibold text-[#52524E]">Contact email</label>
+                    <Input
+                      type="email"
+                      value={contactEmail}
+                      onChange={(e) => setContactEmail(e.target.value)}
+                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
+                      placeholder="collabs@yourname.com"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="block text-sm font-semibold text-[#52524E]">Contact phone</label>
+                    <Input
+                      type="tel"
+                      value={contactPhone}
+                      onChange={(e) => setContactPhone(e.target.value)}
+                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
+                      placeholder="+1 (555) 234-5678"
+                    />
+                  </div>
+
+                  {/* Row 3: Location & Gender */}
                   <div className="space-y-1.5">
                     <label className="block text-sm font-semibold text-[#52524E]">Location</label>
                     <Input
@@ -667,6 +682,7 @@ function CreatorProfileContent() {
                     />
                   </div>
 
+                  {/* Row 4: Starting rate & Currency */}
                   <div className="space-y-1.5">
                     <label className="block text-sm font-semibold text-[#52524E]">Starting rate (EUR)</label>
                     <Input
@@ -680,24 +696,16 @@ function CreatorProfileContent() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-[#52524E]">Contact email</label>
-                    <Input
-                      type="email"
-                      value={contactEmail}
-                      onChange={(e) => setContactEmail(e.target.value)}
-                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
-                      placeholder="collabs@yourname.com"
-                    />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-[#52524E]">Contact phone</label>
-                    <Input
-                      type="tel"
-                      value={contactPhone}
-                      onChange={(e) => setContactPhone(e.target.value)}
-                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
-                      placeholder="+1 (555) 234-5678"
+                    <label className="block text-sm font-semibold text-[#52524E]">Currency</label>
+                    <Select
+                      value={currency}
+                      onChange={(val) => setCurrency(val)}
+                      className="w-full h-11 rounded-xl"
+                      options={[
+                        { value: 'EUR', label: 'EUR (€) - European Euro' },
+                        { value: 'USD', label: 'USD ($) - US Dollar' },
+                        { value: 'GBP', label: 'GBP (£) - British Pound' },
+                      ]}
                     />
                   </div>
                 </div>
@@ -830,14 +838,9 @@ function CreatorProfileContent() {
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
               {/* Header */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#E7E7E2]">
-                <div>
-                  <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
-                    Gallery
-                  </h2>
-                  <p className="text-xs sm:text-sm text-[#73736A] mt-1 font-medium">
-                    Manage your photo gallery for brand visibility.
-                  </p>
-                </div>
+                <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
+                  Gallery
+                </h2>
 
                 <Button
                   type="primary"
@@ -987,9 +990,6 @@ function CreatorProfileContent() {
                       <Instagram className="w-5 h-5 text-[#FF2D78]" />
                       <span>Instagram</span>
                     </div>
-                    <span className="text-xs font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]">
-                      Active
-                    </span>
                   </div>
 
                   <div className="space-y-3">
@@ -1041,9 +1041,6 @@ function CreatorProfileContent() {
                       <Film className="w-5 h-5 text-[#0A0A0A]" />
                       <span>TikTok</span>
                     </div>
-                    <span className="text-xs font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]">
-                      Active
-                    </span>
                   </div>
 
                   <div className="space-y-3">
@@ -1095,9 +1092,6 @@ function CreatorProfileContent() {
                       <Youtube className="w-5 h-5 text-red-500" />
                       <span>YouTube</span>
                     </div>
-                    <span className="text-xs font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]">
-                      Active
-                    </span>
                   </div>
 
                   <div className="space-y-3">

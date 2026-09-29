@@ -334,19 +334,10 @@ function CreatorPortfolioContent() {
                   {/* Card Body */}
                   <div className="p-5 flex-1 flex flex-col justify-between bg-white">
                     <div className="space-y-1.5">
-                      <div className="flex items-center justify-between gap-2">
-                        <div className="flex items-center gap-2 min-w-0">
-                          {item.brandLogo && (
-                            <img
-                              src={item.brandLogo}
-                              alt={item.brandName}
-                              className="w-4 h-4 rounded-full object-cover shrink-0"
-                            />
-                          )}
-                          <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A] truncate">
-                            {item.brandName || 'Creator Work'}
-                          </span>
-                        </div>
+                      <div className="flex items-start justify-between gap-2">
+                        <h3 className="font-bold text-sm text-[#0A0A0A] line-clamp-1 leading-snug">
+                          {item.campaignTitle}
+                        </h3>
 
                         {/* 3-dot dropdown menu */}
                         <Dropdown
@@ -392,10 +383,6 @@ function CreatorPortfolioContent() {
                           </button>
                         </Dropdown>
                       </div>
-
-                      <h3 className="font-bold text-sm text-[#0A0A0A] line-clamp-1 leading-snug">
-                        {item.campaignTitle}
-                      </h3>
 
                       {item.deliverableType && (
                         <div className="text-xs text-[#73736A] font-medium line-clamp-1">

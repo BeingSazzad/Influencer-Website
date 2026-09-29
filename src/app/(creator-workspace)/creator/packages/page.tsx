@@ -461,23 +461,6 @@ export default function CreatorPackagesPage() {
             </div>
           </div>
 
-          {/* Usage Rights */}
-          <div className="space-y-1.5">
-            <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Usage Rights</label>
-            <Select
-              value={usageRights}
-              onChange={(val) => setUsageRights(val)}
-              className="w-full h-10"
-              options={[
-                { value: '30-Day Organic Rights', label: '30-Day Organic Placement' },
-                { value: 'Organic + Spark Ad Authorization', label: 'Organic + Spark / Whitelisting Ads' },
-                { value: '90-Day Full Commercial Ad Rights', label: '90-Day Paid Ad Rights' },
-                { value: 'Full Commercial Ad Rights (1 Year)', label: '1-Year Full Commercial Rights' },
-                { value: 'Permanent Perpetual Rights', label: 'Perpetual Commercial Ownership' },
-              ]}
-            />
-          </div>
-
           {/* Inclusions */}
           <div className="space-y-1.5">
             <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
