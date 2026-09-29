@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { closeOfferModal, createOffer } from '@/redux/slices/orderSlice';
-import { Modal, Input, InputNumber, message, Button } from 'antd';
+import { Modal, Input, message, Button } from 'antd';
 import { ShieldCheck, Lock, Sparkles } from 'lucide-react';
 import { Order, PlatformType } from '@/types';
 import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
@@ -21,7 +21,6 @@ export function OfferModal() {
   const [basePrice, setBasePrice] = useState<number>(950);
   const [brief, setBrief] = useState('');
   const [deadlineDays, setDeadlineDays] = useState<number>(7);
-  const [isCustomDeadline, setIsCustomDeadline] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Synchronize when selected creator opens
@@ -32,6 +31,7 @@ export function OfferModal() {
       setPlatform(selectedCreatorForOffer.platform || 'instagram');
       setCampaignTitle(`${selectedCreatorForOffer.packageTitle || 'Custom Campaign'} Collab`);
       setBrief('Highlight product features with authentic voiceover and a clear call-to-action link.');
+      setDeadlineDays(selectedCreatorForOffer.deliveryDays || 7);
     }
   }, [selectedCreatorForOffer]);
 
@@ -174,57 +174,6 @@ export function OfferModal() {
             />
           </div>
 
-          {/* Turnaround Selector */}
-          <div className="space-y-1.5">
-            <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#73736A]">
-              <span>Delivery Turnaround</span>
-              <span className="text-[#0A0A0A] font-extrabold lowercase">{deadlineDays} days</span>
-            </div>
-            <div className="flex items-center gap-2">
-              {[5, 7, 14].map((days) => (
-                <button
-                  key={days}
-                  type="button"
-                  onClick={() => {
-                    setDeadlineDays(days);
-                    setIsCustomDeadline(false);
-                  }}
-                  className={`flex-1 py-2 rounded-xl text-sm font-bold transition-all cursor-pointer border ${
-                    !isCustomDeadline && deadlineDays === days
-                      ? 'bg-[#0A0A0A] text-white border-[#0A0A0A] shadow-2xs'
-                      : 'bg-[#FAFAF8] text-[#73736A] border-[#E7E7E2] hover:text-[#0A0A0A]'
-                  }`}
-                >
-                  {days} Days
-                </button>
-              ))}
-              <button
-                type="button"
-                onClick={() => setIsCustomDeadline(true)}
-                className={`px-3 py-2 rounded-xl text-sm font-bold transition-all cursor-pointer border ${
-                  isCustomDeadline
-                    ? 'bg-[#0A0A0A] text-white border-[#0A0A0A] shadow-2xs'
-                    : 'bg-[#FAFAF8] text-[#73736A] border-[#E7E7E2] hover:text-[#0A0A0A]'
-                }`}
-              >
-                Custom
-              </button>
-            </div>
-
-            {isCustomDeadline && (
-              <div className="pt-2 flex items-center gap-2">
-                <InputNumber
-                  min={1}
-                  max={60}
-                  value={deadlineDays}
-                  onChange={(val) => setDeadlineDays(val || 7)}
-                  className="w-24 rounded-lg text-sm font-bold"
-                  size="small"
-                />
-                <span className="text-sm text-[#73736A]">days from offer acceptance</span>
-              </div>
-            )}
-          </div>
         </div>
 
         {/* Transparent Escrow Breakdown */}

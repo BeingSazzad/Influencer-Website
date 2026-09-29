@@ -14,6 +14,7 @@ import {
 import { PortfolioItem, PlatformType } from '@/types';
 import {
   Film,
+  Layers,
   Plus,
   Edit3,
   Trash2,
@@ -28,6 +29,15 @@ import {
   MoreVertical,
 } from 'lucide-react';
 import { Button, Modal, Input, Select, message, Dropdown } from 'antd';
+
+function platformLabel(platform: PlatformType) {
+  if (platform === 'all' || platform === 'multi') return 'All platforms';
+  if (platform === 'ugc') return 'UGC Ads';
+  if (platform === 'instagram') return 'Instagram';
+  if (platform === 'tiktok') return 'TikTok';
+  if (platform === 'youtube') return 'YouTube';
+  return platform;
+}
 
 function CreatorPortfolioContent() {
   const router = useRouter();
@@ -80,7 +90,7 @@ function CreatorPortfolioContent() {
     setBrandName(order.brandName);
     setBrandLogo(order.brandLogo || '');
     setCampaignTitle(order.packageTitle || `${order.brandName} Collaboration`);
-    setPlatform(order.platform);
+    setPlatform(order.platform === 'multi' ? 'all' : order.platform);
     setDeliverableType(order.packageTitle);
     if (order.brief) {
       setDescription(order.brief);
@@ -319,7 +329,8 @@ function CreatorPortfolioContent() {
                         {item.platform === 'tiktok' && <Film className="w-3 h-3 text-white" />}
                         {item.platform === 'youtube' && <Youtube className="w-3 h-3 text-red-500" />}
                         {item.platform === 'ugc' && <Sparkles className="w-3 h-3 text-purple-400" />}
-                        <span>{item.platform}</span>
+                        {(item.platform === 'all' || item.platform === 'multi') && <Layers className="w-3 h-3 text-white" />}
+                        <span>{platformLabel(item.platform)}</span>
                       </span>
                     </div>
 
@@ -559,6 +570,7 @@ function CreatorPortfolioContent() {
                   { value: 'tiktok', label: 'TikTok' },
                   { value: 'youtube', label: 'YouTube' },
                   { value: 'ugc', label: 'UGC Ads' },
+                  { value: 'all', label: 'All platforms' },
                 ]}
               />
             </div>
@@ -568,7 +580,7 @@ function CreatorPortfolioContent() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="space-y-1">
               <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider block">
-                Brand / Client
+                Brand
               </label>
               <Input
                 value={brandName}
@@ -594,13 +606,13 @@ function CreatorPortfolioContent() {
           {/* Details / Description */}
           <div className="space-y-1">
             <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider block">
-              Project Details & Notes
+              Description
             </label>
             <Input.TextArea
               rows={3}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Add project details, creative direction, or brand notes..."
+              placeholder="Describe the work"
               className="rounded-2xl p-3 text-sm border-[#E7E7E2] leading-relaxed"
             />
           </div>

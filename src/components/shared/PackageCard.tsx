@@ -90,6 +90,7 @@ export function PackageCard({ packageItem, pkg, creator, onSelect }: PackageCard
           packageTitle: currentPkg.title,
           priceEur: currentPkg.priceEur,
           platform: currentPkg.platform,
+          deliveryDays: currentPkg.deliveryDays,
         })
       );
     }

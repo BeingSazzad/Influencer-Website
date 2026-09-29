@@ -48,7 +48,6 @@ function NewHireContent() {
   );
   const [basePriceEur, setBasePriceEur] = useState<number>(850);
   const [deadlineDays, setDeadlineDays] = useState<number>(7);
-  const [isCustomDeadline, setIsCustomDeadline] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const currentCreator = creators.find((c) => c.id === selectedCreatorId) || creators[0];
@@ -98,7 +97,6 @@ function NewHireContent() {
     setPlatform(pkg.platform);
     setBasePriceEur(pkg.priceEur);
     setDeadlineDays(pkg.deliveryDays || 7);
-    setIsCustomDeadline(false);
     if (pkg.platform === 'ugc') {
       setCollabType('content_creation');
     } else {
@@ -366,60 +364,6 @@ function NewHireContent() {
               />
             </div>
 
-            {/* Delivery Turnaround */}
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
-                  Delivery Turnaround
-                </label>
-                <span className="text-sm font-bold text-[#0A0A0A]">
-                  Est. {formattedDeadline} ({deadlineDays} days)
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                {[3, 5, 7, 10, 14].map((days) => (
-                  <button
-                    key={days}
-                    type="button"
-                    onClick={() => {
-                      setDeadlineDays(days);
-                      setIsCustomDeadline(false);
-                    }}
-                    className={`flex-1 py-2 rounded-xl text-sm font-bold transition-all cursor-pointer border ${
-                      !isCustomDeadline && deadlineDays === days
-                        ? 'bg-[#0A0A0A] text-white border-[#0A0A0A] shadow-xs'
-                        : 'bg-[#FAFAF8] text-[#73736A] border-[#E7E7E2] hover:text-[#0A0A0A] hover:bg-white'
-                    }`}
-                  >
-                    {days} Days
-                  </button>
-                ))}
-                <button
-                  type="button"
-                  onClick={() => setIsCustomDeadline(true)}
-                  className={`px-3.5 py-2 rounded-xl text-sm font-bold transition-all cursor-pointer border ${
-                    isCustomDeadline
-                      ? 'bg-[#0A0A0A] text-white border-[#0A0A0A] shadow-xs'
-                      : 'bg-[#FAFAF8] text-[#73736A] border-[#E7E7E2] hover:text-[#0A0A0A] hover:bg-white'
-                  }`}
-                >
-                  Custom
-                </button>
-              </div>
-              {isCustomDeadline && (
-                <div className="pt-1 flex items-center gap-2">
-                  <InputNumber
-                    min={1}
-                    max={60}
-                    value={deadlineDays}
-                    onChange={(val) => setDeadlineDays(val || 7)}
-                    className="w-24 rounded-lg text-sm font-bold"
-                    size="small"
-                  />
-                  <span className="text-sm text-[#73736A]">days from offer acceptance</span>
-                </div>
-              )}
-            </div>
           </div>
 
           {/* Right Column: Escrow Financials & Checkout */}

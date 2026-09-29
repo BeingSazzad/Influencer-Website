@@ -15,6 +15,7 @@ interface OrderState {
     packageTitle?: string;
     priceEur?: number;
     platform?: PlatformType;
+    deliveryDays?: number;
   } | null;
 }
 

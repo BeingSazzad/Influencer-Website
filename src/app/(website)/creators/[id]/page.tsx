@@ -129,6 +129,7 @@ export default function CreatorProfilePage() {
         packageTitle: pkg?.title || 'Custom Campaign Brief',
         priceEur: pkg?.priceEur || creator.startingPriceEur,
         platform: pkg?.platform || 'instagram',
+        deliveryDays: pkg?.deliveryDays,
       })
     );
   };
