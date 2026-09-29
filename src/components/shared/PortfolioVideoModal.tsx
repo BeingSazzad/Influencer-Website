@@ -272,10 +272,10 @@ export function PortfolioVideoModal({
 
             <button
               onClick={() => onBookCampaign(item)}
-              className="w-full sm:w-auto h-10 px-5 rounded-full font-bold text-xs bg-[#0A0A0A] hover:bg-[#FF2D78] text-white shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-102 active:scale-98"
+              className="w-full sm:w-auto h-11 px-6 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:bg-[#FF2D78] text-white shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-102 active:scale-98"
             >
               <span>Book Similar Campaign</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-4 h-4" />
             </button>
           </div>
         </div>

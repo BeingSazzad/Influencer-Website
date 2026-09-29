@@ -301,7 +301,8 @@ function CreatorPortfolioContent() {
               {filteredVideoList.map((item) => (
                 <div
                   key={item.id}
-                  className="rounded-3xl border border-[#E7E7E2] bg-white overflow-hidden shadow-2xs hover:shadow-md hover:border-[#0A0A0A] transition-all flex flex-col group h-full"
+                  onClick={() => setPreviewingItem(item)}
+                  className="rounded-3xl border border-[#E7E7E2] bg-white overflow-hidden shadow-2xs hover:shadow-md hover:border-[#0A0A0A] transition-all flex flex-col group h-full cursor-pointer"
                 >
                   {/* Media Thumbnail Container (Standard Uniform Size) */}
                   <div className="relative h-52 sm:h-56 w-full bg-[#0A0A0A] overflow-hidden shrink-0">
@@ -311,8 +312,8 @@ function CreatorPortfolioContent() {
                       className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500"
                     />
 
-                    {/* Platform Badge & Video Timestamp */}
-                    <div className="absolute top-3 inset-x-3 flex items-center justify-between z-10 pointer-events-none">
+                    {/* Platform Badge (Clean, No duration badge) */}
+                    <div className="absolute top-3 left-3 z-10 pointer-events-none">
                       <span className="text-xs font-black uppercase tracking-wider bg-black/75 backdrop-blur-md text-white px-3 py-1 rounded-full border border-white/15 flex items-center gap-1.5 shadow-sm">
                         {item.platform === 'instagram' && <Instagram className="w-3 h-3 text-[#FF2D78]" />}
                         {item.platform === 'tiktok' && <Film className="w-3 h-3 text-white" />}
@@ -320,24 +321,14 @@ function CreatorPortfolioContent() {
                         {item.platform === 'ugc' && <Sparkles className="w-3 h-3 text-purple-400" />}
                         <span>{item.platform}</span>
                       </span>
-
-                      {item.duration && item.duration.includes(':') && (
-                        <span className="text-xs font-bold uppercase tracking-wider bg-black/70 backdrop-blur-md text-white px-2.5 py-1 rounded-full border border-white/10">
-                          {item.duration}
-                        </span>
-                      )}
                     </div>
 
                     {/* Center Preview Button on hover */}
-                    <button
-                      type="button"
-                      onClick={() => setPreviewingItem(item)}
-                      className="absolute inset-0 bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer"
-                    >
-                      <div className="w-12 h-12 rounded-full bg-white text-[#0A0A0A] flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
+                    <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                      <div className="w-12 h-12 rounded-full bg-white text-[#0A0A0A] flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform">
                         <Play className="w-5 h-5 fill-current translate-x-0.5" />
                       </div>
-                    </button>
+                    </div>
                   </div>
 
                   {/* Card Body */}
@@ -393,6 +384,7 @@ function CreatorPortfolioContent() {
                         >
                           <button
                             type="button"
+                            onClick={(e) => e.stopPropagation()}
                             className="p-1 rounded-lg text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8] transition-colors cursor-pointer shrink-0"
                             title="Work options"
                           >
@@ -437,15 +429,12 @@ function CreatorPortfolioContent() {
             <h2 className="text-xl font-bold text-[#0A0A0A] tracking-tight">
               {editingItemId ? 'Edit Work' : 'Add Work'}
             </h2>
-            <p className="text-xs text-[#73736A] mt-0.5 font-medium">
-              Showcase your creative content and brand collaborations.
-            </p>
           </div>
         }
         open={isVideoModalOpen}
         onCancel={() => setIsVideoModalOpen(false)}
         footer={null}
-        width={560}
+        width={540}
         centered
         destroyOnClose
         className="rounded-3xl"
@@ -454,9 +443,8 @@ function CreatorPortfolioContent() {
           {/* Optional: Import from Campaign */}
           {orders && orders.length > 0 && (
             <div className="space-y-1">
-              <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider flex items-center justify-between">
-                <span>Import from Campaign (Optional)</span>
-                <span className="text-[11px] font-normal text-[#A3A39C]">Auto-fills title, brand & media</span>
+              <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider block">
+                Import from Campaign
               </label>
               <Select
                 placeholder="Select a campaign to import..."
@@ -471,10 +459,10 @@ function CreatorPortfolioContent() {
             </div>
           )}
 
-          {/* Media Asset (Video or Image) */}
+          {/* Media Asset */}
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider block">
-              Media Asset (Video or Image) <span className="text-rose-500">*</span>
+              Media Asset <span className="text-rose-500">*</span>
             </label>
 
             <input
@@ -496,7 +484,7 @@ function CreatorPortfolioContent() {
                   <Button
                     type="default"
                     onClick={() => modalMediaFileInputRef.current?.click()}
-                    className="h-9 px-4 rounded-full text-xs font-bold bg-white text-[#0A0A0A] border-none flex items-center gap-1.5 shadow-md hover:!bg-zinc-100 cursor-pointer"
+                    className="h-9 px-4 rounded-full text-sm font-semibold bg-white text-[#0A0A0A] border-none flex items-center gap-1.5 shadow-md hover:!bg-zinc-100 cursor-pointer"
                   >
                     <Upload className="w-3.5 h-3.5" />
                     <span>Change Media</span>
@@ -505,7 +493,7 @@ function CreatorPortfolioContent() {
                     type="default"
                     danger
                     onClick={() => setMediaUrl('')}
-                    className="h-9 px-4 rounded-full text-xs font-bold bg-white border-none flex items-center gap-1.5 shadow-md cursor-pointer"
+                    className="h-9 px-4 rounded-full text-sm font-semibold bg-white border-none flex items-center gap-1.5 shadow-md cursor-pointer"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                     <span>Remove</span>
@@ -515,7 +503,7 @@ function CreatorPortfolioContent() {
             ) : (
               <div
                 onClick={() => modalMediaFileInputRef.current?.click()}
-                className="border-2 border-dashed border-[#D2D2CA] hover:border-[#0A0A0A] rounded-2xl p-6 text-center cursor-pointer transition-all bg-[#FAFAF8] hover:bg-[#F5F5F0] space-y-2 group"
+                className="border-2 border-dashed border-[#D2D2CA] hover:border-[#0A0A0A] rounded-2xl p-6 text-center cursor-pointer transition-all bg-[#FAFAF8] hover:bg-[#F5F5F0] space-y-1.5 group"
               >
                 <div className="w-10 h-10 rounded-full bg-white border border-[#E7E7E2] group-hover:border-[#0A0A0A] group-hover:scale-105 transition-all flex items-center justify-center mx-auto text-[#0A0A0A] shadow-2xs">
                   <Upload className="w-4 h-4" />
@@ -524,7 +512,7 @@ function CreatorPortfolioContent() {
                   Click to upload image or video
                 </div>
                 <p className="text-xs text-[#73736A]">
-                  Supports MP4, MOV, WEBM, PNG, JPG (Auto-detects format)
+                  Supports MP4, MOV, PNG, JPG
                 </p>
               </div>
             )}
@@ -537,7 +525,7 @@ function CreatorPortfolioContent() {
                 className="text-xs text-[#73736A] hover:text-[#0A0A0A] font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
               >
                 <Link2 className="w-3 h-3" />
-                <span>{showUrlInput ? 'Hide URL input' : 'Paste media link instead (URL)'}</span>
+                <span>{showUrlInput ? 'Hide link input' : 'Paste media link instead (URL)'}</span>
                 {showUrlInput ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
               </button>
 
@@ -546,8 +534,8 @@ function CreatorPortfolioContent() {
                   <Input
                     value={mediaUrl}
                     onChange={(e) => setMediaUrl(e.target.value)}
-                    placeholder="https://images.unsplash.com/... or hosted media URL"
-                    className="rounded-xl h-9 text-xs font-medium border-[#E7E7E2]"
+                    placeholder="https://... image or video URL"
+                    className="rounded-xl h-10 text-sm font-medium border-[#E7E7E2]"
                     prefix={<Link2 className="w-3 h-3 text-[#73736A]" />}
                     allowClear
                   />
@@ -589,23 +577,23 @@ function CreatorPortfolioContent() {
             </div>
           </div>
 
-          {/* Brand Name (Optional) & Deliverable Format (Optional) */}
+          {/* Brand Name & Deliverable Format */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="space-y-1">
               <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider block">
-                Brand / Client (Optional)
+                Brand / Client
               </label>
               <Input
                 value={brandName}
                 onChange={(e) => setBrandName(e.target.value)}
-                placeholder="e.g. Laneige, Gisou (or leave empty)"
+                placeholder="e.g. Laneige, Gisou"
                 className="rounded-xl h-10 font-semibold text-sm"
               />
             </div>
 
             <div className="space-y-1">
               <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider block">
-                Format (Optional)
+                Format
               </label>
               <Input
                 value={deliverableType}
@@ -619,14 +607,14 @@ function CreatorPortfolioContent() {
           {/* Details / Description */}
           <div className="space-y-1">
             <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider block">
-              Project Details & Notes (Optional)
+              Project Details & Notes
             </label>
             <Input.TextArea
               rows={3}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Write any details about this project, creative direction, results, or brand involvement..."
-              className="rounded-2xl p-3 text-xs border-[#E7E7E2] leading-relaxed"
+              placeholder="Add project details, creative direction, or brand notes..."
+              className="rounded-2xl p-3 text-sm border-[#E7E7E2] leading-relaxed"
             />
           </div>
 
@@ -634,14 +622,14 @@ function CreatorPortfolioContent() {
           <div className="pt-2 border-t border-[#E7E7E2] flex items-center justify-end gap-2.5">
             <Button
               onClick={() => setIsVideoModalOpen(false)}
-              className="rounded-full h-9 px-4 font-bold text-xs"
+              className="rounded-full h-10 px-5 font-semibold text-sm border-[#E7E7E2]"
             >
               Cancel
             </Button>
             <Button
               type="primary"
               htmlType="submit"
-              className="rounded-full h-9 px-5 font-bold text-xs bg-[#0A0A0A] hover:!bg-zinc-800 !text-white border-none shadow-xs cursor-pointer"
+              className="rounded-full h-10 px-6 font-semibold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 !text-white border-none shadow-xs cursor-pointer"
             >
               {editingItemId ? 'Update Work' : 'Save Work'}
             </Button>

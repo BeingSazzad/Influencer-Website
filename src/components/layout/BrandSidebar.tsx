@@ -46,7 +46,6 @@ export function BrandSidebar() {
       name: 'Campaigns',
       href: '/brand/campaigns',
       icon: Layers,
-      badge: brandOrdersCount > 0 ? brandOrdersCount : undefined,
     },
     {
       name: 'Messages',

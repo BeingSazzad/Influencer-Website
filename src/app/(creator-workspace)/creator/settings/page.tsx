@@ -36,11 +36,11 @@ function CreatorSettingsContent() {
   // Tab State: account | security | notifications
   const initialTab = searchParams.get('tab');
   const [activeTab, setActiveTab] = useState<'account' | 'security' | 'notifications'>(
-    initialTab === 'security'
-      ? 'security'
+    initialTab === 'account'
+      ? 'account'
       : initialTab === 'notifications'
       ? 'notifications'
-      : 'account'
+      : 'security'
   );
 
   useEffect(() => {
@@ -181,19 +181,6 @@ function CreatorSettingsContent() {
 
           <button
             type="button"
-            onClick={() => setActiveTab('notifications')}
-            className={`py-2.5 px-4 sm:px-5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 whitespace-nowrap shrink-0 transition-all cursor-pointer ${
-              activeTab === 'notifications'
-                ? 'bg-[#0A0A0A] text-white shadow-xs'
-                : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
-            }`}
-          >
-            <Bell className={`w-4 h-4 shrink-0 ${activeTab === 'notifications' ? 'text-white' : 'text-[#73736A]'}`} />
-            <span>Notifications</span>
-          </button>
-
-          <button
-            type="button"
             onClick={() => setActiveTab('account')}
             className={`py-2.5 px-4 sm:px-5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 whitespace-nowrap shrink-0 transition-all cursor-pointer ${
               activeTab === 'account'
@@ -203,6 +190,19 @@ function CreatorSettingsContent() {
           >
             <Lock className={`w-4 h-4 shrink-0 ${activeTab === 'account' ? 'text-white' : 'text-[#73736A]'}`} />
             <span>Account</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('notifications')}
+            className={`py-2.5 px-4 sm:px-5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 whitespace-nowrap shrink-0 transition-all cursor-pointer ${
+              activeTab === 'notifications'
+                ? 'bg-[#0A0A0A] text-white shadow-xs'
+                : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
+            }`}
+          >
+            <Bell className={`w-4 h-4 shrink-0 ${activeTab === 'notifications' ? 'text-white' : 'text-[#73736A]'}`} />
+            <span>Notifications</span>
           </button>
         </div>
 
@@ -238,7 +238,7 @@ function CreatorSettingsContent() {
                   <button
                     type="button"
                     onClick={handleCancelDeactivation}
-                    className="h-10 px-5 rounded-full font-bold text-xs bg-[#0A0A0A] hover:bg-zinc-800 text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer"
+                    className="h-10 px-5 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white transition-all shadow-sm flex items-center gap-2 cursor-pointer"
                   >
                     <RotateCcw className="w-3.5 h-3.5" />
                     <span>Undo Deactivation</span>
@@ -299,7 +299,7 @@ function CreatorSettingsContent() {
                   <Button
                     type="primary"
                     htmlType="submit"
-                    className="h-10 px-6 rounded-full font-bold text-xs bg-[#0A0A0A] hover:!bg-zinc-800 text-white border-none shadow-sm cursor-pointer"
+                    className="h-10 px-6 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 text-white border-none shadow-sm cursor-pointer"
                   >
                     Save Changes
                   </Button>
@@ -334,7 +334,7 @@ function CreatorSettingsContent() {
                   <Button
                     type="primary"
                     onClick={handleCancelDeactivation}
-                    className="h-10 px-5 rounded-full font-bold text-xs bg-[#0A0A0A] hover:!bg-zinc-800 !text-white border-none flex items-center gap-1.5 shadow-xs cursor-pointer shrink-0"
+                    className="h-10 px-5 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 !text-white border-none flex items-center gap-1.5 shadow-xs cursor-pointer shrink-0"
                   >
                     <RotateCcw className="w-3.5 h-3.5" />
                     <span>Undo Deactivation</span>
@@ -348,7 +348,7 @@ function CreatorSettingsContent() {
                       setDeactivateError('');
                       setIsDeactivateModalOpen(true);
                     }}
-                    className="h-10 px-5 rounded-full font-bold text-xs bg-rose-600 hover:!bg-rose-700 text-white border-none shadow-xs cursor-pointer shrink-0"
+                    className="h-10 px-5 rounded-full font-semibold text-sm bg-rose-600 hover:!bg-rose-700 text-white border-none shadow-xs cursor-pointer shrink-0"
                   >
                     Deactivate Account
                   </Button>
@@ -410,7 +410,7 @@ function CreatorSettingsContent() {
                   <Button
                     type="primary"
                     htmlType="submit"
-                    className="h-10 px-6 rounded-full font-bold text-xs bg-[#0A0A0A] hover:!bg-zinc-800 text-white border-none shadow-sm cursor-pointer"
+                    className="h-10 px-6 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 text-white border-none shadow-sm cursor-pointer"
                   >
                     Update Password
                   </Button>
@@ -484,7 +484,7 @@ function CreatorSettingsContent() {
               <Button
                 type="primary"
                 onClick={handleSaveNotifications}
-                className="h-10 px-6 rounded-full font-bold text-xs bg-[#0A0A0A] hover:!bg-zinc-800 text-white border-none shadow-sm cursor-pointer"
+                className="h-10 px-6 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 text-white border-none shadow-sm cursor-pointer"
               >
                 Save Preferences
               </Button>
@@ -578,7 +578,7 @@ function CreatorSettingsContent() {
                 setDeactivatePassword('');
                 setDeactivateError('');
               }}
-              className="rounded-full h-10 px-5 font-bold text-xs"
+              className="rounded-full h-10 px-5 font-semibold text-sm"
             >
               Keep Account Active
             </Button>
@@ -586,7 +586,7 @@ function CreatorSettingsContent() {
               type="primary"
               danger
               onClick={handleConfirmDeactivate}
-              className="h-10 px-6 rounded-full font-bold text-xs bg-rose-600 hover:!bg-rose-700 text-white border-none shadow-xs cursor-pointer flex items-center gap-1.5"
+              className="h-10 px-6 rounded-full font-semibold text-sm bg-rose-600 hover:!bg-rose-700 text-white border-none shadow-xs cursor-pointer flex items-center gap-1.5"
             >
               <AlertTriangle className="w-3.5 h-3.5" />
               <span>Deactivate Account</span>

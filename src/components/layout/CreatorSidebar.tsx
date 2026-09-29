@@ -68,7 +68,6 @@ export function CreatorSidebar() {
       name: 'Portfolio',
       href: '/creator/portfolio',
       icon: Film,
-      badge: currentCreator?.portfolio?.length || undefined,
     },
     {
       name: 'Packages',
@@ -79,7 +78,6 @@ export function CreatorSidebar() {
       name: 'Campaigns',
       href: '/creator/campaigns',
       icon: Layers,
-      badge: (pendingOffersCount + activeOrdersCount) > 0 ? (pendingOffersCount + activeOrdersCount) : undefined,
     },
     {
       name: 'Messages',
