@@ -19,6 +19,8 @@ import {
 } from 'lucide-react';
 import { Button, message } from 'antd';
 import { CreatorAnnualAnalytics } from '@/components/shared/CreatorAnnualAnalytics';
+import { ProfileCompletionCard } from '@/components/shared/ProfileCompletionCard';
+import { updateCreatorProfileDetails } from '@/redux/slices/creatorSlice';
 
 export default function CreatorDashboardPage() {
   const dispatch = useAppDispatch();
@@ -50,6 +52,18 @@ export default function CreatorDashboardPage() {
     message.success('Offer accepted. Production pipeline started.');
   };
 
+  const handleQuickVerify = () => {
+    if (currentCreator) {
+      dispatch(
+        updateCreatorProfileDetails({
+          creatorId: currentCreator.id,
+          updates: { verified: true },
+        })
+      );
+      message.success('Identity verification requested! Profile verification submitted for escrow badge.');
+    }
+  };
+
   const creatorDisplayName = currentUser?.name || currentCreator?.name || 'Sophie Kim';
   const creatorDisplayHandle = currentUser?.handle || currentCreator?.handle || 'sophiekim';
 
@@ -61,6 +75,15 @@ export default function CreatorDashboardPage() {
       />
 
       <div className="p-6 sm:p-8 max-w-6xl mx-auto space-y-7">
+        {/* Profile Completion Nudge Card (Dynamic % & Actionable Checklist) */}
+        {currentCreator && (
+          <ProfileCompletionCard
+            creator={currentCreator}
+            currentUser={currentUser}
+            onQuickVerify={handleQuickVerify}
+          />
+        )}
+
         {/* Executive Metric Highlights */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           {/* Total Earned */}

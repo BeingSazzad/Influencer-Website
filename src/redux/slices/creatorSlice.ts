@@ -121,6 +121,16 @@ export const creatorSlice = createSlice({
         creator.portfolio = creator.portfolio.filter((i) => i.id !== action.payload.itemId);
       }
     },
+    onboardCreator: (state, action: PayloadAction<Creator>) => {
+      const existingIdx = state.creators.findIndex(
+        (c) => c.id === action.payload.id || c.handle.toLowerCase() === action.payload.handle.toLowerCase()
+      );
+      if (existingIdx !== -1) {
+        state.creators[existingIdx] = { ...state.creators[existingIdx], ...action.payload };
+      } else {
+        state.creators.unshift(action.payload);
+      }
+    },
   },
 });
 
@@ -139,6 +149,7 @@ export const {
   addPortfolioItem,
   updatePortfolioItem,
   deletePortfolioItem,
+  onboardCreator,
 } = creatorSlice.actions;
 
 export default creatorSlice.reducer;
