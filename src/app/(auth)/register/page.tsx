@@ -34,7 +34,7 @@ import {
   Award,
   CheckCircle2,
 } from 'lucide-react';
-import { message, Slider } from 'antd';
+import { message } from 'antd';
 
 // Default presets for avatar & gallery
 const PRESET_AVATARS = [
@@ -126,16 +126,12 @@ export default function RegisterPage() {
   const [ytHandle, setYtHandle] = useState('Sophie Kim Vlogs');
   const [ytReach, setYtReach] = useState('210K');
   const [samplePhotos, setSamplePhotos] = useState<string[]>(PRESET_WORK_SAMPLES);
-  const [collabPreferences, setCollabPreferences] = useState<string[]>([
-    'Sponsored posts & Reels',
-    'Dedicated Product reviews',
-    'User generated content (UGC)',
-  ]);
 
   // Step 4: Rates & Verification (EUR)
   const [startingRateEur, setStartingRateEur] = useState<number>(500);
   const [igReelRate, setIgReelRate] = useState<number>(800);
   const [ttVideoRate, setTtVideoRate] = useState<number>(650);
+  const [ytVideoRate, setYtVideoRate] = useState<number>(1500);
   const [requestVerification, setRequestVerification] = useState<boolean>(true);
 
   // Category toggle handler (Max 3)
@@ -148,14 +144,6 @@ export default function RegisterPage() {
         return;
       }
       setSelectedCategories((prev) => [...prev, catId]);
-    }
-  };
-
-  const toggleCollabPref = (pref: string) => {
-    if (collabPreferences.includes(pref)) {
-      setCollabPreferences((prev) => prev.filter((p) => p !== pref));
-    } else {
-      setCollabPreferences((prev) => [...prev, pref]);
     }
   };
 
@@ -264,6 +252,17 @@ export default function RegisterPage() {
           revisions: 2,
           inclusions: ['1x TikTok Video', '4K raw footage delivery', 'Sound sync'],
         },
+        {
+          id: `pkg-${creatorId}-3`,
+          title: 'YouTube Dedicated Video',
+          platform: 'youtube',
+          type: 'integrated',
+          description: 'High-production dedicated YouTube video showcase with link in description.',
+          priceEur: ytVideoRate,
+          deliveryDays: 7,
+          revisions: 2,
+          inclusions: ['Dedicated YouTube Video', 'Pinned link in description', '4K master file'],
+        },
       ],
       portfolio: samplePhotos.map((url, i) => ({
         id: `port-${creatorId}-${i + 1}`,
@@ -371,65 +370,52 @@ export default function RegisterPage() {
               </p>
             </div>
 
-            {/* LIVE CARD PREVIEW (If role === 'creator') */}
+            {/* VALUE PROPOSITIONS LIST (NO FAKE PREVIEW CARD) */}
             {role === 'creator' ? (
-              <div className="bg-white p-5 rounded-3xl border border-[#E7E7E2] shadow-sm space-y-4">
-                <div className="flex items-center justify-between text-xs font-bold text-[#66665E]">
-                  <span className="flex items-center gap-1.5">
-                    <Eye className="w-3.5 h-3.5 text-[#FF2D78]" />
-                    <span>Live Public Card Preview</span>
-                  </span>
-                  <span className="text-[10px] uppercase font-black px-2 py-0.5 rounded-full bg-[#EEF7F2] text-[#23744D]">
-                    Brand Search Ready
-                  </span>
-                </div>
-
-                {/* Simulated Creator Card */}
-                <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-start gap-4">
-                  <div className="relative w-16 h-16 rounded-2xl overflow-hidden bg-zinc-200 shrink-0 border border-[#E7E7E2]">
-                    <img src={avatar} alt={creatorName} className="w-full h-full object-cover" />
+              <div className="space-y-3.5 pt-1">
+                <div className="p-4 rounded-2xl bg-white border border-[#E7E7E2] flex items-start gap-3.5 shadow-2xs">
+                  <div className="w-9 h-9 rounded-xl bg-[#FFF0F5] text-[#FF2D78] flex items-center justify-center shrink-0">
+                    <Sparkles className="w-4 h-4" />
                   </div>
-                  <div className="min-w-0 flex-1 space-y-1">
-                    <div className="flex items-center gap-1.5">
-                      <h4 className="font-extrabold text-base text-[#0A0A0A] truncate">
-                        {creatorName || 'Your Name'}
-                      </h4>
-                      {requestVerification && (
-                        <span className="w-4 h-4 rounded-full bg-blue-600 text-white flex items-center justify-center text-[9px] font-bold shrink-0">
-                          ✓
-                        </span>
-                      )}
-                    </div>
-                    <div className="text-xs text-[#66665E] font-medium truncate">
-                      @{cleanHandle || 'username'} • {city || 'City'}, {country}
-                    </div>
-                    <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                      {selectedCategories.slice(0, 2).map((cat) => (
-                        <span key={cat} className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-white border border-[#E7E7E2] text-[#0A0A0A]">
-                          {cat}
-                        </span>
-                      ))}
-                      <span className="text-[11px] font-black text-[#FF2D78]">
-                        from €{startingRateEur}
-                      </span>
-                    </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-[#0A0A0A]">Get discovered by top brands</h4>
+                    <p className="text-xs text-[#66665E] mt-0.5">Receive direct inbound campaign offers from verified European companies.</p>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3 pt-1 text-xs">
-                  <div className="p-2.5 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2]">
-                    <span className="text-[#66665E] block text-[11px] font-semibold">Creator Fee</span>
-                    <strong className="text-emerald-700 font-extrabold">0% (Keep 100%)</strong>
+                <div className="p-4 rounded-2xl bg-white border border-[#E7E7E2] flex items-start gap-3.5 shadow-2xs">
+                  <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
+                    <ShieldCheck className="w-4 h-4" />
                   </div>
-                  <div className="p-2.5 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2]">
-                    <span className="text-[#66665E] block text-[11px] font-semibold">Escrow Protection</span>
-                    <strong className="text-[#0A0A0A] font-extrabold">100% Upfront</strong>
+                  <div>
+                    <h4 className="text-sm font-bold text-[#0A0A0A]">100% Upfront Escrow Protection</h4>
+                    <p className="text-xs text-[#66665E] mt-0.5">Brand payments are locked in escrow before you produce content. Never chase invoices.</p>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-white border border-[#E7E7E2] flex items-start gap-3.5 shadow-2xs">
+                  <div className="w-9 h-9 rounded-xl bg-[#F4F4F0] text-[#0A0A0A] flex items-center justify-center shrink-0">
+                    <Film className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-[#0A0A0A]">Multi-platform Showcase</h4>
+                    <p className="text-xs text-[#66665E] mt-0.5">Connect Instagram, TikTok, and YouTube channels with real verified reach.</p>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-white border border-[#E7E7E2] flex items-start gap-3.5 shadow-2xs">
+                  <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center shrink-0">
+                    <Award className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-[#0A0A0A]">0% Creator Platform Fee</h4>
+                    <p className="text-xs text-[#66665E] mt-0.5">Set your own rates in EUR and keep 100% of your earnings with zero hidden commissions.</p>
                   </div>
                 </div>
               </div>
             ) : (
               /* Brand Value Props */
-              <div className="space-y-3">
+              <div className="space-y-3 pt-1">
                 <div className="p-4 rounded-2xl bg-white border border-[#E7E7E2] flex items-center gap-3">
                   <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
                   <span className="text-xs font-bold text-[#0A0A0A]">100% escrow protection before content production begins</span>
@@ -712,27 +698,56 @@ export default function RegisterPage() {
                       <p className="text-xs text-[#66665E]">Configure how brands discover and read your profile.</p>
                     </div>
 
-                    {/* Avatar Preset Row */}
-                    <div className="flex items-center gap-4 p-3.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
-                      <div className="relative w-16 h-16 rounded-2xl overflow-hidden border border-[#E7E7E2] shrink-0">
-                        <img src={avatar} alt="Avatar" className="w-full h-full object-cover" />
+                    {/* Profile Photo Upload (Direct photo upload, no presets) */}
+                    <div className="flex items-center gap-4 p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
+                      <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-white shadow-xs shrink-0 group">
+                        <img src={avatar} alt="Profile avatar" className="w-full h-full object-cover" />
+                        <label className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                          <Camera className="w-5 h-5 text-white" />
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) {
+                                const reader = new FileReader();
+                                reader.onload = () => {
+                                  if (typeof reader.result === 'string') {
+                                    setAvatar(reader.result);
+                                    message.success('Profile photo uploaded.');
+                                  }
+                                };
+                                reader.readAsDataURL(file);
+                              }
+                            }}
+                            className="hidden"
+                          />
+                        </label>
                       </div>
-                      <div className="space-y-1.5">
-                        <span className="text-xs font-bold text-[#0A0A0A]">Choose portrait photo:</span>
-                        <div className="flex gap-2">
-                          {PRESET_AVATARS.map((url, i) => (
-                            <button
-                              key={i}
-                              type="button"
-                              onClick={() => setAvatar(url)}
-                              className={`w-7 h-7 rounded-lg overflow-hidden border-2 cursor-pointer transition-transform ${
-                                avatar === url ? 'border-[#FF2D78] scale-110' : 'border-transparent opacity-60'
-                              }`}
-                            >
-                              <img src={url} alt={`Preset ${i}`} className="w-full h-full object-cover" />
-                            </button>
-                          ))}
-                        </div>
+                      <div className="space-y-1">
+                        <label className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white border border-[#E7E7E2] hover:border-[#0A0A0A] text-xs font-bold text-[#0A0A0A] cursor-pointer shadow-2xs transition-all">
+                          <Camera className="w-3.5 h-3.5 text-[#66665E]" />
+                          <span>Upload photo</span>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) {
+                                const reader = new FileReader();
+                                reader.onload = () => {
+                                  if (typeof reader.result === 'string') {
+                                    setAvatar(reader.result);
+                                    message.success('Profile photo uploaded.');
+                                  }
+                                };
+                                reader.readAsDataURL(file);
+                              }
+                            }}
+                            className="hidden"
+                          />
+                        </label>
+                        <p className="text-[11px] text-[#66665E]">Recommended 500x500px JPG or PNG</p>
                       </div>
                     </div>
 
@@ -860,95 +875,123 @@ export default function RegisterPage() {
                       <p className="text-xs text-[#66665E]">Connect your primary platforms and showcase sample deliverables.</p>
                     </div>
 
-                    {/* Social Channels row */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                      <div className="p-3 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-1.5">
-                        <div className="flex items-center gap-1.5 text-xs font-bold text-[#0A0A0A]">
-                          <Instagram className="w-3.5 h-3.5 text-[#FF2D78]" />
-                          <span>Instagram Handle</span>
+                    {/* Social Channels row: Instagram, TikTok & YouTube */}
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">
+                        Connected Social Platforms
+                      </label>
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                        {/* Instagram */}
+                        <div className="p-3 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-2">
+                          <div className="flex items-center gap-1.5 text-xs font-bold text-[#0A0A0A]">
+                            <Instagram className="w-4 h-4 text-[#FF2D78]" />
+                            <span>Instagram</span>
+                          </div>
+                          <input
+                            type="text"
+                            value={igHandle}
+                            onChange={(e) => setIgHandle(e.target.value)}
+                            placeholder="@handle"
+                            className="w-full h-8 px-2.5 rounded-lg border border-[#E7E7E2] bg-white text-xs font-semibold outline-none focus:border-[#0A0A0A]"
+                          />
+                          <input
+                            type="text"
+                            value={igReach}
+                            onChange={(e) => setIgReach(e.target.value)}
+                            placeholder="Followers (e.g. 1.2M)"
+                            className="w-full h-8 px-2.5 rounded-lg border border-[#E7E7E2] bg-white text-xs font-medium outline-none focus:border-[#0A0A0A]"
+                          />
                         </div>
-                        <input
-                          type="text"
-                          value={igHandle}
-                          onChange={(e) => setIgHandle(e.target.value)}
-                          placeholder="@handle"
-                          className="w-full h-9 px-3 rounded-lg border border-[#E7E7E2] bg-white text-xs font-semibold outline-none"
-                        />
-                      </div>
 
-                      <div className="p-3 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-1.5">
-                        <div className="flex items-center gap-1.5 text-xs font-bold text-[#0A0A0A]">
-                          <Film className="w-3.5 h-3.5 text-black" />
-                          <span>TikTok Handle</span>
+                        {/* TikTok */}
+                        <div className="p-3 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-2">
+                          <div className="flex items-center gap-1.5 text-xs font-bold text-[#0A0A0A]">
+                            <Film className="w-4 h-4 text-black" />
+                            <span>TikTok</span>
+                          </div>
+                          <input
+                            type="text"
+                            value={ttHandle}
+                            onChange={(e) => setTtHandle(e.target.value)}
+                            placeholder="@handle"
+                            className="w-full h-8 px-2.5 rounded-lg border border-[#E7E7E2] bg-white text-xs font-semibold outline-none focus:border-[#0A0A0A]"
+                          />
+                          <input
+                            type="text"
+                            value={ttReach}
+                            onChange={(e) => setTtReach(e.target.value)}
+                            placeholder="Followers (e.g. 680K)"
+                            className="w-full h-8 px-2.5 rounded-lg border border-[#E7E7E2] bg-white text-xs font-medium outline-none focus:border-[#0A0A0A]"
+                          />
                         </div>
-                        <input
-                          type="text"
-                          value={ttHandle}
-                          onChange={(e) => setTtHandle(e.target.value)}
-                          placeholder="@handle"
-                          className="w-full h-9 px-3 rounded-lg border border-[#E7E7E2] bg-white text-xs font-semibold outline-none"
-                        />
+
+                        {/* YouTube */}
+                        <div className="p-3 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-2">
+                          <div className="flex items-center gap-1.5 text-xs font-bold text-[#0A0A0A]">
+                            <Youtube className="w-4 h-4 text-[#FF0000]" />
+                            <span>YouTube</span>
+                          </div>
+                          <input
+                            type="text"
+                            value={ytHandle}
+                            onChange={(e) => setYtHandle(e.target.value)}
+                            placeholder="Channel name / @handle"
+                            className="w-full h-8 px-2.5 rounded-lg border border-[#E7E7E2] bg-white text-xs font-semibold outline-none focus:border-[#0A0A0A]"
+                          />
+                          <input
+                            type="text"
+                            value={ytReach}
+                            onChange={(e) => setYtReach(e.target.value)}
+                            placeholder="Subscribers (e.g. 210K)"
+                            className="w-full h-8 px-2.5 rounded-lg border border-[#E7E7E2] bg-white text-xs font-medium outline-none focus:border-[#0A0A0A]"
+                          />
+                        </div>
                       </div>
                     </div>
 
                     {/* Work Samples Thumbnails */}
-                    <div className="space-y-2">
+                    <div className="space-y-2 pt-1">
                       <div className="flex items-center justify-between text-xs font-bold text-[#66665E]">
                         <span>Portfolio Media (Up to 6)</span>
-                        <span>{samplePhotos.length} Added</span>
+                        <span>{samplePhotos.length} of 6 Added</span>
                       </div>
-                      <div className="grid grid-cols-4 gap-2">
+                      <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
                         {samplePhotos.map((url, i) => (
                           <div key={i} className="relative aspect-square rounded-xl overflow-hidden border border-[#E7E7E2] group">
                             <img src={url} alt={`Sample ${i}`} className="w-full h-full object-cover" />
                             <button
                               type="button"
                               onClick={() => setSamplePhotos(samplePhotos.filter((_, idx) => idx !== i))}
-                              className="absolute top-1 right-1 w-5 h-5 rounded-full bg-black/75 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                              className="absolute top-1 right-1 w-5 h-5 rounded-full bg-black/75 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
                             >
                               <X className="w-3 h-3" />
                             </button>
                           </div>
                         ))}
                         {samplePhotos.length < 6 && (
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setSamplePhotos([...samplePhotos, 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80']);
-                              message.success('Sample added to portfolio');
-                            }}
-                            className="aspect-square rounded-xl border-2 border-dashed border-[#D2D2CA] hover:border-[#0A0A0A] flex flex-col items-center justify-center text-[#66665E] hover:text-[#0A0A0A] cursor-pointer"
-                          >
+                          <label className="aspect-square rounded-xl border-2 border-dashed border-[#D2D2CA] hover:border-[#0A0A0A] flex flex-col items-center justify-center text-[#66665E] hover:text-[#0A0A0A] cursor-pointer transition-colors">
                             <Plus className="w-4 h-4" />
-                            <span className="text-[10px] font-bold mt-0.5">Add</span>
-                          </button>
+                            <span className="text-[10px] font-bold mt-0.5">Upload</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                  const reader = new FileReader();
+                                  reader.onload = () => {
+                                    if (typeof reader.result === 'string') {
+                                      setSamplePhotos([...samplePhotos, reader.result]);
+                                      message.success('Sample photo added to portfolio.');
+                                    }
+                                  };
+                                  reader.readAsDataURL(file);
+                                }
+                              }}
+                              className="hidden"
+                            />
+                          </label>
                         )}
-                      </div>
-                    </div>
-
-                    {/* Collaboration Preferences */}
-                    <div className="space-y-1.5 pt-1">
-                      <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">Collaboration Deliverables</label>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        {['Sponsored posts & Reels', 'Dedicated Product reviews', 'User generated content (UGC)', 'Long-term brand deals'].map((pref) => {
-                          const isChecked = collabPreferences.includes(pref);
-                          return (
-                            <div
-                              key={pref}
-                              onClick={() => toggleCollabPref(pref)}
-                              className={`p-2.5 rounded-xl border flex items-center justify-between transition-all cursor-pointer text-xs font-bold ${
-                                isChecked ? 'border-[#0A0A0A] bg-[#FAFAF8] text-[#0A0A0A]' : 'border-[#E7E7E2] bg-white text-[#66665E]'
-                              }`}
-                            >
-                              <span className="truncate">{pref}</span>
-                              <div className={`w-3.5 h-3.5 rounded border flex items-center justify-center shrink-0 ${
-                                isChecked ? 'bg-[#0A0A0A] border-[#0A0A0A]' : 'border-[#D2D2CA]'
-                              }`}>
-                                {isChecked && <Check className="w-2.5 h-2.5 text-white stroke-[3]" />}
-                              </div>
-                            </div>
-                          );
-                        })}
                       </div>
                     </div>
 
@@ -982,53 +1025,78 @@ export default function RegisterPage() {
                       <p className="text-xs text-[#66665E]">Set your baseline EUR pricing and claim your verified creator badge.</p>
                     </div>
 
-                    {/* Starting Rate Slider */}
-                    <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-3">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold uppercase tracking-wider text-[#66665E]">Starting Rate</span>
-                        <span className="text-xl font-black text-[#0A0A0A]">€{startingRateEur.toLocaleString()}</span>
+                    {/* Starting Base Rate Input (Replaces slider) */}
+                    <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-1.5">
+                      <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">
+                        Starting Base Rate (€)
+                      </label>
+                      <div className="relative">
+                        <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-bold text-[#66665E]">€</span>
+                        <input
+                          type="number"
+                          min={50}
+                          step={50}
+                          value={startingRateEur}
+                          onChange={(e) => setStartingRateEur(Number(e.target.value))}
+                          placeholder="500"
+                          className="w-full h-11 pl-9 pr-3 rounded-xl border border-[#E7E7E2] bg-white text-base font-black text-[#0A0A0A] outline-none focus:border-[#0A0A0A]"
+                        />
                       </div>
-                      <Slider
-                        min={100}
-                        max={3000}
-                        step={50}
-                        value={startingRateEur}
-                        onChange={(v) => setStartingRateEur(v)}
-                        trackStyle={{ backgroundColor: '#0A0A0A' }}
-                        handleStyle={{ borderColor: '#0A0A0A' }}
-                      />
-                      <div className="flex justify-between text-[11px] text-[#66665E] font-semibold">
-                        <span>€100 (Micro)</span>
-                        <span>€1,500 (Mid-tier)</span>
-                        <span>€3,000+ (Macro)</span>
-                      </div>
+                      <p className="text-[11px] text-[#66665E]">Minimum baseline rate shown on your public creator profile</p>
                     </div>
 
-                    {/* Channel Deliverable Rates */}
-                    <div className="grid grid-cols-2 gap-2.5">
-                      <div className="p-3 rounded-xl border border-[#E7E7E2] bg-white flex items-center justify-between">
-                        <span className="text-xs font-bold text-[#0A0A0A]">Instagram Reel</span>
-                        <div className="flex items-center gap-1 font-black text-xs text-[#0A0A0A]">
-                          <span>€</span>
-                          <input
-                            type="number"
-                            value={igReelRate}
-                            onChange={(e) => setIgReelRate(Number(e.target.value))}
-                            className="w-14 h-7 text-right font-black border border-[#E7E7E2] rounded px-1"
-                          />
+                    {/* Platform Deliverable Rates */}
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">
+                        Platform Deliverable Packages (€)
+                      </label>
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                        {/* Instagram Reel */}
+                        <div className="p-3 rounded-xl border border-[#E7E7E2] bg-white space-y-1">
+                          <span className="text-xs font-bold text-[#0A0A0A]">Instagram Reel</span>
+                          <div className="relative">
+                            <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs font-bold text-[#66665E]">€</span>
+                            <input
+                              type="number"
+                              min={50}
+                              step={50}
+                              value={igReelRate}
+                              onChange={(e) => setIgReelRate(Number(e.target.value))}
+                              className="w-full h-8 pl-6 pr-2 rounded-lg border border-[#E7E7E2] font-black text-xs text-[#0A0A0A] outline-none focus:border-[#0A0A0A]"
+                            />
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="p-3 rounded-xl border border-[#E7E7E2] bg-white flex items-center justify-between">
-                        <span className="text-xs font-bold text-[#0A0A0A]">TikTok UGC Video</span>
-                        <div className="flex items-center gap-1 font-black text-xs text-[#0A0A0A]">
-                          <span>€</span>
-                          <input
-                            type="number"
-                            value={ttVideoRate}
-                            onChange={(e) => setTtVideoRate(Number(e.target.value))}
-                            className="w-14 h-7 text-right font-black border border-[#E7E7E2] rounded px-1"
-                          />
+                        {/* TikTok UGC Video */}
+                        <div className="p-3 rounded-xl border border-[#E7E7E2] bg-white space-y-1">
+                          <span className="text-xs font-bold text-[#0A0A0A]">TikTok UGC Video</span>
+                          <div className="relative">
+                            <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs font-bold text-[#66665E]">€</span>
+                            <input
+                              type="number"
+                              min={50}
+                              step={50}
+                              value={ttVideoRate}
+                              onChange={(e) => setTtVideoRate(Number(e.target.value))}
+                              className="w-full h-8 pl-6 pr-2 rounded-lg border border-[#E7E7E2] font-black text-xs text-[#0A0A0A] outline-none focus:border-[#0A0A0A]"
+                            />
+                          </div>
+                        </div>
+
+                        {/* YouTube Video */}
+                        <div className="p-3 rounded-xl border border-[#E7E7E2] bg-white space-y-1">
+                          <span className="text-xs font-bold text-[#0A0A0A]">YouTube Video</span>
+                          <div className="relative">
+                            <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs font-bold text-[#66665E]">€</span>
+                            <input
+                              type="number"
+                              min={50}
+                              step={50}
+                              value={ytVideoRate}
+                              onChange={(e) => setYtVideoRate(Number(e.target.value))}
+                              className="w-full h-8 pl-6 pr-2 rounded-lg border border-[#E7E7E2] font-black text-xs text-[#0A0A0A] outline-none focus:border-[#0A0A0A]"
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>

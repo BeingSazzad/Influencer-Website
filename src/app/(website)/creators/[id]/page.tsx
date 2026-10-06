@@ -379,11 +379,6 @@ export default function CreatorProfilePage() {
                       <ExternalLink className="w-2.5 h-2.5 text-[#66665E] opacity-0 group-hover/item:opacity-100 transition-opacity" />
                     </div>
                     <div className="text-xs sm:text-sm font-bold text-[#66665E] tracking-tight">Followers</div>
-                    {creator.platforms.instagram.engagementRate && (
-                      <div className="text-[11px] font-bold text-[#0A0A0A] tracking-tight">
-                        {creator.platforms.instagram.engagementRate}
-                      </div>
-                    )}
                   </a>
                 )}
 
@@ -408,11 +403,6 @@ export default function CreatorProfilePage() {
                       <ExternalLink className="w-2.5 h-2.5 text-[#66665E] opacity-0 group-hover/item:opacity-100 transition-opacity" />
                     </div>
                     <div className="text-xs sm:text-sm font-bold text-[#66665E] tracking-tight">Followers</div>
-                    {creator.platforms.tiktok.engagementRate && (
-                      <div className="text-[11px] font-bold text-[#0A0A0A] tracking-tight">
-                        {creator.platforms.tiktok.engagementRate}
-                      </div>
-                    )}
                   </a>
                 )}
 
@@ -435,11 +425,6 @@ export default function CreatorProfilePage() {
                       <ExternalLink className="w-2.5 h-2.5 text-[#66665E] opacity-0 group-hover/item:opacity-100 transition-opacity" />
                     </div>
                     <div className="text-xs sm:text-sm font-bold text-[#66665E] tracking-tight">Subscribers</div>
-                    {creator.platforms.youtube.engagementRate && (
-                      <div className="text-[11px] font-bold text-[#0A0A0A] tracking-tight">
-                        {creator.platforms.youtube.engagementRate}
-                      </div>
-                    )}
                   </a>
                 )}
               </div>
