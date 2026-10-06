@@ -29,7 +29,7 @@ export function FeaturedCreators() {
                 Creators
               </span>
             </h2>
-            <p className="text-[18px] text-[#73736A] mt-4 sm:mt-5 font-sans font-medium leading-[28px]">
+            <p className="text-[18px] text-[#66665E] mt-4 sm:mt-5 font-sans font-medium leading-[28px]">
               {t?.featured?.subtitle || 'Discover talented creators across different niches.'}
             </p>
           </div>

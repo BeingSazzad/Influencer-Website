@@ -68,11 +68,11 @@ export default function PrivacyPage() {
           Privacy Policy
         </h1>
 
-        <p className="text-sm sm:text-base text-[#73736A] font-medium leading-relaxed max-w-2xl">
+        <p className="text-sm sm:text-base text-[#66665E] font-medium leading-relaxed max-w-2xl">
           How Influverse collects, protects, and handles personal data, verified creator analytics, and payment information in strict compliance with GDPR.
         </p>
 
-        <div className="pt-2 flex flex-wrap items-center gap-2 text-sm text-[#73736A]">
+        <div className="pt-2 flex flex-wrap items-center gap-2 text-sm text-[#66665E]">
           <span className="font-semibold text-[#0A0A0A]">Effective Date:</span>
           <span>September 2026</span>
           <span>•</span>
@@ -113,7 +113,7 @@ export default function PrivacyPage() {
           <h3 className="text-2xl font-extrabold text-[#0A0A0A]">
             Need a data export or deletion request?
           </h3>
-          <p className="text-sm text-[#73736A]">
+          <p className="text-sm text-[#66665E]">
             You can manage connected profiles in your Settings or contact our Data Protection Officer.
           </p>
         </div>

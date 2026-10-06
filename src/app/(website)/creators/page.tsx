@@ -26,6 +26,7 @@ import {
   X,
 } from 'lucide-react';
 import { Pagination } from 'antd';
+import { Button } from '@/components/ui';
 
 function CreatorsDiscoveryContent() {
   const searchParams = useSearchParams();
@@ -223,7 +224,7 @@ function CreatorsDiscoveryContent() {
         {/* Top Header Area matching reference */}
         <div className="relative">
           <div className="max-w-2xl">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-[#73736A] font-sans block mb-3">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-[#66665E] font-sans block mb-3">
               CREATOR MARKETPLACE
             </span>
             <h1 className="text-3xl sm:text-4xl lg:text-[48px] font-black text-[#0A0A0A] tracking-tight leading-[1.15] font-sans">
@@ -243,13 +244,13 @@ function CreatorsDiscoveryContent() {
         <div className="bg-white p-3.5 rounded-2xl border border-[#E7E7E2] shadow-xs flex flex-wrap items-center gap-3">
           {/* Omni Search Input */}
           <div className="flex-1 min-w-[240px] relative font-sans">
-            <Search className="w-4 h-4 text-[#73736A] absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-[#66665E] absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder={t?.discovery?.searchPlaceholder || 'Search creators, keywords or niches...'}
               value={filters.searchQuery}
               onChange={(e) => dispatch(setFilter({ searchQuery: e.target.value }))}
-              className="w-full pl-10 pr-4 py-2.5 text-sm font-medium text-[#0A0A0A] bg-[#F4F4F0] rounded-xl outline-none placeholder:text-[#A3A39C] focus:ring-1 focus:ring-[#0A0A0A]"
+              className="w-full pl-10 pr-4 py-2.5 text-sm font-medium text-[#0A0A0A] bg-[#F4F4F0] rounded-xl outline-none focus:outline-none focus:ring-0 focus-visible:outline-none border-none placeholder:text-[#A3A39C]"
             />
           </div>
 
@@ -269,7 +270,7 @@ function CreatorsDiscoveryContent() {
               <option value="Lifestyle">Lifestyle</option>
               <option value="Tech">Tech & Gaming</option>
             </select>
-            <ChevronDown className="w-4 h-4 text-[#73736A] pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
+            <ChevronDown className="w-4 h-4 text-[#66665E] pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
           </div>
 
           {/* Locations Dropdown */}
@@ -288,7 +289,7 @@ function CreatorsDiscoveryContent() {
               <option value="Los Angeles">Los Angeles, US</option>
               <option value="New York">New York, US</option>
             </select>
-            <ChevronDown className="w-4 h-4 text-[#73736A] pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
+            <ChevronDown className="w-4 h-4 text-[#66665E] pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
           </div>
 
           {/* Platforms Dropdown */}
@@ -304,7 +305,7 @@ function CreatorsDiscoveryContent() {
               <option value="youtube">YouTube</option>
               <option value="ugc">UGC Creative</option>
             </select>
-            <ChevronDown className="w-4 h-4 text-[#73736A] pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
+            <ChevronDown className="w-4 h-4 text-[#66665E] pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
           </div>
 
           {/* Follower Range Dropdown */}
@@ -320,7 +321,7 @@ function CreatorsDiscoveryContent() {
               <option value="macro">Macro (200K - 1M)</option>
               <option value="mega">Mega (1M+)</option>
             </select>
-            <ChevronDown className="w-4 h-4 text-[#73736A] pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
+            <ChevronDown className="w-4 h-4 text-[#66665E] pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
           </div>
 
           {/* Sort By Dropdown */}
@@ -336,13 +337,13 @@ function CreatorsDiscoveryContent() {
               <option value="price_asc">Price: Low to High</option>
               <option value="price_desc">Price: High to Low</option>
             </select>
-            <ChevronDown className="w-4 h-4 text-[#73736A] pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
+            <ChevronDown className="w-4 h-4 text-[#66665E] pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
           </div>
 
           {/* Reset Filters */}
           <button
             onClick={() => dispatch(resetFilters())}
-            className="p-2.5 rounded-xl border border-[#E7E7E2] hover:bg-[#F4F4F0] text-[#73736A] hover:text-[#0A0A0A] transition-colors"
+            className="p-2.5 rounded-xl border border-[#E7E7E2] hover:bg-[#F4F4F0] text-[#66665E] hover:text-[#0A0A0A] transition-colors"
             title="Reset Filters"
           >
             <RotateCcw className="w-4 h-4" />
@@ -352,7 +353,7 @@ function CreatorsDiscoveryContent() {
         {/* Active Filter Chips / Status bar if any filter is applied */}
         {(filters.searchQuery || filters.category !== 'all' || filters.platform !== 'all' || filters.location !== 'all' || filters.followerRange !== 'all') && (
           <div className="flex flex-wrap items-center gap-2 pt-1 font-sans text-xs">
-            <span className="text-[#73736A] font-bold mr-1">Active Filters:</span>
+            <span className="text-[#66665E] font-bold mr-1">Active Filters:</span>
             {filters.searchQuery && (
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0A0A0A] text-white font-medium">
                 Keyword: "{filters.searchQuery}"
@@ -370,7 +371,7 @@ function CreatorsDiscoveryContent() {
                 Category: {filters.category}
                 <button
                   onClick={() => dispatch(setFilter({ category: 'all' }))}
-                  className="text-[#73736A] hover:text-[#FF2D78] transition-colors cursor-pointer"
+                  className="text-[#66665E] hover:text-[#FF2D78] transition-colors cursor-pointer"
                   title="Remove category filter"
                 >
                   <X className="w-3.5 h-3.5" />
@@ -382,7 +383,7 @@ function CreatorsDiscoveryContent() {
                 Platform: {filters.platform.toUpperCase()}
                 <button
                   onClick={() => dispatch(setFilter({ platform: 'all' }))}
-                  className="text-[#73736A] hover:text-[#FF2D78] transition-colors cursor-pointer"
+                  className="text-[#66665E] hover:text-[#FF2D78] transition-colors cursor-pointer"
                   title="Remove platform filter"
                 >
                   <X className="w-3.5 h-3.5" />
@@ -394,7 +395,7 @@ function CreatorsDiscoveryContent() {
                 Location: {filters.location}
                 <button
                   onClick={() => dispatch(setFilter({ location: 'all' }))}
-                  className="text-[#73736A] hover:text-[#FF2D78] transition-colors cursor-pointer"
+                  className="text-[#66665E] hover:text-[#FF2D78] transition-colors cursor-pointer"
                   title="Remove location filter"
                 >
                   <X className="w-3.5 h-3.5" />
@@ -406,7 +407,7 @@ function CreatorsDiscoveryContent() {
                 Followers: {filters.followerRange}
                 <button
                   onClick={() => dispatch(setFilter({ followerRange: 'all' }))}
-                  className="text-[#73736A] hover:text-[#FF2D78] transition-colors cursor-pointer"
+                  className="text-[#66665E] hover:text-[#FF2D78] transition-colors cursor-pointer"
                   title="Remove follower range filter"
                 >
                   <X className="w-3.5 h-3.5" />
@@ -456,7 +457,7 @@ function CreatorsDiscoveryContent() {
                       className={`text-sm font-bold px-2 py-0.5 rounded-full ${
                         isSelected
                           ? 'bg-white/15 text-white'
-                          : 'bg-[#FAFAF8] text-[#73736A] border border-[#E7E7E2]'
+                          : 'bg-[#FAFAF8] text-[#66665E] border border-[#E7E7E2]'
                       }`}
                     >
                       {cat.count}
@@ -472,19 +473,19 @@ function CreatorsDiscoveryContent() {
                 <h4 className="font-black text-base leading-[22px] text-[#0A0A0A] tracking-tight">
                   Are you a creator?
                 </h4>
-                <p className="text-sm text-[#73736A] mt-2 leading-[18px] font-medium">
+                <p className="text-sm text-[#66665E] mt-2 leading-[18px] font-medium">
                   Join thousands of creators and get discovered by top brands worldwide.
                 </p>
               </div>
 
-              <Link href="/register" className="block w-full">
-                <button
-                  type="button"
-                  className="w-full h-11 px-5 rounded-full bg-[#0A0A0A] hover:bg-[#FF2D78] text-white font-outfit font-bold text-sm leading-[18px] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-sm hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  Create Account
-                </button>
-              </Link>
+              <Button
+                href="/register"
+                size="md"
+                variant="primary"
+                fullWidth
+              >
+                Create Account
+              </Button>
             </div>
           </div>
 
@@ -496,7 +497,7 @@ function CreatorsDiscoveryContent() {
                 <span className="text-2xl font-extrabold text-[#0A0A0A]">
                   {filteredCreators.length.toLocaleString()} creators
                 </span>
-                <span className="text-sm text-[#73736A] ml-2.5 hidden sm:inline font-medium">
+                <span className="text-sm text-[#66665E] ml-2.5 hidden sm:inline font-medium">
                   Showing 1–{paginatedCreators.length} of {filteredCreators.length} creators
                 </span>
               </div>

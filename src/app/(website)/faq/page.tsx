@@ -9,9 +9,9 @@ export const metadata = {
 
 export default function FaqPage() {
   return (
-    <div className="py-8">
-      <FaqSection />
-      <CreatorInviteSection />
+    <div className="flex flex-col min-h-screen">
+      <FaqSection isFullPage={true} showViewAll={false} />
+      <CreatorInviteSection dual />
     </div>
   );
 }

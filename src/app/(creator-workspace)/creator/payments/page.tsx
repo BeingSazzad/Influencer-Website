@@ -186,7 +186,7 @@ export default function CreatorPaymentsPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
           {/* 1. Total Earned */}
           <div className="p-6 bg-white rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
-            <div className="flex items-center justify-between text-[#73736A]">
+            <div className="flex items-center justify-between text-[#66665E]">
               <span className="text-xs font-bold uppercase tracking-wider">Total Earned</span>
               <div className="w-7 h-7 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-center text-[#0A0A0A]">
                 <ArrowDownLeft className="w-3.5 h-3.5" />
@@ -199,7 +199,7 @@ export default function CreatorPaymentsPage() {
 
           {/* 2. In Escrow */}
           <div className="p-6 bg-white rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
-            <div className="flex items-center justify-between text-[#73736A]">
+            <div className="flex items-center justify-between text-[#66665E]">
               <span className="text-xs font-bold uppercase tracking-wider">Pending Escrow</span>
               <div className="w-7 h-7 rounded-xl bg-[#FFF0F5] text-[#FF2D78] flex items-center justify-center">
                 <Clock className="w-3.5 h-3.5" />
@@ -216,12 +216,12 @@ export default function CreatorPaymentsPage() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <h3 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Payout History</h3>
-              <p className="text-sm text-[#73736A] mt-1">Records of completed settlements and funds in escrow.</p>
+              <p className="text-sm text-[#66665E] mt-1">Records of completed settlements and funds in escrow.</p>
             </div>
 
             {/* Search Input */}
             <div className="relative w-full sm:max-w-xs">
-              <Search className="w-4 h-4 text-[#73736A] absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-[#66665E] absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 placeholder="Search by brand or campaign..."
@@ -236,7 +236,7 @@ export default function CreatorPaymentsPage() {
           <div className="overflow-x-auto -mx-6 sm:mx-0">
             <table className="w-full text-left">
               <thead>
-                <tr className="border-b border-[#E7E7E2] text-[#73736A] font-bold uppercase tracking-wider text-xs">
+                <tr className="border-b border-[#E7E7E2] text-[#66665E] font-bold uppercase tracking-wider text-xs">
                   <th className="pb-3.5 px-4">Brand &amp; Campaign</th>
                   <th className="pb-3.5 px-4">Date</th>
                   <th className="pb-3.5 px-4 text-right">Earned (€)</th>
@@ -254,11 +254,11 @@ export default function CreatorPaymentsPage() {
                       {/* Brand & Campaign */}
                       <td className="py-4 px-4">
                         <div className="font-bold text-sm text-[#0A0A0A]">{payout.brandName}</div>
-                        <div className="text-sm text-[#73736A] truncate max-w-xs mt-0.5">{payout.campaignTitle}</div>
+                        <div className="text-sm text-[#66665E] truncate max-w-xs mt-0.5">{payout.campaignTitle}</div>
                       </td>
 
                       {/* Date */}
-                      <td className="py-4 px-4 text-sm text-[#73736A] font-medium whitespace-nowrap">
+                      <td className="py-4 px-4 text-sm text-[#66665E] font-medium whitespace-nowrap">
                         {payout.date}
                       </td>
 
@@ -291,7 +291,7 @@ export default function CreatorPaymentsPage() {
                         <button
                           type="button"
                           onClick={() => setSelectedRemittance(payout)}
-                          className="w-8 h-8 rounded-lg border border-[#E7E7E2] hover:border-[#0A0A0A] hover:bg-white text-[#73736A] hover:text-[#0A0A0A] inline-flex items-center justify-center transition-colors cursor-pointer"
+                          className="w-8 h-8 rounded-lg border border-[#E7E7E2] hover:border-[#0A0A0A] hover:bg-white text-[#66665E] hover:text-[#0A0A0A] inline-flex items-center justify-center transition-colors cursor-pointer"
                           title="View Statement"
                         >
                           <FileText className="w-4 h-4" />
@@ -304,7 +304,7 @@ export default function CreatorPaymentsPage() {
             </table>
 
             {filteredPayouts.length === 0 && (
-              <div className="py-12 text-center text-sm text-[#73736A] font-medium">
+              <div className="py-12 text-center text-sm text-[#66665E] font-medium">
                 No payout records match your search criteria.
               </div>
             )}
@@ -325,13 +325,13 @@ export default function CreatorPaymentsPage() {
           <div className="space-y-5 font-sans pt-2">
             <div className="border-b border-[#E7E7E2] pb-3 flex items-start justify-between">
               <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#66665E]">
                   REMITTANCE STATEMENT
                 </span>
                 <h3 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight mt-0.5">
                   {selectedRemittance.referenceCode}
                 </h3>
-                <div className="text-sm text-[#73736A]">{selectedRemittance.date}</div>
+                <div className="text-sm text-[#66665E]">{selectedRemittance.date}</div>
               </div>
               <span className="px-2.5 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2] font-bold text-xs uppercase tracking-wide">
                 {selectedRemittance.status.replace('_', ' ')}
@@ -340,14 +340,14 @@ export default function CreatorPaymentsPage() {
 
             <div className="grid grid-cols-2 gap-3 text-xs">
               <div>
-                <span className="text-[#73736A] block">Creator</span>
+                <span className="text-[#66665E] block">Creator</span>
                 <strong className="text-[#0A0A0A] block">{currentUser?.name || 'Sophie Kim'}</strong>
-                <span className="text-[#73736A] block">{currentUser?.handle || '@sophiekim'}</span>
+                <span className="text-[#66665E] block">{currentUser?.handle || '@sophiekim'}</span>
               </div>
               <div>
-                <span className="text-[#73736A] block">Brand Sponsor</span>
+                <span className="text-[#66665E] block">Brand Sponsor</span>
                 <strong className="text-[#0A0A0A] block">{selectedRemittance.brandName}</strong>
-                <span className="text-[#73736A] block">Verified Escrow</span>
+                <span className="text-[#66665E] block">Verified Escrow</span>
               </div>
             </div>
 
@@ -356,7 +356,7 @@ export default function CreatorPaymentsPage() {
                 <span>{selectedRemittance.campaignTitle}</span>
                 <span>€{selectedRemittance.amountEur.toLocaleString()}</span>
               </div>
-              <div className="flex justify-between text-[#73736A]">
+              <div className="flex justify-between text-[#66665E]">
                 <span>{selectedRemittance.deliverableType}</span>
                 <span>Platform Fee: 0%</span>
               </div>

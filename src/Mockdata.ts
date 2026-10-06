@@ -2083,25 +2083,75 @@ export const CATEGORIES_LIST = [
   { id: 'Art & Creativity', name: 'Art & Creativity', count: 680, icon: 'Palette' },
 ];
 
-export const FAQS_LIST = [
+export const BRAND_FAQS = [
   {
-    q: 'How does pricing work on Influverse?',
-    a: 'Creators set their own transparent base package prices (in EUR). When a Brand places an order or sends an offer, a 15% platform fee is added (e.g. €100 creator price + €15 platform fee = €115 total before applicable tax). There are no monthly subscription tiers or hidden charges.',
+    q: 'How does the Influverse escrow system protect my budget?',
+    a: 'When a brand sends an offer, the campaign budget (creator rate + 15% platform fee) is placed into a secure escrow account. The creator starts working with complete confidence that funds are secured. Funds are only transferred to the creator once you review and approve the submitted content.',
   },
   {
-    q: 'What is the difference between Content Creation and Sponsored Posting?',
-    a: 'Content Creation (UGC) provides raw, high-quality media assets for the brand to use across its own paid ads, website, and organic channels without requiring the creator to post on their personal feed. Sponsored Posting includes content published directly on the creator’s verified social channel to their engaged audience.',
+    q: 'Why is Influverse different from traditional influencer agencies?',
+    a: 'Influverse eliminates middleman markups, slow email chains, and opaque pricing. Brands get direct access to verified creator rate cards, 100% escrow milestone protection, on-demand portfolio previews, and automated EU VAT invoicing.',
   },
   {
-    q: 'How are payments protected through Escrow?',
-    a: 'When an offer is agreed upon, the brand funds the total order amount into secure escrow. The funds are held safely until the creator submits the final deliverables and the brand reviews and approves them. Once approved, the creator base price is instantly disbursed to their wallet.',
+    q: 'What is the difference between UGC Content and a Sponsored Post?',
+    a: 'UGC (User Generated Content) is custom high-converting photo/video assets produced by the creator for your brand to run on your own official channels or paid ad campaigns. A Sponsored Post includes the creator publishing the content directly to their own engaged audience on Instagram, TikTok, or YouTube.',
   },
   {
-    q: 'Can brands request revisions?',
-    a: 'Yes. Every package specifies the number of included revisions (typically 1 to 2). Brands can review draft previews in the dedicated order workspace and request tweaks before final approval.',
+    q: 'How do revisions work if I need changes on the content?',
+    a: 'Each creator package includes specified revision rounds (typically 1 to 2 revisions). When a creator submits draft deliverables, you can request adjustments directly inside your order workspace with timestamped notes before final escrow sign-off.',
   },
   {
-    q: 'How do creators get discovered and paid?',
-    a: 'Creators create a free verified profile, showcase their packages and portfolio, and receive direct hire offers from global brands. Earnings are paid directly in EUR upon job completion.',
+    q: 'Are all creators verified on Influverse?',
+    a: 'Yes. Our talent team manually verifies creator identity, authentic audience engagement metrics, past brand collaborations, and channel handles across Instagram, TikTok, and YouTube before granting the verified checkmark badge.',
+  },
+  {
+    q: 'What currencies and payment methods are supported?',
+    a: 'All packages, custom offers, and balance transactions are standardized in EUR (€) with support for major credit cards (Visa, Mastercard, Amex), SEPA bank transfers, Apple Pay, and Google Pay.',
+  },
+  {
+    q: 'How does VAT and invoice generation work for European businesses?',
+    a: 'Influverse automatically generates compliant VAT invoices for every transaction. If your company is VAT-registered in the European Union, the reverse-charge mechanism is automatically applied at checkout.',
+  },
+  {
+    q: 'What happens if a creator fails to deliver within the agreed deadline?',
+    a: 'Every order features binding milestone deadlines. If a creator fails to submit content on time or misses communications, you have the right to cancel the campaign and receive a 100% escrow refund immediately.',
   },
 ];
+
+export const CREATOR_FAQS = [
+  {
+    q: 'Do creators have to pay any fee or commission?',
+    a: 'No. Creators keep 100% of their listed package price. The 15% platform fee is covered entirely by the hiring brand to fund escrow protection, contract guarantees, dispute mediation, and secure payouts.',
+  },
+  {
+    q: 'When and how do I receive my earnings?',
+    a: 'Payments are deposited into your Influverse wallet balance immediately after the brand reviews and approves your deliverables. You can withdraw your EUR balance directly to your bank account via SEPA or Stripe at any time.',
+  },
+  {
+    q: 'How do I set my package prices and deliverable terms?',
+    a: 'You have complete autonomy over your rate card. In your creator dashboard, you can define custom packages in EUR (€) for Instagram Reels, Stories, TikTok videos, YouTube integrations, and UGC bundles with your chosen turnaround times and revision limits.',
+  },
+  {
+    q: 'Who owns the content rights and commercial usage license?',
+    a: 'By default, organic sponsored posts allow brands organic reposting rights. If a brand wants paid advertising rights (whitelisting or dark ads), they must purchase commercial usage rights or choose a dedicated UGC package specified in your rate card.',
+  },
+  {
+    q: 'What happens if a brand delays review or requests out-of-scope revisions?',
+    a: 'Our platform includes auto-approval protection. If a brand does not review or request revisions within 5 days of submission, escrow funds are automatically released to your wallet. Our dedicated dispute team mediates any unreasonable requests.',
+  },
+  {
+    q: 'Can I decline an offer if it does not match my personal brand?',
+    a: 'Yes, 100%. You can review brand briefs, deliverables, guidelines, and timelines before accepting. You have full freedom to accept, decline, or send a custom counter-offer directly through the platform.',
+  },
+  {
+    q: 'How do I get the Verified Creator badge on my profile?',
+    a: 'Complete your profile setup, connect your active social channels (Instagram, TikTok, or YouTube) with verified audience metrics, and complete your first successful escrow collaboration with a 4.5+ rating.',
+  },
+  {
+    q: 'Can I work with brands outside of my home country?',
+    a: 'Yes! Influverse connects creators across Europe and internationally. All contracts and escrow payments are handled safely in EUR without international banking complications.',
+  },
+];
+
+export const FAQS_LIST = BRAND_FAQS;
+

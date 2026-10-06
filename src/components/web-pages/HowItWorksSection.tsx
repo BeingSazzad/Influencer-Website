@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Search, Send, CheckCircle2, ShieldCheck, CreditCard, Sparkles, Video, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui';
 
 export function HowItWorksSection() {
   const [activeTab, setActiveTab] = useState<'brand' | 'creator'>('brand');
@@ -99,7 +100,7 @@ export function HowItWorksSection() {
               Works
             </span>
           </h2>
-          <p className="text-[18px] leading-[28px] text-[#73736A] font-sans font-medium mt-4 sm:mt-5 mb-8">
+          <p className="text-[18px] leading-[28px] text-[#66665E] font-sans font-medium mt-4 sm:mt-5 mb-8">
             A seamless, protected four-step workflow built on transparent escrow and verified delivery.
           </p>
 
@@ -112,7 +113,7 @@ export function HowItWorksSection() {
               className={`px-7 py-2.5 rounded-full font-outfit font-bold text-[16px] leading-[20px] transition-all ${
                 activeTab === 'brand'
                   ? 'bg-[#0A0A0A] text-[#FAFAFA] shadow-sm'
-                  : 'text-[#73736A] hover:text-[#0A0A0A]'
+                  : 'text-[#66665E] hover:text-[#0A0A0A]'
               }`}
             >
               For Brands & Marketers
@@ -122,7 +123,7 @@ export function HowItWorksSection() {
               className={`px-7 py-2.5 rounded-full font-outfit font-bold text-[16px] leading-[20px] transition-all ${
                 activeTab === 'creator'
                   ? 'bg-[#FF2D78] text-[#FAFAFA] shadow-sm'
-                  : 'text-[#73736A] hover:text-[#0A0A0A]'
+                  : 'text-[#66665E] hover:text-[#0A0A0A]'
               }`}
             >
               For Creators & Talent
@@ -157,7 +158,7 @@ export function HowItWorksSection() {
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-[#F4F4F0]">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#73736A] font-sans">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#66665E] font-sans">
                     {step.badge}
                   </span>
                 </div>
@@ -168,14 +169,14 @@ export function HowItWorksSection() {
 
         {/* CTA Banner Bottom */}
         <div className="mt-14 text-center">
-          <Link href={activeTab === 'brand' ? '/creators' : '/register'}>
-            <button
-              className="h-12 sm:h-[52px] px-8 rounded-full font-outfit font-bold text-[16px] leading-[20px] bg-[#0A0A0A] hover:bg-[#FF2D78] text-[#FAFAFA] shadow-sm hover:shadow-md transition-all inline-flex items-center justify-center gap-2 cursor-pointer hover:scale-105 active:scale-95"
-            >
-              <span>{activeTab === 'brand' ? 'Start Browsing Creators' : 'Apply as a Creator'}</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </Link>
+          <Button
+            href={activeTab === 'brand' ? '/creators' : '/register'}
+            size="lg"
+            variant="primary"
+            iconRight={<ArrowRight className="w-4 h-4" />}
+          >
+            {activeTab === 'brand' ? 'Start Browsing Creators' : 'Apply as a Creator'}
+          </Button>
         </div>
       </div>
     </section>

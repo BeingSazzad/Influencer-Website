@@ -123,7 +123,7 @@ export function CreatorAnnualAnalytics() {
           <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
             {activeMetric === 'income' ? 'Earnings Performance' : 'Brand Collaborations'}
           </h2>
-          <p className="text-sm text-[#73736A] mt-1 font-medium">
+          <p className="text-sm text-[#66665E] mt-1 font-medium">
             {activeMetric === 'income'
               ? `Brand deal earnings for ${selectedYear}.`
               : `Brand collaboration volume for ${selectedYear}.`}
@@ -138,7 +138,7 @@ export function CreatorAnnualAnalytics() {
               className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 ${
                 activeMetric === 'income'
                   ? 'bg-[#0A0A0A] text-white shadow-2xs'
-                  : 'text-[#73736A] hover:text-[#0A0A0A]'
+                  : 'text-[#66665E] hover:text-[#0A0A0A]'
               }`}
             >
               <DollarSign className="w-3.5 h-3.5" />
@@ -149,7 +149,7 @@ export function CreatorAnnualAnalytics() {
               className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 ${
                 activeMetric === 'brands'
                   ? 'bg-[#0A0A0A] text-white shadow-2xs'
-                  : 'text-[#73736A] hover:text-[#0A0A0A]'
+                  : 'text-[#66665E] hover:text-[#0A0A0A]'
               }`}
             >
               <Building2 className="w-3.5 h-3.5" />
@@ -168,7 +168,7 @@ export function CreatorAnnualAnalytics() {
                 <option key={year} value={year}>{year}</option>
               ))}
             </select>
-            <ChevronDown className="w-3 h-3 text-[#73736A] absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <ChevronDown className="w-3 h-3 text-[#66665E] absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
           </div>
         </div>
       </div>
@@ -197,13 +197,10 @@ export function CreatorAnnualAnalytics() {
                 {(isHovered || isPeak) && (
                   <div
                     className={`absolute -top-7 px-2.5 py-0.5 rounded-md text-xs font-black tracking-tight whitespace-nowrap z-20 pointer-events-none transition-all ${
-                      isHovered
-                        ? activeMetric === 'income'
-                          ? 'bg-[#FF2D78] text-white shadow-md -translate-y-1'
-                          : 'bg-[#0A0A0A] text-white shadow-md -translate-y-1'
-                        : 'bg-[#0A0A0A] text-white shadow-xs'
+                      isHovered ? 'bg-[#FF2D78] text-white shadow-md -translate-y-1' : 'bg-[#0A0A0A] text-white shadow-xs'
                     }`}
                   >
+                    {!isHovered && 'Peak · '}
                     {activeMetric === 'income'
                       ? `€${val.toLocaleString()}`
                       : `${val} Brand${val === 1 ? '' : 's'}`}
@@ -217,12 +214,10 @@ export function CreatorAnnualAnalytics() {
                     style={{ height: `${pct}%` }}
                     className={`w-full rounded-md transition-all duration-300 ${
                       isHovered
-                        ? activeMetric === 'income'
-                          ? 'bg-[#FF2D78] scale-102'
-                          : 'bg-[#0A0A0A] scale-102 ring-2 ring-emerald-400/50'
+                        ? 'bg-[#FF2D78] scale-102'
                         : (item.isCurrent || isPeak)
                         ? 'bg-[#0A0A0A]'
-                        : 'bg-[#D2D2CA] group-hover:bg-[#0A0A0A]'
+                        : 'bg-[#D2D2CA]'
                     }`}
                   />
                 </div>
@@ -232,7 +227,7 @@ export function CreatorAnnualAnalytics() {
                   className={`text-xs font-extrabold mt-2 transition-colors ${
                     isHovered || item.isCurrent
                       ? 'text-[#0A0A0A]'
-                      : 'text-[#73736A] group-hover:text-[#0A0A0A]'
+                      : 'text-[#66665E] group-hover:text-[#0A0A0A]'
                   }`}
                 >
                   {item.month}

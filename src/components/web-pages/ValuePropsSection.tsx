@@ -56,7 +56,7 @@ export function ValuePropsSection() {
             </span>
           </h2>
 
-          <p className="text-[18px] text-[#73736A] font-sans font-medium leading-[28px] mt-4 sm:mt-5 max-w-2xl mx-auto">
+          <p className="text-[18px] text-[#66665E] font-sans font-medium leading-[28px] mt-4 sm:mt-5 max-w-2xl mx-auto">
             Discover creators, manage collaborations and bring your best ideas to life.
           </p>
         </div>
@@ -78,7 +78,7 @@ export function ValuePropsSection() {
                 <h3 className="text-lg sm:text-xl font-bold text-[#0A0A0A] tracking-tight">
                   {prop.title}
                 </h3>
-                <p className="mt-1.5 text-sm text-[#73736A] font-medium leading-relaxed">
+                <p className="mt-1.5 text-sm text-[#66665E] font-medium leading-relaxed">
                   {prop.description}
                 </p>
               </div>

@@ -79,23 +79,23 @@ export default function CreatorOffersPage() {
                     </div>
 
                     <div className="text-left sm:text-right">
-                      <span className="text-sm font-semibold text-[#73736A] uppercase tracking-wider">Net Payout</span>
+                      <span className="text-sm font-semibold text-[#66665E] uppercase tracking-wider">Net Payout</span>
                       <div className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                         €{offer.basePriceEur}
                       </div>
-                      <span className="text-xs text-[#73736A] font-semibold">0% Platform Fee</span>
+                      <span className="text-xs text-[#66665E] font-semibold">0% Platform Fee</span>
                     </div>
                   </div>
 
                   <div className="p-4 bg-white rounded-2xl border border-[#E7E7E2] space-y-1.5">
-                    <div className="text-sm font-semibold uppercase tracking-wider text-[#73736A]">Brief</div>
+                    <div className="text-sm font-semibold uppercase tracking-wider text-[#66665E]">Brief</div>
                     <p className="text-sm text-[#44443E] leading-relaxed">
                       {offer.brief}
                     </p>
                   </div>
 
                   <div>
-                    <div className="text-sm font-semibold uppercase tracking-wider text-[#73736A] mb-2">Requirements</div>
+                    <div className="text-sm font-semibold uppercase tracking-wider text-[#66665E] mb-2">Requirements</div>
                     <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-[#0A0A0A]">
                       {offer.requirements.map((req, idx) => (
                         <li key={idx} className="flex items-center gap-2">
@@ -107,7 +107,7 @@ export default function CreatorOffersPage() {
                   </div>
 
                   <div className="pt-3 border-t border-[#E7E7E2] flex flex-col sm:flex-row items-center justify-between gap-3">
-                    <span className="text-sm text-[#73736A]">
+                    <span className="text-sm text-[#66665E]">
                       Deadline: <strong className="text-[#0A0A0A]">{offer.deadlineDate}</strong>
                     </span>
 
@@ -122,7 +122,7 @@ export default function CreatorOffersPage() {
                       <Button
                         type="default"
                         onClick={() => handleDecline(offer.id)}
-                        className="h-10 px-5 rounded-full font-semibold text-sm border-[#D2D2CA] text-[#73736A] cursor-pointer"
+                        className="h-10 px-5 rounded-full font-semibold text-sm border-[#D2D2CA] text-[#66665E] cursor-pointer"
                       >
                         Decline
                       </Button>

@@ -13,7 +13,7 @@ export default function HowItWorksPage() {
     <div className="py-8">
       <HowItWorksSection />
       <CollaborationModelsSection />
-      <FaqSection />
+      <FaqSection showViewAll={true} limit={5} />
     </div>
   );
 }

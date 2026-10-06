@@ -10,7 +10,6 @@ import {
   Twitter,
   Linkedin,
   Mail,
-  QrCode,
 } from 'lucide-react';
 
 interface ShareProfileModalProps {
@@ -37,7 +36,6 @@ export function ShareProfileModal({
   role = 'creator',
 }: ShareProfileModalProps) {
   const [copied, setCopied] = useState(false);
-  const [showQr, setShowQr] = useState(false);
 
   // Fallback to origin url if relative
   const fullUrl =
@@ -136,7 +134,7 @@ export function ShareProfileModal({
             <h3 className="text-base font-extrabold text-[#0A0A0A] truncate">
               {title}
             </h3>
-            <p className="text-sm text-[#73736A] truncate">
+            <p className="text-sm text-[#66665E] truncate">
               {subtitle || `Share verified ${role} profile & booking rate card`}
             </p>
             {link && (
@@ -150,7 +148,7 @@ export function ShareProfileModal({
 
         {/* Copy Link Field */}
         <div className="space-y-2">
-          <label className="text-xs font-bold uppercase tracking-wider text-[#73736A] block">
+          <label className="text-xs font-bold uppercase tracking-wider text-[#66665E] block">
             Direct Shareable URL
           </label>
           <div className="flex items-center gap-2">
@@ -185,7 +183,7 @@ export function ShareProfileModal({
 
         {/* Quick Social Channels */}
         <div className="space-y-2.5">
-          <label className="text-xs font-bold uppercase tracking-wider text-[#73736A] block">
+          <label className="text-xs font-bold uppercase tracking-wider text-[#66665E] block">
             Share To Social Channels
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -206,47 +204,6 @@ export function ShareProfileModal({
             })}
           </div>
         </div>
-
-        {/* Actions row: QR Code & Native Share */}
-        <div className="pt-2 flex items-center justify-between gap-3 flex-wrap">
-          <button
-            type="button"
-            onClick={() => setShowQr(!showQr)}
-            className="text-sm font-bold text-[#73736A] hover:text-[#0A0A0A] flex items-center gap-1.5 cursor-pointer"
-          >
-            <QrCode className="w-4 h-4 text-[#FF2D78]" />
-            <span>{showQr ? 'Hide QR Code' : 'Show Mobile QR Code'}</span>
-          </button>
-
-          {typeof navigator !== 'undefined' && 'share' in navigator && (
-            <button
-              type="button"
-              onClick={handleNativeShare}
-              className="h-9 px-4 rounded-full font-bold text-xs bg-[#FAFAF8] border border-[#E7E7E2] hover:border-[#0A0A0A] text-[#0A0A0A] flex items-center gap-1.5 cursor-pointer shadow-2xs"
-            >
-              <Share2 className="w-3.5 h-3.5 text-[#FF2D78]" />
-              <span>More Options</span>
-            </button>
-          )}
-        </div>
-
-        {/* Optional QR Code View */}
-        {showQr && (
-          <div className="p-4 bg-[#FAFAF8] rounded-2xl border border-[#E7E7E2] text-center space-y-2 animate-fadeIn">
-            <div className="w-32 h-32 mx-auto bg-white p-2 rounded-xl border border-[#E7E7E2] shadow-2xs flex items-center justify-center">
-              <img
-                src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(
-                  fullUrl
-                )}`}
-                alt="QR Code"
-                className="w-full h-full object-contain"
-              />
-            </div>
-            <p className="text-sm text-[#73736A] font-medium">
-              Scan with mobile phone camera to open rate card instantly.
-            </p>
-          </div>
-        )}
       </div>
     </Modal>
   );

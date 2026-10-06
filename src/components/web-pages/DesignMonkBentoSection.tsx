@@ -164,7 +164,7 @@ export function DesignMonkBentoSection() {
 
             <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between font-sans">
               <span className="text-sm text-[#A3A39C] font-medium">European Banking Standard</span>
-              <span className="text-sm font-bold text-white">15% Transparent Fee</span>
+              <span className="text-sm font-bold text-white">Platform Fee (15%)</span>
             </div>
           </div>
 

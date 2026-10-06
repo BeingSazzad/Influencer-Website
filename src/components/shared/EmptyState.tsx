@@ -6,6 +6,7 @@ import {
   Sparkles,
   ArrowRight,
 } from 'lucide-react';
+import { Button } from '@/components/ui';
 
 export type EmptyStateVariant = 'card' | 'plain' | 'dashed';
 export type EmptyStateColor = 'pink' | 'emerald' | 'purple' | 'amber' | 'neutral' | 'blue';
@@ -143,63 +144,46 @@ export function EmptyState({
           {title}
         </h3>
         {typeof description === 'string' ? (
-          <p className="text-sm text-[#73736A] leading-relaxed font-medium">{description}</p>
+          <p className="text-sm text-[#66665E] leading-relaxed font-medium">{description}</p>
         ) : (
-          <div className="text-sm text-[#73736A] leading-relaxed font-medium">{description}</div>
+          <div className="text-sm text-[#66665E] leading-relaxed font-medium">{description}</div>
         )}
       </div>
 
       {/* Actions */}
       {(primaryAction || secondaryAction) && (
         <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-          {primaryAction &&
-            (primaryAction.href ? (
-              <Link
-                href={primaryAction.href}
-                className="px-6 py-3 rounded-full bg-[#0A0A0A] hover:bg-[#FF2D78] text-white text-sm font-bold transition-all shadow-xs flex items-center gap-2 group cursor-pointer"
-              >
-                {primaryAction.icon}
-                <span>{primaryAction.label}</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            ) : (
-              <button
-                type="button"
-                onClick={primaryAction.onClick}
-                className="px-6 py-3 rounded-full bg-[#0A0A0A] hover:bg-[#FF2D78] text-white text-sm font-bold transition-all shadow-xs flex items-center gap-2 group cursor-pointer"
-              >
-                {primaryAction.icon}
-                <span>{primaryAction.label}</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-            ))}
+          {primaryAction && (
+            <Button
+              size="md"
+              variant="primary"
+              href={primaryAction.href}
+              onClick={primaryAction.onClick}
+              icon={primaryAction.icon}
+              iconRight={<ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
+            >
+              {primaryAction.label}
+            </Button>
+          )}
 
-          {secondaryAction &&
-            (secondaryAction.href ? (
-              <Link
-                href={secondaryAction.href}
-                className="px-6 py-3 rounded-full bg-white hover:bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2] text-sm font-bold transition-all shadow-2xs flex items-center gap-2 cursor-pointer"
-              >
-                {secondaryAction.icon}
-                <span>{secondaryAction.label}</span>
-              </Link>
-            ) : (
-              <button
-                type="button"
-                onClick={secondaryAction.onClick}
-                className="px-6 py-3 rounded-full bg-white hover:bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2] text-sm font-bold transition-all shadow-2xs flex items-center gap-2 cursor-pointer"
-              >
-                {secondaryAction.icon}
-                <span>{secondaryAction.label}</span>
-              </button>
-            ))}
+          {secondaryAction && (
+            <Button
+              size="md"
+              variant="secondary"
+              href={secondaryAction.href}
+              onClick={secondaryAction.onClick}
+              icon={secondaryAction.icon}
+            >
+              {secondaryAction.label}
+            </Button>
+          )}
         </div>
       )}
 
       {/* Suggested Quick Chips */}
       {suggestions && suggestions.length > 0 && (
         <div className="pt-4 border-t border-[#E7E7E2]/70 space-y-2">
-          <p className="text-sm font-bold text-[#73736A] uppercase tracking-wider">
+          <p className="text-sm font-bold text-[#66665E] uppercase tracking-wider">
             {suggestionsLabel}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-2">

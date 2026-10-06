@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { toggleSaveCreator } from '@/redux/slices/creatorSlice';
 import { Bookmark, ArrowRight, Instagram, Youtube, Star } from 'lucide-react';
 import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
+import { Button, Badge } from '@/components/ui';
 
 interface CreatorCardProps {
   creator: Creator;
@@ -26,7 +27,7 @@ export function CreatorCard({ creator }: CreatorCardProps) {
   return (
     <div className="bg-white rounded-3xl border border-[#E7E7E2] overflow-hidden hover:border-[#0A0A0A] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col group relative font-sans">
       {/* Creator Portrait Section */}
-      <div className="relative w-full aspect-[1/1] bg-[#F4F4F0] overflow-hidden">
+      <div className="relative w-full aspect-[1/1] bg-[#F4F4F0] overflow-hidden rounded-t-3xl">
         <Link href={`/creators/${creator.id}`} className="block w-full h-full">
           <img
             src={creator.avatar}
@@ -69,13 +70,13 @@ export function CreatorCard({ creator }: CreatorCardProps) {
                 </h3>
                 {creator.verified && <VerifiedBadge size="sm" />}
               </Link>
-              <span className="text-sm font-medium text-[#73736A] block mt-0.5">
+              <span className="text-sm font-medium text-[#66665E] block mt-0.5">
                 {creator.location}
               </span>
             </div>
 
             <div className="text-right shrink-0">
-              <span className="text-sm font-bold text-[#73736A] uppercase tracking-wider block font-sans">
+              <span className="text-sm font-bold text-[#66665E] uppercase tracking-wider block font-sans">
                 FROM
               </span>
               <strong className="text-[#0A0A0A] font-sans text-2xl font-extrabold tracking-tight">
@@ -87,12 +88,9 @@ export function CreatorCard({ creator }: CreatorCardProps) {
           {/* Category Tags Pills */}
           <div className="flex flex-wrap gap-1.5 mb-3.5">
             {creator.categories.slice(0, 3).map((cat) => (
-              <span
-                key={cat}
-                className="text-xs font-bold px-2.5 py-0.5 rounded-full font-sans bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]"
-              >
+              <Badge key={cat} variant="neutral" size="sm">
                 {cat}
-              </span>
+              </Badge>
             ))}
           </div>
 
@@ -135,14 +133,16 @@ export function CreatorCard({ creator }: CreatorCardProps) {
           </div>
         </div>
 
-        {/* View Profile Action Link */}
-        <Link
+        {/* View Profile Action Button */}
+        <Button
           href={`/creators/${creator.id}`}
-          className="inline-flex items-center justify-center gap-2 w-full h-10 text-xs font-extrabold text-[#0A0A0A] hover:text-white bg-[#FAFAF8] hover:bg-[#0A0A0A] rounded-full transition-all border border-[#E7E7E2] hover:border-[#0A0A0A] font-sans group/btn shadow-2xs cursor-pointer"
+          size="md"
+          variant="secondary"
+          fullWidth
+          iconRight={<ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />}
         >
-          <span>View Profile</span>
-          <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
-        </Link>
+          View Profile
+        </Button>
       </div>
     </div>
   );

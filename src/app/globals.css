@@ -17,18 +17,26 @@
   --border-default: #E7E7E2;
   --border-strong: #D2D2CA;
   --text-primary: #0A0A0A;
-  --text-secondary: #73736A;
+  --text-secondary: #66665E;
   --text-body: #44443E;
   --accent-pink: #FF2D78;
   --accent-green: #23744D;
   --accent-green-bg: #EEF7F2;
 
-  /* Grid & Spacing Standards */
-  --radius-card: 24px;
-  --radius-inner: 16px;
+  /* Grid & Radius Design Tokens */
+  --radius-container: 28px;
+  --radius-card: 20px;
+  --radius-input: 14px;
+  --radius-inner: 12px;
+  --radius-sm: 8px;
   --radius-pill: 9999px;
   --max-w-page: 1152px;
   --max-w-wide: 1600px;
+
+  /* Button Height Standards */
+  --btn-h-lg: 48px;
+  --btn-h-md: 40px;
+  --btn-h-sm: 32px;
 }
 
 /* Accessibility Focus Rings (WCAG 2.2 AA) */
@@ -151,66 +159,398 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Senior Product Designer Card Styles */
+/* ==========================================================================
+   GLOBAL DESIGN SYSTEM: CARDS & CONTAINERS
+   ========================================================================== */
+.app-card,
 .influverse-card {
   background: #FFFFFF;
-  border: 1px solid #E7E7E2;
-  border-radius: 20px;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-card);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.app-card-interactive {
+  background: #FFFFFF;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-card);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.app-card-interactive:hover,
 .influverse-card:hover {
   border-color: #0A0A0A;
   box-shadow: 0 16px 36px -12px rgba(10, 10, 10, 0.08);
   transform: translateY(-2px);
 }
 
-/* Primary Button Styling */
-.btn-primary {
-  font-family: var(--font-outfit);
-  background-color: #0A0A0A;
-  color: #FAFAFA;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 20px;
-  border-radius: 9999px;
-  height: 48px;
-  padding: 0 24px;
+.app-card-subtle {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-card);
+}
+
+.app-card-container {
+  border-radius: var(--radius-container);
+}
+
+.app-panel-dark {
+  background: #0A0A0A;
+  color: #FFFFFF;
+  border-radius: var(--radius-container);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ==========================================================================
+   GLOBAL DESIGN SYSTEM: BUTTONS
+   ========================================================================== */
+.btn-base {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-base:disabled,
+.btn-base[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Button Standard Sizes */
+.btn-lg {
+  height: var(--btn-h-lg);
+  padding: 0 24px;
+  font-size: 15px;
+  border-radius: var(--radius-pill);
+  gap: 8px;
+}
+
+@media (min-width: 640px) {
+  .btn-lg {
+    font-size: 16px;
+    padding: 0 28px;
+  }
+}
+
+.btn-md {
+  height: var(--btn-h-md);
+  padding: 0 20px;
+  font-size: 14px;
+  border-radius: var(--radius-pill);
+  gap: 8px;
+}
+
+.btn-sm {
+  height: var(--btn-h-sm);
+  padding: 0 14px;
+  font-size: 12px;
+  border-radius: var(--radius-pill);
+  gap: 6px;
+}
+
+/* Square / Icon-only variations */
+.btn-icon-lg {
+  width: var(--btn-h-lg);
+  height: var(--btn-h-lg);
+  padding: 0;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon-md {
+  width: var(--btn-h-md);
+  height: var(--btn-h-md);
+  padding: 0;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon-sm {
+  width: var(--btn-h-sm);
+  height: var(--btn-h-sm);
+  padding: 0;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Radius Shape Overrides */
+.btn-rounded {
+  border-radius: var(--radius-input) !important;
+}
+
+.btn-rounded-card {
+  border-radius: var(--radius-card) !important;
+}
+
+/* Explicit Card and Container Border Radius Utilities */
+.rounded-card {
+  border-radius: 28px !important;
+}
+
+.rounded-container {
+  border-radius: 28px !important;
+}
+
+.rounded-input {
+  border-radius: 14px !important;
+}
+
+.rounded-inner {
+  border-radius: 12px !important;
+}
+
+/* Eradicate browser default black rectangle focus outline on inputs */
+input:focus,
+input:focus-visible,
+textarea:focus,
+textarea:focus-visible,
+select:focus,
+select:focus-visible {
+  outline: none !important;
+  box-shadow: none;
+}
+
+/* Button Variants */
+.btn-primary {
+  background-color: #0A0A0A;
+  color: #FAFAFA;
+  border: 1px solid transparent;
 }
 
 .btn-primary:hover {
   background-color: #FF2D78;
   color: #FFFFFF;
+  border-color: #FF2D78;
   transform: translateY(-1px);
-  box-shadow: 0 8px 20px -4px rgba(255, 45, 120, 0.4);
+  box-shadow: 0 8px 20px -4px rgba(255, 45, 120, 0.35);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
 }
 
 .btn-pink {
-  font-family: var(--font-outfit);
   background-color: #FF2D78;
   color: #FFFFFF;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 20px;
-  border-radius: 9999px;
-  height: 48px;
-  padding: 0 24px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid transparent;
   box-shadow: 0 4px 14px -2px rgba(255, 45, 120, 0.3);
 }
 
 .btn-pink:hover {
   background-color: #E01E69;
   color: #FFFFFF;
+  border-color: #E01E69;
   transform: translateY(-1px);
   box-shadow: 0 8px 24px -4px rgba(255, 45, 120, 0.45);
+}
+
+.btn-pink:active {
+  transform: scale(0.98);
+}
+
+.btn-secondary,
+.btn-outline {
+  background-color: #FFFFFF;
+  color: #0A0A0A;
+  border: 1px solid var(--border-default);
+}
+
+.btn-secondary:hover,
+.btn-outline:hover {
+  border-color: #0A0A0A;
+  background-color: #FAFAF8;
+  color: #0A0A0A;
+  box-shadow: 0 2px 8px -2px rgba(10, 10, 10, 0.06);
+}
+
+.btn-secondary:active,
+.btn-outline:active {
+  transform: scale(0.98);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--text-secondary);
+  border: 1px solid transparent;
+}
+
+.btn-ghost:hover {
+  background-color: var(--bg-subtle);
+  color: #0A0A0A;
+}
+
+.btn-white {
+  background-color: #FFFFFF;
+  color: #0A0A0A;
+  border: 1px solid transparent;
+  box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.08);
+}
+
+.btn-white:hover {
+  background-color: #FF2D78;
+  color: #FFFFFF;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px -4px rgba(255, 45, 120, 0.45);
+}
+
+.btn-white:active {
+  transform: scale(0.98);
+}
+
+.btn-dark-outline {
+  background-color: transparent;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.btn-dark-outline:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+.btn-dark-outline:active {
+  transform: scale(0.98);
+}
+
+.btn-danger {
+  background-color: #FFF1F0;
+  color: #CF1322;
+  border: 1px solid #FFA39E;
+}
+
+.btn-danger:hover {
+  background-color: #CF1322;
+  color: #FFFFFF;
+  border-color: #CF1322;
+}
+
+/* ==========================================================================
+   GLOBAL DESIGN SYSTEM: BADGES & CHIPS
+   ========================================================================== */
+.badge-base {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  line-height: 1;
+  border-radius: var(--radius-pill);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.badge-md {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.badge-sm {
+  padding: 4px 10px;
+  font-size: 11px;
+}
+
+.badge-dark {
+  background-color: #0A0A0A;
+  color: #FFFFFF;
+  border: 1px solid #222222;
+}
+
+/* ==========================================================================
+   GLOBAL DESIGN SYSTEM: TYPOGRAPHY HIERARCHY
+   ========================================================================== */
+.type-display {
+  font-family: var(--font-sans);
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: #0A0A0A;
+}
+
+.type-h1 {
+  font-family: var(--font-sans);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: #0A0A0A;
+}
+
+.type-h2 {
+  font-family: var(--font-sans);
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: #0A0A0A;
+}
+
+.type-h3 {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  color: #0A0A0A;
+}
+
+.type-h4 {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: #0A0A0A;
+}
+
+.type-body-lg {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.type-body {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.type-caption {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  color: var(--text-secondary);
+}
+
+.type-overline {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 /* Ant Design Global Button & Input Standardization */
@@ -404,6 +744,14 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #B0B0A8;
+}
+
+/* Horizontal scroll rows (tabs, thumbnails) without a visible scrollbar */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 /* Infinite Marquee Auto Scroll */

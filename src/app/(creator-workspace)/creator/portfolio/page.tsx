@@ -275,7 +275,7 @@ function CreatorPortfolioContent() {
               <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                 Portfolio
               </h2>
-              <p className="text-xs sm:text-sm text-[#73736A] mt-1 font-medium">
+              <p className="text-xs sm:text-sm text-[#66665E] mt-1 font-medium">
                 Showcase of your past work and collaborations.
               </p>
             </div>
@@ -296,7 +296,7 @@ function CreatorPortfolioContent() {
                   className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
                     platformFilter === tab.key
                       ? 'bg-[#0A0A0A] text-white shadow-2xs'
-                      : 'text-[#73736A] hover:text-[#0A0A0A]'
+                      : 'text-[#66665E] hover:text-[#0A0A0A]'
                   }`}
                 >
                   <span>{tab.label}</span>
@@ -387,7 +387,7 @@ function CreatorPortfolioContent() {
                           <button
                             type="button"
                             onClick={(e) => e.stopPropagation()}
-                            className="p-1 rounded-lg text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8] transition-colors cursor-pointer shrink-0"
+                            className="p-1 rounded-lg text-[#66665E] hover:text-[#0A0A0A] hover:bg-[#FAFAF8] transition-colors cursor-pointer shrink-0"
                             title="Work options"
                           >
                             <MoreVertical className="w-4 h-4" />
@@ -396,7 +396,7 @@ function CreatorPortfolioContent() {
                       </div>
 
                       {item.deliverableType && (
-                        <div className="text-xs text-[#73736A] font-medium line-clamp-1">
+                        <div className="text-xs text-[#66665E] font-medium line-clamp-1">
                           {item.deliverableType}
                         </div>
                       )}
@@ -407,7 +407,7 @@ function CreatorPortfolioContent() {
             </div>
           ) : (
             <EmptyState
-              icon={<Film className="w-8 h-8 text-[#73736A]" />}
+              icon={<Film className="w-8 h-8 text-[#66665E]" />}
               title="No work found"
               description="Upload your creative projects or import directly from completed campaigns."
               primaryAction={{
@@ -441,7 +441,7 @@ function CreatorPortfolioContent() {
           {/* Optional: Import from Campaign */}
           {orders && orders.length > 0 && (
             <div className="space-y-1">
-              <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider block">
+              <label className="text-xs font-bold text-[#66665E] uppercase tracking-wider block">
                 Import from Campaign
               </label>
               <Select
@@ -459,7 +459,7 @@ function CreatorPortfolioContent() {
 
           {/* Media Asset */}
           <div className="space-y-1.5">
-            <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider block">
+            <label className="text-xs font-bold text-[#66665E] uppercase tracking-wider block">
               Media Asset <span className="text-rose-500">*</span>
             </label>
 
@@ -509,7 +509,7 @@ function CreatorPortfolioContent() {
                 <div className="text-sm font-bold text-[#0A0A0A]">
                   Click to upload image or video
                 </div>
-                <p className="text-xs text-[#73736A]">
+                <p className="text-xs text-[#66665E]">
                   Supports MP4, MOV, PNG, JPG
                 </p>
               </div>
@@ -520,7 +520,7 @@ function CreatorPortfolioContent() {
               <button
                 type="button"
                 onClick={() => setShowUrlInput(!showUrlInput)}
-                className="text-xs text-[#73736A] hover:text-[#0A0A0A] font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
+                className="text-xs text-[#66665E] hover:text-[#0A0A0A] font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
               >
                 <Link2 className="w-3 h-3" />
                 <span>{showUrlInput ? 'Hide link input' : 'Paste media link instead (URL)'}</span>
@@ -534,7 +534,7 @@ function CreatorPortfolioContent() {
                     onChange={(e) => setMediaUrl(e.target.value)}
                     placeholder="https://... image or video URL"
                     className="rounded-xl h-10 text-sm font-medium border-[#E7E7E2]"
-                    prefix={<Link2 className="w-3 h-3 text-[#73736A]" />}
+                    prefix={<Link2 className="w-3 h-3 text-[#66665E]" />}
                     allowClear
                   />
                 </div>
@@ -545,7 +545,7 @@ function CreatorPortfolioContent() {
           {/* Work Title & Platform */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="space-y-1">
-              <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider block">
+              <label className="text-xs font-bold text-[#66665E] uppercase tracking-wider block">
                 Work Title <span className="text-rose-500">*</span>
               </label>
               <Input
@@ -558,7 +558,7 @@ function CreatorPortfolioContent() {
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider block">
+              <label className="text-xs font-bold text-[#66665E] uppercase tracking-wider block">
                 Platform
               </label>
               <Select
@@ -579,7 +579,7 @@ function CreatorPortfolioContent() {
           {/* Brand Name & Deliverable Format */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="space-y-1">
-              <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider block">
+              <label className="text-xs font-bold text-[#66665E] uppercase tracking-wider block">
                 Brand
               </label>
               <Input
@@ -591,7 +591,7 @@ function CreatorPortfolioContent() {
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider block">
+              <label className="text-xs font-bold text-[#66665E] uppercase tracking-wider block">
                 Format
               </label>
               <Input
@@ -605,7 +605,7 @@ function CreatorPortfolioContent() {
 
           {/* Details / Description */}
           <div className="space-y-1">
-            <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider block">
+            <label className="text-xs font-bold text-[#66665E] uppercase tracking-wider block">
               Description
             </label>
             <Input.TextArea
@@ -656,7 +656,7 @@ export default function CreatorPortfolioPage() {
   return (
     <Suspense
       fallback={
-        <div className="p-8 text-center text-sm font-bold text-[#73736A]">
+        <div className="p-8 text-center text-sm font-bold text-[#66665E]">
           Loading portfolio...
         </div>
       }

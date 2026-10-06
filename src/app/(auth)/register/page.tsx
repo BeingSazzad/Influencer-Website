@@ -122,7 +122,7 @@ export default function RegisterPage() {
             <h1 className="text-3xl sm:text-4xl font-black text-[#0A0A0A] tracking-tight">
               Create your account
             </h1>
-            <p className="text-sm sm:text-base text-[#73736A] font-medium leading-[24px]">
+            <p className="text-sm sm:text-base text-[#66665E] font-medium leading-[24px]">
               Choose your role to get started with verified creator partnerships.
             </p>
           </div>
@@ -130,7 +130,7 @@ export default function RegisterPage() {
           <div className="bg-white p-6 sm:p-8 shadow-xl shadow-black/[0.04] rounded-3xl border border-[#D2D2CA] space-y-6">
             {/* Step 1: Role Selector */}
             <div className="space-y-3">
-              <label className="block text-xs font-black uppercase tracking-wider text-[#73736A]">
+              <label className="block text-xs font-black uppercase tracking-wider text-[#66665E]">
                 1. Select your account role
               </label>
 
@@ -160,7 +160,7 @@ export default function RegisterPage() {
 
                   <div>
                     <h3 className="font-black text-sm text-[#0A0A0A]">Brand / Agency</h3>
-                    <p className="text-sm text-[#73736A] mt-1 leading-relaxed font-medium">
+                    <p className="text-sm text-[#66665E] mt-1 leading-relaxed font-medium">
                       Hire vetted talent with escrow guarantee.
                     </p>
                   </div>
@@ -191,7 +191,7 @@ export default function RegisterPage() {
 
                   <div>
                     <h3 className="font-black text-sm text-[#0A0A0A]">Content Creator</h3>
-                    <p className="text-sm text-[#73736A] mt-1 leading-relaxed font-medium">
+                    <p className="text-sm text-[#66665E] mt-1 leading-relaxed font-medium">
                       Set rates, earn EUR & keep 100%.
                     </p>
                   </div>
@@ -203,7 +203,7 @@ export default function RegisterPage() {
 
             {/* Step 2: Role Form */}
             <form onSubmit={handleRegister} className="space-y-4">
-              <label className="block text-xs font-black uppercase tracking-wider text-[#73736A] mb-1">
+              <label className="block text-xs font-black uppercase tracking-wider text-[#66665E] mb-1">
                 2. Enter your {role === 'brand' ? 'company' : 'creator'} details
               </label>
 
@@ -216,7 +216,7 @@ export default function RegisterPage() {
                         Brand name
                       </label>
                       <div className="relative flex items-center">
-                        <Building className="w-4 h-4 text-[#73736A] absolute left-3.5 pointer-events-none" />
+                        <Building className="w-4 h-4 text-[#66665E] absolute left-3.5 pointer-events-none" />
                         <input
                           type="text"
                           placeholder="e.g. Aura Skincare Paris"
@@ -233,7 +233,7 @@ export default function RegisterPage() {
                         Full name
                       </label>
                       <div className="relative flex items-center">
-                        <UserIcon className="w-4 h-4 text-[#73736A] absolute left-3.5 pointer-events-none" />
+                        <UserIcon className="w-4 h-4 text-[#66665E] absolute left-3.5 pointer-events-none" />
                         <input
                           type="text"
                           placeholder="e.g. Elena Rostova"
@@ -252,7 +252,7 @@ export default function RegisterPage() {
                         Email
                       </label>
                       <div className="relative flex items-center">
-                        <Mail className="w-4 h-4 text-[#73736A] absolute left-3.5 pointer-events-none" />
+                        <Mail className="w-4 h-4 text-[#66665E] absolute left-3.5 pointer-events-none" />
                         <input
                           type="email"
                           placeholder="elena@company.com"
@@ -269,7 +269,7 @@ export default function RegisterPage() {
                         Password
                       </label>
                       <div className="relative flex items-center">
-                        <Lock className="w-4 h-4 text-[#73736A] absolute left-3.5 pointer-events-none" />
+                        <Lock className="w-4 h-4 text-[#66665E] absolute left-3.5 pointer-events-none" />
                         <input
                           type={showPassword ? 'text' : 'password'}
                           placeholder="Create password"
@@ -281,7 +281,7 @@ export default function RegisterPage() {
                         <button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-3.5 text-[#73736A] hover:text-[#0A0A0A] transition-colors p-1"
+                          className="absolute right-3.5 text-[#66665E] hover:text-[#0A0A0A] transition-colors p-1"
                           aria-label={showPassword ? 'Hide password' : 'Show password'}
                         >
                           {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -307,7 +307,7 @@ export default function RegisterPage() {
                         <option value="Food & Beverage">Food & Beverage</option>
                         <option value="Travel & Hospitality">Travel & Hospitality</option>
                       </select>
-                      <ChevronDown className="w-4 h-4 text-[#73736A] absolute right-3.5 pointer-events-none" />
+                      <ChevronDown className="w-4 h-4 text-[#66665E] absolute right-3.5 pointer-events-none" />
                     </div>
                   </div>
                 </>
@@ -320,7 +320,7 @@ export default function RegisterPage() {
                         Full name
                       </label>
                       <div className="relative flex items-center">
-                        <UserIcon className="w-4 h-4 text-[#73736A] absolute left-3.5 pointer-events-none" />
+                        <UserIcon className="w-4 h-4 text-[#66665E] absolute left-3.5 pointer-events-none" />
                         <input
                           type="text"
                           placeholder="e.g. Sophie Kim"
@@ -357,7 +357,7 @@ export default function RegisterPage() {
                         )}
                       </div>
                       <div className="relative flex items-center">
-                        <AtSign className="w-4 h-4 text-[#73736A] absolute left-3.5 pointer-events-none" />
+                        <AtSign className="w-4 h-4 text-[#66665E] absolute left-3.5 pointer-events-none" />
                         <input
                           type="text"
                           placeholder="sophiekim"
@@ -411,7 +411,7 @@ export default function RegisterPage() {
                         Email
                       </label>
                       <div className="relative flex items-center">
-                        <Mail className="w-4 h-4 text-[#73736A] absolute left-3.5 pointer-events-none" />
+                        <Mail className="w-4 h-4 text-[#66665E] absolute left-3.5 pointer-events-none" />
                         <input
                           type="email"
                           placeholder="sophie@creatorhub.com"
@@ -428,7 +428,7 @@ export default function RegisterPage() {
                         Password
                       </label>
                       <div className="relative flex items-center">
-                        <Lock className="w-4 h-4 text-[#73736A] absolute left-3.5 pointer-events-none" />
+                        <Lock className="w-4 h-4 text-[#66665E] absolute left-3.5 pointer-events-none" />
                         <input
                           type={showPassword ? 'text' : 'password'}
                           placeholder="Create password"
@@ -440,7 +440,7 @@ export default function RegisterPage() {
                         <button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-3.5 text-[#73736A] hover:text-[#0A0A0A] transition-colors p-1"
+                          className="absolute right-3.5 text-[#66665E] hover:text-[#0A0A0A] transition-colors p-1"
                           aria-label={showPassword ? 'Hide password' : 'Show password'}
                         >
                           {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -465,7 +465,7 @@ export default function RegisterPage() {
                           <option value="youtube">YouTube</option>
                           <option value="ugc">UGC Ads</option>
                         </select>
-                        <ChevronDown className="w-4 h-4 text-[#73736A] absolute right-3.5 pointer-events-none" />
+                        <ChevronDown className="w-4 h-4 text-[#66665E] absolute right-3.5 pointer-events-none" />
                       </div>
                     </div>
 
@@ -487,7 +487,7 @@ export default function RegisterPage() {
                           <option value="Tech & Gadgets">Tech & Gadgets</option>
                           <option value="Lifestyle">Lifestyle</option>
                         </select>
-                        <ChevronDown className="w-4 h-4 text-[#73736A] absolute right-3.5 pointer-events-none" />
+                        <ChevronDown className="w-4 h-4 text-[#66665E] absolute right-3.5 pointer-events-none" />
                       </div>
                     </div>
                   </div>
@@ -504,7 +504,7 @@ export default function RegisterPage() {
 
             {/* Login Link */}
             <div className="text-center pt-3 border-t border-[#E7E7E2]">
-              <p className="text-sm text-[#73736A] font-medium">
+              <p className="text-sm text-[#66665E] font-medium">
                 Already have an account?{' '}
                 <Link href="/login" className="font-bold text-[#0A0A0A] hover:text-[#FF2D78] underline">
                   Log in

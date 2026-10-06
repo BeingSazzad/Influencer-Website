@@ -23,7 +23,7 @@ const sections = [
     badge: 'Core Guarantee',
     highlight: true,
     content: [
-      'Influverse operates a non-custodial milestone escrow mechanism for all campaign agreements. When a Brand issues or accepts a collaboration offer, the total contract amount plus a transparent 15% marketplace platform fee is immediately authorized and funded into secure escrow.',
+      'Influverse operates a non-custodial milestone escrow mechanism for all campaign agreements. When a Brand issues or accepts a collaboration offer, the total contract amount plus the Platform Fee (15%) is immediately authorized and funded into secure escrow.',
       'Escrow funds remain securely held in escrow until the Creator completes all brief requirements and the Brand reviews and approves the submitted deliverables.',
       'Creators receive 100% of their base quote without hidden payout deductions. Payouts are transferred in EUR (€) via SEPA or SWIFT bank transfer within 48 business hours of deliverable approval.',
     ],
@@ -77,11 +77,11 @@ export default function TermsPage() {
           Terms of Service
         </h1>
 
-        <p className="text-sm sm:text-base text-[#73736A] font-medium leading-relaxed max-w-2xl">
+        <p className="text-sm sm:text-base text-[#66665E] font-medium leading-relaxed max-w-2xl">
           Clear, balanced, and transparent terms governing creator hiring, 15% escrow protection, intellectual property usage, and milestone fulfillment.
         </p>
 
-        <div className="pt-2 flex flex-wrap items-center gap-2 text-sm text-[#73736A]">
+        <div className="pt-2 flex flex-wrap items-center gap-2 text-sm text-[#66665E]">
           <span className="font-semibold text-[#0A0A0A]">Last Modified:</span>
           <span>September 2026</span>
           <span>•</span>
@@ -127,7 +127,7 @@ export default function TermsPage() {
           <h3 className="text-2xl font-extrabold text-[#0A0A0A]">
             Have questions about our escrow or legal framework?
           </h3>
-          <p className="text-sm text-[#73736A]">
+          <p className="text-sm text-[#66665E]">
             Our compliance and trust team is available 24/7 to assist.
           </p>
         </div>

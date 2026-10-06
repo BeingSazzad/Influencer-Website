@@ -303,7 +303,7 @@ function SearchResultsContent() {
       <section className="bg-white border-b border-[#E7E7E2] pt-8 pb-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto space-y-6">
           {/* Breadcrumb Navigation */}
-          <div className="flex items-center gap-2 text-sm font-semibold text-[#73736A]">
+          <div className="flex items-center gap-2 text-sm font-semibold text-[#66665E]">
             <Link href="/" className="hover:text-[#0A0A0A] transition-colors">
               Home
             </Link>
@@ -326,7 +326,7 @@ function SearchResultsContent() {
             >
               {/* 1. Keyword / Name Input */}
               <div ref={searchInputRef} className="flex-1 flex items-center pl-3.5 pr-2 py-1.5 w-full min-w-[180px] relative">
-                <Search className="w-4 h-4 text-[#73736A] mr-2.5 shrink-0" />
+                <Search className="w-4 h-4 text-[#66665E] mr-2.5 shrink-0" />
                 <input
                   type="text"
                   placeholder="Search by creator name, niche, bio, or tags..."
@@ -348,7 +348,7 @@ function SearchResultsContent() {
                       setSearchQuery('');
                       handleExecuteSearch('');
                     }}
-                    className="w-5 h-5 rounded-full hover:bg-[#E7E7E2] text-[#73736A] flex items-center justify-center mr-1 transition-colors cursor-pointer"
+                    className="w-5 h-5 rounded-full hover:bg-[#E7E7E2] text-[#66665E] flex items-center justify-center mr-1 transition-colors cursor-pointer"
                     title="Clear search"
                   >
                     <X className="w-3 h-3" />
@@ -358,7 +358,7 @@ function SearchResultsContent() {
                 {/* Instant Suggestions Dropdown */}
                 {showSuggestions && searchQuery.trim().length > 0 && (
                   <div className="absolute top-full left-0 mt-3 w-[calc(100vw-3rem)] sm:w-[380px] bg-white rounded-2xl border border-[#E7E7E2] shadow-2xl p-3 z-50 animate-in fade-in-0 zoom-in-95 duration-150">
-                    <div className="flex items-center justify-between pb-2 border-b border-[#F4F4F0] px-1 text-xs font-bold uppercase tracking-wider text-[#73736A]">
+                    <div className="flex items-center justify-between pb-2 border-b border-[#F4F4F0] px-1 text-xs font-bold uppercase tracking-wider text-[#66665E]">
                       <span>Matching Creators</span>
                       <span className="text-[#FF2D78]">Press Enter</span>
                     </div>
@@ -386,7 +386,7 @@ function SearchResultsContent() {
                                   <span className="truncate">{c.name}</span>
                                   {c.verified && <VerifiedBadge size="xs" />}
                                 </div>
-                                <div className="text-sm text-[#73736A] truncate">
+                                <div className="text-sm text-[#66665E] truncate">
                                   @{c.handle.replace('@', '')} • {c.categories[0]}
                                 </div>
                               </div>
@@ -399,7 +399,7 @@ function SearchResultsContent() {
                         ))}
                       </div>
                     ) : (
-                      <div className="py-3 text-center text-sm text-[#73736A]">
+                      <div className="py-3 text-center text-sm text-[#66665E]">
                         No direct matches. Press search for broader catalog.
                       </div>
                     )}
@@ -427,7 +427,7 @@ function SearchResultsContent() {
                     </span>
                   </div>
                   <ChevronDown
-                    className={`w-4 h-4 text-[#73736A] transition-transform duration-200 shrink-0 ${
+                    className={`w-4 h-4 text-[#66665E] transition-transform duration-200 shrink-0 ${
                       isPlatformOpen ? 'rotate-180 text-[#0A0A0A]' : ''
                     }`}
                   />
@@ -486,7 +486,7 @@ function SearchResultsContent() {
                     </span>
                   </div>
                   <ChevronDown
-                    className={`w-4 h-4 text-[#73736A] transition-transform duration-200 shrink-0 ${
+                    className={`w-4 h-4 text-[#66665E] transition-transform duration-200 shrink-0 ${
                       isCategoryOpen ? 'rotate-180 text-[#0A0A0A]' : ''
                     }`}
                   />
@@ -535,7 +535,7 @@ function SearchResultsContent() {
 
           {/* Quick Filter Tag Pills */}
           <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none text-xs">
-            <span className="text-[#73736A] font-bold uppercase tracking-wider text-xs shrink-0 mr-1">
+            <span className="text-[#66665E] font-bold uppercase tracking-wider text-xs shrink-0 mr-1">
               Popular:
             </span>
             {quickPills.map((pill) => {
@@ -576,7 +576,7 @@ function SearchResultsContent() {
               <h1 className="text-2xl sm:text-3xl font-black text-[#0A0A0A] tracking-tight">
                 {pageTitle}
               </h1>
-              <p className="text-sm font-medium text-[#73736A] mt-1">
+              <p className="text-sm font-medium text-[#66665E] mt-1">
                 Showing{' '}
                 <span className="font-extrabold text-[#0A0A0A]">
                   {filteredCreators.length}
@@ -589,8 +589,8 @@ function SearchResultsContent() {
             <div className="flex items-center gap-3 self-start md:self-auto">
               {/* Gender Filter Dropdown */}
               <div className="flex items-center gap-2 bg-white px-3 py-2 rounded-2xl border border-[#E7E7E2] shadow-2xs">
-                <Users className="w-3.5 h-3.5 text-[#73736A]" />
-                <span className="text-sm font-bold text-[#73736A]">Gender:</span>
+                <Users className="w-3.5 h-3.5 text-[#66665E]" />
+                <span className="text-sm font-bold text-[#66665E]">Gender:</span>
                 <select
                   value={gender}
                   onChange={(e) => {
@@ -608,8 +608,8 @@ function SearchResultsContent() {
 
               {/* Sort By Dropdown */}
               <div className="flex items-center gap-2 bg-white px-3 py-2 rounded-2xl border border-[#E7E7E2] shadow-2xs">
-                <ArrowUpDown className="w-3.5 h-3.5 text-[#73736A]" />
-                <span className="text-sm font-bold text-[#73736A]">Sort:</span>
+                <ArrowUpDown className="w-3.5 h-3.5 text-[#66665E]" />
+                <span className="text-sm font-bold text-[#66665E]">Sort:</span>
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as any)}
@@ -631,7 +631,7 @@ function SearchResultsContent() {
                   className={`p-1.5 rounded-xl transition-all cursor-pointer ${
                     viewMode === 'grid'
                       ? 'bg-[#0A0A0A] text-white shadow-2xs'
-                      : 'text-[#73736A] hover:text-[#0A0A0A]'
+                      : 'text-[#66665E] hover:text-[#0A0A0A]'
                   }`}
                   title="Grid View"
                 >
@@ -643,7 +643,7 @@ function SearchResultsContent() {
                   className={`p-1.5 rounded-xl transition-all cursor-pointer ${
                     viewMode === 'list'
                       ? 'bg-[#0A0A0A] text-white shadow-2xs'
-                      : 'text-[#73736A] hover:text-[#0A0A0A]'
+                      : 'text-[#66665E] hover:text-[#0A0A0A]'
                   }`}
                   title="List View"
                 >
@@ -656,7 +656,7 @@ function SearchResultsContent() {
           {/* Active Filter Chips */}
           {hasActiveFilters && (
             <div className="flex items-center gap-2 flex-wrap pt-1">
-              <span className="text-sm font-bold text-[#73736A]">Active filters:</span>
+              <span className="text-sm font-bold text-[#66665E]">Active filters:</span>
 
               {searchQuery.trim() && (
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E7E7E2] text-sm font-bold text-[#0A0A0A] shadow-2xs">
@@ -767,19 +767,19 @@ function SearchResultsContent() {
                         >
                           {creator.name}
                         </Link>
-                        <span className="text-sm font-bold text-[#73736A]">
+                        <span className="text-sm font-bold text-[#66665E]">
                           @{creator.handle.replace('@', '')}
                         </span>
                       </div>
 
-                      <div className="flex items-center gap-2 text-sm font-semibold text-[#73736A] mt-1">
+                      <div className="flex items-center gap-2 text-sm font-semibold text-[#66665E] mt-1">
                         <MapPin className="w-3.5 h-3.5" />
                         <span>{creator.location}</span>
                         <span>•</span>
                         <div className="flex items-center gap-1 text-[#0A0A0A] font-extrabold">
                           <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                           <span>{creator.rating}</span>
-                          <span className="text-[#73736A] font-normal">({creator.reviewsCount})</span>
+                          <span className="text-[#66665E] font-normal">({creator.reviewsCount})</span>
                         </div>
                       </div>
 
@@ -803,7 +803,7 @@ function SearchResultsContent() {
                         <div className="text-xs font-black text-[#0A0A0A]">
                           {creator.platforms.instagram.followersFormatted}
                         </div>
-                        <div className="text-sm font-bold text-[#73736A]">Instagram</div>
+                        <div className="text-sm font-bold text-[#66665E]">Instagram</div>
                       </div>
                     )}
                     {creator.platforms.tiktok && (
@@ -811,7 +811,7 @@ function SearchResultsContent() {
                         <div className="text-xs font-black text-[#0A0A0A]">
                           {creator.platforms.tiktok.followersFormatted}
                         </div>
-                        <div className="text-sm font-bold text-[#73736A]">TikTok</div>
+                        <div className="text-sm font-bold text-[#66665E]">TikTok</div>
                       </div>
                     )}
                     {creator.platforms.youtube && (
@@ -819,7 +819,7 @@ function SearchResultsContent() {
                         <div className="text-xs font-black text-[#0A0A0A]">
                           {creator.platforms.youtube.followersFormatted}
                         </div>
-                        <div className="text-sm font-bold text-[#73736A]">YouTube</div>
+                        <div className="text-sm font-bold text-[#66665E]">YouTube</div>
                       </div>
                     )}
                   </div>
@@ -827,7 +827,7 @@ function SearchResultsContent() {
                   {/* Right: Pricing & CTA */}
                   <div className="flex items-center justify-between md:justify-end gap-4 w-full md:w-auto pt-4 md:pt-0 border-t md:border-t-0 border-[#F4F4F0]">
                     <div className="text-left md:text-right">
-                      <span className="text-sm font-bold text-[#73736A] uppercase tracking-wider block">
+                      <span className="text-sm font-bold text-[#66665E] uppercase tracking-wider block">
                         Packages From
                       </span>
                       <span className="text-2xl font-extrabold text-[#0A0A0A]">
@@ -858,14 +858,14 @@ function SearchResultsContent() {
               <h3 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                 No creators matched your search criteria
               </h3>
-              <p className="text-sm text-[#73736A] max-w-md mx-auto leading-relaxed">
+              <p className="text-sm text-[#66665E] max-w-md mx-auto leading-relaxed">
                 We couldn&apos;t find any verified creators matching &ldquo;{searchQuery || platform || category}&rdquo;. Try broadening your keywords or removing some filters.
               </p>
             </div>
 
             {/* Quick Explore Categories */}
             <div className="space-y-3 pt-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#66665E]">
                 Explore Popular Categories:
               </span>
               <div className="flex items-center justify-center gap-2 flex-wrap">

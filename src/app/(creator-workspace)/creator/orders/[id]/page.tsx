@@ -136,15 +136,15 @@ export default function CreatorOrderFulfilmentPage() {
                     {order.platform}
                   </span>
                 </div>
-                <p className="text-sm text-[#73736A] font-medium">{order.packageTitle}</p>
+                <p className="text-sm text-[#66665E] font-medium">{order.packageTitle}</p>
               </div>
             </div>
 
             <div className="flex items-center gap-3 self-start sm:self-auto bg-[#FAFAF8] px-5 py-3.5 rounded-2xl border border-[#E7E7E2]">
               <div className="text-left sm:text-right">
-                <div className="text-sm font-semibold text-[#73736A] uppercase tracking-wider">Your Guaranteed Payout</div>
+                <div className="text-sm font-semibold text-[#66665E] uppercase tracking-wider">Your Guaranteed Payout</div>
                 <div className="text-2xl sm:text-3xl font-extrabold text-[#0A0A0A] tracking-tight">€{order.basePriceEur}</div>
-                <div className="text-xs text-[#73736A] font-semibold">100% Escrow Funded by Brand</div>
+                <div className="text-xs text-[#66665E] font-semibold">100% Escrow Funded by Brand</div>
               </div>
             </div>
           </div>
@@ -161,7 +161,7 @@ export default function CreatorOrderFulfilmentPage() {
                   <h3 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                     Submit Deliverables
                   </h3>
-                  <p className="text-sm text-[#73736A] mt-0.5">
+                  <p className="text-sm text-[#66665E] mt-0.5">
                     Upload or link your completed video draft for brand sign-off.
                   </p>
                 </div>
@@ -196,7 +196,7 @@ export default function CreatorOrderFulfilmentPage() {
                       className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-sm font-bold transition-all cursor-pointer ${
                         submissionMode === 'drive'
                           ? 'bg-[#0A0A0A] text-white shadow-xs'
-                          : 'text-[#73736A] hover:text-[#0A0A0A]'
+                          : 'text-[#66665E] hover:text-[#0A0A0A]'
                       }`}
                     >
                       <Link2 className="w-4 h-4" />
@@ -208,7 +208,7 @@ export default function CreatorOrderFulfilmentPage() {
                       className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-sm font-bold transition-all cursor-pointer ${
                         submissionMode === 'direct'
                           ? 'bg-[#0A0A0A] text-white shadow-xs'
-                          : 'text-[#73736A] hover:text-[#0A0A0A]'
+                          : 'text-[#66665E] hover:text-[#0A0A0A]'
                       }`}
                     >
                       <Video className="w-4 h-4" />
@@ -230,7 +230,7 @@ export default function CreatorOrderFulfilmentPage() {
                       placeholder="https://drive.google.com/... or Frame.io, Dropbox link"
                       required
                     />
-                    <p className="text-sm text-[#73736A] mt-1 font-medium">
+                    <p className="text-sm text-[#66665E] mt-1 font-medium">
                       Paste a public view/download link to Google Drive, Dropbox, Frame.io, or WeTransfer.
                     </p>
                   </div>
@@ -258,7 +258,7 @@ export default function CreatorOrderFulfilmentPage() {
                           <div className="flex items-center gap-2 min-w-0">
                             <Film className="w-4 h-4 text-zinc-700 shrink-0" />
                             <span className="font-bold text-[#0A0A0A] truncate">{directVideoName}</span>
-                            <span className="text-[#73736A] shrink-0">({directVideoSize})</span>
+                            <span className="text-[#66665E] shrink-0">({directVideoSize})</span>
                           </div>
 
                           <label className="text-sm font-bold text-zinc-800 hover:underline cursor-pointer shrink-0 ml-2">
@@ -280,7 +280,7 @@ export default function CreatorOrderFulfilmentPage() {
                         <div className="text-sm font-bold text-[#0A0A0A]">
                           Click or drag video file here to upload
                         </div>
-                        <div className="text-sm text-[#73736A]">
+                        <div className="text-sm text-[#66665E]">
                           Supports MP4, MOV, ProRes up to 2GB
                         </div>
                         <input
@@ -339,7 +339,7 @@ export default function CreatorOrderFulfilmentPage() {
                 <div key={deliv.id} className="p-4 sm:p-5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-3">
                   <div className="flex justify-between items-center text-sm font-semibold text-[#0A0A0A]">
                     <span className="font-bold">{deliv.title}</span>
-                    <span className="text-sm text-[#73736A] font-medium">{deliv.submittedAt}</span>
+                    <span className="text-sm text-[#66665E] font-medium">{deliv.submittedAt}</span>
                   </div>
 
                   {/* Inline Video Player if direct video or video URL */}
@@ -381,7 +381,7 @@ export default function CreatorOrderFulfilmentPage() {
           <div className="lg:col-span-5 space-y-6">
             {/* Brief Box */}
             <div className="bg-white rounded-3xl p-6 border border-[#E7E7E2] shadow-2xs space-y-3">
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-[#73736A]">
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-[#66665E]">
                 Agreed Brief & Requirements
               </h3>
               <p className="text-sm text-[#44443E] bg-[#FAFAF8] p-4 rounded-2xl border border-[#E7E7E2] leading-relaxed">
@@ -408,7 +408,7 @@ export default function CreatorOrderFulfilmentPage() {
                     Brand Chat
                   </h3>
                 </div>
-                <div className="flex items-center gap-1.5 text-xs text-[#73736A] font-semibold">
+                <div className="flex items-center gap-1.5 text-xs text-[#66665E] font-semibold">
                   <span className="w-2 h-2 rounded-full bg-[#0A0A0A]" />
                   <span>Active</span>
                 </div>
@@ -422,7 +422,7 @@ export default function CreatorOrderFulfilmentPage() {
                       key={msg.id}
                       className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}
                     >
-                      <div className="flex items-center gap-1.5 mb-1 text-sm text-[#73736A]">
+                      <div className="flex items-center gap-1.5 mb-1 text-sm text-[#66665E]">
                         <span className="font-semibold text-[#0A0A0A]">{msg.senderName}</span>
                         <span>•</span>
                         <span>{msg.timestamp}</span>

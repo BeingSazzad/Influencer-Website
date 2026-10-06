@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Check, Calculator, ShieldCheck, Sparkles } from 'lucide-react';
 import { Slider } from 'antd';
+import { Button, Badge } from '@/components/ui';
 
 export function PricingSection() {
   const [budgetEur, setBudgetEur] = useState<number>(1000);
@@ -16,16 +17,17 @@ export function PricingSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 text-xs font-bold uppercase tracking-wider font-sans mb-4">
-            <Sparkles className="w-4 h-4" />
-            Zero Subscription Fees
+          <div className="mb-4">
+            <Badge variant="pink" size="md" icon={<Sparkles className="w-4 h-4" />}>
+              Zero Subscription Fees
+            </Badge>
           </div>
           <h2 className="text-[30px] sm:text-4xl lg:text-[48px] font-black text-[#0A0A0A] tracking-tight leading-[1.08] font-sans">
             <span className="block">Transparent,</span>
             <span className="block">Pay-Per-Campaign Pricing</span>
           </h2>
-          <p className="text-[18px] text-[#73736A] font-sans font-medium leading-[28px] mt-4 sm:mt-5">
-            No monthly software lock-ins. We charge a flat 15% marketplace escrow fee to brands on successful creator hires. Creators keep 100% of their rate.
+          <p className="text-[18px] text-[#66665E] font-sans font-medium leading-[28px] mt-4 sm:mt-5">
+            No monthly software lock-ins. Brands pay a flat Platform Fee (15%) on successful creator hires. Creators keep 100% of their rate.
           </p>
         </div>
 
@@ -43,13 +45,13 @@ export function PricingSection() {
                 </h3>
               </div>
               <span className="self-start sm:self-auto px-3.5 py-1.5 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2] text-sm font-bold font-sans whitespace-nowrap">
-                15% Flat Platform Fee
+                Platform Fee (15%)
               </span>
             </div>
 
             <div>
               <div className="flex flex-col min-[420px]:flex-row min-[420px]:justify-between min-[420px]:items-center gap-1 mb-2 font-sans">
-                <label className="text-sm font-bold text-[#73736A]">
+                <label className="text-sm font-bold text-[#66665E]">
                   Creator Base Rate (EUR):
                 </label>
                 <span className="font-sans text-2xl sm:text-3xl font-black text-[#0A0A0A]">
@@ -65,7 +67,7 @@ export function PricingSection() {
                 trackStyle={{ backgroundColor: '#0A0A0A' }}
                 handleStyle={{ borderColor: '#0A0A0A' }}
               />
-              <div className="flex justify-between gap-2 text-xs sm:text-xs text-[#A3A39C] mt-1 font-sans font-medium">
+              <div className="flex justify-between gap-2 text-xs text-[#66665E] mt-1 font-sans font-medium">
                 <span>€200 (Micro)</span>
                 <span>€2,500 (Mid-tier)</span>
                 <span>€5,000+ (Macro)</span>
@@ -79,7 +81,7 @@ export function PricingSection() {
                 <span className="font-sans text-sm sm:text-base font-bold text-[#0A0A0A]">€{budgetEur.toLocaleString()}</span>
               </div>
               <div className="flex flex-col min-[420px]:flex-row min-[420px]:justify-between gap-1 text-sm text-[#555550]">
-                <span>Influverse Escrow & Guarantee Fee (15%):</span>
+                <span>Platform Fee (15%):</span>
                 <span className="font-sans text-sm sm:text-base font-bold text-[#FF2D78]">+€{platformFeeEur.toLocaleString()}</span>
               </div>
               <div className="flex flex-col min-[420px]:flex-row min-[420px]:items-center min-[420px]:justify-between gap-1 text-sm sm:text-base font-extrabold text-[#0A0A0A] pt-3 border-t border-[#E7E7E2]">
@@ -90,7 +92,7 @@ export function PricingSection() {
 
             <div className="p-4 bg-white rounded-2xl border border-[#E7E7E2] flex items-center gap-3 shadow-2xs">
               <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
-              <p className="text-sm text-[#73736A] leading-relaxed font-sans font-medium">
+              <p className="text-sm text-[#66665E] leading-relaxed font-sans font-medium">
                 Funds are held safely in escrow. Creator does not receive payment until you review and approve the submitted content.
               </p>
             </div>
@@ -132,13 +134,14 @@ export function PricingSection() {
               </ul>
 
               <div className="pt-3">
-                <Link href="/creators" className="block">
-                  <button
-                    className="w-full h-12 sm:h-[50px] rounded-full font-sans font-bold text-[16px] leading-[20px] bg-white text-[#0A0A0A] hover:bg-[#FF2D78] hover:text-white shadow-lg hover:shadow-[0_10px_25px_rgba(255,45,120,0.45)] transition-all duration-300 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
-                  >
-                    Hire Creators Now
-                  </button>
-                </Link>
+                <Button
+                  href="/creators"
+                  size="lg"
+                  variant="white"
+                  fullWidth
+                >
+                  Hire Creators Now
+                </Button>
               </div>
             </div>
           </div>

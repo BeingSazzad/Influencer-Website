@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { logout } from '@/redux/slices/authSlice';
 import { Logo } from '@/components/shared/Logo';
 import { LanguageSwitcher } from '@/components/shared/LanguageSwitcher';
+import { Button } from '@/components/ui';
 import { Dropdown, MenuProps, Drawer } from 'antd';
 import {
   Menu as MenuIcon,
@@ -42,7 +43,7 @@ export function Navbar() {
           <div className="font-bold text-[#0A0A0A] text-xs truncate">
             {currentUser?.companyName || currentUser?.name}
           </div>
-          <div className="text-sm text-[#73736A] truncate mt-0.5">
+          <div className="text-sm text-[#66665E] truncate mt-0.5">
             {currentUser?.email}
           </div>
         </div>
@@ -66,7 +67,7 @@ export function Navbar() {
             key: 'profile',
             label: (
               <div className="flex items-center gap-2 py-1 font-sans text-sm font-bold text-[#0A0A0A]">
-                <User className="w-3.5 h-3.5 text-[#73736A]" />
+                <User className="w-3.5 h-3.5 text-[#66665E]" />
                 <span>Public Profile</span>
               </div>
             ),
@@ -78,7 +79,7 @@ export function Navbar() {
             key: 'settings',
             label: (
               <div className="flex items-center gap-2 py-1 font-sans text-sm font-bold text-[#0A0A0A]">
-                <Settings className="w-3.5 h-3.5 text-[#73736A]" />
+                <Settings className="w-3.5 h-3.5 text-[#66665E]" />
                 <span>Account Settings</span>
               </div>
             ),
@@ -92,7 +93,7 @@ export function Navbar() {
             key: 'settings',
             label: (
               <div className="flex items-center gap-2 py-1 font-sans text-sm font-bold text-[#0A0A0A]">
-                <Settings className="w-3.5 h-3.5 text-[#73736A]" />
+                <Settings className="w-3.5 h-3.5 text-[#66665E]" />
                 <span>Brand Settings</span>
               </div>
             ),
@@ -167,16 +168,14 @@ export function Navbar() {
                       {currentUser.companyName || currentUser.name.split(' ')[0]}
                     </span>
                   </div>
-                  <ChevronDown className="w-3.5 h-3.5 text-[#73736A] group-hover:text-[#0A0A0A] transition-colors" />
+                  <ChevronDown className="w-3.5 h-3.5 text-[#66665E] group-hover:text-[#0A0A0A] transition-colors" />
                 </button>
               </Dropdown>
             ) : (
-              <div className="flex items-center font-sans">
-                <Link href="/register">
-                  <button className="h-10 px-5 rounded-full bg-[#0A0A0A] hover:bg-zinc-800 text-white font-bold text-xs shadow-xs transition-all cursor-pointer">
-                    Get Started
-                  </button>
-                </Link>
+              <div className="flex items-center">
+                <Button href="/register" size="md" variant="primary">
+                  Get Started
+                </Button>
               </div>
             )}
           </div>
@@ -214,7 +213,7 @@ export function Navbar() {
                 />
                 <div className="min-w-0 flex-1">
                   <div className="font-extrabold text-sm text-[#0A0A0A] truncate">{currentUser.name}</div>
-                  <div className="text-sm text-[#73736A] capitalize">{activeRole} Account</div>
+                  <div className="text-sm text-[#66665E] capitalize">{activeRole} Account</div>
                 </div>
               </div>
 
@@ -235,7 +234,7 @@ export function Navbar() {
                       onClick={() => setIsDrawerOpen(false)}
                       className="w-full h-9 rounded-xl bg-white border border-[#E7E7E2] text-[#0A0A0A] font-bold text-xs flex items-center justify-center gap-1.5 hover:border-[#0A0A0A]"
                     >
-                      <User className="w-3.5 h-3.5 text-[#73736A]" />
+                      <User className="w-3.5 h-3.5 text-[#66665E]" />
                       <span>Public Profile</span>
                     </Link>
                     <Link
@@ -243,7 +242,7 @@ export function Navbar() {
                       onClick={() => setIsDrawerOpen(false)}
                       className="w-full h-9 rounded-xl bg-white border border-[#E7E7E2] text-[#0A0A0A] font-bold text-xs flex items-center justify-center gap-1.5 hover:border-[#0A0A0A]"
                     >
-                      <Settings className="w-3.5 h-3.5 text-[#73736A]" />
+                      <Settings className="w-3.5 h-3.5 text-[#66665E]" />
                       <span>Account Settings</span>
                     </Link>
                   </>
@@ -253,7 +252,7 @@ export function Navbar() {
                     onClick={() => setIsDrawerOpen(false)}
                     className="w-full h-9 rounded-xl bg-white border border-[#E7E7E2] text-[#0A0A0A] font-bold text-xs flex items-center justify-center gap-1.5 hover:border-[#0A0A0A]"
                   >
-                    <Settings className="w-3.5 h-3.5 text-[#73736A]" />
+                    <Settings className="w-3.5 h-3.5 text-[#66665E]" />
                     <span>Brand Settings</span>
                   </Link>
                 )}
@@ -274,20 +273,24 @@ export function Navbar() {
             </div>
           ) : (
             <div className="pt-2 space-y-2.5">
-              <Link
+              <Button
                 href="/register"
+                size="md"
+                variant="primary"
+                fullWidth
                 onClick={() => setIsDrawerOpen(false)}
-                className="w-full h-11 rounded-full bg-[#0A0A0A] hover:bg-[#FF2D78] text-white font-sans font-bold text-sm flex items-center justify-center shadow-sm transition-all"
               >
                 Get Started
-              </Link>
-              <Link
+              </Button>
+              <Button
                 href="/login"
+                size="md"
+                variant="secondary"
+                fullWidth
                 onClick={() => setIsDrawerOpen(false)}
-                className="w-full h-10 rounded-full bg-white hover:bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] font-sans font-bold text-sm flex items-center justify-center transition-all"
               >
                 Log In
-              </Link>
+              </Button>
             </div>
           )}
 
@@ -307,7 +310,7 @@ export function Navbar() {
 
           {/* Language Switcher in Drawer */}
           <div className="pt-3 border-t border-[#E7E7E2] flex items-center justify-between">
-            <span className="text-xs font-bold text-[#73736A]">Language</span>
+            <span className="text-xs font-bold text-[#66665E]">Language</span>
             <LanguageSwitcher />
           </div>
         </div>

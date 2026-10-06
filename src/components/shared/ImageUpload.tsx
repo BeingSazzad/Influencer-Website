@@ -123,7 +123,7 @@ export function ImageUpload({
               </div>
             </>
           ) : (
-            <div className="flex flex-col items-center justify-center text-[#73736A] p-2 text-center">
+            <div className="flex flex-col items-center justify-center text-[#66665E] p-2 text-center">
               <Camera className="w-6 h-6 mb-1 text-[#0A0A0A]" />
               <span className="text-xs font-bold uppercase">Upload</span>
             </div>
@@ -132,7 +132,7 @@ export function ImageUpload({
 
         <div className="space-y-1.5 flex-1">
           {label && <div className="text-sm font-bold text-[#0A0A0A]">{label}</div>}
-          <div className="text-sm text-[#73736A]">{description}</div>
+          <div className="text-sm text-[#66665E]">{description}</div>
           <div className="flex items-center gap-2 pt-1">
             <button
               type="button"
@@ -146,7 +146,7 @@ export function ImageUpload({
               <button
                 type="button"
                 onClick={handleRemove}
-                className="px-3 py-1.5 rounded-full bg-[#F4F4F0] hover:bg-rose-100 text-[#73736A] hover:text-rose-600 text-sm font-semibold transition-all cursor-pointer"
+                className="px-3 py-1.5 rounded-full bg-[#F4F4F0] hover:bg-rose-100 text-[#66665E] hover:text-rose-600 text-sm font-semibold transition-all cursor-pointer"
               >
                 Remove
               </button>
@@ -162,7 +162,7 @@ export function ImageUpload({
     return (
       <div className={`space-y-2 ${className}`}>
         {label && (
-          <label className="text-xs font-bold uppercase tracking-wider text-[#73736A] block">
+          <label className="text-xs font-bold uppercase tracking-wider text-[#66665E] block">
             {label}
           </label>
         )}
@@ -232,7 +232,7 @@ export function ImageUpload({
                 <div className="text-sm font-bold text-[#0A0A0A]">
                   Click to upload cover image or drag & drop
                 </div>
-                <div className="text-sm text-[#73736A] font-medium">{description}</div>
+                <div className="text-sm text-[#66665E] font-medium">{description}</div>
               </div>
             </div>
           )}
@@ -245,7 +245,7 @@ export function ImageUpload({
   return (
     <div className={`space-y-2 ${className}`}>
       {label && (
-        <label className="text-xs font-bold uppercase tracking-wider text-[#73736A] block">
+        <label className="text-xs font-bold uppercase tracking-wider text-[#66665E] block">
           {label}
         </label>
       )}
@@ -315,7 +315,7 @@ export function ImageUpload({
               <div className="text-sm font-bold text-[#0A0A0A]">
                 Click to browse or drag & drop image
               </div>
-              <div className="text-sm text-[#73736A] font-medium">{description}</div>
+              <div className="text-sm text-[#66665E] font-medium">{description}</div>
             </div>
           </div>
         )}

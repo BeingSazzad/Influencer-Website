@@ -66,7 +66,7 @@ export default function CreatorDashboardPage() {
           {/* Total Earned */}
           <div className="bg-white p-5 sm:p-6 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
+              <span className="text-xs font-extrabold uppercase tracking-wider text-[#66665E]">
                 Total Earned
               </span>
               <div className="w-8 h-8 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center">
@@ -82,7 +82,7 @@ export default function CreatorDashboardPage() {
           {/* Locked in Escrow */}
           <div className="bg-white p-5 sm:p-6 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
+              <span className="text-xs font-extrabold uppercase tracking-wider text-[#66665E]">
                 In Production
               </span>
               <div className="w-8 h-8 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center">
@@ -98,7 +98,7 @@ export default function CreatorDashboardPage() {
           {/* Incoming Offers */}
           <div className="bg-white p-5 sm:p-6 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
+              <span className="text-xs font-extrabold uppercase tracking-wider text-[#66665E]">
                 Pending Offers
               </span>
               <div className="w-8 h-8 rounded-xl bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 flex items-center justify-center">
@@ -114,7 +114,7 @@ export default function CreatorDashboardPage() {
           {/* Portfolio Summary */}
           <div className="bg-white p-5 sm:p-6 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
+              <span className="text-xs font-extrabold uppercase tracking-wider text-[#66665E]">
                 Portfolio
               </span>
               <div className="w-8 h-8 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center">
@@ -180,7 +180,7 @@ export default function CreatorDashboardPage() {
                 <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                   Active Deliverables
                 </h2>
-                <p className="text-sm text-[#73736A] mt-0.5 font-medium">
+                <p className="text-sm text-[#66665E] mt-0.5 font-medium">
                   {activeOrders.length} in progress
                 </p>
               </div>
@@ -218,7 +218,7 @@ export default function CreatorDashboardPage() {
                         <p className="text-sm text-[#555550] truncate font-medium mt-0.5">
                           {order.packageTitle}
                         </p>
-                        <div className="text-sm text-[#73736A] font-medium mt-0.5">
+                        <div className="text-sm text-[#66665E] font-medium mt-0.5">
                           Due: {order.deadlineDate} • €{order.basePriceEur} in escrow
                         </div>
                       </div>
@@ -245,11 +245,11 @@ export default function CreatorDashboardPage() {
               </div>
             ) : (
               <div className="py-8 text-center space-y-2">
-                <div className="w-10 h-10 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-center mx-auto text-[#73736A]">
+                <div className="w-10 h-10 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-center mx-auto text-[#66665E]">
                   <ShoppingBag className="w-5 h-5" />
                 </div>
                 <div className="text-sm font-bold text-[#0A0A0A]">No Active Production Orders</div>
-                <p className="text-sm text-[#73736A] max-w-sm mx-auto">
+                <p className="text-sm text-[#66665E] max-w-sm mx-auto">
                   Your pipeline is currently clear. Accepted brand proposals will appear here with upload portals.
                 </p>
               </div>
@@ -267,7 +267,7 @@ export default function CreatorDashboardPage() {
             </div>
             <div>
               <div className="text-sm font-bold text-[#0A0A0A]">Rate Card</div>
-              <div className="text-sm text-[#73736A]">Packages & pricing</div>
+              <div className="text-sm text-[#66665E]">Packages & pricing</div>
             </div>
           </Link>
 
@@ -280,7 +280,7 @@ export default function CreatorDashboardPage() {
             </div>
             <div>
               <div className="text-sm font-bold text-[#0A0A0A]">Portfolio Studio</div>
-              <div className="text-sm text-[#73736A]">Campaigns & media</div>
+              <div className="text-sm text-[#66665E]">Campaigns & media</div>
             </div>
           </Link>
 
@@ -293,7 +293,7 @@ export default function CreatorDashboardPage() {
             </div>
             <div>
               <div className="text-sm font-bold text-[#0A0A0A]">Payouts</div>
-              <div className="text-sm text-[#73736A]">Escrow ledger</div>
+              <div className="text-sm text-[#66665E]">Escrow ledger</div>
             </div>
           </Link>
 
@@ -306,7 +306,7 @@ export default function CreatorDashboardPage() {
             </div>
             <div>
               <div className="text-sm font-bold text-[#0A0A0A]">Inquiries</div>
-              <div className="text-sm text-[#73736A]">Brand direct chat</div>
+              <div className="text-sm text-[#66665E]">Brand direct chat</div>
             </div>
           </Link>
         </div>

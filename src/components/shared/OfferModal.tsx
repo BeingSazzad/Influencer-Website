@@ -122,14 +122,14 @@ export function OfferModal() {
               <h3 className="font-extrabold text-[#0A0A0A] text-sm leading-tight">
                 {selectedCreatorForOffer.name}
               </h3>
-              <p className="text-sm text-[#73736A] font-medium">
+              <p className="text-sm text-[#66665E] font-medium">
                 {selectedCreatorForOffer.handle}
               </p>
             </div>
           </div>
 
           <div className="text-right">
-            <div className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Package Rate</div>
+            <div className="text-xs font-bold uppercase tracking-wider text-[#66665E]">Package Rate</div>
             <div className="text-2xl font-extrabold text-[#0A0A0A]">€{basePrice.toLocaleString()}</div>
           </div>
         </div>
@@ -140,7 +140,7 @@ export function OfferModal() {
             <Sparkles className="w-3.5 h-3.5 text-amber-500 shrink-0" />
             <span className="font-bold text-[#0A0A0A] truncate">{packageTitle}</span>
           </div>
-          <span className="text-xs font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#73736A] shrink-0">
+          <span className="text-xs font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#66665E] shrink-0">
             {platform === 'all' ? 'Cross-Platform' : platform === 'multi' ? 'Multi-Platform' : platform === 'ugc' ? 'UGC Video' : platform}
           </span>
         </div>
@@ -148,7 +148,7 @@ export function OfferModal() {
         {/* Campaign Info */}
         <div className="space-y-4">
           <div className="space-y-1.5">
-            <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
+            <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">
               Campaign Name
             </label>
             <Input
@@ -161,7 +161,7 @@ export function OfferModal() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
+            <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">
               Campaign Brief
             </label>
             <Input.TextArea
@@ -178,20 +178,20 @@ export function OfferModal() {
 
         {/* Transparent Escrow Breakdown */}
         <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-2 text-xs">
-          <div className="flex items-center justify-between text-[#73736A]">
-            <span>Creator Fee:</span>
+          <div className="flex items-center justify-between text-[#66665E]">
+            <span>Creator Rate:</span>
             <span className="font-bold text-[#0A0A0A]">€{basePrice.toLocaleString()}</span>
           </div>
 
-          <div className="flex items-center justify-between text-[#73736A]">
-            <span>Escrow & Buyer Protection (15%):</span>
+          <div className="flex items-center justify-between text-[#66665E]">
+            <span>Platform Fee (15%):</span>
             <span className="font-bold text-[#0A0A0A]">€{platformFee.toFixed(2)}</span>
           </div>
 
           <div className="pt-2 border-t border-[#E7E7E2] flex items-center justify-between">
             <div>
               <div className="text-xs font-black text-[#0A0A0A]">Total Escrow Funded</div>
-              <div className="text-xs text-[#73736A] font-bold flex items-center gap-1 mt-0.5">
+              <div className="text-xs text-[#66665E] font-bold flex items-center gap-1 mt-0.5">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#0A0A0A]" />
                 <span>Released only upon deliverable approval</span>
               </div>
@@ -206,7 +206,7 @@ export function OfferModal() {
         <div className="pt-2 flex items-center justify-end gap-2.5">
           <Button
             onClick={() => dispatch(closeOfferModal())}
-            className="rounded-full h-11 px-5 font-bold text-xs"
+            className="btn-base btn-md btn-secondary !h-10 !px-5 !text-xs !font-bold"
           >
             Cancel
           </Button>
@@ -215,7 +215,7 @@ export function OfferModal() {
             type="primary"
             loading={isSubmitting}
             onClick={handleSendOffer}
-            className="h-11 px-6 rounded-full font-bold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 !text-white border-none flex items-center gap-2 shadow-sm"
+            className="btn-base btn-md btn-primary !h-10 !px-6 !text-sm !font-bold flex items-center gap-2 shadow-xs"
           >
             <Lock className="w-3.5 h-3.5 text-[#FF2D78]" />
             <span>Fund Escrow & Send Offer</span>

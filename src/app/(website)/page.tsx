@@ -27,8 +27,8 @@ export default function HomePage() {
       <CollaborationModelsSection />
       <HowItWorksSection />
       <PricingSection />
-      <CreatorInviteSection />
-      <FaqSection />
+      <FaqSection showViewAll={true} limit={5} />
+      <CreatorInviteSection dual />
     </div>
   );
 }

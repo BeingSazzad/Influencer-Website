@@ -118,7 +118,7 @@ export function BrandAnnualAnalytics() {
           <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
             {activeMetric === 'spend' ? 'Campaign Spend' : 'Creator Hires'}
           </h2>
-          <p className="text-sm text-[#73736A] mt-1 font-medium">
+          <p className="text-sm text-[#66665E] mt-1 font-medium">
             {activeMetric === 'spend'
               ? `Influencer spend for ${selectedYear}.`
               : `Creators hired for ${selectedYear}.`}
@@ -133,7 +133,7 @@ export function BrandAnnualAnalytics() {
               className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 ${
                 activeMetric === 'spend'
                   ? 'bg-[#0A0A0A] text-white shadow-2xs'
-                  : 'text-[#73736A] hover:text-[#0A0A0A]'
+                  : 'text-[#66665E] hover:text-[#0A0A0A]'
               }`}
             >
               <DollarSign className="w-3.5 h-3.5" />
@@ -144,7 +144,7 @@ export function BrandAnnualAnalytics() {
               className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 ${
                 activeMetric === 'creators'
                   ? 'bg-[#0A0A0A] text-white shadow-2xs'
-                  : 'text-[#73736A] hover:text-[#0A0A0A]'
+                  : 'text-[#66665E] hover:text-[#0A0A0A]'
               }`}
             >
               <Users className="w-3.5 h-3.5" />
@@ -163,7 +163,7 @@ export function BrandAnnualAnalytics() {
                 <option key={year} value={year}>{year}</option>
               ))}
             </select>
-            <ChevronDown className="w-3 h-3 text-[#73736A] absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <ChevronDown className="w-3 h-3 text-[#66665E] absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
           </div>
         </div>
       </div>
@@ -229,7 +229,7 @@ export function BrandAnnualAnalytics() {
                   className={`text-xs font-extrabold mt-2 transition-colors ${
                     isHovered || item.isCurrent
                       ? 'text-[#0A0A0A]'
-                      : 'text-[#73736A] group-hover:text-[#0A0A0A]'
+                      : 'text-[#66665E] group-hover:text-[#0A0A0A]'
                   }`}
                 >
                   {item.month}

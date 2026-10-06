@@ -129,19 +129,19 @@ export default function BrandOrderDetailPage() {
                 <div className="flex items-center gap-2 flex-wrap">
                   <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">{order.creatorName}</h2>
                   <VerifiedBadge size="sm" />
-                  <span className="text-sm text-[#73736A] font-medium">{order.creatorHandle}</span>
+                  <span className="text-sm text-[#66665E] font-medium">{order.creatorHandle}</span>
                 </div>
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-sm text-[#0A0A0A]">
-                  <span className="text-[#73736A]">Package:</span>
+                  <span className="text-[#66665E]">Package:</span>
                   <span className="font-semibold text-[#0A0A0A]">{order.packageTitle}</span>
-                  <span className="text-[#73736A]">({order.platform})</span>
+                  <span className="text-[#66665E]">({order.platform})</span>
                 </div>
               </div>
             </div>
 
             <div className="flex items-center gap-3 self-start sm:self-auto bg-[#FAFAF8] px-5 py-3.5 rounded-2xl border border-[#E7E7E2]">
               <div className="text-left sm:text-right">
-                <div className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Escrow</div>
+                <div className="text-xs font-bold text-[#66665E] uppercase tracking-wider">Escrow</div>
                 <div className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">€{order.totalEur.toLocaleString()}</div>
               </div>
             </div>
@@ -154,7 +154,7 @@ export default function BrandOrderDetailPage() {
                 <CheckCircle2 className="w-4 h-4 shrink-0 text-[#FF2D78]" />
                 <span>1. Escrow Funded</span>
               </div>
-              <p className="text-sm text-[#73736A]">€{order.totalEur} secured</p>
+              <p className="text-sm text-[#66665E]">€{order.totalEur} secured</p>
             </div>
 
             <div
@@ -165,38 +165,38 @@ export default function BrandOrderDetailPage() {
               }`}
             >
               <div className="flex items-center gap-2 text-sm font-bold">
-                <CheckCircle2 className={`w-4 h-4 shrink-0 ${order.status !== 'offer_sent' ? 'text-[#FF2D78]' : 'text-[#73736A]'}`} />
+                <CheckCircle2 className={`w-4 h-4 shrink-0 ${order.status !== 'offer_sent' ? 'text-[#FF2D78]' : 'text-[#66665E]'}`} />
                 <span>2. Offer Accepted</span>
               </div>
-              <p className="text-sm text-[#73736A]">Creator working</p>
+              <p className="text-sm text-[#66665E]">Creator working</p>
             </div>
 
             <div
               className={`p-4 rounded-2xl border space-y-1 ${
                 ['deliverable_submitted', 'approved', 'completed'].includes(order.status)
                   ? 'bg-[#FAFAF8] text-[#0A0A0A] border-[#0A0A0A]'
-                  : 'bg-[#FAFAF8] text-[#73736A] border-[#E7E7E2]'
+                  : 'bg-[#FAFAF8] text-[#66665E] border-[#E7E7E2]'
               }`}
             >
               <div className="flex items-center gap-2 text-sm font-bold text-[#0A0A0A]">
-                <Video className={`w-4 h-4 shrink-0 ${['deliverable_submitted', 'approved', 'completed'].includes(order.status) ? 'text-[#FF2D78]' : 'text-[#73736A]'}`} />
+                <Video className={`w-4 h-4 shrink-0 ${['deliverable_submitted', 'approved', 'completed'].includes(order.status) ? 'text-[#FF2D78]' : 'text-[#66665E]'}`} />
                 <span>3. Assets Submitted</span>
               </div>
-              <p className="text-sm text-[#73736A]">{order.deliverables.length} files attached</p>
+              <p className="text-sm text-[#66665E]">{order.deliverables.length} files attached</p>
             </div>
 
             <div
               className={`p-4 rounded-2xl border space-y-1 ${
                 order.escrowReleased
                   ? 'bg-[#FAFAF8] text-[#0A0A0A] border-[#0A0A0A]'
-                  : 'bg-[#FAFAF8] text-[#73736A] border-[#E7E7E2]'
+                  : 'bg-[#FAFAF8] text-[#66665E] border-[#E7E7E2]'
               }`}
             >
               <div className="flex items-center gap-2 text-sm font-bold text-[#0A0A0A]">
-                <ShieldCheck className={`w-4 h-4 shrink-0 ${order.escrowReleased ? 'text-[#FF2D78]' : 'text-[#73736A]'}`} />
+                <ShieldCheck className={`w-4 h-4 shrink-0 ${order.escrowReleased ? 'text-[#FF2D78]' : 'text-[#66665E]'}`} />
                 <span>4. Payment Released</span>
               </div>
-              <p className="text-sm text-[#73736A]">
+              <p className="text-sm text-[#66665E]">
                 {order.escrowReleased ? '100% Payout Disbursed' : 'Awaiting approval'}
               </p>
             </div>
@@ -212,7 +212,7 @@ export default function BrandOrderDetailPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Creator Deliverables</h3>
-                  <p className="text-sm text-[#73736A] mt-0.5">Review submitted assets before releasing payment.</p>
+                  <p className="text-sm text-[#66665E] mt-0.5">Review submitted assets before releasing payment.</p>
                 </div>
                 <span className="px-3 py-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#0A0A0A] text-sm font-semibold">
                   {order.deliverables.length} Files
@@ -231,7 +231,7 @@ export default function BrandOrderDetailPage() {
                           <Video className="w-4 h-4 text-[#FF2D78]" />
                           <span className="font-bold text-sm text-[#0A0A0A]">{deliv.title}</span>
                         </div>
-                        <span className="text-sm text-[#73736A] font-medium">{deliv.submittedAt}</span>
+                        <span className="text-sm text-[#66665E] font-medium">{deliv.submittedAt}</span>
                       </div>
 
                       {/* Video Player Preview or Image Preview */}
@@ -275,7 +275,7 @@ export default function BrandOrderDetailPage() {
                                 ? 'Open Cloud Asset Link'
                                 : 'Download / Open Master Deliverable'}
                             </span>
-                            <ExternalLink className="w-3.5 h-3.5 text-[#73736A]" />
+                            <ExternalLink className="w-3.5 h-3.5 text-[#66665E]" />
                           </a>
                         </div>
                       )}
@@ -325,7 +325,7 @@ export default function BrandOrderDetailPage() {
                     <Clock className="w-6 h-6" />
                   </div>
                   <p className="font-bold text-sm text-[#0A0A0A]">Deliverables In Progress</p>
-                  <p className="text-sm text-[#73736A] max-w-sm mx-auto leading-relaxed">
+                  <p className="text-sm text-[#66665E] max-w-sm mx-auto leading-relaxed">
                     {order.creatorName} is currently crafting your content according to the agreed brief.
                   </p>
                 </div>
@@ -340,7 +340,7 @@ export default function BrandOrderDetailPage() {
               </p>
 
               <div className="pt-2">
-                <h4 className="text-sm font-semibold uppercase tracking-wider text-[#73736A] mb-3">
+                <h4 className="text-sm font-semibold uppercase tracking-wider text-[#66665E] mb-3">
                   Key Requirements
                 </h4>
                 <ul className="space-y-2.5">
@@ -368,7 +368,7 @@ export default function BrandOrderDetailPage() {
                     Order Messaging
                   </h3>
                 </div>
-                <div className="flex items-center gap-1.5 text-xs text-[#73736A] font-semibold">
+                <div className="flex items-center gap-1.5 text-xs text-[#66665E] font-semibold">
                   <span className="w-2 h-2 rounded-full bg-[#0A0A0A]" />
                   <span>Active</span>
                 </div>
@@ -383,7 +383,7 @@ export default function BrandOrderDetailPage() {
                       key={msg.id}
                       className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}
                     >
-                      <div className="flex items-center gap-1.5 mb-1 text-sm text-[#73736A]">
+                      <div className="flex items-center gap-1.5 mb-1 text-sm text-[#66665E]">
                         <span className="font-semibold text-[#0A0A0A]">{msg.senderName}</span>
                         <span>•</span>
                         <span>{msg.timestamp}</span>
@@ -428,7 +428,7 @@ export default function BrandOrderDetailPage() {
                   <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
                   <h3 className="font-bold text-sm text-[#0A0A0A]">Leave a Review</h3>
                 </div>
-                <p className="text-sm text-[#73736A]">
+                <p className="text-sm text-[#66665E]">
                   Rate {order.creatorName}&apos;s work to finalize the campaign.
                 </p>
 
@@ -469,7 +469,7 @@ export default function BrandOrderDetailPage() {
                 <p className="text-sm text-[#555550] italic bg-[#FAFAF8] p-4 rounded-2xl border border-[#E7E7E2] leading-relaxed">
                   &ldquo;{order.reviewSubmitted.comment}&rdquo;
                 </p>
-                <span className="text-sm text-[#73736A] block">
+                <span className="text-sm text-[#66665E] block">
                   Submitted {order.reviewSubmitted.date}
                 </span>
               </div>
@@ -488,7 +488,7 @@ export default function BrandOrderDetailPage() {
         okButtonProps={{ className: 'bg-[#0A0A0A] rounded-full' }}
       >
         <div className="space-y-3 pt-2">
-          <p className="text-sm text-[#73736A]">
+          <p className="text-sm text-[#66665E]">
             Please clearly describe the timestamps or specific adjustments required for the creator.
           </p>
           <Input.TextArea

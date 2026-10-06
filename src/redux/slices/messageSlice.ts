@@ -181,8 +181,8 @@ const INITIAL_CONVERSATIONS: Conversation[] = [
     creatorLocation: 'Singapore & London',
     lastMessage: 'Yes, my October calendar opens next Monday. Feel free to review my package tiers.',
     lastMessageTimestamp: 'Yesterday',
-    unreadCountBrand: 0,
-    unreadCountCreator: 0,
+    unreadCountBrand: 1,
+    unreadCountCreator: 1,
     messages: [
       {
         id: 'msg-mc-1',

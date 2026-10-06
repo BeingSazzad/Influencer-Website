@@ -33,8 +33,11 @@ import {
   ZoomIn,
   MoreVertical,
   ExternalLink,
+  Lock,
+  Eye,
 } from 'lucide-react';
 import { Input, Button, message, Modal, Popconfirm, Select, Dropdown } from 'antd';
+import { Button as AppButton } from '@/components/ui';
 
 function CreatorProfileContent() {
   const searchParams = useSearchParams();
@@ -429,14 +432,14 @@ function CreatorProfileContent() {
         title="Profile"
         subtitle="Manage your creator profile."
         action={
-          <Button
-            type="primary"
+          <AppButton
+            size="md"
+            variant="primary"
             onClick={() => handleSaveProfile()}
-            className="h-10 px-5 rounded-full font-bold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 !text-white border-none flex items-center gap-2 shadow-sm cursor-pointer"
+            icon={<Save className="w-4 h-4" />}
           >
-            <Save className="w-4 h-4" />
-            <span>Save Profile</span>
-          </Button>
+            Save Profile
+          </AppButton>
         }
       />
 
@@ -449,10 +452,10 @@ function CreatorProfileContent() {
             className={`py-2.5 px-4 sm:px-5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 whitespace-nowrap shrink-0 transition-all cursor-pointer ${
               activeTab === 'identity'
                 ? 'bg-[#0A0A0A] text-white shadow-xs'
-                : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
+                : 'text-[#66665E] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
             }`}
           >
-            <User className={`w-4 h-4 shrink-0 ${activeTab === 'identity' ? 'text-white' : 'text-[#73736A]'}`} />
+            <User className={`w-4 h-4 shrink-0 ${activeTab === 'identity' ? 'text-white' : 'text-[#66665E]'}`} />
             <span className="whitespace-nowrap">Basic Info</span>
           </button>
 
@@ -462,10 +465,10 @@ function CreatorProfileContent() {
             className={`py-2.5 px-4 sm:px-5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 whitespace-nowrap shrink-0 transition-all cursor-pointer ${
               activeTab === 'gallery'
                 ? 'bg-[#0A0A0A] text-white shadow-xs'
-                : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
+                : 'text-[#66665E] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
             }`}
           >
-            <ImageIcon className={`w-4 h-4 shrink-0 ${activeTab === 'gallery' ? 'text-white' : 'text-[#73736A]'}`} />
+            <ImageIcon className={`w-4 h-4 shrink-0 ${activeTab === 'gallery' ? 'text-white' : 'text-[#66665E]'}`} />
             <span className="whitespace-nowrap">Gallery</span>
           </button>
 
@@ -475,10 +478,10 @@ function CreatorProfileContent() {
             className={`py-2.5 px-4 sm:px-5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 whitespace-nowrap shrink-0 transition-all cursor-pointer ${
               activeTab === 'channels'
                 ? 'bg-[#0A0A0A] text-white shadow-xs'
-                : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
+                : 'text-[#66665E] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
             }`}
           >
-            <Globe className={`w-4 h-4 shrink-0 ${activeTab === 'channels' ? 'text-white' : 'text-[#73736A]'}`} />
+            <Globe className={`w-4 h-4 shrink-0 ${activeTab === 'channels' ? 'text-white' : 'text-[#66665E]'}`} />
             <span className="whitespace-nowrap">Channels</span>
           </button>
         </div>
@@ -538,7 +541,7 @@ function CreatorProfileContent() {
                       <button
                         type="button"
                         onClick={() => setAvatar('')}
-                        className="text-sm font-medium text-[#73736A] hover:text-rose-600 transition-colors cursor-pointer"
+                        className="text-sm font-medium text-[#66665E] hover:text-rose-600 transition-colors cursor-pointer"
                       >
                         Remove
                       </button>
@@ -549,11 +552,17 @@ function CreatorProfileContent() {
 
               <div className="border-t border-[#E7E7E2]" />
 
-              {/* Basic information Section */}
+              {/* Public Profile Details Section */}
               <div className="space-y-4">
-                <h3 className="text-base font-bold text-[#0A0A0A] tracking-tight">
-                  Basic information
-                </h3>
+                <div className="flex items-center justify-between">
+                  <h3 className="text-base font-bold text-[#0A0A0A] tracking-tight flex items-center gap-2">
+                    <span>Public Profile Information</span>
+                  </h3>
+                  <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#EEF7F2] text-[#23744D] border border-[#D9EDE2] flex items-center gap-1.5">
+                    <Eye className="w-3.5 h-3.5 text-[#23744D]" />
+                    <span>Visible to Brands</span>
+                  </span>
+                </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
                   <div className="space-y-1.5">
@@ -590,7 +599,7 @@ function CreatorProfileContent() {
                       )}
                     </div>
                     <Input
-                      prefix={<span className="text-[#73736A] text-sm font-medium mr-0.5">@</span>}
+                      prefix={<span className="text-[#66665E] text-sm font-medium mr-0.5">@</span>}
                       suffix={
                         cleanHandle ? (
                           isUsernameTaken ? (
@@ -636,34 +645,11 @@ function CreatorProfileContent() {
                     )}
                   </div>
 
-                  {/* Row 2: Contact email & Contact phone */}
-                  <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-[#52524E]">Contact email</label>
-                    <Input
-                      type="email"
-                      value={contactEmail}
-                      onChange={(e) => setContactEmail(e.target.value)}
-                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
-                      placeholder="collabs@yourname.com"
-                    />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-[#52524E]">Phone</label>
-                    <Input
-                      type="tel"
-                      value={contactPhone}
-                      onChange={(e) => setContactPhone(e.target.value)}
-                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
-                      placeholder="+1 (555) 234-5678"
-                    />
-                  </div>
-
-                  {/* Row 3: Location & Gender */}
+                  {/* Location & Gender */}
                   <div className="space-y-1.5">
                     <label className="block text-sm font-semibold text-[#52524E]">Location</label>
                     <Input
-                      prefix={<MapPin className="w-4 h-4 text-[#73736A] mr-0.5" />}
+                      prefix={<MapPin className="w-4 h-4 text-[#66665E] mr-0.5" />}
                       value={location}
                       onChange={(e) => setLocation(e.target.value)}
                       className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
@@ -686,15 +672,57 @@ function CreatorProfileContent() {
                     />
                   </div>
 
-                  <div className="space-y-1.5">
+                  <div className="space-y-1.5 md:col-span-2">
                     <label className="block text-sm font-semibold text-[#52524E]">Starting rate (EUR)</label>
                     <Input
-                      prefix={<span className="text-[#73736A] text-sm font-medium mr-0.5">€</span>}
+                      prefix={<span className="text-[#66665E] text-sm font-medium mr-0.5">€</span>}
                       type="number"
                       value={startingPriceEur}
                       onChange={(e) => setStartingPriceEur(Number(e.target.value) || 0)}
-                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
+                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A] max-w-md"
                       placeholder="500"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Private Account & Contact Section */}
+              <div className="p-5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div>
+                    <h3 className="text-sm font-bold text-[#0A0A0A] tracking-tight flex items-center gap-2">
+                      <Lock className="w-4 h-4 text-[#66665E]" />
+                      <span>Private Contact & Operational Details</span>
+                    </h3>
+                    <p className="text-xs text-[#66665E] mt-0.5">
+                      Used only for deal notifications, escrow payout confirmations, and urgent SMS alerts. Never shown on your public profile.
+                    </p>
+                  </div>
+                  <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#F4F4F0] text-[#66665E] border border-[#E7E7E2] self-start sm:self-auto shrink-0">
+                    Not Visible to Brands
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="block text-sm font-semibold text-[#52524E]">Contact email</label>
+                    <Input
+                      type="email"
+                      value={contactEmail}
+                      onChange={(e) => setContactEmail(e.target.value)}
+                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A] bg-white"
+                      placeholder="collabs@yourname.com"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="block text-sm font-semibold text-[#52524E]">Phone</label>
+                    <Input
+                      type="tel"
+                      value={contactPhone}
+                      onChange={(e) => setContactPhone(e.target.value)}
+                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A] bg-white"
+                      placeholder="+1 (555) 234-5678"
                     />
                   </div>
                 </div>
@@ -725,7 +753,7 @@ function CreatorProfileContent() {
                           <button
                             type="button"
                             onClick={() => handleRemoveCategory(cat)}
-                            className="text-[#73736A] hover:text-[#0A0A0A] transition-colors cursor-pointer"
+                            className="text-[#66665E] hover:text-[#0A0A0A] transition-colors cursor-pointer"
                           >
                             <X className="w-3 h-3" />
                           </button>
@@ -769,7 +797,7 @@ function CreatorProfileContent() {
                           <button
                             type="button"
                             onClick={() => handleRemoveTag(tag)}
-                            className="text-[#73736A] hover:text-[#0A0A0A] transition-colors cursor-pointer"
+                            className="text-[#66665E] hover:text-[#0A0A0A] transition-colors cursor-pointer"
                           >
                             <X className="w-3 h-3" />
                           </button>
@@ -809,7 +837,7 @@ function CreatorProfileContent() {
                     placeholder="I create authentic, relatable content about beauty, wellness and everyday life. I love working with brands that share my values and believe in meaningful, long-term partnerships."
                     className="w-full rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A] focus:outline-none p-3.5 text-sm font-normal text-[#0A0A0A] leading-relaxed transition-all resize-y shadow-2xs"
                   />
-                  <div className="text-right text-sm text-[#73736A] mt-1 font-medium">
+                  <div className="text-right text-sm text-[#66665E] mt-1 font-medium">
                     {bio.length} characters
                   </div>
                 </div>
@@ -853,22 +881,23 @@ function CreatorProfileContent() {
               {/* Photos Grid */}
               {photosList.length === 0 ? (
                 <div className="py-16 text-center space-y-4">
-                  <div className="w-16 h-16 rounded-3xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-center mx-auto text-[#73736A]">
+                  <div className="w-16 h-16 rounded-3xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-center mx-auto text-[#66665E]">
                     <ImageIcon className="w-8 h-8" />
                   </div>
                   <div className="space-y-1">
                     <h3 className="text-2xl font-extrabold text-[#0A0A0A]">No Gallery Photos Yet</h3>
-                    <p className="text-sm text-[#73736A] max-w-sm mx-auto">
+                    <p className="text-sm text-[#66665E] max-w-sm mx-auto">
                       Add editorial shoots, lifestyle portraits, or behind-the-scenes visuals to make your creator profile stand out.
                     </p>
                   </div>
-                  <Button
-                    type="primary"
+                  <AppButton
+                    size="md"
+                    variant="primary"
                     onClick={openAddPhotoModal}
-                    className="h-10 px-5 rounded-full font-bold text-xs bg-[#0A0A0A] hover:!bg-zinc-800 text-white"
+                    icon={<Plus className="w-4 h-4" />}
                   >
                     Upload First Photo
-                  </Button>
+                  </AppButton>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -947,7 +976,7 @@ function CreatorProfileContent() {
                         >
                           <button
                             type="button"
-                            className="p-1.5 rounded-lg text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8] border border-transparent hover:border-[#E7E7E2] transition-colors cursor-pointer shrink-0"
+                            className="p-1.5 rounded-lg text-[#66665E] hover:text-[#0A0A0A] hover:bg-[#FAFAF8] border border-transparent hover:border-[#E7E7E2] transition-colors cursor-pointer shrink-0"
                             title="Photo options"
                           >
                             <MoreVertical className="w-4 h-4" />
@@ -968,7 +997,7 @@ function CreatorProfileContent() {
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
               <div className="pb-4 border-b border-[#E7E7E2]">
                 <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Social reach</h2>
-                <p className="text-sm text-[#73736A] mt-0.5">Handles, followers, and links shown on your public profile.</p>
+                <p className="text-sm text-[#66665E] mt-0.5">Handles, followers, and links shown on your public profile.</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -983,7 +1012,7 @@ function CreatorProfileContent() {
 
                   <div className="space-y-3">
                     <div className="space-y-1">
-                      <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Handle</label>
+                      <label className="text-xs font-bold text-[#66665E] uppercase tracking-wider">Handle</label>
                       <Input
                         value={igHandle}
                         onChange={(e) => setIgHandle(e.target.value)}
@@ -992,7 +1021,7 @@ function CreatorProfileContent() {
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">URL</label>
+                      <label className="text-xs font-bold text-[#66665E] uppercase tracking-wider">URL</label>
                       <Input
                         value={igUrl}
                         onChange={(e) => setIgUrl(e.target.value)}
@@ -1002,7 +1031,7 @@ function CreatorProfileContent() {
                     </div>
                     <div className="grid grid-cols-2 gap-2">
                       <div className="space-y-1">
-                        <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Followers</label>
+                        <label className="text-xs font-bold text-[#66665E] uppercase tracking-wider">Followers</label>
                         <Input
                           value={igFollowers}
                           onChange={(e) => setIgFollowers(e.target.value)}
@@ -1011,7 +1040,7 @@ function CreatorProfileContent() {
                         />
                       </div>
                       <div className="space-y-1">
-                        <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Engagement</label>
+                        <label className="text-xs font-bold text-[#66665E] uppercase tracking-wider">Engagement</label>
                         <Input
                           value={igEngagement}
                           onChange={(e) => setIgEngagement(e.target.value)}
@@ -1034,7 +1063,7 @@ function CreatorProfileContent() {
 
                   <div className="space-y-3">
                     <div className="space-y-1">
-                      <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Handle</label>
+                      <label className="text-xs font-bold text-[#66665E] uppercase tracking-wider">Handle</label>
                       <Input
                         value={ttHandle}
                         onChange={(e) => setTtHandle(e.target.value)}
@@ -1043,7 +1072,7 @@ function CreatorProfileContent() {
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">URL</label>
+                      <label className="text-xs font-bold text-[#66665E] uppercase tracking-wider">URL</label>
                       <Input
                         value={ttUrl}
                         onChange={(e) => setTtUrl(e.target.value)}
@@ -1053,7 +1082,7 @@ function CreatorProfileContent() {
                     </div>
                     <div className="grid grid-cols-2 gap-2">
                       <div className="space-y-1">
-                        <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Followers</label>
+                        <label className="text-xs font-bold text-[#66665E] uppercase tracking-wider">Followers</label>
                         <Input
                           value={ttFollowers}
                           onChange={(e) => setTtFollowers(e.target.value)}
@@ -1062,7 +1091,7 @@ function CreatorProfileContent() {
                         />
                       </div>
                       <div className="space-y-1">
-                        <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Engagement</label>
+                        <label className="text-xs font-bold text-[#66665E] uppercase tracking-wider">Engagement</label>
                         <Input
                           value={ttEngagement}
                           onChange={(e) => setTtEngagement(e.target.value)}
@@ -1085,7 +1114,7 @@ function CreatorProfileContent() {
 
                   <div className="space-y-3">
                     <div className="space-y-1">
-                      <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Handle</label>
+                      <label className="text-xs font-bold text-[#66665E] uppercase tracking-wider">Handle</label>
                       <Input
                         value={ytHandle}
                         onChange={(e) => setYtHandle(e.target.value)}
@@ -1094,7 +1123,7 @@ function CreatorProfileContent() {
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">URL</label>
+                      <label className="text-xs font-bold text-[#66665E] uppercase tracking-wider">URL</label>
                       <Input
                         value={ytUrl}
                         onChange={(e) => setYtUrl(e.target.value)}
@@ -1104,7 +1133,7 @@ function CreatorProfileContent() {
                     </div>
                     <div className="grid grid-cols-2 gap-2">
                       <div className="space-y-1">
-                        <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Subscribers</label>
+                        <label className="text-xs font-bold text-[#66665E] uppercase tracking-wider">Subscribers</label>
                         <Input
                           value={ytFollowers}
                           onChange={(e) => setYtFollowers(e.target.value)}
@@ -1113,7 +1142,7 @@ function CreatorProfileContent() {
                         />
                       </div>
                       <div className="space-y-1">
-                        <label className="text-xs font-bold text-[#73736A] uppercase tracking-wider">Engagement</label>
+                        <label className="text-xs font-bold text-[#66665E] uppercase tracking-wider">Engagement</label>
                         <Input
                           value={ytEngagement}
                           onChange={(e) => setYtEngagement(e.target.value)}
@@ -1204,7 +1233,7 @@ function CreatorProfileContent() {
                   <Upload className="w-5 h-5" />
                 </div>
                 <div className="text-sm font-bold text-[#0A0A0A]">Click to upload an image</div>
-                <div className="text-sm text-[#73736A]">Supports PNG, JPG, WEBP up to 10MB</div>
+                <div className="text-sm text-[#66665E]">Supports PNG, JPG, WEBP up to 10MB</div>
               </div>
             )}
           </div>
@@ -1254,7 +1283,7 @@ function CreatorProfileContent() {
 
 export default function CreatorProfilePage() {
   return (
-    <Suspense fallback={<div className="p-8 text-center text-sm font-bold text-[#73736A]">Loading profile studio...</div>}>
+    <Suspense fallback={<div className="p-8 text-center text-sm font-bold text-[#66665E]">Loading profile studio...</div>}>
       <CreatorProfileContent />
     </Suspense>
   );

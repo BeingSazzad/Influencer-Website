@@ -1,74 +1,123 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppSelector } from '@/redux/hooks';
-import { ChevronDown, HelpCircle } from 'lucide-react';
+import { ChevronDown, HelpCircle, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui';
+import { BRAND_FAQS, CREATOR_FAQS } from '@/Mockdata';
 
-export function FaqSection() {
+export interface FaqSectionProps {
+  showViewAll?: boolean;
+  limit?: number;
+  isFullPage?: boolean;
+  initialTab?: 'brand' | 'creator';
+  className?: string;
+}
+
+export function FaqSection({
+  showViewAll = true,
+  limit,
+  isFullPage = false,
+  initialTab = 'brand',
+  className = '',
+}: FaqSectionProps) {
   const { t } = useAppSelector((state) => state.lang);
+  const [activeTab, setActiveTab] = useState<'brand' | 'creator'>(initialTab);
   const [openIdx, setOpenIdx] = useState<number | null>(0);
 
-  const faqs = [
-    {
-      q: 'How does the Influverse escrow system protect my budget?',
-      a: 'When a brand sends an offer, the campaign budget (creator rate + 15% platform fee) is placed into a secure escrow account. The creator starts working with complete confidence that funds are secured. Funds are only transferred to the creator once you review and approve the submitted content.',
-    },
-    {
-      q: 'Why is Influverse different from traditional influencer agencies?',
-      a: 'Influverse eliminates middleman markups, slow email chains, and opaque pricing. Brands get direct access to verified creator rate cards, 100% escrow milestone protection, on-demand portfolio previews, and automated EU VAT invoicing.',
-    },
-    {
-      q: 'Do creators have to pay any fee or commission?',
-      a: 'No. Creators keep 100% of their listed package price. The 15% platform fee is covered by the hiring brand to fund escrow protection, contract guarantees, dispute mediation, and secure instant payouts.',
-    },
-    {
-      q: 'What is the difference between UGC Content and a Sponsored Post?',
-      a: 'UGC (User Generated Content) is custom high-converting photo/video assets produced by the creator for your brand to run on your own official channels or paid ad campaigns. A Sponsored Post includes the creator publishing the content directly to their own engaged audience on Instagram, TikTok, or YouTube.',
-    },
-    {
-      q: 'How do revisions work if I need changes on the content?',
-      a: 'Each creator package includes specified revision rounds (typically 1 to 2 revisions). When a creator submits draft deliverables, you can request adjustments directly inside your order workspace with timestamped notes before final escrow sign-off.',
-    },
-    {
-      q: 'Are all creators verified on Influverse?',
-      a: 'Yes. Our talent team manually verifies creator identity, authentic audience engagement metrics, past brand collaborations, and channel handles across Instagram, TikTok, and YouTube before granting the verified checkmark badge.',
-    },
-    {
-      q: 'What currencies and payment methods are supported?',
-      a: 'All packages, custom offers, and balance transactions are standardized in EUR (€) with support for major credit cards (Visa, Mastercard, Amex), SEPA bank transfers, Apple Pay, and Google Pay.',
-    },
-  ];
+  // Sync tab from URL query param ?tab=creator or hash
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = params.get('tab');
+      if (tabParam === 'creator' || window.location.hash === '#creators') {
+        setActiveTab('creator');
+      } else if (tabParam === 'brand' || window.location.hash === '#brands') {
+        setActiveTab('brand');
+      }
+
+      const handleHashChange = () => {
+        if (window.location.hash === '#creators') {
+          setActiveTab('creator');
+        } else if (window.location.hash === '#brands') {
+          setActiveTab('brand');
+        }
+      };
+
+      window.addEventListener('hashchange', handleHashChange);
+      return () => window.removeEventListener('hashchange', handleHashChange);
+    }
+  }, []);
+
+  const handleTabChange = (tab: 'brand' | 'creator') => {
+    setActiveTab(tab);
+    setOpenIdx(0);
+  };
 
   const handleToggle = (idx: number) => {
     setOpenIdx((prev) => (prev === idx ? null : idx));
   };
 
+  const allFaqs = activeTab === 'brand' ? BRAND_FAQS : CREATOR_FAQS;
+  const displayedFaqs = limit ? allFaqs.slice(0, limit) : allFaqs;
+
   return (
-    <section id="faq" className="py-24 bg-white border-t border-[#E7E7E2] font-sans">
+    <section
+      id="faq"
+      className={`py-20 sm:py-24 bg-white font-sans ${
+        isFullPage ? '' : 'border-t border-[#E7E7E2]'
+      } ${className}`}
+    >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16 max-w-2xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#73736A] text-xs font-bold uppercase tracking-wider mb-2">
+        <div className="text-center max-w-2xl mx-auto space-y-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#66665E] text-xs font-bold uppercase tracking-wider mb-2">
             <HelpCircle className="w-4 h-4 text-[#FF2D78]" />
             <span>Common Inquiries</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-[48px] font-black text-[#0A0A0A] tracking-tight leading-[1.15]">
             {t?.faq?.title || 'Frequently Asked Questions'}
           </h2>
-          <p className="text-base sm:text-lg text-[#73736A] font-medium leading-[28px]">
-            Everything you need to know about booking creators, escrow protection, and deliverables.
+          <p className="text-base sm:text-lg text-[#66665E] font-medium leading-[28px]">
+            {t?.faq?.subtitle ||
+              'Everything you need to know about booking creators, escrow protection, and deliverables.'}
           </p>
+
+          {/* Interactive Dual Perspective Toggle */}
+          <div className="pt-6 pb-2 flex justify-center">
+            <div className="inline-flex p-1.5 rounded-full bg-white border border-[#E7E7E2] shadow-xs">
+              <button
+                type="button"
+                onClick={() => handleTabChange('brand')}
+                className={`px-6 sm:px-7 py-2.5 rounded-full font-bold text-sm sm:text-base leading-[20px] transition-all cursor-pointer ${
+                  activeTab === 'brand'
+                    ? 'bg-[#0A0A0A] text-[#FAFAFA] shadow-sm'
+                    : 'text-[#66665E] hover:text-[#0A0A0A]'
+                }`}
+              >
+                For Brands & Marketers
+              </button>
+              <button
+                type="button"
+                onClick={() => handleTabChange('creator')}
+                className={`px-6 sm:px-7 py-2.5 rounded-full font-bold text-sm sm:text-base leading-[20px] transition-all cursor-pointer ${
+                  activeTab === 'creator'
+                    ? 'bg-[#0A0A0A] text-[#FAFAFA] shadow-sm'
+                    : 'text-[#66665E] hover:text-[#0A0A0A]'
+                }`}
+              >
+                For Creators & Talent
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Accordion List */}
-        <div className="divide-y divide-[#E7E7E2] border-t border-b border-[#E7E7E2]">
-          {faqs.map((faq, idx) => {
+        <div className="mt-12 divide-y divide-[#E7E7E2] border-t border-b border-[#E7E7E2]">
+          {displayedFaqs.map((faq, idx) => {
             const isOpen = openIdx === idx;
             return (
-              <div
-                key={idx}
-                className="py-6 sm:py-8 transition-colors select-none"
-              >
+              <div key={idx} className="py-6 sm:py-8 transition-colors select-none">
                 <button
                   type="button"
                   onClick={() => handleToggle(idx)}
@@ -103,6 +152,21 @@ export function FaqSection() {
             );
           })}
         </div>
+
+        {/* View All FAQs Button (on Homepage & summary views) */}
+        {showViewAll && (
+          <div className="mt-12 sm:mt-16 text-center">
+            <Button
+              href={`/faq?tab=${activeTab}`}
+              variant="secondary"
+              size="lg"
+              iconRight={<ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />}
+              className="group font-bold px-8 shadow-xs border-[#E7E7E2] hover:border-[#0A0A0A] hover:bg-white inline-flex items-center gap-2"
+            >
+              View All FAQs
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );

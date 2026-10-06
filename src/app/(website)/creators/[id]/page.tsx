@@ -40,6 +40,7 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import { Button, message } from 'antd';
+import { Button as AppButton, Badge as AppBadge } from '@/components/ui';
 
 function platformLabel(platform: string) {
   if (platform === 'all' || platform === 'multi') return 'All platforms';
@@ -104,7 +105,7 @@ export default function CreatorProfilePage() {
             <h1 className="text-2xl sm:text-3xl font-black text-[#0A0A0A] tracking-tight">
               Profile Unavailable
             </h1>
-            <p className="text-sm text-[#73736A] max-w-sm mx-auto leading-relaxed">
+            <p className="text-sm text-[#66665E] max-w-sm mx-auto leading-relaxed">
               We couldn’t find a creator matching <span className="font-bold text-[#0A0A0A]">"{creatorId}"</span>. They may have changed their username or made their profile private.
             </p>
           </div>
@@ -230,12 +231,12 @@ export default function CreatorProfilePage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         {/* Breadcrumb & Profile Actions */}
         <div className="flex items-center justify-between gap-4">
-          <div className="flex min-w-0 items-center gap-2 overflow-hidden text-sm font-bold text-[#73736A]">
+          <div className="flex min-w-0 items-center gap-2 overflow-hidden text-sm font-bold text-[#66665E]">
             <Link href="/creators" className="shrink-0 hover:text-[#0A0A0A] transition-colors">
               Creators
             </Link>
             <ChevronRight className="w-4 h-4 shrink-0 text-[#A3A39C]" />
-            <span className="hidden sm:inline truncate text-[#73736A]">{creator.categories[0]}</span>
+            <span className="hidden sm:inline truncate text-[#66665E]">{creator.categories[0]}</span>
             <ChevronRight className="hidden sm:block w-4 h-4 shrink-0 text-[#A3A39C]" />
             <span className="truncate text-[#0A0A0A] font-extrabold">{creator.name}</span>
           </div>
@@ -252,7 +253,7 @@ export default function CreatorProfilePage() {
                 className={`w-9 h-9 rounded-full flex items-center justify-center transition-all cursor-pointer border ${
                   isSaved
                     ? 'bg-[#FFF0F5] border-[#FF2D78]/40 text-[#FF2D78] shadow-xs'
-                    : 'bg-white hover:bg-[#FAFAF8] border-[#E7E7E2] text-[#73736A] hover:text-[#0A0A0A] hover:border-[#0A0A0A] shadow-2xs'
+                    : 'bg-white hover:bg-[#FAFAF8] border-[#E7E7E2] text-[#66665E] hover:text-[#0A0A0A] hover:border-[#0A0A0A] shadow-2xs'
                 }`}
               >
                 <Bookmark
@@ -267,7 +268,7 @@ export default function CreatorProfilePage() {
               type="button"
               onClick={() => setIsShareModalOpen(true)}
               title="Share Profile"
-              className="w-9 h-9 rounded-full bg-white hover:bg-[#FAFAF8] border border-[#E7E7E2] text-[#73736A] hover:text-[#0A0A0A] hover:border-[#0A0A0A] flex items-center justify-center transition-all cursor-pointer shadow-2xs"
+              className="w-9 h-9 rounded-full bg-white hover:bg-[#FAFAF8] border border-[#E7E7E2] text-[#66665E] hover:text-[#0A0A0A] hover:border-[#0A0A0A] flex items-center justify-center transition-all cursor-pointer shadow-2xs"
             >
               <Share2 className="w-4 h-4" />
             </button>
@@ -301,7 +302,7 @@ export default function CreatorProfilePage() {
                   )}
                 </div>
 
-                <div className="flex items-center gap-2 text-sm font-bold text-[#73736A] flex-wrap">
+                <div className="flex items-center gap-2 text-sm font-bold text-[#66665E] flex-wrap">
                   <span>{creator.categories.join(' & ')}</span>
                   <span>•</span>
                   <span className="flex items-center gap-1">
@@ -355,7 +356,7 @@ export default function CreatorProfilePage() {
 
             {/* Right: Social Platform Counts & Action Buttons */}
             <div className="w-full lg:w-80 xl:w-[340px] shrink-0 flex flex-col gap-4 pt-4 lg:pt-0 lg:border-l border-[#E7E7E2] lg:pl-8">
-              <span className="text-sm font-bold text-[#73736A] uppercase tracking-wider">Social Reach</span>
+              <span className="text-sm font-bold text-[#66665E] uppercase tracking-wider">Social Reach</span>
 
               {/* Follower Stats Columns */}
               <div className="grid grid-cols-3 gap-2 sm:gap-2.5 text-center">
@@ -375,9 +376,9 @@ export default function CreatorProfilePage() {
                     </div>
                     <div className="text-sm font-black text-[#0A0A0A] flex items-center justify-center gap-1">
                       <span>{creator.platforms.instagram.followersFormatted}</span>
-                      <ExternalLink className="w-2.5 h-2.5 text-[#73736A] opacity-0 group-hover/item:opacity-100 transition-opacity" />
+                      <ExternalLink className="w-2.5 h-2.5 text-[#66665E] opacity-0 group-hover/item:opacity-100 transition-opacity" />
                     </div>
-                    <div className="text-xs sm:text-sm font-bold text-[#73736A] tracking-tight">Followers</div>
+                    <div className="text-xs sm:text-sm font-bold text-[#66665E] tracking-tight">Followers</div>
                     {creator.platforms.instagram.engagementRate && (
                       <div className="text-[11px] font-bold text-[#0A0A0A] tracking-tight">
                         {creator.platforms.instagram.engagementRate}
@@ -404,9 +405,9 @@ export default function CreatorProfilePage() {
                     </div>
                     <div className="text-sm font-black text-[#0A0A0A] flex items-center justify-center gap-1">
                       <span>{creator.platforms.tiktok.followersFormatted}</span>
-                      <ExternalLink className="w-2.5 h-2.5 text-[#73736A] opacity-0 group-hover/item:opacity-100 transition-opacity" />
+                      <ExternalLink className="w-2.5 h-2.5 text-[#66665E] opacity-0 group-hover/item:opacity-100 transition-opacity" />
                     </div>
-                    <div className="text-xs sm:text-sm font-bold text-[#73736A] tracking-tight">Followers</div>
+                    <div className="text-xs sm:text-sm font-bold text-[#66665E] tracking-tight">Followers</div>
                     {creator.platforms.tiktok.engagementRate && (
                       <div className="text-[11px] font-bold text-[#0A0A0A] tracking-tight">
                         {creator.platforms.tiktok.engagementRate}
@@ -431,9 +432,9 @@ export default function CreatorProfilePage() {
                     </div>
                     <div className="text-sm font-black text-[#0A0A0A] flex items-center justify-center gap-1">
                       <span>{creator.platforms.youtube.followersFormatted}</span>
-                      <ExternalLink className="w-2.5 h-2.5 text-[#73736A] opacity-0 group-hover/item:opacity-100 transition-opacity" />
+                      <ExternalLink className="w-2.5 h-2.5 text-[#66665E] opacity-0 group-hover/item:opacity-100 transition-opacity" />
                     </div>
-                    <div className="text-xs sm:text-sm font-bold text-[#73736A] tracking-tight">Subscribers</div>
+                    <div className="text-xs sm:text-sm font-bold text-[#66665E] tracking-tight">Subscribers</div>
                     {creator.platforms.youtube.engagementRate && (
                       <div className="text-[11px] font-bold text-[#0A0A0A] tracking-tight">
                         {creator.platforms.youtube.engagementRate}
@@ -444,43 +445,47 @@ export default function CreatorProfilePage() {
               </div>
 
               <div className="flex items-center justify-between px-1">
-                <span className="text-sm font-bold text-[#73736A]">Starting rate</span>
+                <span className="text-sm font-bold text-[#66665E]">Starting rate</span>
                 <span className="text-lg font-black text-[#0A0A0A]">€{creator.startingPriceEur}</span>
               </div>
 
               {/* Action Buttons */}
               {isSelfProfile ? (
                 <div className="space-y-2.5">
-                  <Link href="/creator/profile" className="block">
-                    <button
-                      type="button"
-                      className="w-full h-11 rounded-full font-bold text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white shadow-sm transition-all cursor-pointer flex items-center justify-center gap-2"
-                    >
-                      <span>Edit Profile & Bio</span>
-                    </button>
-                  </Link>
-                  <Link href="/creator/packages" className="block">
-                    <button
-                      type="button"
-                      className="w-full h-11 rounded-full font-bold text-xs sm:text-sm bg-white border border-[#E7E7E2] text-[#0A0A0A] flex items-center justify-center gap-2 hover:border-[#0A0A0A] hover:bg-[#FAFAF8] transition-all cursor-pointer shadow-2xs"
-                    >
-                      <span>Manage Packages</span>
-                    </button>
-                  </Link>
+                  <AppButton
+                    href="/creator/profile"
+                    size="md"
+                    variant="primary"
+                    fullWidth
+                  >
+                    Edit Profile & Bio
+                  </AppButton>
+                  <AppButton
+                    href="/creator/packages"
+                    size="md"
+                    variant="secondary"
+                    fullWidth
+                  >
+                    Manage Packages
+                  </AppButton>
                 </div>
               ) : (
                 <div className="space-y-2.5">
-                  <Button
-                    type="primary"
-                    block
+                  <AppButton
+                    type="button"
+                    size="md"
+                    variant="primary"
+                    fullWidth
                     onClick={() => handleOpenOffer()}
-                    className="h-11 rounded-full font-bold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 !text-white hover:!text-white border-none shadow-sm transition-all cursor-pointer"
                   >
                     Send Offer
-                  </Button>
+                  </AppButton>
 
-                  <button
+                  <AppButton
                     type="button"
+                    size="md"
+                    variant="secondary"
+                    fullWidth
                     onClick={() => {
                       if (currentUser?.role === 'creator') {
                         router.push(`/creator/messages?creatorId=${creator.id}`);
@@ -488,18 +493,17 @@ export default function CreatorProfilePage() {
                         router.push(`/brand/messages?creatorId=${creator.id}`);
                       }
                     }}
-                    className="w-full h-11 rounded-full font-bold text-xs sm:text-sm bg-white border border-[#E7E7E2] text-[#0A0A0A] flex items-center justify-center gap-2 hover:border-[#0A0A0A] hover:bg-[#FAFAF8] transition-all cursor-pointer shadow-2xs"
+                    icon={<MessageSquare className="w-4 h-4 text-[#66665E]" />}
                   >
-                    <MessageSquare className="w-4 h-4 text-[#73736A]" />
-                    <span>Message</span>
-                  </button>
+                    Message
+                  </AppButton>
                 </div>
               )}
             </div>
           </div>
 
           {/* Profile Navigation Tabs */}
-          <div className="flex items-center gap-6 sm:gap-8 border-b border-[#E7E7E2] mt-8 sm:mt-10 text-sm font-bold overflow-x-auto no-scrollbar">
+          <div className="flex items-center gap-6 sm:gap-8 border-b border-[#E7E7E2] mt-8 sm:mt-10 text-sm font-bold overflow-x-auto no-scrollbar -mx-6 px-6 sm:mx-0 sm:px-0">
             {[
               { key: 'overview', label: 'Overview' },
               { key: 'packages', label: 'Packages' },
@@ -510,11 +514,14 @@ export default function CreatorProfilePage() {
             ].map((tab) => (
               <button
                 key={tab.key}
-                onClick={() => setActiveTab(tab.key as any)}
+                onClick={(e) => {
+                  setActiveTab(tab.key as any);
+                  e.currentTarget.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+                }}
                 className={`pb-3.5 whitespace-nowrap transition-colors relative cursor-pointer ${
                   activeTab === tab.key
                     ? 'text-[#0A0A0A] font-black'
-                    : 'text-[#73736A] hover:text-[#0A0A0A]'
+                    : 'text-[#66665E] hover:text-[#0A0A0A]'
                 }`}
               >
                 <span>{tab.label}</span>
@@ -536,7 +543,7 @@ export default function CreatorProfilePage() {
                   <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                     Collaboration Deals &amp; Rates
                   </h2>
-                  <p className="text-sm text-[#73736A] mt-1 font-medium">
+                  <p className="text-sm text-[#66665E] mt-1 font-medium">
                     Fixed-price verified deliverables with 100% escrow protection and guaranteed turnaround.
                   </p>
                 </div>
@@ -572,7 +579,7 @@ export default function CreatorProfilePage() {
                   <div className="col-span-1 md:col-span-2 lg:col-span-3">
                     <EmptyState
                       color="neutral"
-                      icon={<Package className="w-8 h-8 text-[#73736A]" />}
+                      icon={<Package className="w-8 h-8 text-[#66665E]" />}
                       title="No Deals In This Category"
                       description="This creator currently accepts custom collaboration offers and multi-deliverable briefs for this format."
                       primaryAction={{
@@ -593,16 +600,16 @@ export default function CreatorProfilePage() {
                   </div>
                   <div>
                     <h4 className="text-sm sm:text-base font-bold text-[#0A0A0A]">Need a custom campaign or multi-channel rollout?</h4>
-                    <p className="text-xs sm:text-sm text-[#73736A] mt-0.5">Send a tailored brief with your budget, required deliverables, and licensing timeline.</p>
+                    <p className="text-xs sm:text-sm text-[#66665E] mt-0.5">Send a tailored brief with your budget, required deliverables, and licensing timeline.</p>
                   </div>
                 </div>
-                <Button
-                  type="primary"
+                <AppButton
+                  size="md"
+                  variant="primary"
                   onClick={() => handleOpenOffer()}
-                  className="rounded-full font-bold text-sm h-10 px-5 bg-[#0A0A0A] hover:!bg-[#FF2D78] !text-white hover:!text-white border-none shrink-0"
                 >
                   Send Custom Offer
-                </Button>
+                </AppButton>
               </div>
             </div>
 
@@ -611,7 +618,7 @@ export default function CreatorProfilePage() {
               <div className="flex items-center justify-between">
                 <div>
                   <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Featured Portfolio</h2>
-                  <p className="text-sm text-[#73736A] mt-1 font-medium">
+                  <p className="text-sm text-[#66665E] mt-1 font-medium">
                     Verified brand collaborations and creative content samples.
                   </p>
                 </div>
@@ -631,6 +638,9 @@ export default function CreatorProfilePage() {
                   <div
                     key={item.id}
                     onClick={() => setSelectedPortfolioItem(item)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => e.key === 'Enter' && setSelectedPortfolioItem(item)}
                     className="relative rounded-2xl overflow-hidden group bg-[#F4F4F0] h-64 border border-[#E7E7E2] hover:border-[#0A0A0A] hover:shadow-lg transition-all cursor-pointer"
                   >
                     <img
@@ -671,7 +681,7 @@ export default function CreatorProfilePage() {
                   <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                     Gallery
                   </h2>
-                  <p className="text-sm text-[#73736A] mt-1 font-medium">
+                  <p className="text-sm text-[#66665E] mt-1 font-medium">
                     Photos and visual showcase of {creator.name}.
                   </p>
                 </div>
@@ -716,7 +726,7 @@ export default function CreatorProfilePage() {
               <div className="flex items-center justify-between">
                 <div>
                   <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Client Reviews & Testimonials</h2>
-                  <p className="text-sm text-[#73736A] mt-1 font-medium">
+                  <p className="text-sm text-[#66665E] mt-1 font-medium">
                     Verified ratings from completed brand escrow contracts.
                   </p>
                 </div>
@@ -738,7 +748,7 @@ export default function CreatorProfilePage() {
                           <BrandLogo name={rev.brandName} logoUrl={rev.brandLogo} size="md" />
                           <div className="min-w-0">
                             <div className="font-bold text-sm text-[#0A0A0A] truncate">{rev.brandName}</div>
-                            <div className="text-sm text-[#73736A] truncate">{rev.campaignName} • {rev.date}</div>
+                            <div className="text-sm text-[#66665E] truncate">{rev.campaignName} • {rev.date}</div>
                           </div>
                         </div>
                         <div className="flex text-amber-500 shrink-0">
@@ -752,7 +762,7 @@ export default function CreatorProfilePage() {
                       </p>
                     </div>
 
-                    <div className="pt-2 border-t border-[#E7E7E2]/60 flex items-center justify-between text-sm text-[#73736A]">
+                    <div className="pt-2 border-t border-[#E7E7E2]/60 flex items-center justify-between text-sm text-[#66665E]">
                       <span className="font-bold text-[#0A0A0A] flex items-center gap-1">
                         <ShieldCheck className="w-3.5 h-3.5 text-[#0A0A0A]" />
                         <span>Escrow Verified</span>
@@ -772,7 +782,7 @@ export default function CreatorProfilePage() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#E7E7E2]/60">
               <div>
                 <h2 className="text-2xl font-extrabold text-[#0A0A0A]">All Collaboration Deals</h2>
-                <p className="text-xs sm:text-sm text-[#73736A] mt-1 font-medium">
+                <p className="text-xs sm:text-sm text-[#66665E] mt-1 font-medium">
                   Transparent fixed EUR pricing with escrow protection and clear turnaround times.
                 </p>
               </div>
@@ -804,7 +814,7 @@ export default function CreatorProfilePage() {
                 <h2 className="text-2xl font-extrabold text-[#0A0A0A]">
                   Work Gallery & Portfolio
                 </h2>
-                <p className="text-sm text-[#73736A] mt-1 font-medium max-w-xl">
+                <p className="text-sm text-[#66665E] mt-1 font-medium max-w-xl">
                   {portfolioFilter === 'all'
                     ? 'Browse previous brand campaigns, engagement reach, and visual deliverables across all platforms.'
                     : `Filtered by ${platformLabel(portfolioFilter)} campaigns and deliverables produced by ${creator.name}.`}
@@ -842,7 +852,7 @@ export default function CreatorProfilePage() {
                     className={`px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-bold capitalize transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
                       portfolioFilter === tab.key
                         ? 'bg-[#0A0A0A] text-white shadow-2xs'
-                        : 'text-[#73736A] hover:text-[#0A0A0A]'
+                        : 'text-[#66665E] hover:text-[#0A0A0A]'
                     }`}
                   >
                     <span>{tab.label}</span>
@@ -866,6 +876,9 @@ export default function CreatorProfilePage() {
                   <div
                     key={item.id}
                     onClick={() => setSelectedPortfolioItem(item)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => e.key === 'Enter' && setSelectedPortfolioItem(item)}
                     className="rounded-3xl overflow-hidden border border-[#E7E7E2] bg-[#FAFAF8] hover:border-[#0A0A0A] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group cursor-pointer font-sans"
                   >
                     {/* Media Thumbnail Container */}
@@ -918,14 +931,14 @@ export default function CreatorProfilePage() {
                         </p>
 
                         {item.deliverableType && (
-                          <p className="text-sm text-[#73736A] font-medium line-clamp-1">
+                          <p className="text-sm text-[#66665E] font-medium line-clamp-1">
                             {item.deliverableType}
                           </p>
                         )}
                       </div>
 
                       {/* Footer Metrics & Verified Label */}
-                      <div className="pt-3 border-t border-[#E7E7E2] flex items-center justify-between text-sm font-bold text-[#73736A]">
+                      <div className="pt-3 border-t border-[#E7E7E2] flex items-center justify-between text-sm font-bold text-[#66665E]">
                         <div className="flex items-center gap-3">
                           <span className="flex items-center gap-1 text-[#0A0A0A]">
                             <Heart className="w-3.5 h-3.5 text-[#FF2D78]" />
@@ -972,18 +985,18 @@ export default function CreatorProfilePage() {
               <h2 className="text-2xl font-extrabold text-[#0A0A0A]">
                 Gallery
               </h2>
-              <p className="text-sm text-[#73736A] mt-1 font-medium">
+              <p className="text-sm text-[#66665E] mt-1 font-medium">
                 Photos and visual profile of {creator.name}.
               </p>
             </div>
 
             {/* Clean Photo Cards Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
               {creatorPhotos.map((photo) => (
                 <div
                   key={photo.id}
                   onClick={() => setSelectedPhoto(photo)}
-                  className="rounded-3xl overflow-hidden border border-[#E7E7E2] bg-[#FAFAF8] hover:border-[#0A0A0A] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group cursor-pointer aspect-4/5 relative"
+                  className="rounded-2xl overflow-hidden border border-[#E7E7E2] bg-[#FAFAF8] hover:border-[#0A0A0A] hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 group cursor-pointer aspect-square relative"
                 >
                   <img
                     src={photo.url}
@@ -1011,7 +1024,7 @@ export default function CreatorProfilePage() {
           <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] space-y-8">
             <div>
               <h2 className="text-2xl font-extrabold text-[#0A0A0A]">Verified Audience Demographics</h2>
-              <p className="text-sm text-[#73736A] mt-1 font-medium">
+              <p className="text-sm text-[#66665E] mt-1 font-medium">
                 First-party authenticated analytics via Instagram Graph API & TikTok Creator Portal.
               </p>
             </div>
@@ -1019,7 +1032,7 @@ export default function CreatorProfilePage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Top Countries */}
               <div className="p-5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-3">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Top Geographies</h3>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-[#66665E]">Top Geographies</h3>
                 {creator.audience.topCountries.map((c) => (
                   <div key={c.country} className="space-y-1">
                     <div className="flex justify-between text-sm font-bold text-[#0A0A0A]">
@@ -1035,7 +1048,7 @@ export default function CreatorProfilePage() {
 
               {/* Gender Split */}
               <div className="p-5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-3">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Gender Distribution</h3>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-[#66665E]">Gender Distribution</h3>
                 <div className="flex items-center justify-between text-sm font-bold text-[#0A0A0A]">
                   <span>Female ({creator.audience.genderSplit.female}%)</span>
                   <span>Male ({creator.audience.genderSplit.male}%)</span>
@@ -1050,7 +1063,7 @@ export default function CreatorProfilePage() {
                     style={{ width: `${creator.audience.genderSplit.male}%` }}
                   />
                 </div>
-                <div className="flex justify-between text-sm text-[#73736A] pt-1 font-bold">
+                <div className="flex justify-between text-sm text-[#66665E] pt-1 font-bold">
                   <span className="flex items-center gap-1">
                     <span className="w-2 h-2 rounded-full bg-[#0F766E]" /> Female
                   </span>
@@ -1062,11 +1075,11 @@ export default function CreatorProfilePage() {
 
               {/* Age Bracket */}
               <div className="p-5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-3">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Primary Age Bracket</h3>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-[#66665E]">Primary Age Bracket</h3>
                 <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A] pt-2">
                   {creator.audience.topAgeGroup}
                 </div>
-                <p className="text-sm text-[#73736A] font-medium leading-relaxed">
+                <p className="text-sm text-[#66665E] font-medium leading-relaxed">
                   Over 75% of the engaged audience falls between young adult and high-income working age demographics.
                 </p>
               </div>
@@ -1099,7 +1112,7 @@ export default function CreatorProfilePage() {
                     <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                       Brand Reviews & Verified Ratings
                     </h2>
-                    <p className="text-sm text-[#73736A] mt-1 font-medium">
+                    <p className="text-sm text-[#66665E] mt-1 font-medium">
                       All reviews are verified from completed escrow collaborations on Influverse.
                     </p>
                   </div>
@@ -1115,7 +1128,7 @@ export default function CreatorProfilePage() {
                             <Star key={i} className="w-4 h-4 fill-amber-500" />
                           ))}
                         </div>
-                        <div className="text-sm font-bold text-[#73736A] mt-0.5">
+                        <div className="text-sm font-bold text-[#66665E] mt-0.5">
                           {creator.reviewsCount || 42} verified reviews
                         </div>
                       </div>
@@ -1173,7 +1186,7 @@ export default function CreatorProfilePage() {
                     </button>
                   </div>
 
-                  <span className="text-sm font-bold text-[#73736A] whitespace-nowrap shrink-0 hidden sm:inline">
+                  <span className="text-sm font-bold text-[#66665E] whitespace-nowrap shrink-0 hidden sm:inline">
                     Showing {filteredReviews.length === 0 ? 0 : reviewPageStart + 1}–{Math.min(reviewPageStart + reviewsPerPage, filteredReviews.length)} of {filteredReviews.length} Verified Reviews
                   </span>
                 </div>
@@ -1188,7 +1201,7 @@ export default function CreatorProfilePage() {
                             <BrandLogo name={rev.brandName} logoUrl={rev.brandLogo} size="md" />
                             <div className="min-w-0">
                               <div className="font-extrabold text-sm text-[#0A0A0A] truncate">{rev.brandName}</div>
-                              <div className="text-sm text-[#73736A] truncate">{rev.campaignName}</div>
+                              <div className="text-sm text-[#66665E] truncate">{rev.campaignName}</div>
                             </div>
                           </div>
                           <div className="flex text-amber-500 shrink-0">
@@ -1203,12 +1216,12 @@ export default function CreatorProfilePage() {
                         </p>
                       </div>
 
-                      <div className="pt-3 border-t border-[#E7E7E2]/80 flex items-center justify-between text-sm text-[#73736A]">
+                      <div className="pt-3 border-t border-[#E7E7E2]/80 flex items-center justify-between text-sm text-[#66665E]">
                         <span className="inline-flex items-center gap-1.5 font-bold text-[#0A0A0A]">
                           <ShieldCheck className="w-3.5 h-3.5 text-[#0A0A0A]" />
                           <span>Verified Escrow Order</span>
                         </span>
-                        <span className="font-medium text-[#A3A39C]">{rev.date}</span>
+                        <span className="font-medium text-[#66665E]">{rev.date}</span>
                       </div>
                     </div>
                   ))}
@@ -1219,7 +1232,7 @@ export default function CreatorProfilePage() {
                     aria-label="Review pagination"
                     className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-5 border-t border-[#E7E7E2]"
                   >
-                    <p className="text-sm font-semibold text-[#73736A]">
+                    <p className="text-sm font-semibold text-[#66665E]">
                       Page {currentReviewPage} of {reviewPageCount}
                     </p>
 

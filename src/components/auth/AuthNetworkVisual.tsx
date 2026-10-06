@@ -183,7 +183,7 @@ export function AuthNetworkVisual({
           <span className="font-serif font-black text-xs tracking-widest text-[#0A0A0A]">
             NERA
           </span>
-          <span className="text-[6.5px] font-bold tracking-[0.2em] text-[#73736A] uppercase -mt-0.5">
+          <span className="text-[6.5px] font-bold tracking-[0.2em] text-[#66665E] uppercase -mt-0.5">
             ATELIER
           </span>
         </div>
@@ -363,7 +363,7 @@ export function AuthNetworkVisual({
             {title}
           </h2>
           {subtitle ? (
-            <p className="text-sm sm:text-base text-[#73736A] font-medium leading-relaxed max-w-md mx-auto">
+            <p className="text-sm sm:text-base text-[#66665E] font-medium leading-relaxed max-w-md mx-auto">
               {subtitle}
             </p>
           ) : null}

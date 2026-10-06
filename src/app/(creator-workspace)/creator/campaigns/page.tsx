@@ -95,7 +95,7 @@ export default function CreatorCampaignsPage() {
                 className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
                   activeFilter === tab.key
                     ? 'bg-[#0A0A0A] text-white shadow-2xs'
-                    : 'text-[#73736A] hover:text-[#0A0A0A]'
+                    : 'text-[#66665E] hover:text-[#0A0A0A]'
                 }`}
               >
                 <span>{tab.label}</span>
@@ -113,7 +113,7 @@ export default function CreatorCampaignsPage() {
           {/* Search Filter Input */}
           <div className="w-full sm:w-64 shrink-0">
             <Input
-              prefix={<Search className="w-3.5 h-3.5 text-[#73736A]" />}
+              prefix={<Search className="w-3.5 h-3.5 text-[#66665E]" />}
               placeholder="Search brand or package..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -156,7 +156,7 @@ export default function CreatorCampaignsPage() {
                             <h3 className="font-bold text-sm sm:text-base text-[#0A0A0A] leading-tight">
                               {order.brandName}
                             </h3>
-                            <span className="text-xs uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#73736A] leading-none">
+                            <span className="text-xs uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#66665E] leading-none">
                               {order.platform}
                             </span>
                           </div>
@@ -165,7 +165,7 @@ export default function CreatorCampaignsPage() {
                             {order.packageTitle}
                           </p>
 
-                          <div className="flex items-center gap-2 text-sm text-[#73736A] font-medium pt-0.5">
+                          <div className="flex items-center gap-2 text-sm text-[#66665E] font-medium pt-0.5">
                             <span className="font-extrabold text-[#0A0A0A] text-sm">
                               €{order.basePriceEur.toLocaleString()}
                             </span>
@@ -197,7 +197,7 @@ export default function CreatorCampaignsPage() {
                                 e.stopPropagation();
                                 handleDeclineOffer(order.id);
                               }}
-                              className="h-9 sm:h-10 px-3.5 rounded-full font-bold text-xs border-[#E7E7E2] text-[#73736A] hover:text-[#0A0A0A] cursor-pointer"
+                              className="h-9 sm:h-10 px-3.5 rounded-full font-bold text-xs border-[#E7E7E2] text-[#66665E] hover:text-[#0A0A0A] cursor-pointer"
                             >
                               Decline
                             </Button>
@@ -218,7 +218,7 @@ export default function CreatorCampaignsPage() {
                               </span>
                             )}
 
-                            <div className="w-8 h-8 rounded-full bg-[#FAFAF8] group-hover:bg-[#0A0A0A] group-hover:text-white text-[#73736A] flex items-center justify-center transition-all border border-[#E7E7E2] group-hover:border-[#0A0A0A]">
+                            <div className="w-8 h-8 rounded-full bg-[#FAFAF8] group-hover:bg-[#0A0A0A] group-hover:text-white text-[#66665E] flex items-center justify-center transition-all border border-[#E7E7E2] group-hover:border-[#0A0A0A]">
                               <ChevronRight className="w-4 h-4 translate-x-0.5" />
                             </div>
                           </div>

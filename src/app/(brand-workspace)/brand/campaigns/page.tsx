@@ -12,7 +12,8 @@ import {
   ArrowRight,
   Search,
 } from 'lucide-react';
-import { Button, Input } from 'antd';
+import { Button as AntdButton, Input } from 'antd';
+import { Button as AppButton } from '@/components/ui';
 
 function formatDeadline(dateStr: string) {
   if (!dateStr) return '';
@@ -68,15 +69,14 @@ export default function BrandCampaignsPage() {
         title="Campaigns"
         subtitle="Creator hires and deliverables."
         action={
-          <Link href="/brand/hire/new">
-            <Button
-              type="primary"
-              className="h-10 px-5 rounded-full font-bold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 !text-white border-none flex items-center gap-2 shadow-sm"
-            >
-              <PlusCircle className="w-4 h-4" />
-              <span>New Campaign</span>
-            </Button>
-          </Link>
+          <AppButton
+            href="/brand/hire/new"
+            size="md"
+            variant="primary"
+            icon={<PlusCircle className="w-4 h-4" />}
+          >
+            New Campaign
+          </AppButton>
         }
       />
 
@@ -89,7 +89,7 @@ export default function BrandCampaignsPage() {
               { key: 'all', label: 'All', count: brandOrders.length },
               { key: 'pending', label: 'Pending', count: pendingOffers.length },
               { key: 'active', label: 'In Production', count: inProduction.length },
-              { key: 'review', label: 'Review', count: reviewReady.length },
+              { key: 'review', label: 'In Review', count: reviewReady.length },
               { key: 'completed', label: 'Completed', count: completed.length },
             ].map((tab) => (
               <button
@@ -98,7 +98,7 @@ export default function BrandCampaignsPage() {
                 className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
                   activeFilter === tab.key
                     ? 'bg-[#0A0A0A] text-white shadow-2xs'
-                    : 'text-[#73736A] hover:text-[#0A0A0A]'
+                    : 'text-[#66665E] hover:text-[#0A0A0A]'
                 }`}
               >
                 <span>{tab.label}</span>
@@ -116,7 +116,7 @@ export default function BrandCampaignsPage() {
           {/* Search Filter Input */}
           <div className="w-full sm:w-64 shrink-0">
             <Input
-              prefix={<Search className="w-3.5 h-3.5 text-[#73736A]" />}
+              prefix={<Search className="w-3.5 h-3.5 text-[#66665E]" />}
               placeholder="Search brand or package..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -138,20 +138,20 @@ export default function BrandCampaignsPage() {
             <div className="space-y-4">
               {filteredOrders.map((order) => {
                 const statusColors: Record<string, string> = {
-                  offer_sent: 'bg-[#F4F4F0] text-[#73736A] border border-[#E7E7E2]',
+                  offer_sent: 'bg-[#F4F4F0] text-[#66665E] border border-[#E7E7E2]',
                   accepted: 'bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]',
                   in_production: 'bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]',
                   deliverable_submitted: 'bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 font-bold',
                   approved: 'bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]',
-                  completed: 'bg-[#F4F4F0] text-[#73736A] border border-[#E7E7E2]',
+                  completed: 'bg-[#F4F4F0] text-[#66665E] border border-[#E7E7E2]',
                 };
 
                 const statusLabels: Record<string, string> = {
                   offer_sent: 'Pending',
-                  accepted: 'Accepted',
+                  accepted: 'In Production',
                   in_production: 'In Production',
-                  deliverable_submitted: 'Review Ready',
-                  approved: 'Released',
+                  deliverable_submitted: 'In Review',
+                  approved: 'Completed',
                   completed: 'Completed',
                 };
 
@@ -175,7 +175,7 @@ export default function BrandCampaignsPage() {
                             {order.creatorName}
                           </h3>
                           <VerifiedBadge size="xs" />
-                          <span className="text-sm text-[#73736A] font-medium leading-none">
+                          <span className="text-sm text-[#66665E] font-medium leading-none">
                             {order.creatorHandle.startsWith('@') ? order.creatorHandle : `@${order.creatorHandle}`}
                           </span>
                           <span className="text-xs uppercase tracking-wider font-extrabold px-2.5 py-0.5 rounded-full bg-[#EAEAE3] text-[#4A4A45] leading-none ml-1">
@@ -188,7 +188,7 @@ export default function BrandCampaignsPage() {
                         </div>
 
                         {/* Financial & Deadline Telemetry */}
-                        <div className="flex items-center gap-2 text-sm text-[#73736A] font-medium pt-0.5">
+                        <div className="flex items-center gap-2 text-sm text-[#66665E] font-medium pt-0.5">
                           <span className="font-extrabold text-[#0A0A0A] text-sm">
                             €{order.totalEur.toLocaleString()}
                           </span>
@@ -208,12 +208,14 @@ export default function BrandCampaignsPage() {
                         {statusLabels[order.status] || order.status}
                       </span>
 
-                      <Link href={`/brand/orders/${order.id}`}>
-                        <button className="h-10 px-5 rounded-full font-bold text-xs bg-[#0A0A0A] hover:bg-[#FF2D78] text-white border-none flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer active:scale-98">
-                          <span>{isReviewReady ? 'Review' : 'Manage'}</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
-                        </button>
-                      </Link>
+                      <AppButton
+                        href={`/brand/orders/${order.id}`}
+                        size="md"
+                        variant={isReviewReady ? 'pink' : 'primary'}
+                        iconRight={<ArrowRight className="w-3.5 h-3.5" />}
+                      >
+                        {isReviewReady ? 'Review' : 'Manage'}
+                      </AppButton>
                     </div>
                   </div>
                 );

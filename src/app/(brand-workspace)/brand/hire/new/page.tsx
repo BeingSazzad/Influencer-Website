@@ -196,7 +196,7 @@ function NewHireContent() {
 
             {/* Select Creator */}
             <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
+              <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">
                 Creator
               </label>
               <Select
@@ -228,13 +228,13 @@ function NewHireContent() {
                         <span className="font-extrabold text-[#0A0A0A] text-sm leading-tight">
                           {currentCreator.name}
                         </span>
-                        <span className="text-sm text-[#73736A]">@{currentCreator.handle}</span>
+                        <span className="text-sm text-[#66665E]">@{currentCreator.handle}</span>
                       </div>
                       <div className="flex items-center gap-1.5 mt-1">
                         {currentCreator.categories?.slice(0, 2).map((cat) => (
                           <span
                             key={cat}
-                            className="text-sm font-bold px-2 py-0.5 bg-white border border-[#E7E7E2] rounded-md text-[#73736A]"
+                            className="text-sm font-bold px-2 py-0.5 bg-white border border-[#E7E7E2] rounded-md text-[#66665E]"
                           >
                             {cat}
                           </span>
@@ -251,7 +251,7 @@ function NewHireContent() {
                     className="text-sm font-bold text-[#0A0A0A] hover:text-[#FF2D78] flex items-center gap-1 transition-colors px-3 py-1.5 bg-white rounded-xl border border-[#E7E7E2]"
                   >
                     <span>View Profile</span>
-                    <ExternalLink className="w-3 h-3 text-[#73736A]" />
+                    <ExternalLink className="w-3 h-3 text-[#66665E]" />
                   </Link>
                 </div>
               )}
@@ -260,7 +260,7 @@ function NewHireContent() {
             {/* Quick Package Presets */}
             {currentCreator?.packages && currentCreator.packages.length > 0 && (
               <div className="space-y-2">
-                <label className="block text-xs font-bold uppercase tracking-wider text-[#73736A]">
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#66665E]">
                   Package Preset
                 </label>
 
@@ -279,7 +279,7 @@ function NewHireContent() {
                         }`}
                       >
                         <div>
-                          <span className="text-xs font-extrabold uppercase px-1.5 py-0.5 rounded bg-zinc-100 text-[#73736A]">
+                          <span className="text-xs font-extrabold uppercase px-1.5 py-0.5 rounded bg-zinc-100 text-[#66665E]">
                             {pkg.platform === 'all' ? 'Bundle' : pkg.platform}
                           </span>
                           <div className="text-sm font-bold text-[#0A0A0A] mt-2 line-clamp-1 leading-snug">
@@ -290,7 +290,7 @@ function NewHireContent() {
                           <span className="text-xs font-black text-[#0A0A0A]">
                             €{pkg.priceEur.toLocaleString()}
                           </span>
-                          <span className="text-sm text-[#73736A] font-semibold">
+                          <span className="text-sm text-[#66665E] font-semibold">
                             {pkg.deliveryDays}d
                           </span>
                         </div>
@@ -303,7 +303,7 @@ function NewHireContent() {
 
             {/* Platform Selector */}
             <div className="space-y-1.5">
-              <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
+              <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">
                 Platform
               </label>
               <Select
@@ -319,7 +319,7 @@ function NewHireContent() {
 
             {/* Campaign Name */}
             <div className="space-y-1.5">
-              <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
+              <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">
                 Campaign Name
               </label>
               <Input
@@ -336,7 +336,7 @@ function NewHireContent() {
 
             {/* Campaign Brief */}
             <div className="space-y-1.5">
-              <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
+              <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">
                 Campaign Brief
               </label>
               <Input.TextArea
@@ -351,7 +351,7 @@ function NewHireContent() {
 
             {/* Deliverables & Requirements */}
             <div className="space-y-1.5">
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#73736A]">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#66665E]">
                 Deliverables & Requirements
               </label>
               <Input.TextArea
@@ -374,7 +374,7 @@ function NewHireContent() {
               {/* Creator Rate Slider & Input */}
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">
                     Creator Rate
                   </label>
                   <div className="w-32">
@@ -397,7 +397,7 @@ function NewHireContent() {
                   onChange={(v) => setBasePriceEur(v)}
                   tooltip={{ formatter: (val) => `€${val?.toLocaleString()}` }}
                 />
-                <div className="flex justify-between text-sm font-semibold text-[#73736A]">
+                <div className="flex justify-between text-sm font-semibold text-[#66665E]">
                   <span>€100</span>
                   <span>€5,000+</span>
                 </div>
@@ -405,12 +405,12 @@ function NewHireContent() {
 
               {/* Financial Calculation Breakdown */}
               <div className="space-y-2.5 pt-4 border-t border-[#E7E7E2] text-xs">
-                <div className="flex justify-between text-[#73736A]">
+                <div className="flex justify-between text-[#66665E]">
                   <span>Creator Payout:</span>
                   <span className="font-bold text-[#0A0A0A]">€{basePriceEur.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between text-[#73736A]">
-                  <span>Escrow & Service Fee (15%):</span>
+                <div className="flex justify-between text-[#66665E]">
+                  <span>Platform Fee (15%):</span>
                   <span className="font-bold text-[#0A0A0A]">+€{platformFeeEur.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-baseline text-sm font-black text-[#0A0A0A] pt-3 border-t border-[#E7E7E2]">
@@ -448,7 +448,7 @@ function NewHireContent() {
 
 export default function NewHireCampaignPage() {
   return (
-    <Suspense fallback={<div className="p-8 text-center text-sm font-bold text-[#73736A]">Loading campaign checkout...</div>}>
+    <Suspense fallback={<div className="p-8 text-center text-sm font-bold text-[#66665E]">Loading campaign checkout...</div>}>
       <NewHireContent />
     </Suspense>
   );

@@ -114,7 +114,7 @@ export default function BrandSettingsPage() {
             <button
               type="button"
               onClick={handleLogout}
-              className="h-10 px-4 rounded-full font-bold text-sm bg-[#FAFAF8] border border-[#E7E7E2] hover:border-rose-300 hover:bg-rose-50 text-[#73736A] hover:text-rose-600 flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs"
+              className="h-10 px-4 rounded-full font-bold text-sm bg-[#FAFAF8] border border-[#E7E7E2] hover:border-rose-300 hover:bg-rose-50 text-[#66665E] hover:text-rose-600 flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs"
             >
               <LogOut className="w-4 h-4" />
               <span>Sign Out</span>
@@ -132,10 +132,10 @@ export default function BrandSettingsPage() {
             className={`py-2.5 px-4 sm:px-5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 whitespace-nowrap shrink-0 transition-all cursor-pointer ${
               activeTab === 'company'
                 ? 'bg-[#0A0A0A] text-white shadow-xs'
-                : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
+                : 'text-[#66665E] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
             }`}
           >
-            <Building2 className={`w-4 h-4 shrink-0 ${activeTab === 'company' ? 'text-white' : 'text-[#73736A]'}`} />
+            <Building2 className={`w-4 h-4 shrink-0 ${activeTab === 'company' ? 'text-white' : 'text-[#66665E]'}`} />
             <span className="whitespace-nowrap">Company Profile</span>
           </button>
 
@@ -146,10 +146,10 @@ export default function BrandSettingsPage() {
             className={`py-2.5 px-4 sm:px-5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 whitespace-nowrap shrink-0 transition-all cursor-pointer ${
               activeTab === 'security'
                 ? 'bg-[#0A0A0A] text-white shadow-xs'
-                : 'text-[#73736A] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
+                : 'text-[#66665E] hover:text-[#0A0A0A] hover:bg-[#FAFAF8]'
             }`}
           >
-            <Shield className={`w-4 h-4 shrink-0 ${activeTab === 'security' ? 'text-white' : 'text-[#73736A]'}`} />
+            <Shield className={`w-4 h-4 shrink-0 ${activeTab === 'security' ? 'text-white' : 'text-[#66665E]'}`} />
             <span className="whitespace-nowrap">Security</span>
           </button>
         </div>
@@ -176,7 +176,7 @@ export default function BrandSettingsPage() {
               {/* Company Name & Contact Name */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Brand name</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">Brand name</label>
                   <Input
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
@@ -186,7 +186,7 @@ export default function BrandSettingsPage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Full name</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">Full name</label>
                   <Input
                     value={contactName}
                     onChange={(e) => setContactName(e.target.value)}
@@ -199,9 +199,9 @@ export default function BrandSettingsPage() {
               {/* Email, Website & Location */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Email</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">Email</label>
                   <Input
-                    prefix={<Mail className="w-3.5 h-3.5 text-[#73736A]" />}
+                    prefix={<Mail className="w-3.5 h-3.5 text-[#66665E]" />}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="rounded-xl h-10 text-sm font-semibold"
@@ -210,9 +210,9 @@ export default function BrandSettingsPage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Website</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">Website</label>
                   <Input
-                    prefix={<Globe className="w-3.5 h-3.5 text-[#73736A]" />}
+                    prefix={<Globe className="w-3.5 h-3.5 text-[#66665E]" />}
                     value={website}
                     onChange={(e) => setWebsite(e.target.value)}
                     className="rounded-xl h-10 text-sm font-semibold"
@@ -220,9 +220,9 @@ export default function BrandSettingsPage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Location</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">Location</label>
                   <Input
-                    prefix={<MapPin className="w-3.5 h-3.5 text-[#73736A]" />}
+                    prefix={<MapPin className="w-3.5 h-3.5 text-[#66665E]" />}
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
                     className="rounded-xl h-10 text-sm font-semibold"
@@ -232,7 +232,7 @@ export default function BrandSettingsPage() {
 
               {/* Industry & Bio */}
               <div className="space-y-1.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Industry</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">Industry</label>
                 <Input
                   value={industry}
                   onChange={(e) => setIndustry(e.target.value)}
@@ -241,7 +241,7 @@ export default function BrandSettingsPage() {
               </div>
 
               <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Bio</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">Bio</label>
                 <Input.TextArea
                   rows={3}
                   value={bio}
@@ -292,7 +292,7 @@ export default function BrandSettingsPage() {
                       <label className="text-sm font-bold text-[#0A0A0A]">Current Password</label>
                       <Link
                         href="/forgot-password"
-                        className="text-xs font-bold text-[#73736A] hover:text-[#FF2D78] transition-colors"
+                        className="text-xs font-bold text-[#66665E] hover:text-[#FF2D78] transition-colors"
                       >
                         Forgot current password?
                       </Link>
@@ -347,7 +347,7 @@ export default function BrandSettingsPage() {
                     <ShieldCheck className="w-4 h-4 text-[#FF2D78]" />
                     <span>Password Security Guidelines</span>
                   </div>
-                  <ul className="space-y-2 text-xs font-medium text-[#73736A]">
+                  <ul className="space-y-2 text-xs font-medium text-[#66665E]">
                     <li className="flex items-center gap-2">
                       <span className={`w-1.5 h-1.5 rounded-full ${newPassword.length >= 8 ? 'bg-[#0A0A0A]' : 'bg-[#D2D2CA]'}`} />
                       <span>Minimum 8 characters</span>
@@ -385,7 +385,7 @@ export default function BrandSettingsPage() {
                   <div className="text-sm font-bold text-[#0A0A0A]">
                     Windows PC • Chrome Browser
                   </div>
-                  <div className="text-sm text-[#73736A]">
+                  <div className="text-sm text-[#66665E]">
                     Current active session • Paris, France
                   </div>
                 </div>

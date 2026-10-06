@@ -30,7 +30,7 @@ export function WorkspaceHeader({
         )}
         <div>
           <h1 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">{title}</h1>
-          {subtitle && <p className="text-sm text-[#73736A] font-medium mt-0.5">{subtitle}</p>}
+          {subtitle && <p className="text-sm text-[#66665E] font-medium mt-0.5">{subtitle}</p>}
         </div>
       </div>
 

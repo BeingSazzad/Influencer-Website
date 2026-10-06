@@ -24,7 +24,7 @@ export default function AboutPage() {
             </h1>
           </div>
           <div className="lg:col-span-4 lg:pt-2">
-            <p className="text-base sm:text-lg text-[#73736A] font-medium leading-[28px]">
+            <p className="text-base sm:text-lg text-[#66665E] font-medium leading-[28px]">
               We bring brands and creators together to turn shared ideas into meaningful content.
             </p>
           </div>
@@ -56,7 +56,7 @@ export default function AboutPage() {
               <h3 className="text-xl sm:text-2xl font-extrabold text-[#0A0A0A] mb-3">
                 Finding the right collaborator should feel simple.
               </h3>
-              <p className="text-base sm:text-lg text-[#73736A] font-medium leading-[28px]">
+              <p className="text-base sm:text-lg text-[#66665E] font-medium leading-[28px]">
                 Influverse brings creator discovery, clear offers and content delivery into one place—so both sides know what comes next.
               </p>
             </div>
@@ -89,7 +89,7 @@ export default function AboutPage() {
                   <h3 className="text-2xl font-black text-[#0A0A0A] mb-2">
                     For brands
                   </h3>
-                  <p className="text-base text-[#73736A] font-medium leading-[26px] mb-4">
+                  <p className="text-base text-[#66665E] font-medium leading-[26px] mb-4">
                     Find creators who fit your brand. Agree on the brief, review the work and keep everything organised.
                   </p>
                   <Link
@@ -120,7 +120,7 @@ export default function AboutPage() {
                   <h3 className="text-2xl font-black text-[#0A0A0A] mb-2">
                     For creators
                   </h3>
-                  <p className="text-base text-[#73736A] font-medium leading-[26px] mb-4">
+                  <p className="text-base text-[#66665E] font-medium leading-[26px] mb-4">
                     Show your work, set your packages and manage collaborations with clarity.
                   </p>
                   <Link
@@ -154,7 +154,7 @@ export default function AboutPage() {
                 <h3 className="text-2xl font-extrabold text-[#0A0A0A] mb-1.5">
                   Clear expectations
                 </h3>
-                <p className="text-sm text-[#73736A] font-medium leading-[22px]">
+                <p className="text-sm text-[#66665E] font-medium leading-[22px]">
                   Agree on scope, price and timing.
                 </p>
               </div>
@@ -165,7 +165,7 @@ export default function AboutPage() {
                 <h3 className="text-2xl font-extrabold text-[#0A0A0A] mb-1.5">
                   Shared visibility
                 </h3>
-                <p className="text-sm text-[#73736A] font-medium leading-[22px]">
+                <p className="text-sm text-[#66665E] font-medium leading-[22px]">
                   Keep feedback and delivery together.
                 </p>
               </div>
@@ -176,7 +176,7 @@ export default function AboutPage() {
                 <h3 className="text-2xl font-extrabold text-[#0A0A0A] mb-1.5">
                   Creative respect
                 </h3>
-                <p className="text-sm text-[#73736A] font-medium leading-[22px]">
+                <p className="text-sm text-[#66665E] font-medium leading-[22px]">
                   Build around the work and the people behind it.
                 </p>
               </div>

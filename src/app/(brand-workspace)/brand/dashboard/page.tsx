@@ -61,7 +61,7 @@ export default function BrandDashboardPage() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
           <div className="bg-white p-5 sm:p-6 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
+              <span className="text-xs font-extrabold uppercase tracking-wider text-[#66665E]">
                 In Escrow
               </span>
               <div className="w-8 h-8 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center">
@@ -71,12 +71,12 @@ export default function BrandDashboardPage() {
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
               €{Math.round(activeSpendEur).toLocaleString()}
             </div>
-            <div className="text-sm text-[#73736A] font-medium">Locked on active hires</div>
+            <div className="text-sm text-[#66665E] font-medium">Locked on active hires</div>
           </div>
 
           <div className="bg-white p-5 sm:p-6 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
+              <span className="text-xs font-extrabold uppercase tracking-wider text-[#66665E]">
                 Active Hires
               </span>
               <div className="w-8 h-8 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center">
@@ -86,12 +86,12 @@ export default function BrandDashboardPage() {
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
               {activeOrders.length}
             </div>
-            <div className="text-sm text-[#73736A] font-medium">Campaigns in progress</div>
+            <div className="text-sm text-[#66665E] font-medium">Campaigns in progress</div>
           </div>
 
           <div className="bg-white p-5 sm:p-6 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
+              <span className="text-xs font-extrabold uppercase tracking-wider text-[#66665E]">
                 Lifetime Spend
               </span>
               <div className="w-8 h-8 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center">
@@ -101,7 +101,7 @@ export default function BrandDashboardPage() {
             <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
               €{Math.round(totalEscrowFundedEur).toLocaleString()}
             </div>
-            <div className="text-sm text-[#73736A] font-medium">All funded campaigns</div>
+            <div className="text-sm text-[#66665E] font-medium">All funded campaigns</div>
           </div>
         </div>
 
@@ -115,7 +115,7 @@ export default function BrandDashboardPage() {
               <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                 Active Campaigns
               </h2>
-              <p className="text-sm text-[#73736A] mt-0.5 font-medium">
+              <p className="text-sm text-[#66665E] mt-0.5 font-medium">
                 {activeOrders.length} in progress
               </p>
             </div>
@@ -131,12 +131,12 @@ export default function BrandDashboardPage() {
           <div className="space-y-3">
             {activeOrders.map((order) => {
               const statusColors: Record<string, string> = {
-                offer_sent: 'bg-[#F4F4F0] text-[#73736A] border border-[#E7E7E2]',
+                offer_sent: 'bg-[#F4F4F0] text-[#66665E] border border-[#E7E7E2]',
                 accepted: 'bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]',
                 in_production: 'bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]',
                 deliverable_submitted: 'bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 font-bold',
                 approved: 'bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]',
-                completed: 'bg-[#F4F4F0] text-[#73736A] border border-[#E7E7E2]',
+                completed: 'bg-[#F4F4F0] text-[#66665E] border border-[#E7E7E2]',
               };
 
               const statusLabels: Record<string, string> = {
@@ -172,7 +172,7 @@ export default function BrandDashboardPage() {
                           {order.creatorName}
                         </h3>
                         <VerifiedBadge size="xs" />
-                        <span className="text-sm text-[#73736A] font-medium leading-none">
+                        <span className="text-sm text-[#66665E] font-medium leading-none">
                           {order.creatorHandle.startsWith('@') ? order.creatorHandle : `@${order.creatorHandle}`}
                         </span>
                         <span className="text-xs uppercase tracking-wider font-bold px-2.5 py-0.5 rounded-full bg-[#EAEAE3] text-[#4A4A45] leading-none ml-1">
@@ -182,7 +182,7 @@ export default function BrandDashboardPage() {
                       <div className="text-sm font-semibold text-[#0A0A0A] leading-snug">
                         {order.packageTitle}
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-[#73736A] font-medium pt-0.5">
+                      <div className="flex items-center gap-2 text-sm text-[#66665E] font-medium pt-0.5">
                         <span className="font-extrabold text-[#0A0A0A]">
                           €{order.totalEur.toLocaleString()}
                         </span>
@@ -220,7 +220,7 @@ export default function BrandDashboardPage() {
               <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                 Shortlist
               </h2>
-              <p className="text-sm text-[#73736A] mt-0.5 font-medium">
+              <p className="text-sm text-[#66665E] mt-0.5 font-medium">
                 {savedCreators.length} saved
               </p>
             </div>

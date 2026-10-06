@@ -64,7 +64,7 @@ export default function NotFound() {
         <h1 className="text-2xl sm:text-4xl font-black text-[#0A0A0A] tracking-tight mb-4">
           Looking for a Creator or Campaign?
         </h1>
-        <p className="text-sm sm:text-base text-[#73736A] max-w-lg mb-8 leading-relaxed font-medium">
+        <p className="text-sm sm:text-base text-[#66665E] max-w-lg mb-8 leading-relaxed font-medium">
           The creator profile, rate card, or marketplace route you entered doesn’t exist, has been made private, or was moved to a new URL.
         </p>
 
@@ -99,7 +99,7 @@ export default function NotFound() {
             <h3 className="font-bold text-sm text-[#0A0A0A] mb-1 group-hover:text-[#FF2D78] transition-colors">
               Creator Catalog
             </h3>
-            <p className="text-sm text-[#73736A] leading-relaxed">
+            <p className="text-sm text-[#66665E] leading-relaxed">
               Explore 500+ vetted UGC, TikTok, & Instagram content creators.
             </p>
           </Link>
@@ -114,7 +114,7 @@ export default function NotFound() {
             <h3 className="font-bold text-sm text-[#0A0A0A] mb-1 group-hover:text-[#FF2D78] transition-colors">
               Escrow Protection
             </h3>
-            <p className="text-sm text-[#73736A] leading-relaxed">
+            <p className="text-sm text-[#66665E] leading-relaxed">
               Milestone funding with 100% guarantee on approved deliverables.
             </p>
           </Link>
@@ -129,7 +129,7 @@ export default function NotFound() {
             <h3 className="font-bold text-sm text-[#0A0A0A] mb-1 group-hover:text-[#6444A6] transition-colors">
               Marketplace Help
             </h3>
-            <p className="text-sm text-[#73736A] leading-relaxed">
+            <p className="text-sm text-[#66665E] leading-relaxed">
               Read answers about booking, briefs, usage rights, and payouts.
             </p>
           </Link>
@@ -137,7 +137,7 @@ export default function NotFound() {
       </main>
 
       {/* Clean Footer */}
-      <footer className="w-full border-t border-[#E7E7E2] py-6 px-6 text-center text-sm text-[#73736A]">
+      <footer className="w-full border-t border-[#E7E7E2] py-6 px-6 text-center text-sm text-[#66665E]">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
           <span>© {new Date().getFullYear()} Influverse Ltd. All rights reserved.</span>
           <div className="flex items-center gap-4">

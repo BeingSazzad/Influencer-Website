@@ -233,12 +233,12 @@ function BrandMessagesContent() {
             {/* Search Header */}
             <div className="p-4 border-b border-[#E7E7E2] bg-white space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-black uppercase tracking-wider text-[#73736A]">
+                <span className="text-xs font-black uppercase tracking-wider text-[#66665E]">
                   Conversations
                 </span>
               </div>
               <div className="relative">
-                <Search className="w-4 h-4 text-[#73736A] absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <Search className="w-4 h-4 text-[#66665E] absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
                   placeholder="Search creators..."
@@ -276,28 +276,31 @@ function BrandMessagesContent() {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between gap-1 mb-0.5">
                           <div className="flex items-center gap-1.5 truncate">
-                            <span className="text-sm font-bold text-[#0A0A0A] truncate">
+                            {conv.unreadCountBrand > 0 && (
+                              <span className="w-2 h-2 rounded-full bg-[#0A0A0A] shrink-0" />
+                            )}
+                            <span className={`text-sm truncate ${conv.unreadCountBrand > 0 ? 'font-black text-[#0A0A0A]' : 'font-bold text-[#0A0A0A]'}`}>
                               {conv.creatorName}
                             </span>
                             <VerifiedBadge size="xs" />
                           </div>
-                          <span className="text-xs text-[#73736A] shrink-0 font-medium">
+                          <span className={`text-xs shrink-0 ${conv.unreadCountBrand > 0 ? 'font-bold text-[#0A0A0A]' : 'font-medium text-[#66665E]'}`}>
                             {conv.lastMessageTimestamp}
                           </span>
                         </div>
 
-                        <div className="text-xs text-[#73736A] font-medium truncate mb-1">
+                        <div className="text-xs text-[#66665E] font-medium truncate mb-1">
                           @{conv.creatorHandle}
                         </div>
 
-                        <div className="text-xs text-[#73736A] truncate leading-snug">
+                        <div className={`text-xs truncate leading-snug ${conv.unreadCountBrand > 0 ? 'font-bold text-[#0A0A0A]' : 'font-medium text-[#66665E]'}`}>
                           {conv.lastMessage}
                         </div>
                       </div>
 
                       <div className="flex flex-col items-end justify-between self-stretch shrink-0 pl-1">
                         {conv.unreadCountBrand > 0 ? (
-                          <span className="min-w-[18px] h-[18px] px-1 rounded-full bg-[#0A0A0A] text-white text-[10px] font-bold flex items-center justify-center">
+                          <span className="min-w-[18px] h-[18px] px-1.5 rounded-full bg-[#0A0A0A] text-white text-[10px] font-black flex items-center justify-center shadow-2xs">
                             {conv.unreadCountBrand}
                           </span>
                         ) : (
@@ -331,7 +334,7 @@ function BrandMessagesContent() {
                   );
                 })
               ) : (
-                <div className="p-8 text-center text-sm text-[#73736A] font-medium">
+                <div className="p-8 text-center text-sm text-[#66665E] font-medium">
                   No conversations match your search.
                 </div>
               )}
@@ -356,7 +359,7 @@ function BrandMessagesContent() {
                       </h2>
                       <VerifiedBadge size="xs" />
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-[#73736A]">
+                    <div className="flex items-center gap-2 text-sm text-[#66665E]">
                       <span>@{activeConv.creatorHandle}</span>
                       {activeConv.creatorLocation && (
                         <>
@@ -377,7 +380,7 @@ function BrandMessagesContent() {
                       type="default"
                       className="h-9 px-3.5 rounded-full text-sm font-bold border-[#E7E7E2] text-[#0A0A0A] hover:border-[#0A0A0A] flex items-center gap-1.5 cursor-pointer shadow-2xs"
                     >
-                      <ExternalLink className="w-3.5 h-3.5 text-[#73736A]" />
+                      <ExternalLink className="w-3.5 h-3.5 text-[#66665E]" />
                       <span className="hidden sm:inline">View Profile</span>
                     </Button>
                   </Link>
@@ -454,7 +457,7 @@ function BrandMessagesContent() {
                   >
                     <button
                       type="button"
-                      className="w-9 h-9 rounded-full border border-[#E7E7E2] hover:border-[#0A0A0A] bg-white hover:bg-[#FAFAF8] text-[#73736A] hover:text-[#0A0A0A] flex items-center justify-center transition-all cursor-pointer shadow-2xs"
+                      className="w-9 h-9 rounded-full border border-[#E7E7E2] hover:border-[#0A0A0A] bg-white hover:bg-[#FAFAF8] text-[#66665E] hover:text-[#0A0A0A] flex items-center justify-center transition-all cursor-pointer shadow-2xs"
                       title="More options"
                     >
                       <MoreVertical className="w-4 h-4" />
@@ -478,7 +481,7 @@ function BrandMessagesContent() {
                       <UploadCloud className="w-8 h-8" />
                     </div>
                     <p className="font-bold text-base text-[#0A0A0A]">Drop Files Here to Share</p>
-                    <p className="text-sm text-[#73736A] mt-1">
+                    <p className="text-sm text-[#66665E] mt-1">
                       Upload campaign briefs, moodboards, contract drafts, or brand guidelines
                     </p>
                   </div>
@@ -503,7 +506,7 @@ function BrandMessagesContent() {
                       <div className={`space-y-1.5 ${isBrand ? 'text-right' : 'text-left'}`}>
                         {/* Header: Sender name, timestamp, and read status for outgoing messages */}
                         <div
-                          className={`flex items-center gap-1.5 text-xs text-[#73736A] font-medium px-1 ${
+                          className={`flex items-center gap-1.5 text-xs text-[#66665E] font-medium px-1 ${
                             isBrand ? 'justify-end' : 'justify-start'
                           }`}
                         >
@@ -608,7 +611,7 @@ function BrandMessagesContent() {
                                         <div className="p-2.5 bg-white border-t border-[#E7E7E2] flex items-center justify-between gap-2">
                                           <div className="min-w-0 text-left">
                                             <p className="text-sm font-bold text-[#0A0A0A] truncate">{att.name}</p>
-                                            <p className="text-sm text-[#73736A]">{att.size}</p>
+                                            <p className="text-sm text-[#66665E]">{att.size}</p>
                                           </div>
                                           <a
                                             href={att.url}
@@ -650,7 +653,7 @@ function BrandMessagesContent() {
                                           <p className="text-sm font-bold truncate leading-tight">{att.name}</p>
                                           <p
                                             className={`text-xs font-sans mt-0.5 ${
-                                              isBrand ? 'text-zinc-400' : 'text-[#73736A]'
+                                              isBrand ? 'text-zinc-400' : 'text-[#66665E]'
                                             }`}
                                           >
                                             {att.size} • {att.type.toUpperCase()}
@@ -709,10 +712,10 @@ function BrandMessagesContent() {
 
                 {/* Simulated Creator Typing Indicator */}
                 {isTyping && (
-                  <div className="flex gap-2 items-center text-sm text-[#73736A] italic bg-white px-3 py-2 rounded-full border border-[#E7E7E2] w-fit shadow-2xs">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#73736A] animate-bounce" />
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#73736A] animate-bounce [animation-delay:0.2s]" />
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#73736A] animate-bounce [animation-delay:0.4s]" />
+                  <div className="flex gap-2 items-center text-sm text-[#66665E] italic bg-white px-3 py-2 rounded-full border border-[#E7E7E2] w-fit shadow-2xs">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#66665E] animate-bounce" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#66665E] animate-bounce [animation-delay:0.2s]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#66665E] animate-bounce [animation-delay:0.4s]" />
                     <span className="ml-1 font-medium">{activeConv.creatorName} is typing...</span>
                   </div>
                 )}
@@ -723,7 +726,7 @@ function BrandMessagesContent() {
               {/* Pending Attachments Preview Tray */}
               {pendingAttachments.length > 0 && (
                 <div className="px-4 py-2.5 bg-[#FAFAF8] border-t border-[#E7E7E2] flex items-center gap-2 overflow-x-auto">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#73736A] shrink-0">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#66665E] shrink-0">
                     Files to Send ({pendingAttachments.length}):
                   </span>
                   <div className="flex items-center gap-2 flex-wrap">
@@ -749,7 +752,7 @@ function BrandMessagesContent() {
                         )}
                         <div className="max-w-[130px] truncate">
                           <p className="font-bold text-[#0A0A0A] truncate text-xs">{att.name}</p>
-                          <p className="text-sm text-[#73736A]">{att.size}</p>
+                          <p className="text-sm text-[#66665E]">{att.size}</p>
                         </div>
                         <button
                           type="button"
@@ -787,7 +790,7 @@ function BrandMessagesContent() {
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
                   title="Attach Campaign Brief, Moodboard or Files (PDF, Images, Video, Zip)"
-                  className="w-11 h-11 rounded-full bg-[#FAFAF8] hover:bg-[#F4F4F0] border border-[#E7E7E2] hover:border-[#0A0A0A] text-[#73736A] hover:text-[#0A0A0A] flex items-center justify-center transition-all cursor-pointer shrink-0 shadow-2xs group"
+                  className="w-11 h-11 rounded-full bg-[#FAFAF8] hover:bg-[#F4F4F0] border border-[#E7E7E2] hover:border-[#0A0A0A] text-[#66665E] hover:text-[#0A0A0A] flex items-center justify-center transition-all cursor-pointer shrink-0 shadow-2xs group"
                 >
                   <Paperclip className="w-4 h-4 group-hover:rotate-45 transition-transform duration-200" />
                 </button>
@@ -832,7 +835,7 @@ export default function BrandMessagesPage() {
   return (
     <React.Suspense
       fallback={
-        <div className="min-h-screen bg-[#FAFAF8] flex items-center justify-center font-sans text-sm font-bold text-[#73736A]">
+        <div className="min-h-screen bg-[#FAFAF8] flex items-center justify-center font-sans text-sm font-bold text-[#66665E]">
           Loading direct messages...
         </div>
       }

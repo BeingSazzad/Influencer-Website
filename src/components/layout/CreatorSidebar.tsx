@@ -127,7 +127,7 @@ export function CreatorSidebar() {
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-[#73736A]'}`} />
+                  <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-[#66665E]'}`} />
                   <span>{item.name}</span>
                 </div>
                 {item.badge !== undefined && (
@@ -165,7 +165,7 @@ export function CreatorSidebar() {
               <div className="text-sm font-bold text-[#0A0A0A] group-hover:text-zinc-600 transition-colors truncate">
                 {creatorName}
               </div>
-              <div className="text-sm text-[#73736A] font-medium truncate">
+              <div className="text-sm text-[#66665E] font-medium truncate">
                 {creatorHandle.startsWith('@') ? creatorHandle : `@${creatorHandle}`}
               </div>
             </div>
@@ -175,7 +175,7 @@ export function CreatorSidebar() {
             type="button"
             onClick={handleLogout}
             title="Sign Out"
-            className="w-8 h-8 rounded-xl text-[#73736A] hover:text-rose-600 hover:bg-rose-50 flex items-center justify-center transition-colors cursor-pointer shrink-0"
+            className="w-8 h-8 rounded-xl text-[#66665E] hover:text-rose-600 hover:bg-rose-50 flex items-center justify-center transition-colors cursor-pointer shrink-0"
             aria-label="Sign out"
           >
             <LogOut className="w-4 h-4" />

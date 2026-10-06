@@ -17,6 +17,7 @@ import {
   Layers,
   Edit3,
 } from 'lucide-react';
+import { Button, Badge } from '@/components/ui';
 
 interface PackageCardProps {
   packageItem?: CreatorPackage;
@@ -106,9 +107,10 @@ export function PackageCard({ packageItem, pkg, creator, onSelect }: PackageCard
       }`}
     >
       {currentPkg.popular && (
-        <div className="absolute -top-3 left-6 bg-[#0A0A0A] text-white text-xs font-extrabold uppercase tracking-wider px-3 py-0.5 rounded-full shadow-xs flex items-center gap-1">
-          <Sparkles className="w-3 h-3 text-amber-300" />
-          <span>Featured Deal</span>
+        <div className="absolute -top-3 left-6">
+          <Badge variant="dark" size="sm" icon={<Sparkles className="w-3 h-3 text-amber-300" />}>
+            Featured Deal
+          </Badge>
         </div>
       )}
 
@@ -137,7 +139,7 @@ export function PackageCard({ packageItem, pkg, creator, onSelect }: PackageCard
           <h4 className="font-black text-[#0A0A0A] text-base group-hover:text-zinc-700 transition-colors leading-snug">
             {currentPkg.title}
           </h4>
-          <p className="text-sm text-[#73736A] mt-1.5 leading-relaxed line-clamp-2">
+          <p className="text-sm text-[#66665E] mt-1.5 leading-relaxed line-clamp-2">
             {currentPkg.description}
           </p>
         </div>
@@ -157,33 +159,27 @@ export function PackageCard({ packageItem, pkg, creator, onSelect }: PackageCard
 
       {/* Footer Specs & CTA */}
       <div className="pt-4 mt-4 border-t border-[#E7E7E2] space-y-3">
-        <div className="flex items-center justify-between text-sm text-[#73736A] font-bold">
+        <div className="flex items-center justify-between text-sm text-[#66665E] font-bold">
           <span className="flex items-center gap-1">
-            <Clock className="w-3.5 h-3.5 text-[#73736A]" />
+            <Clock className="w-3.5 h-3.5 text-[#66665E]" />
             {currentPkg.deliveryDays}d turnaround
           </span>
           <span className="flex items-center gap-1">
-            <RotateCcw className="w-3.5 h-3.5 text-[#73736A]" />
+            <RotateCcw className="w-3.5 h-3.5 text-[#66665E]" />
             {currentPkg.revisions} revisions
           </span>
         </div>
 
-        <button
+        <Button
           type="button"
-          className="w-full h-10 rounded-full font-bold text-xs bg-[#0A0A0A] group-hover:bg-zinc-800 text-white transition-all flex items-center justify-center gap-1.5 shadow-2xs"
+          size="md"
+          variant={currentPkg.popular ? 'pink' : 'primary'}
+          fullWidth
+          icon={isSelf ? <Edit3 className="w-3.5 h-3.5" /> : undefined}
+          iconRight={!isSelf ? <ArrowRight className="w-3.5 h-3.5" /> : undefined}
         >
-          {isSelf ? (
-            <>
-              <Edit3 className="w-3.5 h-3.5" />
-              <span>Edit Rate Card</span>
-            </>
-          ) : (
-            <>
-              <span>Book Deal</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </>
-          )}
-        </button>
+          {isSelf ? 'Edit Rate Card' : 'Book Deal'}
+        </Button>
       </div>
     </div>
   );

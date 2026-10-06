@@ -218,7 +218,7 @@ export function SplitHero() {
               <form onSubmit={handleSearch} className="flex flex-col sm:flex-row items-center gap-2 sm:gap-0">
                 {/* 1. Keyword / Name Text Search Input */}
                 <div ref={searchInputRef} className="flex-1 flex items-center pl-3.5 pr-2 py-1.5 w-full min-w-[160px] relative">
-                  <Search className="w-4 h-4 text-[#73736A] mr-2.5 shrink-0" />
+                  <Search className="w-4 h-4 text-[#66665E] mr-2.5 shrink-0" />
                   <input
                     type="text"
                     placeholder={t?.hero?.searchPlaceholder || 'Search creators, niches, keywords...'}
@@ -230,13 +230,13 @@ export function SplitHero() {
                       setSearchQuery(e.target.value);
                       setShowSuggestions(true);
                     }}
-                    className="w-full bg-transparent text-sm font-semibold text-[#0A0A0A] placeholder:text-[#A3A39C] outline-none font-sans"
+                    className="w-full bg-transparent text-sm font-semibold text-[#0A0A0A] placeholder:text-[#A3A39C] outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 border-none shadow-none font-sans"
                   />
 
                   {/* Live Suggestions Dropdown */}
                   {showSuggestions && searchQuery.trim().length > 0 && (
                     <div className="absolute top-full left-0 mt-3 w-[calc(100vw-3rem)] sm:w-[380px] bg-white rounded-2xl border border-[#E7E7E2] shadow-2xl p-3 z-50 animate-in fade-in-0 zoom-in-95 duration-150">
-                      <div className="flex items-center justify-between pb-2 border-b border-[#F4F4F0] px-1 text-xs font-bold uppercase tracking-wider text-[#73736A]">
+                      <div className="flex items-center justify-between pb-2 border-b border-[#F4F4F0] px-1 text-xs font-bold uppercase tracking-wider text-[#66665E]">
                         <span>Suggested Creators</span>
                         <span className="text-[#FF2D78]">Press Enter to search</span>
                       </div>
@@ -264,7 +264,7 @@ export function SplitHero() {
                                     <span className="truncate">{c.name}</span>
                                     {c.verified && <VerifiedBadge size="sm" />}
                                   </div>
-                                  <div className="text-sm text-[#73736A] truncate">
+                                  <div className="text-sm text-[#66665E] truncate">
                                     @{c.handle.replace('@', '')} • {c.categories[0]}
                                   </div>
                                 </div>
@@ -286,7 +286,7 @@ export function SplitHero() {
                           </button>
                         </div>
                       ) : (
-                        <div className="py-4 text-center text-sm text-[#73736A] space-y-2">
+                        <div className="py-4 text-center text-sm text-[#66665E] space-y-2">
                           <p>No creators directly matching &ldquo;{searchQuery}&rdquo;</p>
                           <button
                             type="button"
@@ -322,7 +322,7 @@ export function SplitHero() {
                       </span>
                     </div>
                     <ChevronDown
-                      className={`w-4 h-4 text-[#73736A] transition-transform duration-200 shrink-0 ${
+                      className={`w-4 h-4 text-[#66665E] transition-transform duration-200 shrink-0 ${
                         isPlatformOpen ? 'rotate-180 text-[#0A0A0A]' : ''
                       }`}
                     />
@@ -381,7 +381,7 @@ export function SplitHero() {
                       </span>
                     </div>
                     <ChevronDown
-                      className={`w-4 h-4 text-[#73736A] transition-transform duration-200 shrink-0 ${
+                      className={`w-4 h-4 text-[#66665E] transition-transform duration-200 shrink-0 ${
                         isCategoryOpen ? 'rotate-180 text-[#0A0A0A]' : ''
                       }`}
                     />
@@ -420,7 +420,7 @@ export function SplitHero() {
                 {/* 4. Submit Search Button */}
                 <button
                   type="submit"
-                  className="w-full sm:w-11 sm:h-11 h-10 bg-[#FF2D78] hover:bg-[#E01E69] text-white rounded-xl sm:rounded-full flex items-center justify-center transition-all duration-300 shrink-0 cursor-pointer shadow-sm hover:scale-105 active:scale-95 sm:ml-1"
+                  className="btn-base btn-icon-md btn-pink w-full sm:w-10 sm:h-10 rounded-xl sm:rounded-full shrink-0 shadow-sm sm:ml-1"
                   aria-label="Search Creators"
                 >
                   <Search className="w-4 h-4 stroke-[2.5]" />
@@ -455,7 +455,7 @@ export function SplitHero() {
                 <div className="flex items-center gap-1.5 text-xs font-extrabold text-[#0A0A0A] font-sans">
                   <div className="flex text-amber-400">★★★★★</div>
                   <span className="text-[#0A0A0A] font-black">4.9/5</span>
-                  <span className="text-[#73736A] font-medium">• 3,400+ reviews</span>
+                  <span className="text-[#66665E] font-medium">• 3,400+ reviews</span>
                 </div>
                 <p className="text-sm font-medium text-[#555550] font-sans mt-0.5">
                   Trusted by brands across 45+ countries worldwide.
@@ -492,7 +492,7 @@ export function SplitHero() {
                       <span>Sophie Kim</span>
                       <VerifiedBadge size="sm" />
                     </div>
-                    <div className="text-sm text-[#73736A] font-sans font-medium">1.2M followers</div>
+                    <div className="text-sm text-[#66665E] font-sans font-medium">1.2M followers</div>
                   </div>
                   <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 flex items-center justify-center text-white shadow-xs">
                     <Instagram className="w-3.5 h-3.5" />
@@ -525,7 +525,7 @@ export function SplitHero() {
                       <span>Marcus Chen</span>
                       <VerifiedBadge size="sm" />
                     </div>
-                    <div className="text-sm text-[#73736A] font-sans font-medium">950K followers</div>
+                    <div className="text-sm text-[#66665E] font-sans font-medium">950K followers</div>
                   </div>
                   <div className="w-7 h-7 rounded-full bg-[#000000] flex items-center justify-center text-white shadow-xs">
                     <svg className="w-3.5 h-3.5 fill-white" viewBox="0 0 24 24">
@@ -553,7 +553,7 @@ export function SplitHero() {
                       <span>Emma Rossi</span>
                       <VerifiedBadge size="sm" />
                     </div>
-                    <div className="text-sm text-[#73736A] font-sans font-medium">850K followers</div>
+                    <div className="text-sm text-[#66665E] font-sans font-medium">850K followers</div>
                   </div>
                   <div className="w-7 h-7 rounded-full bg-[#FF0000] flex items-center justify-center text-white shadow-xs">
                     <Youtube className="w-4 h-4" />

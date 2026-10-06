@@ -218,7 +218,7 @@ export default function CreatorPackagesPage() {
               <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                 Packages
               </h2>
-              <p className="text-sm text-[#73736A] mt-0.5 font-medium">
+              <p className="text-sm text-[#66665E] mt-0.5 font-medium">
                 Manage your packages and deliverables.
               </p>
             </div>
@@ -226,13 +226,13 @@ export default function CreatorPackagesPage() {
             <div className="flex items-center gap-3">
               {/* Search Bar */}
               <div className="relative w-full sm:w-64">
-                <Search className="w-3.5 h-3.5 text-[#73736A] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <Search className="w-3.5 h-3.5 text-[#66665E] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <input
                   type="text"
                   placeholder="Search deals..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full h-9 pl-9 pr-3 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-sm font-semibold placeholder:text-[#73736A] focus:outline-none focus:border-[#0A0A0A] transition-colors"
+                  className="w-full h-9 pl-9 pr-3 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-sm font-semibold placeholder:text-[#66665E] focus:outline-none focus:border-[#0A0A0A] transition-colors"
                 />
               </div>
             </div>
@@ -259,7 +259,7 @@ export default function CreatorPackagesPage() {
 
                     <div className="space-y-3">
                       {/* Price label */}
-                      <div className="text-sm font-bold text-[#73736A]">
+                      <div className="text-sm font-bold text-[#66665E]">
                         €{pkg.priceEur.toLocaleString()}
                       </div>
 
@@ -268,7 +268,7 @@ export default function CreatorPackagesPage() {
                         <h3 className="text-lg font-black text-[#0A0A0A] leading-snug tracking-tight">
                           {pkg.title}
                         </h3>
-                        <p className="text-sm text-[#73736A] mt-1.5 line-clamp-2 leading-relaxed font-medium">
+                        <p className="text-sm text-[#66665E] mt-1.5 line-clamp-2 leading-relaxed font-medium">
                           {pkg.description}
                         </p>
                       </div>
@@ -288,13 +288,13 @@ export default function CreatorPackagesPage() {
 
                     {/* Footer Turnaround, Revisions & Actions */}
                     <div className="pt-4 mt-4 border-t border-[#E7E7E2] space-y-3">
-                      <div className="flex items-center justify-between text-sm text-[#73736A] font-bold">
+                      <div className="flex items-center justify-between text-sm text-[#66665E] font-bold">
                         <span className="flex items-center gap-1">
-                          <Clock className="w-3.5 h-3.5 text-[#73736A]" />
+                          <Clock className="w-3.5 h-3.5 text-[#66665E]" />
                           {pkg.deliveryDays}d turnaround
                         </span>
                         <span className="flex items-center gap-1">
-                          <RotateCcw className="w-3.5 h-3.5 text-[#73736A]" />
+                          <RotateCcw className="w-3.5 h-3.5 text-[#66665E]" />
                           {pkg.revisions} revisions
                         </span>
                       </div>
@@ -329,7 +329,7 @@ export default function CreatorPackagesPage() {
                         >
                           <button
                             type="button"
-                            className="w-9 h-9 rounded-full bg-[#FAFAF8] hover:bg-rose-50 text-[#73736A] hover:text-rose-600 border border-[#E7E7E2] flex items-center justify-center transition-all cursor-pointer shrink-0"
+                            className="w-9 h-9 rounded-full bg-[#FAFAF8] hover:bg-rose-50 text-[#66665E] hover:text-rose-600 border border-[#E7E7E2] flex items-center justify-center transition-all cursor-pointer shrink-0"
                             title="Delete"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
@@ -342,7 +342,7 @@ export default function CreatorPackagesPage() {
             </div>
           ) : (
             <EmptyState
-              icon={<Package className="w-8 h-8 text-[#73736A]" />}
+              icon={<Package className="w-8 h-8 text-[#66665E]" />}
               title="No Deals Found"
               description="No collaboration packages match your current filter. Create a deal to start receiving direct brand bookings."
               primaryAction={{
@@ -375,7 +375,7 @@ export default function CreatorPackagesPage() {
 
           {/* Deal Title */}
           <div className="space-y-1.5">
-            <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Deal Title</label>
+            <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">Deal Title</label>
             <Input
               placeholder="e.g. 1x Dedicated 4K Reel + 3x Stories"
               value={title}
@@ -388,10 +388,10 @@ export default function CreatorPackagesPage() {
           {/* Multi-Channel Deliverable Selector */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
+              <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">
                 Delivery Channels
               </label>
-              <span className="text-sm text-[#73736A]">Select one or multiple</span>
+              <span className="text-sm text-[#66665E]">Select one or multiple</span>
             </div>
             <div className="flex flex-wrap gap-2">
               {CHANNEL_OPTIONS.map((ch) => {
@@ -414,7 +414,7 @@ export default function CreatorPackagesPage() {
                     className={`px-3.5 py-2 rounded-xl text-sm font-bold border transition-all flex items-center gap-1.5 cursor-pointer ${
                       isSelected
                         ? 'bg-[#0A0A0A] text-white border-[#0A0A0A] shadow-2xs'
-                        : 'bg-[#FAFAF8] text-[#73736A] border-[#E7E7E2] hover:border-[#0A0A0A] hover:text-[#0A0A0A]'
+                        : 'bg-[#FAFAF8] text-[#66665E] border-[#E7E7E2] hover:border-[#0A0A0A] hover:text-[#0A0A0A]'
                     }`}
                   >
                     <span>{ch.label}</span>
@@ -428,7 +428,7 @@ export default function CreatorPackagesPage() {
           {/* Pricing, Turnaround, Revisions */}
           <div className="grid grid-cols-3 gap-3">
             <div className="space-y-1.5">
-              <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Rate (€ EUR)</label>
+              <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">Rate (€ EUR)</label>
               <InputNumber
                 min={50}
                 max={50000}
@@ -439,7 +439,7 @@ export default function CreatorPackagesPage() {
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Turnaround (Days)</label>
+              <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">Turnaround (Days)</label>
               <InputNumber
                 min={1}
                 max={60}
@@ -450,7 +450,7 @@ export default function CreatorPackagesPage() {
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Revisions</label>
+              <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">Revisions</label>
               <InputNumber
                 min={0}
                 max={10}
@@ -463,7 +463,7 @@ export default function CreatorPackagesPage() {
 
           {/* Inclusions */}
           <div className="space-y-1.5">
-            <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
+            <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">
               Included Deliverables (one per line)
             </label>
             <Input.TextArea
@@ -477,7 +477,7 @@ export default function CreatorPackagesPage() {
 
           {/* Description */}
           <div className="space-y-1.5">
-            <label className="text-xs font-bold uppercase tracking-wider text-[#73736A]">Deal Description</label>
+            <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">Deal Description</label>
             <Input.TextArea
               rows={2}
               placeholder="Creative scope, angles, or content guidelines..."

@@ -19,7 +19,7 @@ export function CollaborationModelsSection() {
               with creators.
             </span>
           </h2>
-          <p className="text-[18px] text-[#73736A] font-medium leading-[28px] mt-4 sm:mt-5">
+          <p className="text-[18px] text-[#66665E] font-medium leading-[28px] mt-4 sm:mt-5">
             Choose whether you want high-performing raw ad creative or direct access to a dedicated follower base.
           </p>
         </div>

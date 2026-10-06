@@ -67,7 +67,7 @@ export default function LoginPage() {
             <h1 className="text-3xl sm:text-4xl font-black text-[#0A0A0A] tracking-tight">
               Welcome back
             </h1>
-            <p className="text-sm sm:text-base text-[#73736A] font-medium leading-[24px]">
+            <p className="text-sm sm:text-base text-[#66665E] font-medium leading-[24px]">
               Log in to manage your campaigns, orders, and creator collaborations.
             </p>
           </div>
@@ -76,7 +76,7 @@ export default function LoginPage() {
             {/* Quick 1-Click Demo Accounts */}
             <div className="space-y-2.5 p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-black text-[#73736A] uppercase tracking-wider">
+                <span className="text-xs font-black text-[#66665E] uppercase tracking-wider">
                   1-Click Instant Demo Access
                 </span>
                 <span className="text-xs font-bold text-[#0A0A0A] bg-[#F4F4F0] px-2 py-0.5 rounded-full border border-[#E7E7E2]">
@@ -98,7 +98,7 @@ export default function LoginPage() {
                       Brand Demo
                     </span>
                   </div>
-                  <div className="text-sm text-[#73736A] truncate font-medium">Elena Rostova</div>
+                  <div className="text-sm text-[#66665E] truncate font-medium">Elena Rostova</div>
                 </button>
 
                 <button
@@ -114,14 +114,14 @@ export default function LoginPage() {
                       Creator Demo
                     </span>
                   </div>
-                  <div className="text-sm text-[#73736A] truncate font-medium">Sophie Kim</div>
+                  <div className="text-sm text-[#66665E] truncate font-medium">Sophie Kim</div>
                 </button>
               </div>
             </div>
 
             <div className="relative flex items-center justify-center">
               <div className="border-t border-[#E7E7E2] w-full" />
-              <span className="bg-white px-3 text-sm font-bold text-[#A3A39C] uppercase tracking-wider absolute">
+              <span className="bg-white px-3 text-sm font-bold text-[#66665E] uppercase tracking-wider absolute">
                 or log in with email
               </span>
             </div>
@@ -133,7 +133,7 @@ export default function LoginPage() {
                   Email address
                 </label>
                 <div className="relative flex items-center">
-                  <Mail className="w-4 h-4 text-[#73736A] absolute left-3.5 pointer-events-none" />
+                  <Mail className="w-4 h-4 text-[#66665E] absolute left-3.5 pointer-events-none" />
                   <input
                     type="email"
                     placeholder="you@example.com"
@@ -152,7 +152,7 @@ export default function LoginPage() {
                   </label>
                 </div>
                 <div className="relative flex items-center">
-                  <Lock className="w-4 h-4 text-[#73736A] absolute left-3.5 pointer-events-none" />
+                  <Lock className="w-4 h-4 text-[#66665E] absolute left-3.5 pointer-events-none" />
                   <input
                     type={showPassword ? 'text' : 'password'}
                     placeholder="••••••••••••"
@@ -164,7 +164,7 @@ export default function LoginPage() {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3.5 text-[#73736A] hover:text-[#0A0A0A] transition-colors p-1"
+                    className="absolute right-3.5 text-[#66665E] hover:text-[#0A0A0A] transition-colors p-1"
                     aria-label={showPassword ? 'Hide password' : 'Show password'}
                   >
                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -176,11 +176,11 @@ export default function LoginPage() {
                 <Checkbox
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
-                  className="text-sm text-[#73736A] font-medium"
+                  className="text-sm text-[#66665E] font-medium"
                 >
                   Remember me
                 </Checkbox>
-                <Link href="/forgot-password" className="text-sm text-[#73736A] hover:text-[#0A0A0A] font-bold transition-colors">
+                <Link href="/forgot-password" className="text-sm text-[#66665E] hover:text-[#0A0A0A] font-bold transition-colors">
                   Forgot password?
                 </Link>
               </div>
@@ -195,7 +195,7 @@ export default function LoginPage() {
 
             {/* Sign Up Link */}
             <div className="text-center pt-2 border-t border-[#E7E7E2]/60">
-              <p className="text-sm text-[#73736A] font-medium">
+              <p className="text-sm text-[#66665E] font-medium">
                 New to Influverse?{' '}
                 <Link href="/register" className="font-bold text-[#0A0A0A] hover:text-[#FF2D78] transition-colors">
                   Create an account

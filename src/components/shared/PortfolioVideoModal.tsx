@@ -211,7 +211,7 @@ export function PortfolioVideoModal({
                       className="w-5 h-5 rounded-full object-cover border border-[#E7E7E2]"
                     />
                   )}
-                  <span className="text-xs font-extrabold uppercase tracking-wider text-[#73736A]">
+                  <span className="text-xs font-extrabold uppercase tracking-wider text-[#66665E]">
                     {item.brandName}
                   </span>
                 </div>
@@ -229,7 +229,7 @@ export function PortfolioVideoModal({
                 </span>
 
                 {item.deliverableType && (
-                  <span className="px-3 py-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-xs font-semibold text-[#73736A]">
+                  <span className="px-3 py-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-xs font-semibold text-[#66665E]">
                     {item.deliverableType}
                   </span>
                 )}
@@ -239,7 +239,7 @@ export function PortfolioVideoModal({
             {/* Campaign Narrative / Description */}
             {item.description ? (
               <div className="space-y-2">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-[#73736A]">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-[#66665E]">
                   About This Project
                 </h3>
                 <div className="text-sm text-[#3A3A35] leading-relaxed font-medium bg-[#FAFAF8] p-5 rounded-2xl border border-[#E7E7E2] whitespace-pre-line">
@@ -247,7 +247,7 @@ export function PortfolioVideoModal({
                 </div>
               </div>
             ) : (
-              <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] text-xs text-[#73736A] italic">
+              <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] text-xs text-[#66665E] italic">
                 No additional project details provided.
               </div>
             )}
@@ -266,7 +266,7 @@ export function PortfolioVideoModal({
                   <span className="font-extrabold text-sm text-[#0A0A0A]">{creator.name}</span>
                   <VerifiedBadge size="xs" />
                 </div>
-                <span className="text-xs text-[#73736A] font-medium">{creator.handle}</span>
+                <span className="text-xs text-[#66665E] font-medium">{creator.handle}</span>
               </div>
             </div>
 

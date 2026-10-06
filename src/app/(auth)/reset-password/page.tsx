@@ -231,7 +231,7 @@ function ResetPasswordContent() {
           {step === 'password' && 'Create New Password'}
           {step === 'success' && 'Password Updated'}
         </h2>
-        <p className="text-sm sm:text-base text-[#73736A] font-medium leading-[24px] mt-2 sm:mt-3">
+        <p className="text-sm sm:text-base text-[#66665E] font-medium leading-[24px] mt-2 sm:mt-3">
           {step === 'email' &&
             "Enter your registered email address and we'll send a 6-digit verification code to reset your password."}
           {step === 'otp' && (
@@ -264,7 +264,7 @@ function ResetPasswordContent() {
                 </div>
                 <span
                   className={`text-xs font-bold ${
-                    step === 'email' ? 'text-[#0A0A0A]' : 'text-[#73736A]'
+                    step === 'email' ? 'text-[#0A0A0A]' : 'text-[#66665E]'
                   }`}
                 >
                   Email
@@ -285,14 +285,14 @@ function ResetPasswordContent() {
                       ? 'bg-[#0A0A0A] text-white ring-4 ring-zinc-100'
                       : step === 'password'
                       ? 'bg-emerald-500 text-white'
-                      : 'bg-[#F4F4F0] text-[#73736A]'
+                      : 'bg-[#F4F4F0] text-[#66665E]'
                   }`}
                 >
                   {step === 'password' ? <Check className="w-3.5 h-3.5" /> : '2'}
                 </div>
                 <span
                   className={`text-xs font-bold ${
-                    step === 'otp' ? 'text-[#0A0A0A]' : 'text-[#73736A]'
+                    step === 'otp' ? 'text-[#0A0A0A]' : 'text-[#66665E]'
                   }`}
                 >
                   OTP
@@ -311,14 +311,14 @@ function ResetPasswordContent() {
                   className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
                     step === 'password'
                       ? 'bg-[#0A0A0A] text-white ring-4 ring-zinc-100'
-                      : 'bg-[#F4F4F0] text-[#73736A]'
+                      : 'bg-[#F4F4F0] text-[#66665E]'
                   }`}
                 >
                   3
                 </div>
                 <span
                   className={`text-xs font-bold ${
-                    step === 'password' ? 'text-[#0A0A0A]' : 'text-[#73736A]'
+                    step === 'password' ? 'text-[#0A0A0A]' : 'text-[#66665E]'
                   }`}
                 >
                   Password
@@ -359,7 +359,7 @@ function ResetPasswordContent() {
               <div className="text-center pt-2">
                 <Link
                   href="/login"
-                  className="inline-flex items-center gap-1.5 text-sm text-[#73736A] hover:text-[#0A0A0A] font-bold transition-colors"
+                  className="inline-flex items-center gap-1.5 text-sm text-[#66665E] hover:text-[#0A0A0A] font-bold transition-colors"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" />
                   Back to sign in
@@ -397,7 +397,7 @@ function ResetPasswordContent() {
                   <button
                     type="button"
                     onClick={() => setStep('email')}
-                    className="text-xs text-[#73736A] hover:text-[#0A0A0A] font-semibold underline cursor-pointer"
+                    className="text-xs text-[#66665E] hover:text-[#0A0A0A] font-semibold underline cursor-pointer"
                   >
                     Change email
                   </button>
@@ -424,7 +424,7 @@ function ResetPasswordContent() {
               </div>
 
               {/* Resend Timer */}
-              <div className="flex items-center justify-between text-xs text-[#73736A] pt-1">
+              <div className="flex items-center justify-between text-xs text-[#66665E] pt-1">
                 <span>Didn&apos;t receive the code?</span>
                 {canResend ? (
                   <button
@@ -436,7 +436,7 @@ function ResetPasswordContent() {
                     Resend Code
                   </button>
                 ) : (
-                  <span className="font-semibold text-[#A3A39C]">
+                  <span className="font-semibold text-[#66665E]">
                     Resend in {resendCountdown}s
                   </span>
                 )}
@@ -457,7 +457,7 @@ function ResetPasswordContent() {
                 <button
                   type="button"
                   onClick={() => setStep('email')}
-                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-[#73736A] hover:text-[#0A0A0A] font-semibold transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-[#66665E] hover:text-[#0A0A0A] font-semibold transition-colors cursor-pointer"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" />
                   Back to email step
@@ -500,7 +500,7 @@ function ResetPasswordContent() {
                 {newPassword.length > 0 && (
                   <div className="mt-2.5 space-y-1.5">
                     <div className="flex items-center justify-between text-xs font-semibold">
-                      <span className="text-[#73736A]">Strength:</span>
+                      <span className="text-[#66665E]">Strength:</span>
                       <span
                         className={
                           strengthScore >= 3
@@ -575,7 +575,7 @@ function ResetPasswordContent() {
               </div>
 
               {/* Requirements Checklist */}
-              <div className="p-3.5 bg-[#FAFAF8] rounded-2xl border border-[#E7E7E2] space-y-1.5 text-xs text-[#73736A]">
+              <div className="p-3.5 bg-[#FAFAF8] rounded-2xl border border-[#E7E7E2] space-y-1.5 text-xs text-[#66665E]">
                 <div className="font-bold text-[#0A0A0A] mb-1">Password must include:</div>
                 <div className={`flex items-center gap-1.5 ${hasMinLength ? 'text-emerald-700 font-semibold' : ''}`}>
                   <div className={`w-1.5 h-1.5 rounded-full ${hasMinLength ? 'bg-emerald-600' : 'bg-[#D2D2CA]'}`} />
@@ -611,7 +611,7 @@ function ResetPasswordContent() {
               </div>
               <div className="space-y-2">
                 <h3 className="font-extrabold text-2xl text-[#0A0A0A]">Password Reset Done</h3>
-                <p className="text-sm text-[#73736A] leading-relaxed">
+                <p className="text-sm text-[#66665E] leading-relaxed">
                   Your password has been successfully updated. You can now use your new password to sign in.
                 </p>
               </div>
@@ -640,7 +640,7 @@ export default function ResetPasswordPage() {
   return (
     <React.Suspense
       fallback={
-        <div className="min-h-screen bg-[#FAFAF8] flex items-center justify-center font-sans text-sm font-bold text-[#73736A]">
+        <div className="min-h-screen bg-[#FAFAF8] flex items-center justify-center font-sans text-sm font-bold text-[#66665E]">
           Loading password reset...
         </div>
       }

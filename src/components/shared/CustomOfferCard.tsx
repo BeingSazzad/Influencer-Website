@@ -7,6 +7,7 @@ import { useAppDispatch } from '@/redux/hooks';
 import { ChatCustomOffer, updateCustomOfferStatus } from '@/redux/slices/messageSlice';
 import { createOffer } from '@/redux/slices/orderSlice';
 import { Order, PlatformType } from '@/types';
+import { Button, Badge } from '@/components/ui';
 
 function platformLabel(platform: PlatformType) {
   if (platform === 'all' || platform === 'multi') return 'All platforms';
@@ -105,24 +106,25 @@ export function CustomOfferCard({
   return (
     <div className="w-[280px] sm:w-[320px] rounded-2xl border border-[#E7E7E2] bg-white text-left shadow-sm overflow-hidden">
       <div className="px-4 py-3 border-b border-[#E7E7E2] flex items-center justify-between gap-2">
-        <span className="text-[11px] font-bold uppercase tracking-wider text-[#73736A]">Custom offer</span>
-        <span
-          className={`text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${
+        <span className="type-caption text-[#66665E]">Custom offer</span>
+        <Badge
+          variant={
             offer.status === 'accepted'
-              ? 'bg-[#0A0A0A] text-white border-[#0A0A0A]'
+              ? 'dark'
               : offer.status === 'declined'
-              ? 'bg-rose-50 text-rose-600 border-rose-200'
-              : 'bg-[#F4F4F0] text-[#73736A] border-[#E7E7E2]'
-          }`}
+              ? 'blush'
+              : 'neutral'
+          }
+          size="sm"
         >
           {statusLabel}
-        </span>
+        </Badge>
       </div>
 
       <div className="p-4 space-y-3">
         <div>
           <div className="text-sm font-bold text-[#0A0A0A]">{offer.title}</div>
-          <div className="text-xs font-semibold text-[#73736A] mt-0.5">{platformLabel(offer.platform)}</div>
+          <div className="text-xs font-semibold text-[#66665E] mt-0.5">{platformLabel(offer.platform)}</div>
         </div>
 
         <ul className="space-y-1">
@@ -136,38 +138,44 @@ export function CustomOfferCard({
         <div>
           <div className="text-lg font-black text-[#0A0A0A] tracking-tight">€{amount.toLocaleString()}</div>
           {viewer === 'brand' && (
-            <div className="text-xs font-medium text-[#73736A]">
-              €{offer.priceEur.toLocaleString()} + €{feeEur.toLocaleString()} fee
+            <div className="text-xs font-medium text-[#66665E]">
+              €{offer.priceEur.toLocaleString()} + €{feeEur.toLocaleString()} platform fee
             </div>
           )}
         </div>
 
         {viewer === 'brand' && offer.status === 'pending' && (
           <div className="flex items-center gap-2 pt-1">
-            <button
+            <Button
               type="button"
+              size="sm"
+              variant="secondary"
               onClick={handleDecline}
-              className="h-9 flex-1 rounded-full text-sm font-bold border border-[#E7E7E2] text-[#0A0A0A] hover:border-[#0A0A0A] bg-white cursor-pointer"
+              fullWidth
             >
               Decline
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
+              size="sm"
+              variant="primary"
               onClick={handleAccept}
-              className="h-9 flex-1 rounded-full text-sm font-bold bg-[#0A0A0A] text-white hover:bg-zinc-800 cursor-pointer"
+              fullWidth
             >
               Accept
-            </button>
+            </Button>
           </div>
         )}
 
         {offer.status === 'accepted' && orderHref && (
-          <Link
+          <Button
             href={orderHref}
-            className="inline-flex h-9 items-center text-sm font-bold text-[#0A0A0A] underline underline-offset-2"
+            size="sm"
+            variant="secondary"
+            fullWidth
           >
             Open campaign
-          </Link>
+          </Button>
         )}
       </div>
     </div>

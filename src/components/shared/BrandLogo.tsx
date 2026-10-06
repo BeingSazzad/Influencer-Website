@@ -39,7 +39,7 @@ export function BrandLogo({ name, logoUrl, className = '', size = 'md' }: BrandL
           <span className="font-serif font-black tracking-widest text-sm text-[#0A0A0A] uppercase">
             AURA
           </span>
-          <span className="text-[7.5px] font-sans font-extrabold tracking-widest text-[#73736A] uppercase mt-0.5">
+          <span className="text-[7.5px] font-sans font-extrabold tracking-widest text-[#66665E] uppercase mt-0.5">
             PARIS
           </span>
         </div>

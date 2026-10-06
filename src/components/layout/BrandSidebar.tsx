@@ -11,6 +11,7 @@ import {
   LayoutDashboard,
   Bookmark,
   Layers,
+  PlusCircle,
   MessageSquare,
   CreditCard,
   Settings,
@@ -39,6 +40,11 @@ export function BrandSidebar() {
       name: 'Campaigns',
       href: '/brand/campaigns',
       icon: Layers,
+    },
+    {
+      name: 'New Campaign',
+      href: '/brand/hire/new',
+      icon: PlusCircle,
     },
     {
       name: 'Messages',
@@ -91,7 +97,7 @@ export function BrandSidebar() {
                     : 'text-[#555550] hover:text-[#0A0A0A] hover:bg-[#F4F4F0]'
                 }`}
               >
-                <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-[#73736A]'}`} />
+                <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-[#66665E]'}`} />
                 <span>{item.name}</span>
               </Link>
             );
@@ -116,7 +122,7 @@ export function BrandSidebar() {
               <div className="text-sm font-bold text-[#0A0A0A] group-hover:text-zinc-600 transition-colors truncate">
                 {currentUser?.name || 'Elena Rostova'}
               </div>
-              <div className="text-sm text-[#73736A] font-medium truncate">
+              <div className="text-sm text-[#66665E] font-medium truncate">
                 {currentUser?.companyName || 'Aura Skincare Paris'}
               </div>
             </div>
@@ -126,7 +132,7 @@ export function BrandSidebar() {
             type="button"
             onClick={handleLogout}
             title="Sign Out"
-            className="w-8 h-8 rounded-xl text-[#73736A] hover:text-rose-600 hover:bg-rose-50 flex items-center justify-center transition-colors cursor-pointer shrink-0"
+            className="w-8 h-8 rounded-xl text-[#66665E] hover:text-rose-600 hover:bg-rose-50 flex items-center justify-center transition-colors cursor-pointer shrink-0"
             aria-label="Sign out"
           >
             <LogOut className="w-4 h-4" />

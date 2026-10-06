@@ -16,6 +16,7 @@ import {
   Lock,
 } from 'lucide-react';
 import { Modal, Button, message } from 'antd';
+import { Button as AppButton } from '@/components/ui';
 
 
 interface Transaction {
@@ -46,7 +47,7 @@ const INITIAL_TRANSACTIONS: Transaction[] = [
     id: 'TXN-90413',
     date: 'March 14, 2026',
     creatorName: 'Influverse Escrow',
-    campaignTitle: '15% Platform Protection & Escrow Fee',
+    campaignTitle: 'Platform Fee (15%)',
     type: 'platform_fee',
     amountEur: 180,
     status: 'completed',
@@ -115,6 +116,8 @@ export default function BrandPaymentsPage() {
 
   // Invoice Receipt Modal State
   const [selectedInvoice, setSelectedInvoice] = useState<Transaction | null>(null);
+  // Compact Detail Drawer/Modal State
+  const [selectedDetailTransaction, setSelectedDetailTransaction] = useState<Transaction | null>(null);
 
   const balanceEur = currentUser?.balanceEur ?? 8450;
 
@@ -196,21 +199,22 @@ export default function BrandPaymentsPage() {
         subtitle="Track wallet balance and payment history."
         action={
           <div className="flex items-center gap-2.5">
-            <button
+            <AppButton
+              size="md"
+              variant="secondary"
               onClick={handleExportCsv}
-              className="h-10 px-4 rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] bg-white font-bold text-sm text-[#0A0A0A] flex items-center gap-2 transition-all cursor-pointer shadow-2xs hover:bg-[#FAFAF8]"
+              icon={<Download className="w-3.5 h-3.5" />}
             >
-              <Download className="w-3.5 h-3.5 text-[#0A0A0A]" />
-              <span>Export CSV</span>
-            </button>
-            <Button
-              type="primary"
+              Export CSV
+            </AppButton>
+            <AppButton
+              size="md"
+              variant="primary"
               onClick={() => setIsTopUpModalOpen(true)}
-              className="h-10 px-5 rounded-full font-bold text-xs bg-[#0A0A0A] hover:!bg-zinc-800 !text-white border-none flex items-center gap-2 shadow-sm cursor-pointer"
+              icon={<Plus className="w-4 h-4" />}
             >
-              <Plus className="w-4 h-4" />
-              <span>Deposit Funds</span>
-            </Button>
+              Deposit Funds
+            </AppButton>
           </div>
         }
       />
@@ -218,7 +222,7 @@ export default function BrandPaymentsPage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-7">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
           <div className="p-6 bg-white rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
-            <div className="flex items-center justify-between text-[#73736A]">
+            <div className="flex items-center justify-between text-[#66665E]">
               <span className="text-xs font-bold uppercase tracking-wider">Available Wallet</span>
               <div className="w-7 h-7 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-center text-[#0A0A0A]">
                 <Wallet className="w-3.5 h-3.5" />
@@ -230,7 +234,7 @@ export default function BrandPaymentsPage() {
           </div>
 
           <div className="p-6 bg-white rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
-            <div className="flex items-center justify-between text-[#73736A]">
+            <div className="flex items-center justify-between text-[#66665E]">
               <span className="text-xs font-bold uppercase tracking-wider">Locked in Escrow</span>
               <div className="w-7 h-7 rounded-xl bg-[#FFF0F5] text-[#FF2D78] flex items-center justify-center">
                 <Lock className="w-3.5 h-3.5" />
@@ -248,13 +252,13 @@ export default function BrandPaymentsPage() {
               <h3 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                 Payment History
               </h3>
-              <p className="text-sm text-[#73736A] mt-1">
+              <p className="text-sm text-[#66665E] mt-1">
                 Deposits, escrow locks, and released payouts.
               </p>
             </div>
 
             <div className="relative w-full sm:max-w-xs">
-              <Search className="w-4 h-4 text-[#73736A] absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-[#66665E] absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 placeholder="Search by creator or invoice..."
@@ -269,7 +273,7 @@ export default function BrandPaymentsPage() {
           <div className="overflow-x-auto -mx-6 sm:mx-0">
             <table className="w-full text-left">
               <thead>
-                <tr className="border-b border-[#E7E7E2] text-[#73736A] font-bold uppercase tracking-wider text-xs">
+                <tr className="border-b border-[#E7E7E2] text-[#66665E] font-bold uppercase tracking-wider text-xs">
                   <th className="pb-3.5 px-4">Creator &amp; Campaign</th>
                   <th className="pb-3.5 px-4">Date</th>
                   <th className="pb-3.5 px-4 text-right">Amount (€)</th>
@@ -290,13 +294,17 @@ export default function BrandPaymentsPage() {
                     : 'Settled';
 
                   return (
-                    <tr key={txn.id} className="hover:bg-[#FAFAF8] transition-colors">
+                    <tr
+                      key={txn.id}
+                      onClick={() => setSelectedDetailTransaction(txn)}
+                      className="hover:bg-[#FAFAF8] transition-colors cursor-pointer group"
+                    >
                       <td className="py-4 px-4">
-                        <div className="font-bold text-sm text-[#0A0A0A]">{txn.creatorName}</div>
-                        <div className="text-sm text-[#73736A] truncate max-w-xs mt-0.5">{txn.campaignTitle}</div>
+                        <div className="font-bold text-sm text-[#0A0A0A] group-hover:text-[#FF2D78] transition-colors">{txn.creatorName}</div>
+                        <div className="text-sm text-[#66665E] truncate max-w-xs mt-0.5">{txn.campaignTitle}</div>
                       </td>
 
-                      <td className="py-4 px-4 text-sm text-[#73736A] font-medium whitespace-nowrap">
+                      <td className="py-4 px-4 text-sm text-[#66665E] font-medium whitespace-nowrap">
                         {txn.date}
                       </td>
 
@@ -318,8 +326,11 @@ export default function BrandPaymentsPage() {
 
                       <td className="py-4 px-4 text-right">
                         <button
-                          onClick={() => setSelectedInvoice(txn)}
-                          className="w-8 h-8 rounded-lg border border-[#E7E7E2] hover:border-[#0A0A0A] hover:bg-white text-[#73736A] hover:text-[#0A0A0A] inline-flex items-center justify-center transition-colors cursor-pointer"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedInvoice(txn);
+                          }}
+                          className="w-8 h-8 rounded-lg border border-[#E7E7E2] hover:border-[#0A0A0A] hover:bg-white text-[#66665E] hover:text-[#0A0A0A] inline-flex items-center justify-center transition-colors cursor-pointer"
                           title="View Tax Receipt"
                         >
                           <FileText className="w-4 h-4" />
@@ -332,7 +343,7 @@ export default function BrandPaymentsPage() {
             </table>
 
             {filteredTransactions.length === 0 && (
-              <div className="py-12 text-center text-sm text-[#73736A] font-medium">
+              <div className="py-12 text-center text-sm text-[#66665E] font-medium">
                 No payment records match your search.
               </div>
             )}
@@ -355,7 +366,7 @@ export default function BrandPaymentsPage() {
         width={480}
       >
         <div className="space-y-5 font-sans pt-3">
-          <p className="text-sm text-[#73736A] leading-relaxed">
+          <p className="text-sm text-[#66665E] leading-relaxed">
             Funds deposited to your Brand Wallet are available immediately to hire verified creators and fund escrow campaigns.
           </p>
 
@@ -384,7 +395,7 @@ export default function BrandPaymentsPage() {
           <div className="space-y-1.5">
             <label className="text-sm font-bold text-[#0A0A0A]">Or Enter Custom Amount (€)</label>
             <div className="relative">
-              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-bold text-[#73736A]">€</span>
+              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-bold text-[#66665E]">€</span>
               <input
                 type="number"
                 min={100}
@@ -416,7 +427,7 @@ export default function BrandPaymentsPage() {
                     <m.icon className="w-4 h-4 text-[#0A0A0A]" />
                     <div>
                       <div className="text-sm font-bold text-[#0A0A0A]">{m.name}</div>
-                      <div className="text-sm text-[#73736A]">{m.desc}</div>
+                      <div className="text-sm text-[#66665E]">{m.desc}</div>
                     </div>
                   </div>
                   <div
@@ -432,20 +443,21 @@ export default function BrandPaymentsPage() {
           </div>
 
           {/* Escrow note */}
-          <div className="p-3 bg-[#FAFAF8] rounded-xl border border-[#E7E7E2] text-xs text-[#73736A] flex items-center gap-2">
+          <div className="p-3 bg-[#FAFAF8] rounded-xl border border-[#E7E7E2] text-xs text-[#66665E] flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 shrink-0 text-[#0A0A0A]" />
             <span>Regulated by European Payment Institution guidelines. Funds are 100% segregated.</span>
           </div>
 
           <div className="pt-2">
-            <Button
-              type="primary"
+            <AppButton
+              size="lg"
+              variant="primary"
+              fullWidth
               loading={isProcessing}
               onClick={handleTopUpConfirm}
-              className="w-full h-11 rounded-full font-bold text-sm bg-[#0A0A0A] hover:!bg-[#FF2D78] !text-white border-none cursor-pointer shadow-xs"
             >
               Deposit €{topUpAmount.toLocaleString()} to Wallet
-            </Button>
+            </AppButton>
           </div>
         </div>
       </Modal>
@@ -462,17 +474,17 @@ export default function BrandPaymentsPage() {
         {selectedInvoice && (
           <div className="space-y-6 font-sans pt-2">
             {/* Header */}
-            <div className="border-b border-[#E7E7E2] pb-4 flex items-start justify-between">
+            <div className="border-b border-[#E7E7E2] pb-4 flex items-start justify-between pr-8">
               <div>
-                <span className="text-xs font-extrabold uppercase tracking-widest text-[#73736A]">
+                <span className="text-xs font-extrabold uppercase tracking-widest text-[#66665E]">
                   OFFICIAL TAX INVOICE
                 </span>
                 <h3 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight mt-0.5">
                   {selectedInvoice.invoiceNumber}
                 </h3>
-                <div className="text-sm text-[#73736A]">Issued on {selectedInvoice.date}</div>
+                <div className="text-sm text-[#66665E]">Issued on {selectedInvoice.date}</div>
               </div>
-              <span className="px-3 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2] font-bold text-xs">
+              <span className="px-3 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2] font-bold text-xs shrink-0 mt-2">
                 Paid / Settled
               </span>
             </div>
@@ -480,18 +492,18 @@ export default function BrandPaymentsPage() {
             {/* Parties */}
             <div className="grid grid-cols-2 gap-4 text-xs">
               <div>
-                <span className="text-[#73736A] font-semibold block mb-1">Billed To</span>
+                <span className="text-[#66665E] font-semibold block mb-1">Billed To</span>
                 <strong className="text-[#0A0A0A] block">{currentUser?.companyName || 'Aura Skincare Paris'}</strong>
                 {currentUser?.email && (
-                  <span className="text-[#73736A] block">{currentUser.email}</span>
+                  <span className="text-[#66665E] block">{currentUser.email}</span>
                 )}
-                <span className="text-[#73736A] block">{currentUser?.location || 'Berlin & Paris'}</span>
+                <span className="text-[#66665E] block">{currentUser?.location || 'Berlin & Paris'}</span>
               </div>
               <div>
-                <span className="text-[#73736A] font-semibold block mb-1">Platform Issuer</span>
+                <span className="text-[#66665E] font-semibold block mb-1">Platform Issuer</span>
                 <strong className="text-[#0A0A0A] block">Influverse Marketplace BV</strong>
-                <span className="text-[#73736A] block">NL 864291823B01</span>
-                <span className="text-[#73736A] block">Amsterdam, Netherlands</span>
+                <span className="text-[#66665E] block">NL 864291823B01</span>
+                <span className="text-[#66665E] block">Amsterdam, Netherlands</span>
               </div>
             </div>
 
@@ -501,7 +513,7 @@ export default function BrandPaymentsPage() {
                 <span>{selectedInvoice.campaignTitle}</span>
                 <span>€{selectedInvoice.amountEur.toLocaleString()}</span>
               </div>
-              <div className="flex justify-between text-[#73736A]">
+              <div className="flex justify-between text-[#66665E]">
                 <span>Transaction Ref: {selectedInvoice.id}</span>
                 <span>{selectedInvoice.method}</span>
               </div>
@@ -522,6 +534,98 @@ export default function BrandPaymentsPage() {
               <Download className="w-4 h-4" />
               <span>Download PDF Invoice</span>
             </button>
+          </div>
+        )}
+      </Modal>
+
+      {/* Transaction Detail Breakdown Modal */}
+      <Modal
+        title={null}
+        open={!!selectedDetailTransaction}
+        onCancel={() => setSelectedDetailTransaction(null)}
+        footer={null}
+        centered
+        width={480}
+      >
+        {selectedDetailTransaction && (
+          <div className="space-y-5 font-sans pt-2">
+            <div className="flex items-center justify-between pb-3.5 border-b border-[#E7E7E2] pr-8">
+              <div>
+                <span className="text-xs font-bold text-[#66665E] uppercase tracking-wider">
+                  Payment Ledger Breakdown
+                </span>
+                <div className="text-xl font-extrabold text-[#0A0A0A] tracking-tight mt-0.5">
+                  {selectedDetailTransaction.id}
+                </div>
+              </div>
+              <span
+                className={`px-3 py-1 rounded-full font-bold text-xs uppercase tracking-wide shrink-0 mt-1 ${
+                  selectedDetailTransaction.status === 'in_escrow'
+                    ? 'bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25'
+                    : 'bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]'
+                }`}
+              >
+                {selectedDetailTransaction.status === 'in_escrow' ? 'In Escrow' : 'Settled'}
+              </span>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-between">
+              <div>
+                <div className="text-xs font-bold uppercase tracking-wider text-[#66665E]">
+                  Amount Processed
+                </div>
+                <div className="text-2xl font-black text-[#0A0A0A] mt-0.5">
+                  {selectedDetailTransaction.type === 'top_up' ? '+' : '−'}€{selectedDetailTransaction.amountEur.toLocaleString()}
+                </div>
+              </div>
+              <div className="text-right">
+                <div className="text-xs font-bold text-[#66665E]">Currency</div>
+                <div className="text-sm font-extrabold text-[#0A0A0A]">EUR (€)</div>
+              </div>
+            </div>
+
+            <div className="divide-y divide-[#F4F4F0] text-sm">
+              <div className="flex justify-between py-2.5">
+                <span className="text-[#66665E] font-medium">Recipient / Entity</span>
+                <span className="font-bold text-[#0A0A0A] text-right">{selectedDetailTransaction.creatorName}</span>
+              </div>
+              <div className="flex justify-between py-2.5">
+                <span className="text-[#66665E] font-medium">Campaign Purpose</span>
+                <span className="font-bold text-[#0A0A0A] text-right max-w-xs truncate">{selectedDetailTransaction.campaignTitle}</span>
+              </div>
+              <div className="flex justify-between py-2.5">
+                <span className="text-[#66665E] font-medium">Date & Settlement</span>
+                <span className="font-bold text-[#0A0A0A] text-right">{selectedDetailTransaction.date}</span>
+              </div>
+              <div className="flex justify-between py-2.5">
+                <span className="text-[#66665E] font-medium">Payment Channel</span>
+                <span className="font-bold text-[#0A0A0A] text-right">{selectedDetailTransaction.method}</span>
+              </div>
+              <div className="flex justify-between py-2.5">
+                <span className="text-[#66665E] font-medium">Official Invoice ID</span>
+                <span className="font-mono font-bold text-[#0A0A0A] text-right">{selectedDetailTransaction.invoiceNumber}</span>
+              </div>
+            </div>
+
+            <div className="pt-2 flex items-center gap-3">
+              <Button
+                type="primary"
+                onClick={() => {
+                  setSelectedInvoice(selectedDetailTransaction);
+                  setSelectedDetailTransaction(null);
+                }}
+                className="flex-1 h-11 rounded-full font-bold text-sm bg-[#0A0A0A] hover:!bg-[#FF2D78] !text-white border-none cursor-pointer shadow-xs"
+              >
+                View Official Tax Invoice
+              </Button>
+              <button
+                type="button"
+                onClick={() => setSelectedDetailTransaction(null)}
+                className="h-11 px-5 rounded-full border border-[#E7E7E2] hover:border-[#0A0A0A] text-sm font-bold text-[#0A0A0A] transition-colors cursor-pointer"
+              >
+                Close
+              </button>
+            </div>
           </div>
         )}
       </Modal>

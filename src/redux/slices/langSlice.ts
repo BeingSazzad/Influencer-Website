@@ -55,7 +55,7 @@ export const DICTIONARY = {
     },
     pricing: {
       title: 'Transparent, Pay-Per-Campaign Pricing',
-      subtitle: 'No monthly software lock-ins. We charge a flat 15% marketplace escrow fee to brands on successful creator hires.',
+      subtitle: 'No monthly software lock-ins. Brands pay a flat Platform Fee (15%) on successful creator hires.',
     },
     creatorInvite: {
       title: 'Turn your passion into predictable brand deals.',
