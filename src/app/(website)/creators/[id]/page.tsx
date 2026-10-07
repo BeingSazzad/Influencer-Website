@@ -356,8 +356,6 @@ export default function CreatorProfilePage() {
 
             {/* Right: Social Platform Counts & Action Buttons */}
             <div className="w-full lg:w-80 xl:w-[340px] shrink-0 flex flex-col gap-4 pt-4 lg:pt-0 lg:border-l border-[#E7E7E2] lg:pl-8">
-              <span className="text-sm font-bold text-[#66665E] uppercase tracking-wider">Social Reach</span>
-
               {/* Follower Stats Columns */}
               <div className="grid grid-cols-3 gap-2 sm:gap-2.5 text-center">
                 {creator.platforms.instagram && (
