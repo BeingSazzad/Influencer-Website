@@ -920,7 +920,7 @@ export default function CreatorProfilePage() {
                         )}
                       </div>
 
-                      {/* Footer Metrics & Verified Label */}
+                      {/* Footer Metrics */}
                       <div className="pt-3 border-t border-[#E7E7E2] flex items-center justify-between text-sm font-bold text-[#66665E]">
                         <div className="flex items-center gap-3">
                           <span className="flex items-center gap-1 text-[#0A0A0A]">
@@ -934,11 +934,6 @@ export default function CreatorProfilePage() {
                             </span>
                           )}
                         </div>
-
-                        <span className="text-[#0A0A0A] group-hover:text-[#FF2D78] flex items-center gap-1 font-extrabold transition-colors">
-                          <span>Preview Portfolio</span>
-                          <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
-                        </span>
                       </div>
                     </div>
                   </div>

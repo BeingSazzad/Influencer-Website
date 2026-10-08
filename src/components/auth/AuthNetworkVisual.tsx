@@ -294,7 +294,15 @@ export function AuthNetworkVisual({
               viewBox="0 0 100 100"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="w-10 h-10 sm:w-12 sm:h-12 text-[#0A0A0A] transition-transform duration-300 group-hover:scale-110"
+              width={48}
+              height={48}
+              style={{
+                width: '48px',
+                height: '48px',
+                maxWidth: '48px',
+                maxHeight: '48px',
+              }}
+              className="w-10 h-10 sm:w-12 sm:h-12 text-[#0A0A0A] transition-transform duration-300 group-hover:scale-110 block shrink-0"
             >
               <circle cx="34" cy="36" r="13" fill="currentColor" />
               <path

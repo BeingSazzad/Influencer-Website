@@ -15,6 +15,13 @@ import {
   ChevronDown,
   ChevronUp,
   Award,
+  DollarSign,
+  Users,
+  Instagram,
+  FileCheck,
+  Calendar,
+  Briefcase,
+  Clock,
 } from 'lucide-react';
 import { Button } from 'antd';
 
@@ -31,85 +38,102 @@ export function ProfileCompletionCard({
 }: ProfileCompletionCardProps) {
   const [isExpanded, setIsExpanded] = useState(true);
 
-  // Criteria scoring calculation
-  const hasAvatar = Boolean(creator?.avatar && !creator.avatar.includes('placeholder'));
-  const hasBioAndLocation = Boolean(creator?.bio && creator?.location);
-  const hasCategories = Boolean(creator?.categories && creator.categories.length > 0);
-  const hasSocials = Boolean(
-    creator?.platforms?.instagram?.handle ||
-    creator?.platforms?.tiktok?.handle ||
-    creator?.platforms?.youtube?.handle
+  // Status checks for optional profile completion items
+  const hasMultiplePlatforms = Boolean(
+    [creator?.platforms?.instagram?.handle, creator?.platforms?.tiktok?.handle, creator?.platforms?.youtube?.handle].filter(Boolean).length > 1
   );
-  const hasPortfolio = Boolean(creator?.portfolio && creator.portfolio.length >= 2);
-  const hasPackages = Boolean(creator?.packages && creator.packages.length >= 1 && creator?.startingPriceEur > 0);
+  const hasMultipleRates = Boolean(
+    creator?.packages && creator.packages.length >= 2
+  );
+  const hasAudienceDemographics = Boolean(
+    creator?.audience?.topCountries && creator.audience.topCountries.length >= 2
+  );
+  const hasExtendedPortfolio = Boolean(
+    creator?.portfolio && creator.portfolio.length >= 4
+  );
+  const hasPastCollaborations = Boolean(
+    (creator?.reviews && creator.reviews.length >= 1) || creator?.totalCollaborations > 0
+  );
   const isVerified = Boolean(creator?.verified);
 
-  const checklist = [
+  // Mandatory items are already completed during onboarding:
+  // (Basic Info, Location & Languages, Niches, Primary Social, 2+ Portfolio samples, Collab preferences)
+  const baseOnboardingWeight = 50; // 50% base strength from mandatory onboarding
+
+  // Profile completion items (Can be completed later as Profile Completion)
+  const optionalChecklist = [
     {
-      id: 'basics',
-      title: 'Profile identity & avatar',
-      description: 'Photo, handle, and a 150-char creator bio',
-      weight: 20,
-      completed: hasAvatar && hasBioAndLocation,
-      href: '/creator/profile',
-      actionLabel: 'Edit Profile',
+      id: 'rates',
+      title: 'Different Rates for Post, Story, Reel, Video (€)',
+      description: 'Set custom pricing for each deliverable format to receive instant brand checkout',
+      weight: 15,
+      completed: hasMultipleRates,
+      href: '/creator/packages',
+      actionLabel: 'Set Deliverable Rates',
+      icon: DollarSign,
     },
     {
-      id: 'categories',
-      title: 'Creator niches & categories',
-      description: 'Select up to 3 core industries for brand matchmaking',
-      weight: 15,
-      completed: hasCategories,
-      href: '/creator/profile',
-      actionLabel: 'Add Niches',
+      id: 'audience',
+      title: 'Audience Demographics (Location, Age & Gender)',
+      description: 'Provide verified audience data to match with high-budget enterprise campaigns',
+      weight: 10,
+      completed: hasAudienceDemographics,
+      href: '/creator/profile?tab=audience',
+      actionLabel: 'Add Demographics',
+      icon: Users,
     },
     {
       id: 'socials',
-      title: 'Connected social platforms',
-      description: 'Handles and audience reach for Instagram, TikTok or YouTube',
-      weight: 15,
-      completed: hasSocials,
+      title: 'Additional Social Media Platforms',
+      description: 'Connect secondary channels (Instagram, TikTok, YouTube) to showcase total reach',
+      weight: 10,
+      completed: hasMultiplePlatforms,
       href: '/creator/profile?tab=channels',
-      actionLabel: 'Link Handles',
+      actionLabel: 'Connect Channels',
+      icon: Instagram,
     },
     {
       id: 'portfolio',
-      title: 'Showcase work samples (2+ items)',
-      description: 'High-definition media samples demonstrating your visual style',
-      weight: 20,
-      completed: hasPortfolio,
+      title: 'More Portfolio / Video Deliverables (4+ pieces)',
+      description: 'Add more client work examples, 4K video clips, and lookbook cases',
+      weight: 10,
+      completed: hasExtendedPortfolio,
       href: '/creator/portfolio',
-      actionLabel: 'Upload Work',
+      actionLabel: 'Add Work',
+      icon: Film,
     },
     {
-      id: 'packages',
-      title: 'Collaboration packages & rates',
-      description: 'Set your transparent fixed EUR deliverables and base rate',
-      weight: 15,
-      completed: hasPackages,
-      href: '/creator/packages',
-      actionLabel: 'Set Rates',
+      id: 'collaborations',
+      title: 'Past Brand Collaborations & Client Reviews',
+      description: 'Feature previous sponsor campaigns, client feedback, and brand partner logos',
+      weight: 10,
+      completed: hasPastCollaborations,
+      href: '/creator/profile',
+      actionLabel: 'Add Partners',
+      icon: Briefcase,
     },
     {
       id: 'verification',
-      title: 'Escrow verification check',
-      description: 'Verify identity to unlock 100% upfront escrow protection',
-      weight: 15,
+      title: 'Influverse Escrow Verification Seal',
+      description: 'Verify identity to activate 100% upfront escrow deposits on all orders',
+      weight: 5,
       completed: isVerified,
       href: '#verify',
       actionLabel: 'Request Badge',
       onClick: onQuickVerify,
+      icon: ShieldCheck,
     },
   ];
 
-  const totalCompletedWeight = checklist.reduce(
+  const completedOptionalWeight = optionalChecklist.reduce(
     (acc, item) => (item.completed ? acc + item.weight : acc),
     0
   );
-  const completionPercentage = Math.min(100, totalCompletedWeight);
 
-  // If 100% complete, show compact verified all-star banner
-  if (completionPercentage === 100) {
+  const totalStrength = Math.min(100, baseOnboardingWeight + completedOptionalWeight);
+
+  // If 100% complete
+  if (totalStrength === 100) {
     return (
       <div className="bg-[#0A0A0A] text-white rounded-3xl p-5 sm:p-6 border border-white/10 shadow-lg flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-sans relative overflow-hidden">
         <div className="flex items-center gap-4">
@@ -122,11 +146,11 @@ export function ProfileCompletionCard({
                 All-Star Creator Profile (100% Complete)
               </h4>
               <span className="text-[10px] uppercase font-black px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                Max Visibility
+                Max Discovery
               </span>
             </div>
             <p className="text-xs sm:text-sm text-[#A3A39C] mt-0.5 font-medium">
-              Your profile is optimized for top brand search placement and direct collaboration offers.
+              Your profile has full marketplace score: rates, demographics, multi-platform channels, and portfolio showcase.
             </p>
           </div>
         </div>
@@ -148,24 +172,29 @@ export function ProfileCompletionCard({
       <div className="p-5 sm:p-6 bg-gradient-to-r from-[#FAFAF8] via-white to-[#FAFAF8] border-b border-[#E7E7E2]">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-1">
-            <div className="flex items-center gap-2.5">
-              <span className="w-7 h-7 rounded-xl bg-[#0A0A0A] text-white flex items-center justify-center text-xs font-black shadow-2xs">
-                <Sparkles className="w-3.5 h-3.5 text-[#FF2D78]" />
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-black">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                <span>Mandatory Onboarding Complete</span>
               </span>
-              <h3 className="text-lg sm:text-xl font-black text-[#0A0A0A] tracking-tight">
-                Complete Your Profile ({completionPercentage}% Complete)
-              </h3>
+              <span className="text-xs text-[#66665E] font-semibold hidden sm:inline">•</span>
+              <span className="text-xs text-[#66665E] font-medium">
+                {creator?.approvalStatus === 'approved' ? 'Approved for Marketplace' : 'Status: Under Curation Review ⏳'}
+              </span>
             </div>
+            <h3 className="text-lg sm:text-xl font-black text-[#0A0A0A] tracking-tight">
+              Profile Completion Strength: {totalStrength}%
+            </h3>
             <p className="text-xs sm:text-sm text-[#66665E] font-medium leading-relaxed max-w-2xl">
-              Creators with fully completed profiles receive <strong className="text-[#0A0A0A]">4.8× more collaboration inquiries</strong> and higher escrow offer deposits from top brands.
+              You're already onboarded! Completing these optional items unlocks higher search ranking and <strong className="text-[#0A0A0A]">3.5× more brand collaboration offers</strong>.
             </p>
           </div>
 
           <div className="flex items-center gap-3 shrink-0 self-start sm:self-auto">
             {/* Completion Percentage Badge */}
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-[#0A0A0A] text-white text-xs font-black shadow-xs">
+            <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-[#0A0A0A] text-white text-xs font-black shadow-xs">
               <span className="w-2 h-2 rounded-full bg-[#FF2D78] animate-pulse" />
-              <span>{completionPercentage}% Done</span>
+              <span>{totalStrength}% Strength</span>
             </div>
 
             <button
@@ -181,17 +210,22 @@ export function ProfileCompletionCard({
         {/* Dynamic Progress Bar */}
         <div className="mt-4 w-full h-2 rounded-full bg-[#EAEAE3] overflow-hidden">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-[#0A0A0A] to-[#FF2D78] transition-all duration-500 ease-out shadow-xs"
-            style={{ width: `${completionPercentage}%` }}
+            className="h-full rounded-full bg-gradient-to-r from-[#0A0A0A] via-[#FF2D78] to-emerald-500 transition-all duration-500 ease-out shadow-xs"
+            style={{ width: `${totalStrength}%` }}
           />
         </div>
       </div>
 
-      {/* Expandable Actionable Checklist */}
+      {/* Expandable Actionable Checklist: Items that Can be Completed Later */}
       {isExpanded && (
         <div className="p-5 sm:p-6 divide-y divide-[#E7E7E2]/60">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 pb-1">
-            {checklist.map((item) => {
+          <div className="pb-3 text-xs font-black uppercase tracking-wider text-[#66665E]">
+            Optional Enhancements (Complete anytime to boost brand bookings):
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 pt-3">
+            {optionalChecklist.map((item) => {
+              const IconComponent = item.icon;
               return (
                 <div
                   key={item.id}
@@ -212,7 +246,7 @@ export function ProfileCompletionCard({
                     <div className="min-w-0">
                       <div className="flex items-center gap-1.5 flex-wrap">
                         <span
-                          className={`text-sm font-bold truncate ${
+                          className={`text-xs font-bold truncate ${
                             item.completed ? 'text-[#66665E] line-through' : 'text-[#0A0A0A]'
                           }`}
                         >
@@ -222,26 +256,26 @@ export function ProfileCompletionCard({
                           +{item.weight}%
                         </span>
                       </div>
-                      <p className="text-xs text-[#66665E] mt-0.5 line-clamp-1 font-medium">
+                      <p className="text-[11px] text-[#66665E] mt-0.5 line-clamp-2 font-medium">
                         {item.description}
                       </p>
                     </div>
                   </div>
 
                   {!item.completed && (
-                    <div className="shrink-0">
+                    <div className="shrink-0 self-center">
                       {item.onClick ? (
                         <button
                           type="button"
                           onClick={item.onClick}
-                          className="px-3 py-1.5 rounded-xl bg-[#0A0A0A] hover:bg-[#FF2D78] text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1 cursor-pointer"
+                          className="px-2.5 py-1 rounded-xl bg-[#0A0A0A] hover:bg-[#FF2D78] text-white text-[11px] font-bold transition-all shadow-xs flex items-center gap-1 cursor-pointer whitespace-nowrap"
                         >
                           <span>{item.actionLabel}</span>
                         </button>
                       ) : (
                         <Link
                           href={item.href}
-                          className="px-3 py-1.5 rounded-xl bg-[#0A0A0A] hover:bg-[#FF2D78] text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1"
+                          className="px-2.5 py-1 rounded-xl bg-[#0A0A0A] hover:bg-[#FF2D78] text-white text-[11px] font-bold transition-all shadow-xs flex items-center gap-1 whitespace-nowrap"
                         >
                           <span>{item.actionLabel}</span>
                         </Link>

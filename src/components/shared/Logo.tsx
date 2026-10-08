@@ -15,6 +15,12 @@ export function Logo({
   withText = true,
   size = 'md',
 }: LogoProps) {
+  const pixelSizes = {
+    sm: 24,
+    md: 28,
+    lg: 36,
+  };
+
   const iconSizes = {
     sm: 'w-6 h-6',
     md: 'w-7 h-7',
@@ -27,14 +33,26 @@ export function Logo({
     lg: 'text-2xl',
   };
 
+  const dim = pixelSizes[size] || 28;
+
   return (
-    <div className={`inline-flex items-center gap-2.5 group select-none ${className}`}>
-      {/* SVG Monogram matching client reference media_1789815697252.jpg */}
+    <div className={`inline-flex items-center gap-2.5 group select-none shrink-0 ${className}`}>
+      {/* SVG Monogram with strict inline bounds to prevent giant rendering */}
       <svg
         viewBox="0 0 100 100"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className={`${iconSizes[size]} transition-transform duration-300 group-hover:scale-105 flex-shrink-0`}
+        width={dim}
+        height={dim}
+        style={{
+          width: `${dim}px`,
+          height: `${dim}px`,
+          minWidth: `${dim}px`,
+          minHeight: `${dim}px`,
+          maxWidth: `${dim}px`,
+          maxHeight: `${dim}px`,
+        }}
+        className={`${iconSizes[size]} transition-transform duration-300 group-hover:scale-105 shrink-0 block`}
       >
         {/* Solid Circle in top-left quadrant */}
         <circle

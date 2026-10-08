@@ -18,6 +18,14 @@ export function VerifiedBadge({
     lg: 'w-6 h-6',
   };
 
+  const pixelSizes = {
+    xs: 14,
+    sm: 16,
+    md: 20,
+    lg: 24,
+  };
+  const px = pixelSizes[size] || 16;
+
   const currentSizeClass = className.includes('w-') || className.includes('h-')
     ? className
     : `${sizeClasses[size]} ${className}`.trim();
@@ -27,12 +35,21 @@ export function VerifiedBadge({
       className={`inline-flex items-center justify-center shrink-0 ${currentSizeClass}`}
       title={title}
       aria-label={title}
+      style={{ width: `${px}px`, height: `${px}px`, minWidth: `${px}px`, minHeight: `${px}px` }}
     >
       <svg
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-full drop-shadow-2xs"
+        width={px}
+        height={px}
+        style={{
+          width: `${px}px`,
+          height: `${px}px`,
+          maxWidth: `${px}px`,
+          maxHeight: `${px}px`,
+        }}
+        className="w-full h-full drop-shadow-2xs block shrink-0"
       >
         <path
           d="M9.984 2.221a2.38 2.38 0 0 1 4.032 0l.442.75a2.38 2.38 0 0 0 2.45 1.066l.86-.143a2.38 2.38 0 0 1 2.76 2.76l-.143.86a2.38 2.38 0 0 0 1.066 2.45l.75.442a2.38 2.38 0 0 1 0 4.032l-.75.442a2.38 2.38 0 0 0-1.066 2.45l.143.86a2.38 2.38 0 0 1-2.76 2.76l-.86-.143a2.38 2.38 0 0 0-2.45 1.066l-.442.75a2.38 2.38 0 0 1-4.032 0l-.442-.75a2.38 2.38 0 0 0-2.45-1.066l-.86.143a2.38 2.38 0 0 1-2.76-2.76l.143-.86a2.38 2.38 0 0 0-1.066-2.45l-.75-.442a2.38 2.38 0 0 1 0-4.032l.75-.442a2.38 2.38 0 0 0 1.066-2.45l-.143-.86a2.38 2.38 0 0 1 2.76-2.76l.86.143a2.38 2.38 0 0 0 2.45-1.066l.442-.75z"

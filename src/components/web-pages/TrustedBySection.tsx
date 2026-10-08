@@ -10,7 +10,9 @@ export function TrustedBySection() {
       content: (
         <div className="flex items-center gap-2 group cursor-pointer">
           <svg
-            className="h-6 sm:h-7 w-auto text-[#0A0A0A] group-hover:text-[#7B68EE] transition-colors"
+            height="28"
+            style={{ maxHeight: '28px' }}
+            className="h-6 sm:h-7 w-auto text-[#0A0A0A] group-hover:text-[#7B68EE] transition-colors block"
             viewBox="0 0 120 32"
             fill="currentColor"
           >
@@ -40,7 +42,9 @@ export function TrustedBySection() {
       content: (
         <div className="flex items-center gap-1.5 group cursor-pointer">
           <svg
-            className="h-7 sm:h-8 w-auto text-[#0A0A0A] group-hover:text-[#DA291C] transition-colors"
+            height="28"
+            style={{ maxHeight: '28px' }}
+            className="h-7 sm:h-8 w-auto text-[#0A0A0A] group-hover:text-[#DA291C] transition-colors block"
             viewBox="0 0 42 36"
             fill="currentColor"
           >
@@ -58,7 +62,9 @@ export function TrustedBySection() {
       content: (
         <div className="flex items-center gap-2 group cursor-pointer">
           <svg
-            className="h-6 sm:h-7 w-auto text-[#0A0A0A] group-hover:text-[#FA6B6B] transition-colors"
+            height="28"
+            style={{ maxHeight: '28px' }}
+            className="h-6 sm:h-7 w-auto text-[#0A0A0A] group-hover:text-[#FA6B6B] transition-colors block"
             viewBox="0 0 115 32"
             fill="currentColor"
           >
@@ -87,7 +93,9 @@ export function TrustedBySection() {
       content: (
         <div className="flex flex-col items-center group cursor-pointer">
           <svg
-            className="h-7 sm:h-8 w-auto text-[#0A0A0A] group-hover:text-[#009EDB] transition-colors"
+            height="32"
+            style={{ maxHeight: '32px' }}
+            className="h-7 sm:h-8 w-auto text-[#0A0A0A] group-hover:text-[#009EDB] transition-colors block"
             viewBox="0 0 40 40"
             fill="none"
             stroke="currentColor"
@@ -113,7 +121,9 @@ export function TrustedBySection() {
       content: (
         <div className="flex items-center gap-2 group cursor-pointer">
           <svg
-            className="h-6 sm:h-7 w-auto text-[#0A0A0A] group-hover:text-[#F36F21] transition-colors"
+            height="28"
+            style={{ maxHeight: '28px' }}
+            className="h-6 sm:h-7 w-auto text-[#0A0A0A] group-hover:text-[#F36F21] transition-colors block"
             viewBox="0 0 160 34"
             fill="currentColor"
           >

@@ -131,6 +131,11 @@ export interface Creator {
   portfolio: PortfolioItem[];
   photos?: CreatorPhoto[];
   aestheticVibe?: string;
+  languages?: string[];
+  collaborationPreferences?: string[];
+  approvalStatus?: 'under_review' | 'approved' | 'action_required';
+  city?: string;
+  country?: string;
   audience: AudienceDemographics;
   reviews: CreatorReview[];
 }
