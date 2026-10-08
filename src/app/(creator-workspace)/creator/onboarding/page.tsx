@@ -608,17 +608,6 @@ export default function CreatorOnboardingPage() {
                   </div>
                 </div>
 
-                {/* Account Pre-fill Confirmation Badge */}
-                {currentUser?.email && (
-                  <div className="bg-[#FAFAF8] border border-[#E7E7E2] rounded-2xl px-4 py-2.5 flex items-center justify-between text-xs font-semibold text-[#66665E]">
-                    <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
-                      <span>Account details linked from registration</span>
-                    </div>
-                    <span className="text-[#0A0A0A] font-bold">Editable below</span>
-                  </div>
-                )}
-
                 {/* Full Name & Username */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   <div className="space-y-1.5">

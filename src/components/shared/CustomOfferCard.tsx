@@ -36,9 +36,7 @@ export function CustomOfferCard({
   creator,
 }: CustomOfferCardProps) {
   const dispatch = useAppDispatch();
-  const feeEur = Math.round(offer.priceEur * 0.15 * 100) / 100;
-  const totalEur = Math.round((offer.priceEur + feeEur) * 100) / 100;
-  const amount = viewer === 'brand' ? totalEur : offer.priceEur;
+  const amount = offer.priceEur;
 
   const statusLabel =
     offer.status === 'accepted' ? 'Accepted' : offer.status === 'declined' ? 'Declined' : 'Pending';
@@ -61,8 +59,8 @@ export function CustomOfferCard({
       collaborationType: offer.platform === 'ugc' || offer.platform === 'all' ? 'content_creation' : 'sponsored_post',
       platform: offer.platform,
       basePriceEur: offer.priceEur,
-      platformFeeEur: feeEur,
-      totalEur,
+      platformFeeEur: 0,
+      totalEur: offer.priceEur,
       status: 'in_production',
       brief: offer.deliverables.join('\n'),
       requirements: offer.deliverables,
@@ -137,11 +135,6 @@ export function CustomOfferCard({
 
         <div>
           <div className="text-lg font-black text-[#0A0A0A] tracking-tight">€{amount.toLocaleString()}</div>
-          {viewer === 'brand' && (
-            <div className="text-xs font-medium text-[#66665E]">
-              €{offer.priceEur.toLocaleString()} + €{feeEur.toLocaleString()} platform fee
-            </div>
-          )}
         </div>
 
         {viewer === 'brand' && offer.status === 'pending' && (

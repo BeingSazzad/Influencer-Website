@@ -10,8 +10,7 @@ import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
 import { PlatformType, Order, CreatorPackage } from '@/types';
 import {
   ShieldCheck,
-  Lock,
-  ExternalLink,
+  Send,
 } from 'lucide-react';
 import { Input, Select, Button, message, Slider, InputNumber } from 'antd';
 
@@ -19,7 +18,6 @@ const PLATFORM_OPTIONS: { value: PlatformType; label: string }[] = [
   { value: 'instagram', label: 'Instagram' },
   { value: 'tiktok', label: 'TikTok' },
   { value: 'youtube', label: 'YouTube' },
-  { value: 'all', label: 'Cross-Platform Bundle' },
   { value: 'ugc', label: 'UGC Video' },
 ];
 
@@ -38,7 +36,7 @@ function NewHireContent() {
   );
   const [selectedPackageId, setSelectedPackageId] = useState<string | null>(null);
   const [collabType, setCollabType] = useState<'content_creation' | 'sponsored_post'>('sponsored_post');
-  const [platform, setPlatform] = useState<PlatformType>('instagram');
+  const [platforms, setPlatforms] = useState<PlatformType[]>(['instagram']);
   const [campaignTitle, setCampaignTitle] = useState('Product Launch Campaign');
   const [brief, setBrief] = useState(
     'Highlight key benefits with authentic product placement and a clear call-to-action link.'
@@ -62,7 +60,13 @@ function NewHireContent() {
           if (foundPkg) {
             setSelectedPackageId(foundPkg.id);
             setCampaignTitle(`${foundPkg.title} Collab`);
-            setPlatform(foundPkg.platform);
+            if (foundPkg.platforms && foundPkg.platforms.length > 0) {
+              setPlatforms(foundPkg.platforms);
+            } else if (foundPkg.platform === 'all' || foundPkg.platform === 'multi') {
+              setPlatforms(['instagram', 'tiktok', 'youtube']);
+            } else {
+              setPlatforms([foundPkg.platform]);
+            }
             setBasePriceEur(foundPkg.priceEur);
             setDeadlineDays(foundPkg.deliveryDays || 7);
             if (foundPkg.platform === 'ugc') {
@@ -94,7 +98,13 @@ function NewHireContent() {
   const handleSelectPackage = (pkg: CreatorPackage) => {
     setSelectedPackageId(pkg.id);
     setCampaignTitle(`${pkg.title} Collab`);
-    setPlatform(pkg.platform);
+    if (pkg.platforms && pkg.platforms.length > 0) {
+      setPlatforms(pkg.platforms);
+    } else if (pkg.platform === 'all' || pkg.platform === 'multi') {
+      setPlatforms(['instagram', 'tiktok', 'youtube']);
+    } else {
+      setPlatforms([pkg.platform]);
+    }
     setBasePriceEur(pkg.priceEur);
     setDeadlineDays(pkg.deliveryDays || 7);
     if (pkg.platform === 'ugc') {
@@ -111,8 +121,7 @@ function NewHireContent() {
     message.success(`Autofilled terms from "${pkg.title}"`);
   };
 
-  const platformFeeEur = Math.round(basePriceEur * 0.15);
-  const totalCostEur = basePriceEur + platformFeeEur;
+  const totalCostEur = basePriceEur;
 
   // Deadline calculation
   const deadlineDate = new Date();
@@ -136,9 +145,12 @@ function NewHireContent() {
 
     setIsSubmitting(true);
 
+    const primaryPlatform: PlatformType =
+      platforms.length > 1 ? 'all' : platforms[0] || 'instagram';
+
     const newOrder: Order = {
       id: `order-${Date.now().toString().slice(-4)}`,
-      brandId: currentUser?.id || 'user_brand_01',
+      brandId: currentUser?.id || 'brand-01',
       brandName: currentUser?.companyName || 'Aura Skincare Paris',
       brandLogo: currentUser?.avatar || 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=100',
       creatorId: currentCreator.id,
@@ -147,10 +159,10 @@ function NewHireContent() {
       creatorAvatar: currentCreator.avatar,
       packageTitle: campaignTitle,
       collaborationType: collabType,
-      platform: platform,
+      platform: primaryPlatform,
       basePriceEur: basePriceEur,
-      platformFeeEur: platformFeeEur,
-      totalEur: totalCostEur,
+      platformFeeEur: 0,
+      totalEur: basePriceEur,
       status: 'offer_sent',
       brief: brief,
       requirements: requirements.split('\n').filter((r) => r.trim().length > 0),
@@ -166,7 +178,7 @@ function NewHireContent() {
           senderName: currentUser?.name || 'Brand Manager',
           senderAvatar: currentUser?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100',
           senderRole: 'brand',
-          text: `Hi ${currentCreator.name.split(' ')[0]}! We just funded this campaign in escrow. Looking forward to collaborating!`,
+          text: `Offer sent for "${campaignTitle}" (€${basePriceEur.toLocaleString()}). Looking forward to collaborating!`,
           timestamp: 'Just now',
         },
       ],
@@ -175,9 +187,9 @@ function NewHireContent() {
     setTimeout(() => {
       dispatch(createOffer(newOrder));
       setIsSubmitting(false);
-      message.success(`Offer created and €${totalCostEur.toLocaleString()} placed in escrow!`);
-      router.push(`/brand/orders/${newOrder.id}`);
-    }, 500);
+      message.success(`Offer sent to ${currentCreator.name}!`);
+      router.push('/brand/campaigns');
+    }, 400);
   };
 
   return (
@@ -204,55 +216,66 @@ function NewHireContent() {
                 onChange={handleSelectCreator}
                 className="w-full h-11"
                 showSearch
+                placeholder="Search by creator name or @username..."
                 optionFilterProp="label"
+                filterOption={(input, option) => {
+                  const q = input.trim().toLowerCase().replace(/^@+/, '');
+                  if (!q) return true;
+                  const c = creators.find((cr) => cr.id === option?.value);
+                  if (!c) {
+                    return (option?.label ?? '').toString().toLowerCase().includes(q);
+                  }
+                  return (
+                    c.name.toLowerCase().includes(q) ||
+                    c.handle.toLowerCase().replace(/^@+/, '').includes(q)
+                  );
+                }}
+                optionRender={(option) => {
+                  const c = creators.find((cr) => cr.id === option.data.value);
+                  if (!c) return option.data.label;
+                  return (
+                    <div className="flex items-center gap-2.5 py-0.5">
+                      <img
+                        src={c.avatar}
+                        alt={c.name}
+                        className="w-6 h-6 rounded-full object-cover border border-[#E7E7E2] shrink-0"
+                      />
+                      <div className="flex items-center gap-1.5 truncate">
+                        <span className="font-bold text-[#0A0A0A] text-sm">{c.name}</span>
+                        <span className="text-xs text-[#66665E]">@{c.handle.replace(/^@+/, '')}</span>
+                      </div>
+                    </div>
+                  );
+                }}
                 options={creators.map((c) => ({
                   value: c.id,
-                  label: `${c.name} (@${c.handle}) — from €${c.startingPriceEur}`,
+                  label: `${c.name} (@${c.handle.replace(/^@+/, '')})`,
                 }))}
               />
 
               {/* Creator Snapshot Card */}
               {currentCreator && (
-                <div className="p-3.5 bg-[#FAFAF8] rounded-2xl border border-[#E7E7E2] flex items-center justify-between">
+                <div className="p-3 bg-[#FAFAF8] rounded-2xl border border-[#E7E7E2] flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="relative">
                       <img
                         src={currentCreator.avatar}
                         alt={currentCreator.name}
-                        className="w-11 h-11 rounded-full object-cover border border-[#E7E7E2]"
+                        className="w-10 h-10 rounded-full object-cover border border-[#E7E7E2]"
                       />
-                      <VerifiedBadge className="absolute -bottom-0.5 -right-0.5 w-4 h-4" />
+                      <VerifiedBadge className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5" />
                     </div>
                     <div>
                       <div className="flex items-center gap-1.5">
                         <span className="font-extrabold text-[#0A0A0A] text-sm leading-tight">
                           {currentCreator.name}
                         </span>
-                        <span className="text-sm text-[#66665E]">@{currentCreator.handle}</span>
-                      </div>
-                      <div className="flex items-center gap-1.5 mt-1">
-                        {currentCreator.categories?.slice(0, 2).map((cat) => (
-                          <span
-                            key={cat}
-                            className="text-sm font-bold px-2 py-0.5 bg-white border border-[#E7E7E2] rounded-md text-[#66665E]"
-                          >
-                            {cat}
-                          </span>
-                        ))}
-                        <span className="text-sm font-bold text-[#0A0A0A] ml-1">
-                          From €{currentCreator.startingPriceEur}
+                        <span className="text-sm text-[#66665E]">
+                          @{currentCreator.handle.replace(/^@+/, '')}
                         </span>
                       </div>
                     </div>
                   </div>
-                  <Link
-                    href={`/creators/${currentCreator.id}`}
-                    target="_blank"
-                    className="text-sm font-bold text-[#0A0A0A] hover:text-[#FF2D78] flex items-center gap-1 transition-colors px-3 py-1.5 bg-white rounded-xl border border-[#E7E7E2]"
-                  >
-                    <span>View Profile</span>
-                    <ExternalLink className="w-3 h-3 text-[#66665E]" />
-                  </Link>
                 </div>
               )}
             </div>
@@ -303,16 +326,21 @@ function NewHireContent() {
 
             {/* Platform Selector */}
             <div className="space-y-1.5">
-              <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">
-                Platform
-              </label>
+              <div className="flex items-center justify-between">
+                <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">
+                  Platform(s)
+                </label>
+                <span className="text-[11px] text-[#66665E] font-medium">Select one or more</span>
+              </div>
               <Select
-                value={platform}
-                onChange={(val) => {
-                  setPlatform(val);
+                mode="multiple"
+                value={platforms}
+                onChange={(vals: PlatformType[]) => {
+                  setPlatforms(vals.length > 0 ? vals : ['instagram']);
                   setSelectedPackageId(null);
                 }}
-                className="w-full h-10"
+                className="w-full min-h-10"
+                placeholder="Select platform(s)..."
                 options={PLATFORM_OPTIONS}
               />
             </div>
@@ -366,16 +394,16 @@ function NewHireContent() {
 
           </div>
 
-          {/* Right Column: Escrow Financials & Checkout */}
+          {/* Right Column: Offer Financials & Direct Send */}
           <div className="lg:col-span-5 space-y-6">
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6 sticky top-6">
-              <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Escrow Summary</h2>
+              <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Offer Summary</h2>
 
               {/* Creator Rate Slider & Input */}
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
                   <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">
-                    Creator Rate
+                    Offer Budget
                   </label>
                   <div className="w-32">
                     <InputNumber
@@ -404,19 +432,11 @@ function NewHireContent() {
               </div>
 
               {/* Financial Calculation Breakdown */}
-              <div className="space-y-2.5 pt-4 border-t border-[#E7E7E2] text-xs">
-                <div className="flex justify-between text-[#66665E]">
-                  <span>Creator Payout:</span>
-                  <span className="font-bold text-[#0A0A0A]">€{basePriceEur.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between text-[#66665E]">
-                  <span>Platform Fee (15%):</span>
-                  <span className="font-bold text-[#0A0A0A]">+€{platformFeeEur.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between items-baseline text-sm font-black text-[#0A0A0A] pt-3 border-t border-[#E7E7E2]">
-                  <span>Total Escrow Deposit:</span>
+              <div className="pt-4 border-t border-[#E7E7E2]">
+                <div className="flex justify-between items-baseline text-sm font-black text-[#0A0A0A]">
+                  <span>Total Offer:</span>
                   <span className="text-2xl font-black text-[#0A0A0A]">
-                    €{totalCostEur.toLocaleString()}
+                    €{basePriceEur.toLocaleString()}
                   </span>
                 </div>
               </div>
@@ -424,7 +444,7 @@ function NewHireContent() {
               {/* Escrow Protection Notice */}
               <div className="p-3 bg-[#FAFAF8] rounded-xl border border-[#E7E7E2] flex items-center gap-2 text-sm font-bold text-[#0A0A0A]">
                 <ShieldCheck className="w-4 h-4 text-[#0A0A0A] shrink-0" />
-                <span>Released only after you approve</span>
+                <span>Escrow protected · Released after you approve</span>
               </div>
 
               <div>
@@ -434,8 +454,8 @@ function NewHireContent() {
                   loading={isSubmitting}
                   className="w-full h-12 rounded-full font-bold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 !text-white border-none shadow-md flex items-center justify-center gap-2 cursor-pointer transition-all"
                 >
-                  <Lock className="w-4 h-4 text-[#FF2D78]" />
-                  <span>Deposit €{totalCostEur.toLocaleString()} & Send Offer</span>
+                  <Send className="w-4 h-4" />
+                  <span>Send Offer (€{basePriceEur.toLocaleString()})</span>
                 </Button>
               </div>
             </div>

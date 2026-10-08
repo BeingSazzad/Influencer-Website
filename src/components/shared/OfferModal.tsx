@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { closeOfferModal, createOffer } from '@/redux/slices/orderSlice';
 import { Modal, Input, message, Button } from 'antd';
-import { ShieldCheck, Lock, Sparkles } from 'lucide-react';
+import { ShieldCheck, Send, Sparkles } from 'lucide-react';
 import { Order, PlatformType } from '@/types';
 import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
 
@@ -37,8 +37,7 @@ export function OfferModal() {
 
   if (!selectedCreatorForOffer) return null;
 
-  const platformFee = Math.round(basePrice * 0.15 * 100) / 100;
-  const totalInvoiceEur = Math.round((basePrice + platformFee) * 100) / 100;
+  const totalInvoiceEur = basePrice;
 
   const handleSendOffer = () => {
     if (!campaignTitle.trim() || !brief.trim() || !basePrice) {
@@ -65,7 +64,7 @@ export function OfferModal() {
         collaborationType: platform === 'ugc' ? 'content_creation' : 'sponsored_post',
         platform: platform,
         basePriceEur: basePrice,
-        platformFeeEur: platformFee,
+        platformFeeEur: 0,
         totalEur: totalInvoiceEur,
         status: 'offer_sent',
         brief: brief.trim(),
@@ -82,7 +81,7 @@ export function OfferModal() {
             senderName: currentUser?.name || 'Brand Manager',
             senderAvatar: currentUser?.avatar || 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=100&q=80',
             senderRole: 'brand',
-            text: `Offer submitted for ${packageTitle} (€${totalInvoiceEur} Escrow Funded). Looking forward to collaborating!`,
+            text: `Offer submitted for ${packageTitle} (€${totalInvoiceEur}). Looking forward to collaborating!`,
             timestamp: 'Just now',
           },
         ],
@@ -91,7 +90,7 @@ export function OfferModal() {
       dispatch(createOffer(newOrder));
       setIsSubmitting(false);
       dispatch(closeOfferModal());
-      message.success('Campaign offer submitted and Escrow funded!');
+      message.success(`Offer sent to ${selectedCreatorForOffer.name}!`);
       router.push('/brand/orders');
     }, 500);
   };
@@ -176,29 +175,17 @@ export function OfferModal() {
 
         </div>
 
-        {/* Transparent Escrow Breakdown */}
-        <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-2 text-xs">
-          <div className="flex items-center justify-between text-[#66665E]">
-            <span>Creator Rate:</span>
-            <span className="font-bold text-[#0A0A0A]">€{basePrice.toLocaleString()}</span>
-          </div>
-
-          <div className="flex items-center justify-between text-[#66665E]">
-            <span>Platform Fee (15%):</span>
-            <span className="font-bold text-[#0A0A0A]">€{platformFee.toFixed(2)}</span>
-          </div>
-
-          <div className="pt-2 border-t border-[#E7E7E2] flex items-center justify-between">
-            <div>
-              <div className="text-xs font-black text-[#0A0A0A]">Total Escrow Funded</div>
-              <div className="text-xs text-[#66665E] font-bold flex items-center gap-1 mt-0.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#0A0A0A]" />
-                <span>Released only upon deliverable approval</span>
-              </div>
+        {/* Offer Summary Breakdown */}
+        <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-between">
+          <div>
+            <div className="text-xs font-black text-[#0A0A0A]">Total Offer Amount</div>
+            <div className="text-xs text-[#66665E] font-bold flex items-center gap-1 mt-0.5">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#0A0A0A]" />
+              <span>Escrow protected · Released after deliverable approval</span>
             </div>
-            <div className="text-2xl font-black text-[#0A0A0A]">
-              €{totalInvoiceEur.toFixed(2)}
-            </div>
+          </div>
+          <div className="text-2xl font-black text-[#0A0A0A]">
+            €{basePrice.toLocaleString()}
           </div>
         </div>
 
@@ -215,10 +202,10 @@ export function OfferModal() {
             type="primary"
             loading={isSubmitting}
             onClick={handleSendOffer}
-            className="btn-base btn-md btn-primary !h-10 !px-6 !text-sm !font-bold flex items-center gap-2 shadow-xs"
+            className="btn-base btn-md btn-primary !h-10 !px-6 !text-sm !font-bold flex items-center gap-2 shadow-xs cursor-pointer"
           >
-            <Lock className="w-3.5 h-3.5 text-[#FF2D78]" />
-            <span>Fund Escrow & Send Offer</span>
+            <Send className="w-3.5 h-3.5" />
+            <span>Send Offer</span>
           </Button>
         </div>
       </div>

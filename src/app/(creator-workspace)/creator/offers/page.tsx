@@ -85,7 +85,6 @@ export default function CreatorOffersPage() {
                       <div className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                         €{offer.basePriceEur}
                       </div>
-                      <span className="text-xs text-[#66665E] font-semibold">0% Platform Fee</span>
                     </div>
                   </div>
 
