@@ -54,11 +54,11 @@ const COUNTRIES = [
 const COMMON_LANGUAGES = ['English', 'German', 'French', 'Spanish', 'Italian', 'Dutch'];
 
 const COLLAB_PREFERENCES = [
-  { id: 'sponsored_posts', title: 'Sponsored Posts & Reels', desc: 'Brand-sponsored feed posts and short-form videos.' },
-  { id: 'ugc', title: 'UGC Content Creation', desc: 'High-converting ad assets delivered directly to brand media teams.' },
-  { id: 'product_reviews', title: 'Product Reviews & Unboxing', desc: 'In-depth authentic product testing and showcase stories.' },
-  { id: 'events', title: 'Events & Experiences', desc: 'On-site brand pop-ups, product launches, and festival coverage.' },
-  { id: 'ambassador', title: 'Long-term Ambassador', desc: 'Multi-month retainer partnerships and ongoing brand advocacy.' },
+  { id: 'sponsored_posts', title: 'Sponsored Posts & Reels', desc: 'Feed posts & short-form video' },
+  { id: 'ugc', title: 'UGC Content Creation', desc: 'Paid ad assets for brand media' },
+  { id: 'product_reviews', title: 'Product Reviews & Testing', desc: 'Authentic reviews & unboxing' },
+  { id: 'events', title: 'Events & Experiences', desc: 'On-site launches & coverage' },
+  { id: 'ambassador', title: 'Brand Ambassador', desc: 'Long-term partnership contracts' },
 ];
 
 export default function CreatorOnboardingPage() {
@@ -90,9 +90,12 @@ export default function CreatorOnboardingPage() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>(['Beauty', 'Fashion', 'Lifestyle']);
 
   // Step 4: Social Media
-  const [platform, setPlatform] = useState<'instagram' | 'tiktok' | 'youtube'>('instagram');
-  const [socialHandle, setSocialHandle] = useState('sophiekim');
-  const [followers, setFollowers] = useState('1.2M');
+  const [instagramHandle, setInstagramHandle] = useState('sophiekim');
+  const [instagramFollowers, setInstagramFollowers] = useState('1.2M');
+  const [tiktokHandle, setTiktokHandle] = useState('sophiekim');
+  const [tiktokFollowers, setTiktokFollowers] = useState('680K');
+  const [youtubeHandle, setYoutubeHandle] = useState('Sophie Kim Vlogs');
+  const [youtubeFollowers, setYoutubeFollowers] = useState('210K');
 
   // Step 5: Content Samples (At least 2-3)
   const [portfolioSamples, setPortfolioSamples] = useState([
@@ -141,8 +144,9 @@ export default function CreatorOnboardingPage() {
         return message.error('Please select 1 to 3 categories');
       }
     } else if (step === 4) {
-      if (!socialHandle.trim()) return message.error('Please enter your social handle');
-      if (!followers.trim()) return message.error('Please enter your approximate followers');
+      if (!instagramHandle.trim() && !tiktokHandle.trim() && !youtubeHandle.trim()) {
+        return message.error('Please enter at least one social media channel');
+      }
     } else if (step === 5) {
       if (portfolioSamples.length < 2) {
         return message.error('Please add at least 2 content samples');
@@ -240,34 +244,41 @@ export default function CreatorOnboardingPage() {
     const creatorId = `creator-${Date.now().toString().slice(-4)}`;
 
     const platforms: Creator['platforms'] = {};
-    if (platform === 'instagram') {
+    if (instagramHandle.trim()) {
+      const clean = instagramHandle.trim().replace(/^@+/, '');
       platforms.instagram = {
-        handle: `@${socialHandle.replace(/^@+/, '')}`,
+        handle: `@${clean}`,
         followers: 1200000,
-        followersFormatted: followers,
+        followersFormatted: instagramFollowers.trim() || '1.2M',
         engagementRate: '4.8%',
         avgViews: '150K',
-        url: `https://instagram.com/${socialHandle.replace(/^@+/, '')}`,
-      };
-    } else if (platform === 'tiktok') {
-      platforms.tiktok = {
-        handle: `@${socialHandle.replace(/^@+/, '')}`,
-        followers: 680000,
-        followersFormatted: followers,
-        engagementRate: '6.2%',
-        avgViews: '90K',
-        url: `https://tiktok.com/@${socialHandle.replace(/^@+/, '')}`,
-      };
-    } else {
-      platforms.youtube = {
-        handle: socialHandle,
-        followers: 210000,
-        followersFormatted: followers,
-        engagementRate: '8.4%',
-        avgViews: '45K',
-        url: `https://youtube.com/@${socialHandle.toLowerCase()}`,
+        url: `https://instagram.com/${clean}`,
       };
     }
+    if (tiktokHandle.trim()) {
+      const clean = tiktokHandle.trim().replace(/^@+/, '');
+      platforms.tiktok = {
+        handle: `@${clean}`,
+        followers: 680000,
+        followersFormatted: tiktokFollowers.trim() || '680K',
+        engagementRate: '6.2%',
+        avgViews: '90K',
+        url: `https://tiktok.com/@${clean}`,
+      };
+    }
+    if (youtubeHandle.trim()) {
+      const clean = youtubeHandle.trim();
+      platforms.youtube = {
+        handle: clean,
+        followers: 210000,
+        followersFormatted: youtubeFollowers.trim() || '210K',
+        engagementRate: '8.4%',
+        avgViews: '45K',
+        url: `https://youtube.com/@${clean.toLowerCase().replace(/\s+/g, '')}`,
+      };
+    }
+
+    const defaultPlatform = platforms.instagram ? 'instagram' : platforms.tiktok ? 'tiktok' : 'youtube';
 
     const newCreatorProfile: Creator = {
       id: creatorId,
@@ -293,7 +304,7 @@ export default function CreatorOnboardingPage() {
         {
           id: `pkg-${Date.now()}-1`,
           title: 'Dedicated Reel / Shortform Video',
-          platform: platform === 'youtube' ? 'youtube' : platform === 'tiktok' ? 'tiktok' : 'instagram',
+          platform: defaultPlatform,
           type: 'reel',
           description: 'High-retention vertical video with usage rights.',
           priceEur: 450,
@@ -346,10 +357,10 @@ export default function CreatorOnboardingPage() {
   const stepTitles = [
     'Basic Profile',
     'Location & Languages',
-    'Categories / Niche',
-    'Social Media',
+    'Niche & Categories',
+    'Social Channels',
     'Portfolio Samples',
-    'Collaboration Preferences',
+    'Collaboration Types',
   ];
 
   return (
@@ -375,7 +386,7 @@ export default function CreatorOnboardingPage() {
               <span>Step {step} of {totalSteps}: {stepTitles[step - 1]}</span>
               <span>{Math.round((step / totalSteps) * 100)}%</span>
             </div>
-            <div className="w-full h-1.5 bg-[#E7E7E2] rounded-full overflow-hidden">
+            <div className="w-full h-1 bg-[#E7E7E2] rounded-full overflow-hidden">
               <div
                 className="h-full bg-[#0A0A0A] transition-all duration-300 rounded-full"
                 style={{ width: `${(step / totalSteps) * 100}%` }}
@@ -385,13 +396,10 @@ export default function CreatorOnboardingPage() {
 
           {/* Step Form Card */}
           <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#E7E7E2] shadow-xl shadow-black/[0.03] space-y-6">
-            {/* STEP 1: BASIC INFORMATION */}
+            {/* STEP 1: BASIC PROFILE */}
             {step === 1 && (
               <div className="space-y-5 animate-in fade-in-50 duration-200">
-                <div>
-                  <h2 className="text-2xl font-black text-[#0A0A0A] tracking-tight">Basic Information</h2>
-                  <p className="text-sm text-[#66665E] font-medium mt-1">Set up your public identity for brand discovery.</p>
-                </div>
+                <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">Basic Profile</h2>
 
                 {/* Profile Photo */}
                 <div className="flex items-center gap-4 py-1">
@@ -435,7 +443,7 @@ export default function CreatorOnboardingPage() {
 
                 {/* Username */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">Username / Handle</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">Username</label>
                   <div className="relative">
                     <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-bold text-[#A3A39C]">@</span>
                     <input
@@ -448,10 +456,10 @@ export default function CreatorOnboardingPage() {
                   </div>
                 </div>
 
-                {/* Short Bio */}
+                {/* Bio */}
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <label className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">Short Bio</label>
+                    <label className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">Bio</label>
                     <span className="text-xs text-[#A3A39C]">{bio.length}/160</span>
                   </div>
                   <textarea
@@ -459,7 +467,7 @@ export default function CreatorOnboardingPage() {
                     maxLength={160}
                     value={bio}
                     onChange={(e) => setBio(e.target.value)}
-                    placeholder="Describe your style, focus, and what you create..."
+                    placeholder="Brief bio (what you create, style, vibe)..."
                     className="w-full px-4 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] focus:ring-0 text-sm font-medium text-[#0A0A0A] outline-none transition-all resize-none"
                   />
                 </div>
@@ -469,10 +477,7 @@ export default function CreatorOnboardingPage() {
             {/* STEP 2: LOCATION & LANGUAGES */}
             {step === 2 && (
               <div className="space-y-5 animate-in fade-in-50 duration-200">
-                <div>
-                  <h2 className="text-2xl font-black text-[#0A0A0A] tracking-tight">Location &amp; Languages</h2>
-                  <p className="text-sm text-[#66665E] font-medium mt-1">Help European and global brands find you by market.</p>
-                </div>
+                <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">Location &amp; Languages</h2>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div className="space-y-1.5">
@@ -504,7 +509,7 @@ export default function CreatorOnboardingPage() {
 
                 {/* Languages */}
                 <div className="space-y-2">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">Spoken Languages</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">Languages</label>
                   <div className="flex flex-wrap gap-2">
                     {COMMON_LANGUAGES.map((l) => {
                       const isSelected = languages.includes(l);
@@ -537,7 +542,7 @@ export default function CreatorOnboardingPage() {
                           addCustomLanguage();
                         }
                       }}
-                      placeholder="Other language..."
+                      placeholder="Add language..."
                       className="flex-1 px-3 py-1.5 rounded-xl border border-[#E7E7E2] text-xs font-medium text-[#0A0A0A] outline-none"
                     />
                     <button
@@ -556,10 +561,7 @@ export default function CreatorOnboardingPage() {
             {step === 3 && (
               <div className="space-y-5 animate-in fade-in-50 duration-200">
                 <div className="flex items-center justify-between">
-                  <div>
-                    <h2 className="text-2xl font-black text-[#0A0A0A] tracking-tight">Select 1 to 3 Categories</h2>
-                    <p className="text-sm text-[#66665E] font-medium mt-1">Choose the niches your content primarily focuses on.</p>
-                  </div>
+                  <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">Niche &amp; Categories</h2>
                   <span className="text-xs font-black px-2.5 py-1 rounded-full bg-[#FFF0F5] text-[#FF2D78]">
                     {selectedCategories.length} of 3
                   </span>
@@ -591,82 +593,87 @@ export default function CreatorOnboardingPage() {
               </div>
             )}
 
-            {/* STEP 4: SOCIAL MEDIA */}
+            {/* STEP 4: SOCIAL CHANNELS */}
             {step === 4 && (
-              <div className="space-y-5 animate-in fade-in-50 duration-200">
-                <div>
-                  <h2 className="text-2xl font-black text-[#0A0A0A] tracking-tight">Primary Social Channel</h2>
-                  <p className="text-sm text-[#66665E] font-medium mt-1">Connect the channel with your main audience reach.</p>
-                </div>
+              <div className="space-y-4 animate-in fade-in-50 duration-200">
+                <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">Social Channels</h2>
 
-                {/* Platform selector */}
-                <div className="grid grid-cols-3 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setPlatform('instagram')}
-                    className={`py-2.5 px-3 rounded-xl border text-xs font-extrabold flex items-center justify-center gap-2 transition-all cursor-pointer ${
-                      platform === 'instagram'
-                        ? 'bg-[#0A0A0A] text-white border-[#0A0A0A]'
-                        : 'bg-white text-[#0A0A0A] border-[#E7E7E2] hover:bg-[#FAFAF8]'
-                    }`}
-                  >
-                    <Instagram className="w-4 h-4" />
+                {/* Instagram */}
+                <div className="p-4 rounded-2xl border border-[#E7E7E2] bg-white space-y-2.5">
+                  <div className="flex items-center gap-2 text-xs font-black text-[#0A0A0A]">
+                    <Instagram className="w-4 h-4 text-[#E1306C]" />
                     <span>Instagram</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setPlatform('tiktok')}
-                    className={`py-2.5 px-3 rounded-xl border text-xs font-extrabold flex items-center justify-center gap-2 transition-all cursor-pointer ${
-                      platform === 'tiktok'
-                        ? 'bg-[#0A0A0A] text-white border-[#0A0A0A]'
-                        : 'bg-white text-[#0A0A0A] border-[#E7E7E2] hover:bg-[#FAFAF8]'
-                    }`}
-                  >
-                    <span>TikTok</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setPlatform('youtube')}
-                    className={`py-2.5 px-3 rounded-xl border text-xs font-extrabold flex items-center justify-center gap-2 transition-all cursor-pointer ${
-                      platform === 'youtube'
-                        ? 'bg-[#0A0A0A] text-white border-[#0A0A0A]'
-                        : 'bg-white text-[#0A0A0A] border-[#E7E7E2] hover:bg-[#FAFAF8]'
-                    }`}
-                  >
-                    <Youtube className="w-4 h-4 text-red-500" />
-                    <span>YouTube</span>
-                  </button>
-                </div>
-
-                {/* Social Handle */}
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">
-                    {platform === 'instagram' ? 'Instagram Username' : platform === 'tiktok' ? 'TikTok Username' : 'YouTube Channel'}
-                  </label>
-                  <div className="relative">
-                    <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-bold text-[#A3A39C]">@</span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div className="relative">
+                      <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-bold text-[#A3A39C]">@</span>
+                      <input
+                        type="text"
+                        value={instagramHandle}
+                        onChange={(e) => setInstagramHandle(e.target.value)}
+                        placeholder="handle"
+                        className="w-full pl-8 pr-3 py-2 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] text-xs font-medium text-[#0A0A0A] outline-none"
+                      />
+                    </div>
                     <input
                       type="text"
-                      value={socialHandle}
-                      onChange={(e) => setSocialHandle(e.target.value)}
-                      placeholder="username"
-                      className="w-full pl-8 pr-4 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] focus:ring-0 text-sm font-medium text-[#0A0A0A] outline-none transition-all"
+                      value={instagramFollowers}
+                      onChange={(e) => setInstagramFollowers(e.target.value)}
+                      placeholder="Followers (e.g. 1.2M)"
+                      className="w-full px-3 py-2 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] text-xs font-medium text-[#0A0A0A] outline-none"
                     />
                   </div>
                 </div>
 
-                {/* Followers count */}
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">Followers / Subscribers</label>
-                  <input
-                    type="text"
-                    value={followers}
-                    onChange={(e) => setFollowers(e.target.value)}
-                    placeholder="e.g. 1.2M, 250K"
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] focus:ring-0 text-sm font-medium text-[#0A0A0A] outline-none transition-all"
-                  />
+                {/* TikTok */}
+                <div className="p-4 rounded-2xl border border-[#E7E7E2] bg-white space-y-2.5">
+                  <div className="flex items-center gap-2 text-xs font-black text-[#0A0A0A]">
+                    <span className="text-sm">🎵</span>
+                    <span>TikTok</span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div className="relative">
+                      <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-bold text-[#A3A39C]">@</span>
+                      <input
+                        type="text"
+                        value={tiktokHandle}
+                        onChange={(e) => setTiktokHandle(e.target.value)}
+                        placeholder="handle"
+                        className="w-full pl-8 pr-3 py-2 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] text-xs font-medium text-[#0A0A0A] outline-none"
+                      />
+                    </div>
+                    <input
+                      type="text"
+                      value={tiktokFollowers}
+                      onChange={(e) => setTiktokFollowers(e.target.value)}
+                      placeholder="Followers (e.g. 680K)"
+                      className="w-full px-3 py-2 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] text-xs font-medium text-[#0A0A0A] outline-none"
+                    />
+                  </div>
+                </div>
+
+                {/* YouTube */}
+                <div className="p-4 rounded-2xl border border-[#E7E7E2] bg-white space-y-2.5">
+                  <div className="flex items-center gap-2 text-xs font-black text-[#0A0A0A]">
+                    <Youtube className="w-4 h-4 text-red-600" />
+                    <span>YouTube</span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <input
+                      type="text"
+                      value={youtubeHandle}
+                      onChange={(e) => setYoutubeHandle(e.target.value)}
+                      placeholder="Channel name"
+                      className="w-full px-3 py-2 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] text-xs font-medium text-[#0A0A0A] outline-none"
+                    />
+                    <input
+                      type="text"
+                      value={youtubeFollowers}
+                      onChange={(e) => setYoutubeFollowers(e.target.value)}
+                      placeholder="Subscribers (e.g. 210K)"
+                      className="w-full px-3 py-2 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] text-xs font-medium text-[#0A0A0A] outline-none"
+                    />
+                  </div>
                 </div>
               </div>
             )}
@@ -675,10 +682,7 @@ export default function CreatorOnboardingPage() {
             {step === 5 && (
               <div className="space-y-5 animate-in fade-in-50 duration-200">
                 <div className="flex items-center justify-between">
-                  <div>
-                    <h2 className="text-2xl font-black text-[#0A0A0A] tracking-tight">Content &amp; Portfolio</h2>
-                    <p className="text-sm text-[#66665E] font-medium mt-1">Showcase 2–3 samples of your content style.</p>
-                  </div>
+                  <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">Portfolio Samples</h2>
                   <span className="text-xs font-black px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700">
                     {portfolioSamples.length} samples
                   </span>
@@ -714,7 +718,7 @@ export default function CreatorOnboardingPage() {
 
                 {/* Quick Add Sample Input */}
                 <div className="p-3.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-2.5">
-                  <span className="text-xs font-black uppercase tracking-wider text-[#0A0A0A]">Add Another Sample</span>
+                  <span className="text-xs font-black uppercase tracking-wider text-[#0A0A0A]">Add Sample</span>
                   <div className="grid grid-cols-1 sm:grid-cols-12 gap-2">
                     <input
                       type="text"
@@ -753,13 +757,10 @@ export default function CreatorOnboardingPage() {
               </div>
             )}
 
-            {/* STEP 6: COLLABORATION PREFERENCES */}
+            {/* STEP 6: COLLABORATION TYPES */}
             {step === 6 && (
               <div className="space-y-5 animate-in fade-in-50 duration-200">
-                <div>
-                  <h2 className="text-2xl font-black text-[#0A0A0A] tracking-tight">Collaboration Preferences</h2>
-                  <p className="text-sm text-[#66665E] font-medium mt-1">Select the deal types you are open to receiving from brands.</p>
-                </div>
+                <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">Collaboration Types</h2>
 
                 <div className="space-y-2.5">
                   {COLLAB_PREFERENCES.map((pref) => {
@@ -769,7 +770,7 @@ export default function CreatorOnboardingPage() {
                         key={pref.id}
                         type="button"
                         onClick={() => toggleCollab(pref.id)}
-                        className={`w-full p-4 rounded-2xl border text-left transition-all flex items-center justify-between cursor-pointer ${
+                        className={`w-full p-3.5 rounded-2xl border text-left transition-all flex items-center justify-between cursor-pointer ${
                           isSelected
                             ? 'bg-[#0A0A0A] text-white border-[#0A0A0A] shadow-xs'
                             : 'bg-white text-[#0A0A0A] border-[#E7E7E2] hover:bg-[#FAFAF8]'
@@ -808,7 +809,7 @@ export default function CreatorOnboardingPage() {
                 onClick={handleNext}
                 className="flex-1 py-3 px-6 rounded-2xl bg-[#0A0A0A] hover:bg-black text-white font-black text-sm tracking-wide transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
-                <span>{step === totalSteps ? 'Submit for Review' : 'Continue'}</span>
+                <span>{step === totalSteps ? 'Complete Profile' : 'Continue'}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
@@ -827,19 +828,14 @@ export default function CreatorOnboardingPage() {
             <div className="space-y-2">
               <span className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-700 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
                 <Clock className="w-3.5 h-3.5" />
-                <span>Application Submitted • Under Review</span>
+                <span>Profile Submitted</span>
               </span>
               <h3 className="text-2xl font-black text-[#0A0A0A]">
-                Welcome to Influverse, {name}!
+                Welcome, {name}!
               </h3>
               <p className="text-sm text-[#66665E] font-medium leading-relaxed">
-                Your onboarding is complete! Our talent curation team is reviewing your profile (~12–24h).
+                Your creator profile has been submitted for verification. You can now access your dashboard.
               </p>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] text-left text-xs text-[#555550] space-y-1">
-              <div className="font-black text-[#0A0A0A]">Next steps in your Creator Dashboard:</div>
-              <p>You can fine-tune deliverable rates for reels, add demographics, and explore campaigns.</p>
             </div>
 
             <button
@@ -847,7 +843,7 @@ export default function CreatorOnboardingPage() {
               onClick={() => router.push('/creator/dashboard')}
               className="w-full py-3.5 px-6 rounded-2xl bg-[#0A0A0A] hover:bg-black text-white font-black text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
             >
-              <span>Enter Creator Dashboard</span>
+              <span>Go to Creator Dashboard</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
