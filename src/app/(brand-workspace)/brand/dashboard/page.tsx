@@ -24,9 +24,14 @@ export default function BrandDashboardPage() {
   const { creators, savedCreatorIds } = useAppSelector((state) => state.creator);
 
   // Filter orders related to this brand
-  const currentBrandId = currentUser?.role === 'brand' ? currentUser.id : 'brand-aura';
+  const currentBrandId = currentUser?.role === 'brand' ? currentUser.id : 'user_brand_01';
   const brandOrders = orders.filter(
-    (o) => o.brandId === currentBrandId || o.brandName === currentUser?.companyName || o.brandName === 'Aura Skincare Paris'
+    (o) =>
+      o.brandId === currentBrandId ||
+      o.brandId === 'user_brand_01' ||
+      o.brandId === 'brand-aura' ||
+      o.brandName === currentUser?.companyName ||
+      o.brandName === 'Aura Skincare Paris'
   );
   const activeOrders = brandOrders.filter(
     (o) => o.status !== 'completed' && o.status !== 'declined'

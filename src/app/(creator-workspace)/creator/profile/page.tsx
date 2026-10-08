@@ -145,7 +145,8 @@ function CreatorProfileContent() {
     creators.find(
       (c) =>
         c.id === currentUser?.id ||
-        (currentUser?.handle && c.handle.toLowerCase() === currentUser.handle.toLowerCase())
+        (currentUser?.handle &&
+          c.handle.replace(/^@+/, '').toLowerCase() === currentUser.handle.replace(/^@+/, '').toLowerCase())
     ) || creators[0];
 
   const fileInputRef = React.useRef<HTMLInputElement>(null);

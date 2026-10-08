@@ -23,6 +23,29 @@ export function BrandSidebar() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { currentUser } = useAppSelector((state) => state.auth);
+  const { orders } = useAppSelector((state) => state.order);
+  const { conversations } = useAppSelector((state) => state.message);
+
+  const currentBrandId = currentUser?.id || 'user_brand_01';
+  const brandOrders = orders.filter(
+    (o) =>
+      o.brandId === currentBrandId ||
+      o.brandId === 'user_brand_01' ||
+      o.brandId === 'brand-aura' ||
+      o.brandName === currentUser?.companyName ||
+      o.brandName === 'Aura Skincare Paris'
+  );
+  const activeCampaignsCount = brandOrders.filter((o) =>
+    ['offer_sent', 'accepted', 'in_production', 'deliverable_submitted'].includes(o.status)
+  ).length;
+
+  const brandConversations = conversations.filter(
+    (c) =>
+      c.brandId === currentBrandId ||
+      c.brandId === 'user_brand_01' ||
+      c.brandName.toLowerCase().includes('aura')
+  );
+  const unreadMessagesCount = brandConversations.reduce((acc, c) => acc + (c.unreadCountBrand || 0), 0);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -40,6 +63,7 @@ export function BrandSidebar() {
       name: 'Campaigns',
       href: '/brand/campaigns',
       icon: Layers,
+      badge: activeCampaignsCount,
     },
     {
       name: 'New Campaign',
@@ -50,6 +74,7 @@ export function BrandSidebar() {
       name: 'Messages',
       href: '/brand/messages',
       icon: MessageSquare,
+      badge: unreadMessagesCount,
     },
     {
       name: 'Saved',
@@ -91,14 +116,25 @@ export function BrandSidebar() {
               <Link
                 key={item.name}
                 href={item.href}
-                className={`flex items-center gap-3 px-4 py-3 rounded-2xl text-sm leading-[20px] font-bold transition-all ${
+                className={`flex items-center justify-between px-4 py-3 rounded-2xl text-sm leading-[20px] font-bold transition-all ${
                   isActive
                     ? 'bg-[#0A0A0A] text-white shadow-sm'
                     : 'text-[#555550] hover:text-[#0A0A0A] hover:bg-[#F4F4F0]'
                 }`}
               >
-                <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-[#66665E]'}`} />
-                <span>{item.name}</span>
+                <div className="flex items-center gap-3">
+                  <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-[#66665E]'}`} />
+                  <span>{item.name}</span>
+                </div>
+                {item.badge !== undefined && item.badge > 0 && (
+                  <span
+                    className={`min-w-[18px] h-[18px] px-1.5 rounded-full text-[10px] font-black flex items-center justify-center transition-all ${
+                      isActive ? 'bg-white text-[#0A0A0A]' : 'bg-[#0A0A0A] text-white'
+                    }`}
+                  >
+                    {item.badge}
+                  </span>
+                )}
               </Link>
             );
           })}

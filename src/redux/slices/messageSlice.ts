@@ -208,11 +208,78 @@ const INITIAL_CONVERSATIONS: Conversation[] = [
       },
     ],
   },
+  {
+    id: 'conv-sophie-nordic',
+    brandId: 'brand-nordic-01',
+    brandName: 'Nordic Glow Studio',
+    brandAvatar: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=400&q=80',
+    creatorId: 'creator-01',
+    creatorName: 'Sophie Kim',
+    creatorHandle: 'sophiekim',
+    creatorAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80',
+    creatorLocation: 'Los Angeles, CA',
+    lastMessage: "We'd love to book your UGC package for our Scandinavian peptide moisturizer campaign.",
+    lastMessageTimestamp: '2h ago',
+    unreadCountBrand: 0,
+    unreadCountCreator: 1,
+    messages: [
+      {
+        id: 'msg-sn-1',
+        senderId: 'brand-nordic-01',
+        senderName: 'Astrid Lind',
+        senderAvatar: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=400&q=80',
+        senderRole: 'brand',
+        text: "Hi Sophie! We love your clean aesthetic. We'd love to book your UGC package for our Scandinavian peptide moisturizer campaign.",
+        timestamp: '2h ago',
+        createdAt: Date.now() - 2 * 3600 * 1000,
+        status: 'delivered',
+      },
+    ],
+  },
+  {
+    id: 'conv-sophie-luxe',
+    brandId: 'brand-luxe-02',
+    brandName: 'Luxe Apparel Milan',
+    brandAvatar: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=400&q=80',
+    creatorId: 'creator-01',
+    creatorName: 'Sophie Kim',
+    creatorHandle: 'sophiekim',
+    creatorAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80',
+    creatorLocation: 'Los Angeles, CA',
+    lastMessage: 'Looking forward to receiving the moodboard!',
+    lastMessageTimestamp: '1d ago',
+    unreadCountBrand: 0,
+    unreadCountCreator: 0,
+    messages: [
+      {
+        id: 'msg-sl-1',
+        senderId: 'brand-luxe-02',
+        senderName: 'Marco Bellini',
+        senderAvatar: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=400&q=80',
+        senderRole: 'brand',
+        text: 'Ciao Sophie! Your Milan fashion week styling was incredible. Are you available for a 3-part Reel sponsorship in November?',
+        timestamp: '1d ago',
+        createdAt: Date.now() - 25 * 3600 * 1000,
+        status: 'read',
+      },
+      {
+        id: 'msg-sl-2',
+        senderId: 'creator-01',
+        senderName: 'Sophie Kim',
+        senderAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80',
+        senderRole: 'creator',
+        text: 'Ciao Marco! Yes, absolutely. Looking forward to receiving the moodboard!',
+        timestamp: '1d ago',
+        createdAt: Date.now() - 24 * 3600 * 1000,
+        status: 'read',
+      },
+    ],
+  },
 ];
 
 const initialState: MessageState = {
   conversations: INITIAL_CONVERSATIONS,
-  activeConversationId: INITIAL_CONVERSATIONS[0].id,
+  activeConversationId: INITIAL_CONVERSATIONS[1].id, // Default to conv-sophie-kim
 };
 
 export const messageSlice = createSlice({
@@ -361,6 +428,17 @@ export const messageSlice = createSlice({
         conv.lastMessageTimestamp = 'Just now';
       }
     },
+    clearMessages: (state, action: PayloadAction<{ conversationId: string }>) => {
+      const { conversationId } = action.payload;
+      const conv = state.conversations.find((c) => c.id === conversationId);
+      if (conv) {
+        conv.messages = [];
+        conv.lastMessage = 'Chat history cleared';
+        conv.lastMessageTimestamp = 'Just now';
+        conv.unreadCountBrand = 0;
+        conv.unreadCountCreator = 0;
+      }
+    },
     getOrCreateConversation: (
       state,
       action: PayloadAction<{
@@ -385,10 +463,15 @@ export const messageSlice = createSlice({
         brandAvatar = 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80',
       } = action.payload;
 
-      let conv = state.conversations.find((c) => c.creatorId === creatorId);
+      const cleanHandle = creatorHandle.replace('@', '').toLowerCase();
+      let conv = state.conversations.find(
+        (c) =>
+          c.brandId === brandId &&
+          (c.creatorId === creatorId || c.creatorHandle.toLowerCase() === cleanHandle)
+      );
       if (!conv) {
         conv = {
-          id: `conv-${creatorId}`,
+          id: `conv-${brandId}-${cleanHandle}`,
           brandId,
           brandName,
           brandAvatar,
@@ -429,6 +512,7 @@ export const {
   markConversationAsRead,
   deleteMessage,
   deleteConversation,
+  clearMessages,
   updateCustomOfferStatus,
   getOrCreateConversation,
 } = messageSlice.actions;

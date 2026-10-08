@@ -30,10 +30,19 @@ export default function CreatorDashboardPage() {
 
   // Current creator details
   const targetCreatorId = currentUser?.role === 'creator' ? currentUser.id : 'creator-01';
-  const currentCreator = creators.find((c) => c.id === targetCreatorId) || creators[0];
+  const currentCreatorHandle = (currentUser?.handle || 'sophiekim').replace(/^@+/, '').toLowerCase();
+  const currentCreator =
+    creators.find(
+      (c) =>
+        c.id === targetCreatorId ||
+        c.handle.replace(/^@+/, '').toLowerCase() === currentCreatorHandle
+    ) || creators[0];
 
   const creatorOrders = orders.filter(
-    (o) => o.creatorId === targetCreatorId || (o.creatorId === 'creator-01' && (!currentUser || currentUser?.role === 'creator'))
+    (o) =>
+      o.creatorId === targetCreatorId ||
+      (o.creatorId === 'creator-01' && (!currentUser || currentUser?.role === 'creator')) ||
+      (o.creatorHandle && o.creatorHandle.replace(/^@+/, '').toLowerCase() === currentCreatorHandle)
   );
 
   const incomingOffers = creatorOrders.filter((o) => o.status === 'offer_sent');

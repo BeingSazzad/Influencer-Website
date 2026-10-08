@@ -32,9 +32,13 @@ export default function CreatorCampaignsPage() {
 
   // Target creator
   const targetCreatorId = currentUser?.role === 'creator' ? currentUser.id : 'creator-01';
+  const currentCreatorHandle = (currentUser?.handle || 'sophiekim').replace(/^@+/, '').toLowerCase();
 
   const creatorOrders = orders.filter(
-    (o) => o.creatorId === targetCreatorId || (o.creatorId === 'creator-01' && (!currentUser || currentUser?.role === 'creator'))
+    (o) =>
+      o.creatorId === targetCreatorId ||
+      (o.creatorId === 'creator-01' && (!currentUser || currentUser?.role === 'creator')) ||
+      (o.creatorHandle && o.creatorHandle.replace(/^@+/, '').toLowerCase() === currentCreatorHandle)
   );
 
   const inProductionOrders = creatorOrders.filter((o) => ['accepted', 'in_production'].includes(o.status));

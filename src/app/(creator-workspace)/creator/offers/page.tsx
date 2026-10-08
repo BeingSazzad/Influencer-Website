@@ -15,11 +15,13 @@ export default function CreatorOffersPage() {
   const { currentUser } = useAppSelector((state) => state.auth);
 
   const targetCreatorId = currentUser?.role === 'creator' ? currentUser.id : 'creator-01';
+  const currentCreatorHandle = (currentUser?.handle || 'sophiekim').replace(/^@+/, '').toLowerCase();
   const incomingOffers = orders.filter(
     (o) =>
       o.status === 'offer_sent' &&
       (o.creatorId === targetCreatorId ||
-        (o.creatorId === 'creator-01' && (!currentUser || currentUser?.role === 'creator')))
+        (o.creatorId === 'creator-01' && (!currentUser || currentUser?.role === 'creator')) ||
+        (o.creatorHandle && o.creatorHandle.replace(/^@+/, '').toLowerCase() === currentCreatorHandle))
   );
 
   const handleAccept = (id: string) => {

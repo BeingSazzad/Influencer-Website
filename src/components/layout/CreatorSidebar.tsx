@@ -40,18 +40,31 @@ export function CreatorSidebar() {
     router.push('/login');
   };
 
+  // Current creator matching
+  const currentCreatorHandle = (currentUser?.handle || currentCreator?.handle || 'sophiekim').replace(/^@+/, '').toLowerCase();
+  const creatorOrders = orders.filter(
+    (o) =>
+      o.creatorId === currentUser?.id ||
+      o.creatorId === 'creator-01' ||
+      (o.creatorHandle && o.creatorHandle.replace(/^@+/, '').toLowerCase() === currentCreatorHandle)
+  );
+
   // Incoming pending offers
-  const pendingOffersCount = orders.filter(
-    (o) => o.status === 'offer_sent' && (o.creatorId === 'creator-01' || o.creatorId === currentUser?.id)
-  ).length;
+  const pendingOffersCount = creatorOrders.filter((o) => o.status === 'offer_sent').length;
 
   // Active production orders
-  const activeOrdersCount = orders.filter(
-    (o) => ['accepted', 'in_production', 'deliverable_submitted'].includes(o.status)
+  const activeOrdersCount = creatorOrders.filter((o) =>
+    ['accepted', 'in_production', 'deliverable_submitted'].includes(o.status)
   ).length;
 
-  // Unread messages
-  const unreadMessagesCount = conversations.reduce((acc, c) => acc + (c.unreadCountCreator || 0), 0);
+  // Unread messages for this creator
+  const creatorConversations = conversations.filter(
+    (c) =>
+      c.creatorId === currentUser?.id ||
+      c.creatorId === 'creator-01' ||
+      c.creatorHandle.replace(/^@+/, '').toLowerCase() === currentCreatorHandle
+  );
+  const unreadMessagesCount = creatorConversations.reduce((acc, c) => acc + (c.unreadCountCreator || 0), 0);
 
   const navItems = [
     {

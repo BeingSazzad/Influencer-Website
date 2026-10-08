@@ -10,6 +10,7 @@ import {
   markConversationAsRead,
   deleteMessage,
   deleteConversation,
+  clearMessages,
   MessageAttachment,
   ChatCustomOffer,
 } from '@/redux/slices/messageSlice';
@@ -58,8 +59,29 @@ export default function CreatorMessagesPage() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Filter conversations relevant to creator
+  const currentCreatorHandle = (currentUser?.handle || 'sophiekim').replace('@', '').toLowerCase();
+  const creatorConversations = conversations.filter((c) => {
+    return (
+      c.creatorId === currentUser?.id ||
+      c.creatorId === 'creator-01' ||
+      c.creatorHandle.toLowerCase() === currentCreatorHandle
+    );
+  });
+
   const activeConv =
-    conversations.find((c) => c.id === activeConversationId) || conversations[0] || null;
+    creatorConversations.find((c) => c.id === activeConversationId) ||
+    creatorConversations[0] ||
+    null;
+
+  // Auto-synchronize active conversation so Creator doesn't see other creators' chats
+  useEffect(() => {
+    if (creatorConversations.length > 0) {
+      const isValid = creatorConversations.some((c) => c.id === activeConversationId);
+      if (!isValid) {
+        dispatch(setActiveConversationId(creatorConversations[0].id));
+      }
+    }
+  }, [creatorConversations, activeConversationId, dispatch]);
 
   // Mark incoming messages as read when viewing this conversation
   useEffect(() => {
@@ -72,10 +94,10 @@ export default function CreatorMessagesPage() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [activeConv?.messages, isTyping, pendingAttachments]);
 
-  const filteredConversations = conversations.filter(
+  const filteredConversations = creatorConversations.filter(
     (c) =>
       c.brandName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      c.creatorName.toLowerCase().includes(searchQuery.toLowerCase())
+      c.lastMessage.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -369,6 +391,7 @@ export default function CreatorMessagesPage() {
                               okType: 'danger',
                               cancelText: 'Cancel',
                               onOk: () => {
+                                dispatch(clearMessages({ conversationId: activeConv.id }));
                                 message.success('Chat history cleared');
                               },
                             });

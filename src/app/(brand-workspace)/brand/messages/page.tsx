@@ -11,6 +11,7 @@ import {
   markConversationAsRead,
   deleteMessage,
   deleteConversation,
+  clearMessages,
   MessageAttachment,
 } from '@/redux/slices/messageSlice';
 import { WorkspaceHeader } from '@/components/layout/WorkspaceHeader';
@@ -83,8 +84,30 @@ function BrandMessagesContent() {
     }
   }, [searchParams, creators, currentUser, dispatch]);
 
+  // Filter conversations relevant to brand
+  const currentBrandId = currentUser?.id || 'user_brand_01';
+  const brandConversations = conversations.filter((c) => {
+    return (
+      c.brandId === currentBrandId ||
+      c.brandId === 'user_brand_01' ||
+      c.brandName.toLowerCase().includes('aura')
+    );
+  });
+
   const activeConv =
-    conversations.find((c) => c.id === activeConversationId) || conversations[0] || null;
+    brandConversations.find((c) => c.id === activeConversationId) ||
+    brandConversations[0] ||
+    null;
+
+  // Auto-synchronize active conversation so Brand doesn't see invalid or foreign threads
+  useEffect(() => {
+    if (brandConversations.length > 0) {
+      const isValid = brandConversations.some((c) => c.id === activeConversationId);
+      if (!isValid) {
+        dispatch(setActiveConversationId(brandConversations[0].id));
+      }
+    }
+  }, [brandConversations, activeConversationId, dispatch]);
 
   // Mark incoming messages as read when viewing this conversation
   useEffect(() => {
@@ -98,9 +121,11 @@ function BrandMessagesContent() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [activeConv?.messages, isTyping, pendingAttachments]);
 
-  const filteredConversations = conversations.filter((c) =>
-    c.creatorName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    c.creatorHandle.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredConversations = brandConversations.filter(
+    (c) =>
+      c.creatorName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      c.creatorHandle.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      c.lastMessage.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -398,6 +423,7 @@ function BrandMessagesContent() {
                               okType: 'danger',
                               cancelText: 'Cancel',
                               onOk: () => {
+                                dispatch(clearMessages({ conversationId: activeConv.id }));
                                 message.success('Chat history cleared');
                               },
                             });
