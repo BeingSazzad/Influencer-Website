@@ -27,6 +27,7 @@ import {
   Plus,
   Check,
   Users,
+  Camera,
 } from 'lucide-react';
 import { ShareProfileModal } from '@/components/shared/ShareProfileModal';
 import { Input, Select, message } from 'antd';
@@ -319,108 +320,173 @@ export default function BrandSettingsPage() {
                 </span>
               </div>
 
-              {/* Brand Logo Upload Card */}
-              <div className="p-5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="flex items-center gap-4">
-                  <div className="relative group shrink-0">
-                    {avatar ? (
-                      <img
-                        src={avatar}
-                        alt={companyName}
-                        className="w-18 h-18 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-white shadow-xs bg-white"
-                      />
-                    ) : (
-                      <div className="w-18 h-18 sm:w-20 sm:h-20 rounded-2xl bg-white border border-[#E7E7E2] flex items-center justify-center text-[#66665E] shadow-2xs">
-                        <Building2 className="w-8 h-8 text-[#0A0A0A]" />
-                      </div>
-                    )}
-                  </div>
-                  <div>
-                    <h3 className="text-base font-bold text-[#0A0A0A] tracking-tight">
-                      Brand Logo
-                    </h3>
-                    <p className="text-xs text-[#66665E] mt-0.5 max-w-sm">
-                      PNG, JPG, SVG or WEBP up to 5MB. Square 1:1 recommended for creator briefs.
-                    </p>
-                  </div>
-                </div>
+              {/* Brand Logo (Centered, Matching Onboarding Standards) */}
+              <div className="flex flex-col items-center justify-center text-center py-2 pb-6 border-b border-[#E7E7E2]">
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleFileUpload}
+                />
 
-                <div className="flex items-center gap-3 shrink-0">
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={handleFileUpload}
-                  />
+                {avatar ? (
+                  <div
+                    onClick={() => fileInputRef.current?.click()}
+                    className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden border-2 border-[#0A0A0A] shadow-md cursor-pointer group transition-transform hover:scale-105"
+                  >
+                    <img src={avatar} alt={companyName} className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-black/50 text-white flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Camera className="w-6 h-6 mb-1 text-white" />
+                      <span className="text-xs font-bold">Change</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    onClick={() => fileInputRef.current?.click()}
+                    className="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-2 border-dashed border-[#D2D2CA] hover:border-[#0A0A0A] bg-[#FAFAF8] hover:bg-[#F4F4F0] flex flex-col items-center justify-center cursor-pointer transition-all text-[#66665E] hover:text-[#0A0A0A] group hover:scale-105"
+                  >
+                    <Camera className="w-7 h-7 sm:w-8 sm:h-8 mb-1 text-[#0A0A0A] group-hover:scale-110 transition-transform" />
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">Upload</span>
+                  </div>
+                )}
+
+                <div className="mt-3 space-y-0.5 text-center">
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    className="h-10 px-4 rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] bg-white hover:bg-[#FAFAF8] text-[#0A0A0A] text-sm font-semibold transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                    className="text-sm font-bold text-[#0A0A0A] hover:text-[#FF2D78] transition-colors cursor-pointer block mx-auto"
                   >
-                    <Upload className="w-4 h-4 text-[#0A0A0A]" />
-                    <span>Upload Logo</span>
+                    {avatar ? 'Click logo to change' : 'Click to upload brand logo'}
                   </button>
-
+                  <div className="text-xs text-[#66665E]">
+                    JPG, PNG, SVG, or WEBP up to 10MB
+                  </div>
                   {avatar && (
                     <button
                       type="button"
                       onClick={() => setAvatar('')}
-                      className="text-sm font-medium text-[#66665E] hover:text-rose-600 transition-colors cursor-pointer"
+                      className="text-xs font-semibold text-rose-600 hover:text-rose-700 hover:underline transition-colors cursor-pointer pt-1 inline-block"
                     >
-                      Remove
+                      Remove logo
                     </button>
                   )}
                 </div>
               </div>
 
-              {/* Public Details Card */}
-              <div className="p-6 rounded-2xl bg-white border border-[#E7E7E2] space-y-4">
-                <div className="pb-3 border-b border-[#E7E7E2] flex items-center justify-between">
-                  <div>
-                    <h3 className="text-base font-bold text-[#0A0A0A] tracking-tight flex items-center gap-2">
-                      <Building2 className="w-4 h-4 text-[#0A0A0A]" />
-                      <span>Public Company Details</span>
-                    </h3>
-                    <p className="text-xs text-[#66665E] mt-0.5">
-                      Displayed on your creator campaign briefs, proposals, and marketplace listings.
-                    </p>
-                  </div>
-                  <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#F4F4F0] text-[#66665E] border border-[#E7E7E2]">
-                    Public
-                  </span>
+              {/* Public Details Section */}
+              <div className="space-y-4">
+                <div>
+                  <h3 className="text-base font-bold text-[#0A0A0A] tracking-tight">
+                    Public Details
+                  </h3>
+                  <p className="text-xs sm:text-sm text-[#66665E] mt-0.5">
+                    Displayed on your creator campaign briefs, proposals, and marketplace listings.
+                  </p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+                  {/* Brand Name */}
                   <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-[#52524E]">
+                    <label className="block text-sm font-bold text-[#0A0A0A]">
                       Brand Name <span className="text-rose-500">*</span>
                     </label>
                     <Input
-                      prefix={<Building2 className="w-4 h-4 text-[#66665E] mr-0.5" />}
+                      prefix={<Building2 className="w-4 h-4 text-[#A3A39C] mr-0.5" />}
                       value={companyName}
                       onChange={(e) => setCompanyName(e.target.value)}
-                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
+                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
                       placeholder="e.g. Aura Skincare Paris"
                       required
                     />
                   </div>
 
+                  {/* Primary Industry */}
                   <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-[#52524E]">
+                    <label className="block text-sm font-bold text-[#0A0A0A]">
+                      Primary Industry <span className="text-rose-500">*</span>
+                    </label>
+                    <Select
+                      value={industry}
+                      onChange={(val) => {
+                        setIndustry(val);
+                        const sel = BRAND_INDUSTRIES.find((b) => b.value === val);
+                        if (sel && tags.length === 0) {
+                          setTags(sel.suggestedTags.slice(0, 3));
+                        }
+                      }}
+                      className="w-full h-11 rounded-xl"
+                      options={BRAND_INDUSTRIES.map((ind) => ({
+                        value: ind.value,
+                        label: (
+                          <div className="flex items-center gap-2">
+                            <span className="text-base">{ind.icon}</span>
+                            <span className="font-semibold text-sm">{ind.label}</span>
+                          </div>
+                        ),
+                      }))}
+                    />
+                  </div>
+
+                  {/* Business Email */}
+                  <div className="space-y-1.5">
+                    <label className="block text-sm font-bold text-[#0A0A0A]">
+                      Business Email <span className="text-rose-500">*</span>
+                    </label>
+                    <Input
+                      prefix={<Mail className="w-4 h-4 text-[#A3A39C] mr-0.5" />}
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
+                      placeholder="partnerships@aura-skincare.com"
+                      required
+                    />
+                  </div>
+
+                  {/* Phone */}
+                  <div className="space-y-1.5">
+                    <label className="block text-sm font-bold text-[#0A0A0A]">
+                      Phone Number
+                    </label>
+                    <Input
+                      prefix={<Phone className="w-4 h-4 text-[#A3A39C] mr-0.5" />}
+                      type="tel"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
+                      placeholder="+33 1 42 68 55 00"
+                    />
+                  </div>
+
+                  {/* Official Website */}
+                  <div className="space-y-1.5">
+                    <label className="block text-sm font-bold text-[#0A0A0A]">
                       Official Website
                     </label>
                     <Input
-                      prefix={<Globe className="w-4 h-4 text-[#66665E] mr-0.5" />}
+                      prefix={<Globe className="w-4 h-4 text-[#A3A39C] mr-0.5" />}
                       value={website}
                       onChange={(e) => setWebsite(e.target.value)}
-                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
+                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
                       placeholder="https://aura-skincare.com"
                     />
                   </div>
 
+                  {/* Company Size */}
                   <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-[#52524E]">Country</label>
+                    <label className="block text-sm font-bold text-[#0A0A0A]">Company Size</label>
+                    <Select
+                      value={companySize}
+                      onChange={(val) => setCompanySize(val)}
+                      className="w-full h-11 rounded-xl"
+                      options={COMPANY_SIZES}
+                    />
+                  </div>
+
+                  {/* Country */}
+                  <div className="space-y-1.5">
+                    <label className="block text-sm font-bold text-[#0A0A0A]">Country</label>
                     <Select
                       value={country}
                       onChange={(val) => setCountry(val)}
@@ -429,177 +495,134 @@ export default function BrandSettingsPage() {
                     />
                   </div>
 
+                  {/* City / Headquarters */}
                   <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-[#52524E]">
+                    <label className="block text-sm font-bold text-[#0A0A0A]">
                       City / Headquarters
                     </label>
                     <Input
-                      prefix={<MapPin className="w-4 h-4 text-[#66665E] mr-0.5" />}
+                      prefix={<MapPin className="w-4 h-4 text-[#A3A39C] mr-0.5" />}
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
-                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
+                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
                       placeholder="e.g. Paris, Berlin, London"
                     />
                   </div>
 
+                  {/* About Brand / Bio (with character counter) */}
                   <div className="space-y-1.5 md:col-span-2">
-                    <label className="block text-sm font-semibold text-[#52524E]">Company Size</label>
-                    <Select
-                      value={companySize}
-                      onChange={(val) => setCompanySize(val)}
-                      className="w-full h-11 rounded-xl"
-                      options={COMPANY_SIZES}
+                    <div className="flex items-center justify-between">
+                      <label className="block text-sm font-bold text-[#0A0A0A]">
+                        Bio / About Brand
+                      </label>
+                      <span className="text-xs font-semibold text-[#66665E]">
+                        {bio.length}/300
+                      </span>
+                    </div>
+                    <textarea
+                      rows={4}
+                      maxLength={300}
+                      value={bio}
+                      onChange={(e) => setBio(e.target.value)}
+                      className="w-full rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A] focus:outline-none p-3.5 text-sm font-normal text-[#0A0A0A] leading-relaxed transition-all resize-y shadow-2xs"
+                      placeholder="Tell creators what your brand stands for, your campaign goals, and what makes your products unique..."
                     />
                   </div>
                 </div>
               </div>
 
-              {/* Industry & Market Vertical Card */}
-              <div className="p-6 rounded-2xl bg-white border border-[#E7E7E2] space-y-4">
-                <div className="pb-3 border-b border-[#E7E7E2]">
-                  <h3 className="text-base font-bold text-[#0A0A0A] tracking-tight flex items-center gap-2">
-                    <Briefcase className="w-4 h-4 text-[#0A0A0A]" />
-                    <span>Industry & Market Focus</span>
-                  </h3>
-                  <p className="text-xs text-[#66665E] mt-0.5">
-                    Helps creators discover relevant campaign briefs and match collaboration styles.
-                  </p>
+              {/* Marketplace Niche Tags */}
+              <div className="pt-6 border-t border-[#E7E7E2] space-y-3">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-base font-bold text-[#0A0A0A] tracking-tight flex items-center gap-2">
+                      <Briefcase className="w-4 h-4 text-[#0A0A0A]" />
+                      <span>Marketplace Niche Tags</span>
+                    </h3>
+                    <p className="text-xs text-[#66665E] mt-0.5">
+                      Helps creators discover relevant campaign briefs and match collaboration styles.
+                    </p>
+                  </div>
+                  <span className="text-xs text-[#66665E] font-medium">
+                    {tags.length}/8 tags selected
+                  </span>
                 </div>
 
-                {/* Primary Industry Dropdown */}
-                <div className="space-y-1.5">
-                  <label className="block text-sm font-semibold text-[#52524E]">
-                    Primary Industry <span className="text-rose-500">*</span>
-                  </label>
-                  <Select
-                    value={industry}
-                    onChange={(val) => {
-                      setIndustry(val);
-                      // Suggest initial tags if empty
-                      const sel = BRAND_INDUSTRIES.find((b) => b.value === val);
-                      if (sel && tags.length === 0) {
-                        setTags(sel.suggestedTags.slice(0, 3));
+                {/* Active Selected Tags */}
+                <div className="min-h-[46px] rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] focus-within:border-[#0A0A0A] bg-white p-2 flex flex-wrap items-center gap-1.5 transition-all shadow-2xs">
+                  {tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#FAFAF8] border border-[#E7E7E2] text-sm font-semibold text-[#0A0A0A]"
+                    >
+                      <span>#{tag}</span>
+                      <button
+                        type="button"
+                        onClick={() => setTags(tags.filter((t) => t !== tag))}
+                        className="text-[#66665E] hover:text-rose-600 transition-colors cursor-pointer"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    </span>
+                  ))}
+
+                  <input
+                    type="text"
+                    placeholder={tags.length === 0 ? "Type tag and press Enter..." : "+ Add custom tag"}
+                    value={newTagInput}
+                    onChange={(e) => setNewTagInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ',') {
+                        e.preventDefault();
+                        const trimmed = newTagInput.trim().replace(/^#/, '');
+                        if (trimmed && !tags.includes(trimmed) && tags.length < 8) {
+                          setTags([...tags, trimmed]);
+                          setNewTagInput('');
+                        }
                       }
                     }}
-                    className="w-full h-11 rounded-xl"
-                    options={BRAND_INDUSTRIES.map((ind) => ({
-                      value: ind.value,
-                      label: (
-                        <div className="flex items-center gap-2">
-                          <span className="text-base">{ind.icon}</span>
-                          <span className="font-semibold text-sm">{ind.label}</span>
-                        </div>
-                      ),
-                    }))}
+                    className="outline-none text-xs bg-transparent min-w-[120px] flex-1 text-[#0A0A0A] placeholder:text-[#66665E] px-1 py-0.5 font-medium"
                   />
                 </div>
 
-                {/* Market Focus Tags / Niche Specializations */}
-                <div className="space-y-2 pt-2">
-                  <div className="flex items-center justify-between">
-                    <label className="block text-sm font-semibold text-[#52524E]">
-                      Marketplace Niche Tags
-                    </label>
-                    <span className="text-xs text-[#66665E] font-medium">
-                      {tags.length}/8 tags selected
+                {/* Suggested Quick Tags for Selected Industry */}
+                {currentIndustryObj && currentIndustryObj.suggestedTags.length > 0 && (
+                  <div className="pt-1.5">
+                    <span className="text-xs font-semibold text-[#66665E] mr-2">
+                      Suggested for {currentIndustryObj.label.split(',')[0]}:
                     </span>
-                  </div>
-
-                  {/* Active Selected Tags */}
-                  <div className="min-h-[46px] rounded-xl border border-[#D2D2CA] hover:border-[#0A0A0A] focus-within:border-[#0A0A0A] bg-white p-2 flex flex-wrap items-center gap-1.5 transition-all shadow-2xs">
-                    {tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#FAFAF8] border border-[#E7E7E2] text-sm font-semibold text-[#0A0A0A]"
-                      >
-                        <span>#{tag}</span>
-                        <button
-                          type="button"
-                          onClick={() => setTags(tags.filter((t) => t !== tag))}
-                          className="text-[#66665E] hover:text-rose-600 transition-colors cursor-pointer"
-                        >
-                          <X className="w-3.5 h-3.5" />
-                        </button>
-                      </span>
-                    ))}
-
-                    <input
-                      type="text"
-                      placeholder={tags.length === 0 ? "Type tag and press Enter..." : "+ Add custom tag"}
-                      value={newTagInput}
-                      onChange={(e) => setNewTagInput(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ',') {
-                          e.preventDefault();
-                          const trimmed = newTagInput.trim().replace(/^#/, '');
-                          if (trimmed && !tags.includes(trimmed) && tags.length < 8) {
-                            setTags([...tags, trimmed]);
-                            setNewTagInput('');
-                          }
-                        }
-                      }}
-                      className="outline-none text-xs bg-transparent min-w-[120px] flex-1 text-[#0A0A0A] placeholder:text-[#66665E] px-1 py-0.5 font-medium"
-                    />
-                  </div>
-
-                  {/* Suggested Quick Tags for Selected Industry */}
-                  {currentIndustryObj && currentIndustryObj.suggestedTags.length > 0 && (
-                    <div className="pt-1.5">
-                      <span className="text-xs font-semibold text-[#66665E] mr-2">
-                        Suggested for {currentIndustryObj.label.split(',')[0]}:
-                      </span>
-                      <div className="inline-flex flex-wrap items-center gap-1.5 mt-1">
-                        {currentIndustryObj.suggestedTags.map((sug) => {
-                          const isSelected = tags.includes(sug);
-                          return (
-                            <button
-                              key={sug}
-                              type="button"
-                              onClick={() => {
-                                if (isSelected) {
-                                  setTags(tags.filter((t) => t !== sug));
-                                } else if (tags.length < 8) {
-                                  setTags([...tags, sug]);
-                                }
-                              }}
-                              className={`text-xs px-2.5 py-1 rounded-lg border transition-all cursor-pointer flex items-center gap-1 ${
-                                isSelected
-                                  ? 'bg-[#0A0A0A] text-white border-[#0A0A0A]'
-                                  : 'bg-white hover:bg-[#FAFAF8] text-[#52524E] border-[#E7E7E2]'
-                              }`}
-                            >
-                              <span>#{sug}</span>
-                              {isSelected ? (
-                                <Check className="w-3 h-3 text-white" />
-                              ) : (
-                                <Plus className="w-3 h-3 text-[#66665E]" />
-                              )}
-                            </button>
-                          );
-                        })}
-                      </div>
+                    <div className="inline-flex flex-wrap items-center gap-1.5 mt-1">
+                      {currentIndustryObj.suggestedTags.map((sug) => {
+                        const isSelected = tags.includes(sug);
+                        return (
+                          <button
+                            key={sug}
+                            type="button"
+                            onClick={() => {
+                              if (isSelected) {
+                                setTags(tags.filter((t) => t !== sug));
+                              } else if (tags.length < 8) {
+                                setTags([...tags, sug]);
+                              }
+                            }}
+                            className={`text-xs px-2.5 py-1 rounded-lg border transition-all cursor-pointer flex items-center gap-1 ${
+                              isSelected
+                                ? 'bg-[#0A0A0A] text-white border-[#0A0A0A]'
+                                : 'bg-white hover:bg-[#FAFAF8] text-[#52524E] border-[#E7E7E2]'
+                            }`}
+                          >
+                            <span>#{sug}</span>
+                            {isSelected ? (
+                              <Check className="w-3 h-3 text-white" />
+                            ) : (
+                              <Plus className="w-3 h-3 text-[#66665E]" />
+                            )}
+                          </button>
+                        );
+                      })}
                     </div>
-                  )}
-                </div>
-
-                {/* About Brand / Bio */}
-                <div className="space-y-1.5 pt-2">
-                  <div className="flex items-center justify-between">
-                    <label className="block text-sm font-semibold text-[#52524E]">
-                      About the Brand
-                    </label>
-                    <span className="text-xs text-[#66665E] font-medium">
-                      {bio.length} characters
-                    </span>
                   </div>
-                  <Input.TextArea
-                    rows={4}
-                    value={bio}
-                    onChange={(e) => setBio(e.target.value)}
-                    className="rounded-xl text-sm font-medium text-[#0A0A0A] border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A] p-3.5 leading-relaxed"
-                    placeholder="Describe your brand aesthetics, mission, product line, and what you look for in creator partnerships..."
-                  />
-                </div>
+                )}
               </div>
 
               {/* Private Contact & Billing Card */}

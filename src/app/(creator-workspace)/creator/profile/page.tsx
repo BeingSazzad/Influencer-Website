@@ -40,6 +40,9 @@ import {
   CheckCircle2,
   Unlink,
   Link2,
+  Camera,
+  Mail,
+  Phone,
 } from 'lucide-react';
 import { Input, Button, message, Select, Dropdown } from 'antd';
 import { Button as AppButton } from '@/components/ui';
@@ -752,8 +755,8 @@ function CreatorProfileContent() {
                 )}
               </div>
 
-              {/* Portrait Photo Section */}
-              <div className="flex items-center gap-5">
+              {/* Profile Photo (Centered, Matching Onboarding Standards) */}
+              <div className="flex flex-col items-center justify-center text-center py-2 pb-6 border-b border-[#E7E7E2]">
                 <input
                   ref={fileInputRef}
                   type="file"
@@ -762,43 +765,49 @@ function CreatorProfileContent() {
                   onChange={handleFileUpload}
                 />
 
-                <div className="relative w-20 h-20 rounded-full overflow-hidden bg-[#FAFAF8] border border-[#E7E7E2] shrink-0 shadow-2xs">
-                  {avatar ? (
+                {avatar ? (
+                  <div
+                    onClick={() => fileInputRef.current?.click()}
+                    className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden border-2 border-[#0A0A0A] shadow-md cursor-pointer group transition-transform hover:scale-105"
+                  >
                     <img src={avatar} alt={name} className="w-full h-full object-cover" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-[#A3A39C] font-bold text-lg bg-[#F4F4F0]">
-                      {name.charAt(0) || 'U'}
+                    <div className="absolute inset-0 bg-black/50 text-white flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Camera className="w-6 h-6 mb-1 text-white" />
+                      <span className="text-xs font-bold">Change</span>
                     </div>
-                  )}
-                </div>
+                  </div>
+                ) : (
+                  <div
+                    onClick={() => fileInputRef.current?.click()}
+                    className="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-2 border-dashed border-[#D2D2CA] hover:border-[#0A0A0A] bg-[#FAFAF8] hover:bg-[#F4F4F0] flex flex-col items-center justify-center cursor-pointer transition-all text-[#66665E] hover:text-[#0A0A0A] group hover:scale-105"
+                  >
+                    <Camera className="w-7 h-7 sm:w-8 sm:h-8 mb-1 text-[#0A0A0A] group-hover:scale-110 transition-transform" />
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">Upload</span>
+                  </div>
+                )}
 
-                <div className="space-y-2">
-                  <h4 className="text-base font-bold text-[#0A0A0A]">Portrait photo</h4>
-
-                  <div className="flex items-center gap-3">
+                <div className="mt-3 space-y-0.5 text-center">
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="text-sm font-bold text-[#0A0A0A] hover:text-[#FF2D78] transition-colors cursor-pointer block mx-auto"
+                  >
+                    {avatar ? 'Click photo to change' : 'Click to upload photo'}
+                  </button>
+                  <div className="text-xs text-[#66665E]">
+                    JPG, PNG, or WEBP up to 10MB
+                  </div>
+                  {avatar && (
                     <button
                       type="button"
-                      onClick={() => fileInputRef.current?.click()}
-                      className="h-9 px-3.5 rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] bg-white hover:bg-[#FAFAF8] text-[#0A0A0A] text-sm font-semibold transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                      onClick={() => setAvatar('')}
+                      className="text-xs font-semibold text-rose-600 hover:text-rose-700 hover:underline transition-colors cursor-pointer pt-1 inline-block"
                     >
-                      <Upload className="w-4 h-4 text-[#0A0A0A]" />
-                      <span>Upload new</span>
+                      Remove photo
                     </button>
-
-                    {avatar && (
-                      <button
-                        type="button"
-                        onClick={() => setAvatar('')}
-                        className="text-sm font-medium text-[#66665E] hover:text-rose-600 transition-colors cursor-pointer"
-                      >
-                        Remove
-                      </button>
-                    )}
-                  </div>
+                  )}
                 </div>
               </div>
-
-              <div className="border-t border-[#E7E7E2]" />
 
               {/* Public Profile Details Section */}
               <div className="space-y-4">
@@ -812,20 +821,69 @@ function CreatorProfileContent() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+                  {/* Full Name */}
                   <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-[#52524E]">Full name</label>
+                    <label className="block text-sm font-bold text-[#0A0A0A]">
+                      Full Name <span className="text-rose-500">*</span>
+                    </label>
                     <Input
+                      prefix={<User className="w-4 h-4 text-[#A3A39C] mr-0.5" />}
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
-                      placeholder="Sophie Kim"
+                      placeholder="e.g. Sophie Kim"
                       required
                     />
                   </div>
 
+                  {/* Gender */}
+                  <div className="space-y-1.5">
+                    <label className="block text-sm font-bold text-[#0A0A0A]">Gender</label>
+                    <Select
+                      value={gender}
+                      onChange={(val) => setGender(val)}
+                      className="w-full h-11 rounded-xl"
+                      options={[
+                        { value: 'male', label: 'Male' },
+                        { value: 'female', label: 'Female' },
+                        { value: 'other', label: 'Other' },
+                      ]}
+                    />
+                  </div>
+
+                  {/* Email & Phone */}
+                  <div className="space-y-1.5">
+                    <label className="block text-sm font-bold text-[#0A0A0A]">
+                      Public Contact Email <span className="text-rose-500">*</span>
+                    </label>
+                    <Input
+                      prefix={<Mail className="w-4 h-4 text-[#A3A39C] mr-0.5" />}
+                      type="email"
+                      value={contactEmail}
+                      onChange={(e) => setContactEmail(e.target.value)}
+                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
+                      placeholder="collabs@sophiekim.com"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="block text-sm font-bold text-[#0A0A0A]">Public Phone</label>
+                    <Input
+                      prefix={<Phone className="w-4 h-4 text-[#A3A39C] mr-0.5" />}
+                      type="tel"
+                      value={contactPhone}
+                      onChange={(e) => setContactPhone(e.target.value)}
+                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
+                      placeholder="+1 (555) 234-5678"
+                    />
+                  </div>
+
+                  {/* Username */}
                   <div className="space-y-1.5">
                     <div className="flex items-center justify-between">
-                      <label className="block text-sm font-semibold text-[#52524E]">Username</label>
+                      <label className="block text-sm font-bold text-[#0A0A0A]">
+                        Username <span className="text-rose-500">*</span>
+                      </label>
                       {cleanHandle && (
                         isUsernameTaken ? (
                           <span className="text-xs font-bold text-rose-500 flex items-center gap-1">
@@ -874,9 +932,22 @@ function CreatorProfileContent() {
                     />
                   </div>
 
+                  {/* Starting Rate */}
+                  <div className="space-y-1.5">
+                    <label className="block text-sm font-bold text-[#0A0A0A]">Starting Rate</label>
+                    <Input
+                      prefix={<span className="text-[#66665E] text-sm font-medium mr-0.5">€</span>}
+                      type="number"
+                      value={startingPriceEur}
+                      onChange={(e) => setStartingPriceEur(Number(e.target.value) || 0)}
+                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
+                      placeholder="350"
+                    />
+                  </div>
+
                   {/* Country & City (Matching Onboarding Step 2) */}
                   <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-[#52524E]">Country</label>
+                    <label className="block text-sm font-bold text-[#0A0A0A]">Country</label>
                     <Select
                       value={country}
                       onChange={(val) => {
@@ -889,9 +960,9 @@ function CreatorProfileContent() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-[#52524E]">City</label>
+                    <label className="block text-sm font-bold text-[#0A0A0A]">City</label>
                     <Input
-                      prefix={<MapPin className="w-4 h-4 text-[#66665E] mr-0.5" />}
+                      prefix={<MapPin className="w-4 h-4 text-[#A3A39C] mr-0.5" />}
                       value={city}
                       onChange={(e) => {
                         setCity(e.target.value);
@@ -902,37 +973,29 @@ function CreatorProfileContent() {
                     />
                   </div>
 
-                  {/* Gender */}
-                  <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-[#52524E]">Gender</label>
-                    <Select
-                      value={gender}
-                      onChange={(val) => setGender(val)}
-                      className="w-full h-11 rounded-xl"
-                      options={[
-                        { value: 'male', label: 'Male' },
-                        { value: 'female', label: 'Female' },
-                        { value: 'other', label: 'Other' },
-                      ]}
-                    />
-                  </div>
-
-                  {/* Starting Rate */}
-                  <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-[#52524E]">Starting Rate</label>
-                    <Input
-                      prefix={<span className="text-[#66665E] text-sm font-medium mr-0.5">€</span>}
-                      type="number"
-                      value={startingPriceEur}
-                      onChange={(e) => setStartingPriceEur(Number(e.target.value) || 0)}
-                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
-                      placeholder="350"
+                  {/* Editorial Bio with 0/160 Counter */}
+                  <div className="space-y-1.5 md:col-span-2">
+                    <div className="flex items-center justify-between">
+                      <label className="block text-sm font-bold text-[#0A0A0A]">
+                        Bio
+                      </label>
+                      <span className="text-xs font-semibold text-[#66665E]">
+                        {bio.length}/160
+                      </span>
+                    </div>
+                    <textarea
+                      rows={3}
+                      maxLength={160}
+                      value={bio}
+                      onChange={(e) => setBio(e.target.value)}
+                      placeholder="Tell brands what you create, your aesthetics, and what makes your content unique..."
+                      className="w-full rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A] focus:outline-none p-3.5 text-sm font-normal text-[#0A0A0A] leading-relaxed transition-all resize-y shadow-2xs"
                     />
                   </div>
 
                   {/* Spoken Languages (Matching Onboarding Step 2) */}
                   <div className="space-y-1.5 md:col-span-2">
-                    <label className="block text-sm font-semibold text-[#52524E]">
+                    <label className="block text-sm font-bold text-[#0A0A0A]">
                       Spoken Languages
                     </label>
                     <div className="min-h-[46px] rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] focus-within:border-[#0A0A0A] bg-white p-2 flex flex-wrap items-center gap-1.5 transition-all shadow-2xs">
@@ -1100,21 +1163,6 @@ function CreatorProfileContent() {
                       }}
                       className="outline-none text-xs bg-transparent min-w-[80px] flex-1 text-[#0A0A0A] placeholder-[#A3A39C] px-1 py-0.5 font-medium"
                     />
-                  </div>
-                </div>
-
-                {/* Editorial Bio */}
-                <div className="space-y-1.5 pt-2">
-                  <label className="block text-sm font-semibold text-[#52524E]">Bio</label>
-                  <textarea
-                    rows={4}
-                    value={bio}
-                    onChange={(e) => setBio(e.target.value)}
-                    placeholder="I create authentic, relatable content and love working with brands that share my values..."
-                    className="w-full rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A] focus:outline-none p-3.5 text-sm font-normal text-[#0A0A0A] leading-relaxed transition-all resize-y shadow-2xs"
-                  />
-                  <div className="text-right text-xs text-[#66665E] mt-1 font-medium">
-                    {bio.length} characters
                   </div>
                 </div>
 

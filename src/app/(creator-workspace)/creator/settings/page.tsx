@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
@@ -25,6 +25,9 @@ import {
   Calendar,
   RotateCcw,
   Lock,
+  Camera,
+  Upload,
+  CheckCircle2,
 } from 'lucide-react';
 import { Input, Button, message, Switch, Modal } from 'antd';
 
@@ -39,6 +42,8 @@ function CreatorSettingsContent() {
       c.handle.replace('@', '').toLowerCase() ===
       (currentUser?.handle || '').replace('@', '').toLowerCase()
   );
+
+  const avatarInputRef = useRef<HTMLInputElement>(null);
 
   // Tab State: account | security | notifications
   const initialTab = searchParams.get('tab');
@@ -61,9 +66,21 @@ function CreatorSettingsContent() {
     }
   }, [searchParams, router]);
 
-  // Account Form State (Private Authentication Credentials)
+  // Account Form State (Private Authentication Credentials & Profile Details)
+  const [accountAvatar, setAccountAvatar] = useState(
+    currentUser?.avatar || currentCreator?.avatar || ''
+  );
+  const [accountName, setAccountName] = useState(
+    currentUser?.name || currentCreator?.name || 'Sophie Kim'
+  );
+  const [accountHandle, setAccountHandle] = useState(
+    (currentUser?.handle || currentCreator?.handle || 'sophiekim').replace('@', '')
+  );
   const [accountEmail, setAccountEmail] = useState(currentUser?.email || 'sophie@sophiekim.com');
   const [accountPhone, setAccountPhone] = useState(currentUser?.phone || '+1 (555) 234-5678');
+  const [accountBio, setAccountBio] = useState(
+    currentUser?.bio || currentCreator?.bio || ''
+  );
 
   // Security Form States
   const [currentPassword, setCurrentPassword] = useState('');
@@ -128,22 +145,71 @@ function CreatorSettingsContent() {
     message.success('Account deactivation canceled! Your creator profile and packages are live again.');
   };
 
+  const handleAvatarFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      message.error('Please upload an image file (PNG, JPG, or WEBP).');
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      message.error('File size exceeds 10MB limit.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (uploadEvent) => {
+      const result = uploadEvent.target?.result as string;
+      if (result) {
+        setAccountAvatar(result);
+        message.success('Profile photo ready to save!');
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
   const handleSaveAccountInfo = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!accountName.trim()) {
+      message.error('Please enter your full name.');
+      return;
+    }
     if (!accountEmail.trim() || !accountEmail.includes('@')) {
       message.error('Please enter a valid email address.');
       return;
     }
-    dispatch(updateUserProfile({ email: accountEmail.trim(), phone: accountPhone.trim() }));
+
+    const cleanH = accountHandle.trim().toLowerCase().replace(/^@/, '');
+
+    dispatch(
+      updateUserProfile({
+        name: accountName.trim(),
+        handle: `@${cleanH}`,
+        avatar: accountAvatar,
+        email: accountEmail.trim(),
+        phone: accountPhone.trim(),
+        bio: accountBio.trim(),
+      })
+    );
+
     if (currentCreator) {
       dispatch(
         updateCreatorProfileDetails({
           creatorId: currentCreator.id,
-          updates: { contactPhone: accountPhone.trim() },
+          updates: {
+            name: accountName.trim(),
+            handle: cleanH,
+            avatar: accountAvatar,
+            contactEmail: accountEmail.trim(),
+            contactPhone: accountPhone.trim(),
+            bio: accountBio.trim(),
+          },
         })
       );
     }
-    message.success('Account credentials updated successfully.');
+    message.success('Account profile & photo updated successfully!');
   };
 
   const handleUpdatePassword = (e: React.FormEvent) => {
@@ -267,57 +333,172 @@ function CreatorSettingsContent() {
               <div className="pb-4 border-b border-[#E7E7E2] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                   <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
-                    Account
+                    Profile & Account Details
                   </h2>
                   <p className="text-sm text-[#66665E] mt-0.5 font-medium">
-                    Update your primary login email and contact details.
+                    Update your profile photo, display name, handle, and contact credentials.
                   </p>
                 </div>
-                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A] text-xs font-bold border border-[#E7E7E2] shrink-0 w-fit">
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#0A0A0A]" />
-                  <span>Verified</span>
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200 shrink-0 w-fit">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Verified Creator Account</span>
                 </div>
               </div>
 
-              <form onSubmit={handleSaveAccountInfo} className="space-y-5 max-w-xl">
-                <div>
-                  <label className="text-sm font-bold text-[#0A0A0A] block mb-1.5">
-                    Primary Login Email
-                  </label>
-                  <Input
-                    prefix={<Mail className="w-4 h-4 text-[#66665E] mr-0.5" />}
-                    type="email"
-                    value={accountEmail}
-                    onChange={(e) => setAccountEmail(e.target.value)}
-                    placeholder="sophie@sophiekim.com"
-                    className="h-11 rounded-xl font-medium text-sm border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
+              <form onSubmit={handleSaveAccountInfo} className="space-y-6">
+                {/* Profile Photo (Centered, Matching Onboarding Standards) */}
+                <div className="flex flex-col items-center justify-center text-center py-2 pb-6 border-b border-[#E7E7E2]">
+                  <input
+                    ref={avatarInputRef}
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleAvatarFileChange}
                   />
+
+                  {accountAvatar ? (
+                    <div
+                      onClick={() => avatarInputRef.current?.click()}
+                      className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden border-2 border-[#0A0A0A] shadow-md cursor-pointer group transition-transform hover:scale-105"
+                    >
+                      <img src={accountAvatar} alt={accountName} className="w-full h-full object-cover" />
+                      <div className="absolute inset-0 bg-black/50 text-white flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Camera className="w-6 h-6 mb-1 text-white" />
+                        <span className="text-xs font-bold">Change</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div
+                      onClick={() => avatarInputRef.current?.click()}
+                      className="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-2 border-dashed border-[#D2D2CA] hover:border-[#0A0A0A] bg-[#FAFAF8] hover:bg-[#F4F4F0] flex flex-col items-center justify-center cursor-pointer transition-all text-[#66665E] hover:text-[#0A0A0A] group hover:scale-105"
+                    >
+                      <Camera className="w-7 h-7 sm:w-8 sm:h-8 mb-1 text-[#0A0A0A] group-hover:scale-110 transition-transform" />
+                      <span className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">Upload</span>
+                    </div>
+                  )}
+
+                  <div className="mt-3 space-y-0.5 text-center">
+                    <button
+                      type="button"
+                      onClick={() => avatarInputRef.current?.click()}
+                      className="text-sm font-bold text-[#0A0A0A] hover:text-[#FF2D78] transition-colors cursor-pointer block mx-auto"
+                    >
+                      {accountAvatar ? 'Click photo to change' : 'Click to upload photo'}
+                    </button>
+                    <div className="text-xs text-[#66665E]">
+                      JPG, PNG, or WEBP up to 10MB
+                    </div>
+                    {accountAvatar && (
+                      <button
+                        type="button"
+                        onClick={() => setAccountAvatar('')}
+                        className="text-xs font-semibold text-rose-600 hover:text-rose-700 hover:underline transition-colors cursor-pointer pt-1 inline-block"
+                      >
+                        Remove photo
+                      </button>
+                    )}
+                  </div>
                 </div>
 
-                <div>
-                  <label className="text-sm font-bold text-[#0A0A0A] block mb-1.5">
-                    Phone
-                  </label>
-                  <Input
-                    prefix={<Phone className="w-4 h-4 text-[#66665E] mr-0.5" />}
-                    type="tel"
-                    value={accountPhone}
-                    onChange={(e) => setAccountPhone(e.target.value)}
-                    placeholder="+1 (555) 234-5678"
-                    className="h-11 rounded-xl font-medium text-sm border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
-                  />
+                {/* 2-Column Inputs Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                  {/* Full Name */}
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-bold text-[#0A0A0A] block">
+                      Full Name <span className="text-rose-500">*</span>
+                    </label>
+                    <Input
+                      prefix={<User className="w-4 h-4 text-[#A3A39C] mr-0.5" />}
+                      type="text"
+                      value={accountName}
+                      onChange={(e) => setAccountName(e.target.value)}
+                      placeholder="e.g. Sophie Kim"
+                      className="h-11 rounded-xl font-medium text-sm border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
+                    />
+                  </div>
+
+                  {/* Username Handle */}
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-bold text-[#0A0A0A] block">
+                      Username <span className="text-rose-500">*</span>
+                    </label>
+                    <Input
+                      prefix={<span className="text-[#66665E] text-sm font-medium mr-0.5">@</span>}
+                      type="text"
+                      value={accountHandle}
+                      onChange={(e) => setAccountHandle(e.target.value.toLowerCase().replace(/\s+/g, ''))}
+                      placeholder="sophiekim"
+                      className="h-11 rounded-xl font-medium text-sm border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
+                    />
+                  </div>
+
+                  {/* Email */}
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-bold text-[#0A0A0A] block">
+                      Primary Login Email <span className="text-rose-500">*</span>
+                    </label>
+                    <Input
+                      prefix={<Mail className="w-4 h-4 text-[#A3A39C] mr-0.5" />}
+                      type="email"
+                      value={accountEmail}
+                      onChange={(e) => setAccountEmail(e.target.value)}
+                      placeholder="sophie@sophiekim.com"
+                      className="h-11 rounded-xl font-medium text-sm border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
+                    />
+                  </div>
+
+                  {/* Phone */}
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-bold text-[#0A0A0A] block">
+                      Phone Number
+                    </label>
+                    <Input
+                      prefix={<Phone className="w-4 h-4 text-[#A3A39C] mr-0.5" />}
+                      type="tel"
+                      value={accountPhone}
+                      onChange={(e) => setAccountPhone(e.target.value)}
+                      placeholder="+1 (555) 234-5678"
+                      className="h-11 rounded-xl font-medium text-sm border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
+                    />
+                  </div>
+
+                  {/* Bio */}
+                  <div className="space-y-1.5 sm:col-span-2">
+                    <div className="flex items-center justify-between">
+                      <label className="text-sm font-bold text-[#0A0A0A] block">
+                        Bio
+                      </label>
+                      <span className="text-xs font-semibold text-[#66665E]">
+                        {accountBio.length}/160
+                      </span>
+                    </div>
+                    <textarea
+                      rows={3}
+                      maxLength={160}
+                      value={accountBio}
+                      onChange={(e) => setAccountBio(e.target.value)}
+                      placeholder="Tell brands what you create, your aesthetics, and what makes your content unique..."
+                      className="w-full rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A] focus:outline-none p-3.5 text-sm font-normal text-[#0A0A0A] leading-relaxed transition-all resize-y shadow-2xs"
+                    />
+                  </div>
                 </div>
 
-
-
-                <div className="pt-1">
+                <div className="pt-2 flex items-center justify-between flex-wrap gap-3 border-t border-[#E7E7E2]">
                   <Button
                     type="primary"
                     htmlType="submit"
-                    className="h-10 px-6 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 text-white border-none shadow-sm cursor-pointer"
+                    className="h-11 px-7 rounded-full font-bold text-sm bg-[#0A0A0A] hover:!bg-zinc-800 text-white border-none shadow-sm cursor-pointer"
                   >
                     Save Changes
                   </Button>
+
+                  <Link
+                    href="/creator/profile"
+                    className="text-sm font-bold text-[#0A0A0A] hover:text-[#FF2D78] flex items-center gap-1.5 transition-colors"
+                  >
+                    <span>Edit Full Marketplace Profile Studio</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
                 </div>
               </form>
             </div>
