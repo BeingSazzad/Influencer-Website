@@ -214,7 +214,7 @@ function CreatorPortfolioContent() {
   const handleSaveVideo = (e: React.FormEvent) => {
     e.preventDefault();
     if (!campaignTitle.trim() || !mediaUrl.trim()) {
-      message.error('Please enter a project title and upload or provide a media URL.');
+      message.error('Please enter a project title and upload an image or video file.');
       return;
     }
 
@@ -515,31 +515,6 @@ function CreatorPortfolioContent() {
               </div>
             )}
 
-            {/* URL Toggle */}
-            <div className="pt-0.5">
-              <button
-                type="button"
-                onClick={() => setShowUrlInput(!showUrlInput)}
-                className="text-xs text-[#66665E] hover:text-[#0A0A0A] font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
-              >
-                <Link2 className="w-3 h-3" />
-                <span>{showUrlInput ? 'Hide link input' : 'Paste media link instead (URL)'}</span>
-                {showUrlInput ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
-              </button>
-
-              {showUrlInput && (
-                <div className="pt-1.5">
-                  <Input
-                    value={mediaUrl}
-                    onChange={(e) => setMediaUrl(e.target.value)}
-                    placeholder="https://... image or video URL"
-                    className="rounded-xl h-10 text-sm font-medium border-[#E7E7E2]"
-                    prefix={<Link2 className="w-3 h-3 text-[#66665E]" />}
-                    allowClear
-                  />
-                </div>
-              )}
-            </div>
           </div>
 
           {/* Work Title & Platform */}

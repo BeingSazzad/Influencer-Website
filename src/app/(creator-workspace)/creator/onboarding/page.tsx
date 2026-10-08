@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { setUser, switchRole } from '@/redux/slices/authSlice';
+import { setUser } from '@/redux/slices/authSlice';
 import { onboardCreator } from '@/redux/slices/creatorSlice';
 import { Logo } from '@/components/shared/Logo';
 import { Creator } from '@/types';
@@ -18,9 +18,15 @@ import {
   Sparkles,
   Instagram,
   Youtube,
-  Globe,
   Clock,
-  CheckCircle2,
+  UploadCloud,
+  Lock,
+  Eye,
+  EyeOff,
+  Mail,
+  Phone,
+  User as UserIcon,
+  AtSign,
 } from 'lucide-react';
 import { message } from 'antd';
 
@@ -53,78 +59,64 @@ const COUNTRIES = [
 
 const COMMON_LANGUAGES = ['English', 'German', 'French', 'Spanish', 'Italian', 'Dutch'];
 
-const COLLAB_PREFERENCES = [
-  { id: 'sponsored_posts', title: 'Sponsored Posts & Reels', desc: 'Feed posts & short-form video' },
-  { id: 'ugc', title: 'UGC Content Creation', desc: 'Paid ad assets for brand media' },
-  { id: 'product_reviews', title: 'Product Reviews & Testing', desc: 'Authentic reviews & unboxing' },
-  { id: 'events', title: 'Events & Experiences', desc: 'On-site launches & coverage' },
-  { id: 'ambassador', title: 'Brand Ambassador', desc: 'Long-term partnership contracts' },
-];
+interface StagedMediaSample {
+  url: string;
+  name: string;
+  isVideo: boolean;
+  title: string;
+  type: string;
+}
 
 export default function CreatorOnboardingPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { currentUser } = useAppSelector((state) => state.auth);
 
-  // Stepper state: 1 to 6
+  // Stepper state: 1 to 5 (Collaboration preference removed per user request)
   const [step, setStep] = useState<number>(1);
-  const totalSteps = 6;
+  const totalSteps = 5;
 
-  // Step 1: Basic Information
-  const [name, setName] = useState(currentUser?.name || 'Sophie Kim');
-  const [handle, setHandle] = useState(currentUser?.handle?.replace(/^@+/, '') || 'sophiekim');
+  // File input refs for native upload
+  const avatarInputRef = useRef<HTMLInputElement>(null);
+  const sampleFileInputRef = useRef<HTMLInputElement>(null);
+
+  // Step 1: Account Credentials & Profile (Starts Raw / Empty)
+  const isMockUser = currentUser?.name === 'Sophie Kim' || currentUser?.name === 'Elena Rostova';
+  const [name, setName] = useState(currentUser?.name && !isMockUser ? currentUser.name : '');
+  const [email, setEmail] = useState(currentUser?.email && !currentUser.email.includes('sophie') ? currentUser.email : '');
+  const [phone, setPhone] = useState(currentUser?.phone || '');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [handle, setHandle] = useState(currentUser?.handle && !isMockUser ? currentUser.handle.replace(/^@+/, '') : '');
   const [bio, setBio] = useState(
-    currentUser?.bio || 'Fashion, beauty & lifestyle creator based in Europe ✨ Building authentic brand narratives.'
+    currentUser?.bio && !isMockUser && !currentUser.bio.includes('Europe') ? currentUser.bio : ''
   );
   const [avatar, setAvatar] = useState(
-    currentUser?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'
+    currentUser?.avatar && !currentUser.avatar.includes('534528741775') ? currentUser.avatar : ''
   );
 
-  // Step 2: Location & Languages
-  const [country, setCountry] = useState('Switzerland');
-  const [city, setCity] = useState('Zürich');
-  const [languages, setLanguages] = useState<string[]>(['English', 'German']);
+  // Step 2: Location & Languages (Starts Raw / Empty)
+  const [country, setCountry] = useState('');
+  const [city, setCity] = useState('');
+  const [languages, setLanguages] = useState<string[]>([]);
   const [customLang, setCustomLang] = useState('');
 
-  // Step 3: Categories / Niche (1 to 3)
-  const [selectedCategories, setSelectedCategories] = useState<string[]>(['Beauty', 'Fashion', 'Lifestyle']);
+  // Step 3: Categories (Starts Raw / Empty)
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
-  // Step 4: Social Media
-  const [instagramHandle, setInstagramHandle] = useState('sophiekim');
-  const [instagramFollowers, setInstagramFollowers] = useState('1.2M');
-  const [tiktokHandle, setTiktokHandle] = useState('sophiekim');
-  const [tiktokFollowers, setTiktokFollowers] = useState('680K');
-  const [youtubeHandle, setYoutubeHandle] = useState('Sophie Kim Vlogs');
-  const [youtubeFollowers, setYoutubeFollowers] = useState('210K');
+  // Step 4: Social Channels (Starts Raw / Empty)
+  const [instagramHandle, setInstagramHandle] = useState('');
+  const [instagramFollowers, setInstagramFollowers] = useState('');
+  const [tiktokHandle, setTiktokHandle] = useState('');
+  const [tiktokFollowers, setTiktokFollowers] = useState('');
+  const [youtubeHandle, setYoutubeHandle] = useState('');
+  const [youtubeFollowers, setYoutubeFollowers] = useState('');
 
-  // Step 5: Content Samples (At least 2-3)
-  const [portfolioSamples, setPortfolioSamples] = useState([
-    {
-      url: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80',
-      title: 'Aura Skincare • 60s Reel',
-      type: 'Reel',
-    },
-    {
-      url: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=600&q=80',
-      title: 'Vogue & Velour • OOTD Lookbook',
-      type: 'UGC Ad',
-    },
-    {
-      url: 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=600&q=80',
-      title: 'Glow Botanical • Product Review',
-      type: 'Photo',
-    },
-  ]);
-  const [newTitle, setNewTitle] = useState('');
-  const [newUrl, setNewUrl] = useState('');
-  const [newType, setNewType] = useState('Reel');
-
-  // Step 6: Collaboration Preferences
-  const [selectedCollabs, setSelectedCollabs] = useState<string[]>([
-    'sponsored_posts',
-    'ugc',
-    'product_reviews',
-  ]);
+  // Step 5: Portfolio Samples (File Upload Only - Starts Raw / Empty, Skippable)
+  const [portfolioSamples, setPortfolioSamples] = useState<
+    { url: string; title: string; type: string; isVideo: boolean }[]
+  >([]);
+  const [stagedMedia, setStagedMedia] = useState<StagedMediaSample | null>(null);
 
   // Submission state
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -133,27 +125,26 @@ export default function CreatorOnboardingPage() {
   // Step Validation & Navigation
   const handleNext = () => {
     if (step === 1) {
-      if (!name.trim()) return message.error('Please enter your display name');
-      if (!handle.trim()) return message.error('Please enter your handle');
-      if (!bio.trim()) return message.error('Please enter a short bio');
+      if (!name.trim()) return message.error('Please enter your full name');
+      if (!email.trim() || !email.includes('@')) return message.error('Please enter a valid email address');
+      if (!handle.trim()) return message.error('Please choose a username');
+      if (!currentUser?.id && (!password || password.length < 6)) {
+        return message.error('Password must be at least 6 characters');
+      }
     } else if (step === 2) {
-      if (!city.trim() || !country.trim()) return message.error('Please enter your location');
+      if (!country.trim()) return message.error('Please select your country');
+      if (!city.trim()) return message.error('Please enter your city');
       if (languages.length === 0) return message.error('Please select at least 1 language');
     } else if (step === 3) {
-      if (selectedCategories.length < 1 || selectedCategories.length > 3) {
-        return message.error('Please select 1 to 3 categories');
+      if (selectedCategories.length < 1) {
+        return message.error('Please select at least 1 category');
+      }
+      if (selectedCategories.length > 3) {
+        return message.error('You can select a maximum of 3 categories');
       }
     } else if (step === 4) {
       if (!instagramHandle.trim() && !tiktokHandle.trim() && !youtubeHandle.trim()) {
-        return message.error('Please enter at least one social media channel');
-      }
-    } else if (step === 5) {
-      if (portfolioSamples.length < 2) {
-        return message.error('Please add at least 2 content samples');
-      }
-    } else if (step === 6) {
-      if (selectedCollabs.length === 0) {
-        return message.error('Please select at least 1 collaboration preference');
+        return message.error('Please enter at least one social media channel handle');
       }
     }
 
@@ -168,17 +159,36 @@ export default function CreatorOnboardingPage() {
     if (step > 1) setStep(step - 1);
   };
 
+  // Avatar Upload Handler
+  const handleAvatarFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      message.error('Please upload an image file (PNG, JPG, WEBP).');
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      message.error('Avatar file size must be under 10MB.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setAvatar(reader.result as string);
+      message.success('Profile photo uploaded.');
+    };
+    reader.readAsDataURL(file);
+  };
+
   // Categories Toggle
   const toggleCategory = (catId: string) => {
     if (selectedCategories.includes(catId)) {
-      if (selectedCategories.length === 1) {
-        message.warning('Please keep at least 1 main category.');
-        return;
-      }
       setSelectedCategories((prev) => prev.filter((c) => c !== catId));
     } else {
       if (selectedCategories.length >= 3) {
-        message.warning('You can choose a maximum of 3 main categories.');
+        message.warning('You can choose a maximum of 3 categories.');
         return;
       }
       setSelectedCategories((prev) => [...prev, catId]);
@@ -188,7 +198,6 @@ export default function CreatorOnboardingPage() {
   // Languages Toggle
   const toggleLanguage = (lang: string) => {
     if (languages.includes(lang)) {
-      if (languages.length === 1) return message.warning('Select at least 1 language');
       setLanguages((prev) => prev.filter((l) => l !== lang));
     } else {
       setLanguages((prev) => [...prev, lang]);
@@ -202,56 +211,82 @@ export default function CreatorOnboardingPage() {
     }
   };
 
-  // Portfolio Add/Remove
-  const addSample = (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-    if (!newUrl.trim()) return message.error('Please provide an image or video URL');
+  // Staged Portfolio File Upload Handler
+  const handlePortfolioFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const isVideo = file.type.startsWith('video/');
+    const isImage = file.type.startsWith('image/');
+
+    if (!isVideo && !isImage) {
+      message.error('Please upload an image or video file.');
+      return;
+    }
+
+    if (file.size > 50 * 1024 * 1024) {
+      message.error('File size exceeds the 50MB limit.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const cleanName = file.name.replace(/\.[^/.]+$/, '');
+      setStagedMedia({
+        url: reader.result as string,
+        name: file.name,
+        isVideo,
+        title: cleanName,
+        type: isVideo ? 'Reel' : 'Photo',
+      });
+      message.success(`${isVideo ? 'Video' : 'Image'} file ready.`);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const confirmAddStagedSample = () => {
+    if (!stagedMedia) return;
+    if (!stagedMedia.title.trim()) {
+      message.error('Please enter a title for this sample.');
+      return;
+    }
+
     setPortfolioSamples((prev) => [
       ...prev,
       {
-        url: newUrl.trim(),
-        title: newTitle.trim() || `Content Sample ${prev.length + 1}`,
-        type: newType,
+        url: stagedMedia.url,
+        title: stagedMedia.title.trim(),
+        type: stagedMedia.type,
+        isVideo: stagedMedia.isVideo,
       },
     ]);
-    setNewUrl('');
-    setNewTitle('');
-    message.success('Sample added to portfolio');
+    setStagedMedia(null);
+    if (sampleFileInputRef.current) {
+      sampleFileInputRef.current.value = '';
+    }
+    message.success('Sample added to portfolio!');
   };
 
   const removeSample = (idx: number) => {
-    if (portfolioSamples.length <= 2) {
-      return message.warning('At least 2 samples are required');
-    }
     setPortfolioSamples((prev) => prev.filter((_, i) => i !== idx));
-  };
-
-  // Collaboration Toggle
-  const toggleCollab = (id: string) => {
-    if (selectedCollabs.includes(id)) {
-      if (selectedCollabs.length === 1) return message.warning('Select at least 1 collaboration type');
-      setSelectedCollabs((prev) => prev.filter((c) => c !== id));
-    } else {
-      setSelectedCollabs((prev) => [...prev, id]);
-    }
   };
 
   // Submit profile
   const handleSubmit = () => {
     setIsSubmitting(true);
 
-    const cleanH = handle.trim().replace(/^@+/, '');
-    const creatorId = `creator-${Date.now().toString().slice(-4)}`;
+    const cleanH = (handle.trim() || name.toLowerCase().replace(/\s+/g, '')).replace(/^@+/, '') || `creator${Date.now().toString().slice(-4)}`;
+    const creatorId = currentUser?.id || `creator-${Date.now().toString().slice(-4)}`;
 
     const platforms: Creator['platforms'] = {};
     if (instagramHandle.trim()) {
       const clean = instagramHandle.trim().replace(/^@+/, '');
       platforms.instagram = {
         handle: `@${clean}`,
-        followers: 1200000,
-        followersFormatted: instagramFollowers.trim() || '1.2M',
+        followers: 25000,
+        followersFormatted: instagramFollowers.trim() || '25K',
         engagementRate: '4.8%',
-        avgViews: '150K',
+        avgViews: '15K',
         url: `https://instagram.com/${clean}`,
       };
     }
@@ -259,10 +294,10 @@ export default function CreatorOnboardingPage() {
       const clean = tiktokHandle.trim().replace(/^@+/, '');
       platforms.tiktok = {
         handle: `@${clean}`,
-        followers: 680000,
-        followersFormatted: tiktokFollowers.trim() || '680K',
+        followers: 18000,
+        followersFormatted: tiktokFollowers.trim() || '18K',
         engagementRate: '6.2%',
-        avgViews: '90K',
+        avgViews: '20K',
         url: `https://tiktok.com/@${clean}`,
       };
     }
@@ -270,10 +305,10 @@ export default function CreatorOnboardingPage() {
       const clean = youtubeHandle.trim();
       platforms.youtube = {
         handle: clean,
-        followers: 210000,
-        followersFormatted: youtubeFollowers.trim() || '210K',
-        engagementRate: '8.4%',
-        avgViews: '45K',
+        followers: 8000,
+        followersFormatted: youtubeFollowers.trim() || '8K',
+        engagementRate: '7.4%',
+        avgViews: '10K',
         url: `https://youtube.com/@${clean.toLowerCase().replace(/\s+/g, '')}`,
       };
     }
@@ -282,20 +317,21 @@ export default function CreatorOnboardingPage() {
 
     const newCreatorProfile: Creator = {
       id: creatorId,
-      name,
+      name: name.trim() || 'New Creator',
       handle: `@${cleanH}`,
-      avatar,
-      bio,
-      location: `${city}, ${country}`,
-      city,
-      country,
-      languages,
-      collaborationPreferences: selectedCollabs,
+      avatar: avatar || '',
+      bio: bio.trim(),
+      location: city.trim() && country.trim() ? `${city.trim()}, ${country.trim()}` : country.trim() || city.trim() || 'Europe',
+      city: city.trim(),
+      country: country.trim(),
+      contactEmail: email.trim(),
+      contactPhone: phone.trim() || undefined,
+      languages: languages.length > 0 ? languages : ['English'],
       approvalStatus: 'under_review',
       verified: false,
-      categories: selectedCategories,
+      categories: selectedCategories.length > 0 ? selectedCategories : ['Lifestyle'],
       tags: [...selectedCategories, 'Creator Onboarded', 'Under Review'],
-      startingPriceEur: 450,
+      startingPriceEur: 350,
       rating: 5.0,
       reviewsCount: 0,
       totalCollaborations: 0,
@@ -306,8 +342,8 @@ export default function CreatorOnboardingPage() {
           title: 'Dedicated Reel / Shortform Video',
           platform: defaultPlatform,
           type: 'reel',
-          description: 'High-retention vertical video with usage rights.',
-          priceEur: 450,
+          description: 'High-retention vertical video with commercial usage rights.',
+          priceEur: 350,
           deliveryDays: 4,
           revisions: 2,
           inclusions: ['60-second vertical video', 'Brand tagging & hashtags', '30-day organic usage rights'],
@@ -315,18 +351,18 @@ export default function CreatorOnboardingPage() {
       ],
       portfolio: portfolioSamples.map((s, idx) => ({
         id: `port-${idx + 1}`,
-        brandName: 'Featured Campaign',
+        brandName: 'Showcase Project',
         campaignTitle: s.title,
-        mediaType: (s.type === 'Photo' ? 'image' : 'video') as 'image' | 'video',
+        mediaType: s.isVideo ? 'video' : 'image',
         mediaUrl: s.url,
         videoPreviewUrl: s.url,
-        views: '120K',
-        platform: 'instagram',
+        views: '15K',
+        platform: defaultPlatform,
         deliverableType: s.type,
       })),
       audience: {
-        topCountries: [{ country: country, percentage: 65 }, { country: 'Germany', percentage: 20 }],
-        genderSplit: { female: 72, male: 28 },
+        topCountries: [{ country: country || 'United Kingdom', percentage: 70 }, { country: 'Germany', percentage: 20 }],
+        genderSplit: { female: 68, male: 32 },
         topAgeGroup: '21-34',
       },
       reviews: [],
@@ -336,139 +372,249 @@ export default function CreatorOnboardingPage() {
     dispatch(
       setUser({
         id: creatorId,
-        name,
-        email: currentUser?.email || `${cleanH}@influverse.app`,
+        name: name.trim() || 'New Creator',
+        email: email.trim() || `${cleanH}@influverse.app`,
+        phone: phone.trim() || undefined,
         role: 'creator',
         handle: `@${cleanH}`,
-        avatar,
-        location: `${city}, ${country}`,
-        bio,
+        avatar: avatar || '',
+        location: city.trim() && country.trim() ? `${city.trim()}, ${country.trim()}` : 'Europe',
+        bio: bio.trim(),
         balanceEur: 0,
       })
     );
-    dispatch(switchRole('creator'));
 
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
-    }, 600);
+    }, 500);
   };
 
   const stepTitles = [
-    'Basic Profile',
-    'Location & Languages',
-    'Niche & Categories',
-    'Social Channels',
-    'Portfolio Samples',
-    'Collaboration Types',
+    'Profile',
+    'Location',
+    'Categories',
+    'Channels',
+    'Portfolio',
   ];
 
   return (
     <div className="min-h-screen bg-[#FAFAF8] flex flex-col justify-between font-sans selection:bg-[#FF2D78]/20 selection:text-[#FF2D78]">
-      {/* Sleek App Header */}
+      {/* Header */}
       <header className="border-b border-[#E7E7E2] bg-white sticky top-0 z-40">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center">
             <Logo size="sm" />
           </Link>
-          <div className="text-xs font-bold text-[#66665E]">
-            Creator Onboarding
+          <div className="flex items-center gap-2 text-sm font-semibold text-[#66665E]">
+            <span className="w-2 h-2 rounded-full bg-emerald-500" />
+            <span>Creator Setup</span>
           </div>
         </div>
       </header>
 
-      {/* Main Centered Flow */}
+      {/* Main Container */}
       <main className="flex-1 flex items-center justify-center py-10 sm:py-14 px-4 sm:px-6">
-        <div className="w-full max-w-xl space-y-6">
-          {/* Minimal Progress Bar */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between text-xs font-bold text-[#66665E]">
-              <span>Step {step} of {totalSteps}: {stepTitles[step - 1]}</span>
-              <span>{Math.round((step / totalSteps) * 100)}%</span>
+        <div className="w-full max-w-2xl space-y-6">
+          {/* Progress Bar & Stepper */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <div>
+                <span className="text-sm font-bold text-[#FF2D78]">
+                  Step {step} of {totalSteps}
+                </span>
+                <h1 className="text-xl font-black text-[#0A0A0A]">{stepTitles[step - 1]}</h1>
+              </div>
+              <span className="text-sm font-bold px-3 py-1 rounded-full bg-[#F4F4F0] text-[#0A0A0A]">
+                {Math.round((step / totalSteps) * 100)}% Complete
+              </span>
             </div>
-            <div className="w-full h-1 bg-[#E7E7E2] rounded-full overflow-hidden">
-              <div
-                className="h-full bg-[#0A0A0A] transition-all duration-300 rounded-full"
-                style={{ width: `${(step / totalSteps) * 100}%` }}
-              />
+
+            {/* Segmented Step Indicator */}
+            <div className="grid grid-cols-5 gap-2">
+              {Array.from({ length: totalSteps }).map((_, idx) => (
+                <div
+                  key={idx}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    idx + 1 < step
+                      ? 'bg-[#0A0A0A]'
+                      : idx + 1 === step
+                      ? 'bg-[#FF2D78]'
+                      : 'bg-[#E7E7E2]'
+                  }`}
+                />
+              ))}
             </div>
           </div>
 
-          {/* Step Form Card */}
-          <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#E7E7E2] shadow-xl shadow-black/[0.03] space-y-6">
-            {/* STEP 1: BASIC PROFILE */}
+          {/* Form Card */}
+          <div className="bg-white p-7 sm:p-9 rounded-3xl border border-[#E7E7E2] shadow-xl shadow-black/[0.03] space-y-6">
+            {/* STEP 1: ACCOUNT CREDENTIALS & PROFILE */}
             {step === 1 && (
               <div className="space-y-5 animate-in fade-in-50 duration-200">
-                <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">Basic Profile</h2>
+                <div>
+                  <h2 className="text-2xl font-black text-[#0A0A0A] tracking-tight">Profile Details</h2>
+                  <p className="text-sm text-[#66665E] font-medium mt-1">
+                    Set up your basic account and public creator details.
+                  </p>
+                </div>
 
-                {/* Profile Photo */}
-                <div className="flex items-center gap-4 py-1">
-                  <img
-                    src={avatar}
-                    alt={name}
-                    className="w-16 h-16 rounded-full object-cover border border-[#E7E7E2] shrink-0"
+                {/* Profile Photo (Centered) */}
+                <div className="flex flex-col items-center justify-center text-center py-1">
+                  <input
+                    ref={avatarInputRef}
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleAvatarFileChange}
                   />
-                  <div className="space-y-1">
-                    <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] bg-[#FAFAF8] hover:bg-white text-xs font-black text-[#0A0A0A] cursor-pointer transition-all">
-                      <Camera className="w-3.5 h-3.5" />
-                      <span>Change Photo</span>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        className="hidden"
-                        onChange={(e) => {
-                          const file = e.target.files?.[0];
-                          if (file) {
-                            const reader = new FileReader();
-                            reader.onload = () => setAvatar(reader.result as string);
-                            reader.readAsDataURL(file);
-                          }
-                        }}
-                      />
-                    </label>
+
+                  {avatar ? (
+                    <div
+                      onClick={() => avatarInputRef.current?.click()}
+                      className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-[#0A0A0A] shadow-md cursor-pointer group transition-transform hover:scale-105"
+                    >
+                      <img src={avatar} alt="Avatar" className="w-full h-full object-cover" />
+                      <div className="absolute inset-0 bg-black/50 text-white flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Camera className="w-5 h-5 mb-1" />
+                        <span className="text-xs font-bold">Change</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div
+                      onClick={() => avatarInputRef.current?.click()}
+                      className="w-24 h-24 rounded-full border-2 border-dashed border-[#D2D2CA] hover:border-[#0A0A0A] bg-[#FAFAF8] hover:bg-[#F4F4F0] flex flex-col items-center justify-center cursor-pointer transition-all text-[#66665E] hover:text-[#0A0A0A] group hover:scale-105"
+                    >
+                      <Camera className="w-7 h-7 mb-1 text-[#0A0A0A] group-hover:scale-110 transition-transform" />
+                      <span className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">Upload</span>
+                    </div>
+                  )}
+
+                  <div className="mt-2.5 space-y-0.5 text-center">
+                    <button
+                      type="button"
+                      onClick={() => avatarInputRef.current?.click()}
+                      className="text-sm font-bold text-[#0A0A0A] hover:text-[#FF2D78] transition-colors cursor-pointer block mx-auto"
+                    >
+                      {avatar ? 'Click photo to change' : 'Click to upload photo'}
+                    </button>
+                    <div className="text-sm text-[#66665E]">
+                      JPG, PNG or WEBP (max 10MB)
+                    </div>
                   </div>
                 </div>
 
-                {/* Display Name */}
+                {/* Full Name */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">Display Name</label>
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="e.g. Sophie Kim"
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] focus:ring-0 text-sm font-medium text-[#0A0A0A] outline-none transition-all"
-                  />
-                </div>
-
-                {/* Username */}
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">Username</label>
+                  <label className="text-sm font-bold text-[#0A0A0A] block">
+                    Full Name <span className="text-rose-500">*</span>
+                  </label>
                   <div className="relative">
-                    <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-bold text-[#A3A39C]">@</span>
+                    <UserIcon className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A3A39C]" />
                     <input
                       type="text"
-                      value={handle}
-                      onChange={(e) => setHandle(e.target.value.toLowerCase().replace(/[^a-z0-9_.]/g, ''))}
-                      placeholder="sophiekim"
-                      className="w-full pl-8 pr-4 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] focus:ring-0 text-sm font-medium text-[#0A0A0A] outline-none transition-all"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="e.g. Alex Morgan"
+                      className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] focus:ring-0 text-sm font-medium text-[#0A0A0A] outline-none transition-all"
                     />
+                  </div>
+                </div>
+
+                {/* Email & Phone */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-bold text-[#0A0A0A] block">
+                      Email <span className="text-rose-500">*</span>
+                    </label>
+                    <div className="relative">
+                      <Mail className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A3A39C]" />
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="you@example.com"
+                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] focus:ring-0 text-sm font-medium text-[#0A0A0A] outline-none transition-all"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-bold text-[#0A0A0A] block">
+                      Phone
+                    </label>
+                    <div className="relative">
+                      <Phone className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A3A39C]" />
+                      <input
+                        type="tel"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        placeholder="+1 (555) 000-0000"
+                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] focus:ring-0 text-sm font-medium text-[#0A0A0A] outline-none transition-all"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Password & Username */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-bold text-[#0A0A0A] block">
+                      Password <span className="text-rose-500">*</span>
+                    </label>
+                    <div className="relative">
+                      <Lock className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A3A39C]" />
+                      <input
+                        type={showPassword ? 'text' : 'password'}
+                        value={password}
+                        autoComplete="new-password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="At least 6 characters"
+                        className="w-full pl-10 pr-10 py-3 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] focus:ring-0 text-sm font-medium text-[#0A0A0A] outline-none transition-all"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#A3A39C] hover:text-[#0A0A0A] cursor-pointer"
+                      >
+                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-bold text-[#0A0A0A] block">
+                      Username <span className="text-rose-500">*</span>
+                    </label>
+                    <div className="relative">
+                      <AtSign className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A3A39C]" />
+                      <input
+                        type="text"
+                        value={handle}
+                        autoComplete="off"
+                        onChange={(e) => setHandle(e.target.value.toLowerCase().replace(/[^a-z0-9_.]/g, ''))}
+                        placeholder="yourusername"
+                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] focus:ring-0 text-sm font-medium text-[#0A0A0A] outline-none transition-all"
+                      />
+                    </div>
                   </div>
                 </div>
 
                 {/* Bio */}
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <label className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">Bio</label>
-                    <span className="text-xs text-[#A3A39C]">{bio.length}/160</span>
+                    <label className="text-sm font-bold text-[#0A0A0A] block">
+                      Bio
+                    </label>
+                    <span className="text-sm text-[#66665E] font-medium">{bio.length}/160</span>
                   </div>
                   <textarea
                     rows={3}
                     maxLength={160}
                     value={bio}
                     onChange={(e) => setBio(e.target.value)}
-                    placeholder="Brief bio (what you create, style, vibe)..."
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] focus:ring-0 text-sm font-medium text-[#0A0A0A] outline-none transition-all resize-none"
+                    placeholder="Tell brands what you create, your aesthetics, and what makes your content unique..."
+                    className="w-full px-4 py-3 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] focus:ring-0 text-sm font-medium text-[#0A0A0A] outline-none transition-all resize-none"
                   />
                 </div>
               </div>
@@ -477,16 +623,24 @@ export default function CreatorOnboardingPage() {
             {/* STEP 2: LOCATION & LANGUAGES */}
             {step === 2 && (
               <div className="space-y-5 animate-in fade-in-50 duration-200">
-                <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">Location &amp; Languages</h2>
+                <div>
+                  <h2 className="text-2xl font-black text-[#0A0A0A] tracking-tight">Location &amp; Languages</h2>
+                  <p className="text-sm text-[#66665E] font-medium mt-1">
+                    Where you are based and languages you speak.
+                  </p>
+                </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">Country</label>
+                    <label className="text-sm font-bold text-[#0A0A0A] block">
+                      Country <span className="text-rose-500">*</span>
+                    </label>
                     <select
                       value={country}
                       onChange={(e) => setCountry(e.target.value)}
-                      className="w-full px-3 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] bg-white text-sm font-medium text-[#0A0A0A] outline-none"
+                      className="w-full px-3.5 py-3 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] bg-white text-sm font-medium text-[#0A0A0A] outline-none cursor-pointer"
                     >
+                      <option value="">Select country...</option>
                       {COUNTRIES.map((c) => (
                         <option key={c.code} value={c.name}>
                           {c.name}
@@ -496,20 +650,24 @@ export default function CreatorOnboardingPage() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">City</label>
+                    <label className="text-sm font-bold text-[#0A0A0A] block">
+                      City <span className="text-rose-500">*</span>
+                    </label>
                     <input
                       type="text"
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
-                      placeholder="e.g. Zürich, Berlin"
-                      className="w-full px-4 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] focus:ring-0 text-sm font-medium text-[#0A0A0A] outline-none transition-all"
+                      placeholder="e.g. London, Zürich, Berlin"
+                      className="w-full px-4 py-3 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] focus:ring-0 text-sm font-medium text-[#0A0A0A] outline-none transition-all"
                     />
                   </div>
                 </div>
 
                 {/* Languages */}
-                <div className="space-y-2">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">Languages</label>
+                <div className="space-y-2.5">
+                  <label className="text-sm font-bold text-[#0A0A0A] block">
+                    Content Languages <span className="text-rose-500">*</span>
+                  </label>
                   <div className="flex flex-wrap gap-2">
                     {COMMON_LANGUAGES.map((l) => {
                       const isSelected = languages.includes(l);
@@ -518,9 +676,9 @@ export default function CreatorOnboardingPage() {
                           key={l}
                           type="button"
                           onClick={() => toggleLanguage(l)}
-                          className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                          className={`px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
                             isSelected
-                              ? 'bg-[#0A0A0A] text-white'
+                              ? 'bg-[#0A0A0A] text-white shadow-xs'
                               : 'bg-[#F4F4F0] text-[#555550] hover:bg-[#E7E7E2]'
                           }`}
                         >
@@ -531,7 +689,7 @@ export default function CreatorOnboardingPage() {
                   </div>
 
                   {/* Add Custom Language */}
-                  <div className="flex gap-2 pt-2">
+                  <div className="flex gap-2 pt-1 max-w-sm">
                     <input
                       type="text"
                       value={customLang}
@@ -542,13 +700,13 @@ export default function CreatorOnboardingPage() {
                           addCustomLanguage();
                         }
                       }}
-                      placeholder="Add language..."
-                      className="flex-1 px-3 py-1.5 rounded-xl border border-[#E7E7E2] text-xs font-medium text-[#0A0A0A] outline-none"
+                      placeholder="Add another language..."
+                      className="flex-1 px-3.5 py-2.5 rounded-xl border border-[#E7E7E2] text-sm font-medium text-[#0A0A0A] outline-none"
                     />
                     <button
                       type="button"
                       onClick={addCustomLanguage}
-                      className="px-3 py-1.5 rounded-xl bg-[#0A0A0A] text-white text-xs font-bold cursor-pointer"
+                      className="px-4 py-2.5 rounded-xl bg-[#0A0A0A] text-white text-sm font-bold cursor-pointer hover:bg-black transition-colors"
                     >
                       Add
                     </button>
@@ -557,17 +715,22 @@ export default function CreatorOnboardingPage() {
               </div>
             )}
 
-            {/* STEP 3: CATEGORIES / NICHE */}
+            {/* STEP 3: CATEGORIES */}
             {step === 3 && (
               <div className="space-y-5 animate-in fade-in-50 duration-200">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">Niche &amp; Categories</h2>
-                  <span className="text-xs font-black px-2.5 py-1 rounded-full bg-[#FFF0F5] text-[#FF2D78]">
-                    {selectedCategories.length} of 3
+                  <div>
+                    <h2 className="text-2xl font-black text-[#0A0A0A] tracking-tight">Categories</h2>
+                    <p className="text-sm text-[#66665E] font-medium mt-1">
+                      Choose 1 to 3 categories that define your work.
+                    </p>
+                  </div>
+                  <span className="text-sm font-bold px-3 py-1 rounded-full bg-[#FFF0F5] text-[#FF2D78]">
+                    {selectedCategories.length} / 3 selected
                   </span>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {CATEGORIES.map((cat) => {
                     const isSelected = selectedCategories.includes(cat.id);
                     return (
@@ -575,17 +738,17 @@ export default function CreatorOnboardingPage() {
                         key={cat.id}
                         type="button"
                         onClick={() => toggleCategory(cat.id)}
-                        className={`p-3 rounded-2xl border text-left transition-all flex items-center justify-between cursor-pointer ${
+                        className={`p-4 rounded-2xl border text-left transition-all flex items-center justify-between cursor-pointer ${
                           isSelected
                             ? 'bg-[#0A0A0A] text-white border-[#0A0A0A] shadow-xs'
                             : 'bg-white text-[#0A0A0A] border-[#E7E7E2] hover:bg-[#FAFAF8]'
                         }`}
                       >
-                        <div className="flex items-center gap-2">
-                          <span className="text-base">{cat.icon}</span>
-                          <span className="text-xs font-extrabold">{cat.label}</span>
+                        <div className="flex items-center gap-3">
+                          <span className="text-xl">{cat.icon}</span>
+                          <span className="text-sm font-extrabold">{cat.label}</span>
                         </div>
-                        {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+                        {isSelected && <Check className="w-4 h-4 stroke-[3]" />}
                       </button>
                     );
                   })}
@@ -595,203 +758,271 @@ export default function CreatorOnboardingPage() {
 
             {/* STEP 4: SOCIAL CHANNELS */}
             {step === 4 && (
-              <div className="space-y-4 animate-in fade-in-50 duration-200">
-                <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">Social Channels</h2>
+              <div className="space-y-5 animate-in fade-in-50 duration-200">
+                <div>
+                  <h2 className="text-2xl font-black text-[#0A0A0A] tracking-tight">Social Channels</h2>
+                  <p className="text-sm text-[#66665E] font-medium mt-1">
+                    Add at least one platform you create on.
+                  </p>
+                </div>
 
                 {/* Instagram */}
-                <div className="p-4 rounded-2xl border border-[#E7E7E2] bg-white space-y-2.5">
-                  <div className="flex items-center gap-2 text-xs font-black text-[#0A0A0A]">
+                <div className="p-4 rounded-2xl border border-[#E7E7E2] bg-white space-y-3">
+                  <div className="flex items-center gap-2 text-sm font-black text-[#0A0A0A]">
                     <Instagram className="w-4 h-4 text-[#E1306C]" />
                     <span>Instagram</span>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div className="relative">
                       <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-bold text-[#A3A39C]">@</span>
                       <input
                         type="text"
                         value={instagramHandle}
                         onChange={(e) => setInstagramHandle(e.target.value)}
-                        placeholder="handle"
-                        className="w-full pl-8 pr-3 py-2 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] text-xs font-medium text-[#0A0A0A] outline-none"
+                        placeholder="your_handle"
+                        className="w-full pl-8 pr-3 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] text-sm font-medium text-[#0A0A0A] outline-none"
                       />
                     </div>
                     <input
                       type="text"
                       value={instagramFollowers}
                       onChange={(e) => setInstagramFollowers(e.target.value)}
-                      placeholder="Followers (e.g. 1.2M)"
-                      className="w-full px-3 py-2 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] text-xs font-medium text-[#0A0A0A] outline-none"
+                      placeholder="Followers (e.g. 25K)"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] text-sm font-medium text-[#0A0A0A] outline-none"
                     />
                   </div>
                 </div>
 
                 {/* TikTok */}
-                <div className="p-4 rounded-2xl border border-[#E7E7E2] bg-white space-y-2.5">
-                  <div className="flex items-center gap-2 text-xs font-black text-[#0A0A0A]">
-                    <span className="text-sm">🎵</span>
+                <div className="p-4 rounded-2xl border border-[#E7E7E2] bg-white space-y-3">
+                  <div className="flex items-center gap-2 text-sm font-black text-[#0A0A0A]">
+                    <span className="text-base">🎵</span>
                     <span>TikTok</span>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div className="relative">
                       <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-bold text-[#A3A39C]">@</span>
                       <input
                         type="text"
                         value={tiktokHandle}
                         onChange={(e) => setTiktokHandle(e.target.value)}
-                        placeholder="handle"
-                        className="w-full pl-8 pr-3 py-2 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] text-xs font-medium text-[#0A0A0A] outline-none"
+                        placeholder="your_handle"
+                        className="w-full pl-8 pr-3 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] text-sm font-medium text-[#0A0A0A] outline-none"
                       />
                     </div>
                     <input
                       type="text"
                       value={tiktokFollowers}
                       onChange={(e) => setTiktokFollowers(e.target.value)}
-                      placeholder="Followers (e.g. 680K)"
-                      className="w-full px-3 py-2 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] text-xs font-medium text-[#0A0A0A] outline-none"
+                      placeholder="Followers (e.g. 50K)"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] text-sm font-medium text-[#0A0A0A] outline-none"
                     />
                   </div>
                 </div>
 
                 {/* YouTube */}
-                <div className="p-4 rounded-2xl border border-[#E7E7E2] bg-white space-y-2.5">
-                  <div className="flex items-center gap-2 text-xs font-black text-[#0A0A0A]">
+                <div className="p-4 rounded-2xl border border-[#E7E7E2] bg-white space-y-3">
+                  <div className="flex items-center gap-2 text-sm font-black text-[#0A0A0A]">
                     <Youtube className="w-4 h-4 text-red-600" />
                     <span>YouTube</span>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <input
                       type="text"
                       value={youtubeHandle}
                       onChange={(e) => setYoutubeHandle(e.target.value)}
-                      placeholder="Channel name"
-                      className="w-full px-3 py-2 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] text-xs font-medium text-[#0A0A0A] outline-none"
+                      placeholder="Channel Name"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] text-sm font-medium text-[#0A0A0A] outline-none"
                     />
                     <input
                       type="text"
                       value={youtubeFollowers}
                       onChange={(e) => setYoutubeFollowers(e.target.value)}
-                      placeholder="Subscribers (e.g. 210K)"
-                      className="w-full px-3 py-2 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] text-xs font-medium text-[#0A0A0A] outline-none"
+                      placeholder="Subscribers (e.g. 10K)"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] text-sm font-medium text-[#0A0A0A] outline-none"
                     />
                   </div>
                 </div>
               </div>
             )}
 
-            {/* STEP 5: PORTFOLIO & CONTENT SAMPLES */}
+            {/* STEP 5: PORTFOLIO (File Upload Only & Skippable) */}
             {step === 5 && (
               <div className="space-y-5 animate-in fade-in-50 duration-200">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">Portfolio Samples</h2>
-                  <span className="text-xs font-black px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700">
-                    {portfolioSamples.length} samples
+                  <div>
+                    <h2 className="text-2xl font-black text-[#0A0A0A] tracking-tight">Portfolio</h2>
+                    <p className="text-sm text-[#66665E] font-medium mt-1">
+                      Upload image or video files. <span className="text-[#FF2D78] font-bold">This step is optional.</span>
+                    </p>
+                  </div>
+                  <span className="text-sm font-bold px-3 py-1 rounded-full bg-zinc-100 text-[#0A0A0A]">
+                    {portfolioSamples.length} Uploaded
                   </span>
                 </div>
 
-                {/* Samples Grid */}
-                <div className="grid grid-cols-3 gap-3">
-                  {portfolioSamples.map((s, idx) => (
-                    <div key={idx} className="relative rounded-2xl overflow-hidden aspect-[4/5] bg-zinc-100 group border border-[#E7E7E2]">
-                      <img src={s.url} alt={s.title} className="w-full h-full object-cover" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90 p-2.5 flex flex-col justify-between">
-                        <div className="flex justify-between items-start">
-                          <span className="text-[10px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-black/60 text-white backdrop-blur-xs">
-                            {s.type}
+                {/* Hidden File Picker */}
+                <input
+                  ref={sampleFileInputRef}
+                  type="file"
+                  accept="image/*,video/*"
+                  className="hidden"
+                  onChange={handlePortfolioFileChange}
+                />
+
+                {/* Native File Upload Area */}
+                {!stagedMedia ? (
+                  <div
+                    onClick={() => sampleFileInputRef.current?.click()}
+                    className="border-2 border-dashed border-[#D2D2CA] hover:border-[#0A0A0A] rounded-2xl p-8 text-center cursor-pointer transition-all bg-[#FAFAF8] hover:bg-[#F4F4F0] space-y-2 group"
+                  >
+                    <div className="w-12 h-12 rounded-full bg-white border border-[#E7E7E2] group-hover:border-[#0A0A0A] group-hover:scale-105 transition-all flex items-center justify-center mx-auto text-[#0A0A0A] shadow-xs">
+                      <UploadCloud className="w-6 h-6" />
+                    </div>
+                    <div className="text-base font-bold text-[#0A0A0A]">
+                      Click to choose video or photo file
+                    </div>
+                    <div className="text-sm text-[#66665E]">
+                      Supports MP4, MOV, WEBM, PNG, JPG up to 50MB
+                    </div>
+                  </div>
+                ) : (
+                  /* Staged Media Ready to Add */
+                  <div className="p-5 rounded-2xl border-2 border-[#0A0A0A] bg-[#FAFAF8] space-y-4">
+                    <div className="flex items-start gap-4">
+                      {stagedMedia.isVideo ? (
+                        <video
+                          src={stagedMedia.url}
+                          controls
+                          className="w-36 h-28 rounded-xl object-cover bg-black shrink-0"
+                        />
+                      ) : (
+                        <img
+                          src={stagedMedia.url}
+                          alt="Staged"
+                          className="w-36 h-28 rounded-xl object-cover border border-[#E7E7E2] shrink-0"
+                        />
+                      )}
+                      <div className="space-y-1.5 flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#0A0A0A] text-white">
+                            {stagedMedia.isVideo ? 'Video' : 'Image'}
                           </span>
-                          {portfolioSamples.length > 2 && (
-                            <button
-                              type="button"
-                              onClick={() => removeSample(idx)}
-                              className="text-white/80 hover:text-rose-400 p-1 cursor-pointer transition-colors"
-                            >
-                              <Trash2 className="w-3.5 h-3.5" />
-                            </button>
-                          )}
+                          <span className="text-sm text-[#66665E] truncate">{stagedMedia.name}</span>
                         </div>
-                        <div className="text-[11px] font-bold text-white leading-tight truncate">
-                          {s.title}
-                        </div>
+                        <button
+                          type="button"
+                          onClick={() => sampleFileInputRef.current?.click()}
+                          className="text-sm font-bold text-[#FF2D78] hover:underline cursor-pointer"
+                        >
+                          Change File
+                        </button>
                       </div>
                     </div>
-                  ))}
-                </div>
 
-                {/* Quick Add Sample Input */}
-                <div className="p-3.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-2.5">
-                  <span className="text-xs font-black uppercase tracking-wider text-[#0A0A0A]">Add Sample</span>
-                  <div className="grid grid-cols-1 sm:grid-cols-12 gap-2">
-                    <input
-                      type="text"
-                      value={newTitle}
-                      onChange={(e) => setNewTitle(e.target.value)}
-                      placeholder="Title / Brand"
-                      className="sm:col-span-4 px-3 py-2 rounded-xl border border-[#E7E7E2] text-xs font-medium text-[#0A0A0A] bg-white outline-none"
-                    />
-                    <select
-                      value={newType}
-                      onChange={(e) => setNewType(e.target.value)}
-                      className="sm:col-span-3 px-2 py-2 rounded-xl border border-[#E7E7E2] text-xs font-bold text-[#0A0A0A] bg-white outline-none"
-                    >
-                      <option value="Reel">Reel</option>
-                      <option value="UGC Ad">UGC Ad</option>
-                      <option value="Photo">Photo</option>
-                      <option value="Video">Video</option>
-                    </select>
-                    <input
-                      type="text"
-                      value={newUrl}
-                      onChange={(e) => setNewUrl(e.target.value)}
-                      placeholder="Image / Video URL"
-                      className="sm:col-span-5 px-3 py-2 rounded-xl border border-[#E7E7E2] text-xs font-medium text-[#0A0A0A] bg-white outline-none"
-                    />
-                  </div>
-                  <button
-                    type="button"
-                    onClick={addSample}
-                    className="w-full py-2 rounded-xl bg-[#0A0A0A] text-white text-xs font-bold hover:bg-black transition-colors cursor-pointer flex items-center justify-center gap-1.5"
-                  >
-                    <Plus className="w-3.5 h-3.5" />
-                    <span>Add Sample</span>
-                  </button>
-                </div>
-              </div>
-            )}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-3 border-t border-[#E7E7E2]">
+                      <div className="space-y-1.5">
+                        <label className="text-sm font-bold text-[#0A0A0A] block">
+                          Sample Title
+                        </label>
+                        <input
+                          type="text"
+                          value={stagedMedia.title}
+                          onChange={(e) =>
+                            setStagedMedia({ ...stagedMedia, title: e.target.value })
+                          }
+                          placeholder="e.g. Summer Lookbook or Product Review"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-[#E7E7E2] bg-white text-sm font-medium text-[#0A0A0A] outline-none"
+                        />
+                      </div>
 
-            {/* STEP 6: COLLABORATION TYPES */}
-            {step === 6 && (
-              <div className="space-y-5 animate-in fade-in-50 duration-200">
-                <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">Collaboration Types</h2>
+                      <div className="space-y-1.5">
+                        <label className="text-sm font-bold text-[#0A0A0A] block">
+                          Format
+                        </label>
+                        <select
+                          value={stagedMedia.type}
+                          onChange={(e) =>
+                            setStagedMedia({ ...stagedMedia, type: e.target.value })
+                          }
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-[#E7E7E2] bg-white text-sm font-bold text-[#0A0A0A] outline-none cursor-pointer"
+                        >
+                          <option value="Reel">Reel / Vertical Video</option>
+                          <option value="UGC Ad">UGC Video Ad</option>
+                          <option value="Photo">Photo Shoot</option>
+                          <option value="Video">Full Video</option>
+                        </select>
+                      </div>
+                    </div>
 
-                <div className="space-y-2.5">
-                  {COLLAB_PREFERENCES.map((pref) => {
-                    const isSelected = selectedCollabs.includes(pref.id);
-                    return (
+                    <div className="flex items-center justify-end gap-2.5 pt-2">
                       <button
-                        key={pref.id}
                         type="button"
-                        onClick={() => toggleCollab(pref.id)}
-                        className={`w-full p-3.5 rounded-2xl border text-left transition-all flex items-center justify-between cursor-pointer ${
-                          isSelected
-                            ? 'bg-[#0A0A0A] text-white border-[#0A0A0A] shadow-xs'
-                            : 'bg-white text-[#0A0A0A] border-[#E7E7E2] hover:bg-[#FAFAF8]'
-                        }`}
+                        onClick={() => setStagedMedia(null)}
+                        className="px-4 py-2 rounded-xl border border-[#E7E7E2] text-sm font-bold text-[#66665E] hover:text-[#0A0A0A] cursor-pointer"
                       >
-                        <div className="space-y-0.5">
-                          <h4 className="text-sm font-black">{pref.title}</h4>
-                          <p className={`text-xs ${isSelected ? 'text-[#D2D2CA]' : 'text-[#66665E]'}`}>
-                            {pref.desc}
-                          </p>
-                        </div>
-                        {isSelected && <Check className="w-4 h-4 stroke-[3] shrink-0 ml-3" />}
+                        Cancel
                       </button>
-                    );
-                  })}
-                </div>
+                      <button
+                        type="button"
+                        onClick={confirmAddStagedSample}
+                        className="px-5 py-2 rounded-xl bg-[#0A0A0A] hover:bg-black text-white text-sm font-bold cursor-pointer flex items-center gap-1.5"
+                      >
+                        <Plus className="w-4 h-4" />
+                        <span>Add to Portfolio</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Uploaded Samples Grid */}
+                {portfolioSamples.length > 0 ? (
+                  <div className="space-y-2.5 pt-2">
+                    <span className="text-sm font-bold text-[#0A0A0A] block">
+                      Added Samples ({portfolioSamples.length})
+                    </span>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                      {portfolioSamples.map((s, idx) => (
+                        <div
+                          key={idx}
+                          className="relative rounded-2xl overflow-hidden aspect-[4/5] bg-black group border border-[#E7E7E2]"
+                        >
+                          {s.isVideo ? (
+                            <video src={s.url} className="w-full h-full object-cover opacity-80" />
+                          ) : (
+                            <img src={s.url} alt={s.title} className="w-full h-full object-cover" />
+                          )}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent p-3 flex flex-col justify-between">
+                            <div className="flex justify-between items-start">
+                              <span className="text-xs font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-black/60 text-white backdrop-blur-xs">
+                                {s.type}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => removeSample(idx)}
+                                className="text-white/80 hover:text-rose-400 p-1 cursor-pointer transition-colors"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </div>
+                            <div className="text-sm font-bold text-white leading-tight truncate">
+                              {s.title}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-center py-5 px-4 bg-[#FAFAF8] rounded-2xl border border-[#E7E7E2] text-sm text-[#66665E]">
+                    No samples added yet. You can upload media now or skip and add anytime later from your portfolio studio.
+                  </div>
+                )}
               </div>
             )}
 
             {/* Navigation Buttons */}
-            <div className="flex items-center gap-3 pt-3 border-t border-[#F4F4F0]">
+            <div className="flex items-center gap-3 pt-5 border-t border-[#F4F4F0]">
               {step > 1 && (
                 <button
                   type="button"
@@ -803,11 +1034,23 @@ export default function CreatorOnboardingPage() {
                 </button>
               )}
 
+              {/* In step 5, allow explicit Skip for now option */}
+              {step === 5 && (
+                <button
+                  type="button"
+                  disabled={isSubmitting}
+                  onClick={handleSubmit}
+                  className="py-3.5 px-6 rounded-2xl border border-[#E7E7E2] hover:border-[#0A0A0A] text-sm font-bold text-[#66665E] hover:text-[#0A0A0A] transition-all cursor-pointer"
+                >
+                  Skip for Now
+                </button>
+              )}
+
               <button
                 type="button"
                 disabled={isSubmitting}
                 onClick={handleNext}
-                className="flex-1 py-3 px-6 rounded-2xl bg-[#0A0A0A] hover:bg-black text-white font-black text-sm tracking-wide transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                className="flex-1 py-3.5 px-6 rounded-2xl bg-[#0A0A0A] hover:bg-black text-white font-bold text-sm tracking-wide transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
                 <span>{step === totalSteps ? 'Complete Profile' : 'Continue'}</span>
                 <ArrowRight className="w-4 h-4" />
@@ -826,22 +1069,22 @@ export default function CreatorOnboardingPage() {
             </div>
 
             <div className="space-y-2">
-              <span className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-700 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
-                <Clock className="w-3.5 h-3.5" />
-                <span>Profile Submitted</span>
+              <span className="inline-flex items-center gap-1.5 text-sm font-bold text-amber-700 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
+                <Clock className="w-4 h-4" />
+                <span>Application Submitted</span>
               </span>
               <h3 className="text-2xl font-black text-[#0A0A0A]">
-                Welcome, {name}!
+                Welcome, {name || 'Creator'}!
               </h3>
               <p className="text-sm text-[#66665E] font-medium leading-relaxed">
-                Your creator profile has been submitted for verification. You can now access your dashboard.
+                Your creator account has been created. You can now access your dashboard and manage campaigns.
               </p>
             </div>
 
             <button
               type="button"
               onClick={() => router.push('/creator/dashboard')}
-              className="w-full py-3.5 px-6 rounded-2xl bg-[#0A0A0A] hover:bg-black text-white font-black text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-3.5 px-6 rounded-2xl bg-[#0A0A0A] hover:bg-black text-white font-bold text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>Go to Creator Dashboard</span>
               <ArrowRight className="w-4 h-4" />

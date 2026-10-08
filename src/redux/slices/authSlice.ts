@@ -37,12 +37,14 @@ export const authSlice = createSlice({
     },
     switchRole: (state, action: PayloadAction<UserRole>) => {
       state.activeRole = action.payload;
-      if (action.payload === 'brand') {
-        state.currentUser = MOCK_USERS[0];
-        state.isAuthenticated = true;
-      } else if (action.payload === 'creator') {
-        state.currentUser = MOCK_USERS[1];
-        state.isAuthenticated = true;
+      if (!state.currentUser || state.currentUser.role !== action.payload) {
+        if (action.payload === 'brand') {
+          state.currentUser = MOCK_USERS[0];
+          state.isAuthenticated = true;
+        } else if (action.payload === 'creator') {
+          state.currentUser = MOCK_USERS[1];
+          state.isAuthenticated = true;
+        }
       }
     },
     updateUserProfile: (state, action: PayloadAction<Partial<User>>) => {

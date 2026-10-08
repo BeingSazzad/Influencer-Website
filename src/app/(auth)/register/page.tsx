@@ -87,14 +87,13 @@ export default function RegisterPage() {
         email,
         role: 'creator' as const,
         handle: `@${cleanHandle}`,
-        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
-        location: 'Zürich, Switzerland',
-        bio: 'Content creator on Influverse.',
+        avatar: '',
+        location: '',
+        bio: '',
         balanceEur: 0,
       };
 
       dispatch(setUser(creatorUser));
-      dispatch(switchRole('creator'));
       message.success(`Welcome to Influverse, ${name}! Let's complete your creator profile.`);
       router.push('/creator/onboarding');
     }
