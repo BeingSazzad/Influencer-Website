@@ -138,16 +138,15 @@ export default function CreatorOnboardingPage() {
   const avatarInputRef = useRef<HTMLInputElement>(null);
   const sampleFileInputRef = useRef<HTMLInputElement>(null);
 
-  // Step 1: Account Credentials & Profile (Starts Raw / Empty)
-  const isMockUser = currentUser?.name === 'Sophie Kim' || currentUser?.name === 'Elena Rostova';
-  const [name, setName] = useState(currentUser?.name && !isMockUser ? currentUser.name : '');
-  const [email, setEmail] = useState(currentUser?.email && !currentUser.email.includes('sophie') ? currentUser.email : '');
+  // Step 1: Creator Identity & Public Profile (Pre-populated from Registration)
+  const [name, setName] = useState(currentUser?.name || '');
+  const [email, setEmail] = useState(currentUser?.email || '');
   const [phone, setPhone] = useState(currentUser?.phone || '');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [handle, setHandle] = useState(currentUser?.handle && !isMockUser ? currentUser.handle.replace(/^@+/, '') : '');
+  const [handle, setHandle] = useState(
+    currentUser?.handle ? currentUser.handle.replace(/^@+/, '') : ''
+  );
   const [bio, setBio] = useState(
-    currentUser?.bio && !isMockUser && !currentUser.bio.includes('Europe') ? currentUser.bio : ''
+    currentUser?.bio && !currentUser.bio.includes('Europe') ? currentUser.bio : ''
   );
   const [avatar, setAvatar] = useState(
     currentUser?.avatar && !currentUser.avatar.includes('534528741775') ? currentUser.avatar : ''
@@ -203,9 +202,6 @@ export default function CreatorOnboardingPage() {
       if (!name.trim()) return message.error('Please enter your full name');
       if (!email.trim() || !email.includes('@')) return message.error('Please enter a valid email address');
       if (!handle.trim()) return message.error('Please choose a username');
-      if (!currentUser?.id && (!password || password.length < 6)) {
-        return message.error('Password must be at least 6 characters');
-      }
     } else if (step === 2) {
       if (!country.trim()) return message.error('Please select your country');
       if (!city.trim()) return message.error('Please enter your city');
@@ -612,7 +608,18 @@ export default function CreatorOnboardingPage() {
                   </div>
                 </div>
 
-                {/* Full Name & Gender */}
+                {/* Account Pre-fill Confirmation Badge */}
+                {currentUser?.email && (
+                  <div className="bg-[#FAFAF8] border border-[#E7E7E2] rounded-2xl px-4 py-2.5 flex items-center justify-between text-xs font-semibold text-[#66665E]">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
+                      <span>Account details linked from registration</span>
+                    </div>
+                    <span className="text-[#0A0A0A] font-bold">Editable below</span>
+                  </div>
+                )}
+
+                {/* Full Name & Username */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   <div className="space-y-1.5">
                     <label className="text-sm font-bold text-[#0A0A0A] block">
@@ -632,25 +639,27 @@ export default function CreatorOnboardingPage() {
 
                   <div className="space-y-1.5">
                     <label className="text-sm font-bold text-[#0A0A0A] block">
-                      Gender
+                      Username <span className="text-rose-500">*</span>
                     </label>
-                    <select
-                      value={gender}
-                      onChange={(e) => setGender(e.target.value as any)}
-                      className="w-full px-3.5 py-3 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] bg-white text-sm font-medium text-[#0A0A0A] outline-none cursor-pointer transition-all"
-                    >
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                      <option value="other">Other</option>
-                    </select>
+                    <div className="relative">
+                      <AtSign className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A3A39C]" />
+                      <input
+                        type="text"
+                        value={handle}
+                        autoComplete="off"
+                        onChange={(e) => setHandle(e.target.value.toLowerCase().replace(/[^a-z0-9_.]/g, ''))}
+                        placeholder="yourusername"
+                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] focus:ring-0 text-sm font-medium text-[#0A0A0A] outline-none transition-all"
+                      />
+                    </div>
                   </div>
                 </div>
 
-                {/* Email & Phone */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                {/* Email, Phone & Gender */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
                   <div className="space-y-1.5">
                     <label className="text-sm font-bold text-[#0A0A0A] block">
-                      Email <span className="text-rose-500">*</span>
+                      Public Contact Email <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
                       <Mail className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A3A39C]" />
@@ -666,7 +675,7 @@ export default function CreatorOnboardingPage() {
 
                   <div className="space-y-1.5">
                     <label className="text-sm font-bold text-[#0A0A0A] block">
-                      Phone
+                      Phone Number
                     </label>
                     <div className="relative">
                       <Phone className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A3A39C]" />
@@ -679,49 +688,20 @@ export default function CreatorOnboardingPage() {
                       />
                     </div>
                   </div>
-                </div>
-
-                {/* Password & Username */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                  <div className="space-y-1.5">
-                    <label className="text-sm font-bold text-[#0A0A0A] block">
-                      Password <span className="text-rose-500">*</span>
-                    </label>
-                    <div className="relative">
-                      <Lock className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A3A39C]" />
-                      <input
-                        type={showPassword ? 'text' : 'password'}
-                        value={password}
-                        autoComplete="new-password"
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="At least 6 characters"
-                        className="w-full pl-10 pr-10 py-3 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] focus:ring-0 text-sm font-medium text-[#0A0A0A] outline-none transition-all"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#A3A39C] hover:text-[#0A0A0A] cursor-pointer"
-                      >
-                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                      </button>
-                    </div>
-                  </div>
 
                   <div className="space-y-1.5">
                     <label className="text-sm font-bold text-[#0A0A0A] block">
-                      Username <span className="text-rose-500">*</span>
+                      Gender
                     </label>
-                    <div className="relative">
-                      <AtSign className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A3A39C]" />
-                      <input
-                        type="text"
-                        value={handle}
-                        autoComplete="off"
-                        onChange={(e) => setHandle(e.target.value.toLowerCase().replace(/[^a-z0-9_.]/g, ''))}
-                        placeholder="yourusername"
-                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] focus:ring-0 text-sm font-medium text-[#0A0A0A] outline-none transition-all"
-                      />
-                    </div>
+                    <select
+                      value={gender}
+                      onChange={(e) => setGender(e.target.value as any)}
+                      className="w-full px-3.5 py-3 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] bg-white text-sm font-medium text-[#0A0A0A] outline-none cursor-pointer transition-all"
+                    >
+                      <option value="female">Female</option>
+                      <option value="male">Male</option>
+                      <option value="other">Other</option>
+                    </select>
                   </div>
                 </div>
 

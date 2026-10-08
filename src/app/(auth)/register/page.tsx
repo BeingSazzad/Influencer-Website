@@ -190,38 +190,21 @@ export default function RegisterPage() {
 
               {/* Creator Username or Brand Company */}
               {role === 'creator' ? (
-                <>
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">
-                      Username
-                    </label>
-                    <div className="relative">
-                      <AtSign className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A3A39C]" />
-                      <input
-                        type="text"
-                        value={handle}
-                        onChange={(e) => setHandle(e.target.value)}
-                        placeholder="sophiekim"
-                        className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] focus:ring-0 text-sm font-medium text-[#0A0A0A] outline-none transition-all"
-                      />
-                    </div>
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">
+                    Username
+                  </label>
+                  <div className="relative">
+                    <AtSign className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A3A39C]" />
+                    <input
+                      type="text"
+                      value={handle}
+                      onChange={(e) => setHandle(e.target.value)}
+                      placeholder="sophiekim"
+                      className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] focus:ring-0 text-sm font-medium text-[#0A0A0A] outline-none transition-all"
+                    />
                   </div>
-
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">
-                      Gender
-                    </label>
-                    <select
-                      value={gender}
-                      onChange={(e) => setGender(e.target.value as any)}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] bg-white text-sm font-medium text-[#0A0A0A] outline-none cursor-pointer transition-all"
-                    >
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                      <option value="other">Other</option>
-                    </select>
-                  </div>
-                </>
+                </div>
               ) : (
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">
