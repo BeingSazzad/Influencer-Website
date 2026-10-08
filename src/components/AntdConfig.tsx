@@ -30,6 +30,7 @@ export function AntdConfig({ children }: { children: React.ReactNode }) {
             colorText: '#0A0A0A',
             colorTextSecondary: '#66665E',
             colorTextDescription: '#66665E',
+            colorTextPlaceholder: '#66665E',
           },
           components: {
             Button: {
@@ -63,6 +64,8 @@ export function AntdConfig({ children }: { children: React.ReactNode }) {
               controlHeightSM: 32,
               borderRadius: 14,
               fontFamily: "'Red Hat Display', sans-serif",
+              colorText: '#0A0A0A',
+              colorTextPlaceholder: '#66665E',
             },
             Select: {
               controlHeight: 40,
@@ -70,6 +73,8 @@ export function AntdConfig({ children }: { children: React.ReactNode }) {
               controlHeightSM: 32,
               borderRadius: 14,
               fontFamily: "'Red Hat Display', sans-serif",
+              colorText: '#0A0A0A',
+              colorTextPlaceholder: '#66665E',
               optionSelectedBg: '#F4F4F0',
               optionSelectedColor: '#0A0A0A',
               optionActiveBg: '#FAFAF8',

@@ -103,14 +103,6 @@ export function BrandAnnualAnalytics() {
   const maxCreators = Math.max(...yearData.months.map((m) => m.creatorsCount));
   const currentMax = activeMetric === 'spend' ? maxSpend : maxCreators;
 
-  // Highest performing month
-  const peakMonthRecord = yearData.months.reduce((prev, current) => {
-    if (activeMetric === 'spend') {
-      return current.spendEur > prev.spendEur ? current : prev;
-    }
-    return current.creatorsCount > prev.creatorsCount ? current : prev;
-  });
-
   return (
     <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#E7E7E2] shadow-2xs space-y-6 font-sans">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#E7E7E2]">
@@ -168,8 +160,6 @@ export function BrandAnnualAnalytics() {
         </div>
       </div>
 
-
-
       {/* 12-Month Bar Chart */}
       <div className="pt-2">
         <div className="h-72 w-full flex items-end justify-between gap-1.5 sm:gap-3 px-1 pt-6 pb-2 relative">
@@ -181,7 +171,6 @@ export function BrandAnnualAnalytics() {
             const val = activeMetric === 'spend' ? item.spendEur : item.creatorsCount;
             const pct = Math.max(12, Math.round((val / currentMax) * 100));
             const isHovered = hoveredMonth?.month === item.month;
-            const isPeak = item.month === peakMonthRecord.month;
 
             return (
               <div
@@ -190,16 +179,10 @@ export function BrandAnnualAnalytics() {
                 onMouseLeave={() => setHoveredMonth(null)}
                 className="flex-1 h-full flex flex-col justify-end items-center group cursor-pointer relative"
               >
-                {/* Floating Micro-Value on Hover or Peak */}
-                {(isHovered || isPeak) && (
+                {/* Floating Micro-Value on Hover ONLY */}
+                {isHovered && (
                   <div
-                    className={`absolute -top-7 px-2.5 py-0.5 rounded-md text-xs font-black tracking-tight whitespace-nowrap z-20 pointer-events-none transition-all ${
-                      isHovered
-                        ? activeMetric === 'spend'
-                          ? 'bg-[#FF2D78] text-white shadow-md -translate-y-1'
-                          : 'bg-[#0A0A0A] text-white shadow-md -translate-y-1'
-                        : 'bg-[#0A0A0A] text-white shadow-xs'
-                    }`}
+                    className="absolute -top-7 px-2.5 py-0.5 rounded-md text-xs font-black tracking-tight whitespace-nowrap z-20 pointer-events-none transition-all bg-[#0A0A0A] text-white shadow-md -translate-y-1"
                   >
                     {activeMetric === 'spend'
                       ? `€${val.toLocaleString()}`
@@ -212,14 +195,10 @@ export function BrandAnnualAnalytics() {
                   {/* Dynamic Height Bar */}
                   <div
                     style={{ height: `${pct}%` }}
-                    className={`w-full rounded-md transition-all duration-300 ${
+                    className={`w-full rounded-md transition-all duration-200 ${
                       isHovered
-                        ? activeMetric === 'spend'
-                          ? 'bg-[#FF2D78] scale-102'
-                          : 'bg-[#0A0A0A] scale-102 ring-2 ring-emerald-400/50'
-                        : (item.isCurrent || isPeak)
-                        ? 'bg-[#0A0A0A]'
-                        : 'bg-[#D2D2CA] group-hover:bg-[#0A0A0A]'
+                        ? 'bg-[#FF2D78] scale-102 shadow-xs'
+                        : 'bg-[#0A0A0A]'
                     }`}
                   />
                 </div>
@@ -227,18 +206,13 @@ export function BrandAnnualAnalytics() {
                 {/* Month Label */}
                 <span
                   className={`text-xs font-extrabold mt-2 transition-colors ${
-                    isHovered || item.isCurrent
-                      ? 'text-[#0A0A0A]'
+                    isHovered
+                      ? 'text-[#FF2D78]'
                       : 'text-[#66665E] group-hover:text-[#0A0A0A]'
                   }`}
                 >
                   {item.month}
                 </span>
-
-                {/* Current Month Under-dot */}
-                {item.isCurrent && selectedYear === 2026 && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF2D78] absolute -bottom-2" />
-                )}
               </div>
             );
           })}

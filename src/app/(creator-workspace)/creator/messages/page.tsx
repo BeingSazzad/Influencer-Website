@@ -310,38 +310,13 @@ export default function CreatorMessagesPage() {
                         </div>
                       </div>
 
-                      <div className="flex flex-col items-end justify-between self-stretch shrink-0 pl-1">
-                        {conv.unreadCountCreator > 0 ? (
+                      {conv.unreadCountCreator > 0 && (
+                        <div className="shrink-0 self-center pl-1">
                           <span className="min-w-[18px] h-[18px] px-1.5 rounded-full bg-[#0A0A0A] text-white text-[10px] font-black flex items-center justify-center shadow-2xs">
                             {conv.unreadCountCreator}
                           </span>
-                        ) : (
-                          <span className="w-2 h-2" />
-                        )}
-
-                        <div onClick={(e) => e.stopPropagation()}>
-                          <Popconfirm
-                            title="Delete conversation?"
-                            description="Remove this thread from your inbox?"
-                            okText="Delete"
-                            cancelText="Cancel"
-                            okButtonProps={{ danger: true, size: 'small' }}
-                            cancelButtonProps={{ size: 'small' }}
-                            onConfirm={() => {
-                              dispatch(deleteConversation({ conversationId: conv.id }));
-                              message.success('Conversation removed');
-                            }}
-                          >
-                            <button
-                              type="button"
-                              className="opacity-0 group-hover:opacity-100 p-1 rounded-md text-zinc-400 hover:text-rose-600 hover:bg-rose-50 transition-all cursor-pointer"
-                              title="Delete conversation"
-                            >
-                              <Trash2 className="w-3.5 h-3.5" />
-                            </button>
-                          </Popconfirm>
                         </div>
-                      </div>
+                      )}
                     </div>
                   );
                 })
@@ -780,7 +755,7 @@ export default function CreatorMessagesPage() {
                   placeholder={`Write a reply to ${activeConv.brandName}...`}
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
-                  className="flex-1 h-11 px-4 text-sm font-sans rounded-full bg-[#FAFAF8] border border-[#E7E7E2] outline-none focus:border-[#0A0A0A] focus:bg-white transition-all"
+                  className="flex-1 h-11 px-4 text-sm font-sans rounded-full bg-[#FAFAF8] border border-[#D2D2CA] outline-none focus:border-[#0A0A0A] focus:bg-white text-[#0A0A0A] placeholder:text-[#66665E] transition-all"
                 />
 
                 <button
@@ -818,42 +793,42 @@ export default function CreatorMessagesPage() {
       >
         <div className="space-y-4 pt-2">
           <div className="space-y-1.5">
-            <label className="text-sm font-semibold text-[#52524E]">Title</label>
+            <label className="text-sm font-bold text-[#0A0A0A]">Title</label>
             <Input
               value={offerTitle}
               onChange={(e) => setOfferTitle(e.target.value)}
               placeholder="Reel and 3 stories"
-              className="rounded-xl h-11"
+              className="rounded-xl h-11 text-sm font-semibold text-[#0A0A0A] placeholder:text-[#66665E] placeholder:font-normal border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
             />
           </div>
           <div className="space-y-1.5">
-            <label className="text-sm font-semibold text-[#52524E]">Deliverables</label>
+            <label className="text-sm font-bold text-[#0A0A0A]">Deliverables</label>
             <Input.TextArea
               rows={4}
               value={offerDeliverables}
               onChange={(e) => setOfferDeliverables(e.target.value)}
               placeholder={'1 Reel\n3 Stories\nUsage rights for 30 days'}
-              className="rounded-xl"
+              className="rounded-xl text-sm font-semibold text-[#0A0A0A] placeholder:text-[#66665E] placeholder:font-normal border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A] p-3 leading-relaxed"
             />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
-              <label className="text-sm font-semibold text-[#52524E]">Price (EUR)</label>
+              <label className="text-sm font-bold text-[#0A0A0A]">Price (EUR)</label>
               <Input
                 type="number"
-                prefix={<span className="text-[#66665E]">€</span>}
+                prefix={<span className="text-[#0A0A0A] font-bold text-sm">€</span>}
                 value={offerPrice ?? ''}
                 onChange={(e) => setOfferPrice(e.target.value ? Number(e.target.value) : null)}
                 placeholder="950"
-                className="rounded-xl h-11"
+                className="rounded-xl h-11 text-sm font-semibold text-[#0A0A0A] placeholder:text-[#66665E] placeholder:font-normal border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-sm font-semibold text-[#52524E]">Platform</label>
+              <label className="text-sm font-bold text-[#0A0A0A]">Platform</label>
               <Select
                 value={offerPlatform}
                 onChange={(value) => setOfferPlatform(value)}
-                className="w-full h-11"
+                className="w-full h-11 text-sm font-semibold text-[#0A0A0A]"
                 options={[
                   { value: 'instagram', label: 'Instagram' },
                   { value: 'tiktok', label: 'TikTok' },

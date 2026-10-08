@@ -17,7 +17,6 @@ import {
   ArrowRight,
   Sparkles,
   Check,
-  ShieldCheck,
 } from 'lucide-react';
 import { message } from 'antd';
 
@@ -43,6 +42,7 @@ export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [handle, setHandle] = useState('');
   const [companyName, setCompanyName] = useState('');
+  const [gender, setGender] = useState<'female' | 'male' | 'other'>('female');
 
   // Handle Form Submit
   const handleRegister = (e: React.FormEvent) => {
@@ -87,6 +87,7 @@ export default function RegisterPage() {
         email,
         role: 'creator' as const,
         handle: `@${cleanHandle}`,
+        gender,
         avatar: '',
         location: '',
         bio: '',
@@ -120,15 +121,6 @@ export default function RegisterPage() {
           <Link href="/" className="flex items-center">
             <Logo size="sm" />
           </Link>
-          <div className="flex items-center gap-3 text-sm">
-            <span className="text-[#66665E] font-medium hidden sm:inline">Already have an account?</span>
-            <Link
-              href="/login"
-              className="font-bold text-[#0A0A0A] hover:text-[#FF2D78] transition-colors"
-            >
-              Sign In
-            </Link>
-          </div>
         </div>
       </header>
 
@@ -198,25 +190,42 @@ export default function RegisterPage() {
 
               {/* Creator Username or Brand Company */}
               {role === 'creator' ? (
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">
-                    Creator Username / Handle
-                  </label>
-                  <div className="relative">
-                    <AtSign className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A3A39C]" />
-                    <input
-                      type="text"
-                      value={handle}
-                      onChange={(e) => setHandle(e.target.value)}
-                      placeholder="sophiekim"
-                      className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] focus:ring-0 text-sm font-medium text-[#0A0A0A] outline-none transition-all"
-                    />
+                <>
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">
+                      Username
+                    </label>
+                    <div className="relative">
+                      <AtSign className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A3A39C]" />
+                      <input
+                        type="text"
+                        value={handle}
+                        onChange={(e) => setHandle(e.target.value)}
+                        placeholder="sophiekim"
+                        className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] focus:ring-0 text-sm font-medium text-[#0A0A0A] outline-none transition-all"
+                      />
+                    </div>
                   </div>
-                </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">
+                      Gender
+                    </label>
+                    <select
+                      value={gender}
+                      onChange={(e) => setGender(e.target.value as any)}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] bg-white text-sm font-medium text-[#0A0A0A] outline-none cursor-pointer transition-all"
+                    >
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                </>
               ) : (
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">
-                    Company / Brand Name
+                    Company Name
                   </label>
                   <div className="relative">
                     <Building className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A3A39C]" />
@@ -314,18 +323,19 @@ export default function RegisterPage() {
                 </button>
               </div>
             </div>
-          </div>
 
-          {/* Clean Trust Footer */}
-          <div className="flex items-center justify-center gap-4 text-xs text-[#888880] text-center">
-            <span className="flex items-center gap-1">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-              <span>100% Escrow Protected</span>
-            </span>
-            <span>•</span>
-            <span>EUR (€) Currency</span>
-            <span>•</span>
-            <Link href="/terms" className="hover:underline">Terms</Link>
+            {/* Already Have Account - Sign In CTA */}
+            <div className="text-center pt-3 border-t border-[#E7E7E2]/70">
+              <p className="text-sm text-[#66665E] font-medium">
+                Already have an account?{' '}
+                <Link
+                  href="/login"
+                  className="font-bold text-[#0A0A0A] hover:text-[#FF2D78] transition-colors"
+                >
+                  Sign In
+                </Link>
+              </p>
+            </div>
           </div>
         </div>
       </main>

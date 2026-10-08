@@ -60,6 +60,18 @@ select:focus-visible {
   color: #FFFFFF;
 }
 
+/* Accessible High-Contrast Placeholders (WCAG 2.2 AA compliant, contrast > 5.5:1) */
+::placeholder,
+input::placeholder,
+textarea::placeholder,
+.ant-input::placeholder,
+.ant-input-affix-wrapper input::placeholder,
+.ant-select-selection-placeholder {
+  color: #66665E !important;
+  opacity: 1 !important;
+  -webkit-text-fill-color: #66665E !important;
+}
+
 /* Respect Reduced Motion Preferences */
 @media (prefers-reduced-motion: reduce) {
   *,

@@ -27,8 +27,10 @@ import {
   ChevronDown,
   ChevronUp,
   MoreVertical,
+  Check,
 } from 'lucide-react';
 import { Button, Modal, Input, Select, message, Dropdown } from 'antd';
+import { InstagramLogo, TikTokLogo, YouTubeLogo } from '@/components/shared/SocialLogos';
 
 function platformLabel(platform: PlatformType) {
   if (platform === 'all' || platform === 'multi') return 'All platforms';
@@ -449,6 +451,7 @@ function CreatorPortfolioContent() {
                 className="w-full h-10"
                 onChange={handleAutofillFromOrder}
                 allowClear
+                menuItemSelectedIcon={<Check className="w-4 h-4 text-[#0A0A0A] stroke-[3]" />}
                 options={orders.map((o) => ({
                   value: o.id,
                   label: `${o.brandName} — ${o.packageTitle}`,
@@ -540,12 +543,53 @@ function CreatorPortfolioContent() {
                 value={platform}
                 onChange={(val) => setPlatform(val)}
                 className="w-full h-10"
+                menuItemSelectedIcon={<Check className="w-4 h-4 text-[#0A0A0A] stroke-[3]" />}
                 options={[
-                  { value: 'instagram', label: 'Instagram' },
-                  { value: 'tiktok', label: 'TikTok' },
-                  { value: 'youtube', label: 'YouTube' },
-                  { value: 'ugc', label: 'UGC Ads' },
-                  { value: 'all', label: 'All platforms' },
+                  {
+                    value: 'instagram',
+                    label: (
+                      <div className="flex items-center gap-2">
+                        <InstagramLogo className="w-4 h-4 shrink-0 rounded-sm" />
+                        <span className="font-semibold text-sm">Instagram</span>
+                      </div>
+                    ),
+                  },
+                  {
+                    value: 'tiktok',
+                    label: (
+                      <div className="flex items-center gap-2">
+                        <TikTokLogo className="w-4 h-4 shrink-0 rounded-sm" />
+                        <span className="font-semibold text-sm">TikTok</span>
+                      </div>
+                    ),
+                  },
+                  {
+                    value: 'youtube',
+                    label: (
+                      <div className="flex items-center gap-2">
+                        <YouTubeLogo className="w-4 h-4 shrink-0 rounded-sm" />
+                        <span className="font-semibold text-sm">YouTube</span>
+                      </div>
+                    ),
+                  },
+                  {
+                    value: 'ugc',
+                    label: (
+                      <div className="flex items-center gap-2">
+                        <Sparkles className="w-4 h-4 text-purple-600 shrink-0" />
+                        <span className="font-semibold text-sm">UGC Ads</span>
+                      </div>
+                    ),
+                  },
+                  {
+                    value: 'all',
+                    label: (
+                      <div className="flex items-center gap-2">
+                        <Layers className="w-4 h-4 text-amber-600 shrink-0" />
+                        <span className="font-semibold text-sm">All platforms</span>
+                      </div>
+                    ),
+                  },
                 ]}
               />
             </div>

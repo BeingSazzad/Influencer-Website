@@ -52,7 +52,7 @@ export function PricingSection() {
             <div>
               <div className="flex flex-col min-[420px]:flex-row min-[420px]:justify-between min-[420px]:items-center gap-1 mb-2 font-sans">
                 <label className="text-sm font-bold text-[#66665E]">
-                  Creator Base Rate (EUR):
+                  Creator Base Rate:
                 </label>
                 <span className="font-sans text-2xl sm:text-3xl font-black text-[#0A0A0A]">
                   €{budgetEur.toLocaleString()}
@@ -64,6 +64,7 @@ export function PricingSection() {
                 step={50}
                 value={budgetEur}
                 onChange={(val) => setBudgetEur(val)}
+                tooltip={{ open: false }}
                 trackStyle={{ backgroundColor: '#0A0A0A' }}
                 handleStyle={{ borderColor: '#0A0A0A' }}
               />

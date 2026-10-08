@@ -4,7 +4,12 @@ import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { WorkspaceHeader } from '@/components/layout/WorkspaceHeader';
 import { EmptyState } from '@/components/shared/EmptyState';
-import { addCreatorPackage, updateCreatorPackage, deleteCreatorPackage } from '@/redux/slices/creatorSlice';
+import {
+  addCreatorPackage,
+  updateCreatorPackage,
+  deleteCreatorPackage,
+  updateCreatorProfileDetails,
+} from '@/redux/slices/creatorSlice';
 import { CreatorPackage, PlatformType } from '@/types';
 import {
   Plus,
@@ -68,6 +73,10 @@ export default function CreatorPackagesPage() {
   });
 
   const handleOpenAddModal = () => {
+    if (currentCreator.packages.length >= 3) {
+      message.warning('Rate cards support a maximum of 3 packages (Starter, Standard, Premium). Edit an existing package to update your offerings.');
+      return;
+    }
     setEditingPkgId(null);
     setTitle('');
     setDescription('');
@@ -102,6 +111,10 @@ export default function CreatorPackagesPage() {
   };
 
   const handleDuplicatePackage = (pkg: CreatorPackage) => {
+    if (currentCreator.packages.length >= 3) {
+      message.warning('Rate cards support a maximum of 3 packages. Please remove or edit an existing package first.');
+      return;
+    }
     const duplicatedPkg: CreatorPackage = {
       ...pkg,
       id: `pkg-${Date.now()}`,
@@ -109,13 +122,18 @@ export default function CreatorPackagesPage() {
       popular: false,
     };
     dispatch(addCreatorPackage({ creatorId: currentCreator.id, pkg: duplicatedPkg }));
-    message.success(`Duplicated "${pkg.title}" as a new deal!`);
+    const allPackages = [...currentCreator.packages, duplicatedPkg];
+    const minPrice = Math.min(...allPackages.map((p) => p.priceEur));
+    if (Number.isFinite(minPrice) && minPrice > 0) {
+      dispatch(updateCreatorProfileDetails({ creatorId: currentCreator.id, updates: { startingPriceEur: minPrice } }));
+    }
+    message.success(`Duplicated "${pkg.title}" as a new package!`);
   };
 
   const handleSavePackage = (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim() || !description.trim()) {
-      message.error('Please enter a deal title and description.');
+      message.error('Please enter a package title and description.');
       return;
     }
 
@@ -125,7 +143,7 @@ export default function CreatorPackagesPage() {
     }
 
     if (selectedChannels.length === 0) {
-      message.error('Please select at least 1 delivery channel for this deal.');
+      message.error('Please select at least 1 delivery channel for this package.');
       return;
     }
 
@@ -163,7 +181,12 @@ export default function CreatorPackagesPage() {
       };
 
       dispatch(updateCreatorPackage({ creatorId: currentCreator.id, pkg: updatedPkg }));
-      message.success('Collaboration deal updated on your rate card!');
+      const remainingPackages = currentCreator.packages.map((p) => (p.id === editingPkgId ? updatedPkg : p));
+      const minPrice = Math.min(...remainingPackages.map((p) => p.priceEur));
+      if (Number.isFinite(minPrice) && minPrice > 0) {
+        dispatch(updateCreatorProfileDetails({ creatorId: currentCreator.id, updates: { startingPriceEur: minPrice } }));
+      }
+      message.success('Package updated on your rate card!');
     } else {
       const newPkg: CreatorPackage = {
         id: `pkg-${Date.now()}`,
@@ -181,7 +204,12 @@ export default function CreatorPackagesPage() {
       };
 
       dispatch(addCreatorPackage({ creatorId: currentCreator.id, pkg: newPkg }));
-      message.success('New collaboration deal published to your rate card!');
+      const allPackages = [...currentCreator.packages, newPkg];
+      const minPrice = Math.min(...allPackages.map((p) => p.priceEur));
+      if (Number.isFinite(minPrice) && minPrice > 0) {
+        dispatch(updateCreatorProfileDetails({ creatorId: currentCreator.id, updates: { startingPriceEur: minPrice } }));
+      }
+      message.success('New package published to your rate card!');
     }
 
     setIsModalOpen(false);
@@ -189,7 +217,14 @@ export default function CreatorPackagesPage() {
 
   const handleDeletePackage = (pkgId: string) => {
     dispatch(deleteCreatorPackage({ creatorId: currentCreator.id, packageId: pkgId }));
-    message.success('Deal removed from your rate card.');
+    const remainingPackages = currentCreator.packages.filter((p) => p.id !== pkgId);
+    if (remainingPackages.length > 0) {
+      const minPrice = Math.min(...remainingPackages.map((p) => p.priceEur));
+      if (Number.isFinite(minPrice) && minPrice > 0) {
+        dispatch(updateCreatorProfileDetails({ creatorId: currentCreator.id, updates: { startingPriceEur: minPrice } }));
+      }
+    }
+    message.success('Package removed from your rate card.');
   };
 
   return (
@@ -229,7 +264,7 @@ export default function CreatorPackagesPage() {
                 <Search className="w-3.5 h-3.5 text-[#66665E] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <input
                   type="text"
-                  placeholder="Search deals..."
+                  placeholder="Search packages..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full h-9 pl-9 pr-3 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-sm font-semibold placeholder:text-[#66665E] focus:outline-none focus:border-[#0A0A0A] transition-colors"
@@ -253,7 +288,7 @@ export default function CreatorPackagesPage() {
                     {pkg.popular && (
                       <div className="absolute -top-3 left-6 bg-[#0A0A0A] text-white text-xs font-extrabold uppercase tracking-wider px-3 py-0.5 rounded-full shadow-xs flex items-center gap-1">
                         <Sparkles className="w-3 h-3 text-amber-300" />
-                        <span>Featured Deal</span>
+                        <span>Most Popular</span>
                       </div>
                     )}
 
@@ -428,7 +463,7 @@ export default function CreatorPackagesPage() {
           {/* Pricing, Turnaround, Revisions */}
           <div className="grid grid-cols-3 gap-3">
             <div className="space-y-1.5">
-              <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">Rate (€ EUR)</label>
+              <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">Rate (€)</label>
               <InputNumber
                 min={50}
                 max={50000}
@@ -477,7 +512,7 @@ export default function CreatorPackagesPage() {
 
           {/* Description */}
           <div className="space-y-1.5">
-            <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">Deal Description</label>
+            <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">Package Description</label>
             <Input.TextArea
               rows={2}
               placeholder="Creative scope, angles, or content guidelines..."
@@ -496,7 +531,7 @@ export default function CreatorPackagesPage() {
               onChange={(e) => setIsPopular(e.target.checked)}
               className="w-4 h-4 rounded text-[#0A0A0A]"
             />
-            <span>Highlight as &quot;Featured Deal&quot; on public storefront</span>
+            <span>Highlight as &quot;Most Popular&quot; on public storefront</span>
           </label>
 
           {/* Modal Actions */}
@@ -509,7 +544,7 @@ export default function CreatorPackagesPage() {
               onClick={handleSavePackage}
               className="h-10 px-6 rounded-full font-bold bg-[#0A0A0A] hover:!bg-zinc-800 !text-white border-none shadow-sm cursor-pointer"
             >
-              {editingPkgId ? 'Save Changes' : 'Publish Deal'}
+              {editingPkgId ? 'Save Changes' : 'Publish Package'}
             </Button>
           </div>
         </div>

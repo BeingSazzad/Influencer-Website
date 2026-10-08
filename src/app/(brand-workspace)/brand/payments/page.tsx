@@ -372,7 +372,7 @@ export default function BrandPaymentsPage() {
 
           {/* Quick Preset Buttons */}
           <div className="space-y-2">
-            <label className="text-sm font-bold text-[#0A0A0A]">Select Deposit Amount (EUR)</label>
+            <label className="text-sm font-bold text-[#0A0A0A]">Select Deposit Amount</label>
             <div className="grid grid-cols-4 gap-2">
               {[500, 1000, 2500, 5000].map((preset) => (
                 <button
@@ -393,7 +393,7 @@ export default function BrandPaymentsPage() {
 
           {/* Custom Amount Input */}
           <div className="space-y-1.5">
-            <label className="text-sm font-bold text-[#0A0A0A]">Or Enter Custom Amount (€)</label>
+            <label className="text-sm font-bold text-[#0A0A0A]">Custom Amount</label>
             <div className="relative">
               <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-bold text-[#66665E]">€</span>
               <input

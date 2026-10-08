@@ -109,7 +109,7 @@ export function PackageCard({ packageItem, pkg, creator, onSelect }: PackageCard
       {currentPkg.popular && (
         <div className="absolute -top-3 left-6">
           <Badge variant="dark" size="sm" icon={<Sparkles className="w-3 h-3 text-amber-300" />}>
-            Featured Deal
+            Most Popular
           </Badge>
         </div>
       )}
@@ -178,7 +178,7 @@ export function PackageCard({ packageItem, pkg, creator, onSelect }: PackageCard
           icon={isSelf ? <Edit3 className="w-3.5 h-3.5" /> : undefined}
           iconRight={!isSelf ? <ArrowRight className="w-3.5 h-3.5" /> : undefined}
         >
-          {isSelf ? 'Edit Rate Card' : 'Book Deal'}
+          {isSelf ? 'Edit Package' : 'Book Package'}
         </Button>
       </div>
     </div>

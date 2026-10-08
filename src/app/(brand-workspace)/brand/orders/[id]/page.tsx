@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from '@/redux/hooks';
 import {
@@ -120,14 +121,21 @@ export default function BrandOrderDetailPage() {
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
             <div className="flex items-center gap-4">
-              <img
-                src={order.creatorAvatar}
-                alt={order.creatorName}
-                className="w-14 h-14 rounded-full object-cover border border-[#E7E7E2] shadow-2xs shrink-0"
-              />
+              <Link href={`/creators/${order.creatorId}`} className="group/avatar block shrink-0">
+                <img
+                  src={order.creatorAvatar}
+                  alt={order.creatorName}
+                  className="w-14 h-14 rounded-full object-cover border border-[#E7E7E2] shadow-2xs group-hover/avatar:scale-105 transition-transform"
+                />
+              </Link>
               <div className="space-y-1">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">{order.creatorName}</h2>
+                  <Link
+                    href={`/creators/${order.creatorId}`}
+                    className="hover:text-[#FF2D78] transition-colors"
+                  >
+                    <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">{order.creatorName}</h2>
+                  </Link>
                   <VerifiedBadge size="sm" />
                   <span className="text-sm text-[#66665E] font-medium">{order.creatorHandle}</span>
                 </div>
@@ -139,8 +147,15 @@ export default function BrandOrderDetailPage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-3 self-start sm:self-auto bg-[#FAFAF8] px-5 py-3.5 rounded-2xl border border-[#E7E7E2]">
-              <div className="text-left sm:text-right">
+            <div className="flex items-center gap-3 self-start sm:self-auto">
+              <Link
+                href={`/creators/${order.creatorId}`}
+                className="px-4 py-2.5 rounded-2xl bg-white border border-[#E7E7E2] hover:border-[#0A0A0A] text-[#0A0A0A] font-bold text-sm flex items-center gap-1.5 transition-all shadow-2xs"
+              >
+                <span>View Profile</span>
+                <ExternalLink className="w-3.5 h-3.5 text-[#66665E]" />
+              </Link>
+              <div className="bg-[#FAFAF8] px-5 py-3.5 rounded-2xl border border-[#E7E7E2] text-left sm:text-right">
                 <div className="text-xs font-bold text-[#66665E] uppercase tracking-wider">Escrow</div>
                 <div className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">€{order.totalEur.toLocaleString()}</div>
               </div>

@@ -14,7 +14,9 @@ export interface User {
   bio?: string;
   website?: string;
   industry?: string;
-  gender?: 'female' | 'male' | 'non-binary' | 'other' | string;
+  industryTags?: string[];
+  companySize?: string;
+  gender?: 'female' | 'male' | 'other' | string;
   balanceEur?: number;
   isDeactivated?: boolean;
   deactivatedAt?: string | null;
@@ -114,7 +116,7 @@ export interface Creator {
   verified: boolean;
   categories: string[];
   tags: string[];
-  gender?: 'female' | 'male' | 'non-binary' | 'other' | string;
+  gender?: 'female' | 'male' | 'other' | string;
   platforms: {
     instagram?: CreatorPlatformInfo;
     tiktok?: CreatorPlatformInfo;
@@ -209,6 +211,6 @@ export interface CreatorFilterState {
   minPrice: number;
   maxPrice: number;
   followerRange: 'all' | 'nano' | 'micro' | 'macro' | 'mega';
-  gender?: 'all' | 'female' | 'male' | 'non-binary' | string;
+  gender?: 'all' | 'female' | 'male' | 'other' | string;
   sortBy: 'relevance' | 'price_asc' | 'price_desc' | 'followers' | 'rating';
 }

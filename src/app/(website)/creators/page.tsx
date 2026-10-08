@@ -8,6 +8,7 @@ import { setFilter, resetFilters } from '@/redux/slices/creatorSlice';
 import { CreatorCard } from '@/components/shared/CreatorCard';
 import { CreatorGridSkeleton } from '@/components/shared/Skeleton';
 import { EmptyState } from '@/components/shared/EmptyState';
+import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
 import { PlatformType, CreatorFilterState } from '@/types';
 import {
   Search,
@@ -24,6 +25,11 @@ import {
   Palette,
   Layers,
   X,
+  LayoutGrid,
+  List,
+  MapPin,
+  Star,
+  ArrowRight,
 } from 'lucide-react';
 import { Pagination } from 'antd';
 import { Button } from '@/components/ui';
@@ -35,6 +41,7 @@ function CreatorsDiscoveryContent() {
   const { t } = useAppSelector((state) => state.lang);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const pageSize = 9;
 
   // Synchronize incoming URL search parameters (from Hero search, Footer category links, etc.)
@@ -169,7 +176,7 @@ function CreatorsDiscoveryContent() {
           }
         }
 
-        // Search query
+        // Search query (names, handles, bio, categories, tags, location, city, country, languages, collaboration preferences)
         if (filters.searchQuery) {
           const query = filters.searchQuery.toLowerCase().trim();
           const matchName = c.name.toLowerCase().includes(query);
@@ -178,13 +185,34 @@ function CreatorsDiscoveryContent() {
           const matchCat = c.categories.some((cat) => cat.toLowerCase().includes(query));
           const matchTag = c.tags?.some((t) => t.toLowerCase().includes(query));
           const matchLocation = c.location.toLowerCase().includes(query);
-          if (!matchName && !matchHandle && !matchBio && !matchCat && !matchTag && !matchLocation) {
+          const matchCity = c.city?.toLowerCase().includes(query);
+          const matchCountry = c.country?.toLowerCase().includes(query);
+          const matchLanguage = c.languages?.some((l) => l.toLowerCase().includes(query));
+          const matchCollab = c.collaborationPreferences?.some((p) => p.toLowerCase().includes(query));
+
+          if (
+            !matchName &&
+            !matchHandle &&
+            !matchBio &&
+            !matchCat &&
+            !matchTag &&
+            !matchLocation &&
+            !matchCity &&
+            !matchCountry &&
+            !matchLanguage &&
+            !matchCollab
+          ) {
             return false;
           }
         }
 
-        // Location filter
-        if (filters.location !== 'all' && !c.location.toLowerCase().includes(filters.location.toLowerCase())) {
+        // Location filter (location string, city, or country)
+        if (
+          filters.location !== 'all' &&
+          !c.location.toLowerCase().includes(filters.location.toLowerCase()) &&
+          !c.country?.toLowerCase().includes(filters.location.toLowerCase()) &&
+          !c.city?.toLowerCase().includes(filters.location.toLowerCase())
+        ) {
           return false;
         }
 
@@ -491,7 +519,7 @@ function CreatorsDiscoveryContent() {
 
           {/* Right Main Area (75% width) */}
           <div className="lg:col-span-9 space-y-6">
-            {/* Results Header with Count */}
+            {/* Results Header with Count & Grid/List switcher */}
             <div className="flex items-center justify-between font-sans">
               <div>
                 <span className="text-2xl font-extrabold text-[#0A0A0A]">
@@ -501,17 +529,149 @@ function CreatorsDiscoveryContent() {
                   Showing 1–{paginatedCreators.length} of {filteredCreators.length} creators
                 </span>
               </div>
+
+              {/* Layout Switcher (Grid vs List) */}
+              <div className="flex items-center bg-[#F4F4F0] p-1 rounded-2xl border border-[#E7E7E2]">
+                <button
+                  type="button"
+                  onClick={() => setViewMode('grid')}
+                  className={`p-1.5 rounded-xl transition-all cursor-pointer ${
+                    viewMode === 'grid'
+                      ? 'bg-white text-[#0A0A0A] shadow-xs'
+                      : 'text-[#66665E] hover:text-[#0A0A0A]'
+                  }`}
+                  title="Grid View"
+                >
+                  <LayoutGrid className="w-4 h-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewMode('list')}
+                  className={`p-1.5 rounded-xl transition-all cursor-pointer ${
+                    viewMode === 'list'
+                      ? 'bg-white text-[#0A0A0A] shadow-xs'
+                      : 'text-[#66665E] hover:text-[#0A0A0A]'
+                  }`}
+                  title="List View"
+                >
+                  <List className="w-4 h-4" />
+                </button>
+              </div>
             </div>
 
-            {/* Creator Cards Grid (3 columns on desktop for spacious cards) */}
+            {/* Creator Cards Grid or List */}
             {creators.length === 0 ? (
               <CreatorGridSkeleton count={6} />
             ) : paginatedCreators.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-7">
-                {paginatedCreators.map((creator) => (
-                  <CreatorCard key={creator.id} creator={creator} />
-                ))}
-              </div>
+              viewMode === 'grid' ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
+                  {paginatedCreators.map((creator) => (
+                    <CreatorCard key={creator.id} creator={creator} />
+                  ))}
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {paginatedCreators.map((creator) => (
+                    <div
+                      key={creator.id}
+                      className="bg-white rounded-3xl border border-[#E7E7E2] hover:border-[#0A0A0A] p-5 sm:p-6 transition-all duration-300 shadow-2xs hover:shadow-md flex flex-col md:flex-row items-center justify-between gap-6 group"
+                    >
+                      {/* Left: Avatar & Identity */}
+                      <div className="flex items-center gap-4 w-full md:w-auto">
+                        <Link href={`/creators/${creator.id}`} className="shrink-0 relative">
+                          <img
+                            src={creator.avatar}
+                            alt={creator.name}
+                            className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border border-[#E7E7E2] group-hover:scale-105 transition-transform"
+                          />
+                          <VerifiedBadge className="absolute -bottom-1 -right-1 w-5 h-5" />
+                        </Link>
+
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-2">
+                            <Link
+                              href={`/creators/${creator.id}`}
+                              className="text-2xl font-extrabold text-[#0A0A0A] hover:text-[#FF2D78] transition-colors truncate"
+                            >
+                              {creator.name}
+                            </Link>
+                          </div>
+
+                          <div className="flex items-center gap-2 text-sm font-semibold text-[#66665E] mt-1">
+                            <MapPin className="w-3.5 h-3.5" />
+                            <span>{creator.location}</span>
+                            <span>•</span>
+                            <div className="flex items-center gap-1 text-[#0A0A0A] font-extrabold">
+                              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                              <span>{creator.rating}</span>
+                              <span className="text-[#66665E] font-normal">({creator.reviewsCount})</span>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-2 mt-2 flex-wrap">
+                            {creator.categories.map((cat) => (
+                              <span
+                                key={cat}
+                                className="px-2.5 py-0.5 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-sm font-bold text-[#555550]"
+                              >
+                                {cat}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Middle: Platforms & Audience */}
+                      <div className="hidden lg:flex items-center gap-6 border-x border-[#F4F4F0] px-6">
+                        {creator.platforms.instagram && (
+                          <div className="text-center">
+                            <div className="text-xs font-black text-[#0A0A0A]">
+                              {creator.platforms.instagram.followersFormatted}
+                            </div>
+                            <div className="text-sm font-bold text-[#66665E]">Instagram</div>
+                          </div>
+                        )}
+                        {creator.platforms.tiktok && (
+                          <div className="text-center">
+                            <div className="text-xs font-black text-[#0A0A0A]">
+                              {creator.platforms.tiktok.followersFormatted}
+                            </div>
+                            <div className="text-sm font-bold text-[#66665E]">TikTok</div>
+                          </div>
+                        )}
+                        {creator.platforms.youtube && (
+                          <div className="text-center">
+                            <div className="text-xs font-black text-[#0A0A0A]">
+                              {creator.platforms.youtube.followersFormatted}
+                            </div>
+                            <div className="text-sm font-bold text-[#66665E]">YouTube</div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Right: Pricing & CTA */}
+                      <div className="flex items-center justify-between md:justify-end gap-4 w-full md:w-auto pt-4 md:pt-0 border-t md:border-t-0 border-[#F4F4F0]">
+                        <div className="text-left md:text-right">
+                          <span className="text-sm font-bold text-[#66665E] uppercase tracking-wider block">
+                            Packages From
+                          </span>
+                          <span className="text-2xl font-extrabold text-[#0A0A0A]">
+                            €{creator.startingPriceEur}
+                          </span>
+                        </div>
+
+                        <Link
+                          href={`/creators/${creator.id}`}
+                          className="h-10 px-5 rounded-full bg-[#0A0A0A] hover:bg-zinc-800 text-white text-sm font-bold transition-all flex items-center gap-1.5 shadow-2xs hover:scale-105 active:scale-95"
+                        >
+                          <span>View Profile</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </Link>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )
             ) : (
               <EmptyState
                 color="pink"

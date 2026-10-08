@@ -29,6 +29,7 @@ import {
   AtSign,
 } from 'lucide-react';
 import { message } from 'antd';
+import { InstagramLogo, TikTokLogo, YouTubeLogo } from '@/components/shared/SocialLogos';
 
 // Curated Category list
 const CATEGORIES = [
@@ -44,6 +45,46 @@ const CATEGORIES = [
   { id: 'Family', label: 'Family & Parenting', icon: '👶' },
 ];
 
+// Collaboration Preferences
+const COLLABORATION_PREFERENCES = [
+  {
+    id: 'sponsored',
+    label: 'Sponsored Posts',
+    desc: 'Dedicated reels, videos, and posts',
+    icon: '✨',
+  },
+  {
+    id: 'ugc',
+    label: 'UGC Content',
+    desc: 'Ad content without posting to your feed',
+    icon: '📱',
+  },
+  {
+    id: 'reviews',
+    label: 'Product Reviews',
+    desc: 'Unboxings and honest product reviews',
+    icon: '📦',
+  },
+  {
+    id: 'events',
+    label: 'Events & Brand Trips',
+    desc: 'In-person events and brand trips',
+    icon: '🎟️',
+  },
+  {
+    id: 'ambassador',
+    label: 'Brand Ambassadorship',
+    desc: 'Long-term brand partnerships',
+    icon: '🤝',
+  },
+  {
+    id: 'affiliate',
+    label: 'Affiliate & Gifting',
+    desc: 'Affiliate links and product gifting',
+    icon: '🎁',
+  },
+];
+
 // Curated Country list
 const COUNTRIES = [
   { code: 'CH', name: 'Switzerland' },
@@ -57,7 +98,24 @@ const COUNTRIES = [
   { code: 'US', name: 'United States' },
 ];
 
-const COMMON_LANGUAGES = ['English', 'German', 'French', 'Spanish', 'Italian', 'Dutch'];
+const COMMON_LANGUAGES = [
+  'English',
+  'German',
+  'French',
+  'Spanish',
+  'Italian',
+  'Dutch',
+  'Portuguese',
+  'Swedish',
+  'Polish',
+  'Turkish',
+  'Arabic',
+  'Hindi',
+  'Bengali',
+  'Japanese',
+  'Korean',
+  'Chinese',
+];
 
 interface StagedMediaSample {
   url: string;
@@ -72,9 +130,9 @@ export default function CreatorOnboardingPage() {
   const dispatch = useAppDispatch();
   const { currentUser } = useAppSelector((state) => state.auth);
 
-  // Stepper state: 1 to 5 (Collaboration preference removed per user request)
+  // Stepper state: 1 to 6 (Including Collaboration Preferences)
   const [step, setStep] = useState<number>(1);
-  const totalSteps = 5;
+  const totalSteps = 6;
 
   // File input refs for native upload
   const avatarInputRef = useRef<HTMLInputElement>(null);
@@ -94,29 +152,46 @@ export default function CreatorOnboardingPage() {
   const [avatar, setAvatar] = useState(
     currentUser?.avatar && !currentUser.avatar.includes('534528741775') ? currentUser.avatar : ''
   );
+  const [gender, setGender] = useState<'female' | 'male' | 'other'>(
+    (currentUser?.gender as any) || 'female'
+  );
 
   // Step 2: Location & Languages (Starts Raw / Empty)
   const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
   const [languages, setLanguages] = useState<string[]>([]);
-  const [customLang, setCustomLang] = useState('');
 
   // Step 3: Categories (Starts Raw / Empty)
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
-  // Step 4: Social Channels (Starts Raw / Empty)
+  // Step 4: Social Channels (Connect via API - No blocking validation)
   const [instagramHandle, setInstagramHandle] = useState('');
-  const [instagramFollowers, setInstagramFollowers] = useState('');
+  const [isInstagramConnected, setIsInstagramConnected] = useState(false);
   const [tiktokHandle, setTiktokHandle] = useState('');
-  const [tiktokFollowers, setTiktokFollowers] = useState('');
+  const [isTiktokConnected, setIsTiktokConnected] = useState(false);
   const [youtubeHandle, setYoutubeHandle] = useState('');
-  const [youtubeFollowers, setYoutubeFollowers] = useState('');
+  const [isYoutubeConnected, setIsYoutubeConnected] = useState(false);
 
-  // Step 5: Portfolio Samples (File Upload Only - Starts Raw / Empty, Skippable)
+  // Step 5: Portfolio Samples (File Upload Only - Skippable)
   const [portfolioSamples, setPortfolioSamples] = useState<
     { url: string; title: string; type: string; isVideo: boolean }[]
   >([]);
   const [stagedMedia, setStagedMedia] = useState<StagedMediaSample | null>(null);
+
+  // Step 6: Collaboration Preferences
+  const [collabPreferences, setCollabPreferences] = useState<string[]>([
+    'sponsored',
+    'ugc',
+    'reviews',
+  ]);
+
+  const toggleCollabPreference = (id: string) => {
+    if (collabPreferences.includes(id)) {
+      setCollabPreferences((prev) => prev.filter((p) => p !== id));
+    } else {
+      setCollabPreferences((prev) => [...prev, id]);
+    }
+  };
 
   // Submission state
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -143,8 +218,12 @@ export default function CreatorOnboardingPage() {
         return message.error('You can select a maximum of 3 categories');
       }
     } else if (step === 4) {
-      if (!instagramHandle.trim() && !tiktokHandle.trim() && !youtubeHandle.trim()) {
-        return message.error('Please enter at least one social media channel handle');
+      // No blocking validation required as requested
+    } else if (step === 5) {
+      // Portfolio is optional/skippable
+    } else if (step === 6) {
+      if (collabPreferences.length === 0) {
+        return message.warning('Please select at least 1 collaboration preference');
       }
     }
 
@@ -157,6 +236,38 @@ export default function CreatorOnboardingPage() {
 
   const handleBack = () => {
     if (step > 1) setStep(step - 1);
+  };
+
+  // Social Channel Connect Handler
+  const handleToggleConnect = (platform: 'instagram' | 'tiktok' | 'youtube') => {
+    if (platform === 'instagram') {
+      if (!isInstagramConnected) {
+        setIsInstagramConnected(true);
+        if (!instagramHandle.trim()) setInstagramHandle(handle || 'creator');
+        message.success('Instagram connected');
+      } else {
+        setIsInstagramConnected(false);
+        message.info('Instagram disconnected');
+      }
+    } else if (platform === 'tiktok') {
+      if (!isTiktokConnected) {
+        setIsTiktokConnected(true);
+        if (!tiktokHandle.trim()) setTiktokHandle(handle || 'creator');
+        message.success('TikTok connected');
+      } else {
+        setIsTiktokConnected(false);
+        message.info('TikTok disconnected');
+      }
+    } else if (platform === 'youtube') {
+      if (!isYoutubeConnected) {
+        setIsYoutubeConnected(true);
+        if (!youtubeHandle.trim()) setYoutubeHandle(name || 'Creator Studio');
+        message.success('YouTube connected');
+      } else {
+        setIsYoutubeConnected(false);
+        message.info('YouTube disconnected');
+      }
+    }
   };
 
   // Avatar Upload Handler
@@ -201,13 +312,6 @@ export default function CreatorOnboardingPage() {
       setLanguages((prev) => prev.filter((l) => l !== lang));
     } else {
       setLanguages((prev) => [...prev, lang]);
-    }
-  };
-
-  const addCustomLanguage = () => {
-    if (customLang.trim() && !languages.includes(customLang.trim())) {
-      setLanguages((prev) => [...prev, customLang.trim()]);
-      setCustomLang('');
     }
   };
 
@@ -279,34 +383,34 @@ export default function CreatorOnboardingPage() {
     const creatorId = currentUser?.id || `creator-${Date.now().toString().slice(-4)}`;
 
     const platforms: Creator['platforms'] = {};
-    if (instagramHandle.trim()) {
-      const clean = instagramHandle.trim().replace(/^@+/, '');
+    if (instagramHandle.trim() || isInstagramConnected) {
+      const clean = (instagramHandle.trim() || handle || 'creator').replace(/^@+/, '');
       platforms.instagram = {
         handle: `@${clean}`,
         followers: 25000,
-        followersFormatted: instagramFollowers.trim() || '25K',
+        followersFormatted: '25K',
         engagementRate: '4.8%',
         avgViews: '15K',
         url: `https://instagram.com/${clean}`,
       };
     }
-    if (tiktokHandle.trim()) {
-      const clean = tiktokHandle.trim().replace(/^@+/, '');
+    if (tiktokHandle.trim() || isTiktokConnected) {
+      const clean = (tiktokHandle.trim() || handle || 'creator').replace(/^@+/, '');
       platforms.tiktok = {
         handle: `@${clean}`,
         followers: 18000,
-        followersFormatted: tiktokFollowers.trim() || '18K',
+        followersFormatted: '18K',
         engagementRate: '6.2%',
         avgViews: '20K',
         url: `https://tiktok.com/@${clean}`,
       };
     }
-    if (youtubeHandle.trim()) {
-      const clean = youtubeHandle.trim();
+    if (youtubeHandle.trim() || isYoutubeConnected) {
+      const clean = youtubeHandle.trim() || name || 'Creator Studio';
       platforms.youtube = {
         handle: clean,
         followers: 8000,
-        followersFormatted: youtubeFollowers.trim() || '8K',
+        followersFormatted: '8K',
         engagementRate: '7.4%',
         avgViews: '10K',
         url: `https://youtube.com/@${clean.toLowerCase().replace(/\s+/g, '')}`,
@@ -320,6 +424,7 @@ export default function CreatorOnboardingPage() {
       name: name.trim() || 'New Creator',
       handle: `@${cleanH}`,
       avatar: avatar || '',
+      gender: gender || 'female',
       bio: bio.trim(),
       location: city.trim() && country.trim() ? `${city.trim()}, ${country.trim()}` : country.trim() || city.trim() || 'Europe',
       city: city.trim(),
@@ -327,6 +432,7 @@ export default function CreatorOnboardingPage() {
       contactEmail: email.trim(),
       contactPhone: phone.trim() || undefined,
       languages: languages.length > 0 ? languages : ['English'],
+      collaborationPreferences: collabPreferences,
       approvalStatus: 'under_review',
       verified: false,
       categories: selectedCategories.length > 0 ? selectedCategories : ['Lifestyle'],
@@ -378,6 +484,7 @@ export default function CreatorOnboardingPage() {
         role: 'creator',
         handle: `@${cleanH}`,
         avatar: avatar || '',
+        gender: gender || 'female',
         location: city.trim() && country.trim() ? `${city.trim()}, ${country.trim()}` : 'Europe',
         bio: bio.trim(),
         balanceEur: 0,
@@ -396,6 +503,7 @@ export default function CreatorOnboardingPage() {
     'Categories',
     'Channels',
     'Portfolio',
+    'Preferences',
   ];
 
   return (
@@ -431,7 +539,7 @@ export default function CreatorOnboardingPage() {
             </div>
 
             {/* Segmented Step Indicator */}
-            <div className="grid grid-cols-5 gap-2">
+            <div className="grid grid-cols-6 gap-2">
               {Array.from({ length: totalSteps }).map((_, idx) => (
                 <div
                   key={idx}
@@ -499,25 +607,42 @@ export default function CreatorOnboardingPage() {
                       {avatar ? 'Click photo to change' : 'Click to upload photo'}
                     </button>
                     <div className="text-sm text-[#66665E]">
-                      JPG, PNG or WEBP (max 10MB)
+                      JPG, PNG, or WEBP up to 10MB
                     </div>
                   </div>
                 </div>
 
-                {/* Full Name */}
-                <div className="space-y-1.5">
-                  <label className="text-sm font-bold text-[#0A0A0A] block">
-                    Full Name <span className="text-rose-500">*</span>
-                  </label>
-                  <div className="relative">
-                    <UserIcon className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A3A39C]" />
-                    <input
-                      type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="e.g. Alex Morgan"
-                      className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] focus:ring-0 text-sm font-medium text-[#0A0A0A] outline-none transition-all"
-                    />
+                {/* Full Name & Gender */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-bold text-[#0A0A0A] block">
+                      Full Name <span className="text-rose-500">*</span>
+                    </label>
+                    <div className="relative">
+                      <UserIcon className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A3A39C]" />
+                      <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="e.g. Alex Morgan"
+                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] focus:ring-0 text-sm font-medium text-[#0A0A0A] outline-none transition-all"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-bold text-[#0A0A0A] block">
+                      Gender
+                    </label>
+                    <select
+                      value={gender}
+                      onChange={(e) => setGender(e.target.value as any)}
+                      className="w-full px-3.5 py-3 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] bg-white text-sm font-medium text-[#0A0A0A] outline-none cursor-pointer transition-all"
+                    >
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
+                    </select>
                   </div>
                 </div>
 
@@ -687,30 +812,6 @@ export default function CreatorOnboardingPage() {
                       );
                     })}
                   </div>
-
-                  {/* Add Custom Language */}
-                  <div className="flex gap-2 pt-1 max-w-sm">
-                    <input
-                      type="text"
-                      value={customLang}
-                      onChange={(e) => setCustomLang(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                          e.preventDefault();
-                          addCustomLanguage();
-                        }
-                      }}
-                      placeholder="Add another language..."
-                      className="flex-1 px-3.5 py-2.5 rounded-xl border border-[#E7E7E2] text-sm font-medium text-[#0A0A0A] outline-none"
-                    />
-                    <button
-                      type="button"
-                      onClick={addCustomLanguage}
-                      className="px-4 py-2.5 rounded-xl bg-[#0A0A0A] text-white text-sm font-bold cursor-pointer hover:bg-black transition-colors"
-                    >
-                      Add
-                    </button>
-                  </div>
                 </div>
               </div>
             )}
@@ -762,18 +863,44 @@ export default function CreatorOnboardingPage() {
                 <div>
                   <h2 className="text-2xl font-black text-[#0A0A0A] tracking-tight">Social Channels</h2>
                   <p className="text-sm text-[#66665E] font-medium mt-1">
-                    Add at least one platform you create on.
+                    Connect the profiles where you publish content.
                   </p>
                 </div>
 
                 {/* Instagram */}
-                <div className="p-4 rounded-2xl border border-[#E7E7E2] bg-white space-y-3">
-                  <div className="flex items-center gap-2 text-sm font-black text-[#0A0A0A]">
-                    <Instagram className="w-4 h-4 text-[#E1306C]" />
-                    <span>Instagram</span>
+                <div
+                  className={`p-4 sm:p-5 rounded-2xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 ${
+                    isInstagramConnected
+                      ? 'bg-[#FAFCFA] border-emerald-300 ring-1 ring-emerald-300/40 shadow-xs'
+                      : 'bg-white border-[#E7E7E2]'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="relative shrink-0 w-10 h-10 flex items-center justify-center">
+                      <InstagramLogo className="w-10 h-10 rounded-xl" />
+                      {isInstagramConnected && (
+                        <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-white flex items-center justify-center text-white">
+                          <Check className="w-2.5 h-2.5 stroke-[3]" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-bold text-[#0A0A0A]">Instagram</span>
+                        {isInstagramConnected && (
+                          <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                            Connected
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-xs text-[#66665E] font-medium mt-0.5 truncate whitespace-nowrap">
+                        {isInstagramConnected ? 'Account linked to profile' : 'Connect your Instagram account'}
+                      </p>
+                    </div>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div className="relative">
+
+                  <div className="flex items-center gap-2">
+                    <div className="relative flex-1 sm:w-52">
                       <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-bold text-[#A3A39C]">@</span>
                       <input
                         type="text"
@@ -783,24 +910,54 @@ export default function CreatorOnboardingPage() {
                         className="w-full pl-8 pr-3 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] text-sm font-medium text-[#0A0A0A] outline-none"
                       />
                     </div>
-                    <input
-                      type="text"
-                      value={instagramFollowers}
-                      onChange={(e) => setInstagramFollowers(e.target.value)}
-                      placeholder="Followers (e.g. 25K)"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] text-sm font-medium text-[#0A0A0A] outline-none"
-                    />
+                    <button
+                      type="button"
+                      onClick={() => handleToggleConnect('instagram')}
+                      className={`px-4 py-2.5 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
+                        isInstagramConnected
+                          ? 'bg-[#F4F4F0] hover:bg-rose-50 text-[#66665E] hover:text-rose-600 border border-[#E7E7E2] hover:border-rose-200'
+                          : 'bg-[#0A0A0A] hover:bg-black text-white'
+                      }`}
+                    >
+                      {isInstagramConnected ? 'Disconnect' : 'Connect'}
+                    </button>
                   </div>
                 </div>
 
                 {/* TikTok */}
-                <div className="p-4 rounded-2xl border border-[#E7E7E2] bg-white space-y-3">
-                  <div className="flex items-center gap-2 text-sm font-black text-[#0A0A0A]">
-                    <span className="text-base">🎵</span>
-                    <span>TikTok</span>
+                <div
+                  className={`p-4 sm:p-5 rounded-2xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 ${
+                    isTiktokConnected
+                      ? 'bg-[#FAFCFA] border-emerald-300 ring-1 ring-emerald-300/40 shadow-xs'
+                      : 'bg-white border-[#E7E7E2]'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="relative shrink-0 w-10 h-10 flex items-center justify-center">
+                      <TikTokLogo className="w-10 h-10 rounded-xl" />
+                      {isTiktokConnected && (
+                        <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-white flex items-center justify-center text-white">
+                          <Check className="w-2.5 h-2.5 stroke-[3]" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-bold text-[#0A0A0A]">TikTok</span>
+                        {isTiktokConnected && (
+                          <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                            Connected
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-xs text-[#66665E] font-medium mt-0.5 truncate whitespace-nowrap">
+                        {isTiktokConnected ? 'Account linked to profile' : 'Connect your TikTok account'}
+                      </p>
+                    </div>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div className="relative">
+
+                  <div className="flex items-center gap-2">
+                    <div className="relative flex-1 sm:w-52">
                       <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-bold text-[#A3A39C]">@</span>
                       <input
                         type="text"
@@ -810,37 +967,73 @@ export default function CreatorOnboardingPage() {
                         className="w-full pl-8 pr-3 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] text-sm font-medium text-[#0A0A0A] outline-none"
                       />
                     </div>
-                    <input
-                      type="text"
-                      value={tiktokFollowers}
-                      onChange={(e) => setTiktokFollowers(e.target.value)}
-                      placeholder="Followers (e.g. 50K)"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] text-sm font-medium text-[#0A0A0A] outline-none"
-                    />
+                    <button
+                      type="button"
+                      onClick={() => handleToggleConnect('tiktok')}
+                      className={`px-4 py-2.5 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
+                        isTiktokConnected
+                          ? 'bg-[#F4F4F0] hover:bg-rose-50 text-[#66665E] hover:text-rose-600 border border-[#E7E7E2] hover:border-rose-200'
+                          : 'bg-[#0A0A0A] hover:bg-black text-white'
+                      }`}
+                    >
+                      {isTiktokConnected ? 'Disconnect' : 'Connect'}
+                    </button>
                   </div>
                 </div>
 
                 {/* YouTube */}
-                <div className="p-4 rounded-2xl border border-[#E7E7E2] bg-white space-y-3">
-                  <div className="flex items-center gap-2 text-sm font-black text-[#0A0A0A]">
-                    <Youtube className="w-4 h-4 text-red-600" />
-                    <span>YouTube</span>
+                <div
+                  className={`p-4 sm:p-5 rounded-2xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 ${
+                    isYoutubeConnected
+                      ? 'bg-[#FAFCFA] border-emerald-300 ring-1 ring-emerald-300/40 shadow-xs'
+                      : 'bg-white border-[#E7E7E2]'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="relative shrink-0 w-10 h-10 flex items-center justify-center">
+                      <YouTubeLogo className="w-10 h-10" />
+                      {isYoutubeConnected && (
+                        <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-white flex items-center justify-center text-white">
+                          <Check className="w-2.5 h-2.5 stroke-[3]" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-bold text-[#0A0A0A]">YouTube</span>
+                        {isYoutubeConnected && (
+                          <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                            Connected
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-xs text-[#66665E] font-medium mt-0.5 truncate whitespace-nowrap">
+                        {isYoutubeConnected ? 'Channel linked to profile' : 'Connect your YouTube channel'}
+                      </p>
+                    </div>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <input
-                      type="text"
-                      value={youtubeHandle}
-                      onChange={(e) => setYoutubeHandle(e.target.value)}
-                      placeholder="Channel Name"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] text-sm font-medium text-[#0A0A0A] outline-none"
-                    />
-                    <input
-                      type="text"
-                      value={youtubeFollowers}
-                      onChange={(e) => setYoutubeFollowers(e.target.value)}
-                      placeholder="Subscribers (e.g. 10K)"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] text-sm font-medium text-[#0A0A0A] outline-none"
-                    />
+
+                  <div className="flex items-center gap-2">
+                    <div className="relative flex-1 sm:w-52">
+                      <input
+                        type="text"
+                        value={youtubeHandle}
+                        onChange={(e) => setYoutubeHandle(e.target.value)}
+                        placeholder="Channel Name"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] text-sm font-medium text-[#0A0A0A] outline-none"
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleToggleConnect('youtube')}
+                      className={`px-4 py-2.5 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
+                        isYoutubeConnected
+                          ? 'bg-[#F4F4F0] hover:bg-rose-50 text-[#66665E] hover:text-rose-600 border border-[#E7E7E2] hover:border-rose-200'
+                          : 'bg-[#0A0A0A] hover:bg-black text-white'
+                      }`}
+                    >
+                      {isYoutubeConnected ? 'Disconnect' : 'Connect'}
+                    </button>
                   </div>
                 </div>
               </div>
@@ -979,7 +1172,7 @@ export default function CreatorOnboardingPage() {
                 {portfolioSamples.length > 0 ? (
                   <div className="space-y-2.5 pt-2">
                     <span className="text-sm font-bold text-[#0A0A0A] block">
-                      Added Samples ({portfolioSamples.length})
+                      Portfolio Samples ({portfolioSamples.length})
                     </span>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                       {portfolioSamples.map((s, idx) => (
@@ -1021,6 +1214,56 @@ export default function CreatorOnboardingPage() {
               </div>
             )}
 
+            {/* STEP 6: COLLABORATION PREFERENCES */}
+            {step === 6 && (
+              <div className="space-y-5 animate-in fade-in-50 duration-200">
+                <div>
+                  <h2 className="text-2xl font-black text-[#0A0A0A] tracking-tight">Collaboration Preferences</h2>
+                  <p className="text-sm text-[#66665E] font-medium mt-1">
+                    Select the collaboration formats you are available for.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  {COLLABORATION_PREFERENCES.map((pref) => {
+                    const isSelected = collabPreferences.includes(pref.id);
+                    return (
+                      <div
+                        key={pref.id}
+                        onClick={() => toggleCollabPreference(pref.id)}
+                        className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-start gap-3.5 ${
+                          isSelected
+                            ? 'bg-[#0A0A0A] text-white border-[#0A0A0A] shadow-md'
+                            : 'bg-white text-[#0A0A0A] border-[#E7E7E2] hover:bg-[#FAFAF8] hover:border-[#D2D2CA]'
+                        }`}
+                      >
+                        <span className="text-2xl shrink-0 mt-0.5">{pref.icon}</span>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="text-sm font-bold">{pref.label}</span>
+                            <div
+                              className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 transition-colors ${
+                                isSelected ? 'bg-white text-black' : 'border border-[#D2D2CA]'
+                              }`}
+                            >
+                              {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+                            </div>
+                          </div>
+                          <p
+                            className={`text-xs mt-1 leading-snug ${
+                              isSelected ? 'text-white/80' : 'text-[#66665E]'
+                            }`}
+                          >
+                            {pref.desc}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
             {/* Navigation Buttons */}
             <div className="flex items-center gap-3 pt-5 border-t border-[#F4F4F0]">
               {step > 1 && (
@@ -1034,12 +1277,12 @@ export default function CreatorOnboardingPage() {
                 </button>
               )}
 
-              {/* In step 5, allow explicit Skip for now option */}
+              {/* In step 5, allow explicit Skip for now option to jump to Step 6 */}
               {step === 5 && (
                 <button
                   type="button"
                   disabled={isSubmitting}
-                  onClick={handleSubmit}
+                  onClick={() => setStep(6)}
                   className="py-3.5 px-6 rounded-2xl border border-[#E7E7E2] hover:border-[#0A0A0A] text-sm font-bold text-[#66665E] hover:text-[#0A0A0A] transition-all cursor-pointer"
                 >
                   Skip for Now
@@ -1052,7 +1295,7 @@ export default function CreatorOnboardingPage() {
                 onClick={handleNext}
                 className="flex-1 py-3.5 px-6 rounded-2xl bg-[#0A0A0A] hover:bg-black text-white font-bold text-sm tracking-wide transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
-                <span>{step === totalSteps ? 'Complete Profile' : 'Continue'}</span>
+                <span>{step === totalSteps ? 'Submit for Review' : 'Continue'}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
@@ -1060,35 +1303,45 @@ export default function CreatorOnboardingPage() {
         </div>
       </main>
 
-      {/* Celebratory Completion Modal */}
+      {/* Post-Submission Review Pipeline Screen */}
       {isSubmitted && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl border border-[#E7E7E2] text-center space-y-6 animate-in zoom-in-95 duration-200">
-            <div className="w-16 h-16 rounded-full bg-[#FFF0F5] text-[#FF2D78] flex items-center justify-center mx-auto shadow-inner">
-              <Sparkles className="w-8 h-8" />
-            </div>
-
-            <div className="space-y-2">
-              <span className="inline-flex items-center gap-1.5 text-sm font-bold text-amber-700 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
-                <Clock className="w-4 h-4" />
-                <span>Application Submitted</span>
-              </span>
+          <div className="bg-white rounded-3xl p-7 sm:p-9 max-w-lg w-full shadow-2xl border border-[#E7E7E2] space-y-6 animate-in zoom-in-95 duration-200">
+            <div className="text-center space-y-2">
+              <div className="w-16 h-16 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto shadow-inner border border-emerald-100">
+                <Check className="w-8 h-8 stroke-[3]" />
+              </div>
               <h3 className="text-2xl font-black text-[#0A0A0A]">
-                Welcome, {name || 'Creator'}!
+                Application Submitted
               </h3>
-              <p className="text-sm text-[#66665E] font-medium leading-relaxed">
-                Your creator account has been created. You can now access your dashboard and manage campaigns.
+              <p className="text-sm text-[#66665E] font-medium max-w-md mx-auto">
+                We've received your application and will notify you once your profile is approved.
               </p>
             </div>
 
-            <button
-              type="button"
-              onClick={() => router.push('/creator/dashboard')}
-              className="w-full py-3.5 px-6 rounded-2xl bg-[#0A0A0A] hover:bg-black text-white font-bold text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <span>Go to Creator Dashboard</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
+            {/* Clean Status Card */}
+            <div className="bg-[#FAFAF8] p-4.5 rounded-2xl border border-[#E7E7E2] flex items-center gap-3.5">
+              <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-700 flex items-center justify-center shrink-0 border border-amber-500/20">
+                <Clock className="w-5 h-5" />
+              </div>
+              <div className="text-left">
+                <div className="text-sm font-bold text-[#0A0A0A]">Under Review</div>
+                <div className="text-xs text-[#66665E] font-medium">
+                  Our curation team typically reviews new creators within 24 hours.
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-2 pt-2">
+              <button
+                type="button"
+                onClick={() => router.push('/creator/dashboard')}
+                className="w-full py-3.5 px-6 rounded-2xl bg-[#0A0A0A] hover:bg-black text-white font-bold text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span>Go to Creator Dashboard</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </div>
       )}

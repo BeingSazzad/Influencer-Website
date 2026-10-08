@@ -117,7 +117,7 @@ export default function BrandCampaignsPage() {
           <div className="w-full sm:w-64 shrink-0">
             <Input
               prefix={<Search className="w-3.5 h-3.5 text-[#66665E]" />}
-              placeholder="Search brand or package..."
+              placeholder="Search creator or campaign..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="rounded-2xl h-10 text-sm font-semibold"
@@ -130,7 +130,7 @@ export default function BrandCampaignsPage() {
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-4">
           <div className="pb-3 border-b border-[#E7E7E2] flex items-center justify-between">
             <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
-              Contracts
+              Campaign Orders
             </h2>
           </div>
 
@@ -164,16 +164,21 @@ export default function BrandCampaignsPage() {
                   >
                     {/* Creator Details & Deliverable */}
                     <div className="flex items-center gap-4 sm:gap-5 min-w-0">
-                      <img
-                        src={order.creatorAvatar}
-                        alt={order.creatorName}
-                        className="w-11 h-11 rounded-full object-cover border border-[#E7E7E2] shrink-0"
-                      />
+                      <Link href={`/creators/${order.creatorId}`} className="group/avatar shrink-0 block">
+                        <img
+                          src={order.creatorAvatar}
+                          alt={order.creatorName}
+                          className="w-11 h-11 rounded-full object-cover border border-[#E7E7E2] group-hover/avatar:scale-105 transition-transform"
+                        />
+                      </Link>
                       <div className="flex flex-col gap-1.5 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <h3 className="font-extrabold text-base text-[#0A0A0A] leading-tight">
+                          <Link
+                            href={`/creators/${order.creatorId}`}
+                            className="font-extrabold text-base text-[#0A0A0A] hover:text-[#FF2D78] transition-colors leading-tight"
+                          >
                             {order.creatorName}
-                          </h3>
+                          </Link>
                           <VerifiedBadge size="xs" />
                           <span className="text-sm text-[#66665E] font-medium leading-none">
                             {order.creatorHandle.startsWith('@') ? order.creatorHandle : `@${order.creatorHandle}`}

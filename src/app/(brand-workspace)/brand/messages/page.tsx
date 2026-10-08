@@ -298,38 +298,13 @@ function BrandMessagesContent() {
                         </div>
                       </div>
 
-                      <div className="flex flex-col items-end justify-between self-stretch shrink-0 pl-1">
-                        {conv.unreadCountBrand > 0 ? (
+                      {conv.unreadCountBrand > 0 && (
+                        <div className="shrink-0 self-center pl-1">
                           <span className="min-w-[18px] h-[18px] px-1.5 rounded-full bg-[#0A0A0A] text-white text-[10px] font-black flex items-center justify-center shadow-2xs">
                             {conv.unreadCountBrand}
                           </span>
-                        ) : (
-                          <span className="w-2 h-2" />
-                        )}
-
-                        <div onClick={(e) => e.stopPropagation()}>
-                          <Popconfirm
-                            title="Delete conversation?"
-                            description="Remove this thread from your inbox?"
-                            okText="Delete"
-                            cancelText="Cancel"
-                            okButtonProps={{ danger: true, size: 'small' }}
-                            cancelButtonProps={{ size: 'small' }}
-                            onConfirm={() => {
-                              dispatch(deleteConversation({ conversationId: conv.id }));
-                              message.success('Conversation removed');
-                            }}
-                          >
-                            <button
-                              type="button"
-                              className="opacity-0 group-hover:opacity-100 p-1 rounded-md text-zinc-400 hover:text-rose-600 hover:bg-rose-50 transition-all cursor-pointer"
-                              title="Delete conversation"
-                            >
-                              <Trash2 className="w-3.5 h-3.5" />
-                            </button>
-                          </Popconfirm>
                         </div>
-                      </div>
+                      )}
                     </div>
                   );
                 })

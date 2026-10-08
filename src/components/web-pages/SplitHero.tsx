@@ -44,7 +44,9 @@ export function SplitHero() {
       const matchBio = c.bio.toLowerCase().includes(q);
       const matchCat = c.categories.some((cat) => cat.toLowerCase().includes(q));
       const matchTag = c.tags?.some((tag) => tag.toLowerCase().includes(q));
-      const matchesText = matchName || matchHandle || matchBio || matchCat || matchTag;
+      const matchLang = c.languages?.some((lang) => lang.toLowerCase().includes(q));
+      const matchLoc = c.location.toLowerCase().includes(q) || c.country?.toLowerCase().includes(q) || c.city?.toLowerCase().includes(q);
+      const matchesText = matchName || matchHandle || matchBio || matchCat || matchTag || matchLang || matchLoc;
 
       const matchesPlatform =
         platform === 'all' ||
@@ -502,30 +504,30 @@ export function SplitHero() {
 
               {/* Card 2: Marcus Chen (Center Prominent) */}
               <Link
-                href="/creators/creator-03"
+                href="/creators/creator-02"
                 className="absolute left-1/2 -translate-x-1/2 top-0 w-[200px] sm:w-[230px] bg-white rounded-3xl p-4 border border-[#E7E7E2] shadow-2xl hover:scale-105 transition-all duration-300 z-20 group"
               >
                 <div className="relative h-54 sm:h-64 rounded-2xl overflow-hidden bg-[#F4F4F0] mb-3">
                   <img
                     src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600"
-                    alt="Marcus Chen"
+                    alt="Liam Carter"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-[#FF2D78] text-white text-xs font-black shadow-xs">
                     Top Rated
                   </div>
                   <div className="absolute bottom-3 left-3 right-3 bg-black/60 backdrop-blur-md rounded-xl p-2 text-white">
-                    <div className="text-xs font-black">Tech & Hardware UGC</div>
-                    <div className="text-xs text-[#D2D2CA]">48h turnaround</div>
+                    <div className="text-xs font-black">Cinematic 4K Adventure</div>
+                    <div className="text-xs text-[#D2D2CA]">From €550</div>
                   </div>
                 </div>
                 <div className="flex items-center justify-between px-1">
                   <div>
                     <div className="font-extrabold text-sm text-[#0A0A0A] font-sans flex items-center gap-1.5">
-                      <span>Marcus Chen</span>
+                      <span>Liam Carter</span>
                       <VerifiedBadge size="sm" />
                     </div>
-                    <div className="text-sm text-[#66665E] font-sans font-medium">950K followers</div>
+                    <div className="text-sm text-[#66665E] font-sans font-medium">980K followers</div>
                   </div>
                   <div className="w-7 h-7 rounded-full bg-[#000000] flex items-center justify-center text-white shadow-xs">
                     <svg className="w-3.5 h-3.5 fill-white" viewBox="0 0 24 24">

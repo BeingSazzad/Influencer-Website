@@ -107,13 +107,6 @@ export function CreatorAnnualAnalytics() {
   const maxBrands = Math.max(...yearData.months.map((m) => m.brandsCount));
   const currentMax = activeMetric === 'income' ? maxIncome : maxBrands;
 
-  // Highest performing month
-  const peakMonthRecord = yearData.months.reduce((prev, current) => {
-    if (activeMetric === 'income') {
-      return current.incomeEur > prev.incomeEur ? current : prev;
-    }
-    return current.brandsCount > prev.brandsCount ? current : prev;
-  });
 
   return (
     <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#E7E7E2] shadow-2xs space-y-6 font-sans">
@@ -184,7 +177,6 @@ export function CreatorAnnualAnalytics() {
             const val = activeMetric === 'income' ? item.incomeEur : item.brandsCount;
             const pct = Math.max(12, Math.round((val / currentMax) * 100));
             const isHovered = hoveredMonth?.month === item.month;
-            const isPeak = item.month === peakMonthRecord.month;
 
             return (
               <div
@@ -193,14 +185,11 @@ export function CreatorAnnualAnalytics() {
                 onMouseLeave={() => setHoveredMonth(null)}
                 className="flex-1 h-full flex flex-col justify-end items-center group cursor-pointer relative"
               >
-                {/* Floating Micro-Value on Hover or Peak */}
-                {(isHovered || isPeak) && (
+                {/* Floating Micro-Value on Hover ONLY */}
+                {isHovered && (
                   <div
-                    className={`absolute -top-7 px-2.5 py-0.5 rounded-md text-xs font-black tracking-tight whitespace-nowrap z-20 pointer-events-none transition-all ${
-                      isHovered ? 'bg-[#FF2D78] text-white shadow-md -translate-y-1' : 'bg-[#0A0A0A] text-white shadow-xs'
-                    }`}
+                    className="absolute -top-7 px-2.5 py-0.5 rounded-md text-xs font-black tracking-tight whitespace-nowrap z-20 pointer-events-none transition-all bg-[#0A0A0A] text-white shadow-md -translate-y-1"
                   >
-                    {!isHovered && 'Peak · '}
                     {activeMetric === 'income'
                       ? `€${val.toLocaleString()}`
                       : `${val} Brand${val === 1 ? '' : 's'}`}
@@ -212,12 +201,10 @@ export function CreatorAnnualAnalytics() {
                   {/* Dynamic Height Bar */}
                   <div
                     style={{ height: `${pct}%` }}
-                    className={`w-full rounded-md transition-all duration-300 ${
+                    className={`w-full rounded-md transition-all duration-200 ${
                       isHovered
-                        ? 'bg-[#FF2D78] scale-102'
-                        : (item.isCurrent || isPeak)
-                        ? 'bg-[#0A0A0A]'
-                        : 'bg-[#D2D2CA]'
+                        ? 'bg-[#FF2D78] scale-102 shadow-xs'
+                        : 'bg-[#0A0A0A]'
                     }`}
                   />
                 </div>
@@ -225,18 +212,13 @@ export function CreatorAnnualAnalytics() {
                 {/* Month Label */}
                 <span
                   className={`text-xs font-extrabold mt-2 transition-colors ${
-                    isHovered || item.isCurrent
-                      ? 'text-[#0A0A0A]'
+                    isHovered
+                      ? 'text-[#FF2D78]'
                       : 'text-[#66665E] group-hover:text-[#0A0A0A]'
                   }`}
                 >
                   {item.month}
                 </span>
-
-                {/* Current Month Under-dot */}
-                {item.isCurrent && selectedYear === 2026 && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF2D78] absolute -bottom-2" />
-                )}
               </div>
             );
           })}

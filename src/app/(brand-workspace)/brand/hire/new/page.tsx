@@ -395,7 +395,7 @@ function NewHireContent() {
                   step={50}
                   value={basePriceEur}
                   onChange={(v) => setBasePriceEur(v)}
-                  tooltip={{ formatter: (val) => `€${val?.toLocaleString()}` }}
+                  tooltip={{ open: false }}
                 />
                 <div className="flex justify-between text-sm font-semibold text-[#66665E]">
                   <span>€100</span>

@@ -199,7 +199,12 @@ function SearchResultsContent() {
           c.name.toLowerCase().includes(q) ||
           c.handle.toLowerCase().includes(q) ||
           c.categories.some((cat) => cat.toLowerCase().includes(q)) ||
-          c.tags?.some((t) => t.toLowerCase().includes(q))
+          c.tags?.some((t) => t.toLowerCase().includes(q)) ||
+          c.languages?.some((l) => l.toLowerCase().includes(q)) ||
+          c.collaborationPreferences?.some((p) => p.toLowerCase().includes(q)) ||
+          c.location.toLowerCase().includes(q) ||
+          c.city?.toLowerCase().includes(q) ||
+          c.country?.toLowerCase().includes(q)
       )
       .slice(0, 4);
   }, [creators, searchQuery]);
@@ -239,7 +244,7 @@ function SearchResultsContent() {
           }
         }
 
-        // Search query
+        // Search query (names, handles, bio, categories, tags, location, city, country, languages, collaboration preferences)
         if (searchQuery.trim()) {
           const query = searchQuery.toLowerCase().trim();
           const matchName = c.name.toLowerCase().includes(query);
@@ -248,7 +253,23 @@ function SearchResultsContent() {
           const matchCat = c.categories.some((cat) => cat.toLowerCase().includes(query));
           const matchTag = c.tags?.some((t) => t.toLowerCase().includes(query));
           const matchLocation = c.location.toLowerCase().includes(query);
-          if (!matchName && !matchHandle && !matchBio && !matchCat && !matchTag && !matchLocation) {
+          const matchCity = c.city?.toLowerCase().includes(query);
+          const matchCountry = c.country?.toLowerCase().includes(query);
+          const matchLanguage = c.languages?.some((l) => l.toLowerCase().includes(query));
+          const matchCollab = c.collaborationPreferences?.some((p) => p.toLowerCase().includes(query));
+
+          if (
+            !matchName &&
+            !matchHandle &&
+            !matchBio &&
+            !matchCat &&
+            !matchTag &&
+            !matchLocation &&
+            !matchCity &&
+            !matchCountry &&
+            !matchLanguage &&
+            !matchCollab
+          ) {
             return false;
           }
         }
@@ -600,9 +621,9 @@ function SearchResultsContent() {
                   className="bg-transparent text-sm font-bold text-[#0A0A0A] outline-none cursor-pointer pr-1"
                 >
                   <option value="all">All Genders</option>
-                  <option value="female">Female</option>
                   <option value="male">Male</option>
-                  <option value="non-binary">Non-binary</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
                 </select>
               </div>
 
@@ -708,7 +729,7 @@ function SearchResultsContent() {
 
               {gender !== 'all' && (
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E7E7E2] text-sm font-bold text-[#0A0A0A] shadow-2xs">
-                  <span>Gender: {gender === 'female' ? 'Female' : gender === 'male' ? 'Male' : gender}</span>
+                  <span>Gender: {gender === 'female' ? 'Female' : gender === 'male' ? 'Male' : 'Other'}</span>
                   <button
                     type="button"
                     onClick={() => {
@@ -736,7 +757,7 @@ function SearchResultsContent() {
         {/* Results Grid or List */}
         {filteredCreators.length > 0 ? (
           viewMode === 'grid' ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {paginatedCreators.map((creator) => (
                 <CreatorCard key={creator.id} creator={creator} />
               ))}
@@ -760,16 +781,13 @@ function SearchResultsContent() {
                     </Link>
 
                     <div className="min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
+                      <div className="flex items-center gap-2">
                         <Link
                           href={`/creators/${creator.id}`}
                           className="text-2xl font-extrabold text-[#0A0A0A] hover:text-[#FF2D78] transition-colors truncate"
                         >
                           {creator.name}
                         </Link>
-                        <span className="text-sm font-bold text-[#66665E]">
-                          @{creator.handle.replace('@', '')}
-                        </span>
                       </div>
 
                       <div className="flex items-center gap-2 text-sm font-semibold text-[#66665E] mt-1">

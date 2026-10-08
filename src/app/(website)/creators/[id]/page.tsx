@@ -54,9 +54,48 @@ function platformLabel(platform: string) {
 function genderLabel(gender?: string) {
   if (gender === 'female') return 'Female';
   if (gender === 'male') return 'Male';
-  if (gender === 'non-binary' || gender === 'other') return 'Non-binary';
+  if (gender === 'other') return 'Other';
   return null;
 }
+
+const ALL_COLLAB_PREFS = [
+  {
+    id: 'sponsored',
+    label: 'Sponsored Posts',
+    desc: 'Dedicated Reels, TikToks, YouTube integrations & feed posts',
+    icon: '✨',
+  },
+  {
+    id: 'ugc',
+    label: 'UGC Content',
+    desc: 'High-converting ad creatives & organic assets without posting to personal feed',
+    icon: '📱',
+  },
+  {
+    id: 'reviews',
+    label: 'Product Reviews',
+    desc: 'In-depth unboxings, honest product testing, and feature demonstrations',
+    icon: '📦',
+  },
+  {
+    id: 'events',
+    label: 'Events & Brand Trips',
+    desc: 'In-person event attendance, runway appearances, launches, and summits',
+    icon: '🎟️',
+  },
+  {
+    id: 'ambassador',
+    label: 'Brand Ambassadorship',
+    desc: 'Long-term representation and multi-month brand ambassador partnerships',
+    icon: '🤝',
+  },
+  {
+    id: 'affiliate',
+    label: 'Affiliate & Gifting',
+    desc: 'Trackable affiliate links, commission codes, and PR gifting seeding',
+    icon: '🎁',
+  },
+];
 
 export default function CreatorProfilePage() {
   const params = useParams();
@@ -300,6 +339,11 @@ export default function CreatorProfilePage() {
                   {creator.verified && (
                     <VerifiedBadge className="w-6 h-6 sm:w-7 sm:h-7" />
                   )}
+                  {creator.handle && (
+                    <span className="text-base sm:text-lg font-bold text-[#66665E]">
+                      @{creator.handle.replace('@', '')}
+                    </span>
+                  )}
                 </div>
 
                 <div className="flex items-center gap-2 text-sm font-bold text-[#66665E] flex-wrap">
@@ -320,25 +364,20 @@ export default function CreatorProfilePage() {
                     <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                     {creator.rating} ({creator.reviewsCount} reviews)
                   </span>
+                  {creator.languages && creator.languages.length > 0 && (
+                    <>
+                      <span>•</span>
+                      <span className="flex items-center gap-1 text-[#0A0A0A] font-bold">
+                        <span>🌐</span>
+                        <span>{creator.languages.join(', ')}</span>
+                      </span>
+                    </>
+                  )}
                 </div>
 
                 <p className="text-sm sm:text-base text-[#555550] leading-[26px] font-medium">
                   {creator.bio}
                 </p>
-
-                {(creator.contactEmail || creator.contactPhone) && (
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-semibold text-[#0A0A0A]">
-                    {creator.contactEmail && (
-                      <a href={`mailto:${creator.contactEmail}`} className="hover:text-[#FF2D78]">
-                        {creator.contactEmail}
-                      </a>
-                    )}
-                    {creator.contactEmail && creator.contactPhone && (
-                      <span className="text-[#A3A39C]">•</span>
-                    )}
-                    {creator.contactPhone && <span>{creator.contactPhone}</span>}
-                  </div>
-                )}
 
                 {/* Category Pills matching pastel tags in reference */}
                 <div className="flex flex-wrap gap-2 pt-1">
@@ -492,7 +531,6 @@ export default function CreatorProfilePage() {
               { key: 'packages', label: 'Packages' },
               { key: 'portfolio', label: 'Portfolio' },
               { key: 'photos', label: 'Gallery' },
-              { key: 'audience', label: 'Audience' },
               { key: 'reviews', label: 'Reviews' },
             ].map((tab) => (
               <button
@@ -519,30 +557,20 @@ export default function CreatorProfilePage() {
         {/* TAB 1: OVERVIEW */}
         {activeTab === 'overview' && (
           <div className="space-y-8">
-            {/* Collaboration Deals & Offerings Section */}
+            {/* Collaboration Packages Section */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                   <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
-                    Collaboration Deals &amp; Rates
+                    Collaboration Packages
                   </h2>
                   <p className="text-sm text-[#66665E] mt-1 font-medium">
-                    Fixed-price verified deliverables with 100% escrow protection and guaranteed turnaround.
+                    Pre-set deliverables with guaranteed turnaround and escrow protection.
                   </p>
                 </div>
-
-                {filteredPackages.length > 3 && (
-                  <button
-                    onClick={() => setActiveTab('packages')}
-                    className="text-sm font-bold text-[#0A0A0A] hover:text-[#FF2D78] flex items-center gap-1.5 cursor-pointer transition-colors shrink-0"
-                  >
-                    <span>View All Deals ({filteredPackages.length})</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                )}
               </div>
 
-              {/* Packages Cards Row (Highest 3 Deals) */}
+              {/* Packages Cards Row (Curated 3 Packages) */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredPackages.length > 0 ? (
                   filteredPackages.slice(0, 3).map((pkg) => (
@@ -596,6 +624,52 @@ export default function CreatorProfilePage() {
               </div>
             </div>
 
+            {/* Collaboration Preferences (Matching Onboarding Step 6) */}
+            {(() => {
+              const activeCollabIds =
+                creator.collaborationPreferences && creator.collaborationPreferences.length > 0
+                  ? creator.collaborationPreferences
+                  : ['sponsored', 'ugc', 'reviews'];
+              const collabPrefsList = ALL_COLLAB_PREFS.filter((p) => activeCollabIds.includes(p.id));
+
+              return (
+                <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-5">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div>
+                      <h2 className="text-xl sm:text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
+                        Collaboration Preferences
+                      </h2>
+                      <p className="text-sm text-[#66665E] mt-0.5 font-medium">
+                        Partnership types and content formats {creator.name} is open to working on.
+                      </p>
+                    </div>
+                    <span className="text-xs font-bold px-3 py-1 rounded-full bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] self-start sm:self-auto">
+                      {collabPrefsList.length} Preferences Active
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+                    {collabPrefsList.map((pref) => (
+                      <div
+                        key={pref.id}
+                        className="p-4 rounded-2xl border border-[#E7E7E2] bg-[#FAFAF8] flex items-start gap-3 hover:border-[#0A0A0A] transition-all"
+                      >
+                        <span className="text-2xl shrink-0 mt-0.5">{pref.icon}</span>
+                        <div className="min-w-0 flex-1">
+                          <h4 className="text-sm font-bold text-[#0A0A0A] truncate">
+                            {pref.label}
+                          </h4>
+                          <p className="text-xs text-[#66665E] mt-0.5 leading-relaxed">
+                            {pref.desc}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
+
             {/* Portfolio Showcase */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
               <div className="flex items-center justify-between">
@@ -637,18 +711,13 @@ export default function CreatorProfilePage() {
                       <Play className="w-3.5 h-3.5 fill-white translate-x-0.5" />
                     </div>
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-90 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 text-white">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <span className="text-xs font-black uppercase tracking-wider text-amber-400">
-                            {platformLabel(item.platform)}
-                          </span>
-                          <div className="font-extrabold text-sm text-white">{item.brandName}</div>
-                          <div className="text-xs text-[#D2D2CA] line-clamp-1">{item.campaignTitle}</div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-85 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 text-white">
+                      <div className="min-w-0">
+                        <div className="font-extrabold text-sm text-white tracking-tight truncate">
+                          {item.brandName}
                         </div>
-                        <div className="text-right">
-                          <div className="text-xs font-bold text-white/90">{item.views} views</div>
-                          <div className="text-xs text-[#D2D2CA]">{item.likes} likes</div>
+                        <div className="text-xs text-white/80 font-medium truncate mt-0.5">
+                          {item.deliverableType || item.campaignTitle}
                         </div>
                       </div>
                     </div>
@@ -744,13 +813,6 @@ export default function CreatorProfilePage() {
                         &ldquo;{rev.comment}&rdquo;
                       </p>
                     </div>
-
-                    <div className="pt-2 border-t border-[#E7E7E2]/60 flex items-center justify-between text-sm text-[#66665E]">
-                      <span className="font-bold text-[#0A0A0A] flex items-center gap-1">
-                        <ShieldCheck className="w-3.5 h-3.5 text-[#0A0A0A]" />
-                        <span>Escrow Verified</span>
-                      </span>
-                    </div>
                   </div>
                 ))}
               </div>
@@ -764,15 +826,15 @@ export default function CreatorProfilePage() {
           <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] space-y-8">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#E7E7E2]/60">
               <div>
-                <h2 className="text-2xl font-extrabold text-[#0A0A0A]">All Collaboration Deals</h2>
+                <h2 className="text-2xl font-extrabold text-[#0A0A0A]">Collaboration Packages</h2>
                 <p className="text-xs sm:text-sm text-[#66665E] mt-1 font-medium">
-                  Transparent fixed EUR pricing with escrow protection and clear turnaround times.
+                  Pre-set deliverables with guaranteed turnaround and escrow protection.
                 </p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredPackages.map((pkg) => (
+              {filteredPackages.slice(0, 3).map((pkg) => (
                 <PackageCard
                   key={pkg.id}
                   packageItem={pkg}
@@ -997,74 +1059,6 @@ export default function CreatorProfilePage() {
           </div>
         )}
 
-        {/* TAB 5: AUDIENCE DEMOGRAPHICS */}
-        {activeTab === 'audience' && (
-          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] space-y-8">
-            <div>
-              <h2 className="text-2xl font-extrabold text-[#0A0A0A]">Verified Audience Demographics</h2>
-              <p className="text-sm text-[#66665E] mt-1 font-medium">
-                First-party authenticated analytics via Instagram Graph API & TikTok Creator Portal.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Top Countries */}
-              <div className="p-5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-3">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-[#66665E]">Top Geographies</h3>
-                {creator.audience.topCountries.map((c) => (
-                  <div key={c.country} className="space-y-1">
-                    <div className="flex justify-between text-sm font-bold text-[#0A0A0A]">
-                      <span>{c.country}</span>
-                      <span>{c.percentage}%</span>
-                    </div>
-                    <div className="w-full h-2 bg-[#E7E7E2] rounded-full overflow-hidden">
-                      <div className="h-full bg-[#0A0A0A] rounded-full" style={{ width: `${c.percentage}%` }} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Gender Split */}
-              <div className="p-5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-3">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-[#66665E]">Gender Distribution</h3>
-                <div className="flex items-center justify-between text-sm font-bold text-[#0A0A0A]">
-                  <span>Female ({creator.audience.genderSplit.female}%)</span>
-                  <span>Male ({creator.audience.genderSplit.male}%)</span>
-                </div>
-                <div className="w-full h-3 bg-[#E7E7E2] rounded-full flex overflow-hidden">
-                  <div
-                    className="h-full bg-[#0F766E]"
-                    style={{ width: `${creator.audience.genderSplit.female}%` }}
-                  />
-                  <div
-                    className="h-full bg-[#7C3AED]"
-                    style={{ width: `${creator.audience.genderSplit.male}%` }}
-                  />
-                </div>
-                <div className="flex justify-between text-sm text-[#66665E] pt-1 font-bold">
-                  <span className="flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-[#0F766E]" /> Female
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-[#7C3AED]" /> Male
-                  </span>
-                </div>
-              </div>
-
-              {/* Age Bracket */}
-              <div className="p-5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-3">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-[#66665E]">Primary Age Bracket</h3>
-                <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A] pt-2">
-                  {creator.audience.topAgeGroup}
-                </div>
-                <p className="text-sm text-[#66665E] font-medium leading-relaxed">
-                  Over 75% of the engaged audience falls between young adult and high-income working age demographics.
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* TAB 5: REVIEWS */}
         {activeTab === 'reviews' && (() => {
           const filteredReviews = creator.reviews.filter((rev) => {
@@ -1179,7 +1173,7 @@ export default function CreatorProfilePage() {
                             <BrandLogo name={rev.brandName} logoUrl={rev.brandLogo} size="md" />
                             <div className="min-w-0">
                               <div className="font-extrabold text-sm text-[#0A0A0A] truncate">{rev.brandName}</div>
-                              <div className="text-sm text-[#66665E] truncate">{rev.campaignName}</div>
+                              <div className="text-sm text-[#66665E] truncate">{rev.campaignName} • {rev.date}</div>
                             </div>
                           </div>
                           <div className="flex text-amber-500 shrink-0">
@@ -1192,14 +1186,6 @@ export default function CreatorProfilePage() {
                         <p className="text-sm sm:text-[15px] text-[#44443E] leading-[24px] italic font-normal">
                           &ldquo;{rev.comment}&rdquo;
                         </p>
-                      </div>
-
-                      <div className="pt-3 border-t border-[#E7E7E2]/80 flex items-center justify-between text-sm text-[#66665E]">
-                        <span className="inline-flex items-center gap-1.5 font-bold text-[#0A0A0A]">
-                          <ShieldCheck className="w-3.5 h-3.5 text-[#0A0A0A]" />
-                          <span>Verified Escrow Order</span>
-                        </span>
-                        <span className="font-medium text-[#66665E]">{rev.date}</span>
                       </div>
                     </div>
                   ))}

@@ -148,27 +148,27 @@ export function OfferModal() {
         {/* Campaign Info */}
         <div className="space-y-4">
           <div className="space-y-1.5">
-            <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">
+            <label className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">
               Campaign Name
             </label>
             <Input
               value={campaignTitle}
               onChange={(e) => setCampaignTitle(e.target.value)}
-              className="rounded-xl h-10 text-sm font-semibold"
+              className="rounded-xl h-10 text-sm font-semibold text-[#0A0A0A] placeholder:text-[#66665E] border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
               placeholder="e.g. Summer Skincare Drop"
               required
             />
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">
+            <label className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">
               Campaign Brief
             </label>
             <Input.TextArea
               rows={3}
               value={brief}
               onChange={(e) => setBrief(e.target.value)}
-              className="rounded-xl text-sm leading-relaxed p-3"
+              className="rounded-xl text-sm font-medium leading-relaxed p-3 text-[#0A0A0A] placeholder:text-[#66665E] border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
               placeholder="Outline your talking points, aesthetic tone, and required call-to-action..."
               required
             />
