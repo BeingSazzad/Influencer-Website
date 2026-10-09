@@ -1300,16 +1300,37 @@ export default function CreatorOnboardingPage() {
               </p>
             </div>
 
-            {/* Clean Status Card */}
-            <div className="bg-[#FAFAF8] p-4.5 rounded-2xl border border-[#E7E7E2] flex items-center gap-3.5">
-              <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-700 flex items-center justify-center shrink-0 border border-amber-500/20">
-                <Clock className="w-5 h-5" />
-              </div>
-              <div className="text-left">
-                <div className="text-sm font-bold text-[#0A0A0A]">Under Review</div>
-                <div className="text-xs text-[#66665E] font-medium">
-                  Our curation team typically reviews new creators within 24 hours.
+            {/* Premium Curation Status Card */}
+            <div className="bg-gradient-to-br from-[#FAFAF8] to-[#F5F5F0] p-5 rounded-2xl border border-[#E7E7E2] text-left shadow-2xs space-y-3">
+              <div className="flex flex-col min-[420px]:flex-row min-[420px]:items-start min-[420px]:justify-between gap-3">
+                <div className="flex items-center gap-3.5">
+                  <div className="w-11 h-11 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center shrink-0 border border-amber-500/20 shadow-2xs">
+                    <Clock className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-black text-[#0A0A0A] tracking-tight">
+                      Under Curation Review
+                    </div>
+                    <div className="text-xs text-[#66665E] font-medium mt-0.5">
+                      Our editorial team reviews new creators within 24 hours.
+                    </div>
+                  </div>
                 </div>
+
+                <span className="self-start shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/25 text-[11px] font-extrabold text-amber-700 tracking-wide uppercase">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+                  24h Review
+                </span>
+              </div>
+
+              {/* Informative Sub-badges */}
+              <div className="pt-3 border-t border-[#E7E7E2] flex flex-wrap items-center justify-between gap-2 text-xs text-[#66665E] font-medium">
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="text-emerald-600 font-bold">✓</span> Full workspace access unlocked
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="text-emerald-600 font-bold">✓</span> Email notification upon approval
+                </span>
               </div>
             </div>
 
