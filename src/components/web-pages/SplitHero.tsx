@@ -14,6 +14,7 @@ import {
   ArrowRight,
   ChevronDown,
   Globe,
+  Star,
 } from 'lucide-react';
 import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
 
@@ -431,35 +432,39 @@ export function SplitHero() {
             </div>
 
             {/* Social Trust Metrics with Avatar Stack */}
-            <div className="flex items-center gap-4 pt-1">
-              <div className="flex -space-x-2 overflow-hidden">
+            <div className="flex items-center gap-3.5 sm:gap-4 pt-3">
+              <div className="flex -space-x-2.5 overflow-hidden shrink-0">
                 <img
-                  className="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover shadow-xs"
+                  className="inline-block h-10 w-10 sm:h-11 sm:w-11 rounded-full ring-2 ring-white object-cover shadow-xs"
                   src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100"
                   alt="Creator"
                 />
                 <img
-                  className="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover shadow-xs"
+                  className="inline-block h-10 w-10 sm:h-11 sm:w-11 rounded-full ring-2 ring-white object-cover shadow-xs"
                   src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100"
                   alt="Creator"
                 />
                 <img
-                  className="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover shadow-xs"
+                  className="inline-block h-10 w-10 sm:h-11 sm:w-11 rounded-full ring-2 ring-white object-cover shadow-xs"
                   src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100"
                   alt="Creator"
                 />
-                <div className="h-10 w-10 rounded-full bg-[#0A0A0A] text-white text-xs font-black flex items-center justify-center ring-2 ring-white shadow-xs font-sans">
+                <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-full bg-[#0A0A0A] text-white text-xs sm:text-[13px] font-black flex items-center justify-center ring-2 ring-white shadow-xs font-sans">
                   +12k
                 </div>
               </div>
 
-              <div>
-                <div className="flex items-center gap-1.5 text-xs font-extrabold text-[#0A0A0A] font-sans">
-                  <div className="flex text-amber-400">★★★★★</div>
-                  <span className="text-[#0A0A0A] font-black">4.9/5</span>
-                  <span className="text-[#66665E] font-medium">• 3,400+ reviews</span>
+              <div className="flex flex-col justify-center">
+                <div className="flex items-center gap-1.5 text-sm sm:text-base font-bold text-[#0A0A0A] font-sans">
+                  <div className="flex items-center gap-0.5 text-amber-400">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                    ))}
+                  </div>
+                  <span className="text-[#0A0A0A] font-black ml-0.5">4.9/5</span>
+                  <span className="text-[#66665E] font-medium text-xs sm:text-sm">· 3,400+ reviews</span>
                 </div>
-                <p className="text-sm font-medium text-[#555550] font-sans mt-0.5">
+                <p className="text-xs sm:text-sm font-medium text-[#66665E] font-sans mt-0.5">
                   Trusted by brands across 45+ countries worldwide.
                 </p>
               </div>
