@@ -124,5 +124,5 @@ npm run build
    - Creator delivers content for review, and escrow is released only upon brand approval.
 
 4. **Dedicated Dual Workspaces**:
-   - **Brand Workspace**: Campaign KPIs, shortlist, order tracking, and escrow management.
+   - **Brand Workspace**: Campaign KPIs, shortlist, standardized status taxonomy (`Pending`, `In Production`, `In Review`, `Completed`), transaction ledger breakdown drawer/modal, and escrow management.
    - **Creator Workspace**: Direct profile sharing modal (QR code, rate card link), package pricing manager, portfolio showcase, and incoming offer reviews.
