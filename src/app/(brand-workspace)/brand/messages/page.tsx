@@ -391,7 +391,7 @@ function BrandMessagesContent() {
                       className="h-9 px-4 rounded-full text-sm font-bold bg-[#0A0A0A] hover:!bg-zinc-800 !text-white hover:!text-white border-none flex items-center gap-1.5 cursor-pointer shadow-2xs"
                     >
                       <PlusCircle className="w-3.5 h-3.5" />
-                      <span>Send Offer</span>
+                      <span>New Campaign</span>
                     </Button>
                   </Link>
 
@@ -408,7 +408,7 @@ function BrandMessagesContent() {
                         {
                           key: 'offer',
                           icon: <PlusCircle className="w-4 h-4" />,
-                          label: 'Send Campaign Offer',
+                          label: 'New Campaign',
                           onClick: () => router.push(`/brand/hire/new?creatorId=${activeConv.creatorId}`),
                         },
                         {

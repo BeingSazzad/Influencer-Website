@@ -14,6 +14,7 @@ import {
   Download,
   Plus,
   Lock,
+  Eye,
 } from 'lucide-react';
 import { Modal, Button, message } from 'antd';
 import { Button as AppButton } from '@/components/ui';
@@ -253,7 +254,7 @@ export default function BrandPaymentsPage() {
                 Payment History
               </h3>
               <p className="text-sm text-[#66665E] mt-1">
-                Deposits, escrow locks, and released payouts.
+                Deposits, escrow locks, and released payouts. Click any row for detail breakdown.
               </p>
             </div>
 
@@ -278,7 +279,7 @@ export default function BrandPaymentsPage() {
                   <th className="pb-3.5 px-4">Date</th>
                   <th className="pb-3.5 px-4 text-right">Amount (€)</th>
                   <th className="pb-3.5 px-4 text-center">Status</th>
-                  <th className="pb-3.5 px-4 text-right">Invoice</th>
+                  <th className="pb-3.5 px-4 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#F4F4F0]">
@@ -325,16 +326,28 @@ export default function BrandPaymentsPage() {
                       </td>
 
                       <td className="py-4 px-4 text-right">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedInvoice(txn);
-                          }}
-                          className="w-8 h-8 rounded-lg border border-[#E7E7E2] hover:border-[#0A0A0A] hover:bg-white text-[#66665E] hover:text-[#0A0A0A] inline-flex items-center justify-center transition-colors cursor-pointer"
-                          title="View Tax Receipt"
-                        >
-                          <FileText className="w-4 h-4" />
-                        </button>
+                        <div className="flex items-center justify-end gap-1.5">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedDetailTransaction(txn);
+                            }}
+                            className="w-8 h-8 rounded-lg border border-[#E7E7E2] hover:border-[#0A0A0A] hover:bg-white text-[#66665E] hover:text-[#0A0A0A] inline-flex items-center justify-center transition-colors cursor-pointer"
+                            title="View Transaction Breakdown"
+                          >
+                            <Eye className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedInvoice(txn);
+                            }}
+                            className="w-8 h-8 rounded-lg border border-[#E7E7E2] hover:border-[#0A0A0A] hover:bg-white text-[#66665E] hover:text-[#0A0A0A] inline-flex items-center justify-center transition-colors cursor-pointer"
+                            title="View Tax Receipt"
+                          >
+                            <FileText className="w-4 h-4" />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   );

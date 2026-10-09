@@ -146,10 +146,10 @@ export default function BrandDashboardPage() {
 
               const statusLabels: Record<string, string> = {
                 offer_sent: 'Pending',
-                accepted: 'Accepted',
+                accepted: 'In Production',
                 in_production: 'In Production',
-                deliverable_submitted: 'Review Ready',
-                approved: 'Released',
+                deliverable_submitted: 'In Review',
+                approved: 'Completed',
                 completed: 'Completed',
               };
 
