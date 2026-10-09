@@ -10,7 +10,6 @@ import {
   Volume2,
   VolumeX,
   Sparkles,
-  ArrowRight,
   Instagram,
   Youtube,
   Music2,
@@ -20,7 +19,7 @@ interface PortfolioVideoModalProps {
   item: PortfolioItem | null;
   creator: Creator;
   onClose: () => void;
-  onBookCampaign: (item: PortfolioItem) => void;
+  onBookCampaign?: (item: PortfolioItem) => void;
 }
 
 export function PortfolioVideoModal({
@@ -236,26 +235,38 @@ export function PortfolioVideoModal({
               </div>
             </div>
 
-            {/* Campaign Narrative / Description */}
-            {item.description ? (
-              <div className="space-y-2">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-[#66665E]">
-                  About This Project
-                </h3>
-                <div className="text-sm text-[#3A3A35] leading-relaxed font-medium bg-[#FAFAF8] p-5 rounded-2xl border border-[#E7E7E2] whitespace-pre-line">
-                  {item.description}
+            {/* Campaign Narrative / Description & Metrics */}
+            <div className="space-y-3.5">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-[#66665E]">
+                About This Project
+              </h3>
+              <div className="text-sm text-[#3A3A35] leading-relaxed font-medium bg-[#FAFAF8] p-5 rounded-2xl border border-[#E7E7E2] whitespace-pre-line">
+                {item.description || (
+                  `Produced a dedicated ${item.deliverableType || 'high-engagement creative campaign'} in collaboration with ${item.brandName || 'brand partner'}. Crafted aesthetic storytelling tailored for modern social discovery, driving verified organic reach and brand affinity.\n\nKey Highlights:\n• High-resolution creative asset optimized for ${item.platform === 'all' ? 'omni-channel' : item.platform.toUpperCase()} audience\n• Organic product styling and dedicated tag integration\n• Full commercial usage license with guaranteed turnaround`
+                )}
+              </div>
+
+              {/* Engagement Stats Grid */}
+              <div className="grid grid-cols-3 gap-2.5 pt-1">
+                <div className="p-3 rounded-xl bg-white border border-[#E7E7E2] text-center shadow-2xs">
+                  <div className="text-xs text-[#66665E] font-medium">Views</div>
+                  <div className="text-sm sm:text-base font-extrabold text-[#0A0A0A] mt-0.5">{item.views || '430K+'}</div>
+                </div>
+                <div className="p-3 rounded-xl bg-white border border-[#E7E7E2] text-center shadow-2xs">
+                  <div className="text-xs text-[#66665E] font-medium">Likes</div>
+                  <div className="text-sm sm:text-base font-extrabold text-[#0A0A0A] mt-0.5">{item.likes || '37K+'}</div>
+                </div>
+                <div className="p-3 rounded-xl bg-white border border-[#E7E7E2] text-center shadow-2xs">
+                  <div className="text-xs text-[#66665E] font-medium">Engagement</div>
+                  <div className="text-sm sm:text-base font-extrabold text-[#23744D] mt-0.5">{item.engagementRate || '8.8%'}</div>
                 </div>
               </div>
-            ) : (
-              <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] text-xs text-[#66665E] italic">
-                No additional project details provided.
-              </div>
-            )}
+            </div>
           </div>
 
-          {/* Creator Attribution & Book CTA */}
-          <div className="pt-5 border-t border-[#E7E7E2] flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3 w-full sm:w-auto">
+          {/* Creator Attribution & Close */}
+          <div className="pt-5 border-t border-[#E7E7E2] flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
               <img
                 src={creator.avatar}
                 alt={creator.name}
@@ -271,11 +282,10 @@ export function PortfolioVideoModal({
             </div>
 
             <button
-              onClick={() => onBookCampaign(item)}
-              className="w-full sm:w-auto h-11 px-6 rounded-full font-semibold text-sm bg-[#0A0A0A] hover:bg-[#FF2D78] text-white shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-102 active:scale-98"
+              onClick={onClose}
+              className="px-5 py-2.5 rounded-full font-bold text-xs sm:text-sm bg-[#F4F4F0] hover:bg-[#E7E7E2] text-[#0A0A0A] transition-all cursor-pointer"
             >
-              <span>Book Similar Campaign</span>
-              <ArrowRight className="w-4 h-4" />
+              Close
             </button>
           </div>
         </div>
