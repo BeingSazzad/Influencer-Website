@@ -644,8 +644,8 @@ export default function CreatorOnboardingPage() {
                   </div>
                 </div>
 
-                {/* Email, Phone & Gender */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+                {/* Contact Information (2 Columns) */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   <div className="space-y-1.5">
                     <label className="text-sm font-bold text-[#0A0A0A] block">
                       Public Contact Email <span className="text-rose-500">*</span>
@@ -677,20 +677,32 @@ export default function CreatorOnboardingPage() {
                       />
                     </div>
                   </div>
+                </div>
 
-                  <div className="space-y-1.5">
-                    <label className="text-sm font-bold text-[#0A0A0A] block">
-                      Gender
-                    </label>
-                    <select
-                      value={gender}
-                      onChange={(e) => setGender(e.target.value as any)}
-                      className="w-full px-3.5 py-3 rounded-xl border border-[#E7E7E2] focus:border-[#0A0A0A] bg-white text-sm font-medium text-[#0A0A0A] outline-none cursor-pointer transition-all"
-                    >
-                      <option value="female">Female</option>
-                      <option value="male">Male</option>
-                      <option value="other">Other</option>
-                    </select>
+                {/* Gender (Segmented Selection) */}
+                <div className="space-y-1.5">
+                  <label className="text-sm font-bold text-[#0A0A0A] block">
+                    Gender
+                  </label>
+                  <div className="grid grid-cols-3 gap-2.5 max-w-xs sm:max-w-sm">
+                    {([
+                      { id: 'female', label: 'Female' },
+                      { id: 'male', label: 'Male' },
+                      { id: 'other', label: 'Other' },
+                    ] as const).map((item) => (
+                      <button
+                        key={item.id}
+                        type="button"
+                        onClick={() => setGender(item.id)}
+                        className={`py-2.5 px-3 rounded-xl text-sm font-bold transition-all border text-center cursor-pointer ${
+                          gender === item.id
+                            ? 'bg-[#0A0A0A] text-white border-[#0A0A0A] shadow-xs'
+                            : 'bg-white text-[#555550] border-[#E7E7E2] hover:bg-[#F4F4F0] hover:text-[#0A0A0A]'
+                        }`}
+                      >
+                        {item.label}
+                      </button>
+                    ))}
                   </div>
                 </div>
 
