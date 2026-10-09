@@ -16,7 +16,6 @@ import {
   ArrowRight,
   ArrowLeft,
   Sparkles,
-  CheckCircle2,
 } from 'lucide-react';
 import { message } from 'antd';
 
@@ -131,7 +130,7 @@ export default function RegisterPage() {
                 {/* 1. Content Creator Box */}
                 <div
                   onClick={handleSelectCreator}
-                  className="bg-white rounded-3xl p-6 sm:p-7 border-2 border-[#E7E7E2] hover:border-[#0A0A0A] shadow-sm hover:shadow-xl transition-all duration-200 cursor-pointer flex flex-col justify-between group text-left relative overflow-hidden"
+                  className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-[#E7E7E2] hover:border-[#0A0A0A] shadow-sm hover:shadow-xl transition-all duration-200 cursor-pointer flex flex-col justify-between group text-left relative overflow-hidden"
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
@@ -147,31 +146,16 @@ export default function RegisterPage() {
                       <h2 className="text-xl font-black text-[#0A0A0A] group-hover:text-[#FF2D78] transition-colors">
                         I am a Creator
                       </h2>
-                      <p className="text-xs sm:text-sm text-[#66665E] font-medium mt-1.5 leading-relaxed">
-                        Monetize your content, create custom packages, and partner with European brands.
+                      <p className="text-sm text-[#66665E] font-medium mt-2 leading-relaxed">
+                        Partner with top brands, showcase your portfolio, and collaborate on paid campaigns.
                       </p>
                     </div>
-
-                    <ul className="space-y-2 pt-2 border-t border-[#F4F4F0] text-xs font-semibold text-[#0A0A0A]">
-                      <li className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                        <span>Keep 100% of your earnings (0% commission)</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                        <span>Instant escrow payment protection</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                        <span>Direct client chat & custom briefs</span>
-                      </li>
-                    </ul>
                   </div>
 
-                  <div className="pt-6">
+                  <div className="pt-8">
                     <button
                       type="button"
-                      className="w-full py-3 px-4 rounded-xl bg-[#0A0A0A] group-hover:bg-[#FF2D78] text-white font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+                      className="w-full py-3.5 px-4 rounded-xl bg-[#0A0A0A] group-hover:bg-[#FF2D78] text-white font-bold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
                     >
                       <span>Continue as Creator</span>
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -182,7 +166,7 @@ export default function RegisterPage() {
                 {/* 2. Brand Marketer Box */}
                 <div
                   onClick={() => setSelectedRole('brand')}
-                  className="bg-white rounded-3xl p-6 sm:p-7 border-2 border-[#E7E7E2] hover:border-[#0A0A0A] shadow-sm hover:shadow-xl transition-all duration-200 cursor-pointer flex flex-col justify-between group text-left relative overflow-hidden"
+                  className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-[#E7E7E2] hover:border-[#0A0A0A] shadow-sm hover:shadow-xl transition-all duration-200 cursor-pointer flex flex-col justify-between group text-left relative overflow-hidden"
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
@@ -198,31 +182,16 @@ export default function RegisterPage() {
                       <h2 className="text-xl font-black text-[#0A0A0A] group-hover:text-black transition-colors">
                         I am a Brand
                       </h2>
-                      <p className="text-xs sm:text-sm text-[#66665E] font-medium mt-1.5 leading-relaxed">
-                        Discover 12,000+ vetted creators, run campaigns, and safely escrow deliverables.
+                      <p className="text-sm text-[#66665E] font-medium mt-2 leading-relaxed">
+                        Discover vetted creators across Instagram, TikTok &amp; YouTube, and launch high-impact campaigns.
                       </p>
                     </div>
-
-                    <ul className="space-y-2 pt-2 border-t border-[#F4F4F0] text-xs font-semibold text-[#0A0A0A]">
-                      <li className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                        <span>Verified creators on Instagram, TikTok, YouTube</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                        <span>100% escrow milestone protection</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                        <span>Zero upfront subscription fees</span>
-                      </li>
-                    </ul>
                   </div>
 
-                  <div className="pt-6">
+                  <div className="pt-8">
                     <button
                       type="button"
-                      className="w-full py-3 px-4 rounded-xl bg-[#0A0A0A] text-white font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:bg-zinc-800"
+                      className="w-full py-3.5 px-4 rounded-xl bg-[#0A0A0A] text-white font-bold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:bg-zinc-800"
                     >
                       <span>Continue as Brand</span>
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
