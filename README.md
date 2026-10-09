@@ -1,6 +1,6 @@
 # Influverse — The Creator Marketplace for Brands & Influencers
 
-> **Production Platform**: Two-sided creator marketplace connecting brands with verified social media creators and UGC specialists with 100% escrow protection and transparent EUR (€) pricing.
+> **Production Platform (v1.0.1)**: Two-sided creator marketplace connecting brands with verified social media creators and UGC specialists with 100% escrow protection and transparent EUR (€) pricing.
 
 ---
 
