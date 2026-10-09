@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Check, Calculator, ShieldCheck, Sparkles } from 'lucide-react';
+import { Check, Calculator, Sparkles } from 'lucide-react';
 import { Slider } from 'antd';
 import { Button, Badge } from '@/components/ui';
 
@@ -89,13 +89,6 @@ export function PricingSection() {
                 <span>Total Brand Cost (Funded in Escrow):</span>
                 <span className="font-sans text-lg sm:text-xl font-black text-[#0A0A0A]">€{totalCostEur.toLocaleString()}</span>
               </div>
-            </div>
-
-            <div className="p-4 bg-white rounded-2xl border border-[#E7E7E2] flex items-center gap-3 shadow-2xs">
-              <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
-              <p className="text-sm text-[#66665E] leading-relaxed font-sans font-medium">
-                Funds are held safely in escrow. Creator does not receive payment until you review and approve the submitted content.
-              </p>
             </div>
           </div>
 
