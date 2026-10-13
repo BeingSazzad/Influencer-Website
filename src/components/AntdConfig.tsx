@@ -2,10 +2,12 @@
 
 import React from 'react';
 import { ConfigProvider } from 'antd';
+import { StyleProvider } from '@ant-design/cssinjs';
 
 export function AntdConfig({ children }: { children: React.ReactNode }) {
   return (
-    <ConfigProvider
+    <StyleProvider hashPriority="high">
+      <ConfigProvider
         theme={{
           token: {
             colorPrimary: '#0A0A0A',
@@ -108,5 +110,6 @@ export function AntdConfig({ children }: { children: React.ReactNode }) {
     >
       {children}
     </ConfigProvider>
+  </StyleProvider>
   );
 }

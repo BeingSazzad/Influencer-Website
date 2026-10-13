@@ -560,6 +560,7 @@ export default function BrandOnboardingPage() {
                     accept="image/*"
                     onChange={handleLogoFileChange}
                     className="hidden"
+                    style={{ display: 'none' }}
                   />
                   <div className="relative group cursor-pointer" onClick={() => logoInputRef.current?.click()}>
                     <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl border-2 border-dashed border-[#E7E7E2] group-hover:border-[#FF2D78] overflow-hidden bg-[#FAFAF8] flex items-center justify-center transition-all duration-200 shadow-xs">

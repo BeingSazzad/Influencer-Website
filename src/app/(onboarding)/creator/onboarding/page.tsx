@@ -570,6 +570,7 @@ export default function CreatorOnboardingPage() {
                     type="file"
                     accept="image/*"
                     className="hidden"
+                    style={{ display: 'none' }}
                     onChange={handleAvatarFileChange}
                   />
 
@@ -1041,6 +1042,7 @@ export default function CreatorOnboardingPage() {
                   type="file"
                   accept="image/*,video/*"
                   className="hidden"
+                  style={{ display: 'none' }}
                   onChange={handlePortfolioFileChange}
                 />
 
