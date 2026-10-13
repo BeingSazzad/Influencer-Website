@@ -16,6 +16,7 @@ import {
   CreditCard,
   Settings,
   LogOut,
+  Scale,
 } from 'lucide-react';
 
 export function BrandSidebar() {
@@ -37,6 +38,10 @@ export function BrandSidebar() {
   );
   const activeCampaignsCount = brandOrders.filter((o) =>
     ['offer_sent', 'accepted', 'in_production', 'deliverable_submitted'].includes(o.status)
+  ).length;
+
+  const openDisputesCount = brandOrders.filter(
+    (o) => o.status === 'disputed' || o.dispute?.status === 'open'
   ).length;
 
   const brandConversations = conversations.filter(
@@ -64,6 +69,12 @@ export function BrandSidebar() {
       href: '/brand/campaigns',
       icon: Layers,
       badge: activeCampaignsCount,
+    },
+    {
+      name: 'Disputes',
+      href: '/brand/disputes',
+      icon: Scale,
+      badge: openDisputesCount > 0 ? openDisputesCount : undefined,
     },
     {
       name: 'New Campaign',

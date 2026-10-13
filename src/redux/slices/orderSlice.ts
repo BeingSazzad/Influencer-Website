@@ -77,6 +77,49 @@ export const orderSlice = createSlice({
         order.status = 'completed';
       }
     },
+    openDispute: (
+      state,
+      action: PayloadAction<{ orderId: string; reason: string; scope?: string }>
+    ) => {
+      const order = state.orders.find((o) => o.id === action.payload.orderId);
+      if (order) {
+        order.status = 'disputed';
+        order.dispute = {
+          id: `DSP-${Math.floor(1000 + Math.random() * 9000)}`,
+          status: 'open',
+          filedDate: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+          reason: action.payload.reason,
+          scope: action.payload.scope,
+        };
+      }
+    },
+    arbitrateDispute: (
+      state,
+      action: PayloadAction<{
+        orderId: string;
+        decision: 'resolved_split' | 'resolved_brand' | 'resolved_creator';
+        splitRatio?: string;
+        mediatorNotes?: string;
+      }>
+    ) => {
+      const order = state.orders.find(
+        (o) => o.id === action.payload.orderId || o.dispute?.id === action.payload.orderId
+      );
+      if (order && order.dispute) {
+        order.dispute.status = action.payload.decision;
+        order.dispute.splitRatio = action.payload.splitRatio;
+        order.dispute.mediatorNotes = action.payload.mediatorNotes;
+        if (action.payload.decision === 'resolved_creator') {
+          order.status = 'completed';
+          order.escrowReleased = true;
+        } else if (action.payload.decision === 'resolved_brand') {
+          order.status = 'declined';
+        } else {
+          order.status = 'completed';
+          order.escrowReleased = true;
+        }
+      }
+    },
     openOfferModal: (
       state,
       action: PayloadAction<NonNullable<OrderState['selectedCreatorForOffer']>>
@@ -97,6 +140,8 @@ export const {
   submitDeliverable,
   addMessageToOrder,
   submitOrderReview,
+  openDispute,
+  arbitrateDispute,
   openOfferModal,
   closeOfferModal,
 } = orderSlice.actions;

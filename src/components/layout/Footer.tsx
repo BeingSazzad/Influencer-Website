@@ -173,6 +173,14 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/disputes" className="hover:text-[#FF2D78] transition-colors flex items-center gap-1.5 font-bold text-white">
+                  <span>Disputes & Arbitration</span>
+                  <span className="text-[10px] uppercase font-extrabold bg-[#FF2D78] text-white px-1.5 py-0.5 rounded-full leading-none">
+                    Active
+                  </span>
+                </Link>
+              </li>
+              <li>
                 <Link href="/terms#guidelines" className="hover:text-white transition-colors">
                   Community Guidelines
                 </Link>

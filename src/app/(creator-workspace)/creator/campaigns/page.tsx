@@ -12,6 +12,7 @@ import {
   ArrowRight,
   Search,
   ChevronRight,
+  Scale,
 } from 'lucide-react';
 import { Button, Input, message } from 'antd';
 
@@ -27,7 +28,7 @@ export default function CreatorCampaignsPage() {
   const { orders } = useAppSelector((state) => state.order);
   const { currentUser } = useAppSelector((state) => state.auth);
 
-  const [activeFilter, setActiveFilter] = useState<'all' | 'pending' | 'active' | 'review' | 'completed'>('all');
+  const [activeFilter, setActiveFilter] = useState<'all' | 'pending' | 'active' | 'review' | 'disputed' | 'completed'>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
   // Target creator
@@ -44,6 +45,7 @@ export default function CreatorCampaignsPage() {
   const inProductionOrders = creatorOrders.filter((o) => ['accepted', 'in_production'].includes(o.status));
   const pendingOffers = creatorOrders.filter((o) => o.status === 'offer_sent');
   const reviewReady = creatorOrders.filter((o) => o.status === 'deliverable_submitted');
+  const disputedOrders = creatorOrders.filter((o) => o.status === 'disputed' || !!o.dispute);
   const completedOrders = creatorOrders.filter((o) => ['completed', 'approved'].includes(o.status));
 
   const handleAcceptOffer = (orderId: string) => {
@@ -61,6 +63,7 @@ export default function CreatorCampaignsPage() {
       if (activeFilter === 'pending') return o.status === 'offer_sent';
       if (activeFilter === 'active') return ['accepted', 'in_production'].includes(o.status);
       if (activeFilter === 'review') return o.status === 'deliverable_submitted';
+      if (activeFilter === 'disputed') return o.status === 'disputed' || !!o.dispute;
       if (activeFilter === 'completed') return ['completed', 'approved'].includes(o.status);
       return true;
     })
@@ -91,6 +94,7 @@ export default function CreatorCampaignsPage() {
               { key: 'pending', label: 'Pending', count: pendingOffers.length },
               { key: 'active', label: 'In Production', count: inProductionOrders.length },
               { key: 'review', label: 'Under Review', count: reviewReady.length },
+              { key: 'disputed', label: 'Disputed', count: disputedOrders.length },
               { key: 'completed', label: 'Completed', count: completedOrders.length },
             ].map((tab) => (
               <button
@@ -133,6 +137,13 @@ export default function CreatorCampaignsPage() {
             <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
               Contracts
             </h2>
+            <Link
+              href="/creator/disputes"
+              className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold px-3.5 py-1.5 rounded-full bg-[#FFF0F5] text-[#FF2D78] hover:bg-[#FFE0EB] transition-colors border border-[#FF2D78]/25"
+            >
+              <Scale className="w-3.5 h-3.5" />
+              <span>Disputes Docket ({disputedOrders.length})</span>
+            </Link>
           </div>
 
           {filteredOrders.length > 0 ? (
@@ -208,7 +219,12 @@ export default function CreatorCampaignsPage() {
                           </div>
                         ) : (
                           <div className="flex items-center gap-3">
-                            {isUnderReview ? (
+                            {order.status === 'disputed' || !!order.dispute ? (
+                              <span className="text-sm font-bold px-3 py-1 rounded-full bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 flex items-center gap-1.5">
+                                <Scale className="w-3.5 h-3.5" />
+                                <span>Disputed</span>
+                              </span>
+                            ) : isUnderReview ? (
                               <span className="text-sm font-bold px-3 py-1 rounded-full bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25">
                                 Under Review
                               </span>

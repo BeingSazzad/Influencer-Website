@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from '@/redux/hooks';
 import {
@@ -17,6 +18,7 @@ import {
   MessageSquare,
   Link2,
   Film,
+  Scale,
 } from 'lucide-react';
 import { Button, Input, message } from 'antd';
 import { BrandLogo } from '@/components/shared/BrandLogo';
@@ -27,7 +29,14 @@ export default function CreatorOrderFulfilmentPage() {
   const { orders } = useAppSelector((state) => state.order);
 
   const orderId = params?.id as string;
-  const order = orders.find((o) => o.id === orderId) || orders[0];
+  const order =
+    orders.find(
+      (o) =>
+        o.id === orderId ||
+        o.id?.toLowerCase() === orderId?.toLowerCase() ||
+        (orderId?.toLowerCase() === 'ord-102' && o.id === 'ORD-94102') ||
+        (orderId?.toUpperCase() === 'ORD-94102' && o.id === 'ord-102')
+    ) || orders[0];
 
   const [delivTitle, setDelivTitle] = useState('Campaign Final Video Cut (9:16 4K)');
   const [submissionMode, setSubmissionMode] = useState<'drive' | 'direct'>('drive');
@@ -120,6 +129,55 @@ export default function CreatorOrderFulfilmentPage() {
       />
 
       <div className="p-6 sm:p-8 max-w-6xl mx-auto space-y-8 font-sans">
+        {/* Active Escrow Dispute Banner */}
+        {(order.status === 'disputed' || !!order.dispute) && (
+          <div className="bg-[#FFF5F8] rounded-3xl p-6 sm:p-8 border border-[#FFE0EB] shadow-xs space-y-5 font-sans">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#FFE0EB]">
+              <div className="flex items-center gap-3">
+                <div className="w-11 h-11 rounded-2xl bg-[#FF2D78] text-white flex items-center justify-center shrink-0 shadow-xs">
+                  <Scale className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="font-mono text-xs font-bold px-2 py-0.5 rounded-md bg-white text-[#FF2D78] border border-[#FF2D78]/30">
+                      {order.dispute?.caseId || 'DSP-8821'}
+                    </span>
+                    <span className="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#FF2D78] text-white">
+                      {order.dispute?.status === 'resolved' ? 'Arbitrated' : 'Escrow Dispute Open'}
+                    </span>
+                    <span className="text-xs text-[#66665E] font-medium">
+                      Order #{order.id.toUpperCase()}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-extrabold text-[#0A0A0A] tracking-tight mt-1">
+                    Escrow Funds (€{order.basePriceEur.toLocaleString()}) On Hold Under Mediation
+                  </h3>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5">
+                <Link
+                  href="/creator/disputes"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-[#FFE0EB] text-xs font-bold text-[#FF2D78] hover:bg-[#FFE0EB] transition-colors shadow-2xs"
+                >
+                  <Scale className="w-3.5 h-3.5" />
+                  <span>Open Disputes Docket</span>
+                </Link>
+              </div>
+            </div>
+
+            {/* Grievance Statement */}
+            <div className="p-4 rounded-2xl bg-white border border-[#FFE0EB] space-y-1">
+              <div className="text-xs font-extrabold uppercase tracking-wider text-[#FF2D78]">
+                Dispute Grievance
+              </div>
+              <p className="text-xs sm:text-sm font-semibold text-[#0A0A0A] italic">
+                &ldquo;{order.dispute?.reason || 'Brand claims lighting & tone do not match agreed moodboard; Creator claims script was fully approved.'}&rdquo;
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Top Escrow Payout Banner */}
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">

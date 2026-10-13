@@ -17,6 +17,7 @@ import {
   LogOut,
   LayoutDashboard,
   User,
+  Scale,
 } from 'lucide-react';
 
 export function Navbar() {
@@ -59,6 +60,18 @@ export function Navbar() {
       ),
       onClick: () => {
         router.push(activeRole === 'brand' ? '/brand/dashboard' : '/creator/dashboard');
+      },
+    },
+    {
+      key: 'disputes',
+      label: (
+        <div className="flex items-center gap-2 py-1 font-sans text-sm font-bold text-[#FF2D78]">
+          <Scale className="w-3.5 h-3.5 text-[#FF2D78]" />
+          <span>Escrow Disputes Docket</span>
+        </div>
+      ),
+      onClick: () => {
+        router.push(activeRole === 'brand' ? '/brand/disputes' : '/creator/disputes');
       },
     },
     ...(activeRole === 'creator'

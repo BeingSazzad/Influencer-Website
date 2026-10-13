@@ -25,7 +25,7 @@ function formatDeadline(dateStr: string) {
 export default function BrandCampaignsPage() {
   const { orders } = useAppSelector((state) => state.order);
   const { currentUser } = useAppSelector((state) => state.auth);
-  const [activeFilter, setActiveFilter] = useState<'all' | 'pending' | 'active' | 'review' | 'completed'>('all');
+  const [activeFilter, setActiveFilter] = useState<'all' | 'pending' | 'active' | 'review' | 'disputed' | 'completed'>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
   // Filter campaigns strictly for this brand
@@ -42,6 +42,7 @@ export default function BrandCampaignsPage() {
   const pendingOffers = brandOrders.filter((o) => o.status === 'offer_sent');
   const inProduction = brandOrders.filter((o) => ['accepted', 'in_production'].includes(o.status));
   const reviewReady = brandOrders.filter((o) => o.status === 'deliverable_submitted');
+  const disputedOrders = brandOrders.filter((o) => o.status === 'disputed' || !!o.dispute);
   const completed = brandOrders.filter((o) => ['completed', 'approved'].includes(o.status));
 
   const filteredOrders = brandOrders
@@ -49,6 +50,7 @@ export default function BrandCampaignsPage() {
       if (activeFilter === 'pending') return o.status === 'offer_sent';
       if (activeFilter === 'active') return ['accepted', 'in_production'].includes(o.status);
       if (activeFilter === 'review') return o.status === 'deliverable_submitted';
+      if (activeFilter === 'disputed') return o.status === 'disputed' || !!o.dispute;
       if (activeFilter === 'completed') return ['completed', 'approved'].includes(o.status);
       return true;
     })
@@ -90,6 +92,7 @@ export default function BrandCampaignsPage() {
               { key: 'pending', label: 'Pending', count: pendingOffers.length },
               { key: 'active', label: 'In Production', count: inProduction.length },
               { key: 'review', label: 'In Review', count: reviewReady.length },
+              { key: 'disputed', label: 'Disputed', count: disputedOrders.length },
               { key: 'completed', label: 'Completed', count: completed.length },
             ].map((tab) => (
               <button
@@ -142,6 +145,7 @@ export default function BrandCampaignsPage() {
                   accepted: 'bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]',
                   in_production: 'bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]',
                   deliverable_submitted: 'bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 font-bold',
+                  disputed: 'bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/35 font-extrabold',
                   approved: 'bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2]',
                   completed: 'bg-[#F4F4F0] text-[#66665E] border border-[#E7E7E2]',
                 };
@@ -151,11 +155,13 @@ export default function BrandCampaignsPage() {
                   accepted: 'In Production',
                   in_production: 'In Production',
                   deliverable_submitted: 'In Review',
+                  disputed: 'Dispute Open',
                   approved: 'Completed',
                   completed: 'Completed',
                 };
 
                 const isReviewReady = order.status === 'deliverable_submitted';
+                const isDisputed = order.status === 'disputed' || !!order.dispute;
 
                 return (
                   <div
@@ -214,12 +220,12 @@ export default function BrandCampaignsPage() {
                       </span>
 
                       <AppButton
-                        href={`/brand/orders/${order.id}`}
+                        href={isDisputed ? '/brand/disputes' : `/brand/orders/${order.id}`}
                         size="md"
-                        variant={isReviewReady ? 'pink' : 'primary'}
+                        variant={isDisputed || isReviewReady ? 'pink' : 'primary'}
                         iconRight={<ArrowRight className="w-3.5 h-3.5" />}
                       >
-                        {isReviewReady ? 'Review' : 'Manage'}
+                        {isDisputed ? 'Dispute Docket' : isReviewReady ? 'Review' : 'Manage'}
                       </AppButton>
                     </div>
                   </div>

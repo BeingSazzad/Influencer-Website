@@ -17,6 +17,7 @@ import {
   Settings,
   LogOut,
   User,
+  Scale,
 } from 'lucide-react';
 import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
 
@@ -57,6 +58,11 @@ export function CreatorSidebar() {
     ['accepted', 'in_production', 'deliverable_submitted'].includes(o.status)
   ).length;
 
+  // Open disputes
+  const openDisputesCount = creatorOrders.filter(
+    (o) => o.status === 'disputed' || o.dispute?.status === 'open'
+  ).length;
+
   // Unread messages for this creator
   const creatorConversations = conversations.filter(
     (c) =>
@@ -91,6 +97,12 @@ export function CreatorSidebar() {
       name: 'Campaigns',
       href: '/creator/campaigns',
       icon: Layers,
+    },
+    {
+      name: 'Disputes',
+      href: '/creator/disputes',
+      icon: Scale,
+      badge: openDisputesCount > 0 ? openDisputesCount : undefined,
     },
     {
       name: 'Messages',

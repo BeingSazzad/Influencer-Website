@@ -149,7 +149,20 @@ export type OrderStatus =
   | 'deliverable_submitted'
   | 'approved'
   | 'completed'
-  | 'declined';
+  | 'declined'
+  | 'disputed';
+
+export interface OrderDispute {
+  id: string;
+  caseId?: string;
+  status: 'open' | 'under_review' | 'resolved_split' | 'resolved_brand' | 'resolved_creator' | 'resolved';
+  filedDate: string;
+  reason: string;
+  scope?: string;
+  deliverableLink?: string;
+  mediatorNotes?: string;
+  splitRatio?: string;
+}
 
 export interface OrderDeliverable {
   id: string;
@@ -196,6 +209,7 @@ export interface Order {
   escrowReleased: boolean;
   deliverables: OrderDeliverable[];
   messages: OrderMessage[];
+  dispute?: OrderDispute;
   reviewSubmitted?: {
     rating: number;
     comment: string;
