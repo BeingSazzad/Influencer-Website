@@ -91,7 +91,7 @@ export const MOCK_BRANDS: BrandProfile[] = [
         title: 'Alpine Recovery Balm Review',
         creatorName: 'Liam Carter',
         creatorAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
-        mediaUrl: 'https://images.unsplash.com/photo-1608248597359-53530f2955cf?auto=format&fit=crop&w=600&q=80',
+        mediaUrl: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=600&q=80',
         mediaType: 'image',
         platform: 'tiktok',
         views: '298K views',
