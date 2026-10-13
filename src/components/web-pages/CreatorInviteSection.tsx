@@ -40,7 +40,7 @@ export function CreatorInviteSection({ dual = false }: { dual?: boolean }) {
               </div>
               <div className="flex items-center gap-2.5 text-sm sm:text-[15px] font-semibold text-[#FAFAF8] whitespace-nowrap">
                 <DollarSign className="w-5 h-5 text-[#FF2D78] shrink-0" />
-                <span>0% Platform Fee (Keep 100%)</span>
+                <span>{dual ? 'Flat 15% Brand Fee • 0% for Creators (Keep 100%)' : '0% Platform Fee for Creators (Keep 100%)'}</span>
               </div>
               <div className="flex items-center gap-2.5 text-sm sm:text-[15px] font-semibold text-[#FAFAF8] whitespace-nowrap">
                 <Award className="w-5 h-5 text-amber-300 shrink-0" />
