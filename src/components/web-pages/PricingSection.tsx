@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Check, Calculator, Sparkles } from 'lucide-react';
+import { Check, Calculator, Sparkles, ArrowRight, ShieldCheck } from 'lucide-react';
 import { Slider } from 'antd';
 import { Button, Badge } from '@/components/ui';
 
@@ -90,11 +90,20 @@ export function PricingSection() {
                 <span className="font-sans text-lg sm:text-xl font-black text-[#0A0A0A]">€{totalCostEur.toLocaleString()}</span>
               </div>
             </div>
+
+            <div className="pt-2">
+              <Link
+                href="/pricing"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0A0A0A] hover:text-[#FF2D78] transition-colors"
+              >
+                <span>View Full Plan Breakdown &amp; Creator FAQ</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
           </div>
 
-          {/* Value Summary Card with consistent site dark gradient & glowing accents */}
+          {/* Value Summary Card */}
           <div className="lg:col-span-5 min-w-0 relative overflow-hidden bg-[#0A0A0A] bg-gradient-to-b from-[#141414] to-[#0D0D0D] text-white rounded-3xl p-6 sm:p-8 lg:p-10 border border-white/10 hover:border-white/20 shadow-2xl transition-all duration-300 space-y-6 group">
-            {/* Ambient subtle glow effects matching site design */}
             <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-[#FF2D78]/20 blur-[90px] pointer-events-none transition-opacity duration-500 group-hover:opacity-90" />
             <div className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-[#FF2D78]/10 blur-[80px] pointer-events-none" />
 
@@ -127,7 +136,7 @@ export function PricingSection() {
                 ))}
               </ul>
 
-              <div className="pt-3">
+              <div className="pt-3 space-y-2.5">
                 <Button
                   href="/creators"
                   size="lg"
@@ -136,6 +145,12 @@ export function PricingSection() {
                 >
                   Hire Creators Now
                 </Button>
+                <Link
+                  href="/pricing"
+                  className="block text-center text-xs font-bold text-white/80 hover:text-white transition-colors py-1"
+                >
+                  Compare All Pricing Plans &rarr;
+                </Link>
               </div>
             </div>
           </div>

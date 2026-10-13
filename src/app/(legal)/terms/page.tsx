@@ -61,6 +61,16 @@ const sections = [
       'Influverse reserves the right to suspend or terminate accounts that engage in fraudulent activity, artificial engagement inflation (bot followers/views), harassment, or attempts to circumvent platform escrow.',
     ],
   },
+  {
+    id: 'guidelines',
+    title: '7. Community Guidelines & Ethical Collaboration',
+    badge: 'Community Standards',
+    content: [
+      'Influverse is committed to an authentic, respectful, and transparent creator economy. All platform participants must adhere to our zero-tolerance policies on fraud, artificial engagement, and harassment.',
+      'Brands must provide respectful creative briefs, prompt feedback during milestone reviews, and maintain clear product usage rights expectations.',
+      'Creators must disclose all paid partnerships in compliance with European advertising standards (ASA, ARPP, Bundeskartellamt) and refrain from purchasing bot followers or artificial views.',
+    ],
+  },
 ];
 
 export default function TermsPage() {
