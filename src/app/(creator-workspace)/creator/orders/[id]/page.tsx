@@ -19,6 +19,7 @@ import {
   Link2,
   Film,
   Scale,
+  ArrowRight,
 } from 'lucide-react';
 import { Button, Input, message } from 'antd';
 import { BrandLogo } from '@/components/shared/BrandLogo';
@@ -182,19 +183,40 @@ export default function CreatorOrderFulfilmentPage() {
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-4">
-              <BrandLogo
-                name={order.brandName}
-                logoUrl={order.brandLogo}
-                size="lg"
-              />
+              <Link
+                href={`/brands/${order.brandId || 'user_brand_01'}`}
+                className="hover:opacity-85 transition-opacity shrink-0"
+                title="View Brand Profile"
+              >
+                <BrandLogo
+                  name={order.brandName}
+                  logoUrl={order.brandLogo}
+                  size="lg"
+                />
+              </Link>
               <div className="space-y-1">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">{order.brandName}</h2>
+                  <Link
+                    href={`/brands/${order.brandId || 'user_brand_01'}`}
+                    className="text-2xl font-extrabold text-[#0A0A0A] hover:text-[#FF2D78] transition-colors tracking-tight flex items-center gap-1.5"
+                  >
+                    <span>{order.brandName}</span>
+                    <ArrowRight className="w-4 h-4 text-[#A3A39C]" />
+                  </Link>
                   <span className="text-sm font-semibold px-2.5 py-0.5 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#0A0A0A]">
                     {order.platform}
                   </span>
                 </div>
-                <p className="text-sm text-[#66665E] font-medium">{order.packageTitle}</p>
+                <div className="flex items-center gap-2.5 text-sm flex-wrap">
+                  <p className="text-[#66665E] font-medium">{order.packageTitle}</p>
+                  <span className="text-[#D2D2CA]">•</span>
+                  <Link
+                    href={`/brands/${order.brandId || 'user_brand_01'}`}
+                    className="text-xs font-bold text-[#FF2D78] hover:underline"
+                  >
+                    View Brand Profile &amp; Open Briefs
+                  </Link>
+                </div>
               </div>
             </div>
 

@@ -22,6 +22,7 @@ import {
   Search,
   Send,
   ExternalLink,
+  Building2,
   ShoppingBag,
   Paperclip,
   FileText,
@@ -354,25 +355,44 @@ export default function CreatorMessagesPage() {
           {activeConv ? (
             <div className="flex-1 flex flex-col bg-white">
               <div className="p-4 sm:px-6 border-b border-[#E7E7E2] flex items-center justify-between gap-4 bg-white">
-                <div className="flex items-center gap-3 min-w-0">
+                <Link
+                  href={`/brands/${activeConv.brandId || 'user_brand_01'}`}
+                  className="flex items-center gap-3 min-w-0 group hover:opacity-90"
+                  title="View Brand Profile"
+                >
                   <img
                     src={activeConv.brandAvatar}
                     alt={activeConv.brandName}
-                    className="w-10 h-10 rounded-full object-cover border border-[#E7E7E2] shrink-0"
+                    className="w-10 h-10 rounded-full object-cover border border-[#E7E7E2] shrink-0 group-hover:scale-105 transition-transform"
                   />
                   <div className="truncate">
-                    <h2 className="text-sm sm:text-base font-bold text-[#0A0A0A] truncate">
-                      {activeConv.brandName}
+                    <h2 className="text-sm sm:text-base font-bold text-[#0A0A0A] group-hover:text-[#FF2D78] transition-colors truncate flex items-center gap-1.5">
+                      <span>{activeConv.brandName}</span>
+                      <ExternalLink className="w-3.5 h-3.5 text-[#A3A39C] opacity-0 group-hover:opacity-100 transition-opacity" />
                     </h2>
-                    <div className="text-sm text-[#66665E]">Verified Brand Partner</div>
+                    <div className="text-xs text-[#66665E]">Verified Brand Partner • View Profile</div>
                   </div>
-                </div>
+                </Link>
 
                 <div className="flex items-center gap-2 shrink-0">
+                  <Link
+                    href={`/brands/${activeConv.brandId || 'user_brand_01'}`}
+                    className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FAFAF8] hover:bg-[#F4F4F0] border border-[#E7E7E2] hover:border-[#0A0A0A] text-xs font-bold text-[#0A0A0A] transition-all shadow-2xs"
+                  >
+                    <Building2 className="w-3.5 h-3.5 text-[#66665E]" />
+                    <span>Brand Profile</span>
+                  </Link>
+
                   {/* 3-Dot Options Dropdown */}
                   <Dropdown
                     menu={{
                       items: [
+                        {
+                          key: 'brand-profile',
+                          icon: <Building2 className="w-4 h-4" />,
+                          label: 'View Brand Profile',
+                          onClick: () => router.push(`/brands/${activeConv.brandId || 'user_brand_01'}`),
+                        },
                         {
                           key: 'orders',
                           icon: <ShoppingBag className="w-4 h-4" />,

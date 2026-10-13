@@ -17,6 +17,7 @@ import {
   Save,
   LogOut,
   Share2,
+  ExternalLink,
   Upload,
   X,
   CheckCircle2,
@@ -313,10 +314,20 @@ export default function BrandSettingsPage() {
                     Public company details, industry focus, and marketplace profile shown to creators.
                   </p>
                 </div>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold self-start sm:self-auto shrink-0">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Verified Brand Account</span>
-                </span>
+                <div className="flex items-center gap-2.5 self-start sm:self-auto shrink-0 flex-wrap">
+                  <Link
+                    href={`/brands/${currentUser?.id || 'user_brand_01'}`}
+                    target="_blank"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-[#E7E7E2] hover:border-[#0A0A0A] text-xs font-bold text-[#0A0A0A] transition-all shadow-2xs hover:scale-[1.02]"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5 text-[#66665E]" />
+                    <span>View Public Profile</span>
+                  </Link>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>Verified Brand Account</span>
+                  </span>
+                </div>
               </div>
 
               {/* Brand Logo (Centered, Matching Onboarding Standards) */}

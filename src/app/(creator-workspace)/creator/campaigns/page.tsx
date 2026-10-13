@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from '@/redux/hooks';
 import { updateOrderStatus } from '@/redux/slices/orderSlice';
 import { WorkspaceHeader } from '@/components/layout/WorkspaceHeader';
@@ -13,6 +14,7 @@ import {
   Search,
   ChevronRight,
   Scale,
+  ExternalLink,
 } from 'lucide-react';
 import { Button, Input, message } from 'antd';
 
@@ -24,6 +26,7 @@ function formatDeadline(dateStr: string) {
 }
 
 export default function CreatorCampaignsPage() {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const { orders } = useAppSelector((state) => state.order);
   const { currentUser } = useAppSelector((state) => state.auth);
@@ -171,6 +174,19 @@ export default function CreatorCampaignsPage() {
                             <h3 className="font-bold text-sm sm:text-base text-[#0A0A0A] leading-tight">
                               {order.brandName}
                             </h3>
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                router.push(`/brands/${order.brandId || 'user_brand_01'}`);
+                              }}
+                              className="text-[11px] font-bold text-[#FF2D78] hover:text-[#E02669] hover:underline cursor-pointer flex items-center gap-0.5"
+                              title="View Brand Profile"
+                            >
+                              <span>Profile</span>
+                              <ExternalLink className="w-3 h-3" />
+                            </button>
                             <span className="text-xs uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#66665E] leading-none">
                               {order.platform}
                             </span>

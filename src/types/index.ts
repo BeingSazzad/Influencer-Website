@@ -229,3 +229,65 @@ export interface CreatorFilterState {
   gender?: 'all' | 'female' | 'male' | 'other' | string;
   sortBy: 'relevance' | 'price_asc' | 'price_desc' | 'followers' | 'rating';
 }
+
+export interface BrandCampaignBrief {
+  id: string;
+  title: string;
+  platform: PlatformType;
+  budgetFormatted: string;
+  budgetEur: number;
+  openSlots: number;
+  deadlineDate: string;
+  description: string;
+  requirements: string[];
+  category: string;
+}
+
+export interface BrandReview {
+  id: string;
+  creatorId: string;
+  creatorName: string;
+  creatorAvatar: string;
+  creatorHandle: string;
+  rating: number;
+  date: string;
+  campaignTitle: string;
+  comment: string;
+}
+
+export interface BrandProfile {
+  id: string;
+  companyName: string;
+  contactName: string;
+  email: string;
+  logo: string;
+  coverImage: string;
+  verified: boolean;
+  industry: string;
+  industryTags: string[];
+  website: string;
+  location: string;
+  companySize: string;
+  bio: string;
+  foundedYear?: string;
+  stats: {
+    escrowFundedRate: number;
+    rating: number;
+    reviewsCount: number;
+    avgResponseHours: number;
+    totalCampaigns: number;
+    avgPayoutEur: number;
+  };
+  activeCampaigns: BrandCampaignBrief[];
+  pastCampaignsHighlights: {
+    id: string;
+    title: string;
+    creatorName: string;
+    creatorAvatar: string;
+    mediaUrl: string;
+    mediaType: 'image' | 'video';
+    platform: PlatformType;
+    views?: string;
+  }[];
+  reviews: BrandReview[];
+}

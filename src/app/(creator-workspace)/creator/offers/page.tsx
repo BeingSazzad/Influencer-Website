@@ -1,11 +1,12 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { useAppSelector, useAppDispatch } from '@/redux/hooks';
 import { updateOrderStatus } from '@/redux/slices/orderSlice';
 import { WorkspaceHeader } from '@/components/layout/WorkspaceHeader';
 import { EmptyState } from '@/components/shared/EmptyState';
-import { Inbox, ShieldCheck } from 'lucide-react';
+import { Inbox, ShieldCheck, ArrowRight } from 'lucide-react';
 import { Button, message } from 'antd';
 import { BrandLogo } from '@/components/shared/BrandLogo';
 
@@ -62,16 +63,26 @@ export default function CreatorOffersPage() {
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="flex items-center gap-4 sm:gap-5">
-                      <BrandLogo
-                        name={offer.brandName}
-                        logoUrl={offer.brandLogo}
-                        size="lg"
-                      />
+                      <Link
+                        href={`/brands/${offer.brandId || 'user_brand_01'}`}
+                        className="hover:opacity-85 transition-opacity shrink-0"
+                        title="View Brand Profile"
+                      >
+                        <BrandLogo
+                          name={offer.brandName}
+                          logoUrl={offer.brandLogo}
+                          size="lg"
+                        />
+                      </Link>
                       <div className="flex flex-col gap-1.5">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <h3 className="font-bold text-base text-[#0A0A0A] leading-tight">
-                            {offer.brandName}
-                          </h3>
+                          <Link
+                            href={`/brands/${offer.brandId || 'user_brand_01'}`}
+                            className="font-bold text-base text-[#0A0A0A] hover:text-[#FF2D78] transition-colors leading-tight flex items-center gap-1.5"
+                          >
+                            <span>{offer.brandName}</span>
+                            <ArrowRight className="w-3.5 h-3.5 text-[#A3A39C]" />
+                          </Link>
                           <span className="text-xs uppercase tracking-wider font-bold px-2.5 py-0.5 rounded-full bg-[#EAEAE3] text-[#4A4A45] leading-none ml-1">
                             {offer.platform}
                           </span>
