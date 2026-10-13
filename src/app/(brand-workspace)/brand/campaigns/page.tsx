@@ -220,12 +220,12 @@ export default function BrandCampaignsPage() {
                       </span>
 
                       <AppButton
-                        href={isDisputed ? '/brand/disputes' : `/brand/orders/${order.id}`}
+                        href={`/brand/orders/${order.id}`}
                         size="md"
                         variant={isDisputed || isReviewReady ? 'pink' : 'primary'}
                         iconRight={<ArrowRight className="w-3.5 h-3.5" />}
                       >
-                        {isDisputed ? 'Dispute Docket' : isReviewReady ? 'Review' : 'Manage'}
+                        {isDisputed ? 'Support Review' : isReviewReady ? 'Review' : 'Manage'}
                       </AppButton>
                     </div>
                   </div>

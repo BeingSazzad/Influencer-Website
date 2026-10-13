@@ -48,6 +48,7 @@ export interface Conversation {
   unreadCountBrand: number;
   unreadCountCreator: number;
   messages: DirectMessage[];
+  isSupport?: boolean;
 }
 
 interface MessageState {
@@ -56,6 +57,35 @@ interface MessageState {
 }
 
 const INITIAL_CONVERSATIONS: Conversation[] = [
+  {
+    id: 'conv-influverse-support',
+    isSupport: true,
+    brandId: 'user_brand_01',
+    brandName: 'Aura Skincare Paris',
+    brandAvatar: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80',
+    creatorId: 'support-team',
+    creatorName: 'Influverse Trust & Support',
+    creatorHandle: 'support',
+    creatorAvatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
+    creatorLocation: 'Trust & Dispute Mediation Desk',
+    lastMessage: '👋 Need help with an order brief, deliverable review, or escrow settlement? Support is here.',
+    lastMessageTimestamp: 'Online',
+    unreadCountBrand: 0,
+    unreadCountCreator: 0,
+    messages: [
+      {
+        id: 'msg-sup-welcome',
+        senderId: 'support-team',
+        senderName: 'Influverse Support Desk',
+        senderAvatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
+        senderRole: 'creator',
+        text: '👋 Welcome to Influverse Trust & Support Desk. If you encounter any issues with order deliverables, timelines, or brief requirements, submit a report from your order page or chat directly here. Our mediation team will coordinate with both parties to resolve it fairly.',
+        timestamp: 'Online',
+        createdAt: Date.now() - 3600000,
+        status: 'read',
+      },
+    ],
+  },
   {
     id: 'conv-noah-becker',
     brandId: 'user_brand_01',
@@ -502,6 +532,76 @@ export const messageSlice = createSlice({
       }
       state.activeConversationId = conv.id;
     },
+    reportIssueToSupport: (
+      state,
+      action: PayloadAction<{
+        orderId: string;
+        role: 'brand' | 'creator';
+        reporterName: string;
+        category: string;
+        reason: string;
+      }>
+    ) => {
+      const { orderId, role, reporterName, category, reason } = action.payload;
+      let conv = state.conversations.find((c) => c.id === 'conv-influverse-support');
+      if (!conv) {
+        conv = {
+          id: 'conv-influverse-support',
+          isSupport: true,
+          brandId: 'user_brand_01',
+          brandName: 'Aura Skincare Paris',
+          brandAvatar: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80',
+          creatorId: 'support-team',
+          creatorName: 'Influverse Trust & Support',
+          creatorHandle: 'support',
+          creatorAvatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
+          creatorLocation: 'Trust & Dispute Mediation Desk',
+          lastMessage: '',
+          lastMessageTimestamp: 'Just now',
+          unreadCountBrand: 0,
+          unreadCountCreator: 0,
+          messages: [],
+        };
+        state.conversations.unshift(conv);
+      }
+
+      const userMsg: DirectMessage = {
+        id: `msg-sup-user-${Date.now()}`,
+        senderId: role === 'brand' ? 'user_brand_01' : 'creator-01',
+        senderName: reporterName,
+        senderAvatar:
+          role === 'brand'
+            ? 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80'
+            : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80',
+        senderRole: role,
+        text: `⚠️ [Order Support Ticket: #${orderId}]\n• Category: ${category}\n• Details: ${reason}\n\nPlease review and assist with resolving this order.`,
+        timestamp: 'Just now',
+        createdAt: Date.now(),
+        status: 'delivered',
+      };
+
+      const supportAckMsg: DirectMessage = {
+        id: `msg-sup-ack-${Date.now() + 1}`,
+        senderId: 'support-team',
+        senderName: 'Influverse Support Desk',
+        senderAvatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
+        senderRole: 'creator',
+        text: `Hello ${reporterName}! We have logged your request for Order #${orderId} (${category}). A mediation specialist is reviewing the deliverable files and creative brief. Both parties will be assisted right here in chat to resolve this smoothly. Escrow funds remain 100% safeguarded.`,
+        timestamp: 'Just now',
+        createdAt: Date.now() + 500,
+        status: 'delivered',
+      };
+
+      conv.messages.push(userMsg, supportAckMsg);
+      conv.lastMessage = `Support Ticket #${orderId} logged (${category}). Mediation active.`;
+      conv.lastMessageTimestamp = 'Just now';
+      if (role === 'brand') {
+        conv.unreadCountBrand = 1;
+      } else {
+        conv.unreadCountCreator = 1;
+      }
+      state.activeConversationId = 'conv-influverse-support';
+    },
   },
 });
 
@@ -515,5 +615,6 @@ export const {
   clearMessages,
   updateCustomOfferStatus,
   getOrCreateConversation,
+  reportIssueToSupport,
 } = messageSlice.actions;
 export default messageSlice.reducer;

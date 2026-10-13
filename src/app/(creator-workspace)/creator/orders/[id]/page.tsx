@@ -7,7 +7,10 @@ import { useAppSelector, useAppDispatch } from '@/redux/hooks';
 import {
   submitDeliverable,
   addMessageToOrder,
+  reportOrderIssue,
+  resolveOrderIssue,
 } from '@/redux/slices/orderSlice';
+import { reportIssueToSupport } from '@/redux/slices/messageSlice';
 import { WorkspaceHeader } from '@/components/layout/WorkspaceHeader';
 import { OrderDeliverable } from '@/types';
 import {
@@ -18,10 +21,13 @@ import {
   MessageSquare,
   Link2,
   Film,
-  Scale,
   ArrowRight,
+  HelpCircle,
+  LifeBuoy,
+  CheckCircle2,
+  ShieldCheck,
 } from 'lucide-react';
-import { Button, Input, message } from 'antd';
+import { Button, Input, Modal, Select, message } from 'antd';
 import { BrandLogo } from '@/components/shared/BrandLogo';
 
 export default function CreatorOrderFulfilmentPage() {
@@ -47,6 +53,11 @@ export default function CreatorOrderFulfilmentPage() {
   const [directVideoSize, setDirectVideoSize] = useState<string>('38.6 MB');
   const [delivNotes, setDelivNotes] = useState('Here is the final cut with both color grades and clean uncompressed audio.');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Support / Issue states
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [reportCategory, setReportCategory] = useState('Brand Unresponsive / Feedback Delayed');
+  const [reportReason, setReportReason] = useState('');
 
   const [chatMessage, setChatMessage] = useState('');
 
@@ -121,6 +132,51 @@ export default function CreatorOrderFulfilmentPage() {
     message.success('Message sent');
   };
 
+  const handleReportIssue = () => {
+    if (!reportReason.trim()) {
+      message.error('Please describe the issue for our support team.');
+      return;
+    }
+    dispatch(
+      reportOrderIssue({
+        orderId: order.id,
+        reporterRole: 'creator',
+        category: reportCategory,
+        reason: reportReason.trim(),
+      })
+    );
+    dispatch(
+      reportIssueToSupport({
+        orderId: order.id,
+        role: 'creator',
+        reporterName: order.creatorName || 'Sophie Kim',
+        category: reportCategory,
+        reason: reportReason.trim(),
+      })
+    );
+    setIsReportModalOpen(false);
+    setReportReason('');
+    message.success('Support ticket opened! Influverse Support is notified and will assist both parties in chat.');
+  };
+
+  const handleResolveSupportTicket = () => {
+    Modal.confirm({
+      title: 'Mark Support Ticket as Resolved?',
+      content: 'Confirm that you and the brand have resolved this issue with Support assistance.',
+      okText: 'Mark Resolved',
+      okButtonProps: { className: '!bg-[#0A0A0A]' },
+      onOk: () => {
+        dispatch(
+          resolveOrderIssue({
+            orderId: order.id,
+            resolutionNotes: 'Creator confirmed resolution with support.',
+          })
+        );
+        message.success('Issue marked as resolved! Order fulfillment can continue.');
+      },
+    });
+  };
+
   return (
     <div className="min-h-screen pb-16">
       <WorkspaceHeader
@@ -130,51 +186,64 @@ export default function CreatorOrderFulfilmentPage() {
       />
 
       <div className="p-6 sm:p-8 max-w-6xl mx-auto space-y-8 font-sans">
-        {/* Active Escrow Dispute Banner */}
+        {/* Support Ticket Active Banner */}
         {(order.status === 'disputed' || !!order.dispute) && (
-          <div className="bg-[#FFF5F8] rounded-3xl p-6 sm:p-8 border border-[#FFE0EB] shadow-xs space-y-5 font-sans">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#FFE0EB]">
+          <div className="bg-[#FAF8F5] rounded-3xl p-6 sm:p-7 border border-[#EBE7DF] shadow-2xs space-y-4 font-sans">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-3 border-b border-[#E7E3D8]">
               <div className="flex items-center gap-3">
-                <div className="w-11 h-11 rounded-2xl bg-[#FF2D78] text-white flex items-center justify-center shrink-0 shadow-xs">
-                  <Scale className="w-5 h-5" />
+                <div className="w-10 h-10 rounded-2xl bg-[#0A0A0A] text-white flex items-center justify-center shrink-0 shadow-2xs">
+                  <LifeBuoy className="w-5 h-5" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-mono text-xs font-bold px-2 py-0.5 rounded-md bg-white text-[#FF2D78] border border-[#FF2D78]/30">
-                      {order.dispute?.caseId || 'DSP-8821'}
+                    <span className="font-mono text-xs font-bold px-2 py-0.5 rounded-md bg-white text-[#0A0A0A] border border-[#E7E3D8]">
+                      {order.dispute?.caseId || order.dispute?.id || 'SUP-8821'}
                     </span>
-                    <span className="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#FF2D78] text-white">
-                      {order.dispute?.status === 'resolved' ? 'Arbitrated' : 'Escrow Dispute Open'}
+                    <span className="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-500 text-white">
+                      Support Review Active
                     </span>
                     <span className="text-xs text-[#66665E] font-medium">
                       Order #{order.id.toUpperCase()}
                     </span>
                   </div>
-                  <h3 className="text-lg font-extrabold text-[#0A0A0A] tracking-tight mt-1">
-                    Escrow Funds (€{order.basePriceEur.toLocaleString()}) On Hold Under Mediation
+                  <h3 className="text-lg font-bold text-[#0A0A0A] tracking-tight mt-1">
+                    Support Ticket Under Review
                   </h3>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2.5 self-start sm:self-auto">
                 <Link
-                  href="/creator/disputes"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-[#FFE0EB] text-xs font-bold text-[#FF2D78] hover:bg-[#FFE0EB] transition-colors shadow-2xs"
+                  href="/creator/messages?conv=conv-influverse-support"
+                  className="px-4 py-2 rounded-xl bg-[#0A0A0A] hover:bg-zinc-800 text-white text-xs font-bold transition-all inline-flex items-center gap-2 shadow-2xs"
                 >
-                  <Scale className="w-3.5 h-3.5" />
-                  <span>Open Disputes Docket</span>
+                  <MessageSquare className="w-3.5 h-3.5" />
+                  <span>Chat with Support</span>
                 </Link>
+                <button
+                  onClick={handleResolveSupportTicket}
+                  className="px-3.5 py-2 rounded-xl bg-white border border-[#E7E7E2] hover:border-[#0A0A0A] text-[#0A0A0A] text-xs font-bold transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                >
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Mark Resolved</span>
+                </button>
               </div>
             </div>
 
-            {/* Grievance Statement */}
-            <div className="p-4 rounded-2xl bg-white border border-[#FFE0EB] space-y-1">
-              <div className="text-xs font-extrabold uppercase tracking-wider text-[#FF2D78]">
-                Dispute Grievance
+            <div className="p-3.5 rounded-2xl bg-white border border-[#E7E3D8] space-y-1">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-[#888880]">
+                Report Details
               </div>
-              <p className="text-xs sm:text-sm font-semibold text-[#0A0A0A] italic">
-                &ldquo;{order.dispute?.reason || 'Brand claims lighting & tone do not match agreed moodboard; Creator claims script was fully approved.'}&rdquo;
+              <p className="text-sm text-[#44443E] font-medium leading-relaxed">
+                {order.dispute?.reason || 'Issue reported regarding order deliverables and timeline.'}
               </p>
+            </div>
+
+            <div className="text-xs text-[#66665E] flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+              <span>
+                Your guaranteed payment of <strong>€{order.basePriceEur}</strong> is held safely in escrow while Support assists both parties in chat.
+              </span>
             </div>
           </div>
         )}
@@ -220,8 +289,16 @@ export default function CreatorOrderFulfilmentPage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-3 self-start sm:self-auto bg-[#FAFAF8] px-5 py-3.5 rounded-2xl border border-[#E7E7E2]">
-              <div className="text-left sm:text-right">
+            <div className="flex items-center gap-3 self-start sm:self-auto flex-wrap">
+              <button
+                onClick={() => setIsReportModalOpen(true)}
+                className="px-3.5 py-2.5 rounded-2xl bg-white border border-[#E7E7E2] hover:border-[#0A0A0A] text-[#66665E] hover:text-[#0A0A0A] font-bold text-xs flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer"
+                title="Report an issue or ask support for assistance"
+              >
+                <HelpCircle className="w-3.5 h-3.5" />
+                <span>Need Help?</span>
+              </button>
+              <div className="bg-[#FAFAF8] px-5 py-3.5 rounded-2xl border border-[#E7E7E2] text-left sm:text-right">
                 <div className="text-sm font-semibold text-[#66665E] uppercase tracking-wider">Your Guaranteed Payout</div>
                 <div className="text-2xl sm:text-3xl font-extrabold text-[#0A0A0A] tracking-tight">€{order.basePriceEur}</div>
                 <div className="text-xs text-[#66665E] font-semibold">100% Escrow Funded by Brand</div>
@@ -541,6 +618,71 @@ export default function CreatorOrderFulfilmentPage() {
           </div>
         </div>
       </div>
+
+      {/* Report Issue to Support Modal */}
+      <Modal
+        title={`Report an Issue with Order #${order.id.toUpperCase()}`}
+        open={isReportModalOpen}
+        onCancel={() => setIsReportModalOpen(false)}
+        footer={null}
+        width={540}
+        centered
+      >
+        <div className="space-y-4 pt-3 font-sans">
+          <div className="p-3.5 bg-[#FAF8F5] rounded-2xl border border-[#EBE7DF] text-xs text-[#66665E] leading-relaxed">
+            Need help? Our Trust & Support team mediates between brands and creators. If the brand is unresponsive, requests out-of-scope work, or changes requirements, submit a report here and our team will step in to assist both parties.
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#66665E]">
+              Issue Category
+            </label>
+            <Select
+              value={reportCategory}
+              onChange={(val) => setReportCategory(val)}
+              className="w-full h-10 rounded-xl"
+              options={[
+                { value: 'Brand Unresponsive / Feedback Delayed', label: 'Brand is unresponsive or feedback is delayed' },
+                { value: 'Unreasonable / Out-of-Scope Revision Request', label: 'Unreasonable or out-of-scope revision requested' },
+                { value: 'Creative Brief Changed After Work Started', label: 'Brief was changed after project started' },
+                { value: 'Payment or Escrow Disbursement Inquiry', label: 'Payment or escrow disbursement inquiry' },
+                { value: 'Other Support Inquiry', label: 'Other order support request' },
+              ]}
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#66665E]">
+              Describe the Issue
+            </label>
+            <Input.TextArea
+              rows={4}
+              placeholder="Explain what happened or what assistance you need from Influverse Support..."
+              value={reportReason}
+              onChange={(e) => setReportReason(e.target.value)}
+              className="rounded-2xl text-xs p-3"
+            />
+          </div>
+
+          <div className="flex items-center justify-end gap-3 pt-2">
+            <button
+              type="button"
+              onClick={() => setIsReportModalOpen(false)}
+              className="px-4 py-2.5 rounded-xl border border-[#E7E7E2] text-xs font-bold text-[#66665E] hover:text-[#0A0A0A] cursor-pointer"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              onClick={handleReportIssue}
+              className="px-5 py-2.5 rounded-xl bg-[#0A0A0A] hover:bg-[#FF2D78] text-white text-xs font-extrabold transition-all shadow-xs cursor-pointer inline-flex items-center gap-1.5"
+            >
+              <LifeBuoy className="w-3.5 h-3.5" />
+              <span>Submit Report to Support</span>
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

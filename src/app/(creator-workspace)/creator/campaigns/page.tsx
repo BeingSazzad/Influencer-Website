@@ -13,7 +13,7 @@ import {
   ArrowRight,
   Search,
   ChevronRight,
-  Scale,
+  LifeBuoy,
   ExternalLink,
 } from 'lucide-react';
 import { Button, Input, message } from 'antd';
@@ -140,13 +140,15 @@ export default function CreatorCampaignsPage() {
             <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
               Contracts
             </h2>
-            <Link
-              href="/creator/disputes"
-              className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold px-3.5 py-1.5 rounded-full bg-[#FFF0F5] text-[#FF2D78] hover:bg-[#FFE0EB] transition-colors border border-[#FF2D78]/25"
-            >
-              <Scale className="w-3.5 h-3.5" />
-              <span>Disputes Docket ({disputedOrders.length})</span>
-            </Link>
+            {disputedOrders.length > 0 && (
+              <Link
+                href="/creator/messages?conv=conv-influverse-support"
+                className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full bg-[#FAF8F5] text-[#0A0A0A] hover:bg-[#F4F4F0] transition-colors border border-[#E7E7E2]"
+              >
+                <LifeBuoy className="w-3.5 h-3.5 text-amber-600" />
+                <span>Support Inquiries ({disputedOrders.length})</span>
+              </Link>
+            )}
           </div>
 
           {filteredOrders.length > 0 ? (
@@ -236,9 +238,9 @@ export default function CreatorCampaignsPage() {
                         ) : (
                           <div className="flex items-center gap-3">
                             {order.status === 'disputed' || !!order.dispute ? (
-                              <span className="text-sm font-bold px-3 py-1 rounded-full bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 flex items-center gap-1.5">
-                                <Scale className="w-3.5 h-3.5" />
-                                <span>Disputed</span>
+                              <span className="text-sm font-bold px-3 py-1 rounded-full bg-[#FAF8F5] text-[#0A0A0A] border border-[#E7E7E2] flex items-center gap-1.5">
+                                <LifeBuoy className="w-3.5 h-3.5 text-amber-600" />
+                                <span>Support Review</span>
                               </span>
                             ) : isUnderReview ? (
                               <span className="text-sm font-bold px-3 py-1 rounded-full bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25">

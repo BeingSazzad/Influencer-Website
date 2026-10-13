@@ -36,6 +36,7 @@ import {
   Trash2,
   MoreVertical,
   RotateCcw,
+  Shield,
 } from 'lucide-react';
 import { Button, Popconfirm, message, Dropdown, Modal } from 'antd';
 
@@ -54,6 +55,17 @@ function BrandMessagesContent() {
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // If a conv query param is provided, select that conversation
+  useEffect(() => {
+    const convParam = searchParams.get('conv');
+    if (convParam) {
+      const exists = conversations.some((c) => c.id === convParam);
+      if (exists) {
+        dispatch(setActiveConversationId(convParam));
+      }
+    }
+  }, [searchParams, conversations, dispatch]);
 
   // If a creatorId query param is provided, open or create conversation with that creator
   useEffect(() => {
@@ -88,6 +100,8 @@ function BrandMessagesContent() {
   const currentBrandId = currentUser?.id || 'user_brand_01';
   const brandConversations = conversations.filter((c) => {
     return (
+      c.isSupport ||
+      c.id === 'conv-influverse-support' ||
       c.brandId === currentBrandId ||
       c.brandId === 'user_brand_01' ||
       c.brandName.toLowerCase().includes('aura')
@@ -375,25 +389,34 @@ function BrandMessagesContent() {
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0">
-                  <Link href={`/creators/${activeConv.creatorId}`}>
-                    <Button
-                      type="default"
-                      className="h-9 px-3.5 rounded-full text-sm font-bold border-[#E7E7E2] text-[#0A0A0A] hover:border-[#0A0A0A] flex items-center gap-1.5 cursor-pointer shadow-2xs"
-                    >
-                      <ExternalLink className="w-3.5 h-3.5 text-[#66665E]" />
-                      <span className="hidden sm:inline">View Profile</span>
-                    </Button>
-                  </Link>
+                  {activeConv.isSupport || activeConv.id === 'conv-influverse-support' ? (
+                    <div className="px-3.5 py-1.5 rounded-full bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 text-xs font-bold flex items-center gap-1.5 shadow-2xs">
+                      <Shield className="w-3.5 h-3.5" />
+                      <span>Official Mediation Desk</span>
+                    </div>
+                  ) : (
+                    <>
+                      <Link href={`/creators/${activeConv.creatorId}`}>
+                        <Button
+                          type="default"
+                          className="h-9 px-3.5 rounded-full text-sm font-bold border-[#E7E7E2] text-[#0A0A0A] hover:border-[#0A0A0A] flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5 text-[#66665E]" />
+                          <span className="hidden sm:inline">View Profile</span>
+                        </Button>
+                      </Link>
 
-                  <Link href={`/brand/hire/new?creatorId=${activeConv.creatorId}`}>
-                    <Button
-                      type="primary"
-                      className="h-9 px-4 rounded-full text-sm font-bold bg-[#0A0A0A] hover:!bg-zinc-800 !text-white hover:!text-white border-none flex items-center gap-1.5 cursor-pointer shadow-2xs"
-                    >
-                      <PlusCircle className="w-3.5 h-3.5" />
-                      <span>New Campaign</span>
-                    </Button>
-                  </Link>
+                      <Link href={`/brand/hire/new?creatorId=${activeConv.creatorId}`}>
+                        <Button
+                          type="primary"
+                          className="h-9 px-4 rounded-full text-sm font-bold bg-[#0A0A0A] hover:!bg-zinc-800 !text-white hover:!text-white border-none flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                        >
+                          <PlusCircle className="w-3.5 h-3.5" />
+                          <span>New Campaign</span>
+                        </Button>
+                      </Link>
+                    </>
+                  )}
 
                   {/* 3-Dot Options Dropdown */}
                   <Dropdown

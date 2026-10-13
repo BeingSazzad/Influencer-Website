@@ -8,9 +8,10 @@ import {
   updateOrderStatus,
   addMessageToOrder,
   submitOrderReview,
-  openDispute,
-  arbitrateDispute,
+  reportOrderIssue,
+  resolveOrderIssue,
 } from '@/redux/slices/orderSlice';
+import { reportIssueToSupport } from '@/redux/slices/messageSlice';
 import { WorkspaceHeader } from '@/components/layout/WorkspaceHeader';
 import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
 import {
@@ -24,11 +25,11 @@ import {
   MessageSquare,
   Star,
   RotateCcw,
-  Scale,
   AlertTriangle,
-  ShieldAlert,
+  HelpCircle,
+  LifeBuoy,
 } from 'lucide-react';
-import { Button, Input, Modal, Rate, message } from 'antd';
+import { Button, Input, Modal, Rate, Select, message } from 'antd';
 
 export default function BrandOrderDetailPage() {
   const params = useParams();
@@ -52,14 +53,10 @@ export default function BrandOrderDetailPage() {
   const [ratingVal, setRatingVal] = useState(5);
   const [reviewComment, setReviewComment] = useState('');
 
-  // Dispute states
-  const [isDisputeModalOpen, setIsDisputeModalOpen] = useState(false);
-  const [disputeReasonInput, setDisputeReasonInput] = useState('');
-  const [isArbitrateModalOpen, setIsArbitrateModalOpen] = useState(false);
-  const [arbitrateDecision, setArbitrateDecision] = useState<'resolved_split' | 'resolved_brand' | 'resolved_creator'>('resolved_split');
-  const [arbitrateNotes, setArbitrateNotes] = useState(
-    'Deliverable met 70% of creative brief criteria. Re-cut revision was acceptable for organic channels but not whitelisted TikTok Ads. 50/50 mutual settlement approved.'
-  );
+  // Support / Issue states
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [reportCategory, setReportCategory] = useState('Quality / Creative Brief Disagreement');
+  const [reportReason, setReportReason] = useState('');
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -129,34 +126,49 @@ export default function BrandOrderDetailPage() {
     message.success('Review submitted! Campaign marked as completed.');
   };
 
-  const handleOpenDispute = () => {
-    if (!disputeReasonInput.trim()) {
-      message.error('Please enter the reason for the escrow dispute.');
+  const handleReportIssue = () => {
+    if (!reportReason.trim()) {
+      message.error('Please describe the issue for our support team.');
       return;
     }
     dispatch(
-      openDispute({
+      reportOrderIssue({
         orderId: order.id,
-        reason: disputeReasonInput.trim(),
-        scope: order.brief,
+        reporterRole: 'brand',
+        category: reportCategory,
+        reason: reportReason.trim(),
       })
     );
-    setIsDisputeModalOpen(false);
-    setDisputeReasonInput('');
-    message.warning('Escrow dispute opened! Funds are locked pending mediation.');
+    dispatch(
+      reportIssueToSupport({
+        orderId: order.id,
+        role: 'brand',
+        reporterName: currentUser?.companyName || currentUser?.name || 'Aura Skincare Paris',
+        category: reportCategory,
+        reason: reportReason.trim(),
+      })
+    );
+    setIsReportModalOpen(false);
+    setReportReason('');
+    message.success('Support ticket opened! Influverse Support is notified and will assist both parties in chat.');
   };
 
-  const handleExecuteArbitration = () => {
-    dispatch(
-      arbitrateDispute({
-        orderId: order.id,
-        decision: arbitrateDecision,
-        splitRatio: arbitrateDecision === 'resolved_split' ? '50% Brand / 50% Creator' : undefined,
-        mediatorNotes: arbitrateNotes,
-      })
-    );
-    setIsArbitrateModalOpen(false);
-    message.success('Arbitration decision recorded and escrow settlement disbursed.');
+  const handleResolveSupportTicket = () => {
+    Modal.confirm({
+      title: 'Mark Support Ticket as Resolved?',
+      content: 'Confirm that you and the creator have resolved this issue with Support assistance.',
+      okText: 'Mark Resolved',
+      okButtonProps: { className: '!bg-[#0A0A0A]' },
+      onOk: () => {
+        dispatch(
+          resolveOrderIssue({
+            orderId: order.id,
+            resolutionNotes: 'Brand confirmed resolution with support.',
+          })
+        );
+        message.success('Issue marked as resolved! Order fulfillment can continue.');
+      },
+    });
   };
 
   return (
@@ -168,63 +180,63 @@ export default function BrandOrderDetailPage() {
       />
 
       <div className="p-6 sm:p-8 max-w-6xl mx-auto space-y-8 font-sans">
-        {/* Active Dispute Banner */}
+        {/* Support Ticket Active Banner */}
         {(order.status === 'disputed' || !!order.dispute) && (
-          <div className="bg-[#FFF5F8] rounded-3xl p-6 sm:p-8 border border-[#FFE0EB] shadow-xs space-y-5 font-sans">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#FFE0EB]">
+          <div className="bg-[#FAF8F5] rounded-3xl p-6 sm:p-7 border border-[#EBE7DF] shadow-2xs space-y-4 font-sans">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-3 border-b border-[#E7E3D8]">
               <div className="flex items-center gap-3">
-                <div className="w-11 h-11 rounded-2xl bg-[#FF2D78] text-white flex items-center justify-center shrink-0 shadow-xs">
-                  <Scale className="w-5 h-5" />
+                <div className="w-10 h-10 rounded-2xl bg-[#0A0A0A] text-white flex items-center justify-center shrink-0 shadow-2xs">
+                  <LifeBuoy className="w-5 h-5" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-mono text-xs font-black text-[#0A0A0A] bg-white px-2.5 py-0.5 rounded-md border border-[#FFE0EB]">
-                      {order.dispute?.id || 'DSP-8821'}
+                    <span className="font-mono text-xs font-black text-[#0A0A0A] bg-white px-2.5 py-0.5 rounded-md border border-[#E7E3D8]">
+                      {order.dispute?.id || 'SUP-8821'}
                     </span>
-                    <span className="px-2.5 py-0.5 rounded-full bg-[#FF2D78] text-white text-xs font-extrabold uppercase">
-                      {order.dispute?.status || 'OPEN'}
+                    <span className="px-2.5 py-0.5 rounded-full bg-amber-500 text-white text-[11px] font-extrabold uppercase">
+                      Support Review Active
                     </span>
-                    <span className="text-xs text-[#7A1E3E] font-bold">
-                      Filed: {order.dispute?.filedDate || 'Sep 24, 2026'}
+                    <span className="text-xs text-[#66665E] font-medium">
+                      Opened: {order.dispute?.filedDate || 'Recently'}
                     </span>
                   </div>
-                  <h3 className="text-xl font-black text-[#0A0A0A] tracking-tight mt-1">
-                    Escrow Contract Dispute Under Arbitration
+                  <h3 className="text-lg font-bold text-[#0A0A0A] tracking-tight mt-1">
+                    Support Ticket Under Review
                   </h3>
                 </div>
               </div>
 
               <div className="flex items-center gap-2.5 self-start sm:self-auto">
                 <Link
-                  href="/brand/disputes"
-                  className="px-4 py-2.5 rounded-xl bg-white border border-[#FFE0EB] hover:border-[#FF2D78] text-[#0A0A0A] text-xs font-bold transition-all inline-flex items-center gap-1.5 shadow-2xs"
+                  href="/brand/messages?conv=conv-influverse-support"
+                  className="px-4 py-2 rounded-xl bg-[#0A0A0A] hover:bg-zinc-800 text-white text-xs font-bold transition-all inline-flex items-center gap-2 shadow-2xs"
                 >
-                  <span>All Disputes</span>
-                  <ExternalLink className="w-3.5 h-3.5 text-[#66665E]" />
+                  <MessageSquare className="w-3.5 h-3.5" />
+                  <span>Chat with Support</span>
                 </Link>
                 <button
-                  onClick={() => setIsArbitrateModalOpen(true)}
-                  className="px-4 py-2.5 rounded-xl bg-[#FF2D78] hover:bg-[#E02669] text-white text-xs font-bold transition-all shadow-xs inline-flex items-center gap-1.5 cursor-pointer"
+                  onClick={handleResolveSupportTicket}
+                  className="px-3.5 py-2 rounded-xl bg-white border border-[#E7E7E2] hover:border-[#0A0A0A] text-[#0A0A0A] text-xs font-bold transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-2xs"
                 >
-                  <Scale className="w-3.5 h-3.5" />
-                  <span>Arbitrate Case</span>
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Mark Resolved</span>
                 </button>
               </div>
             </div>
 
-            <div className="p-4 rounded-2xl bg-white border border-[#FFE0EB] space-y-1.5">
+            <div className="p-3.5 rounded-2xl bg-white border border-[#E7E3D8] space-y-1">
               <div className="text-[11px] font-bold uppercase tracking-wider text-[#888880]">
-                Official Grievance Statement
+                Report Details
               </div>
-              <p className="text-sm text-[#7A1E3E] font-medium italic leading-relaxed">
-                &ldquo;{order.dispute?.reason || 'Brand claims lighting & tone do not match agreed moodboard; Creator claims script was fully approved.'}&rdquo;
+              <p className="text-sm text-[#44443E] font-medium leading-relaxed">
+                {order.dispute?.reason || 'Issue reported regarding order deliverables and timeline.'}
               </p>
             </div>
 
             <div className="text-xs text-[#66665E] flex items-center gap-2">
-              <ShieldAlert className="w-4 h-4 text-[#FF2D78] shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
               <span>
-                Escrow funds of <strong>€{order.basePriceEur.toLocaleString()}</strong> are secured in neutral escrow. Payouts are halted until this case is arbitrated.
+                Escrow funds of <strong>€{order.totalEur.toLocaleString()}</strong> remain secured in platform escrow while Support assists both parties in chat.
               </span>
             </div>
           </div>
@@ -259,7 +271,15 @@ export default function BrandOrderDetailPage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-3 self-start sm:self-auto">
+            <div className="flex items-center gap-3 self-start sm:self-auto flex-wrap">
+              <button
+                onClick={() => setIsReportModalOpen(true)}
+                className="px-3.5 py-2.5 rounded-2xl bg-white border border-[#E7E7E2] hover:border-[#0A0A0A] text-[#66665E] hover:text-[#0A0A0A] font-bold text-xs flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer"
+                title="Report an issue or ask support for assistance"
+              >
+                <HelpCircle className="w-3.5 h-3.5" />
+                <span>Need Help?</span>
+              </button>
               <Link
                 href={`/creators/${order.creatorId}`}
                 className="px-4 py-2.5 rounded-2xl bg-white border border-[#E7E7E2] hover:border-[#0A0A0A] text-[#0A0A0A] font-bold text-sm flex items-center gap-1.5 transition-all shadow-2xs"
@@ -436,11 +456,11 @@ export default function BrandOrderDetailPage() {
 
                         <Button
                           type="default"
-                          onClick={() => setIsDisputeModalOpen(true)}
-                          className="h-10 px-4 rounded-full font-semibold text-sm border-[#FFE0EB] text-[#FF2D78] hover:!border-[#FF2D78] flex items-center gap-2 cursor-pointer bg-[#FFF5F8]"
+                          onClick={() => setIsReportModalOpen(true)}
+                          className="h-10 px-4 rounded-full font-semibold text-sm border-[#E7E7E2] text-[#66665E] hover:text-[#0A0A0A] flex items-center gap-2 cursor-pointer bg-white"
                         >
-                          <Scale className="w-4 h-4" />
-                          <span>Raise Escrow Dispute</span>
+                          <HelpCircle className="w-4 h-4" />
+                          <span>Report an Issue</span>
                         </Button>
                       </div>
                     </div>
@@ -637,122 +657,66 @@ export default function BrandOrderDetailPage() {
         </div>
       </Modal>
 
-      {/* File Dispute Modal */}
+      {/* Report Issue to Support Modal */}
       <Modal
-        title="Open Escrow Dispute & Arbitration"
-        open={isDisputeModalOpen}
-        onCancel={() => setIsDisputeModalOpen(false)}
-        onOk={handleOpenDispute}
-        okText="Submit Dispute & Freeze Escrow"
-        okButtonProps={{ className: '!bg-[#FF2D78] rounded-full' }}
-      >
-        <div className="space-y-3 pt-2 font-sans">
-          <div className="p-3 bg-[#FFF5F8] rounded-xl border border-[#FFE0EB] text-xs text-[#7A1E3E]">
-            Opening an escrow dispute locks contract funds in neutral mediation. Influverse arbitrates the submitted brief and deliverable evidence.
-          </div>
-          <p className="text-sm text-[#66665E]">
-            Explain in detail why the submitted deliverables fail to comply with the agreed creative brief:
-          </p>
-          <Input.TextArea
-            rows={4}
-            placeholder="e.g. Brand claims lighting and tone do not match agreed moodboard..."
-            value={disputeReasonInput}
-            onChange={(e) => setDisputeReasonInput(e.target.value)}
-            className="rounded-xl text-xs"
-          />
-        </div>
-      </Modal>
-
-      {/* Arbitrate Case Modal */}
-      <Modal
-        open={isArbitrateModalOpen}
-        onCancel={() => setIsArbitrateModalOpen(false)}
+        title={`Report an Issue with Order #${order.id.toUpperCase()}`}
+        open={isReportModalOpen}
+        onCancel={() => setIsReportModalOpen(false)}
         footer={null}
-        width={560}
+        width={540}
         centered
       >
-        <div className="p-2 space-y-6 font-sans">
-          <div className="space-y-1">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#FFF0F5] text-[#FF2D78] text-xs font-bold border border-[#FF2D78]/20">
-              <Scale className="w-3.5 h-3.5" />
-              <span>Arbitration Docket • {order.dispute?.id || 'DSP-8821'}</span>
-            </div>
-            <h2 className="text-2xl font-black text-[#0A0A0A] tracking-tight">
-              Execute Escrow Settlement
-            </h2>
-            <p className="text-xs text-[#66665E]">
-              Contract Order #{order.id} • €{order.basePriceEur} Escrow Balance
-            </p>
+        <div className="space-y-4 pt-3 font-sans">
+          <div className="p-3.5 bg-[#FAF8F5] rounded-2xl border border-[#EBE7DF] text-xs text-[#66665E] leading-relaxed">
+            Need help? Our Trust & Support team mediates between brands and creators. Submitting a report alerts support specialists who review briefs, chat history, and deliverables to resolve issues amicably.
           </div>
 
-          {/* Ruling Options */}
-          <div className="space-y-2.5">
-            {[
-              {
-                key: 'resolved_split',
-                label: '50% Split Settlement (Mutual Resolution)',
-                desc: 'Split locked escrow 50/50 between brand and creator as binding settlement.',
-              },
-              {
-                key: 'resolved_creator',
-                label: 'Release 100% to Creator',
-                desc: 'Creator met brief scope. Full payout released to creator wallet.',
-              },
-              {
-                key: 'resolved_brand',
-                label: 'Refund 100% to Brand',
-                desc: 'Creator failed to deliver brief requirements. Full escrow refund to brand.',
-              },
-            ].map((opt) => (
-              <div
-                key={opt.key}
-                onClick={() => setArbitrateDecision(opt.key as any)}
-                className={`p-3.5 rounded-2xl border transition-all cursor-pointer ${
-                  arbitrateDecision === opt.key
-                    ? 'border-[#0A0A0A] bg-[#FAFAF8] shadow-xs'
-                    : 'border-[#E7E7E2] hover:border-[#D2D2CA]'
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-extrabold text-[#0A0A0A]">{opt.label}</span>
-                  <input
-                    type="radio"
-                    checked={arbitrateDecision === opt.key}
-                    onChange={() => setArbitrateDecision(opt.key as any)}
-                    className="accent-[#FF2D78]"
-                  />
-                </div>
-                <p className="text-xs text-[#66665E] mt-1">{opt.desc}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Mediator Notes */}
           <div className="space-y-1.5">
-            <label className="text-xs font-bold uppercase tracking-wider text-[#888880] block">
-              Arbitrator Notes & Audit Log
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#66665E]">
+              Issue Category
             </label>
-            <textarea
-              value={arbitrateNotes}
-              onChange={(e) => setArbitrateNotes(e.target.value)}
-              rows={3}
-              className="w-full text-xs p-3 rounded-2xl border border-[#E7E7E2] focus:border-[#0A0A0A] focus:outline-none bg-white leading-relaxed text-[#0A0A0A]"
+            <Select
+              value={reportCategory}
+              onChange={(val) => setReportCategory(val)}
+              className="w-full h-10 rounded-xl"
+              options={[
+                { value: 'Quality / Creative Brief Disagreement', label: 'Deliverables do not match agreed creative brief' },
+                { value: 'Missed Delivery Deadline / Creator Unresponsive', label: 'Missed delivery deadline or creator unresponsive' },
+                { value: 'Video Formatting / Technical Problems', label: 'Technical or formatting issues with video files' },
+                { value: 'Scope or Revision Disagreement', label: 'Disagreement regarding revisions or scope' },
+                { value: 'Other Support Inquiry', label: 'Other order support request' },
+              ]}
             />
           </div>
 
-          {/* Actions */}
+          <div className="space-y-1.5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#66665E]">
+              Describe the Issue
+            </label>
+            <Input.TextArea
+              rows={4}
+              placeholder="Explain specifically what is missing, what went wrong, or what assistance you need from Influverse Support..."
+              value={reportReason}
+              onChange={(e) => setReportReason(e.target.value)}
+              className="rounded-2xl text-xs p-3"
+            />
+          </div>
+
           <div className="flex items-center justify-end gap-3 pt-2">
             <button
-              onClick={() => setIsArbitrateModalOpen(false)}
+              type="button"
+              onClick={() => setIsReportModalOpen(false)}
               className="px-4 py-2.5 rounded-xl border border-[#E7E7E2] text-xs font-bold text-[#66665E] hover:text-[#0A0A0A] cursor-pointer"
             >
               Cancel
             </button>
             <button
-              onClick={handleExecuteArbitration}
-              className="px-5 py-2.5 rounded-xl bg-[#0A0A0A] hover:bg-[#FF2D78] text-white text-xs font-extrabold transition-all shadow-xs cursor-pointer"
+              type="button"
+              onClick={handleReportIssue}
+              className="px-5 py-2.5 rounded-xl bg-[#0A0A0A] hover:bg-[#FF2D78] text-white text-xs font-extrabold transition-all shadow-xs cursor-pointer inline-flex items-center gap-1.5"
             >
-              Confirm & Execute Settlement
+              <LifeBuoy className="w-3.5 h-3.5" />
+              <span>Submit Report to Support</span>
             </button>
           </div>
         </div>

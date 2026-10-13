@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from '@/redux/hooks';
 import {
   sendMessage,
@@ -36,12 +36,14 @@ import {
   MoreVertical,
   RotateCcw,
   Tag,
+  Shield,
 } from 'lucide-react';
 import { Button, Popconfirm, message, Dropdown, Modal, Input, Select } from 'antd';
 import { PlatformType } from '@/types';
 
-export default function CreatorMessagesPage() {
+function CreatorMessagesContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
   const { conversations, activeConversationId } = useAppSelector((state) => state.message);
   const { currentUser } = useAppSelector((state) => state.auth);
@@ -59,10 +61,23 @@ export default function CreatorMessagesPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // If a conv query param is provided, select that conversation
+  useEffect(() => {
+    const convParam = searchParams.get('conv');
+    if (convParam) {
+      const exists = conversations.some((c) => c.id === convParam);
+      if (exists) {
+        dispatch(setActiveConversationId(convParam));
+      }
+    }
+  }, [searchParams, conversations, dispatch]);
+
   // Filter conversations relevant to creator
   const currentCreatorHandle = (currentUser?.handle || 'sophiekim').replace('@', '').toLowerCase();
   const creatorConversations = conversations.filter((c) => {
     return (
+      c.isSupport ||
+      c.id === 'conv-influverse-support' ||
       c.creatorId === currentUser?.id ||
       c.creatorId === 'creator-01' ||
       c.creatorHandle.toLowerCase() === currentCreatorHandle
@@ -355,33 +370,56 @@ export default function CreatorMessagesPage() {
           {activeConv ? (
             <div className="flex-1 flex flex-col bg-white">
               <div className="p-4 sm:px-6 border-b border-[#E7E7E2] flex items-center justify-between gap-4 bg-white">
-                <Link
-                  href={`/brands/${activeConv.brandId || 'user_brand_01'}`}
-                  className="flex items-center gap-3 min-w-0 group hover:opacity-90"
-                  title="View Brand Profile"
-                >
-                  <img
-                    src={activeConv.brandAvatar}
-                    alt={activeConv.brandName}
-                    className="w-10 h-10 rounded-full object-cover border border-[#E7E7E2] shrink-0 group-hover:scale-105 transition-transform"
-                  />
-                  <div className="truncate">
-                    <h2 className="text-sm sm:text-base font-bold text-[#0A0A0A] group-hover:text-[#FF2D78] transition-colors truncate flex items-center gap-1.5">
-                      <span>{activeConv.brandName}</span>
-                      <ExternalLink className="w-3.5 h-3.5 text-[#A3A39C] opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </h2>
-                    <div className="text-xs text-[#66665E]">Verified Brand Partner • View Profile</div>
+                {activeConv.isSupport || activeConv.id === 'conv-influverse-support' ? (
+                  <div className="flex items-center gap-3 min-w-0">
+                    <img
+                      src={activeConv.creatorAvatar}
+                      alt={activeConv.creatorName}
+                      className="w-10 h-10 rounded-full object-cover border border-[#E7E7E2] shrink-0"
+                    />
+                    <div className="truncate">
+                      <h2 className="text-sm sm:text-base font-bold text-[#0A0A0A] truncate flex items-center gap-1.5">
+                        <span>Influverse Trust & Support</span>
+                      </h2>
+                      <div className="text-xs text-[#66665E]">Official Mediation Desk • Escrow Protection</div>
+                    </div>
                   </div>
-                </Link>
-
-                <div className="flex items-center gap-2 shrink-0">
+                ) : (
                   <Link
                     href={`/brands/${activeConv.brandId || 'user_brand_01'}`}
-                    className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FAFAF8] hover:bg-[#F4F4F0] border border-[#E7E7E2] hover:border-[#0A0A0A] text-xs font-bold text-[#0A0A0A] transition-all shadow-2xs"
+                    className="flex items-center gap-3 min-w-0 group hover:opacity-90"
+                    title="View Brand Profile"
                   >
-                    <Building2 className="w-3.5 h-3.5 text-[#66665E]" />
-                    <span>Brand Profile</span>
+                    <img
+                      src={activeConv.brandAvatar}
+                      alt={activeConv.brandName}
+                      className="w-10 h-10 rounded-full object-cover border border-[#E7E7E2] shrink-0 group-hover:scale-105 transition-transform"
+                    />
+                    <div className="truncate">
+                      <h2 className="text-sm sm:text-base font-bold text-[#0A0A0A] group-hover:text-[#FF2D78] transition-colors truncate flex items-center gap-1.5">
+                        <span>{activeConv.brandName}</span>
+                        <ExternalLink className="w-3.5 h-3.5 text-[#A3A39C] opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </h2>
+                      <div className="text-xs text-[#66665E]">Verified Brand Partner • View Profile</div>
+                    </div>
                   </Link>
+                )}
+
+                <div className="flex items-center gap-2 shrink-0">
+                  {activeConv.isSupport || activeConv.id === 'conv-influverse-support' ? (
+                    <div className="px-3.5 py-1.5 rounded-full bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 text-xs font-bold flex items-center gap-1.5 shadow-2xs">
+                      <Shield className="w-3.5 h-3.5" />
+                      <span>Official Mediation Desk</span>
+                    </div>
+                  ) : (
+                    <Link
+                      href={`/brands/${activeConv.brandId || 'user_brand_01'}`}
+                      className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FAFAF8] hover:bg-[#F4F4F0] border border-[#E7E7E2] hover:border-[#0A0A0A] text-xs font-bold text-[#0A0A0A] transition-all shadow-2xs"
+                    >
+                      <Building2 className="w-3.5 h-3.5 text-[#66665E]" />
+                      <span>Brand Profile</span>
+                    </Link>
+                  )}
 
                   {/* 3-Dot Options Dropdown */}
                   <Dropdown
@@ -901,5 +939,19 @@ export default function CreatorMessagesPage() {
         </div>
       </Modal>
     </div>
+  );
+}
+
+export default function CreatorMessagesPage() {
+  return (
+    <React.Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-[#FAFAF8]">
+          <div className="w-8 h-8 rounded-full border-2 border-[#0A0A0A] border-t-transparent animate-spin" />
+        </div>
+      }
+    >
+      <CreatorMessagesContent />
+    </React.Suspense>
   );
 }
