@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAppDispatch } from '@/redux/hooks';
-import { setUser, switchRole, loginAsCreatorDemo, loginAsBrandDemo } from '@/redux/slices/authSlice';
+import { setUser, switchRole } from '@/redux/slices/authSlice';
 import { Logo } from '@/components/shared/Logo';
 import {
   Lock,
@@ -20,7 +20,6 @@ import {
   Briefcase,
 } from 'lucide-react';
 import { message } from 'antd';
-import { DemoReviewerDock } from '@/components/auth/DemoReviewerDock';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -87,19 +86,6 @@ export default function RegisterPage() {
     router.push('/brand/dashboard');
   };
 
-  // 1-Click Instant Demo Access
-  const handleCreatorDemo = () => {
-    dispatch(loginAsCreatorDemo());
-    message.success('Signed in as Sophie Kim (Creator)');
-    router.push('/creator/dashboard');
-  };
-
-  const handleBrandDemo = () => {
-    dispatch(loginAsBrandDemo());
-    message.success('Signed in as Elena Rostova (Brand)');
-    router.push('/brand/dashboard');
-  };
-
   return (
     <div className="min-h-screen bg-[#FAFAF8] flex flex-col justify-between font-sans selection:bg-[#FF2D78]/20 selection:text-[#FF2D78]">
       {/* Clean Header */}
@@ -112,7 +98,7 @@ export default function RegisterPage() {
       </header>
 
       {/* Main Registration Layout */}
-      <main className="flex-1 flex items-start sm:items-center justify-center pt-8 pb-48 sm:pt-12 sm:pb-52 px-4 sm:px-6">
+      <main className="flex-1 flex items-center justify-center py-10 sm:py-16 px-4 sm:px-6">
         <div className="w-full max-w-2xl space-y-8">
           {/* Headline */}
           <div className="text-center space-y-2">
@@ -342,9 +328,6 @@ export default function RegisterPage() {
           )}
         </div>
       </main>
-
-      {/* Floating Reviewer Sandbox Dock (Clearly identified as temporary prototype demo) */}
-      <DemoReviewerDock />
     </div>
   );
 }
