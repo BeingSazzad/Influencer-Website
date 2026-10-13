@@ -201,6 +201,61 @@ export default function BrandProfilePage() {
               </button>
             </div>
           </div>
+
+          {/* Trust & Performance Track Record Highlights */}
+          <div className="mt-6 pt-6 border-t border-[#E7E7E2] grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div className="p-3.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]/80">
+              <div className="flex items-center gap-2 text-xs font-bold text-[#66665E] uppercase tracking-wider">
+                <Users className="w-3.5 h-3.5 text-[#FF2D78]" />
+                <span>Collaborations</span>
+              </div>
+              <div className="mt-1 flex items-baseline gap-1.5">
+                <span className="text-xl sm:text-2xl font-black text-[#0A0A0A]">
+                  {brand.stats.totalCampaigns}+
+                </span>
+                <span className="text-xs font-bold text-emerald-600">Creators Partnered</span>
+              </div>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]/80">
+              <div className="flex items-center gap-2 text-xs font-bold text-[#66665E] uppercase tracking-wider">
+                <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+                <span>Reputation</span>
+              </div>
+              <div className="mt-1 flex items-baseline gap-1.5">
+                <span className="text-xl sm:text-2xl font-black text-[#0A0A0A]">
+                  {brand.stats.rating}
+                </span>
+                <span className="text-xs text-[#66665E]">({brand.stats.reviewsCount} reviews)</span>
+              </div>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]/80">
+              <div className="flex items-center gap-2 text-xs font-bold text-[#66665E] uppercase tracking-wider">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                <span>Escrow Funded</span>
+              </div>
+              <div className="mt-1 flex items-baseline gap-1.5">
+                <span className="text-xl sm:text-2xl font-black text-[#0A0A0A]">
+                  {brand.stats.escrowFundedRate}%
+                </span>
+                <span className="text-xs font-bold text-emerald-600">Guaranteed</span>
+              </div>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]/80">
+              <div className="flex items-center gap-2 text-xs font-bold text-[#66665E] uppercase tracking-wider">
+                <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+                <span>Response Time</span>
+              </div>
+              <div className="mt-1 flex items-baseline gap-1.5">
+                <span className="text-xl sm:text-2xl font-black text-[#0A0A0A]">
+                  &lt; {brand.stats.avgResponseHours}h
+                </span>
+                <span className="text-xs text-[#66665E]">Avg Reply</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* 3. MAIN CONTENT GRID */}
@@ -525,6 +580,10 @@ export default function BrandProfilePage() {
 
               {/* Brand Meta Specs */}
               <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-2.5 text-xs">
+                <div className="flex items-center justify-between text-[#66665E]">
+                  <span>Total Collaborations:</span>
+                  <strong className="text-[#0A0A0A] font-bold">{brand.stats.totalCampaigns}+ Creators</strong>
+                </div>
                 <div className="flex items-center justify-between text-[#66665E]">
                   <span>Partnerships Lead:</span>
                   <strong className="text-[#0A0A0A]">{brand.contactName}</strong>

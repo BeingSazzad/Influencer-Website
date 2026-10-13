@@ -1336,7 +1336,7 @@ function CreatorProfileContent() {
                         <InstagramLogo className="w-8 h-8 rounded-xl shadow-2xs shrink-0" />
                         <div>
                           <h4 className="text-base font-bold text-[#0A0A0A]">Instagram</h4>
-                          <span className="text-xs text-[#66665E] font-medium">Reels &amp; Posts</span>
+                          <span className="text-xs text-[#66665E] font-semibold">{isIgConnected ? igHandle : 'Not Linked'}</span>
                         </div>
                       </div>
 
@@ -1353,55 +1353,26 @@ function CreatorProfileContent() {
                     </div>
 
                     {isIgConnected ? (
-                      <>
-                        {/* Connected Handle & Profile URL */}
-                        <div className="p-3 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-between gap-2">
-                          <div className="min-w-0">
-                            <span className="text-[11px] font-bold text-[#66665E] uppercase tracking-wider block">
-                              Connected Account
-                            </span>
-                            <span className="text-sm font-extrabold text-[#0A0A0A] truncate block">
-                              {igHandle}
-                            </span>
-                          </div>
-                          <a
-                            href={igUrl || `https://instagram.com/${igHandle.replace('@', '')}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-2 rounded-lg hover:bg-white text-[#66665E] hover:text-[#0A0A0A] transition-colors"
-                            title="Visit Profile"
-                          >
-                            <ExternalLink className="w-4 h-4" />
-                          </a>
-                        </div>
-
-                        {/* Verified Live Metrics (Read-only badges) */}
-                        <div className="grid grid-cols-2 gap-2.5 pt-1">
-                          <div className="p-3 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2]">
-                            <span className="text-[11px] font-bold text-[#66665E] uppercase tracking-wider block">
-                              Followers
-                            </span>
-                            <div className="flex items-baseline gap-1 mt-0.5">
-                              <span className="text-xl font-black text-[#0A0A0A]">{igFollowers}</span>
-                              <span className="text-[10px] font-bold text-emerald-600">✓ Verified</span>
-                            </div>
-                          </div>
-                          <div className="p-3 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2]">
-                            <span className="text-[11px] font-bold text-[#66665E] uppercase tracking-wider block">
-                              Engagement
-                            </span>
-                            <div className="flex items-baseline gap-1 mt-0.5">
-                              <span className="text-xl font-black text-[#0A0A0A]">{igEngagement}</span>
-                              <span className="text-[10px] font-medium text-[#66665E]">30d avg</span>
-                            </div>
+                      <div className="p-3.5 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-between">
+                        <div>
+                          <span className="text-[11px] font-bold text-[#66665E] uppercase tracking-wider block">
+                            Followers
+                          </span>
+                          <div className="flex items-baseline gap-1.5 mt-0.5">
+                            <span className="text-xl font-black text-[#0A0A0A]">{igFollowers}</span>
+                            <span className="text-[10px] font-bold text-emerald-600">✓ Verified</span>
                           </div>
                         </div>
-
-                        <div className="text-[11px] text-[#66665E] flex items-center gap-1 font-medium">
-                          <Lock className="w-3 h-3 text-[#A3A39C]" />
-                          <span>Metrics verified via Instagram Graph API</span>
-                        </div>
-                      </>
+                        <a
+                          href={igUrl || `https://instagram.com/${igHandle.replace('@', '')}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 rounded-lg hover:bg-white text-[#66665E] hover:text-[#0A0A0A] transition-colors border border-transparent hover:border-[#E7E7E2]"
+                          title="Visit Profile"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                        </a>
+                      </div>
                     ) : (
                       /* Not Connected State */
                       <div className="space-y-3 py-2">
@@ -1478,7 +1449,7 @@ function CreatorProfileContent() {
                         <TikTokLogo className="w-8 h-8 rounded-xl shadow-2xs shrink-0" />
                         <div>
                           <h4 className="text-base font-bold text-[#0A0A0A]">TikTok</h4>
-                          <span className="text-xs text-[#66665E] font-medium">Shortform Videos</span>
+                          <span className="text-xs text-[#66665E] font-semibold">{isTtConnected ? ttHandle : 'Not Linked'}</span>
                         </div>
                       </div>
 
@@ -1495,55 +1466,26 @@ function CreatorProfileContent() {
                     </div>
 
                     {isTtConnected ? (
-                      <>
-                        {/* Connected Handle & Profile URL */}
-                        <div className="p-3 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-between gap-2">
-                          <div className="min-w-0">
-                            <span className="text-[11px] font-bold text-[#66665E] uppercase tracking-wider block">
-                              Connected Account
-                            </span>
-                            <span className="text-sm font-extrabold text-[#0A0A0A] truncate block">
-                              {ttHandle}
-                            </span>
-                          </div>
-                          <a
-                            href={ttUrl || `https://tiktok.com/@${ttHandle.replace('@', '')}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-2 rounded-lg hover:bg-white text-[#66665E] hover:text-[#0A0A0A] transition-colors"
-                            title="Visit Profile"
-                          >
-                            <ExternalLink className="w-4 h-4" />
-                          </a>
-                        </div>
-
-                        {/* Verified Live Metrics */}
-                        <div className="grid grid-cols-2 gap-2.5 pt-1">
-                          <div className="p-3 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2]">
-                            <span className="text-[11px] font-bold text-[#66665E] uppercase tracking-wider block">
-                              Followers
-                            </span>
-                            <div className="flex items-baseline gap-1 mt-0.5">
-                              <span className="text-xl font-black text-[#0A0A0A]">{ttFollowers}</span>
-                              <span className="text-[10px] font-bold text-emerald-600">✓ Verified</span>
-                            </div>
-                          </div>
-                          <div className="p-3 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2]">
-                            <span className="text-[11px] font-bold text-[#66665E] uppercase tracking-wider block">
-                              Engagement
-                            </span>
-                            <div className="flex items-baseline gap-1 mt-0.5">
-                              <span className="text-xl font-black text-[#0A0A0A]">{ttEngagement}</span>
-                              <span className="text-[10px] font-medium text-[#66665E]">30d avg</span>
-                            </div>
+                      <div className="p-3.5 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-between">
+                        <div>
+                          <span className="text-[11px] font-bold text-[#66665E] uppercase tracking-wider block">
+                            Followers
+                          </span>
+                          <div className="flex items-baseline gap-1.5 mt-0.5">
+                            <span className="text-xl font-black text-[#0A0A0A]">{ttFollowers}</span>
+                            <span className="text-[10px] font-bold text-emerald-600">✓ Verified</span>
                           </div>
                         </div>
-
-                        <div className="text-[11px] text-[#66665E] flex items-center gap-1 font-medium">
-                          <Lock className="w-3 h-3 text-[#A3A39C]" />
-                          <span>Metrics verified via TikTok Creator API</span>
-                        </div>
-                      </>
+                        <a
+                          href={ttUrl || `https://tiktok.com/@${ttHandle.replace('@', '')}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 rounded-lg hover:bg-white text-[#66665E] hover:text-[#0A0A0A] transition-colors border border-transparent hover:border-[#E7E7E2]"
+                          title="Visit Profile"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                        </a>
+                      </div>
                     ) : (
                       /* Not Connected State */
                       <div className="space-y-3 py-2">
@@ -1620,7 +1562,7 @@ function CreatorProfileContent() {
                         <YouTubeLogo className="w-8 h-8 rounded-xl shadow-2xs shrink-0" />
                         <div>
                           <h4 className="text-base font-bold text-[#0A0A0A]">YouTube</h4>
-                          <span className="text-xs text-[#66665E] font-medium">Longform &amp; Shorts</span>
+                          <span className="text-xs text-[#66665E] font-semibold">{isYtConnected ? ytHandle : 'Not Linked'}</span>
                         </div>
                       </div>
 
@@ -1637,55 +1579,26 @@ function CreatorProfileContent() {
                     </div>
 
                     {isYtConnected ? (
-                      <>
-                        {/* Connected Handle & Channel URL */}
-                        <div className="p-3 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-between gap-2">
-                          <div className="min-w-0">
-                            <span className="text-[11px] font-bold text-[#66665E] uppercase tracking-wider block">
-                              Connected Channel
-                            </span>
-                            <span className="text-sm font-extrabold text-[#0A0A0A] truncate block">
-                              {ytHandle}
-                            </span>
-                          </div>
-                          <a
-                            href={ytUrl || `https://youtube.com/@${ytHandle.toLowerCase().replace(/\s+/g, '')}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-2 rounded-lg hover:bg-white text-[#66665E] hover:text-[#0A0A0A] transition-colors"
-                            title="Visit Channel"
-                          >
-                            <ExternalLink className="w-4 h-4" />
-                          </a>
-                        </div>
-
-                        {/* Verified Live Metrics */}
-                        <div className="grid grid-cols-2 gap-2.5 pt-1">
-                          <div className="p-3 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2]">
-                            <span className="text-[11px] font-bold text-[#66665E] uppercase tracking-wider block">
-                              Subscribers
-                            </span>
-                            <div className="flex items-baseline gap-1 mt-0.5">
-                              <span className="text-xl font-black text-[#0A0A0A]">{ytFollowers}</span>
-                              <span className="text-[10px] font-bold text-emerald-600">✓ Verified</span>
-                            </div>
-                          </div>
-                          <div className="p-3 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2]">
-                            <span className="text-[11px] font-bold text-[#66665E] uppercase tracking-wider block">
-                              Engagement
-                            </span>
-                            <div className="flex items-baseline gap-1 mt-0.5">
-                              <span className="text-xl font-black text-[#0A0A0A]">{ytEngagement}</span>
-                              <span className="text-[10px] font-medium text-[#66665E]">30d avg</span>
-                            </div>
+                      <div className="p-3.5 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-between">
+                        <div>
+                          <span className="text-[11px] font-bold text-[#66665E] uppercase tracking-wider block">
+                            Subscribers
+                          </span>
+                          <div className="flex items-baseline gap-1.5 mt-0.5">
+                            <span className="text-xl font-black text-[#0A0A0A]">{ytFollowers}</span>
+                            <span className="text-[10px] font-bold text-emerald-600">✓ Verified</span>
                           </div>
                         </div>
-
-                        <div className="text-[11px] text-[#66665E] flex items-center gap-1 font-medium">
-                          <Lock className="w-3 h-3 text-[#A3A39C]" />
-                          <span>Metrics verified via YouTube Data API v3</span>
-                        </div>
-                      </>
+                        <a
+                          href={ytUrl || `https://youtube.com/@${ytHandle.toLowerCase().replace(/\s+/g, '')}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 rounded-lg hover:bg-white text-[#66665E] hover:text-[#0A0A0A] transition-colors border border-transparent hover:border-[#E7E7E2]"
+                          title="Visit Channel"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                        </a>
+                      </div>
                     ) : (
                       /* Not Connected State */
                       <div className="space-y-3 py-2">

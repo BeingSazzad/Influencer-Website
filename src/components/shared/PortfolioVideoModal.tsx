@@ -265,22 +265,6 @@ export function PortfolioVideoModal({
                   `Produced a dedicated ${item.deliverableType || 'high-engagement creative campaign'} in collaboration with ${item.brandName || 'brand partner'}. Crafted aesthetic storytelling tailored for modern social discovery, driving verified organic reach and brand affinity.\n\nKey Highlights:\n• High-resolution creative asset optimized for ${item.platform === 'all' ? 'omni-channel' : item.platform.toUpperCase()} audience\n• Organic product styling and dedicated tag integration\n• Full commercial usage license with guaranteed turnaround`
                 )}
               </div>
-
-              {/* Engagement Stats Grid */}
-              <div className="grid grid-cols-3 gap-2.5 pt-1">
-                <div className="p-3 rounded-xl bg-white border border-[#E7E7E2] text-center shadow-2xs">
-                  <div className="text-xs text-[#66665E] font-medium">Views</div>
-                  <div className="text-sm sm:text-base font-extrabold text-[#0A0A0A] mt-0.5">{item.views || '430K+'}</div>
-                </div>
-                <div className="p-3 rounded-xl bg-white border border-[#E7E7E2] text-center shadow-2xs">
-                  <div className="text-xs text-[#66665E] font-medium">Likes</div>
-                  <div className="text-sm sm:text-base font-extrabold text-[#0A0A0A] mt-0.5">{item.likes || '37K+'}</div>
-                </div>
-                <div className="p-3 rounded-xl bg-white border border-[#E7E7E2] text-center shadow-2xs">
-                  <div className="text-xs text-[#66665E] font-medium">Engagement</div>
-                  <div className="text-sm sm:text-base font-extrabold text-[#23744D] mt-0.5">{item.engagementRate || '8.8%'}</div>
-                </div>
-              </div>
             </div>
           </div>
 

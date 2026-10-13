@@ -35,7 +35,7 @@ export default function RegisterPage() {
     if (initialRoleParam === 'creator') {
       router.push('/creator/onboarding');
     } else if (initialRoleParam === 'brand') {
-      setSelectedRole('brand');
+      router.push('/brand/onboarding');
     }
   }, [initialRoleParam, router]);
 
@@ -49,6 +49,10 @@ export default function RegisterPage() {
   // Handle Creator Selection (Direct to Step 1 Onboarding - No Duplication!)
   const handleSelectCreator = () => {
     router.push('/creator/onboarding');
+  };
+
+  const handleSelectBrand = () => {
+    router.push('/brand/onboarding');
   };
 
   // Handle Brand Register
@@ -158,7 +162,7 @@ export default function RegisterPage() {
 
                 {/* 2. Brand Marketer Box */}
                 <div
-                  onClick={() => setSelectedRole('brand')}
+                  onClick={handleSelectBrand}
                   className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-[#E7E7E2] hover:border-[#0A0A0A] shadow-sm hover:shadow-xl transition-all duration-200 cursor-pointer flex flex-col justify-between group text-left relative overflow-hidden"
                 >
                   <div className="space-y-4">
@@ -183,17 +187,16 @@ export default function RegisterPage() {
                   </div>
 
                   <div className="pt-8">
-                    <button
-                      type="button"
+                    <Link
+                      href="/brand/onboarding"
                       onClick={(e) => {
                         e.stopPropagation();
-                        setSelectedRole('brand');
                       }}
                       className="w-full py-3.5 px-4 rounded-xl bg-[#0A0A0A] hover:bg-black text-white font-bold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:shadow-md"
                     >
                       <span>Continue as Brand</span>
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -214,14 +217,23 @@ export default function RegisterPage() {
           ) : (
             /* STEP 2: Brand Registration Form */
             <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#E7E7E2] shadow-xl shadow-black/[0.03] space-y-6 max-w-lg mx-auto">
-              <button
-                type="button"
-                onClick={() => setSelectedRole(null)}
-                className="text-xs font-bold text-[#66665E] hover:text-[#0A0A0A] flex items-center gap-1 transition-colors cursor-pointer"
-              >
-                <ArrowLeft className="w-3.5 h-3.5" />
-                <span>Choose a different account type</span>
-              </button>
+              <div className="flex items-center justify-between">
+                <button
+                  type="button"
+                  onClick={() => setSelectedRole(null)}
+                  className="text-xs font-bold text-[#66665E] hover:text-[#0A0A0A] flex items-center gap-1 transition-colors cursor-pointer"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                  <span>Choose a different account type</span>
+                </button>
+                <Link
+                  href="/brand/onboarding"
+                  className="text-xs font-bold text-[#FF2D78] hover:underline flex items-center gap-1"
+                >
+                  <span>Full 6-Step Setup</span>
+                  <ArrowRight className="w-3 h-3" />
+                </Link>
+              </div>
 
               <form onSubmit={handleBrandRegister} className="space-y-4">
                 {/* Full Name */}

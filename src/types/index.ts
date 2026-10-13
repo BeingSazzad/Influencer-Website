@@ -21,6 +21,11 @@ export interface User {
   isDeactivated?: boolean;
   deactivatedAt?: string | null;
   deactivationScheduledFor?: string | null;
+  jobTitle?: string;
+  monthlyBudgetEur?: string;
+  targetPlatforms?: string[];
+  campaignGoals?: string[];
+  vatNumber?: string;
 }
 
 export type PlatformType = 'instagram' | 'tiktok' | 'youtube' | 'ugc' | 'all' | 'multi';

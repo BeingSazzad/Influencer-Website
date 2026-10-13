@@ -158,6 +158,11 @@ export function Footer() {
             </h4>
             <ul className="space-y-2.5 text-sm text-[#D4D4CA]">
               <li>
+                <Link href="/about" className="hover:text-white transition-colors">
+                  About Us
+                </Link>
+              </li>
+              <li>
                 <Link href="/terms" className="hover:text-white transition-colors">
                   Terms of Service
                 </Link>
@@ -165,16 +170,6 @@ export function Footer() {
               <li>
                 <Link href="/privacy" className="hover:text-white transition-colors">
                   Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms#escrow" className="hover:text-white transition-colors">
-                  Escrow & Platform Fee (15%)
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms#disputes" className="hover:text-white transition-colors">
-                  Escrow & Dispute Policy
                 </Link>
               </li>
               <li>
