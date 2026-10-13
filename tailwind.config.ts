@@ -58,6 +58,10 @@ const config: Config = {
         'inner': '12px',
         'pill': '9999px',
       },
+      boxShadow: {
+        '2xs': '0 1px 2px 0 rgba(0, 0, 0, 0.03)',
+        'xs': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+      },
       height: {
         'btn-lg': '48px',
         'btn-md': '40px',

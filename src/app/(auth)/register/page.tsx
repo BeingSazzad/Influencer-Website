@@ -112,7 +112,7 @@ export default function RegisterPage() {
       </header>
 
       {/* Main Registration Layout */}
-      <main className="flex-1 flex items-center justify-center pt-8 pb-32 sm:pt-14 sm:pb-36 px-4 sm:px-6">
+      <main className="flex-1 flex items-start sm:items-center justify-center pt-8 pb-48 sm:pt-12 sm:pb-52 px-4 sm:px-6">
         <div className="w-full max-w-2xl space-y-8">
           {/* Headline */}
           <div className="text-center space-y-2">
@@ -133,11 +133,11 @@ export default function RegisterPage() {
                 {/* 1. Content Creator Box */}
                 <div
                   onClick={handleSelectCreator}
-                  className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-[#E7E7E2] hover:border-[#0A0A0A] shadow-sm hover:shadow-xl transition-all duration-200 cursor-pointer flex flex-col justify-between group text-left relative overflow-hidden"
+                  className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-[#E7E7E2] hover:border-[#FF2D78] shadow-sm hover:shadow-xl transition-all duration-200 cursor-pointer flex flex-col justify-between group text-left relative overflow-hidden"
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <div className="w-13 h-13 rounded-2xl bg-gradient-to-br from-[#FFF0F5] to-[#FFE0EB] text-[#FF2D78] border border-[#FF2D78]/25 flex items-center justify-center font-bold group-hover:scale-110 group-hover:bg-[#FF2D78] group-hover:text-white transition-all duration-300 shadow-xs">
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-[#FFF0F5] to-[#FFE0EB] text-[#FF2D78] border border-[#FF2D78]/25 flex items-center justify-center font-bold group-hover:scale-110 group-hover:bg-[#FF2D78] group-hover:text-white transition-all duration-300 shadow-sm">
                         <Video className="w-6 h-6 transition-colors" />
                       </div>
                       <span className="text-[11px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#FFF0F5] border border-[#FF2D78]/25 text-[#FF2D78] flex items-center gap-1.5">
@@ -157,13 +157,16 @@ export default function RegisterPage() {
                   </div>
 
                   <div className="pt-8">
-                    <button
-                      type="button"
-                      className="w-full py-3.5 px-4 rounded-xl bg-[#0A0A0A] group-hover:bg-[#FF2D78] text-white font-bold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+                    <Link
+                      href="/creator/onboarding"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                      className="w-full py-3.5 px-4 rounded-xl bg-[#FF2D78] hover:bg-[#E02669] text-white font-bold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:shadow-md"
                     >
                       <span>Continue as Creator</span>
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </button>
+                    </Link>
                   </div>
                 </div>
 
@@ -174,7 +177,7 @@ export default function RegisterPage() {
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <div className="w-13 h-13 rounded-2xl bg-gradient-to-br from-[#FAFAF8] to-[#EAEAE3] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center font-bold group-hover:scale-110 group-hover:bg-[#0A0A0A] group-hover:text-white transition-all duration-300 shadow-xs">
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-[#FAFAF8] to-[#EAEAE3] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center font-bold group-hover:scale-110 group-hover:bg-[#0A0A0A] group-hover:text-white transition-all duration-300 shadow-sm">
                         <Briefcase className="w-6 h-6 transition-colors" />
                       </div>
                       <span className="text-[11px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#66665E] flex items-center gap-1.5">
@@ -196,7 +199,11 @@ export default function RegisterPage() {
                   <div className="pt-8">
                     <button
                       type="button"
-                      className="w-full py-3.5 px-4 rounded-xl bg-[#0A0A0A] text-white font-bold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:bg-zinc-800"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedRole('brand');
+                      }}
+                      className="w-full py-3.5 px-4 rounded-xl bg-[#0A0A0A] hover:bg-black text-white font-bold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:shadow-md"
                     >
                       <span>Continue as Brand</span>
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

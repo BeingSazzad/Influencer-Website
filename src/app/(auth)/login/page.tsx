@@ -57,7 +57,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAF8] flex items-center justify-center pt-8 pb-32 sm:pt-12 sm:pb-36 px-4 sm:px-6 lg:px-10 font-sans selection:bg-[#FF2D78]/20 selection:text-[#FF2D78]">
+    <div className="min-h-screen bg-[#FAFAF8] flex items-center justify-center pt-8 pb-48 sm:pt-12 sm:pb-52 px-4 sm:px-6 lg:px-10 font-sans selection:bg-[#FF2D78]/20 selection:text-[#FF2D78]">
       <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center py-6">
         {/* Left: Login Form Card (Consistent with Register page) */}
         <div className="w-full lg:col-span-6 xl:col-span-6 space-y-6">
