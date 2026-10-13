@@ -591,12 +591,6 @@ export function SplitHero() {
                   </div>
                 </div>
               </Link>
-
-              {/* Interactive Discovery Indicator Pill */}
-              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-[#E7E7E2] shadow-xs text-xs font-semibold text-[#66665E] pointer-events-none whitespace-nowrap">
-                <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
-                <span>Click any creator card to view full profile & packages</span>
-              </div>
             </div>
           </div>
         </div>
