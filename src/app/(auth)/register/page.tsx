@@ -110,7 +110,7 @@ export default function RegisterPage() {
       </header>
 
       {/* Main Registration Layout */}
-      <main className="flex-1 flex items-center justify-center py-10 sm:py-16 px-4 sm:px-6">
+      <main className="flex-1 flex items-center justify-center pt-8 pb-32 sm:pt-14 sm:pb-36 px-4 sm:px-6">
         <div className="w-full max-w-2xl space-y-8">
           {/* Headline */}
           <div className="text-center space-y-2">
