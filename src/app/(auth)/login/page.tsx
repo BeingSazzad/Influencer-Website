@@ -12,8 +12,9 @@ import {
   Mail,
   Eye,
   EyeOff,
+  Check,
 } from 'lucide-react';
-import { Checkbox, message } from 'antd';
+import { message } from 'antd';
 import { DemoReviewerDock } from '@/components/auth/DemoReviewerDock';
 
 export default function LoginPage() {
@@ -120,14 +121,27 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-1">
-                <Checkbox
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  className="text-sm text-[#66665E] font-medium"
-                >
-                  Remember me
-                </Checkbox>
+              <div className="flex items-center justify-between pt-1 select-none">
+                <label className="inline-flex items-center gap-2 cursor-pointer group">
+                  <span
+                    className={`w-4 h-4 rounded-md border flex items-center justify-center transition-all ${
+                      rememberMe
+                        ? 'bg-[#0A0A0A] border-[#0A0A0A] text-white shadow-2xs'
+                        : 'bg-white border-[#D2D2CA] group-hover:border-[#0A0A0A]'
+                    }`}
+                  >
+                    {rememberMe && <Check className="w-3 h-3 stroke-[3]" />}
+                  </span>
+                  <input
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                    className="sr-only"
+                  />
+                  <span className="text-sm text-[#66665E] group-hover:text-[#0A0A0A] font-medium transition-colors">
+                    Remember me
+                  </span>
+                </label>
                 <Link href="/forgot-password" className="text-sm text-[#66665E] hover:text-[#0A0A0A] font-bold transition-colors">
                   Forgot password?
                 </Link>

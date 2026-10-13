@@ -68,11 +68,6 @@ export function PricingSection() {
                 trackStyle={{ backgroundColor: '#0A0A0A' }}
                 handleStyle={{ borderColor: '#0A0A0A' }}
               />
-              <div className="flex justify-between gap-2 text-xs text-[#66665E] mt-1 font-sans font-medium">
-                <span>€200 (Micro)</span>
-                <span>€2,500 (Mid-tier)</span>
-                <span>€5,000+ (Macro)</span>
-              </div>
             </div>
 
             {/* Financial Breakdown Table */}
@@ -121,17 +116,17 @@ export function PricingSection() {
               <ul className="space-y-3.5">
                 {[
                   'Full Escrow Payment Protection',
-                  'Standard Commercial Usage Rights Contract',
-                  'Built-in File & Link Delivery Workspace',
-                  'Dedicated Mediation & Dispute Resolution',
+                  'Standard Commercial Usage Rights',
+                  'Built-in File Delivery Workspace',
+                  'Dedicated Mediation & Dispute Help',
                   'EU VAT Invoices & Compliance Receipts',
                   'Free to Sign Up & Search Catalog',
                 ].map((item, idx) => (
-                  <li key={idx} className="flex items-center gap-3 text-sm sm:text-[15px] font-semibold text-white/90 font-sans">
+                  <li key={idx} className="flex items-center gap-2.5 text-xs sm:text-[14px] font-semibold text-white/90 font-sans whitespace-nowrap overflow-hidden">
                     <div className="w-5 h-5 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center shrink-0">
                       <Check className="w-3.5 h-3.5 text-emerald-400" />
                     </div>
-                    <span>{item}</span>
+                    <span className="truncate">{item}</span>
                   </li>
                 ))}
               </ul>
