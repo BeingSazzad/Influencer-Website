@@ -14,6 +14,7 @@ import {
   EyeOff,
 } from 'lucide-react';
 import { Checkbox, message } from 'antd';
+import { DemoReviewerDock } from '@/components/auth/DemoReviewerDock';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -73,59 +74,6 @@ export default function LoginPage() {
           </div>
 
           <div className="bg-white p-6 sm:p-8 shadow-xl shadow-black/[0.04] rounded-3xl border border-[#D2D2CA] space-y-6">
-            {/* Quick 1-Click Demo Accounts */}
-            <div className="space-y-2.5 p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-black text-[#66665E] uppercase tracking-wider">
-                  1-Click Instant Demo Access
-                </span>
-                <span className="text-xs font-bold text-[#0A0A0A] bg-[#F4F4F0] px-2 py-0.5 rounded-full border border-[#E7E7E2]">
-                  Instant Test
-                </span>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2.5">
-                <button
-                  type="button"
-                  onClick={handleBrandDemoLogin}
-                  className="p-3 rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] bg-white hover:bg-[#F4F4F0] text-left transition-all cursor-pointer group shadow-2xs"
-                >
-                  <div className="flex items-center gap-2 mb-1">
-                    <div className="w-5 h-5 rounded-md bg-[#0A0A0A] text-white flex items-center justify-center font-bold text-xs">
-                      B
-                    </div>
-                    <span className="text-xs font-black text-[#0A0A0A] group-hover:text-black transition-colors">
-                      Brand Demo
-                    </span>
-                  </div>
-                  <div className="text-sm text-[#66665E] truncate font-medium">Elena Rostova</div>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={handleCreatorDemoLogin}
-                  className="p-3 rounded-xl border border-[#E7E7E2] hover:border-[#FF2D78] bg-white hover:bg-[#FFF0F5] text-left transition-all cursor-pointer group shadow-2xs"
-                >
-                  <div className="flex items-center gap-2 mb-1">
-                    <div className="w-5 h-5 rounded-md bg-[#FF2D78] text-white flex items-center justify-center font-bold text-xs">
-                      C
-                    </div>
-                    <span className="text-xs font-black text-[#0A0A0A] group-hover:text-[#FF2D78] transition-colors">
-                      Creator Demo
-                    </span>
-                  </div>
-                  <div className="text-sm text-[#66665E] truncate font-medium">Sophie Kim</div>
-                </button>
-              </div>
-            </div>
-
-            <div className="relative flex items-center justify-center">
-              <div className="border-t border-[#E7E7E2] w-full" />
-              <span className="bg-white px-3 text-sm font-bold text-[#66665E] uppercase tracking-wider absolute">
-                or log in with email
-              </span>
-            </div>
-
             {/* Manual Form */}
             <form onSubmit={handleManualLogin} className="space-y-4">
               <div>
@@ -210,6 +158,9 @@ export default function LoginPage() {
           <AuthNetworkVisual />
         </div>
       </div>
+
+      {/* Floating Reviewer Sandbox Dock (Clearly identified as temporary prototype demo) */}
+      <DemoReviewerDock />
     </div>
   );
 }

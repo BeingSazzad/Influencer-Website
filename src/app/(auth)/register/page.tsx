@@ -18,6 +18,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { message } from 'antd';
+import { DemoReviewerDock } from '@/components/auth/DemoReviewerDock';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -200,33 +201,6 @@ export default function RegisterPage() {
                 </div>
               </div>
 
-              {/* Quick 1-Click Instant Demo Access */}
-              <div className="bg-white p-5 rounded-2xl border border-[#E7E7E2] space-y-2.5">
-                <div className="text-center">
-                  <span className="text-xs font-bold text-[#A3A39C] uppercase tracking-wider">
-                    Or instant 1-click test
-                  </span>
-                </div>
-                <div className="grid grid-cols-2 gap-2.5 max-w-sm mx-auto">
-                  <button
-                    type="button"
-                    onClick={handleCreatorDemo}
-                    className="p-2.5 rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] bg-[#FAFAF8] hover:bg-white text-xs font-black text-[#0A0A0A] transition-all cursor-pointer flex items-center justify-center gap-1.5"
-                  >
-                    <Sparkles className="w-3.5 h-3.5 text-[#FF2D78]" />
-                    <span>Creator Demo</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleBrandDemo}
-                    className="p-2.5 rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] bg-[#FAFAF8] hover:bg-white text-xs font-black text-[#0A0A0A] transition-all cursor-pointer flex items-center justify-center gap-1.5"
-                  >
-                    <Building className="w-3.5 h-3.5" />
-                    <span>Brand Demo</span>
-                  </button>
-                </div>
-              </div>
-
               {/* Already Have Account - Sign In */}
               <div className="text-center">
                 <p className="text-sm text-[#66665E] font-medium">
@@ -357,6 +331,9 @@ export default function RegisterPage() {
           )}
         </div>
       </main>
+
+      {/* Floating Reviewer Sandbox Dock (Clearly identified as temporary prototype demo) */}
+      <DemoReviewerDock />
     </div>
   );
 }
