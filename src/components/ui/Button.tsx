@@ -102,6 +102,7 @@ export const Button = React.forwardRef<
           className={classNames}
           target={target}
           rel={rel}
+          {...(rest as any)}
         >
           {content}
         </Link>
