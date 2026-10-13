@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch } from '@/redux/hooks';
 import { loginAsBrandDemo, loginAsCreatorDemo } from '@/redux/slices/authSlice';
-import { Sparkles, Building, ChevronDown, ChevronUp, Info } from 'lucide-react';
+import { Video, Briefcase, ChevronDown, ChevronUp, Info } from 'lucide-react';
 import { message } from 'antd';
 
 export function DemoReviewerDock() {
@@ -81,7 +81,7 @@ export function DemoReviewerDock() {
             onClick={handleCreatorDemo}
             className="py-2.5 px-3 rounded-xl bg-white/10 hover:bg-[#FF2D78] text-white text-xs font-bold transition-all border border-white/10 hover:border-transparent flex items-center justify-center gap-2 cursor-pointer shadow-sm group"
           >
-            <Sparkles className="w-3.5 h-3.5 text-[#FF2D78] group-hover:text-white transition-colors" />
+            <Video className="w-3.5 h-3.5 text-[#FF2D78] group-hover:text-white transition-colors" />
             <span className="truncate">Creator Demo (Sophie)</span>
           </button>
 
@@ -90,7 +90,7 @@ export function DemoReviewerDock() {
             onClick={handleBrandDemo}
             className="py-2.5 px-3 rounded-xl bg-white/10 hover:bg-white hover:text-black text-white text-xs font-bold transition-all border border-white/10 hover:border-transparent flex items-center justify-center gap-2 cursor-pointer shadow-sm group"
           >
-            <Building className="w-3.5 h-3.5 text-white group-hover:text-black transition-colors" />
+            <Briefcase className="w-3.5 h-3.5 text-white group-hover:text-black transition-colors" />
             <span className="truncate">Brand Demo (Elena)</span>
           </button>
         </div>

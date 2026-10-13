@@ -16,6 +16,8 @@ import {
   ArrowRight,
   ArrowLeft,
   Sparkles,
+  Video,
+  Briefcase,
 } from 'lucide-react';
 import { message } from 'antd';
 import { DemoReviewerDock } from '@/components/auth/DemoReviewerDock';
@@ -135,11 +137,12 @@ export default function RegisterPage() {
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <div className="w-12 h-12 rounded-2xl bg-pink-50 text-[#FF2D78] flex items-center justify-center font-bold group-hover:scale-110 transition-transform">
-                        <Sparkles className="w-6 h-6" />
+                      <div className="w-13 h-13 rounded-2xl bg-gradient-to-br from-[#FFF0F5] to-[#FFE0EB] text-[#FF2D78] border border-[#FF2D78]/25 flex items-center justify-center font-bold group-hover:scale-110 group-hover:bg-[#FF2D78] group-hover:text-white transition-all duration-300 shadow-xs">
+                        <Video className="w-6 h-6 transition-colors" />
                       </div>
-                      <span className="text-[11px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#66665E]">
-                        For Creators
+                      <span className="text-[11px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#FFF0F5] border border-[#FF2D78]/25 text-[#FF2D78] flex items-center gap-1.5">
+                        <Video className="w-3 h-3" />
+                        <span>For Creators</span>
                       </span>
                     </div>
 
@@ -171,11 +174,12 @@ export default function RegisterPage() {
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <div className="w-12 h-12 rounded-2xl bg-zinc-100 text-[#0A0A0A] flex items-center justify-center font-bold group-hover:scale-110 transition-transform">
-                        <Building className="w-6 h-6" />
+                      <div className="w-13 h-13 rounded-2xl bg-gradient-to-br from-[#FAFAF8] to-[#EAEAE3] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center font-bold group-hover:scale-110 group-hover:bg-[#0A0A0A] group-hover:text-white transition-all duration-300 shadow-xs">
+                        <Briefcase className="w-6 h-6 transition-colors" />
                       </div>
-                      <span className="text-[11px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#66665E]">
-                        For Brands
+                      <span className="text-[11px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#66665E] flex items-center gap-1.5">
+                        <Briefcase className="w-3 h-3" />
+                        <span>For Brands</span>
                       </span>
                     </div>
 
