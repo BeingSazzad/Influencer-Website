@@ -126,7 +126,17 @@ export function PortfolioVideoModal({
             <div className="absolute top-4 left-4 z-20 flex items-center gap-2">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/70 backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider border border-white/15">
                 {platformIcons[item.platform]}
-                <span>{item.platform === 'all' || item.platform === 'multi' ? 'All platforms' : item.platform === 'ugc' ? 'UGC Ads' : item.platform}</span>
+                <span>
+                  {item.platforms && item.platforms.length > 1
+                    ? item.platforms.length >= 4
+                      ? 'All platforms'
+                      : item.platforms.map((p) => (p === 'ugc' ? 'UGC Ads' : p.charAt(0).toUpperCase() + p.slice(1))).join(' • ')
+                    : item.platform === 'all' || item.platform === 'multi'
+                    ? 'All platforms'
+                    : item.platform === 'ugc'
+                    ? 'UGC Ads'
+                    : item.platform}
+                </span>
               </span>
               <span className="px-2.5 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-extrabold uppercase tracking-widest border border-white/15">
                 4K HDR
@@ -224,7 +234,17 @@ export function PortfolioVideoModal({
               <div className="flex flex-wrap items-center gap-2 pt-1">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F4F4F0] border border-[#E7E7E2] text-xs font-bold text-[#0A0A0A] capitalize">
                   {platformIcons[item.platform]}
-                  <span>{item.platform === 'all' || item.platform === 'multi' ? 'All platforms' : item.platform === 'ugc' ? 'UGC Ads' : item.platform}</span>
+                  <span>
+                    {item.platforms && item.platforms.length > 1
+                      ? item.platforms.length >= 4
+                        ? 'All platforms'
+                        : item.platforms.map((p) => (p === 'ugc' ? 'UGC Ads' : p.charAt(0).toUpperCase() + p.slice(1))).join(' • ')
+                      : item.platform === 'all' || item.platform === 'multi'
+                      ? 'All platforms'
+                      : item.platform === 'ugc'
+                      ? 'UGC Ads'
+                      : item.platform}
+                  </span>
                 </span>
 
                 {item.deliverableType && (

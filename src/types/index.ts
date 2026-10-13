@@ -68,6 +68,7 @@ export interface PortfolioItem {
   duration?: string;
   aspectRatio?: '9:16' | '16:9' | '1:1';
   platform: PlatformType;
+  platforms?: PlatformType[];
   deliverableType?: string;
   description?: string;
   soundTrack?: string;

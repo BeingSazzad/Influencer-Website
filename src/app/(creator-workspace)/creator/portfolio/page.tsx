@@ -28,11 +28,16 @@ import {
   ChevronUp,
   MoreVertical,
   Check,
+  X,
 } from 'lucide-react';
 import { Button, Modal, Input, Select, message, Dropdown } from 'antd';
 import { InstagramLogo, TikTokLogo, YouTubeLogo } from '@/components/shared/SocialLogos';
 
-function platformLabel(platform: PlatformType) {
+function platformLabel(platform: PlatformType, platforms?: PlatformType[]) {
+  if (platforms && platforms.length > 1) {
+    if (platforms.length >= 4) return 'All platforms';
+    return platforms.map((p) => (p === 'ugc' ? 'UGC' : p.charAt(0).toUpperCase() + p.slice(1))).join(' • ');
+  }
   if (platform === 'all' || platform === 'multi') return 'All platforms';
   if (platform === 'ugc') return 'UGC Ads';
   if (platform === 'instagram') return 'Instagram';
@@ -75,7 +80,7 @@ function CreatorPortfolioContent() {
   const [brandName, setBrandName] = useState('');
   const [brandLogo, setBrandLogo] = useState('');
   const [campaignTitle, setCampaignTitle] = useState('');
-  const [platform, setPlatform] = useState<PlatformType>('instagram');
+  const [selectedPlatforms, setSelectedPlatforms] = useState<PlatformType[]>(['instagram']);
   const [deliverableType, setDeliverableType] = useState('');
   const [mediaType, setMediaType] = useState<'video' | 'image'>('video');
   const [mediaUrl, setMediaUrl] = useState('');
@@ -92,7 +97,7 @@ function CreatorPortfolioContent() {
     setBrandName(order.brandName);
     setBrandLogo(order.brandLogo || '');
     setCampaignTitle(order.packageTitle || `${order.brandName} Collaboration`);
-    setPlatform(order.platform === 'multi' ? 'all' : order.platform);
+    setSelectedPlatforms(order.platform === 'multi' ? ['instagram', 'tiktok', 'youtube', 'ugc'] : [order.platform]);
     setDeliverableType(order.packageTitle);
     if (order.brief) {
       setDescription(order.brief);
@@ -103,6 +108,71 @@ function CreatorPortfolioContent() {
     message.success(`Imported details from ${order.brandName} campaign!`);
   };
 
+  // Multiple Platform selection handler
+  const handlePlatformsChange = (newValues: (PlatformType | 'all')[]) => {
+    if (newValues.includes('all')) {
+      if (selectedPlatforms.length === 4) {
+        setSelectedPlatforms(['instagram']);
+      } else {
+        setSelectedPlatforms(['instagram', 'tiktok', 'youtube', 'ugc']);
+      }
+      return;
+    }
+    const filtered = newValues.filter((v): v is PlatformType => v !== 'all');
+    if (filtered.length === 0) {
+      setSelectedPlatforms(['instagram']);
+    } else {
+      setSelectedPlatforms(filtered);
+    }
+  };
+
+  // Sleek tagRender for multi-platform tags in Select
+  const tagRender = (props: { label: React.ReactNode; value: any; closable: boolean; onClose: () => void }) => {
+    const { value, closable, onClose } = props;
+    if (value === 'all') return <span className="hidden" />;
+
+    const onPreventMouseDown = (event: React.MouseEvent<HTMLSpanElement>) => {
+      event.preventDefault();
+      event.stopPropagation();
+    };
+
+    const getPlatformIcon = (val: string) => {
+      if (val === 'instagram') return <InstagramLogo className="w-3.5 h-3.5 shrink-0 rounded-xs" />;
+      if (val === 'tiktok') return <TikTokLogo className="w-3.5 h-3.5 shrink-0 rounded-xs" />;
+      if (val === 'youtube') return <YouTubeLogo className="w-3.5 h-3.5 shrink-0 rounded-xs" />;
+      if (val === 'ugc') return <Sparkles className="w-3.5 h-3.5 text-purple-600 shrink-0" />;
+      return <Layers className="w-3.5 h-3.5 text-amber-600 shrink-0" />;
+    };
+
+    const getPlatformLabelText = (val: string) => {
+      if (val === 'instagram') return 'Instagram';
+      if (val === 'tiktok') return 'TikTok';
+      if (val === 'youtube') return 'YouTube';
+      if (val === 'ugc') return 'UGC Ads';
+      return val;
+    };
+
+    return (
+      <span
+        onMouseDown={onPreventMouseDown}
+        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#FAFAF8] border border-[#E7E7E2] text-[#0A0A0A] font-bold text-xs mr-1.5 my-0.5 shadow-2xs"
+      >
+        {getPlatformIcon(value)}
+        <span>{getPlatformLabelText(value)}</span>
+        {closable && (
+          <button
+            type="button"
+            onClick={onClose}
+            className="hover:text-rose-600 text-[#8E8E87] transition-colors cursor-pointer ml-0.5 flex items-center"
+            aria-label="Remove platform"
+          >
+            <X className="w-3 h-3" />
+          </button>
+        )}
+      </span>
+    );
+  };
+
   // File upload refs
   const modalMediaFileInputRef = useRef<HTMLInputElement>(null);
 
@@ -110,14 +180,19 @@ function CreatorPortfolioContent() {
   const filteredVideoList =
     platformFilter === 'all'
       ? portfolioList
-      : portfolioList.filter((item) => item.platform === platformFilter);
+      : portfolioList.filter((item) => {
+          if (item.platforms && item.platforms.length > 0) {
+            return item.platforms.includes(platformFilter);
+          }
+          return item.platform === platformFilter || item.platform === 'all' || item.platform === 'multi';
+        });
 
   const openAddVideoModal = () => {
     setEditingItemId(null);
     setBrandName('');
     setBrandLogo('');
     setCampaignTitle('');
-    setPlatform('instagram');
+    setSelectedPlatforms(['instagram']);
     setDeliverableType('');
     setMediaType('video');
     setMediaUrl('');
@@ -133,7 +208,13 @@ function CreatorPortfolioContent() {
     setBrandName(item.brandName || '');
     setBrandLogo(item.brandLogo || '');
     setCampaignTitle(item.campaignTitle);
-    setPlatform(item.platform);
+    if (item.platforms && item.platforms.length > 0) {
+      setSelectedPlatforms(item.platforms);
+    } else if (item.platform === 'all' || item.platform === 'multi') {
+      setSelectedPlatforms(['instagram', 'tiktok', 'youtube', 'ugc']);
+    } else {
+      setSelectedPlatforms([item.platform]);
+    }
     setDeliverableType(item.deliverableType || '');
     setMediaType(item.mediaType || 'video');
     setMediaUrl(item.mediaUrl);
@@ -220,13 +301,24 @@ function CreatorPortfolioContent() {
       return;
     }
 
+    const primaryPlatform = selectedPlatforms[0] || 'instagram';
+    const isAll = selectedPlatforms.length >= 4;
+    const isMulti = selectedPlatforms.length > 1;
+
     const payload: PortfolioItem = {
       id: editingItemId || `port-${Date.now()}`,
       brandName: brandName.trim() || 'Personal Work',
       brandLogo: brandLogo.trim() || undefined,
       campaignTitle: campaignTitle.trim(),
-      platform,
-      deliverableType: deliverableType.trim() || (platform === 'instagram' ? 'Reel / Post' : 'Video / Content'),
+      platform: isAll ? 'all' : isMulti ? 'multi' : primaryPlatform,
+      platforms: selectedPlatforms,
+      deliverableType:
+        deliverableType.trim() ||
+        (isMulti
+          ? 'Cross-Platform Campaign'
+          : primaryPlatform === 'instagram'
+          ? 'Reel / Post'
+          : 'Video / Content'),
       mediaType,
       mediaUrl: mediaUrl.trim(),
       aspectRatio,
@@ -327,12 +419,21 @@ function CreatorPortfolioContent() {
                     {/* Platform Badge (Clean, No duration badge) */}
                     <div className="absolute top-3 left-3 z-10 pointer-events-none">
                       <span className="text-xs font-black uppercase tracking-wider bg-black/75 backdrop-blur-md text-white px-3 py-1 rounded-full border border-white/15 flex items-center gap-1.5 shadow-sm">
-                        {item.platform === 'instagram' && <Instagram className="w-3 h-3 text-[#FF2D78]" />}
-                        {item.platform === 'tiktok' && <Film className="w-3 h-3 text-white" />}
-                        {item.platform === 'youtube' && <Youtube className="w-3 h-3 text-red-500" />}
-                        {item.platform === 'ugc' && <Sparkles className="w-3 h-3 text-purple-400" />}
-                        {(item.platform === 'all' || item.platform === 'multi') && <Layers className="w-3 h-3 text-white" />}
-                        <span>{platformLabel(item.platform)}</span>
+                        {item.platforms && item.platforms.length > 1 ? (
+                          <>
+                            <Layers className="w-3 h-3 text-amber-400" />
+                            <span>{platformLabel(item.platform, item.platforms)}</span>
+                          </>
+                        ) : (
+                          <>
+                            {item.platform === 'instagram' && <Instagram className="w-3 h-3 text-[#FF2D78]" />}
+                            {item.platform === 'tiktok' && <Film className="w-3 h-3 text-white" />}
+                            {item.platform === 'youtube' && <Youtube className="w-3 h-3 text-red-500" />}
+                            {item.platform === 'ugc' && <Sparkles className="w-3 h-3 text-purple-400" />}
+                            {(item.platform === 'all' || item.platform === 'multi') && <Layers className="w-3 h-3 text-white" />}
+                            <span>{platformLabel(item.platform, item.platforms)}</span>
+                          </>
+                        )}
                       </span>
                     </div>
 
@@ -536,13 +637,23 @@ function CreatorPortfolioContent() {
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs font-bold text-[#66665E] uppercase tracking-wider block">
-                Platform
-              </label>
+              <div className="flex items-center justify-between">
+                <label className="text-xs font-bold text-[#66665E] uppercase tracking-wider block">
+                  Platform
+                </label>
+                <span className="text-[11px] font-semibold text-[#8E8E87]">
+                  {selectedPlatforms.length > 1
+                    ? `${selectedPlatforms.length} platforms selected`
+                    : 'Multiple selection enabled'}
+                </span>
+              </div>
               <Select
-                value={platform}
-                onChange={(val) => setPlatform(val)}
-                className="w-full h-10"
+                mode="multiple"
+                value={selectedPlatforms.length === 4 ? [...selectedPlatforms, 'all'] : selectedPlatforms}
+                onChange={handlePlatformsChange}
+                tagRender={tagRender}
+                className="w-full min-h-[42px]"
+                placeholder="Select one or multiple platforms..."
                 menuItemSelectedIcon={<Check className="w-4 h-4 text-[#0A0A0A] stroke-[3]" />}
                 options={[
                   {
