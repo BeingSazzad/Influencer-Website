@@ -20,7 +20,6 @@ import {
   Upload,
   X,
   CheckCircle2,
-  Lock,
   User,
   Phone,
   Briefcase,
@@ -374,14 +373,14 @@ export default function BrandSettingsPage() {
                 </div>
               </div>
 
-              {/* Public Details Section */}
+              {/* Brand & Organization Details Section */}
               <div className="space-y-4">
                 <div>
                   <h3 className="text-base font-bold text-[#0A0A0A] tracking-tight">
-                    Public Details
+                    Brand & Organization Details
                   </h3>
                   <p className="text-xs sm:text-sm text-[#66665E] mt-0.5">
-                    Displayed on your creator campaign briefs, proposals, and marketplace listings.
+                    General information, contact credentials, and marketplace discovery settings.
                   </p>
                 </div>
 
@@ -397,6 +396,21 @@ export default function BrandSettingsPage() {
                       onChange={(e) => setCompanyName(e.target.value)}
                       className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
                       placeholder="e.g. Aura Skincare Paris"
+                      required
+                    />
+                  </div>
+
+                  {/* Account Manager / Contact Name */}
+                  <div className="space-y-1.5">
+                    <label className="block text-sm font-bold text-[#0A0A0A]">
+                      Account Manager <span className="text-rose-500">*</span>
+                    </label>
+                    <Input
+                      prefix={<User className="w-4 h-4 text-[#A3A39C] mr-0.5" />}
+                      value={contactName}
+                      onChange={(e) => setContactName(e.target.value)}
+                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
+                      placeholder="e.g. Elena Rostova"
                       required
                     />
                   </div>
@@ -625,67 +639,6 @@ export default function BrandSettingsPage() {
                 )}
               </div>
 
-              {/* Private Contact & Billing Card */}
-              <div className="p-6 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#E7E7E2]/70">
-                  <div>
-                    <h3 className="text-base font-bold text-[#0A0A0A] tracking-tight flex items-center gap-2">
-                      <Lock className="w-4 h-4 text-[#66665E]" />
-                      <span>Primary Contact & Account Admin</span>
-                    </h3>
-                    <p className="text-xs text-[#66665E] mt-0.5">
-                      Used strictly for escrow release receipts, legal contracts, and dispute mediation. Never shown publicly to creators.
-                    </p>
-                  </div>
-                  <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#F4F4F0] text-[#66665E] border border-[#E7E7E2] self-start sm:self-auto shrink-0">
-                    Private
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-[#52524E]">
-                      Account Manager <span className="text-rose-500">*</span>
-                    </label>
-                    <Input
-                      prefix={<User className="w-4 h-4 text-[#66665E] mr-0.5" />}
-                      value={contactName}
-                      onChange={(e) => setContactName(e.target.value)}
-                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A] bg-white"
-                      placeholder="Elena Rostova"
-                      required
-                    />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-[#52524E]">
-                      Business Email <span className="text-rose-500">*</span>
-                    </label>
-                    <Input
-                      prefix={<Mail className="w-4 h-4 text-[#66665E] mr-0.5" />}
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A] bg-white"
-                      placeholder="elena@aura-cosmetics.com"
-                      required
-                    />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-[#52524E]">
-                      Direct Phone
-                    </label>
-                    <Input
-                      prefix={<Phone className="w-4 h-4 text-[#66665E] mr-0.5" />}
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A] bg-white"
-                      placeholder="+33 1 42 68 55 00"
-                    />
-                  </div>
-                </div>
-              </div>
 
               {/* Bottom Save Action */}
               <div className="pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
