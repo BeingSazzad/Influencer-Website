@@ -66,11 +66,11 @@ export function DemoReviewerDock() {
           </button>
         </div>
 
-        {/* Explanatory Notice */}
-        <div className="flex items-start gap-2 text-white/70 text-[11px] sm:text-xs leading-relaxed">
-          <Info className="w-3.5 h-3.5 text-amber-300 shrink-0 mt-0.5" />
-          <p>
-            <strong className="text-white">Reviewer Note:</strong> এই ১-ক্লিক ডেমো অপশনটি শুধুমাত্র প্রোটোটাইপ ইভ্যালুয়েশন ও ক্লায়েন্ট টেস্টিং-এর জন্য রাখা হয়েছে। লাইভ প্রোডাকশন ওয়েবসাইটে এটি থাকবে না (ব্যবহারকারীরা রেগুলার ইমেইল/পাসওয়ার্ড দিয়ে সাইনআপ করবেন)।
+        {/* Short English Notice */}
+        <div className="flex items-center gap-1.5 text-white/70 text-[11px] sm:text-xs">
+          <Info className="w-3.5 h-3.5 text-amber-300 shrink-0" />
+          <p className="truncate">
+            <span className="text-white font-bold">Reviewer Demo:</span> 1-click test access for client review only.
           </p>
         </div>
 
