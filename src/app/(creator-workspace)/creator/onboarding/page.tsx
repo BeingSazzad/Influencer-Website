@@ -644,11 +644,11 @@ export default function CreatorOnboardingPage() {
                   </div>
                 </div>
 
-                {/* Contact Information (2 Columns) */}
+                {/* Contact Information (2 Columns - Private Account Only) */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   <div className="space-y-1.5">
                     <label className="text-sm font-bold text-[#0A0A0A] block">
-                      Public Contact Email <span className="text-rose-500">*</span>
+                      Account Email <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
                       <Mail className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A3A39C]" />
@@ -664,7 +664,7 @@ export default function CreatorOnboardingPage() {
 
                   <div className="space-y-1.5">
                     <label className="text-sm font-bold text-[#0A0A0A] block">
-                      Phone Number
+                      Phone Number <span className="text-xs text-[#71716A] font-normal">(Private)</span>
                     </label>
                     <div className="relative">
                       <Phone className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A3A39C]" />

@@ -41,8 +41,6 @@ import {
   Unlink,
   Link2,
   Camera,
-  Mail,
-  Phone,
 } from 'lucide-react';
 import { Input, Button, message, Select, Dropdown } from 'antd';
 import { Button as AppButton } from '@/components/ui';
@@ -245,11 +243,9 @@ function CreatorProfileContent() {
   );
   const [newTagInput, setNewTagInput] = useState('');
 
-  // Private Contact Details
-  const [contactEmail, setContactEmail] = useState(currentCreator?.contactEmail || currentUser?.email || '');
-  const [contactPhone, setContactPhone] = useState(
-    currentCreator?.contactPhone || currentUser?.phone || ''
-  );
+  // Private Contact Details (Preserved from account profile)
+  const contactEmail = currentCreator?.contactEmail || currentUser?.email || '';
+  const contactPhone = currentCreator?.contactPhone || currentUser?.phone || '';
 
   // Aesthetic Gallery States
   const photosList: CreatorPhoto[] = currentCreator?.photos || [];
@@ -852,33 +848,6 @@ function CreatorProfileContent() {
                     />
                   </div>
 
-                  {/* Email & Phone */}
-                  <div className="space-y-1.5">
-                    <label className="block text-sm font-bold text-[#0A0A0A]">
-                      Public Contact Email <span className="text-rose-500">*</span>
-                    </label>
-                    <Input
-                      prefix={<Mail className="w-4 h-4 text-[#A3A39C] mr-0.5" />}
-                      type="email"
-                      value={contactEmail}
-                      onChange={(e) => setContactEmail(e.target.value)}
-                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
-                      placeholder="collabs@sophiekim.com"
-                    />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="block text-sm font-bold text-[#0A0A0A]">Public Phone</label>
-                    <Input
-                      prefix={<Phone className="w-4 h-4 text-[#A3A39C] mr-0.5" />}
-                      type="tel"
-                      value={contactPhone}
-                      onChange={(e) => setContactPhone(e.target.value)}
-                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
-                      placeholder="+1 (555) 234-5678"
-                    />
-                  </div>
-
                   {/* Username */}
                   <div className="space-y-1.5">
                     <div className="flex items-center justify-between">
@@ -1035,50 +1004,6 @@ function CreatorProfileContent() {
                   </div>
                 </div>
               </div>
-
-              {/* Private Account & Contact Section */}
-              <div className="p-5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                  <div>
-                    <h3 className="text-sm font-bold text-[#0A0A0A] tracking-tight flex items-center gap-2">
-                      <Lock className="w-4 h-4 text-[#66665E]" />
-                      <span>Private Contact</span>
-                    </h3>
-                    <p className="text-xs text-[#66665E] mt-0.5">
-                      Used for order and payout alerts. Never shown publicly.
-                    </p>
-                  </div>
-                  <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#F4F4F0] text-[#66665E] border border-[#E7E7E2] self-start sm:self-auto shrink-0">
-                    Private
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-[#52524E]">Contact email</label>
-                    <Input
-                      type="email"
-                      value={contactEmail}
-                      onChange={(e) => setContactEmail(e.target.value)}
-                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A] bg-white"
-                      placeholder="collabs@yourname.com"
-                    />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="block text-sm font-semibold text-[#52524E]">Phone</label>
-                    <Input
-                      type="tel"
-                      value={contactPhone}
-                      onChange={(e) => setContactPhone(e.target.value)}
-                      className="rounded-xl h-11 text-sm font-medium text-[#0A0A0A] border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A] bg-white"
-                      placeholder="+1 (555) 234-5678"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="border-t border-[#E7E7E2]" />
 
               {/* Creator details Section: Standardized Niches & Custom Tags */}
               <div className="space-y-5">
