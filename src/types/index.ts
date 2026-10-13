@@ -255,6 +255,18 @@ export interface BrandReview {
   comment: string;
 }
 
+export interface BrandGivenReview {
+  id: string;
+  creatorId: string;
+  creatorName: string;
+  creatorAvatar: string;
+  creatorHandle: string;
+  rating: number;
+  date: string;
+  collaborationType: string;
+  comment: string;
+}
+
 export interface BrandProfile {
   id: string;
   companyName: string;
@@ -290,4 +302,5 @@ export interface BrandProfile {
     views?: string;
   }[];
   reviews: BrandReview[];
+  reviewsGiven?: BrandGivenReview[];
 }
