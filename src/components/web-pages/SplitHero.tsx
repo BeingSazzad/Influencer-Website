@@ -481,7 +481,8 @@ export function SplitHero() {
               {/* Card 1: Sophie Kim (Leftmost Tilted) */}
               <Link
                 href="/creators/creator-01"
-                className="absolute left-0 top-10 w-[190px] sm:w-[210px] bg-white rounded-3xl p-3.5 border border-[#E7E7E2] shadow-xl transform -rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300 z-10 group"
+                title="View Sophie Kim's Creator Profile"
+                className="absolute left-0 top-10 w-[190px] sm:w-[210px] bg-white rounded-3xl p-3.5 border border-[#E7E7E2] shadow-xl transform -rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300 z-10 hover:z-30 cursor-pointer group block"
               >
                 <div className="relative h-48 sm:h-56 rounded-2xl overflow-hidden bg-[#F4F4F0] mb-3">
                   <img
@@ -491,6 +492,12 @@ export function SplitHero() {
                   />
                   <div className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-white text-xs font-black">
                     €500
+                  </div>
+                  {/* Hover Overlay Pill */}
+                  <div className="absolute inset-0 bg-black/35 backdrop-blur-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center pointer-events-none">
+                    <span className="bg-white text-[#0A0A0A] font-bold text-xs px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5 transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                      View Profile <ArrowRight className="w-3.5 h-3.5 text-[#FF2D78]" />
+                    </span>
                   </div>
                 </div>
                 <div className="flex items-center justify-between px-1">
@@ -507,10 +514,11 @@ export function SplitHero() {
                 </div>
               </Link>
 
-              {/* Card 2: Marcus Chen (Center Prominent) */}
+              {/* Card 2: Liam Carter (Center Prominent) */}
               <Link
                 href="/creators/creator-02"
-                className="absolute left-1/2 -translate-x-1/2 top-0 w-[200px] sm:w-[230px] bg-white rounded-3xl p-4 border border-[#E7E7E2] shadow-2xl hover:scale-105 transition-all duration-300 z-20 group"
+                title="View Liam Carter's Creator Profile"
+                className="absolute left-1/2 -translate-x-1/2 top-0 w-[200px] sm:w-[230px] bg-white rounded-3xl p-4 border border-[#E7E7E2] shadow-2xl hover:scale-105 transition-all duration-300 z-20 hover:z-30 cursor-pointer group block"
               >
                 <div className="relative h-54 sm:h-64 rounded-2xl overflow-hidden bg-[#F4F4F0] mb-3">
                   <img
@@ -520,6 +528,12 @@ export function SplitHero() {
                   />
                   <div className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-[#FF2D78] text-white text-xs font-black shadow-xs">
                     Top Rated
+                  </div>
+                  {/* Hover Overlay Pill */}
+                  <div className="absolute inset-0 bg-black/35 backdrop-blur-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center pointer-events-none">
+                    <span className="bg-white text-[#0A0A0A] font-bold text-xs px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5 transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                      View Profile <ArrowRight className="w-3.5 h-3.5 text-[#FF2D78]" />
+                    </span>
                   </div>
                   <div className="absolute bottom-3 left-3 right-3 bg-black/60 backdrop-blur-md rounded-xl p-2 text-white">
                     <div className="text-xs font-black">Cinematic 4K Adventure</div>
@@ -545,7 +559,8 @@ export function SplitHero() {
               {/* Card 3: Emma Rossi (Rightmost Tilted) */}
               <Link
                 href="/creators/creator-05"
-                className="absolute right-0 top-14 w-[180px] sm:w-[200px] bg-white rounded-3xl p-3.5 border border-[#E7E7E2] shadow-xl transform rotate-12 hover:rotate-6 hover:scale-105 transition-all duration-300 z-5 group hidden sm:block"
+                title="View Emma Rossi's Creator Profile"
+                className="absolute right-0 top-14 w-[180px] sm:w-[200px] bg-white rounded-3xl p-3.5 border border-[#E7E7E2] shadow-xl transform rotate-12 hover:rotate-0 hover:scale-105 transition-all duration-300 z-5 hover:z-30 cursor-pointer group hidden sm:block"
               >
                 <div className="relative h-44 sm:h-50 rounded-2xl overflow-hidden bg-[#F4F4F0] mb-3">
                   <img
@@ -553,6 +568,15 @@ export function SplitHero() {
                     alt="Emma Rossi"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
+                  <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-white text-xs font-black">
+                    €420
+                  </div>
+                  {/* Hover Overlay Pill */}
+                  <div className="absolute inset-0 bg-black/35 backdrop-blur-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center pointer-events-none">
+                    <span className="bg-white text-[#0A0A0A] font-bold text-xs px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5 transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                      View Profile <ArrowRight className="w-3.5 h-3.5 text-[#FF2D78]" />
+                    </span>
+                  </div>
                 </div>
                 <div className="flex items-center justify-between px-1">
                   <div>
@@ -567,6 +591,12 @@ export function SplitHero() {
                   </div>
                 </div>
               </Link>
+
+              {/* Interactive Discovery Indicator Pill */}
+              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-[#E7E7E2] shadow-xs text-xs font-semibold text-[#66665E] pointer-events-none whitespace-nowrap">
+                <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
+                <span>Click any creator card to view full profile & packages</span>
+              </div>
             </div>
           </div>
         </div>
