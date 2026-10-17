@@ -16,7 +16,6 @@ import {
   Star,
   Users,
   Building2,
-  Sparkles,
   CheckCircle2,
   ChevronRight,
   Share2,
@@ -25,6 +24,8 @@ import {
   Check,
   Send,
   Calendar,
+  Clock,
+  Target,
 } from 'lucide-react';
 import { message, Modal, Input } from 'antd';
 
@@ -196,7 +197,7 @@ export default function BrandProfilePage() {
                 onClick={handleOpenPitch}
                 className="h-12 px-7 rounded-full font-bold text-sm bg-[#FF2D78] hover:bg-[#E02669] text-white transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
               >
-                <Sparkles className="w-4 h-4" />
+                <Send className="w-4 h-4" />
                 <span>Pitch for Partnership</span>
               </button>
             </div>
@@ -245,7 +246,7 @@ export default function BrandProfilePage() {
 
             <div className="p-3.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]/80">
               <div className="flex items-center gap-2 text-xs font-bold text-[#66665E] uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+                <Clock className="w-3.5 h-3.5 text-blue-600" />
                 <span>Response Time</span>
               </div>
               <div className="mt-1 flex items-baseline gap-1.5">
@@ -301,7 +302,7 @@ export default function BrandProfilePage() {
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-5">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-xl bg-[#FFF0F5] border border-[#FF2D78]/20 flex items-center justify-center">
-                  <Sparkles className="w-4 h-4 text-[#FF2D78]" />
+                  <Target className="w-4 h-4 text-[#FF2D78]" />
                 </div>
                 <div>
                   <h2 className="text-lg font-extrabold text-[#0A0A0A] tracking-tight">
@@ -552,7 +553,7 @@ export default function BrandProfilePage() {
                 onClick={handleOpenPitch}
                 className="w-full h-12 rounded-2xl font-extrabold text-sm bg-[#FF2D78] hover:bg-[#E02669] text-white transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.01] active:scale-[0.99]"
               >
-                <Sparkles className="w-4 h-4" />
+                <Send className="w-4 h-4" />
                 <span>Pitch for Partnership</span>
               </button>
 

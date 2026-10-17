@@ -2,31 +2,31 @@
 
 import React from 'react';
 import { useAppSelector } from '@/redux/hooks';
-import { Sparkles, ArrowRight, ShieldCheck, DollarSign, Award } from 'lucide-react';
+import { ArrowRight, ShieldCheck, DollarSign, Award, Flame } from 'lucide-react';
 import { Button } from '@/components/ui';
 
 export function CreatorInviteSection({ dual = false }: { dual?: boolean }) {
   const { t } = useAppSelector((state) => state.lang);
 
   return (
-    <section className="py-20 bg-[#FAFAF8] relative overflow-hidden font-sans">
+    <section className="py-12 sm:py-16 lg:py-20 bg-[#FAFAF8] relative overflow-hidden font-sans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="app-panel-dark p-8 sm:p-14 relative overflow-hidden">
+        <div className="app-panel-dark p-6 sm:p-10 lg:p-14 rounded-3xl relative overflow-hidden">
           {/* Subtle decorative circles */}
           <div className="absolute top-0 right-0 w-80 h-80 bg-[#FF2D78]/20 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute bottom-0 left-1/3 w-60 h-60 bg-[#F1EEF9]/10 rounded-full blur-2xl pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl lg:max-w-4xl">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-white text-xs font-bold uppercase tracking-wider mb-4">
-              <Sparkles className="w-3.5 h-3.5 text-[#FF2D78]" />
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-white text-[11px] sm:text-xs font-bold uppercase tracking-wider mb-3 sm:mb-4">
+              <Flame className="w-3.5 h-3.5 text-[#FF2D78]" />
               {dual ? 'For Brands & Creators' : 'For Creators & Influencers'}
             </div>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-[48px] font-black text-white tracking-tight leading-[1.15]">
+            <h2 className="text-2xl sm:text-4xl lg:text-[48px] font-black text-white tracking-tight leading-[1.15]">
               {dual ? 'Ready to start your next collaboration?' : t?.creatorInvite?.title || 'Turn your passion into predictable brand deals.'}
             </h2>
 
-            <p className="text-[18px] text-[#A3A39C] leading-[28px] mt-4 sm:mt-5 mb-8 max-w-2xl font-medium">
+            <p className="text-sm sm:text-base lg:text-[18px] text-[#A3A39C] leading-relaxed sm:leading-[28px] mt-2 sm:mt-4 mb-6 sm:mb-8 max-w-2xl font-medium">
               {dual
                 ? 'Brands hire vetted creators with escrow-protected payments. Creators set their own EUR prices and get paid on approval.'
                 : t?.creatorInvite?.subtitle ||

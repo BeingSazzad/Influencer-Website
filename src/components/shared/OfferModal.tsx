@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { closeOfferModal, createOffer } from '@/redux/slices/orderSlice';
 import { Modal, Input, message, Button } from 'antd';
-import { ShieldCheck, Send, Sparkles } from 'lucide-react';
+import { ShieldCheck, Send, Package, X } from 'lucide-react';
 import { Order, PlatformType } from '@/types';
 import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
 
@@ -100,12 +100,29 @@ export function OfferModal() {
       open={isOfferModalOpen}
       onCancel={() => dispatch(closeOfferModal())}
       footer={null}
-      width={520}
+      width={540}
       centered
       destroyOnClose
+      closeIcon={
+        <span className="w-8 h-8 rounded-full bg-[#FAFAF8] hover:bg-[#EAEAE3] border border-[#E7E7E2] flex items-center justify-center text-[#66665E] hover:text-[#0A0A0A] transition-all cursor-pointer shadow-2xs">
+          <X className="w-4 h-4" />
+        </span>
+      }
       className="rounded-3xl"
     >
-      <div className="pt-2 pb-1 space-y-5 font-sans">
+      <div className="pt-1 pb-1 space-y-4 font-sans">
+        {/* Modal Top Header with dedicated title and safe clearance for close button */}
+        <div className="flex items-center justify-between pr-10 pb-3 border-b border-[#E7E7E2]">
+          <div>
+            <h2 className="text-base font-extrabold text-[#0A0A0A] tracking-tight">
+              Send Collaboration Offer
+            </h2>
+            <p className="text-xs text-[#66665E] font-medium mt-0.5">
+              Escrow-protected campaign contract and deliverable brief
+            </p>
+          </div>
+        </div>
+
         {/* Creator & Package Summary Header */}
         <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -136,7 +153,7 @@ export function OfferModal() {
         {/* Selected Package Badge */}
         <div className="flex items-center justify-between text-xs p-3 rounded-xl bg-white border border-[#E7E7E2]">
           <div className="flex items-center gap-2 truncate">
-            <Sparkles className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+            <Package className="w-3.5 h-3.5 text-[#0A0A0A] shrink-0" />
             <span className="font-bold text-[#0A0A0A] truncate">{packageTitle}</span>
           </div>
           <span className="text-xs font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#66665E] shrink-0">

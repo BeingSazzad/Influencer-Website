@@ -30,19 +30,20 @@ import {
 } from 'lucide-react';
 import { message } from 'antd';
 import { InstagramLogo, TikTokLogo, YouTubeLogo } from '@/components/shared/SocialLogos';
+import { CategoryIcon } from '@/components/shared/CategoryIcon';
 
 // Curated Category list
 const CATEGORIES = [
-  { id: 'Beauty', label: 'Beauty & Skincare', icon: '💄' },
-  { id: 'Fashion', label: 'Fashion & Style', icon: '👗' },
-  { id: 'Fitness', label: 'Fitness & Health', icon: '⚡' },
-  { id: 'Travel', label: 'Travel & Adventure', icon: '✈️' },
-  { id: 'Food', label: 'Food & Cuisine', icon: '🍴' },
-  { id: 'Lifestyle', label: 'Lifestyle & Wellness', icon: '❤️' },
-  { id: 'Tech', label: 'Tech & Gaming', icon: '🎮' },
-  { id: 'Business', label: 'Business & Finance', icon: '💼' },
-  { id: 'Art', label: 'Art & Photography', icon: '🎨' },
-  { id: 'Family', label: 'Family & Parenting', icon: '👶' },
+  { id: 'Beauty', label: 'Beauty & Skincare' },
+  { id: 'Fashion', label: 'Fashion & Style' },
+  { id: 'Fitness', label: 'Fitness & Health' },
+  { id: 'Travel', label: 'Travel & Adventure' },
+  { id: 'Food', label: 'Food & Cuisine' },
+  { id: 'Lifestyle', label: 'Lifestyle & Wellness' },
+  { id: 'Tech', label: 'Tech & Gaming' },
+  { id: 'Business', label: 'Business & Finance' },
+  { id: 'Art', label: 'Art & Photography' },
+  { id: 'Family', label: 'Family & Parenting' },
 ];
 
 // Collaboration Preferences
@@ -51,31 +52,26 @@ const COLLABORATION_PREFERENCES = [
     id: 'sponsored',
     label: 'Sponsored Posts',
     desc: 'Dedicated reels, videos, and posts',
-    icon: '✨',
   },
   {
     id: 'ugc',
     label: 'UGC Content',
     desc: 'Ad content without posting to your feed',
-    icon: '📱',
   },
   {
     id: 'reviews',
     label: 'Product Reviews',
     desc: 'Unboxings and honest product reviews',
-    icon: '📦',
   },
   {
     id: 'events',
     label: 'Events & Brand Trips',
     desc: 'In-person events and brand trips',
-    icon: '🎟️',
   },
   {
     id: 'ambassador',
     label: 'Brand Ambassadorship',
     desc: 'Long-term brand partnerships',
-    icon: '🤝',
   },
   {
     id: 'affiliate',
@@ -828,7 +824,7 @@ export default function CreatorOnboardingPage() {
                         }`}
                       >
                         <div className="flex items-center gap-3">
-                          <span className="text-xl">{cat.icon}</span>
+                          <CategoryIcon name={cat.id} size={20} className={isSelected ? 'text-white' : 'text-[#0A0A0A]'} />
                           <span className="text-sm font-extrabold">{cat.label}</span>
                         </div>
                         {isSelected && <Check className="w-4 h-4 stroke-[3]" />}
@@ -1220,7 +1216,7 @@ export default function CreatorOnboardingPage() {
                             : 'bg-white text-[#0A0A0A] border-[#E7E7E2] hover:bg-[#FAFAF8] hover:border-[#D2D2CA]'
                         }`}
                       >
-                        <span className="text-2xl shrink-0 mt-0.5">{pref.icon}</span>
+                        <CategoryIcon name={pref.id} size={22} className={`shrink-0 mt-0.5 ${isSelected ? 'text-white' : 'text-[#0A0A0A]'}`} />
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between gap-2">
                             <span className="text-sm font-bold">{pref.label}</span>

@@ -10,6 +10,7 @@ import {
   Twitter,
   Linkedin,
   Mail,
+  X,
 } from 'lucide-react';
 
 interface ShareProfileModalProps {
@@ -118,11 +119,16 @@ export function ShareProfileModal({
       footer={null}
       centered
       width={480}
-      className="rounded-3xl overflow-hidden font-sans"
+      closeIcon={
+        <span className="w-8 h-8 rounded-full bg-[#FAFAF8] hover:bg-[#EAEAE3] border border-[#E7E7E2] flex items-center justify-center text-[#66665E] hover:text-[#0A0A0A] transition-all cursor-pointer shadow-2xs">
+          <X className="w-4 h-4" />
+        </span>
+      }
+      className="rounded-3xl font-sans"
     >
-      <div className="p-2 space-y-6">
+      <div className="p-1 space-y-6">
         {/* Header */}
-        <div className="flex items-center gap-3.5 pb-4 border-b border-[#E7E7E2]">
+        <div className="flex items-center gap-3.5 pb-4 border-b border-[#E7E7E2] pr-10">
           {avatar && (
             <img
               src={avatar}

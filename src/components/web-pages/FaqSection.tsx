@@ -64,67 +64,67 @@ export function FaqSection({
   return (
     <section
       id="faq"
-      className={`py-20 sm:py-24 bg-white font-sans ${
+      className={`py-12 sm:py-16 lg:py-24 bg-white font-sans ${
         isFullPage ? '' : 'border-t border-[#E7E7E2]'
       } ${className}`}
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#66665E] text-xs font-bold uppercase tracking-wider mb-2">
-            <HelpCircle className="w-4 h-4 text-[#FF2D78]" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-[#66665E] text-[11px] sm:text-xs font-bold uppercase tracking-wider mb-1 sm:mb-2">
+            <HelpCircle className="w-3.5 h-3.5 text-[#FF2D78]" />
             <span>Common Inquiries</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-[48px] font-black text-[#0A0A0A] tracking-tight leading-[1.15]">
+          <h2 className="text-2xl sm:text-4xl lg:text-[48px] font-black text-[#0A0A0A] tracking-tight leading-[1.15]">
             {t?.faq?.title || 'Frequently Asked Questions'}
           </h2>
-          <p className="text-base sm:text-lg text-[#66665E] font-medium leading-[28px]">
+          <p className="text-sm sm:text-base lg:text-lg text-[#66665E] font-medium leading-relaxed sm:leading-[28px]">
             {t?.faq?.subtitle ||
               'Everything you need to know about booking creators, escrow protection, and deliverables.'}
           </p>
 
           {/* Interactive Dual Perspective Toggle */}
-          <div className="pt-6 pb-2 flex justify-center">
-            <div className="inline-flex p-1.5 rounded-full bg-white border border-[#E7E7E2] shadow-xs">
+          <div className="pt-4 sm:pt-6 pb-2 flex justify-center">
+            <div className="inline-flex p-1 rounded-full bg-white border border-[#E7E7E2] shadow-xs max-w-full">
               <button
                 type="button"
                 onClick={() => handleTabChange('brand')}
-                className={`px-6 sm:px-7 py-2.5 rounded-full font-bold text-sm sm:text-base leading-[20px] transition-all cursor-pointer ${
+                className={`px-3.5 sm:px-7 py-2 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm leading-[20px] transition-all cursor-pointer whitespace-nowrap ${
                   activeTab === 'brand'
                     ? 'bg-[#0A0A0A] text-[#FAFAFA] shadow-sm'
                     : 'text-[#66665E] hover:text-[#0A0A0A]'
                 }`}
               >
-                For Brands & Marketers
+                For Brands
               </button>
               <button
                 type="button"
                 onClick={() => handleTabChange('creator')}
-                className={`px-6 sm:px-7 py-2.5 rounded-full font-bold text-sm sm:text-base leading-[20px] transition-all cursor-pointer ${
+                className={`px-3.5 sm:px-7 py-2 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm leading-[20px] transition-all cursor-pointer whitespace-nowrap ${
                   activeTab === 'creator'
                     ? 'bg-[#0A0A0A] text-[#FAFAFA] shadow-sm'
                     : 'text-[#66665E] hover:text-[#0A0A0A]'
                 }`}
               >
-                For Creators & Talent
+                For Creators
               </button>
             </div>
           </div>
         </div>
 
         {/* Accordion List */}
-        <div className="mt-12 divide-y divide-[#E7E7E2] border-t border-b border-[#E7E7E2]">
+        <div className="mt-8 sm:mt-12 divide-y divide-[#E7E7E2] border-t border-b border-[#E7E7E2]">
           {displayedFaqs.map((faq, idx) => {
             const isOpen = openIdx === idx;
             return (
-              <div key={idx} className="py-6 sm:py-8 transition-colors select-none">
+              <div key={idx} className="py-4 sm:py-6 lg:py-8 transition-colors select-none">
                 <button
                   type="button"
                   onClick={() => handleToggle(idx)}
-                  className="w-full text-left flex items-center justify-between gap-6 group cursor-pointer focus:outline-none"
+                  className="w-full text-left flex items-center justify-between gap-4 sm:gap-6 group cursor-pointer focus:outline-none"
                   aria-expanded={isOpen}
                 >
-                  <span className="text-lg sm:text-xl lg:text-[22px] font-bold text-[#0A0A0A] group-hover:text-[#FF2D78] transition-colors leading-snug">
+                  <span className="text-base sm:text-lg lg:text-[20px] font-bold text-[#0A0A0A] group-hover:text-[#FF2D78] transition-colors leading-snug">
                     {faq.q}
                   </span>
 

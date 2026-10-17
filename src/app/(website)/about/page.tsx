@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Briefcase, Camera, ArrowUpRight, Sparkles } from 'lucide-react';
+import { Briefcase, Camera, ArrowUpRight, Compass } from 'lucide-react';
 
 export default function AboutPage() {
   return (
@@ -12,7 +12,7 @@ export default function AboutPage() {
       <section className="pt-12 sm:pt-16 pb-14 sm:pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Label Badge */}
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#E7E7E2] text-sm font-bold text-[#0A0A0A] shadow-2xs mb-6">
-          <Sparkles className="w-3.5 h-3.5 text-[#FF2D78]" />
+          <Compass className="w-3.5 h-3.5 text-[#FF2D78]" />
           <span className="tracking-wider uppercase">About Influverse</span>
         </div>
 

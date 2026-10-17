@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { setUser } from '@/redux/slices/authSlice';
 import { Logo } from '@/components/shared/Logo';
+import { CategoryIcon } from '@/components/shared/CategoryIcon';
 import {
   Building2,
   Camera,
@@ -14,7 +15,6 @@ import {
   Check,
   Plus,
   Trash2,
-  Sparkles,
   Globe,
   MapPin,
   Lock,
@@ -63,77 +63,66 @@ const BRAND_INDUSTRIES = [
     id: 'beauty',
     value: 'Beauty, Cosmetics & Wellness',
     label: 'Beauty, Cosmetics & Wellness',
-    icon: '💄',
     suggestedTags: ['Clean Beauty', 'Skincare', 'Organic', 'DTC', 'Vegan', 'Cruelty-Free'],
   },
   {
     id: 'fashion',
     value: 'Fashion, Apparel & Luxury',
     label: 'Fashion, Apparel & Luxury',
-    icon: '👗',
     suggestedTags: ['Streetwear', 'Sustainable', 'Luxury', 'Accessories', 'DTC', 'Footwear'],
   },
   {
     id: 'fitness',
     value: 'Fitness, Health & Nutrition',
     label: 'Fitness, Health & Nutrition',
-    icon: '⚡',
     suggestedTags: ['Supplements', 'Activewear', 'Nutrition', 'Gym', 'Recovery', 'Biohacking'],
   },
   {
     id: 'food',
     value: 'Food, Beverage & Dining',
     label: 'Food, Beverage & Dining',
-    icon: '🍴',
     suggestedTags: ['Plant-Based', 'Gourmet', 'Specialty Coffee', 'Healthy Snacks', 'Beverages'],
   },
   {
     id: 'tech',
     value: 'Tech, Software & Gaming',
     label: 'Tech, Software & Gaming',
-    icon: '🎮',
     suggestedTags: ['SaaS', 'Mobile Apps', 'Gaming', 'AI Tools', 'Consumer Tech'],
   },
   {
     id: 'travel',
     value: 'Travel, Hospitality & Tourism',
     label: 'Travel, Hospitality & Tourism',
-    icon: '✈️',
     suggestedTags: ['Boutique Hotels', 'Eco-Travel', 'Luggage', 'Resorts', 'Airlines'],
   },
   {
     id: 'home',
     value: 'Home, Living & Interior',
     label: 'Home, Living & Interior',
-    icon: '🏡',
     suggestedTags: ['Smart Home', 'Interior Design', 'Furniture', 'Kitchen', 'Bedding'],
   },
   {
     id: 'business',
     value: 'Business, Finance & B2B',
     label: 'Business, Finance & B2B',
-    icon: '💼',
     suggestedTags: ['Fintech', 'Investing', 'Crypto', 'Productivity', 'Consulting'],
   },
   {
     id: 'family',
     value: 'Family, Parenting & Kids',
     label: 'Family, Parenting & Kids',
-    icon: '👶',
     suggestedTags: ['Baby Gear', 'Maternity', 'Educational Toys', 'Family Lifestyle'],
   },
   {
     id: 'eco',
     value: 'Eco-Friendly & Sustainability',
     label: 'Eco-Friendly & Sustainability',
-    icon: '🌿',
     suggestedTags: ['Zero Waste', 'Renewable', 'Circular Fashion', 'Fair Trade'],
   },
   {
     id: 'art',
     value: 'Art, Design & Creative',
     label: 'Art, Design & Creative',
-    icon: '🎨',
     suggestedTags: ['Prints', 'Graphic Design', 'Photography', 'Crafts'],
   },
 ];
@@ -174,7 +163,7 @@ const TARGET_PLATFORMS = [
     id: 'ugc',
     label: 'UGC Video Ads',
     desc: 'Whitelisted organic video ad creatives without feed posting',
-    icon: Sparkles,
+    icon: Camera,
     color: 'bg-[#FF2D78] text-white',
   },
 ];
@@ -861,7 +850,11 @@ export default function BrandOnboardingPage() {
                           }`}
                         >
                           <div className="flex items-center gap-2.5">
-                            <span className="text-xl">{ind.icon}</span>
+                            <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 transition-colors ${
+                              isSelected ? 'bg-[#FF2D78] text-white' : 'bg-[#F2F2EE] text-[#0A0A0A]'
+                            }`}>
+                              <CategoryIcon name={ind.id} size={16} />
+                            </div>
                             <span className="text-xs sm:text-sm font-bold text-[#0A0A0A]">
                               {ind.label}
                             </span>

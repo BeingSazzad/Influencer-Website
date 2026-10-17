@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Search, Send, CheckCircle2, ShieldCheck, CreditCard, Sparkles, Video, ArrowRight } from 'lucide-react';
+import { Search, Send, CheckCircle2, ShieldCheck, CreditCard, Package, Video, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui';
 
 export function HowItWorksSection() {
@@ -61,7 +61,7 @@ export function HowItWorksSection() {
       step: '01',
       title: 'Set Up Your Rate Card',
       desc: 'Create preset packages for Stories, Reels, TikToks, and UGC with your exact EUR prices, delivery timelines, and revision allowances.',
-      icon: Sparkles,
+      icon: Package,
       badge: 'Step 1',
     },
     {
@@ -90,55 +90,55 @@ export function HowItWorksSection() {
   const currentSteps = activeTab === 'brand' ? brandSteps : creatorSteps;
 
   return (
-    <section id="how-it-works" className="py-24 bg-[#FAFAF8]">
+    <section id="how-it-works" className="py-12 sm:py-16 lg:py-24 bg-[#FAFAF8]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-[48px] font-black text-[#0A0A0A] tracking-tight leading-[1.15] font-sans">
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-14">
+          <h2 className="text-2xl sm:text-4xl lg:text-[48px] font-black text-[#0A0A0A] tracking-tight leading-[1.15] font-sans">
             How Influverse{' '}
             <span className="font-editorial italic font-normal text-[#0A0A0A]">
               Works
             </span>
           </h2>
-          <p className="text-[18px] leading-[28px] text-[#66665E] font-sans font-medium mt-4 sm:mt-5 mb-8">
+          <p className="text-sm sm:text-base lg:text-[18px] leading-relaxed sm:leading-[28px] text-[#66665E] font-sans font-medium mt-2 sm:mt-4 mb-6 sm:mb-8">
             A seamless, protected four-step workflow built on transparent escrow and verified delivery.
           </p>
 
           {/* Interactive Dual Perspective Toggle */}
           <div id="creators" className="scroll-mt-28" />
           <div id="brands" className="scroll-mt-28" />
-          <div className="inline-flex p-1.5 rounded-full bg-white border border-[#E7E7E2] shadow-xs">
+          <div className="inline-flex p-1 rounded-full bg-white border border-[#E7E7E2] shadow-xs max-w-full">
             <button
               onClick={() => setActiveTab('brand')}
-              className={`px-7 py-2.5 rounded-full font-outfit font-bold text-[16px] leading-[20px] transition-all ${
+              className={`px-3.5 sm:px-7 py-2 sm:py-2.5 rounded-full font-outfit font-bold text-xs sm:text-[15px] transition-all whitespace-nowrap cursor-pointer ${
                 activeTab === 'brand'
                   ? 'bg-[#0A0A0A] text-[#FAFAFA] shadow-sm'
                   : 'text-[#66665E] hover:text-[#0A0A0A]'
               }`}
             >
-              For Brands & Marketers
+              For Brands
             </button>
             <button
               onClick={() => setActiveTab('creator')}
-              className={`px-7 py-2.5 rounded-full font-outfit font-bold text-[16px] leading-[20px] transition-all ${
+              className={`px-3.5 sm:px-7 py-2 sm:py-2.5 rounded-full font-outfit font-bold text-xs sm:text-[15px] transition-all whitespace-nowrap cursor-pointer ${
                 activeTab === 'creator'
                   ? 'bg-[#FF2D78] text-[#FAFAFA] shadow-sm'
                   : 'text-[#66665E] hover:text-[#0A0A0A]'
               }`}
             >
-              For Creators & Talent
+              For Creators
             </button>
           </div>
         </div>
 
-        {/* 4 Steps Grid with Playfair Display Numbers */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* 4 Steps Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {currentSteps.map((step, idx) => {
             const Icon = step.icon;
             return (
               <div
                 key={idx}
-                className="bg-white rounded-3xl p-7 border border-[#E7E7E2] flex flex-col justify-between hover:border-[#0A0A0A] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative group"
+                className="bg-white rounded-3xl p-5 sm:p-7 border border-[#E7E7E2] flex flex-col justify-between hover:border-[#0A0A0A] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative group"
               >
                 <div>
                   <div className="flex items-center justify-between mb-6">

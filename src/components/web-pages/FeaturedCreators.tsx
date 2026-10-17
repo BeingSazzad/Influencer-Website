@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useAppSelector } from '@/redux/hooks';
 import { CreatorCard } from '@/components/shared/CreatorCard';
 import { CreatorCardSkeleton } from '@/components/shared/Skeleton';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, BadgeCheck } from 'lucide-react';
 
 export function FeaturedCreators() {
   const { creators } = useAppSelector((state) => state.creator);
@@ -14,22 +14,22 @@ export function FeaturedCreators() {
   const featured = creators.slice(0, 4);
 
   return (
-    <section className="py-20 bg-white border-y border-[#E7E7E2]">
+    <section className="py-12 sm:py-16 lg:py-20 bg-white border-y border-[#E7E7E2]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-14 gap-6">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 sm:mb-12 gap-5">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 text-xs font-bold uppercase tracking-wider mb-4 font-sans">
-              <Sparkles className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 text-[11px] sm:text-xs font-bold uppercase tracking-wider mb-3 sm:mb-4 font-sans">
+              <BadgeCheck className="w-3.5 h-3.5" />
               Verified Marketplace Talent
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-[48px] font-black text-[#0A0A0A] tracking-tight leading-[1.15] font-sans">
+            <h2 className="text-2xl sm:text-4xl lg:text-[48px] font-black text-[#0A0A0A] tracking-tight leading-[1.15] font-sans">
               Featured{' '}
               <span className="font-editorial italic font-normal text-[#0A0A0A]">
                 Creators
               </span>
             </h2>
-            <p className="text-[18px] text-[#66665E] mt-4 sm:mt-5 font-sans font-medium leading-[28px]">
+            <p className="text-sm sm:text-base lg:text-[18px] text-[#66665E] mt-2 sm:mt-4 font-sans font-medium leading-relaxed sm:leading-[28px]">
               {t?.featured?.subtitle || 'Discover talented creators across different niches.'}
             </p>
           </div>

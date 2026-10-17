@@ -2,31 +2,31 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Video, Share2, Check, Sparkles } from 'lucide-react';
+import { Video, Share2, Check, Layers } from 'lucide-react';
 
 export function CollaborationModelsSection() {
   return (
-    <section className="py-24 bg-white border-y border-[#E7E7E2] font-sans">
+    <section className="py-12 sm:py-20 lg:py-24 bg-white border-y border-[#E7E7E2] font-sans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAF6E8] text-[#8C6819] text-xs font-bold uppercase tracking-wider mb-4">
-            <Sparkles className="w-4 h-4" />
-            Collaboration Formats
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAF6E8] text-[#8C6819] text-[11px] sm:text-xs font-bold uppercase tracking-wider mb-3 sm:mb-4">
+            <Layers className="w-3.5 h-3.5" />
+            <span>Collaboration Formats</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-[48px] font-black text-[#0A0A0A] tracking-tight leading-[1.15]">
+          <h2 className="text-[28px] sm:text-4xl lg:text-[48px] font-black text-[#0A0A0A] tracking-tight leading-[1.12] sm:leading-[1.15]">
             Two ways to partner{' '}
             <span className="font-editorial italic font-normal text-[#0A0A0A]">
               with creators.
             </span>
           </h2>
-          <p className="text-[18px] text-[#66665E] font-medium leading-[28px] mt-4 sm:mt-5">
+          <p className="text-[15px] sm:text-[18px] text-[#66665E] font-medium leading-[24px] sm:leading-[28px] mt-2.5 sm:mt-5">
             Choose whether you want high-performing raw ad creative or direct access to a dedicated follower base.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8 max-w-5xl mx-auto">
           {/* Model 1: UGC & Content Creation */}
-          <div className="rounded-3xl p-6 sm:p-8 lg:p-10 bg-[#FAFAF8] border border-[#E7E7E2] hover:border-[#0A0A0A] hover:shadow-xl transition-all duration-300 flex flex-col justify-between relative group">
+          <div className="rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-10 bg-[#FAFAF8] border border-[#E7E7E2] hover:border-[#0A0A0A] hover:shadow-xl transition-all duration-300 flex flex-col justify-between relative group">
             <div className="space-y-6">
               <div className="w-14 h-14 rounded-2xl bg-[#F4F4F0] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center shadow-2xs group-hover:scale-105 transition-transform">
                 <Video className="w-7 h-7" />

@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import {
   Check,
   Calculator,
-  Sparkles,
+  BadgeCheck,
   ShieldCheck,
   Building2,
   DollarSign,
@@ -109,7 +109,7 @@ export default function PricingPage() {
       <section className="pt-12 sm:pt-16 pb-12 sm:pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="max-w-3xl mx-auto space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFF0F5] border border-[#FF2D78]/25 text-[#FF2D78] text-xs font-bold uppercase tracking-wider">
-            <Sparkles className="w-3.5 h-3.5" />
+            <ShieldCheck className="w-3.5 h-3.5" />
             <span>Pay-Per-Milestone • 0% Subscription Trap</span>
           </div>
 
@@ -432,7 +432,7 @@ export default function PricingPage() {
               <div className="relative z-10 pt-8 space-y-3">
                 <Link href="/register?role=creator" className="block">
                   <button className="w-full h-12 rounded-full bg-white hover:bg-[#FAFAF8] text-[#0A0A0A] font-bold text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.01] active:scale-[0.99]">
-                    <Sparkles className="w-4 h-4 text-[#FF2D78]" />
+                    <BadgeCheck className="w-4 h-4 text-[#FF2D78]" />
                     <span>Apply for Vetted Creator Status</span>
                   </button>
                 </Link>

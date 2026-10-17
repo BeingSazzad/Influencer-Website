@@ -5,23 +5,23 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Logo } from '@/components/shared/Logo';
 import { LanguageSwitcher } from '@/components/shared/LanguageSwitcher';
-import { ArrowUpRight, Instagram, Youtube, Linkedin } from 'lucide-react';
+import { Instagram, Youtube, Linkedin } from 'lucide-react';
 
 export function Footer() {
   const pathname = usePathname();
   return (
-    <footer className="bg-[#0A0A0A] text-[#FAFAF8] pt-16 pb-12 border-t border-white/10">
+    <footer className="bg-[#0A0A0A] text-[#FAFAF8] pt-12 sm:pt-16 pb-8 sm:pb-12 border-t border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 lg:gap-8 mb-10 sm:mb-16">
           {/* Brand Col */}
-          <div className="lg:col-span-2 space-y-5">
+          <div className="lg:col-span-2">
             <Logo isLight size="md" />
-            <p className="text-sm text-[#C4C4BC] max-w-sm leading-relaxed">
+            <p className="text-sm text-[#C4C4BC] max-w-sm leading-relaxed mt-2.5">
               Influverse is the premier creator marketplace connecting forward-thinking brands with verified content creators worldwide for sponsored collaborations and bespoke UGC.
             </p>
 
             {/* Social Media Links */}
-            <div className="flex items-center gap-3 pt-2">
+            <div className="flex items-center gap-3 pt-5">
               <a
                 href="https://instagram.com"
                 target="_blank"
@@ -138,16 +138,6 @@ export function Footer() {
                   Frequently Asked Questions
                 </Link>
               </li>
-              <li>
-                <Link href="/brand/dashboard" className="hover:text-white transition-colors flex items-center gap-1">
-                  Brand Workspace <ArrowUpRight className="w-3 h-3 text-[#A3A39C]" />
-                </Link>
-              </li>
-              <li>
-                <Link href="/creator/dashboard" className="hover:text-white transition-colors flex items-center gap-1">
-                  Creator Workspace <ArrowUpRight className="w-3 h-3 text-[#A3A39C]" />
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -190,9 +180,6 @@ export function Footer() {
           </div>
 
           <div className="flex items-center gap-6">
-            <span className="flex items-center gap-1 text-[#D4D4CA]">
-              EUR (€) Standard Marketplace
-            </span>
             <LanguageSwitcher />
           </div>
         </div>

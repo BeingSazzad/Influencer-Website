@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 
 interface LogoProps {
   className?: string;
@@ -16,15 +17,15 @@ export function Logo({
   size = 'md',
 }: LogoProps) {
   const pixelSizes = {
-    sm: 24,
-    md: 28,
-    lg: 36,
+    sm: 32,
+    md: 40,
+    lg: 48,
   };
 
   const iconSizes = {
-    sm: 'w-6 h-6',
-    md: 'w-7 h-7',
-    lg: 'w-9 h-9',
+    sm: 'w-8 h-8',
+    md: 'w-10 h-10',
+    lg: 'w-12 h-12',
   };
 
   const textSizes = {
@@ -33,40 +34,37 @@ export function Logo({
     lg: 'text-2xl',
   };
 
-  const dim = pixelSizes[size] || 28;
+  const radiusClasses = {
+    sm: 'rounded-lg',
+    md: 'rounded-xl',
+    lg: 'rounded-2xl',
+  };
+
+  const dim = pixelSizes[size] || 40;
 
   return (
-    <div className={`inline-flex items-center gap-2.5 group select-none shrink-0 ${className}`}>
-      {/* SVG Monogram with strict inline bounds to prevent giant rendering */}
-      <svg
-        viewBox="0 0 100 100"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        width={dim}
-        height={dim}
+    <div className={`inline-flex items-center gap-2 group select-none shrink-0 ${className}`}>
+      {/* Local Logo Image with suitable height and subtle border radius */}
+      <div
+        className={`relative overflow-hidden shrink-0 transition-transform duration-200 group-hover:scale-105 ${iconSizes[size]} ${radiusClasses[size]} ${
+          isLight ? '' : 'ring-1 ring-black/10 shadow-sm'
+        }`}
         style={{
           width: `${dim}px`,
           height: `${dim}px`,
           minWidth: `${dim}px`,
           minHeight: `${dim}px`,
-          maxWidth: `${dim}px`,
-          maxHeight: `${dim}px`,
         }}
-        className={`${iconSizes[size]} transition-transform duration-300 group-hover:scale-105 shrink-0 block`}
       >
-        {/* Solid Circle in top-left quadrant */}
-        <circle
-          cx="34"
-          cy="36"
-          r="13"
-          fill={isLight ? '#FFFFFF' : '#0A0A0A'}
+        <Image
+          src="/images/logo.jpeg"
+          alt="Influverse Logo"
+          width={dim}
+          height={dim}
+          priority
+          className="w-full h-full object-cover"
         />
-        {/* Smooth rounded checkmark / angled pill */}
-        <path
-          d="M32 50 H52 L76 24 C80 20 86 20 90 24 C94 28 94 34 90 38 L58 74 C52 80 44 80 38 74 L24 60 C20 56 20 50 24 46 C28 42 32 46 32 50 Z"
-          fill={isLight ? '#FFFFFF' : '#0A0A0A'}
-        />
-      </svg>
+      </div>
 
       {withText && (
         <span
@@ -81,3 +79,4 @@ export function Logo({
     </div>
   );
 }
+

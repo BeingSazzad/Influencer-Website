@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Sparkles } from 'lucide-react';
+import { Target } from 'lucide-react';
 
 const valueProps = [
   {
@@ -41,44 +41,44 @@ const valueProps = [
 
 export function ValuePropsSection() {
   return (
-    <section className="border-b border-[#E7E7E2] bg-white py-20 font-sans sm:py-24">
-      <div className="mx-auto max-w-[1500px] px-5 sm:px-8 lg:px-10 xl:px-12">
-        <div className="mx-auto mb-14 max-w-3xl text-center sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 text-xs font-bold uppercase tracking-wider mb-4">
-            <Sparkles className="w-4 h-4 text-[#FF2D78]" aria-hidden="true" />
+    <section className="border-b border-[#E7E7E2] bg-white py-12 sm:py-20 lg:py-24 font-sans">
+      <div className="mx-auto max-w-[1500px] px-4 sm:px-8 lg:px-10 xl:px-12">
+        <div className="mx-auto mb-8 sm:mb-14 max-w-3xl text-center sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 text-[11px] sm:text-xs font-bold uppercase tracking-wider mb-3 sm:mb-4">
+            <Target className="w-3.5 h-3.5 text-[#FF2D78]" aria-hidden="true" />
             <span>Made for Collaboration</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-[48px] font-black text-[#0A0A0A] tracking-tight leading-[1.15] font-sans">
+          <h2 className="text-[28px] sm:text-4xl lg:text-[48px] font-black text-[#0A0A0A] tracking-tight leading-[1.12] sm:leading-[1.15] font-sans">
             Everything you need.{' '}
             <span className="font-editorial italic font-normal text-[#0A0A0A]">
               In one place.
             </span>
           </h2>
 
-          <p className="text-[18px] text-[#66665E] font-sans font-medium leading-[28px] mt-4 sm:mt-5 max-w-2xl mx-auto">
+          <p className="text-[15px] sm:text-[18px] text-[#66665E] font-sans font-medium leading-[24px] sm:leading-[28px] mt-2.5 sm:mt-4 max-w-2xl mx-auto">
             Discover creators, manage collaborations and bring your best ideas to life.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3 xl:grid-cols-5">
           {valueProps.map((prop) => (
-            <article key={prop.id} className="group min-w-0">
-              <div className="relative aspect-square overflow-hidden rounded-[28px] border border-black/[0.045] bg-[#F7F4F8] shadow-[0_18px_55px_rgba(30,24,37,0.07)]">
+            <article key={prop.id} className="group min-w-0 last:col-span-2 sm:last:col-span-1">
+              <div className="relative aspect-[4/3] sm:aspect-square overflow-hidden rounded-2xl sm:rounded-[28px] border border-black/[0.045] bg-[#F7F4F8] shadow-[0_10px_30px_rgba(30,24,37,0.05)] sm:shadow-[0_18px_55px_rgba(30,24,37,0.07)]">
                 <Image
                   src={prop.image}
                   alt={prop.imageAlt}
                   fill
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.035] motion-reduce:transition-none"
-                  sizes="(min-width: 1280px) 19vw, (min-width: 1024px) 31vw, (min-width: 640px) 47vw, 92vw"
+                  sizes="(min-width: 1280px) 19vw, (min-width: 1024px) 31vw, (min-width: 640px) 47vw, 48vw"
                 />
               </div>
 
-              <div className="px-1 pt-5">
-                <h3 className="text-lg sm:text-xl font-bold text-[#0A0A0A] tracking-tight">
+              <div className="px-0.5 pt-2.5 sm:pt-4">
+                <h3 className="text-sm sm:text-lg lg:text-xl font-bold text-[#0A0A0A] tracking-tight">
                   {prop.title}
                 </h3>
-                <p className="mt-1.5 text-sm text-[#66665E] font-medium leading-relaxed">
+                <p className="mt-0.5 sm:mt-1.5 text-xs sm:text-sm text-[#66665E] font-medium leading-relaxed">
                   {prop.description}
                 </p>
               </div>

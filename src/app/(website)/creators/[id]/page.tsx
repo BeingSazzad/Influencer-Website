@@ -15,6 +15,7 @@ import { ShareProfileModal } from '@/components/shared/ShareProfileModal';
 import { BrandLogo } from '@/components/shared/BrandLogo';
 import { CreatorProfileSkeleton } from '@/components/shared/Skeleton';
 import { EmptyState } from '@/components/shared/EmptyState';
+import { CategoryIcon } from '@/components/shared/CategoryIcon';
 import { CreatorPackage, PlatformType, PortfolioItem, CreatorPhoto } from '@/types';
 import {
   MapPin,
@@ -23,7 +24,6 @@ import {
   MessageSquare,
   Bookmark,
   Share2,
-  Sparkles,
   ArrowRight,
   ShieldCheck,
   Star,
@@ -38,6 +38,8 @@ import {
   Home,
   Package,
   ExternalLink,
+  Venus,
+  Mars,
 } from 'lucide-react';
 import { Button, message } from 'antd';
 import { Button as AppButton, Badge as AppBadge } from '@/components/ui';
@@ -63,37 +65,31 @@ const ALL_COLLAB_PREFS = [
     id: 'sponsored',
     label: 'Sponsored Posts',
     desc: 'Dedicated Reels, TikToks, YouTube integrations & feed posts',
-    icon: '✨',
   },
   {
     id: 'ugc',
     label: 'UGC Content',
     desc: 'High-converting ad creatives & organic assets without posting to personal feed',
-    icon: '📱',
   },
   {
     id: 'reviews',
     label: 'Product Reviews',
     desc: 'In-depth unboxings, honest product testing, and feature demonstrations',
-    icon: '📦',
   },
   {
     id: 'events',
     label: 'Events & Brand Trips',
     desc: 'In-person event attendance, runway appearances, launches, and summits',
-    icon: '🎟️',
   },
   {
     id: 'ambassador',
     label: 'Brand Ambassadorship',
     desc: 'Long-term representation and multi-month brand ambassador partnerships',
-    icon: '🤝',
   },
   {
     id: 'affiliate',
     label: 'Affiliate & Gifting',
     desc: 'Trackable affiliate links, commission codes, and PR gifting seeding',
-    icon: '🎁',
   },
 ];
 
@@ -353,10 +349,19 @@ export default function CreatorProfilePage() {
                     <MapPin className="w-3.5 h-3.5 text-[#A3A39C]" />
                     {creator.location}
                   </span>
-                  {genderLabel(creator.gender) && (
+                  {creator.gender && (creator.gender === 'female' || creator.gender === 'male') && (
                     <>
                       <span>•</span>
-                      <span>{genderLabel(creator.gender)}</span>
+                      <span
+                        className="inline-flex items-center"
+                        title={creator.gender === 'female' ? 'Female' : 'Male'}
+                      >
+                        {creator.gender === 'female' ? (
+                          <Venus className="w-4 h-4 text-[#FF2D78]" />
+                        ) : (
+                          <Mars className="w-4 h-4 text-[#2563EB]" />
+                        )}
+                      </span>
                     </>
                   )}
                   <span>•</span>
@@ -405,17 +410,18 @@ export default function CreatorProfilePage() {
                     }
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="py-3 px-2 sm:px-2.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] hover:border-[#E1306C] hover:bg-rose-50/20 transition-all group/item block cursor-pointer"
+                    className="py-3 px-2 sm:px-2.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] hover:border-[#E1306C] hover:bg-rose-50/20 transition-all group/item flex flex-col items-center justify-center text-center relative cursor-pointer"
                     title={`Visit ${creator.name}'s Instagram (@${creator.platforms.instagram.handle.replace('@', '')})`}
                   >
-                    <div className="w-6 h-6 mx-auto mb-1 rounded-full bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 flex items-center justify-center text-white shadow-2xs group-hover/item:scale-110 transition-transform">
+                    <div className="w-6 h-6 mb-1 rounded-full bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 flex items-center justify-center text-white shadow-2xs group-hover/item:scale-110 transition-transform">
                       <Instagram className="w-3.5 h-3.5" />
                     </div>
-                    <div className="text-sm font-black text-[#0A0A0A] flex items-center justify-center gap-1">
-                      <span>{creator.platforms.instagram.followersFormatted}</span>
-                      <ExternalLink className="w-2.5 h-2.5 text-[#66665E] opacity-0 group-hover/item:opacity-100 transition-opacity" />
+                    <div className="w-full text-center text-sm font-black text-[#0A0A0A] leading-tight">
+                      {creator.platforms.instagram.followersFormatted}
                     </div>
-                    <div className="text-xs sm:text-sm font-bold text-[#66665E] tracking-tight">Followers</div>
+                    <div className="w-full text-center text-xs sm:text-sm font-bold text-[#66665E] tracking-tight leading-tight mt-0.5">
+                      Followers
+                    </div>
                   </a>
                 )}
 
@@ -427,7 +433,7 @@ export default function CreatorProfilePage() {
                     }
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="py-3 px-2 sm:px-2.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] hover:border-[#0A0A0A] hover:bg-zinc-100/40 transition-all group/item block cursor-pointer"
+                    className="py-3 px-2 sm:px-2.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] hover:border-[#0A0A0A] hover:bg-zinc-100/40 transition-all group/item flex flex-col items-center justify-center text-center relative cursor-pointer"
                     title={`Visit ${creator.name}'s TikTok (@${creator.platforms.tiktok.handle.replace('@', '')})`}
                   >
                     <div className="w-6 h-6 mx-auto mb-1 rounded-full bg-[#0A0A0A] flex items-center justify-center text-white shadow-2xs group-hover/item:scale-110 transition-transform">
@@ -435,11 +441,12 @@ export default function CreatorProfilePage() {
                         <path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-2.891 2.887 2.896 2.896 0 0 1-2.891-2.887 2.896 2.896 0 0 1 2.891-2.887c.28 0 .546.04.8.113V9.37a6.31 6.31 0 0 0-.8-.052 6.333 6.333 0 0 0-6.333 6.333 6.333 6.333 0 0 0 6.333 6.333 6.333 6.333 0 0 0 6.333-6.333V9.01a8.172 8.172 0 0 0 4.968 1.666V7.231a4.8 4.8 0 0 1-1.19-.545z" />
                       </svg>
                     </div>
-                    <div className="text-sm font-black text-[#0A0A0A] flex items-center justify-center gap-1">
-                      <span>{creator.platforms.tiktok.followersFormatted}</span>
-                      <ExternalLink className="w-2.5 h-2.5 text-[#66665E] opacity-0 group-hover/item:opacity-100 transition-opacity" />
+                    <div className="w-full text-center text-sm font-black text-[#0A0A0A] leading-tight">
+                      {creator.platforms.tiktok.followersFormatted}
                     </div>
-                    <div className="text-xs sm:text-sm font-bold text-[#66665E] tracking-tight">Followers</div>
+                    <div className="w-full text-center text-xs sm:text-sm font-bold text-[#66665E] tracking-tight leading-tight mt-0.5">
+                      Followers
+                    </div>
                   </a>
                 )}
 
@@ -451,17 +458,18 @@ export default function CreatorProfilePage() {
                     }
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="py-3 px-2 sm:px-2.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] hover:border-[#FF0000] hover:bg-red-50/20 transition-all group/item block cursor-pointer"
+                    className="py-3 px-2 sm:px-2.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] hover:border-[#FF0000] hover:bg-red-50/20 transition-all group/item flex flex-col items-center justify-center text-center relative cursor-pointer"
                     title={`Visit ${creator.name}'s YouTube (${creator.platforms.youtube.handle})`}
                   >
                     <div className="w-6 h-6 mx-auto mb-1 rounded-full bg-[#FF0000] flex items-center justify-center text-white shadow-2xs group-hover/item:scale-110 transition-transform">
                       <Youtube className="w-3.5 h-3.5" />
                     </div>
-                    <div className="text-sm font-black text-[#0A0A0A] flex items-center justify-center gap-1">
-                      <span>{creator.platforms.youtube.followersFormatted}</span>
-                      <ExternalLink className="w-2.5 h-2.5 text-[#66665E] opacity-0 group-hover/item:opacity-100 transition-opacity" />
+                    <div className="w-full text-center text-sm font-black text-[#0A0A0A] leading-tight">
+                      {creator.platforms.youtube.followersFormatted}
                     </div>
-                    <div className="text-xs sm:text-sm font-bold text-[#66665E] tracking-tight">Subscribers</div>
+                    <div className="w-full text-center text-xs sm:text-sm font-bold text-[#66665E] tracking-tight leading-tight mt-0.5">
+                      Subscribers
+                    </div>
                   </a>
                 )}
               </div>
@@ -607,7 +615,7 @@ export default function CreatorProfilePage() {
               <div className="p-5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-[#0A0A0A] flex items-center justify-center text-white shrink-0">
-                    <Sparkles className="w-5 h-5 text-amber-400" />
+                    <CategoryIcon name="ugc" size={20} className="text-white" />
                   </div>
                   <div>
                     <h4 className="text-sm sm:text-base font-bold text-[#0A0A0A]">Need a custom campaign or multi-channel rollout?</h4>
@@ -654,7 +662,9 @@ export default function CreatorProfilePage() {
                         key={pref.id}
                         className="p-4 rounded-2xl border border-[#E7E7E2] bg-[#FAFAF8] flex items-start gap-3 hover:border-[#0A0A0A] transition-all"
                       >
-                        <span className="text-2xl shrink-0 mt-0.5">{pref.icon}</span>
+                        <div className="w-9 h-9 rounded-xl bg-white border border-[#E7E7E2] flex items-center justify-center shrink-0 mt-0.5 text-[#0A0A0A]">
+                          <CategoryIcon name={pref.id} size={18} />
+                        </div>
                         <div className="min-w-0 flex-1">
                           <h4 className="text-sm font-bold text-[#0A0A0A] truncate">
                             {pref.label}
@@ -869,47 +879,22 @@ export default function CreatorProfilePage() {
               {/* Interactive Platform Filter Pills - Strict 1 Line */}
               <div className="inline-flex items-center p-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] whitespace-nowrap overflow-x-auto shrink-0 max-w-full">
                 {[
-                  { key: 'all', label: 'All', count: creator.portfolio.length },
-                  {
-                    key: 'instagram',
-                    label: 'Instagram',
-                    count: creator.portfolio.filter((i) => i.platform === 'instagram').length,
-                  },
-                  {
-                    key: 'tiktok',
-                    label: 'TikTok',
-                    count: creator.portfolio.filter((i) => i.platform === 'tiktok').length,
-                  },
-                  {
-                    key: 'youtube',
-                    label: 'YouTube',
-                    count: creator.portfolio.filter((i) => i.platform === 'youtube').length,
-                  },
-                  {
-                    key: 'ugc',
-                    label: 'UGC Ads',
-                    count: creator.portfolio.filter((i) => i.platform === 'ugc').length,
-                  },
+                  { key: 'all', label: 'All' },
+                  { key: 'instagram', label: 'Instagram' },
+                  { key: 'tiktok', label: 'TikTok' },
+                  { key: 'youtube', label: 'YouTube' },
+                  { key: 'ugc', label: 'UGC Ads' },
                 ].map((tab) => (
                   <button
                     key={tab.key}
                     onClick={() => setPortfolioFilter(tab.key as any)}
-                    className={`px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-bold capitalize transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
+                    className={`px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold capitalize transition-all cursor-pointer shrink-0 ${
                       portfolioFilter === tab.key
                         ? 'bg-[#0A0A0A] text-white shadow-2xs'
                         : 'text-[#66665E] hover:text-[#0A0A0A]'
                     }`}
                   >
-                    <span>{tab.label}</span>
-                    <span
-                      className={`text-xs px-1.5 py-0.2 rounded-full font-extrabold ${
-                        portfolioFilter === tab.key
-                          ? 'bg-white/20 text-white'
-                          : 'bg-[#EAEAE3] text-[#0A0A0A]'
-                      }`}
-                    >
-                      {tab.count}
-                    </span>
+                    {tab.label}
                   </button>
                 ))}
               </div>
@@ -940,7 +925,7 @@ export default function CreatorProfilePage() {
                           {item.platform === 'instagram' && <Instagram className="w-3 h-3 text-[#FF2D78]" />}
                           {item.platform === 'tiktok' && <Film className="w-3 h-3 text-white" />}
                           {item.platform === 'youtube' && <Youtube className="w-3 h-3 text-red-500" />}
-                          {item.platform === 'ugc' && <Sparkles className="w-3 h-3 text-purple-400" />}
+                          {item.platform === 'ugc' && <CategoryIcon name="ugc" size={12} className="text-purple-400" />}
                           <span>{platformLabel(item.platform)}</span>
                         </span>
 

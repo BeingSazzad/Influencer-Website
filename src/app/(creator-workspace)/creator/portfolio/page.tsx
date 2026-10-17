@@ -22,7 +22,6 @@ import {
   Upload,
   Instagram,
   Youtube,
-  Sparkles,
   Link2,
   ChevronDown,
   ChevronUp,
@@ -32,6 +31,7 @@ import {
 } from 'lucide-react';
 import { Button, Modal, Input, Select, message, Dropdown } from 'antd';
 import { InstagramLogo, TikTokLogo, YouTubeLogo } from '@/components/shared/SocialLogos';
+import { CategoryIcon } from '@/components/shared/CategoryIcon';
 
 function platformLabel(platform: PlatformType, platforms?: PlatformType[]) {
   if (platforms && platforms.length > 1) {
@@ -140,7 +140,7 @@ function CreatorPortfolioContent() {
       if (val === 'instagram') return <InstagramLogo className="w-3.5 h-3.5 shrink-0 rounded-xs" />;
       if (val === 'tiktok') return <TikTokLogo className="w-3.5 h-3.5 shrink-0 rounded-xs" />;
       if (val === 'youtube') return <YouTubeLogo className="w-3.5 h-3.5 shrink-0 rounded-xs" />;
-      if (val === 'ugc') return <Sparkles className="w-3.5 h-3.5 text-purple-600 shrink-0" />;
+      if (val === 'ugc') return <CategoryIcon name="ugc" size={14} className="text-purple-600 shrink-0" />;
       return <Layers className="w-3.5 h-3.5 text-amber-600 shrink-0" />;
     };
 
@@ -429,7 +429,7 @@ function CreatorPortfolioContent() {
                             {item.platform === 'instagram' && <Instagram className="w-3 h-3 text-[#FF2D78]" />}
                             {item.platform === 'tiktok' && <Film className="w-3 h-3 text-white" />}
                             {item.platform === 'youtube' && <Youtube className="w-3 h-3 text-red-500" />}
-                            {item.platform === 'ugc' && <Sparkles className="w-3 h-3 text-purple-400" />}
+                            {item.platform === 'ugc' && <CategoryIcon name="ugc" size={12} className="text-purple-400" />}
                             {(item.platform === 'all' || item.platform === 'multi') && <Layers className="w-3 h-3 text-white" />}
                             <span>{platformLabel(item.platform, item.platforms)}</span>
                           </>
@@ -687,7 +687,7 @@ function CreatorPortfolioContent() {
                     value: 'ugc',
                     label: (
                       <div className="flex items-center gap-2">
-                        <Sparkles className="w-4 h-4 text-purple-600 shrink-0" />
+                        <CategoryIcon name="ugc" size={16} className="text-purple-600 shrink-0" />
                         <span className="font-semibold text-sm">UGC Ads</span>
                       </div>
                     ),

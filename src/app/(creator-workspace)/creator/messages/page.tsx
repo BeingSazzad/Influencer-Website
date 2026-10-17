@@ -61,13 +61,28 @@ function CreatorMessagesContent() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // If a conv query param is provided, select that conversation
+  // If a conv, brandName, or brandId query param is provided, select that conversation
   useEffect(() => {
     const convParam = searchParams.get('conv');
+    const brandIdParam = searchParams.get('brandId');
+    const brandNameParam = searchParams.get('brandName');
+
     if (convParam) {
       const exists = conversations.some((c) => c.id === convParam);
       if (exists) {
         dispatch(setActiveConversationId(convParam));
+        return;
+      }
+    }
+
+    if (brandIdParam || brandNameParam) {
+      const match = conversations.find(
+        (c) =>
+          (brandIdParam && c.brandId === brandIdParam) ||
+          (brandNameParam && c.brandName.toLowerCase().includes(brandNameParam.toLowerCase()))
+      );
+      if (match) {
+        dispatch(setActiveConversationId(match.id));
       }
     }
   }, [searchParams, conversations, dispatch]);

@@ -30,6 +30,7 @@ import {
   Camera,
 } from 'lucide-react';
 import { ShareProfileModal } from '@/components/shared/ShareProfileModal';
+import { CategoryIcon } from '@/components/shared/CategoryIcon';
 import { Input, Select, message } from 'antd';
 
 // Curated Countries list matching Creator Profile & Onboarding
@@ -45,72 +46,61 @@ const COUNTRIES = [
   { code: 'SE', name: 'Sweden' },
 ];
 
-// Curated Brand Industries with emojis & suggested niche tags matching platform creator categories
+// Curated Brand Industries matching platform creator categories
 const BRAND_INDUSTRIES = [
   {
     value: 'Beauty, Cosmetics & Wellness',
     label: 'Beauty, Cosmetics & Wellness',
-    icon: '💄',
     suggestedTags: ['Clean Beauty', 'Skincare', 'Organic', 'DTC', 'Vegan', 'Cruelty-Free'],
   },
   {
     value: 'Fashion, Apparel & Luxury',
     label: 'Fashion, Apparel & Luxury',
-    icon: '👗',
     suggestedTags: ['Streetwear', 'Sustainable', 'Luxury', 'Accessories', 'DTC', 'Footwear'],
   },
   {
     value: 'Fitness, Health & Nutrition',
     label: 'Fitness, Health & Nutrition',
-    icon: '⚡',
     suggestedTags: ['Supplements', 'Activewear', 'Nutrition', 'Gym', 'Recovery', 'Biohacking'],
   },
   {
     value: 'Food, Beverage & Dining',
     label: 'Food, Beverage & Dining',
-    icon: '🍴',
     suggestedTags: ['Plant-Based', 'Gourmet', 'Specialty Coffee', 'Healthy Snacks', 'Beverages'],
   },
   {
     value: 'Tech, Software & Gaming',
     label: 'Tech, Software & Gaming',
-    icon: '🎮',
     suggestedTags: ['SaaS', 'Mobile Apps', 'Gaming', 'AI Tools', 'Consumer Tech'],
   },
   {
     value: 'Travel, Hospitality & Tourism',
     label: 'Travel, Hospitality & Tourism',
-    icon: '✈️',
     suggestedTags: ['Boutique Hotels', 'Eco-Travel', 'Luggage', 'Resorts', 'Airlines'],
   },
   {
     value: 'Home, Living & Interior',
     label: 'Home, Living & Interior',
-    icon: '🏡',
     suggestedTags: ['Smart Home', 'Interior Design', 'Furniture', 'Kitchen', 'Bedding'],
   },
   {
     value: 'Business, Finance & B2B',
     label: 'Business, Finance & B2B',
-    icon: '💼',
     suggestedTags: ['Fintech', 'Investing', 'Crypto', 'Productivity', 'Consulting'],
   },
   {
     value: 'Family, Parenting & Kids',
     label: 'Family, Parenting & Kids',
-    icon: '👶',
     suggestedTags: ['Baby Gear', 'Maternity', 'Educational Toys', 'Family Lifestyle'],
   },
   {
     value: 'Eco-Friendly & Sustainability',
     label: 'Eco-Friendly & Sustainability',
-    icon: '🌿',
     suggestedTags: ['Zero Waste', 'Renewable', 'Circular Fashion', 'Fair Trade'],
   },
   {
     value: 'Art, Design & Creative',
     label: 'Art, Design & Creative',
-    icon: '🎨',
     suggestedTags: ['Prints', 'Graphic Design', 'Photography', 'Crafts'],
   },
 ];
@@ -445,7 +435,7 @@ export default function BrandSettingsPage() {
                         value: ind.value,
                         label: (
                           <div className="flex items-center gap-2">
-                            <span className="text-base">{ind.icon}</span>
+                            <CategoryIcon name={ind.value} size={15} className="text-[#0A0A0A] shrink-0" />
                             <span className="font-semibold text-sm">{ind.label}</span>
                           </div>
                         ),

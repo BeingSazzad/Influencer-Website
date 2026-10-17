@@ -2,7 +2,6 @@ import React from 'react';
 import Link from 'next/link';
 import { Logo } from '@/components/shared/Logo';
 import {
-  Sparkles,
   ArrowRight,
   Compass,
   Users,
@@ -46,7 +45,7 @@ export default function NotFound() {
       <main className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 py-16 text-center max-w-4xl mx-auto w-full">
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFF0F5] text-[#FF2D78] text-xs font-bold uppercase tracking-wider mb-6">
-          <Sparkles className="w-3.5 h-3.5" />
+          <Compass className="w-3.5 h-3.5" />
           <span>404 • Page Not Found</span>
         </div>
 

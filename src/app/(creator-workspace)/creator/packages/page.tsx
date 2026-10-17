@@ -17,7 +17,8 @@ import {
   Instagram,
   Youtube,
   Film,
-  Sparkles,
+  Video,
+  Flame,
   Check,
   Clock,
   RotateCcw,
@@ -32,7 +33,7 @@ const CHANNEL_OPTIONS: { id: PlatformType; label: string; icon: React.ReactNode 
   { id: 'instagram', label: 'Instagram', icon: <Instagram className="w-3.5 h-3.5 text-[#FF2D78]" /> },
   { id: 'tiktok', label: 'TikTok', icon: <Film className="w-3.5 h-3.5 text-[#0A0A0A]" /> },
   { id: 'youtube', label: 'YouTube', icon: <Youtube className="w-3.5 h-3.5 text-red-500" /> },
-  { id: 'ugc', label: 'UGC Video', icon: <Sparkles className="w-3.5 h-3.5 text-purple-600" /> },
+  { id: 'ugc', label: 'UGC Video', icon: <Video className="w-3.5 h-3.5 text-purple-600" /> },
 ];
 
 export default function CreatorPackagesPage() {
@@ -287,7 +288,7 @@ export default function CreatorPackagesPage() {
                 >
                     {pkg.popular && (
                       <div className="absolute -top-3 left-6 bg-[#0A0A0A] text-white text-xs font-extrabold uppercase tracking-wider px-3 py-0.5 rounded-full shadow-xs flex items-center gap-1">
-                        <Sparkles className="w-3 h-3 text-amber-300" />
+                        <Flame className="w-3 h-3 text-amber-300" />
                         <span>Most Popular</span>
                       </div>
                     )}

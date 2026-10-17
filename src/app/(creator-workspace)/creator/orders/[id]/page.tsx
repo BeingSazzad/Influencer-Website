@@ -26,6 +26,7 @@ import {
   LifeBuoy,
   CheckCircle2,
   ShieldCheck,
+  Star,
 } from 'lucide-react';
 import { Button, Input, Modal, Select, message } from 'antd';
 import { BrandLogo } from '@/components/shared/BrandLogo';
@@ -58,8 +59,6 @@ export default function CreatorOrderFulfilmentPage() {
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [reportCategory, setReportCategory] = useState('Brand Unresponsive / Feedback Delayed');
   const [reportReason, setReportReason] = useState('');
-
-  const [chatMessage, setChatMessage] = useState('');
 
   const handleVideoFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -108,28 +107,6 @@ export default function CreatorOrderFulfilmentPage() {
       setDirectVideoName('');
       setDirectVideoSize('');
     }, 500);
-  };
-
-  const handleSendChat = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!chatMessage.trim()) return;
-
-    dispatch(
-      addMessageToOrder({
-        orderId: order.id,
-        message: {
-          id: `msg-${Date.now()}`,
-          senderId: 'creator-01',
-          senderName: order.creatorName,
-          senderAvatar: order.creatorAvatar,
-          senderRole: 'creator',
-          text: chatMessage.trim(),
-          timestamp: 'Just now',
-        },
-      })
-    );
-    setChatMessage('');
-    message.success('Message sent');
   };
 
   const handleReportIssue = () => {
@@ -290,6 +267,13 @@ export default function CreatorOrderFulfilmentPage() {
             </div>
 
             <div className="flex items-center gap-3 self-start sm:self-auto flex-wrap">
+              <Link
+                href={`/creator/messages?conv=conv-sophie-kim&brandName=${encodeURIComponent(order.brandName)}`}
+                className="px-4 py-2.5 rounded-2xl bg-[#0A0A0A] hover:bg-[#FF2D78] text-white font-bold text-sm flex items-center gap-2 transition-all shadow-xs"
+              >
+                <MessageSquare className="w-4 h-4" />
+                <span>Message Brand</span>
+              </Link>
               <button
                 onClick={() => setIsReportModalOpen(true)}
                 className="px-3.5 py-2.5 rounded-2xl bg-white border border-[#E7E7E2] hover:border-[#0A0A0A] text-[#66665E] hover:text-[#0A0A0A] font-bold text-xs flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer"
@@ -554,66 +538,89 @@ export default function CreatorOrderFulfilmentPage() {
               </ul>
             </div>
 
-            {/* Chat Box */}
-            <div className="bg-white rounded-3xl p-6 border border-[#E7E7E2] shadow-2xs flex flex-col h-[480px]">
-              <div className="flex items-center justify-between pb-3.5 border-b border-[#E7E7E2]">
+            {/* Direct Communication Hub Card */}
+            <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#E7E7E2] shadow-2xs space-y-5">
+              <div className="flex items-center justify-between pb-4 border-b border-[#E7E7E2]">
                 <div className="flex items-center gap-2.5">
                   <div className="w-8 h-8 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-center">
                     <MessageSquare className="w-4 h-4 text-[#0A0A0A]" />
                   </div>
                   <h3 className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">
-                    Brand Chat
+                    Direct Communication
                   </h3>
                 </div>
                 <div className="flex items-center gap-1.5 text-xs text-[#66665E] font-semibold">
-                  <span className="w-2 h-2 rounded-full bg-[#0A0A0A]" />
-                  <span>Active</span>
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-[#0A0A0A]">Active</span>
                 </div>
               </div>
 
-              <div className="flex-1 overflow-y-auto py-3.5 space-y-3 text-sm font-sans">
-                {order.messages.map((msg) => {
-                  const isMe = msg.senderRole === 'creator';
-                  return (
-                    <div
-                      key={msg.id}
-                      className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}
-                    >
-                      <div className="flex items-center gap-1.5 mb-1 text-sm text-[#66665E]">
-                        <span className="font-semibold text-[#0A0A0A]">{msg.senderName}</span>
-                        <span>•</span>
-                        <span>{msg.timestamp}</span>
-                      </div>
-                      <div
-                        className={`p-4 rounded-2xl max-w-[85%] leading-relaxed text-sm ${
-                          isMe
-                            ? 'bg-[#0A0A0A] text-white rounded-br-xs'
-                            : 'bg-[#F4F4F0] text-[#0A0A0A] rounded-bl-xs'
-                        }`}
-                      >
-                        {msg.text}
-                      </div>
-                    </div>
-                  );
-                })}
+              {/* Brand Preview */}
+              <div className="flex items-center gap-3.5 p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
+                <BrandLogo
+                  name={order.brandName}
+                  logoUrl={order.brandLogo}
+                  size="md"
+                />
+                <div className="min-w-0 flex-1">
+                  <span className="font-bold text-sm text-[#0A0A0A] truncate block">{order.brandName}</span>
+                  <p className="text-xs text-[#66665E] truncate">Verified Brand Partner</p>
+                </div>
               </div>
 
-              <form onSubmit={handleSendChat} className="pt-3 border-t border-[#E7E7E2] flex gap-2">
-                <input
-                  type="text"
-                  placeholder="Type message to brand..."
-                  value={chatMessage}
-                  onChange={(e) => setChatMessage(e.target.value)}
-                  className="flex-1 h-10 px-4 text-sm font-sans bg-[#FAFAF8] border border-[#E7E7E2] rounded-full outline-none focus:border-[#0A0A0A] transition-colors"
-                />
-                <button
-                  type="submit"
-                  className="h-10 w-10 rounded-full bg-[#0A0A0A] hover:bg-[#FF2D78] text-white flex items-center justify-center transition-colors cursor-pointer shrink-0 shadow-xs"
-                  aria-label="Send message"
-                >
-                  <Send className="w-4 h-4" />
-                </button>
-              </form>
+              {/* Info Note */}
+              <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#EBE7DF] text-xs text-[#66665E] leading-relaxed space-y-1.5">
+                <div className="font-bold flex items-center gap-1.5 text-[#0A0A0A]">
+                  <ShieldCheck className="w-4 h-4 shrink-0 text-emerald-600" />
+                  <span>Centralized Messaging</span>
+                </div>
+                <p>
+                  All project updates, brief questions, and deliverable feedback with {order.brandName} are handled in your dedicated Messages inbox to avoid duplicate threads and keep full escrow protections active.
+                </p>
+              </div>
+
+              {/* Primary Action Button */}
+              <Link
+                href={`/creator/messages?conv=conv-sophie-kim&brandName=${encodeURIComponent(order.brandName)}`}
+                className="w-full h-11 rounded-2xl bg-[#0A0A0A] hover:bg-[#FF2D78] text-white font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-xs group/msg cursor-pointer"
+              >
+                <MessageSquare className="w-4 h-4" />
+                <span>Open Conversation in Messages</span>
+                <ArrowRight className="w-4 h-4 transition-transform group-hover/msg:translate-x-1" />
+              </Link>
+            </div>
+
+            {/* Brand Review (if submitted) */}
+            {order.reviewSubmitted && (
+              <div className="bg-white rounded-3xl p-6 border border-[#E7E7E2] shadow-2xs space-y-3">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-bold text-sm text-[#0A0A0A]">Brand Review</h3>
+                  <div className="flex text-amber-500">
+                    {[...Array(order.reviewSubmitted.rating)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-amber-500" />
+                    ))}
+                  </div>
+                </div>
+                <p className="text-sm text-[#555550] italic bg-[#FAFAF8] p-4 rounded-2xl border border-[#E7E7E2] leading-relaxed">
+                  &ldquo;{order.reviewSubmitted.comment}&rdquo;
+                </p>
+                <span className="text-xs text-[#66665E] block">
+                  Submitted {order.reviewSubmitted.date}
+                </span>
+              </div>
+            )}
+
+            {/* Escrow & Payout Safety */}
+            <div className="bg-white rounded-3xl p-6 border border-[#E7E7E2] shadow-2xs space-y-3">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                <h4 className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">
+                  Guaranteed Payout
+                </h4>
+              </div>
+              <p className="text-xs text-[#66665E] leading-relaxed">
+                Your payout of €{order.basePriceEur.toLocaleString()} is securely funded in Influverse Escrow. As soon as the brand signs off on the deliverables, funds are immediately credited to your creator balance.
+              </p>
             </div>
           </div>
         </div>

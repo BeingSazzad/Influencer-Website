@@ -10,7 +10,7 @@ import {
   Inbox,
   ShoppingBag,
   Clock,
-  Sparkles,
+  Zap,
   Package,
   Film,
   ChevronRight,
@@ -164,7 +164,7 @@ export default function CreatorDashboardPage() {
           <div className="bg-gradient-to-r from-[#0A0A0A] to-zinc-900 text-white rounded-3xl p-5 sm:p-6 shadow-md flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-[#FF2D78] shrink-0 border border-white/10">
-                <Sparkles className="w-6 h-6" />
+                <Zap className="w-6 h-6" />
               </div>
               <div>
                 <div className="flex items-center gap-2">

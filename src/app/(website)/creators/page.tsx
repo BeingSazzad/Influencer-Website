@@ -12,18 +12,8 @@ import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
 import { PlatformType, CreatorFilterState } from '@/types';
 import {
   Search,
-  Sparkles,
   RotateCcw,
   ChevronDown,
-  Shirt,
-  Dumbbell,
-  Plane,
-  UtensilsCrossed,
-  Camera,
-  Cpu,
-  Briefcase,
-  Palette,
-  Layers,
   X,
   LayoutGrid,
   List,
@@ -33,6 +23,7 @@ import {
 } from 'lucide-react';
 import { Pagination } from 'antd';
 import { Button } from '@/components/ui';
+import { CategoryIcon } from '@/components/shared/CategoryIcon';
 
 function CreatorsDiscoveryContent() {
   const searchParams = useSearchParams();
@@ -80,70 +71,70 @@ function CreatorsDiscoveryContent() {
       name: 'all',
       label: 'All Creators',
       count: '12,430',
-      icon: <Layers className="w-4 h-4" />,
+      icon: <CategoryIcon name="all" size={16} />,
       color: 'bg-neutral-100 text-neutral-800',
     },
     {
       name: 'Beauty',
       label: 'Beauty & Skincare',
       count: '1,240',
-      icon: <Sparkles className="w-4 h-4" />,
+      icon: <CategoryIcon name="beauty" size={16} />,
       color: 'bg-rose-50 text-rose-600',
     },
     {
       name: 'Fashion',
       label: 'Fashion & Luxury',
       count: '980',
-      icon: <Shirt className="w-4 h-4" />,
+      icon: <CategoryIcon name="fashion" size={16} />,
       color: 'bg-purple-50 text-purple-600',
     },
     {
       name: 'Fitness',
       label: 'Fitness & Health',
       count: '1,340',
-      icon: <Dumbbell className="w-4 h-4" />,
+      icon: <CategoryIcon name="fitness" size={16} />,
       color: 'bg-emerald-50 text-emerald-600',
     },
     {
       name: 'Travel',
       label: 'Travel & Vlog',
       count: '1,120',
-      icon: <Plane className="w-4 h-4" />,
+      icon: <CategoryIcon name="travel" size={16} />,
       color: 'bg-rose-50 text-[#FF2D78]',
     },
     {
       name: 'Food',
       label: 'Food & Cuisine',
       count: '890',
-      icon: <UtensilsCrossed className="w-4 h-4" />,
+      icon: <CategoryIcon name="food" size={16} />,
       color: 'bg-amber-50 text-amber-600',
     },
     {
       name: 'Lifestyle',
       label: 'Lifestyle & UGC',
       count: '1,560',
-      icon: <Camera className="w-4 h-4" />,
+      icon: <CategoryIcon name="lifestyle" size={16} />,
       color: 'bg-teal-50 text-teal-600',
     },
     {
       name: 'Tech',
       label: 'Tech & Gaming',
       count: '760',
-      icon: <Cpu className="w-4 h-4" />,
+      icon: <CategoryIcon name="tech" size={16} />,
       color: 'bg-indigo-50 text-indigo-600',
     },
     {
       name: 'Business',
       label: 'Founder & SaaS UGC',
       count: '420',
-      icon: <Briefcase className="w-4 h-4" />,
+      icon: <CategoryIcon name="business" size={16} />,
       color: 'bg-pink-50 text-[#FF2D78]',
     },
     {
       name: 'Art',
       label: 'Digital Art & Visuals',
       count: '680',
-      icon: <Palette className="w-4 h-4" />,
+      icon: <CategoryIcon name="art" size={16} />,
       color: 'bg-orange-50 text-orange-600',
     },
   ];
@@ -247,21 +238,21 @@ function CreatorsDiscoveryContent() {
   }, [filteredCreators, currentPage, pageSize]);
 
   return (
-    <div className="bg-[#FAFAF8] min-h-screen py-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <div className="bg-[#FAFAF8] min-h-screen py-6 sm:py-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
         {/* Top Header Area matching reference */}
         <div className="relative">
           <div className="max-w-2xl">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-[#66665E] font-sans block mb-3">
+            <span className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-[#66665E] font-sans block mb-2 sm:mb-3">
               CREATOR MARKETPLACE
             </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-[48px] font-black text-[#0A0A0A] tracking-tight leading-[1.15] font-sans">
+            <h1 className="text-[28px] sm:text-4xl lg:text-[48px] font-black text-[#0A0A0A] tracking-tight leading-[1.12] sm:leading-[1.15] font-sans">
               Discover amazing{' '}
               <span className="font-editorial italic font-normal text-[#0A0A0A]">
                 creators
               </span>
             </h1>
-            <p className="text-[18px] text-[#555550] font-sans font-medium leading-[28px] mt-3 sm:mt-4">
+            <p className="text-[15px] sm:text-[18px] text-[#555550] font-sans font-medium leading-[24px] sm:leading-[28px] mt-2.5 sm:mt-4">
               {t?.discovery?.subtitle ||
                 'Find the right creators to bring your brand to life — across all platforms and niches.'}
             </p>
@@ -451,10 +442,42 @@ function CreatorsDiscoveryContent() {
           </div>
         )}
 
+        {/* Mobile Horizontal Category Pills Strip (Visible only on < lg screens) */}
+        <div className="lg:hidden">
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 -mx-4 px-4 sm:mx-0 sm:px-0">
+            {categories.map((cat) => {
+              const isSelected = filters.category.toLowerCase() === cat.name.toLowerCase();
+              return (
+                <button
+                  key={cat.name}
+                  onClick={() => dispatch(setFilter({ category: cat.name }))}
+                  className={`shrink-0 flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    isSelected
+                      ? 'bg-[#0A0A0A] text-white shadow-xs'
+                      : 'bg-white text-[#555550] border border-[#E7E7E2] hover:bg-[#F4F4F0]'
+                  }`}
+                >
+                  <span className={isSelected ? 'text-white' : 'text-[#0A0A0A]'}>
+                    {cat.icon}
+                  </span>
+                  <span>{cat.name === 'all' ? 'All' : cat.label.split('&')[0].trim()}</span>
+                  <span
+                    className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
+                      isSelected ? 'bg-white/20 text-white' : 'bg-[#F4F4F0] text-[#66665E]'
+                    }`}
+                  >
+                    {cat.count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         {/* Main Split Grid: Left Category Sidebar + Right Creator Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Left Sidebar (25% width) matching reference */}
-          <div className="lg:col-span-3 space-y-6 font-sans">
+          {/* Left Sidebar (25% width) - Desktop only */}
+          <div className="hidden lg:block lg:col-span-3 space-y-6 font-sans">
             {/* Category Navigation Pills */}
             <div className="bg-white rounded-3xl border border-[#E7E7E2] p-3 shadow-2xs space-y-1">
               {categories.map((cat) => {

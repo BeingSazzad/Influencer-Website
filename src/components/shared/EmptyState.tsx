@@ -3,7 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 import {
-  Sparkles,
+  Layers,
+  Compass,
   ArrowRight,
 } from 'lucide-react';
 import { Button } from '@/components/ui';
@@ -104,7 +105,7 @@ export function EmptyState({
 
   const defaultIcon = (
     <div className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center">
-      <Sparkles className="w-full h-full" />
+      <Layers className="w-full h-full" />
     </div>
   );
 
@@ -123,7 +124,7 @@ export function EmptyState({
           <div
             className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${palette.badgeBg} ${palette.badgeText}`}
           >
-            <Sparkles className="w-3.5 h-3.5" />
+            <Compass className="w-3.5 h-3.5" />
             <span>{badge}</span>
           </div>
         )}

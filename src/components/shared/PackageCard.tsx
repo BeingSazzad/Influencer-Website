@@ -11,7 +11,8 @@ import {
   Clock,
   RotateCcw,
   Film,
-  Sparkles,
+  Video,
+  Flame,
   Youtube,
   Instagram,
   Layers,
@@ -48,7 +49,7 @@ export function getPackageChannels(pkg: CreatorPackage): { id: string; label: st
       case 'youtube':
         return { id: 'youtube', label: 'YouTube', icon: <Youtube className="w-3 h-3 text-red-500" /> };
       case 'ugc':
-        return { id: 'ugc', label: 'UGC', icon: <Sparkles className="w-3 h-3 text-purple-600" /> };
+        return { id: 'ugc', label: 'UGC', icon: <Video className="w-3 h-3 text-purple-600" /> };
       default:
         return { id: p, label: 'Omni', icon: <Layers className="w-3 h-3 text-amber-600" /> };
     }
@@ -108,7 +109,7 @@ export function PackageCard({ packageItem, pkg, creator, onSelect }: PackageCard
     >
       {currentPkg.popular && (
         <div className="absolute -top-3 left-6">
-          <Badge variant="dark" size="sm" icon={<Sparkles className="w-3 h-3 text-amber-300" />}>
+          <Badge variant="dark" size="sm" icon={<Flame className="w-3 h-3 text-amber-300" />}>
             Most Popular
           </Badge>
         </div>

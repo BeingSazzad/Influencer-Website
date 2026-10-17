@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Check, Calculator, Sparkles, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Check, Calculator, ArrowRight, ShieldCheck } from 'lucide-react';
 import { Slider } from 'antd';
 import { Button, Badge } from '@/components/ui';
 
@@ -13,28 +13,28 @@ export function PricingSection() {
   const totalCostEur = budgetEur + platformFeeEur;
 
   return (
-    <section id="pricing" className="py-16 sm:py-20 lg:py-24 bg-white border-y border-[#E7E7E2] font-sans overflow-x-hidden">
+    <section id="pricing" className="py-12 sm:py-20 lg:py-24 bg-white border-y border-[#E7E7E2] font-sans overflow-x-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="mb-4">
-            <Badge variant="pink" size="md" icon={<Sparkles className="w-4 h-4" />}>
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-14">
+          <div className="mb-3 sm:mb-4">
+            <Badge variant="pink" size="md" icon={<ShieldCheck className="w-4 h-4 text-[#FF2D78]" />}>
               Zero Subscription Fees
             </Badge>
           </div>
-          <h2 className="text-[30px] sm:text-4xl lg:text-[48px] font-black text-[#0A0A0A] tracking-tight leading-[1.08] font-sans">
+          <h2 className="text-[28px] sm:text-4xl lg:text-[48px] font-black text-[#0A0A0A] tracking-tight leading-[1.12] sm:leading-[1.08] font-sans">
             <span className="block">Transparent,</span>
             <span className="block">Pay-Per-Campaign Pricing</span>
           </h2>
-          <p className="text-[18px] text-[#66665E] font-sans font-medium leading-[28px] mt-4 sm:mt-5">
+          <p className="text-[15px] sm:text-[18px] text-[#66665E] font-sans font-medium leading-[24px] sm:leading-[28px] mt-2.5 sm:mt-5">
             No monthly software lock-ins. Brands pay a flat Platform Fee (15%) on successful creator hires. Creators keep 100% of their rate.
           </p>
         </div>
 
         {/* Live Fee Calculator & Model Comparison */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-5xl mx-auto items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 max-w-5xl mx-auto items-center">
           {/* Interactive Calculator Box */}
-          <div className="lg:col-span-7 min-w-0 bg-[#FAFAF8] rounded-3xl p-5 sm:p-8 lg:p-10 border border-[#E7E7E2] shadow-sm space-y-6">
+          <div className="lg:col-span-7 min-w-0 bg-[#FAFAF8] rounded-2xl sm:rounded-3xl p-4 sm:p-8 lg:p-10 border border-[#E7E7E2] shadow-sm space-y-5 sm:space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div className="flex items-center gap-2.5">
                 <div className="w-10 h-10 rounded-xl bg-[#0A0A0A] text-white flex items-center justify-center shadow-xs">

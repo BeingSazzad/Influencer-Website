@@ -9,11 +9,12 @@ import {
   Pause,
   Volume2,
   VolumeX,
-  Sparkles,
+  Layers,
   Instagram,
   Youtube,
   Music2,
 } from 'lucide-react';
+import { CategoryIcon } from '@/components/shared/CategoryIcon';
 
 interface PortfolioVideoModalProps {
   item: PortfolioItem | null;
@@ -66,17 +67,17 @@ export function PortfolioVideoModal({
     ),
     ugc: (
       <span className="w-5 h-5 rounded-full bg-[#6444A6] flex items-center justify-center text-white shrink-0 shadow-2xs">
-        <Sparkles className="w-3 h-3" />
+        <CategoryIcon name="ugc" size={12} className="text-white" />
       </span>
     ),
     all: (
       <span className="w-5 h-5 rounded-full bg-gradient-to-tr from-amber-500 to-rose-500 flex items-center justify-center text-white shrink-0 shadow-2xs">
-        <Sparkles className="w-3 h-3" />
+        <Layers className="w-3 h-3" />
       </span>
     ),
     multi: (
       <span className="w-5 h-5 rounded-full bg-gradient-to-tr from-amber-500 to-rose-500 flex items-center justify-center text-white shrink-0 shadow-2xs">
-        <Sparkles className="w-3 h-3" />
+        <Layers className="w-3 h-3" />
       </span>
     ),
   };

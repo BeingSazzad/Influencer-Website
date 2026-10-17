@@ -15,6 +15,7 @@ import { CreatorPhoto, Creator } from '@/types';
 import { ShareProfileModal } from '@/components/shared/ShareProfileModal';
 import { CreatorPhotoLightbox } from '@/components/shared/CreatorPhotoLightbox';
 import { InstagramLogo, TikTokLogo, YouTubeLogo } from '@/components/shared/SocialLogos';
+import { CategoryIcon } from '@/components/shared/CategoryIcon';
 import {
   User,
   Globe,
@@ -34,7 +35,6 @@ import {
   Lock,
   Eye,
   Languages,
-  Sparkles,
   RefreshCw,
   ShieldCheck,
   CheckCircle2,
@@ -47,16 +47,16 @@ import { Button as AppButton } from '@/components/ui';
 
 // Curated marketplace categories matching Onboarding
 const CATEGORIES = [
-  { id: 'Beauty', label: 'Beauty & Skincare', icon: '💄' },
-  { id: 'Fashion', label: 'Fashion & Style', icon: '👗' },
-  { id: 'Fitness', label: 'Fitness & Health', icon: '⚡' },
-  { id: 'Travel', label: 'Travel & Adventure', icon: '✈️' },
-  { id: 'Food', label: 'Food & Cuisine', icon: '🍴' },
-  { id: 'Lifestyle', label: 'Lifestyle & Wellness', icon: '❤️' },
-  { id: 'Tech', label: 'Tech & Gaming', icon: '🎮' },
-  { id: 'Business', label: 'Business & Finance', icon: '💼' },
-  { id: 'Art', label: 'Art & Photography', icon: '🎨' },
-  { id: 'Family', label: 'Family & Parenting', icon: '👶' },
+  { id: 'Beauty', label: 'Beauty & Skincare' },
+  { id: 'Fashion', label: 'Fashion & Style' },
+  { id: 'Fitness', label: 'Fitness & Health' },
+  { id: 'Travel', label: 'Travel & Adventure' },
+  { id: 'Food', label: 'Food & Cuisine' },
+  { id: 'Lifestyle', label: 'Lifestyle & Wellness' },
+  { id: 'Tech', label: 'Tech & Gaming' },
+  { id: 'Business', label: 'Business & Finance' },
+  { id: 'Art', label: 'Art & Photography' },
+  { id: 'Family', label: 'Family & Parenting' },
 ];
 
 // Collaboration preferences matching Onboarding Step 6
@@ -65,37 +65,31 @@ const COLLABORATION_PREFERENCES = [
     id: 'sponsored',
     label: 'Sponsored Posts',
     desc: 'Dedicated reels, videos, and posts',
-    icon: '✨',
   },
   {
     id: 'ugc',
     label: 'UGC Content',
     desc: 'Ad content without posting to your feed',
-    icon: '📱',
   },
   {
     id: 'reviews',
     label: 'Product Reviews',
     desc: 'Unboxings and honest product reviews',
-    icon: '📦',
   },
   {
     id: 'events',
     label: 'Events & Brand Trips',
     desc: 'In-person events and brand trips',
-    icon: '🎟️',
   },
   {
     id: 'ambassador',
     label: 'Brand Ambassadorship',
     desc: 'Long-term brand partnerships',
-    icon: '🤝',
   },
   {
     id: 'affiliate',
     label: 'Affiliate & Gifting',
     desc: 'Affiliate links and product gifting',
-    icon: '🎁',
   },
 ];
 
@@ -1036,7 +1030,11 @@ function CreatorProfileContent() {
                             : 'bg-white hover:bg-[#FAFAF8] text-[#0A0A0A] border-[#E7E7E2]'
                         }`}
                       >
-                        <span className="text-base shrink-0">{cat.icon}</span>
+                        <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
+                          isSelected ? 'bg-white/10 text-white' : 'bg-[#F2F2EE] text-[#0A0A0A]'
+                        }`}>
+                          <CategoryIcon name={cat.id} size={15} />
+                        </div>
                         <div className="min-w-0 flex-1">
                           <span className={`text-xs font-bold block truncate ${isSelected ? 'text-white' : 'text-[#0A0A0A]'}`}>
                             {cat.label}
@@ -1122,7 +1120,11 @@ function CreatorProfileContent() {
                               : 'bg-white hover:bg-[#FAFAF8] text-[#0A0A0A] border-[#E7E7E2]'
                           }`}
                         >
-                          <span className="text-xl shrink-0 mt-0.5">{pref.icon}</span>
+                          <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 mt-0.5 transition-colors ${
+                            isSelected ? 'bg-white/10 text-white' : 'bg-[#F2F2EE] text-[#0A0A0A]'
+                          }`}>
+                            <CategoryIcon name={pref.id} size={17} />
+                          </div>
                           <div className="min-w-0 flex-1">
                             <div className="flex items-center justify-between">
                               <span className={`text-sm font-bold truncate ${isSelected ? 'text-white' : 'text-[#0A0A0A]'}`}>

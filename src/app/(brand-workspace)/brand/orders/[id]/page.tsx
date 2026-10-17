@@ -11,7 +11,7 @@ import {
   reportOrderIssue,
   resolveOrderIssue,
 } from '@/redux/slices/orderSlice';
-import { reportIssueToSupport } from '@/redux/slices/messageSlice';
+import { reportIssueToSupport, sendMessage } from '@/redux/slices/messageSlice';
 import { WorkspaceHeader } from '@/components/layout/WorkspaceHeader';
 import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
 import {
@@ -28,6 +28,7 @@ import {
   AlertTriangle,
   HelpCircle,
   LifeBuoy,
+  ArrowRight,
 } from 'lucide-react';
 import { Button, Input, Modal, Rate, Select, message } from 'antd';
 
@@ -47,7 +48,6 @@ export default function BrandOrderDetailPage() {
         (orderId?.toUpperCase() === 'ORD-94102' && o.id === 'ord-102')
     ) || orders[0];
 
-  const [newMessageText, setNewMessageText] = useState('');
   const [isRevisionModalOpen, setIsRevisionModalOpen] = useState(false);
   const [revisionNotes, setRevisionNotes] = useState('');
   const [ratingVal, setRatingVal] = useState(5);
@@ -57,28 +57,6 @@ export default function BrandOrderDetailPage() {
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [reportCategory, setReportCategory] = useState('Quality / Creative Brief Disagreement');
   const [reportReason, setReportReason] = useState('');
-
-  const handleSendMessage = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newMessageText.trim()) return;
-
-    dispatch(
-      addMessageToOrder({
-        orderId: order.id,
-        message: {
-          id: `msg-${Date.now()}`,
-          senderId: currentUser?.id || 'brand-aura',
-          senderName: currentUser?.companyName || currentUser?.name || 'Aura Skincare Paris',
-          senderAvatar: currentUser?.avatar || 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80',
-          senderRole: 'brand',
-          text: newMessageText.trim(),
-          timestamp: 'Just now',
-        },
-      })
-    );
-    setNewMessageText('');
-    message.success('Message sent to creator');
-  };
 
   const handleApproveDeliverables = () => {
     dispatch(updateOrderStatus({ orderId: order.id, status: 'approved' }));
@@ -90,6 +68,18 @@ export default function BrandOrderDetailPage() {
       message.error('Please specify the revisions needed.');
       return;
     }
+
+    // Send note to unified Messages inbox
+    dispatch(
+      sendMessage({
+        conversationId: 'conv-sophie-kim',
+        senderId: currentUser?.id || 'user_brand_01',
+        senderName: currentUser?.companyName || 'Aura Skincare Paris',
+        senderAvatar: currentUser?.avatar || 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80',
+        senderRole: 'brand',
+        text: `[Revision Requested for Order #${order.id}]: ${revisionNotes}`,
+      })
+    );
 
     dispatch(
       addMessageToOrder({
@@ -272,6 +262,13 @@ export default function BrandOrderDetailPage() {
             </div>
 
             <div className="flex items-center gap-3 self-start sm:self-auto flex-wrap">
+              <Link
+                href={`/brand/messages?creatorId=${order.creatorId}`}
+                className="px-4 py-2.5 rounded-2xl bg-[#0A0A0A] hover:bg-[#FF2D78] text-white font-bold text-sm flex items-center gap-2 transition-all shadow-xs"
+              >
+                <MessageSquare className="w-4 h-4" />
+                <span>Message Creator</span>
+              </Link>
               <button
                 onClick={() => setIsReportModalOpen(true)}
                 className="px-3.5 py-2.5 rounded-2xl bg-white border border-[#E7E7E2] hover:border-[#0A0A0A] text-[#66665E] hover:text-[#0A0A0A] font-bold text-xs flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer"
@@ -511,70 +508,74 @@ export default function BrandOrderDetailPage() {
             </div>
           </div>
 
-          {/* Right Column (5 cols): Chat & Review */}
+          {/* Right Column (5 cols): Communication & Review */}
           <div className="lg:col-span-5 space-y-6">
-            {/* Direct Order Chat */}
-            <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#E7E7E2] shadow-2xs flex flex-col h-[540px]">
+            {/* Direct Communication Hub Card */}
+            <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#E7E7E2] shadow-2xs space-y-5">
               <div className="flex items-center justify-between pb-4 border-b border-[#E7E7E2]">
                 <div className="flex items-center gap-2.5">
                   <div className="w-8 h-8 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-center">
                     <MessageSquare className="w-4 h-4 text-[#0A0A0A]" />
                   </div>
                   <h3 className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">
-                    Order Messaging
+                    Direct Communication
                   </h3>
                 </div>
                 <div className="flex items-center gap-1.5 text-xs text-[#66665E] font-semibold">
-                  <span className="w-2 h-2 rounded-full bg-[#0A0A0A]" />
-                  <span>Active</span>
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-[#0A0A0A]">Active</span>
                 </div>
               </div>
 
-              {/* Message Feed */}
-              <div className="flex-1 overflow-y-auto py-4 space-y-3.5 text-sm font-sans">
-                {order.messages.map((msg) => {
-                  const isMe = msg.senderRole === 'brand';
-                  return (
-                    <div
-                      key={msg.id}
-                      className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}
-                    >
-                      <div className="flex items-center gap-1.5 mb-1 text-sm text-[#66665E]">
-                        <span className="font-semibold text-[#0A0A0A]">{msg.senderName}</span>
-                        <span>•</span>
-                        <span>{msg.timestamp}</span>
-                      </div>
-                      <div
-                        className={`p-4 rounded-2xl max-w-[85%] leading-relaxed text-sm ${
-                          isMe
-                            ? 'bg-[#0A0A0A] text-white rounded-br-xs'
-                            : 'bg-[#F4F4F0] text-[#0A0A0A] rounded-bl-xs'
-                        }`}
-                      >
-                        {msg.text}
-                      </div>
-                    </div>
-                  );
-                })}
+              {/* Creator Preview */}
+              <div className="flex items-center gap-3.5 p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]">
+                <img
+                  src={order.creatorAvatar}
+                  alt={order.creatorName}
+                  className="w-12 h-12 rounded-full object-cover border border-[#E7E7E2] shrink-0"
+                />
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-bold text-sm text-[#0A0A0A] truncate">{order.creatorName}</span>
+                    <VerifiedBadge size="sm" />
+                  </div>
+                  <p className="text-xs text-[#66665E] truncate">{order.creatorHandle}</p>
+                </div>
               </div>
 
-              {/* Message Input */}
-              <form onSubmit={handleSendMessage} className="pt-3 border-t border-[#E7E7E2] flex gap-2">
-                <input
-                  type="text"
-                  placeholder="Type message or question..."
-                  value={newMessageText}
-                  onChange={(e) => setNewMessageText(e.target.value)}
-                  className="flex-1 h-10 px-4 text-sm font-sans bg-[#FAFAF8] border border-[#E7E7E2] rounded-full outline-none focus:border-[#0A0A0A] transition-colors"
-                />
-                <button
-                  type="submit"
-                  className="h-10 w-10 rounded-full bg-[#0A0A0A] hover:bg-[#FF2D78] text-white flex items-center justify-center transition-colors cursor-pointer shrink-0 shadow-xs"
-                  aria-label="Send message"
-                >
-                  <Send className="w-4 h-4" />
-                </button>
-              </form>
+              {/* Info Note */}
+              <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#EBE7DF] text-xs text-[#66665E] leading-relaxed space-y-1.5">
+                <div className="font-bold flex items-center gap-1.5 text-[#0A0A0A]">
+                  <ShieldCheck className="w-4 h-4 shrink-0 text-emerald-600" />
+                  <span>Centralized Messaging</span>
+                </div>
+                <p>
+                  To prevent duplicate conversations and keep all files organized, all direct messaging, brief discussions, and revision feedback with {order.creatorName} are handled in your dedicated Messages inbox.
+                </p>
+              </div>
+
+              {/* Primary Action Button */}
+              <Link
+                href={`/brand/messages?creatorId=${order.creatorId}`}
+                className="w-full h-11 rounded-2xl bg-[#0A0A0A] hover:bg-[#FF2D78] text-white font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-xs group/msg cursor-pointer"
+              >
+                <MessageSquare className="w-4 h-4" />
+                <span>Open Conversation in Messages</span>
+                <ArrowRight className="w-4 h-4 transition-transform group-hover/msg:translate-x-1" />
+              </Link>
+            </div>
+
+            {/* Escrow & Protection Summary */}
+            <div className="bg-white rounded-3xl p-6 border border-[#E7E7E2] shadow-2xs space-y-3">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                <h4 className="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">
+                  Escrow Guarantee
+                </h4>
+              </div>
+              <p className="text-xs text-[#66665E] leading-relaxed">
+                Your payment of €{order.totalEur.toLocaleString()} is securely protected in escrow. Funds are only released to {order.creatorName} once you review and approve the final deliverables.
+              </p>
             </div>
 
             {/* Review Form (Appears when approved or completed) */}
