@@ -40,6 +40,7 @@ import {
   ExternalLink,
   Venus,
   Mars,
+  Globe,
 } from 'lucide-react';
 import { Button, message } from 'antd';
 import { Button as AppButton, Badge as AppBadge } from '@/components/ui';
@@ -342,41 +343,34 @@ export default function CreatorProfilePage() {
                   )}
                 </div>
 
-                <div className="flex items-center gap-2 text-sm font-bold text-[#66665E] flex-wrap">
-                  <span>{creator.categories.join(' & ')}</span>
-                  <span>•</span>
-                  <span className="flex items-center gap-1">
-                    <MapPin className="w-3.5 h-3.5 text-[#A3A39C]" />
-                    {creator.location}
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs sm:text-sm font-semibold text-[#66665E]">
+                  <span className="text-[#0A0A0A] font-bold">{creator.categories.join(' & ')}</span>
+                  <span className="inline-flex items-center gap-1">
+                    <MapPin className="w-3.5 h-3.5 text-[#A3A39C] shrink-0" />
+                    <span>{creator.location}</span>
                   </span>
                   {creator.gender && (creator.gender === 'female' || creator.gender === 'male') && (
-                    <>
-                      <span>•</span>
-                      <span
-                        className="inline-flex items-center"
-                        title={creator.gender === 'female' ? 'Female' : 'Male'}
-                      >
-                        {creator.gender === 'female' ? (
-                          <Venus className="w-4 h-4 text-[#FF2D78]" />
-                        ) : (
-                          <Mars className="w-4 h-4 text-[#2563EB]" />
-                        )}
-                      </span>
-                    </>
+                    <span
+                      className="inline-flex items-center gap-1"
+                      title={creator.gender === 'female' ? 'Female' : 'Male'}
+                    >
+                      {creator.gender === 'female' ? (
+                        <Venus className="w-3.5 h-3.5 text-[#FF2D78] shrink-0" />
+                      ) : (
+                        <Mars className="w-3.5 h-3.5 text-[#2563EB] shrink-0" />
+                      )}
+                      <span>{creator.gender === 'female' ? 'Female' : 'Male'}</span>
+                    </span>
                   )}
-                  <span>•</span>
-                  <span className="flex items-center gap-1 text-[#0A0A0A] font-bold">
-                    <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                    {creator.rating} ({creator.reviewsCount} reviews)
+                  <span className="inline-flex items-center gap-1 text-[#0A0A0A] font-bold">
+                    <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400 shrink-0" />
+                    <span>{creator.rating} ({creator.reviewsCount} reviews)</span>
                   </span>
                   {creator.languages && creator.languages.length > 0 && (
-                    <>
-                      <span>•</span>
-                      <span className="flex items-center gap-1 text-[#0A0A0A] font-bold">
-                        <span>🌐</span>
-                        <span>{creator.languages.join(', ')}</span>
-                      </span>
-                    </>
+                    <span className="inline-flex items-center gap-1 text-[#0A0A0A] font-semibold">
+                      <Globe className="w-3.5 h-3.5 text-[#66665E] shrink-0" />
+                      <span>{creator.languages.join(', ')}</span>
+                    </span>
                   )}
                 </div>
 

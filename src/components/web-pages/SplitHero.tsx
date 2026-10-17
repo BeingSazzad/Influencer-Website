@@ -201,7 +201,7 @@ export function SplitHero() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center">
           {/* Left Column: Typography & Search */}
-          <div className="lg:col-span-6">
+          <div className="lg:col-span-7 xl:col-span-7">
             {/* Headline pairing Red Hat Display with Playfair Display Italic Accent */}
             <h1 className="text-[32px] min-[420px]:text-4xl sm:text-5xl lg:text-[62px] font-black text-[#0A0A0A] tracking-tight leading-[1.1] sm:leading-[1.05] font-sans mb-3 sm:mb-5">
               The right creators{' '}
@@ -216,15 +216,15 @@ export function SplitHero() {
                 'Discover, collaborate and grow with verified creators across all platforms — in one place.'}
             </p>
 
-            {/* Search Pill Bar - Responsive Mobile Two-Tier & Desktop Unified Pill */}
-            <div className="bg-white p-2 sm:p-2 rounded-2xl sm:rounded-full border border-[#E7E7E2] shadow-lg shadow-black/[0.04] w-full max-w-xl xl:max-w-2xl transition-all focus-within:border-[#0A0A0A] relative z-30 mb-6 sm:mb-8">
-              <form onSubmit={handleSearch} className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-0">
+            {/* Search Pill Bar - Responsive Mobile/Tablet Two-Tier & Desktop Unified Pill */}
+            <div className="bg-white p-2 rounded-2xl lg:rounded-full border border-[#E7E7E2] shadow-lg shadow-black/[0.04] w-full max-w-2xl xl:max-w-3xl transition-all focus-within:border-[#0A0A0A] relative z-30 mb-6 lg:mb-8">
+              <form onSubmit={handleSearch} className="flex flex-col lg:flex-row items-stretch lg:items-center gap-2 lg:gap-0">
                 {/* 1. Keyword / Name Text Search Input */}
-                <div ref={searchInputRef} className="flex-1 flex items-center pl-3.5 pr-2 py-1 sm:py-1.5 w-full min-w-0 sm:min-w-[160px] relative">
+                <div ref={searchInputRef} className="flex-1 flex items-center pl-3.5 pr-2 py-1.5 w-full min-w-0 lg:min-w-[160px] relative">
                   <Search className="w-4 h-4 text-[#66665E] mr-2.5 shrink-0" />
                   <input
                     type="text"
-                    placeholder={t?.hero?.searchPlaceholder || 'Search creators, niches, keywords...'}
+                    placeholder={t?.hero?.searchPlaceholder || 'Search creators...'}
                     value={searchQuery}
                     onFocus={() => {
                       if (searchQuery.trim()) setShowSuggestions(true);
@@ -236,10 +236,10 @@ export function SplitHero() {
                     className="w-full bg-transparent text-sm font-semibold text-[#0A0A0A] placeholder:text-[#A3A39C] outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 border-none shadow-none font-sans"
                   />
 
-                  {/* Submit Search Button (Mobile Inline) */}
+                  {/* Submit Search Button (Mobile & Tablet Inline) */}
                   <button
                     type="submit"
-                    className="sm:hidden btn-base btn-icon-sm btn-pink rounded-xl shrink-0 shadow-xs ml-1.5"
+                    className="lg:hidden btn-base btn-icon-sm btn-pink rounded-xl shrink-0 shadow-xs ml-1.5"
                     aria-label="Search Creators"
                   >
                     <Search className="w-4 h-4 stroke-[2.5]" />
@@ -247,7 +247,7 @@ export function SplitHero() {
 
                   {/* Live Suggestions Dropdown */}
                   {showSuggestions && searchQuery.trim().length > 0 && (
-                    <div className="absolute top-full left-0 mt-3 w-[calc(100vw-3rem)] sm:w-[380px] bg-white rounded-2xl border border-[#E7E7E2] shadow-2xl p-3 z-50 animate-in fade-in-0 zoom-in-95 duration-150">
+                    <div className="absolute top-full left-0 mt-3 w-[calc(100vw-3rem)] sm:w-[380px] lg:w-[420px] bg-white rounded-2xl border border-[#E7E7E2] shadow-2xl p-3 z-50 animate-in fade-in-0 zoom-in-95 duration-150">
                       <div className="flex items-center justify-between pb-2 border-b border-[#F4F4F0] px-1 text-xs font-bold uppercase tracking-wider text-[#66665E]">
                         <span>Suggested Creators</span>
                         <span className="text-[#FF2D78]">Press Enter to search</span>
@@ -314,20 +314,20 @@ export function SplitHero() {
                   )}
                 </div>
 
-                {/* Filter Controls: Row on mobile, inline on desktop */}
-                <div className="grid grid-cols-2 gap-1.5 pt-1.5 sm:pt-0 border-t border-[#F4F4F0] sm:border-t-0 sm:flex sm:items-center w-full sm:w-auto">
+                {/* Filter Controls: 2-col on mobile/tablet, inline on desktop */}
+                <div className="grid grid-cols-2 gap-1.5 pt-1.5 lg:pt-0 border-t border-[#F4F4F0] lg:border-t-0 lg:flex lg:items-center w-full lg:w-auto">
                   {/* Divider Line (Desktop only) */}
-                  <div className="hidden sm:block w-px h-6 bg-[#E7E7E2] shrink-0 mx-1" />
+                  <div className="hidden lg:block w-px h-6 bg-[#E7E7E2] shrink-0 mx-1" />
 
                   {/* 2. Platform Selector */}
-                  <div ref={platformDropdownRef} className="relative shrink-0 sm:min-w-[130px] w-full sm:w-auto">
+                  <div ref={platformDropdownRef} className="relative shrink-0 lg:min-w-[130px] w-full lg:w-auto">
                     <button
                       type="button"
                       onClick={() => {
                         setIsPlatformOpen(!isPlatformOpen);
                         setIsCategoryOpen(false);
                       }}
-                      className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl sm:rounded-full bg-[#FAFAF8] sm:bg-transparent hover:bg-[#F4F4F0] transition-colors cursor-pointer text-left border sm:border-0 border-[#E7E7E2]"
+                      className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl lg:rounded-full bg-[#FAFAF8] lg:bg-transparent hover:bg-[#F4F4F0] transition-colors cursor-pointer text-left border lg:border-0 border-[#E7E7E2]"
                     >
                       <div className="flex items-center min-w-0 mr-1">
                         {renderPlatformIcon()}
@@ -336,7 +336,7 @@ export function SplitHero() {
                         </span>
                       </div>
                       <ChevronDown
-                        className={`w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#66665E] transition-transform duration-200 shrink-0 ${
+                        className={`w-3.5 h-3.5 lg:w-4 lg:h-4 text-[#66665E] transition-transform duration-200 shrink-0 ${
                           isPlatformOpen ? 'rotate-180 text-[#0A0A0A]' : ''
                         }`}
                       />
@@ -376,17 +376,17 @@ export function SplitHero() {
                   </div>
 
                   {/* Divider Line (Desktop only) */}
-                  <div className="hidden sm:block w-px h-6 bg-[#E7E7E2] shrink-0 mx-1" />
+                  <div className="hidden lg:block w-px h-6 bg-[#E7E7E2] shrink-0 mx-1" />
 
                   {/* 3. Categories Selector */}
-                  <div ref={categoryDropdownRef} className="relative shrink-0 sm:min-w-[140px] w-full sm:w-auto">
+                  <div ref={categoryDropdownRef} className="relative shrink-0 lg:min-w-[140px] w-full lg:w-auto">
                     <button
                       type="button"
                       onClick={() => {
                         setIsCategoryOpen(!isCategoryOpen);
                         setIsPlatformOpen(false);
                       }}
-                      className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl sm:rounded-full bg-[#FAFAF8] sm:bg-transparent hover:bg-[#F4F4F0] transition-colors cursor-pointer text-left border sm:border-0 border-[#E7E7E2]"
+                      className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl lg:rounded-full bg-[#FAFAF8] lg:bg-transparent hover:bg-[#F4F4F0] transition-colors cursor-pointer text-left border lg:border-0 border-[#E7E7E2]"
                     >
                       <div className="flex items-center min-w-0 mr-1">
                         <span className="text-[#A3A39C] mr-1.5 text-xs font-black shrink-0 font-mono">::</span>
@@ -395,7 +395,7 @@ export function SplitHero() {
                         </span>
                       </div>
                       <ChevronDown
-                        className={`w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#66665E] transition-transform duration-200 shrink-0 ${
+                        className={`w-3.5 h-3.5 lg:w-4 lg:h-4 text-[#66665E] transition-transform duration-200 shrink-0 ${
                           isCategoryOpen ? 'rotate-180 text-[#0A0A0A]' : ''
                         }`}
                       />
@@ -403,7 +403,7 @@ export function SplitHero() {
 
                     {/* Custom Floating Dropdown Menu with Clean Gap */}
                     {isCategoryOpen && (
-                      <div className="absolute top-full right-0 sm:left-auto sm:right-0 mt-2 sm:mt-3 w-56 sm:w-64 bg-white rounded-2xl border border-[#E7E7E2] shadow-2xl p-2 z-50 animate-in fade-in-0 zoom-in-95 duration-150 max-h-72 overflow-y-auto">
+                      <div className="absolute top-full right-0 lg:left-auto lg:right-0 mt-2 sm:mt-3 w-56 sm:w-64 bg-white rounded-2xl border border-[#E7E7E2] shadow-2xl p-2 z-50 animate-in fade-in-0 zoom-in-95 duration-150 max-h-72 overflow-y-auto">
                         <div className="space-y-1">
                           {categoryOptions.map((opt) => {
                             const isSelected = category === opt.value;
@@ -432,7 +432,7 @@ export function SplitHero() {
                   </div>
 
                   {/* 4. Submit Search Button (Desktop only) */}
-                  <div className="hidden sm:block">
+                  <div className="hidden lg:block">
                     <button
                       type="submit"
                       className="btn-base btn-icon-md btn-pink w-10 h-10 rounded-full shrink-0 shadow-sm ml-1"
@@ -487,7 +487,7 @@ export function SplitHero() {
           </div>
 
           {/* Right Column: Dynamic Floating Creator Stack Cards on Desktop, Horizontal Spotlight Reel on Mobile */}
-          <div className="lg:col-span-6 relative">
+          <div className="lg:col-span-5 xl:col-span-5 relative">
             {/* Ambient Back Glow */}
             <div className="absolute inset-0 max-w-sm mx-auto bg-gradient-to-tr from-[#FF2D78]/15 to-[#F1EEF9]/20 rounded-full blur-3xl pointer-events-none" />
 

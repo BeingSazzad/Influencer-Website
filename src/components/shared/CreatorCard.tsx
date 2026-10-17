@@ -27,7 +27,7 @@ export function CreatorCard({ creator }: CreatorCardProps) {
   return (
     <div className="bg-white rounded-3xl border border-[#E7E7E2] overflow-hidden hover:border-[#0A0A0A] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col group relative font-sans">
       {/* Creator Portrait Section */}
-      <div className="relative w-full aspect-[16/10] sm:aspect-[4/3] lg:aspect-[1/1] bg-[#F4F4F0] overflow-hidden rounded-t-3xl">
+      <div className="relative w-full aspect-[4/3] lg:aspect-square bg-[#F4F4F0] overflow-hidden rounded-t-3xl">
         <Link href={`/creators/${creator.id}`} className="block w-full h-full">
           <img
             src={creator.avatar}

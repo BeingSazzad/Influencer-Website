@@ -21,7 +21,7 @@ export const DICTIONARY = {
       title: 'The right creators for your brand.',
       subtitle:
         'Discover, collaborate and grow with verified creators across all platforms — in one place.',
-      searchPlaceholder: 'Search creators, keywords, or niches...',
+      searchPlaceholder: 'Search creators...',
       allCategories: 'All Categories',
       allPlatforms: 'All Platforms',
       findCreatorsBtn: 'Find Creators',
@@ -85,7 +85,7 @@ export const DICTIONARY = {
       title: 'Die passenden Creator für Ihre Marke.',
       subtitle:
         'Entdecken, kooperieren und wachsen Sie mit verifizierten Creatorn auf allen Plattformen — an einem Ort.',
-      searchPlaceholder: 'Creator, Keywords oder Nischen suchen...',
+      searchPlaceholder: 'Creator suchen...',
       allCategories: 'Alle Kategorien',
       allPlatforms: 'Alle Plattformen',
       findCreatorsBtn: 'Creator finden',

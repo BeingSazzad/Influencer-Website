@@ -260,9 +260,9 @@ function CreatorsDiscoveryContent() {
         </div>
 
         {/* Global Filter Bar matching reference */}
-        <div className="bg-white p-3.5 rounded-2xl border border-[#E7E7E2] shadow-xs flex flex-wrap items-center gap-3">
+        <div className="bg-white p-3 sm:p-3.5 rounded-2xl border border-[#E7E7E2] shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center gap-2.5 sm:gap-3">
           {/* Omni Search Input */}
-          <div className="flex-1 min-w-[240px] relative font-sans">
+          <div className="w-full lg:flex-1 lg:min-w-[220px] relative font-sans">
             <Search className="w-4 h-4 text-[#66665E] absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
@@ -273,100 +273,104 @@ function CreatorsDiscoveryContent() {
             />
           </div>
 
-          {/* All Categories Dropdown */}
-          <div className="min-w-[150px] font-sans relative">
-            <select
-              value={filters.category}
-              onChange={(e) => dispatch(setFilter({ category: e.target.value }))}
-              className="w-full pl-3.5 pr-8 py-2.5 text-sm font-bold text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer appearance-none"
-            >
-              <option value="all">All Categories</option>
-              <option value="Beauty">Beauty</option>
-              <option value="Fashion">Fashion</option>
-              <option value="Fitness">Fitness & Health</option>
-              <option value="Travel">Travel</option>
-              <option value="Food">Food & Cuisine</option>
-              <option value="Lifestyle">Lifestyle</option>
-              <option value="Tech">Tech & Gaming</option>
-            </select>
-            <ChevronDown className="w-4 h-4 text-[#66665E] pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
-          </div>
+          {/* Responsive Dropdowns Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:items-center gap-2 sm:gap-2.5 w-full lg:w-auto">
+            {/* All Categories Dropdown */}
+            <div className="w-full lg:min-w-[145px] font-sans relative">
+              <select
+                value={filters.category}
+                onChange={(e) => dispatch(setFilter({ category: e.target.value }))}
+                className="w-full pl-3 pr-7 py-2.5 text-xs sm:text-sm font-bold text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer appearance-none truncate"
+              >
+                <option value="all">All Categories</option>
+                <option value="Beauty">Beauty</option>
+                <option value="Fashion">Fashion</option>
+                <option value="Fitness">Fitness & Health</option>
+                <option value="Travel">Travel</option>
+                <option value="Food">Food & Cuisine</option>
+                <option value="Lifestyle">Lifestyle</option>
+                <option value="Tech">Tech & Gaming</option>
+              </select>
+              <ChevronDown className="w-3.5 h-3.5 text-[#66665E] pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
+            </div>
 
-          {/* Locations Dropdown */}
-          <div className="min-w-[140px] font-sans relative">
-            <select
-              value={filters.location}
-              onChange={(e) => dispatch(setFilter({ location: e.target.value }))}
-              className="w-full pl-3.5 pr-8 py-2.5 text-sm font-bold text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer appearance-none"
-            >
-              <option value="all">All Locations</option>
-              <option value="London">London, UK</option>
-              <option value="Berlin">Berlin, DE</option>
-              <option value="Paris">Paris, FR</option>
-              <option value="Milan">Milan, IT</option>
-              <option value="Amsterdam">Amsterdam, NL</option>
-              <option value="Los Angeles">Los Angeles, US</option>
-              <option value="New York">New York, US</option>
-            </select>
-            <ChevronDown className="w-4 h-4 text-[#66665E] pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
-          </div>
+            {/* Locations Dropdown */}
+            <div className="w-full lg:min-w-[135px] font-sans relative">
+              <select
+                value={filters.location}
+                onChange={(e) => dispatch(setFilter({ location: e.target.value }))}
+                className="w-full pl-3 pr-7 py-2.5 text-xs sm:text-sm font-bold text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer appearance-none truncate"
+              >
+                <option value="all">All Locations</option>
+                <option value="London">London, UK</option>
+                <option value="Berlin">Berlin, DE</option>
+                <option value="Paris">Paris, FR</option>
+                <option value="Milan">Milan, IT</option>
+                <option value="Amsterdam">Amsterdam, NL</option>
+                <option value="Los Angeles">Los Angeles, US</option>
+                <option value="New York">New York, US</option>
+              </select>
+              <ChevronDown className="w-3.5 h-3.5 text-[#66665E] pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
+            </div>
 
-          {/* Platforms Dropdown */}
-          <div className="min-w-[140px] font-sans relative">
-            <select
-              value={filters.platform}
-              onChange={(e) => dispatch(setFilter({ platform: e.target.value as any }))}
-              className="w-full pl-3.5 pr-8 py-2.5 text-sm font-bold text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer appearance-none"
-            >
-              <option value="all">All Platforms</option>
-              <option value="instagram">Instagram</option>
-              <option value="tiktok">TikTok</option>
-              <option value="youtube">YouTube</option>
-              <option value="ugc">UGC Creative</option>
-            </select>
-            <ChevronDown className="w-4 h-4 text-[#66665E] pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
-          </div>
+            {/* Platforms Dropdown */}
+            <div className="w-full lg:min-w-[130px] font-sans relative">
+              <select
+                value={filters.platform}
+                onChange={(e) => dispatch(setFilter({ platform: e.target.value as any }))}
+                className="w-full pl-3 pr-7 py-2.5 text-xs sm:text-sm font-bold text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer appearance-none truncate"
+              >
+                <option value="all">All Platforms</option>
+                <option value="instagram">Instagram</option>
+                <option value="tiktok">TikTok</option>
+                <option value="youtube">YouTube</option>
+                <option value="ugc">UGC Creative</option>
+              </select>
+              <ChevronDown className="w-3.5 h-3.5 text-[#66665E] pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
+            </div>
 
-          {/* Follower Range Dropdown */}
-          <div className="min-w-[150px] font-sans relative">
-            <select
-              value={filters.followerRange}
-              onChange={(e) => dispatch(setFilter({ followerRange: e.target.value as any }))}
-              className="w-full pl-3.5 pr-8 py-2.5 text-sm font-bold text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer appearance-none"
-            >
-              <option value="all">Follower Range</option>
-              <option value="nano">Nano (10K - 50K)</option>
-              <option value="micro">Micro (50K - 200K)</option>
-              <option value="macro">Macro (200K - 1M)</option>
-              <option value="mega">Mega (1M+)</option>
-            </select>
-            <ChevronDown className="w-4 h-4 text-[#66665E] pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
-          </div>
+            {/* Follower Range Dropdown */}
+            <div className="w-full lg:min-w-[140px] font-sans relative">
+              <select
+                value={filters.followerRange}
+                onChange={(e) => dispatch(setFilter({ followerRange: e.target.value as any }))}
+                className="w-full pl-3 pr-7 py-2.5 text-xs sm:text-sm font-bold text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer appearance-none truncate"
+              >
+                <option value="all">Follower Range</option>
+                <option value="nano">Nano (10K - 50K)</option>
+                <option value="micro">Micro (50K - 200K)</option>
+                <option value="macro">Macro (200K - 1M)</option>
+                <option value="mega">Mega (1M+)</option>
+              </select>
+              <ChevronDown className="w-3.5 h-3.5 text-[#66665E] pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
+            </div>
 
-          {/* Sort By Dropdown */}
-          <div className="min-w-[150px] font-sans relative">
-            <select
-              value={filters.sortBy}
-              onChange={(e) => dispatch(setFilter({ sortBy: e.target.value as any }))}
-              className="w-full pl-3.5 pr-8 py-2.5 text-sm font-bold text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer appearance-none"
-            >
-              <option value="relevance">Sort: Relevance</option>
-              <option value="followers">Most Followers</option>
-              <option value="rating">Top Rated</option>
-              <option value="price_asc">Price: Low to High</option>
-              <option value="price_desc">Price: High to Low</option>
-            </select>
-            <ChevronDown className="w-4 h-4 text-[#66665E] pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
-          </div>
+            {/* Sort By Dropdown */}
+            <div className="w-full lg:min-w-[140px] font-sans relative">
+              <select
+                value={filters.sortBy}
+                onChange={(e) => dispatch(setFilter({ sortBy: e.target.value as any }))}
+                className="w-full pl-3 pr-7 py-2.5 text-xs sm:text-sm font-bold text-[#0A0A0A] bg-[#FAFAF8] border border-[#E7E7E2] rounded-xl outline-none cursor-pointer appearance-none truncate"
+              >
+                <option value="relevance">Sort: Relevance</option>
+                <option value="followers">Most Followers</option>
+                <option value="rating">Top Rated</option>
+                <option value="price_asc">Price: Low to High</option>
+                <option value="price_desc">Price: High to Low</option>
+              </select>
+              <ChevronDown className="w-3.5 h-3.5 text-[#66665E] pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
+            </div>
 
-          {/* Reset Filters */}
-          <button
-            onClick={() => dispatch(resetFilters())}
-            className="p-2.5 rounded-xl border border-[#E7E7E2] hover:bg-[#F4F4F0] text-[#66665E] hover:text-[#0A0A0A] transition-colors"
-            title="Reset Filters"
-          >
-            <RotateCcw className="w-4 h-4" />
-          </button>
+            {/* Reset Filters Button */}
+            <button
+              onClick={() => dispatch(resetFilters())}
+              className="w-full lg:w-auto h-10 px-3 rounded-xl border border-[#E7E7E2] hover:bg-[#F4F4F0] text-[#66665E] hover:text-[#0A0A0A] transition-colors flex items-center justify-center gap-1.5 font-bold text-xs"
+              title="Reset Filters"
+            >
+              <RotateCcw className="w-3.5 h-3.5 shrink-0" />
+              <span className="lg:hidden">Reset</span>
+            </button>
+          </div>
         </div>
 
         {/* Active Filter Chips / Status bar if any filter is applied */}

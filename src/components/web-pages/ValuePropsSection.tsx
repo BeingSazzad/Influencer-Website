@@ -64,7 +64,7 @@ export function ValuePropsSection() {
         <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3 xl:grid-cols-5">
           {valueProps.map((prop) => (
             <article key={prop.id} className="group min-w-0 last:col-span-2 sm:last:col-span-1">
-              <div className="relative aspect-[4/3] sm:aspect-square overflow-hidden rounded-2xl sm:rounded-[28px] border border-black/[0.045] bg-[#F7F4F8] shadow-[0_10px_30px_rgba(30,24,37,0.05)] sm:shadow-[0_18px_55px_rgba(30,24,37,0.07)]">
+              <div className="relative aspect-[4/3] group-last:aspect-[16/9] sm:aspect-square sm:group-last:aspect-square overflow-hidden rounded-2xl sm:rounded-[28px] border border-black/[0.045] bg-[#F7F4F8] shadow-[0_10px_30px_rgba(30,24,37,0.05)] sm:shadow-[0_18px_55px_rgba(30,24,37,0.07)]">
                 <Image
                   src={prop.image}
                   alt={prop.imageAlt}
