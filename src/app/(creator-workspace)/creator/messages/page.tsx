@@ -37,6 +37,7 @@ import {
   RotateCcw,
   Tag,
   Shield,
+  ArrowLeft,
 } from 'lucide-react';
 import { Button, Popconfirm, message, Dropdown, Modal, Input, Select } from 'antd';
 import { PlatformType } from '@/types';
@@ -58,6 +59,7 @@ function CreatorMessagesContent() {
   const [offerDeliverables, setOfferDeliverables] = useState('');
   const [offerPrice, setOfferPrice] = useState<number | null>(null);
   const [offerPlatform, setOfferPlatform] = useState<PlatformType>('instagram');
+  const [mobilePane, setMobilePane] = useState<'list' | 'thread'>('list');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -295,9 +297,9 @@ function CreatorMessagesContent() {
       />
 
       <div className="p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto flex-1">
-        <div className="bg-white rounded-3xl border border-[#E7E7E2] shadow-2xs overflow-hidden flex flex-col lg:flex-row h-[720px]">
+        <div className="flex h-[calc(100dvh-12.5rem)] min-h-[420px] flex-col overflow-hidden rounded-3xl border border-[#E7E7E2] bg-white shadow-2xs lg:h-[720px] lg:flex-row">
           {/* LEFT COLUMN: Conversation List */}
-          <div className="w-full lg:w-80 xl:w-96 border-r border-[#E7E7E2] flex flex-col bg-[#FAFAF8]">
+          <div className={`${mobilePane === 'thread' ? 'hidden' : 'flex'} w-full flex-col border-r border-[#E7E7E2] bg-[#FAFAF8] lg:flex lg:w-80 xl:w-96`}>
             <div className="p-4 border-b border-[#E7E7E2] bg-white space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-black uppercase tracking-wider text-[#66665E]">
@@ -323,7 +325,10 @@ function CreatorMessagesContent() {
                   return (
                     <div
                       key={conv.id}
-                      onClick={() => dispatch(setActiveConversationId(conv.id))}
+                      onClick={() => {
+                        dispatch(setActiveConversationId(conv.id));
+                        setMobilePane('thread');
+                      }}
                       className={`group w-full p-3.5 sm:p-4 flex items-start gap-3 text-left transition-all cursor-pointer relative ${
                         isSelected
                           ? 'bg-white border-l-4 border-l-[#0A0A0A] shadow-2xs'
@@ -383,8 +388,16 @@ function CreatorMessagesContent() {
 
           {/* RIGHT COLUMN: Active Chat Thread */}
           {activeConv ? (
-            <div className="flex-1 flex flex-col bg-white">
-              <div className="p-4 sm:px-6 border-b border-[#E7E7E2] flex items-center justify-between gap-4 bg-white">
+            <div className={`${mobilePane === 'list' ? 'hidden' : 'flex'} min-w-0 flex-1 flex-col bg-white lg:flex`}>
+              <div className="flex items-center gap-3 border-b border-[#E7E7E2] bg-white p-4 sm:gap-4 sm:px-6">
+                <button
+                  type="button"
+                  onClick={() => setMobilePane('list')}
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-[#E7E7E2] text-[#0A0A0A] lg:hidden"
+                  aria-label="Back to conversations"
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                </button>
                 {activeConv.isSupport || activeConv.id === 'conv-influverse-support' ? (
                   <div className="flex items-center gap-3 min-w-0">
                     <img
@@ -420,7 +433,7 @@ function CreatorMessagesContent() {
                   </Link>
                 )}
 
-                <div className="flex items-center gap-2 shrink-0">
+                <div className="ml-auto flex shrink-0 items-center gap-2">
                   {activeConv.isSupport || activeConv.id === 'conv-influverse-support' ? (
                     <div className="px-3.5 py-1.5 rounded-full bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 text-xs font-bold flex items-center gap-1.5 shadow-2xs">
                       <Shield className="w-3.5 h-3.5" />

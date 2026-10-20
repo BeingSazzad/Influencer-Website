@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import { useAppDispatch } from '@/redux/hooks';
 import { loginAsBrandDemo, loginAsCreatorDemo } from '@/redux/slices/authSlice';
 import { Logo } from '@/components/shared/Logo';
-import { AuthNetworkVisual } from '@/components/auth/AuthNetworkVisual';
 import {
   Lock,
   Mail,
@@ -15,7 +14,6 @@ import {
   Check,
 } from 'lucide-react';
 import { message } from 'antd';
-import { DemoReviewerDock } from '@/components/auth/DemoReviewerDock';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -58,10 +56,9 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAF8] flex items-center justify-center pt-8 pb-24 sm:pt-12 sm:pb-28 px-4 sm:px-6 lg:px-10 font-sans selection:bg-[#FF2D78]/20 selection:text-[#FF2D78]">
-      <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center py-6">
-        {/* Left: Login Form Card (Consistent with Register page) */}
-        <div className="w-full lg:col-span-6 xl:col-span-6 space-y-6">
+    <div className="min-h-dvh bg-[#FAFAF8] font-sans selection:bg-[#FF2D78]/20 selection:text-[#FF2D78] lg:grid lg:h-dvh lg:grid-cols-2 lg:overflow-hidden">
+      <div className="flex min-h-dvh items-center justify-center px-4 py-8 sm:px-8 lg:order-2 lg:h-full lg:min-h-0 lg:overflow-y-auto">
+        <div className="w-full max-w-[440px] space-y-6">
           <div className="space-y-2">
             <Link href="/" className="inline-flex items-center mb-2 hover:opacity-90 transition-opacity">
               <Logo size="lg" />
@@ -121,7 +118,7 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-1 select-none">
+              <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 pt-1 select-none">
                 <label className="inline-flex items-center gap-2 cursor-pointer group">
                   <span
                     className={`w-4 h-4 rounded-md border flex items-center justify-center transition-all ${
@@ -153,6 +150,23 @@ export default function LoginPage() {
               >
                 Log in
               </button>
+
+              <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
+                <button
+                  type="button"
+                  onClick={handleCreatorDemoLogin}
+                  className="h-8 px-3.5 rounded-full text-xs font-bold bg-white border border-[#D2D2CA] text-[#0A0A0A] hover:border-[#0A0A0A] hover:bg-[#FAFAF8] cursor-pointer"
+                >
+                  Demo Influencer
+                </button>
+                <button
+                  type="button"
+                  onClick={handleBrandDemoLogin}
+                  className="h-8 px-3.5 rounded-full text-xs font-bold bg-white border border-[#D2D2CA] text-[#0A0A0A] hover:border-[#0A0A0A] hover:bg-[#FAFAF8] cursor-pointer"
+                >
+                  Demo Brand
+                </button>
+              </div>
             </form>
 
             {/* Sign Up Link */}
@@ -166,15 +180,47 @@ export default function LoginPage() {
             </div>
           </div>
         </div>
-
-        {/* Right: Connected Network Graphic Matching Reference Design */}
-        <div className="hidden lg:block lg:col-span-6 xl:col-span-6 h-full">
-          <AuthNetworkVisual />
-        </div>
       </div>
 
-      {/* Floating Reviewer Sandbox Dock (Clearly identified as temporary prototype demo) */}
-      <DemoReviewerDock />
+      <aside className="relative hidden min-h-0 overflow-hidden lg:order-1 lg:block lg:h-full">
+        <img
+          src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1800&q=80"
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover object-[center_30%]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/70 to-[#0A0A0A]/25" />
+        <div className="relative z-10 flex h-full flex-col justify-between overflow-y-auto p-8 text-white xl:p-14">
+          <Logo isLight size="md" />
+          <div className="max-w-lg">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-white/70">
+              Brand &amp; creator collaboration
+            </p>
+            <h2 className="mt-3 text-3xl font-black leading-[1.12] tracking-tight xl:text-[2.75rem] xl:leading-[1.08]">
+              Where Impactful Stories Turn Into Powerful Results.
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-white/80 xl:text-base">
+              Connect, collaborate, and scale your brand with top-tier creators. Influverse makes partnerships transparent, seamless, and results-driven.
+            </p>
+            <div className="mt-6 grid grid-cols-3 gap-3 border-t border-white/20 pt-5 xl:mt-8 xl:gap-4 xl:pt-6">
+              <div className="min-w-0">
+                <span className="mb-3 block h-1.5 w-1.5 rounded-full bg-white" />
+                <p className="text-[13px] font-black leading-tight xl:text-sm">Discover Creators</p>
+                <p className="mt-1 text-[11px] leading-snug text-white/70 xl:text-xs">Verified profiles &amp; authentic reach</p>
+              </div>
+              <div className="min-w-0">
+                <span className="mb-3 block h-1.5 w-1.5 rounded-full bg-white" />
+                <p className="text-[13px] font-black leading-tight xl:text-sm">Seamless Workflow</p>
+                <p className="mt-1 text-[11px] leading-snug text-white/70 xl:text-xs">From brief to final approval</p>
+              </div>
+              <div className="min-w-0">
+                <span className="mb-3 block h-1.5 w-1.5 rounded-full bg-white" />
+                <p className="text-[13px] font-black leading-tight xl:text-sm">Guaranteed Safety</p>
+                <p className="mt-1 text-[11px] leading-snug text-white/70 xl:text-xs">Protected payments at every step</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
     </div>
   );
 }

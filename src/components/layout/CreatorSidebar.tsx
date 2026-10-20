@@ -123,8 +123,8 @@ export function CreatorSidebar() {
   ];
 
   return (
-    <aside className="w-64 bg-white border-r border-[#E7E7E2] flex flex-col justify-between h-screen sticky top-0 shrink-0 font-sans">
-      <div>
+    <aside className="flex h-full w-full flex-col justify-between border-r border-[#E7E7E2] bg-white font-sans">
+      <div className="min-h-0 flex-1 overflow-y-auto">
         {/* Logo */}
         <div className="p-6 border-b border-[#E7E7E2]">
           <Link href="/" className="flex items-center gap-2">

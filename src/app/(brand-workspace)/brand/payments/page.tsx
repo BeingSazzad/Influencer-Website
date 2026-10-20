@@ -386,7 +386,7 @@ export default function BrandPaymentsPage() {
           {/* Quick Preset Buttons */}
           <div className="space-y-2">
             <label className="text-sm font-bold text-[#0A0A0A]">Select Deposit Amount</label>
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
               {[500, 1000, 2500, 5000].map((preset) => (
                 <button
                   key={preset}

@@ -18,24 +18,24 @@ export function WorkspaceHeader({
   action,
 }: WorkspaceHeaderProps) {
   return (
-    <header className="bg-white border-b border-[#E7E7E2] px-6 py-4 sticky top-0 z-30 flex items-center justify-between">
-      <div className="flex items-center gap-4">
+    <header className="sticky top-0 z-30 flex items-center justify-between gap-3 border-b border-[#E7E7E2] bg-white px-4 py-3 sm:px-6 sm:py-4">
+      <div className="flex min-w-0 items-center gap-3 sm:gap-4">
         {backHref && (
           <Link
             href={backHref}
-            className="p-2 rounded-xl border border-[#E7E7E2] hover:bg-[#F4F4F0] text-[#0A0A0A] transition-colors"
+            className="shrink-0 rounded-xl border border-[#E7E7E2] p-2 text-[#0A0A0A] transition-colors hover:bg-[#F4F4F0]"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="h-4 w-4" />
           </Link>
         )}
-        <div>
-          <h1 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">{title}</h1>
-          {subtitle && <p className="text-sm text-[#66665E] font-medium mt-0.5">{subtitle}</p>}
+        <div className="min-w-0">
+          <h1 className="truncate text-xl font-extrabold tracking-tight text-[#0A0A0A] sm:text-2xl">{title}</h1>
+          {subtitle && <p className="mt-0.5 truncate text-sm font-medium text-[#66665E]">{subtitle}</p>}
         </div>
       </div>
 
       {action && (
-        <div className="flex items-center gap-3">
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
           {action}
         </div>
       )}
