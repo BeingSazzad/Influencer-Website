@@ -105,12 +105,12 @@ export function ProfileCompletionCard({
   if (totalStrength === 100) {
     return (
       <div className="bg-[#0A0A0A] text-white rounded-3xl p-5 sm:p-6 border border-white/10 shadow-lg flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-sans">
-        <div className="flex items-center gap-4">
+        <div className="flex min-w-0 items-center gap-4">
           <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/30">
             <Award className="w-6 h-6" />
           </div>
-          <div>
-            <div className="flex items-center gap-2">
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-2">
               <h4 className="font-extrabold text-base text-white tracking-tight">
                 Profile 100% Complete
               </h4>
@@ -118,7 +118,7 @@ export function ProfileCompletionCard({
                 All-Star
               </span>
             </div>
-            <p className="text-sm text-[#A3A39C] mt-0.5 font-medium">
+            <p className="mt-0.5 break-words text-sm font-medium text-[#A3A39C]">
               Your profile is fully completed and optimized for maximum brand discovery.
             </p>
           </div>

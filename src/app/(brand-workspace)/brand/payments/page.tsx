@@ -199,7 +199,7 @@ export default function BrandPaymentsPage() {
         title="Payments"
         subtitle="Track wallet balance and payment history."
         action={
-          <div className="flex items-center gap-2.5">
+          <div className="flex flex-wrap items-center gap-2.5">
             <AppButton
               size="md"
               variant="secondary"

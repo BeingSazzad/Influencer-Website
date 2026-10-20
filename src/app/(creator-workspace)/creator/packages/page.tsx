@@ -462,7 +462,7 @@ export default function CreatorPackagesPage() {
           </div>
 
           {/* Pricing, Turnaround, Revisions */}
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <div className="space-y-1.5">
               <label className="text-xs font-bold uppercase tracking-wider text-[#66665E]">Rate (€)</label>
               <InputNumber

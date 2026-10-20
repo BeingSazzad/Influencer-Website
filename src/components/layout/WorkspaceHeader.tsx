@@ -18,7 +18,7 @@ export function WorkspaceHeader({
   action,
 }: WorkspaceHeaderProps) {
   return (
-    <header className="sticky top-0 z-30 flex items-center justify-between gap-3 border-b border-[#E7E7E2] bg-white px-4 py-3 sm:px-6 sm:py-4">
+    <header className="sticky top-0 z-30 flex flex-col gap-3 border-b border-[#E7E7E2] bg-white px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-4">
       <div className="flex min-w-0 items-center gap-3 sm:gap-4">
         {backHref && (
           <Link
@@ -35,7 +35,7 @@ export function WorkspaceHeader({
       </div>
 
       {action && (
-        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+        <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto sm:shrink-0 sm:justify-end">
           {action}
         </div>
       )}

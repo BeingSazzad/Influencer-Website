@@ -198,10 +198,10 @@ export function SplitHero() {
       <div className="absolute top-10 right-1/4 w-[600px] h-[600px] bg-gradient-to-tr from-[#FFF0F5]/60 to-[#FFE4EC]/60 rounded-full blur-3xl pointer-events-none -z-10" />
       <div className="absolute -bottom-10 left-10 w-[500px] h-[500px] bg-gradient-to-br from-[#EEF7F2]/50 to-[#FAF6E8]/50 rounded-full blur-3xl pointer-events-none -z-10" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-w-0">
+        <div className="grid w-full min-w-0 max-w-full grid-cols-1 items-center gap-8 overflow-hidden lg:grid-cols-12 lg:overflow-visible">
           {/* Left Column: Typography & Search */}
-          <div className="lg:col-span-7 xl:col-span-7">
+          <div className="lg:col-span-7 xl:col-span-7 min-w-0">
             {/* Headline pairing Red Hat Display with Playfair Display Italic Accent */}
             <h1 className="text-[32px] min-[420px]:text-4xl sm:text-5xl lg:text-[62px] font-black text-[#0A0A0A] tracking-tight leading-[1.1] sm:leading-[1.05] font-sans mb-3 sm:mb-5">
               The right creators{' '}
@@ -211,7 +211,7 @@ export function SplitHero() {
             </h1>
 
             {/* Subtitle */}
-            <p className="text-[15px] sm:text-[18px] text-[#555550] leading-[24px] sm:leading-[28px] max-w-lg font-sans font-medium mb-6 sm:mb-8">
+            <p className="mb-6 max-w-full text-[15px] font-medium leading-[24px] text-[#555550] sm:mb-8 sm:text-[18px] sm:leading-[28px] lg:max-w-lg">
               {t?.hero?.subtitle ||
                 'Discover, collaborate and grow with verified creators across all platforms — in one place.'}
             </p>
@@ -470,7 +470,7 @@ export function SplitHero() {
               </div>
 
               <div className="flex flex-col justify-center">
-                <div className="flex items-center gap-1.5 text-xs sm:text-base font-bold text-[#0A0A0A] font-sans">
+                <div className="flex flex-wrap items-center gap-1.5 text-xs sm:text-base font-bold text-[#0A0A0A] font-sans">
                   <div className="flex items-center gap-0.5 text-amber-400">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-amber-400 text-amber-400" />
@@ -487,19 +487,19 @@ export function SplitHero() {
           </div>
 
           {/* Right Column: Dynamic Floating Creator Stack Cards on Desktop, Horizontal Spotlight Reel on Mobile */}
-          <div className="lg:col-span-5 xl:col-span-5 relative">
+          <div className="lg:col-span-5 xl:col-span-5 relative min-w-0">
             {/* Ambient Back Glow */}
             <div className="absolute inset-0 max-w-sm mx-auto bg-gradient-to-tr from-[#FF2D78]/15 to-[#F1EEF9]/20 rounded-full blur-3xl pointer-events-none" />
 
             {/* Mobile Creator Spotlight Reel (Compact, Zero Overflow, ~210px height) */}
             <div className="lg:hidden mt-2">
-              <div className="flex items-center justify-between mb-2 px-1">
-                <span className="text-[11px] font-black uppercase tracking-wider text-[#66665E]">
+              <div className="mb-2 flex min-w-0 items-center justify-between gap-3 px-1">
+                <span className="min-w-0 truncate text-[11px] font-black uppercase tracking-wider text-[#66665E]">
                   Verified Creator Spotlight
                 </span>
-                <span className="text-[11px] font-bold text-[#FF2D78]">Swipe to explore →</span>
+                <span className="shrink-0 text-[11px] font-bold text-[#FF2D78]">Swipe to explore →</span>
               </div>
-              <div className="flex gap-3 overflow-x-auto no-scrollbar pb-2 snap-x -mx-4 px-4 sm:mx-0 sm:px-0">
+              <div className="flex w-full min-w-0 gap-3 overflow-x-auto pb-2 snap-x no-scrollbar">
                 {/* Mobile Spotlight Card 1: Sophie Kim */}
                 <Link
                   href="/creators/creator-01"
