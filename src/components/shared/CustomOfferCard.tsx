@@ -18,6 +18,14 @@ function platformLabel(platform: PlatformType) {
   return platform;
 }
 
+function offerPlatformsLabel(offer: ChatCustomOffer) {
+  const selected = (offer.platforms || []).filter(
+    (platform) => platform !== 'all' && platform !== 'multi'
+  );
+  if (selected.length > 1) return selected.map(platformLabel).join(' · ');
+  return platformLabel(offer.platform);
+}
+
 interface CustomOfferCardProps {
   offer: ChatCustomOffer;
   viewer: 'brand' | 'creator';
@@ -122,7 +130,7 @@ export function CustomOfferCard({
       <div className="p-4 space-y-3">
         <div>
           <div className="text-sm font-bold text-[#0A0A0A]">{offer.title}</div>
-          <div className="text-xs font-semibold text-[#66665E] mt-0.5">{platformLabel(offer.platform)}</div>
+          <div className="text-xs font-semibold text-[#66665E] mt-0.5">{offerPlatformsLabel(offer)}</div>
         </div>
 
         <ul className="space-y-1">

@@ -31,6 +31,7 @@ import {
 } from 'lucide-react';
 import { ShareProfileModal } from '@/components/shared/ShareProfileModal';
 import { CategoryIcon } from '@/components/shared/CategoryIcon';
+import { companySizeKey, getBrandProfile } from '@/data/mockBrands';
 import { Input, Select, message } from 'antd';
 
 // Curated Countries list matching Creator Profile & Onboarding
@@ -118,36 +119,30 @@ export default function BrandSettingsPage() {
   const dispatch = useAppDispatch();
   const { currentUser } = useAppSelector((state) => state.auth);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const publicBrand = getBrandProfile(currentUser?.id || 'user_brand_01', currentUser);
 
   const [activeTab, setActiveTab] = useState<'company' | 'security'>('company');
 
   // Parse location into city and country
-  const initialLoc = currentUser?.location || 'Paris, France';
+  const initialLoc = publicBrand.location || 'Paris, France';
   const locParts = initialLoc.split(',').map((s) => s.trim());
   const initialCity = locParts[0] || 'Paris';
   const initialCountry = locParts.length > 1 ? locParts[1] : 'France';
 
   // Company Profile Form States
-  const [companyName, setCompanyName] = useState(currentUser?.companyName || 'Aura Skincare Paris');
-  const [contactName, setContactName] = useState(currentUser?.name || 'Elena Rostova');
-  const [email, setEmail] = useState(currentUser?.email || 'elena@aura-cosmetics.com');
-  const [phone, setPhone] = useState(currentUser?.phone || '+33 1 42 68 55 00');
-  const [avatar, setAvatar] = useState(currentUser?.avatar || '');
-  const [website, setWebsite] = useState(currentUser?.website || 'https://aura-skincare.com');
+  const [companyName, setCompanyName] = useState(publicBrand.companyName);
+  const [contactName, setContactName] = useState(publicBrand.contactName);
+  const [email, setEmail] = useState(currentUser?.email || publicBrand.email);
+  const [phone, setPhone] = useState(currentUser?.phone || '');
+  const [avatar, setAvatar] = useState(publicBrand.logo || '');
+  const [website, setWebsite] = useState(publicBrand.website || '');
   const [country, setCountry] = useState(initialCountry);
   const [city, setCity] = useState(initialCity);
-  const [companySize, setCompanySize] = useState(currentUser?.companySize || '11-50');
-  const [industry, setIndustry] = useState(currentUser?.industry || 'Beauty, Cosmetics & Wellness');
-  const [tags, setTags] = useState<string[]>(
-    currentUser?.industryTags && currentUser.industryTags.length > 0
-      ? currentUser.industryTags
-      : ['Clean Beauty', 'Organic', 'DTC', 'Skincare']
-  );
+  const [companySize, setCompanySize] = useState(companySizeKey(publicBrand.companySize));
+  const [industry, setIndustry] = useState(publicBrand.industry);
+  const [tags, setTags] = useState<string[]>(publicBrand.industryTags || []);
   const [newTagInput, setNewTagInput] = useState('');
-  const [bio, setBio] = useState(
-    currentUser?.bio ||
-      'We formulate clean, organic skincare and wellness products designed in Paris. Looking for authentic lifestyle, UGC, and beauty creators.'
-  );
+  const [bio, setBio] = useState(publicBrand.bio || '');
 
   // Security Form States
   const [currentPassword, setCurrentPassword] = useState('');
@@ -404,7 +399,7 @@ export default function BrandSettingsPage() {
                   {/* Account Manager / Contact Name */}
                   <div className="space-y-1.5">
                     <label className="block text-sm font-bold text-[#0A0A0A]">
-                      Account Manager <span className="text-rose-500">*</span>
+                      Partnerships Lead <span className="text-rose-500">*</span>
                     </label>
                     <Input
                       prefix={<User className="w-4 h-4 text-[#A3A39C] mr-0.5" />}
@@ -531,12 +526,12 @@ export default function BrandSettingsPage() {
                         Bio / About Brand
                       </label>
                       <span className="text-xs font-semibold text-[#66665E]">
-                        {bio.length}/300
+                        {bio.length}/500
                       </span>
                     </div>
                     <textarea
                       rows={4}
-                      maxLength={300}
+                      maxLength={500}
                       value={bio}
                       onChange={(e) => setBio(e.target.value)}
                       className="w-full rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A] focus:outline-none p-3.5 text-sm font-normal text-[#0A0A0A] leading-relaxed transition-all resize-y shadow-2xs"

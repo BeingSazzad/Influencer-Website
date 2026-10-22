@@ -36,7 +36,6 @@ import {
   Trash2,
   MoreVertical,
   RotateCcw,
-  Shield,
   ArrowLeft,
 } from 'lucide-react';
 import { Button, Popconfirm, message, Dropdown, Modal } from 'antd';
@@ -402,12 +401,7 @@ function BrandMessagesContent() {
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0">
-                  {activeConv.isSupport || activeConv.id === 'conv-influverse-support' ? (
-                    <div className="px-3.5 py-1.5 rounded-full bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 text-xs font-bold flex items-center gap-1.5 shadow-2xs">
-                      <Shield className="w-3.5 h-3.5" />
-                      <span>Official Mediation Desk</span>
-                    </div>
-                  ) : (
+                  {!(activeConv.isSupport || activeConv.id === 'conv-influverse-support') && (
                     <>
                       <Link href={`/creators/${activeConv.creatorId}`}>
                         <Button

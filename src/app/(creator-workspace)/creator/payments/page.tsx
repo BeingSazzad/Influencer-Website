@@ -232,9 +232,50 @@ export default function CreatorPaymentsPage() {
             </div>
           </div>
 
-          {/* Table */}
-          <div className="overflow-x-auto -mx-6 sm:mx-0">
-            <table className="w-full text-left">
+          <div className="md:hidden divide-y divide-[#F4F4F0]">
+            {filteredPayouts.map((payout) => {
+              const isPaidOut = payout.status === 'paid_out';
+              const isEscrow = payout.status === 'in_escrow';
+              const statusLabel = isPaidOut ? 'Transferred' : isEscrow ? 'In Escrow' : 'Available';
+
+              return (
+                <div key={payout.id} className="py-3">
+                  <div className="flex min-w-0 items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <div className="truncate text-sm font-bold text-[#0A0A0A]">{payout.brandName}</div>
+                      <div className="mt-0.5 truncate text-xs text-[#66665E]">{payout.campaignTitle}</div>
+                    </div>
+                    <div className="shrink-0 text-sm font-black tracking-tight text-[#0A0A0A]">
+                      +€{payout.amountEur.toLocaleString()}
+                    </div>
+                  </div>
+                  <div className="mt-2 flex items-center justify-between gap-2">
+                    <span className="min-w-0 truncate text-xs font-medium text-[#66665E]">{payout.date}</span>
+                    <span
+                      className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${
+                        isEscrow
+                          ? 'border border-[#FF2D78]/25 bg-[#FFF0F5] text-[#FF2D78]'
+                          : 'border border-[#E7E7E2] bg-[#F4F4F0] text-[#0A0A0A]'
+                      }`}
+                    >
+                      {statusLabel}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedRemittance(payout)}
+                      className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-[#E7E7E2] text-[#66665E]"
+                      title="View Statement"
+                    >
+                      <FileText className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="hidden md:block overflow-x-auto">
+            <table className="w-full min-w-[680px] text-left">
               <thead>
                 <tr className="border-b border-[#E7E7E2] text-[#66665E] font-bold uppercase tracking-wider text-xs">
                   <th className="pb-3.5 px-4">Brand &amp; Campaign</th>
@@ -302,13 +343,13 @@ export default function CreatorPaymentsPage() {
                 })}
               </tbody>
             </table>
-
-            {filteredPayouts.length === 0 && (
-              <div className="py-12 text-center text-sm text-[#66665E] font-medium">
-                No payout records match your search criteria.
-              </div>
-            )}
           </div>
+
+          {filteredPayouts.length === 0 && (
+            <div className="py-12 text-center text-sm text-[#66665E] font-medium">
+              No payout records match your search criteria.
+            </div>
+          )}
         </div>
       </div>
 

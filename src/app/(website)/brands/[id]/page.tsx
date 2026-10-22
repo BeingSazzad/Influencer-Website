@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { useAppSelector } from '@/redux/hooks';
-import { getBrandProfile } from '@/data/mockBrands';
+import { formatCompanySize, getBrandProfile } from '@/data/mockBrands';
 import { BrandLogo } from '@/components/shared/BrandLogo';
 import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
 import { SaveButton } from '@/components/shared/SaveButton';
@@ -17,10 +17,9 @@ import {
   Building2,
   ChevronRight,
   Award,
-  Send,
   MessageSquare,
 } from 'lucide-react';
-import { message, Modal, Input } from 'antd';
+import { message } from 'antd';
 
 export default function BrandProfilePage() {
   const params = useParams();
@@ -32,35 +31,6 @@ export default function BrandProfilePage() {
 
   const [reviewTab, setReviewTab] = useState<'given' | 'received'>('given');
   const [isSaved, setIsSaved] = useState(false);
-
-  // Partnership Pitch Modal State
-  const [isPitchModalOpen, setIsPitchModalOpen] = useState(false);
-  const [pitchMessage, setPitchMessage] = useState('');
-  const [proposedRate, setProposedRate] = useState('1200');
-  const [isSubmittingPitch, setIsSubmittingPitch] = useState(false);
-
-  const handleOpenPitch = () => {
-    setPitchMessage(
-      `Hi ${brand.companyName}! I love your brand and would love to collaborate with you on upcoming campaigns. Here is a brief pitch and my rate card proposal.`
-    );
-    setProposedRate('1200');
-    setIsPitchModalOpen(true);
-  };
-
-  const handleSendPitch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!pitchMessage.trim()) {
-      message.error('Please write a brief pitch for the brand.');
-      return;
-    }
-
-    setIsSubmittingPitch(true);
-    setTimeout(() => {
-      setIsSubmittingPitch(false);
-      setIsPitchModalOpen(false);
-      message.success(`Partnership pitch delivered to ${brand.companyName}!`);
-    }, 600);
-  };
 
   const isCurrentBrandOwner =
     currentUser?.role === 'brand' &&
@@ -153,23 +123,12 @@ export default function BrandProfilePage() {
                   )}
                   <span className="flex items-center gap-1.5">
                     <Users className="w-4 h-4 text-[#A3A39C]" />
-                    <span>{brand.companySize.split('(')[0].trim()}</span>
+                    <span>{formatCompanySize(brand.companySize)}</span>
                   </span>
                 </div>
               </div>
             </div>
 
-            {/* Pitch for Partnership Button */}
-            <div className="shrink-0 flex items-center gap-3">
-              <button
-                type="button"
-                onClick={handleOpenPitch}
-                className="h-12 px-7 rounded-full font-bold text-sm bg-[#FF2D78] hover:bg-[#E02669] text-white transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
-              >
-                <Send className="w-4 h-4" />
-                <span>Pitch for Partnership</span>
-              </button>
-            </div>
           </div>
 
           {/* Trust & Performance Track Record Highlights */}
@@ -196,7 +155,6 @@ export default function BrandProfilePage() {
                 <span className="text-xl sm:text-2xl font-black text-[#0A0A0A]">
                   {brand.stats.rating}
                 </span>
-                <span className="text-xs text-[#66665E]">({brand.stats.reviewsCount} reviews)</span>
               </div>
             </div>
 
@@ -433,27 +391,6 @@ export default function BrandProfilePage() {
           {/* RIGHT COLUMN: PARTNERSHIP PITCH & BRAND SPECS */}
           <div className="space-y-6">
             <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#E7E7E2] shadow-2xs space-y-5 sticky top-24">
-              <div className="space-y-1">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#FF2D78]">
-                  Collaboration Pitch
-                </span>
-                <h3 className="text-lg font-black text-[#0A0A0A] tracking-tight">
-                  Partner with {brand.companyName}
-                </h3>
-                <p className="text-xs text-[#66665E] leading-relaxed">
-                  Pitch your creative ideas, share your rate card, and propose a collaboration concept directly to the brand team.
-                </p>
-              </div>
-
-              <button
-                type="button"
-                onClick={handleOpenPitch}
-                className="w-full h-12 rounded-2xl font-extrabold text-sm bg-[#FF2D78] hover:bg-[#E02669] text-white transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.01] active:scale-[0.99]"
-              >
-                <Send className="w-4 h-4" />
-                <span>Pitch for Partnership</span>
-              </button>
-
               {/* Brand Meta Specs */}
               <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-2.5 text-xs">
                 <div className="flex items-center justify-between text-[#66665E]">
@@ -497,78 +434,6 @@ export default function BrandProfilePage() {
         </div>
       </div>
 
-      {/* PARTNERSHIP PITCH MODAL */}
-      <Modal
-        open={isPitchModalOpen}
-        onCancel={() => setIsPitchModalOpen(false)}
-        footer={null}
-        centered
-        width={560}
-        destroyOnClose
-        className="influverse-modal"
-      >
-        <div className="p-6 sm:p-8 space-y-6 font-sans">
-          <div className="space-y-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#FF2D78]">
-              Partnership Pitch
-            </span>
-            <h3 className="text-xl font-extrabold text-[#0A0A0A] tracking-tight">
-              Pitch {brand.companyName}
-            </h3>
-            <p className="text-xs text-[#66665E]">
-              Send your collaboration concept, media kit link, and proposed fee to {brand.companyName}.
-            </p>
-          </div>
-
-          <form onSubmit={handleSendPitch} className="space-y-4">
-            <div className="space-y-1.5">
-              <label className="block text-xs font-bold text-[#0A0A0A] uppercase tracking-wider">
-                Proposed Collaboration Fee (€ EUR)
-              </label>
-              <Input
-                prefix={<span className="text-sm font-bold text-[#66665E] mr-1">€</span>}
-                value={proposedRate}
-                onChange={(e) => setProposedRate(e.target.value)}
-                placeholder="1200"
-                className="h-11 rounded-xl font-bold text-sm"
-                required
-              />
-            </div>
-
-            <div className="space-y-1.5">
-              <label className="block text-xs font-bold text-[#0A0A0A] uppercase tracking-wider">
-                Creative Proposal &amp; Concept Note
-              </label>
-              <textarea
-                rows={4}
-                value={pitchMessage}
-                onChange={(e) => setPitchMessage(e.target.value)}
-                className="w-full rounded-xl border border-[#E7E7E2] hover:border-[#0A0A0A] focus:border-[#0A0A0A] focus:outline-none p-3.5 text-sm font-normal text-[#0A0A0A] leading-relaxed transition-all resize-y shadow-2xs"
-                placeholder="Introduce yourself, outline why your audience matches this brand, and describe the content format you propose..."
-                required
-              />
-            </div>
-
-            <div className="pt-2 flex items-center justify-end gap-3">
-              <button
-                type="button"
-                onClick={() => setIsPitchModalOpen(false)}
-                className="h-10 px-5 rounded-full font-bold text-xs border border-[#E7E7E2] text-[#66665E] hover:text-[#0A0A0A] transition-colors cursor-pointer"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={isSubmittingPitch}
-                className="h-10 px-7 rounded-full font-bold text-xs bg-[#FF2D78] hover:bg-[#E02669] text-white transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
-              >
-                <Send className="w-3.5 h-3.5" />
-                <span>{isSubmittingPitch ? 'Sending...' : 'Send Pitch'}</span>
-              </button>
-            </div>
-          </form>
-        </div>
-      </Modal>
     </div>
   );
 }

@@ -36,7 +36,6 @@ import {
   MoreVertical,
   RotateCcw,
   Tag,
-  Shield,
   ArrowLeft,
 } from 'lucide-react';
 import { Button, Popconfirm, message, Dropdown, Modal, Input, Select } from 'antd';
@@ -58,7 +57,7 @@ function CreatorMessagesContent() {
   const [offerTitle, setOfferTitle] = useState('');
   const [offerDeliverables, setOfferDeliverables] = useState('');
   const [offerPrice, setOfferPrice] = useState<number | null>(null);
-  const [offerPlatform, setOfferPlatform] = useState<PlatformType>('instagram');
+  const [offerPlatforms, setOfferPlatforms] = useState<PlatformType[]>(['instagram']);
   const [mobilePane, setMobilePane] = useState<'list' | 'thread'>('list');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -259,13 +258,28 @@ function CreatorMessagesContent() {
       message.error('Add a title, at least one deliverable, and a price.');
       return;
     }
+    if (offerPlatforms.length === 0) {
+      message.error('Choose at least one platform.');
+      return;
+    }
+
+    const concretePlatforms = offerPlatforms.filter(
+      (platform) => platform !== 'all' && platform !== 'multi'
+    );
+    const primaryPlatform: PlatformType =
+      concretePlatforms.length >= 4
+        ? 'all'
+        : concretePlatforms.length > 1
+        ? 'multi'
+        : concretePlatforms[0] || 'instagram';
 
     const customOffer: ChatCustomOffer = {
       id: `offer-${Date.now()}`,
       title,
       deliverables,
       priceEur: offerPrice,
-      platform: offerPlatform,
+      platform: primaryPlatform,
+      platforms: concretePlatforms,
       status: 'pending',
     };
 
@@ -285,7 +299,7 @@ function CreatorMessagesContent() {
     setOfferTitle('');
     setOfferDeliverables('');
     setOfferPrice(null);
-    setOfferPlatform('instagram');
+    setOfferPlatforms(['instagram']);
     message.success('Custom offer sent.');
   };
 
@@ -355,12 +369,8 @@ function CreatorMessagesContent() {
                             </span>
                           </div>
                           <span className={`text-xs shrink-0 ${conv.unreadCountCreator > 0 ? 'font-bold text-[#0A0A0A]' : 'font-medium text-[#66665E]'}`}>
-                            {conv.lastMessageTimestamp}
+                            {conv.lastMessageTimestamp === 'Online' ? '' : conv.lastMessageTimestamp}
                           </span>
-                        </div>
-
-                        <div className="text-xs text-[#66665E] font-medium truncate mb-1">
-                          Brand Partner
                         </div>
 
                         <div className={`text-xs truncate leading-snug ${conv.unreadCountCreator > 0 ? 'font-bold text-[#0A0A0A]' : 'font-medium text-[#66665E]'}`}>
@@ -434,12 +444,7 @@ function CreatorMessagesContent() {
                 )}
 
                 <div className="ml-auto flex shrink-0 items-center gap-2">
-                  {activeConv.isSupport || activeConv.id === 'conv-influverse-support' ? (
-                    <div className="px-3.5 py-1.5 rounded-full bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 text-xs font-bold flex items-center gap-1.5 shadow-2xs">
-                      <Shield className="w-3.5 h-3.5" />
-                      <span>Official Mediation Desk</span>
-                    </div>
-                  ) : (
+                  {!(activeConv.isSupport || activeConv.id === 'conv-influverse-support') && (
                     <Link
                       href={`/brands/${activeConv.brandId || 'user_brand_01'}`}
                       className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FAFAF8] hover:bg-[#F4F4F0] border border-[#E7E7E2] hover:border-[#0A0A0A] text-xs font-bold text-[#0A0A0A] transition-all shadow-2xs"
@@ -920,33 +925,35 @@ function CreatorMessagesContent() {
               className="rounded-xl text-sm font-semibold text-[#0A0A0A] placeholder:text-[#66665E] placeholder:font-normal border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A] p-3 leading-relaxed"
             />
           </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="space-y-1.5">
-              <label className="text-sm font-bold text-[#0A0A0A]">Price (EUR)</label>
-              <Input
-                type="number"
-                prefix={<span className="text-[#0A0A0A] font-bold text-sm">€</span>}
-                value={offerPrice ?? ''}
-                onChange={(e) => setOfferPrice(e.target.value ? Number(e.target.value) : null)}
-                placeholder="950"
-                className="rounded-xl h-11 text-sm font-semibold text-[#0A0A0A] placeholder:text-[#66665E] placeholder:font-normal border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
-              />
+          <div className="space-y-1.5">
+            <label className="text-sm font-bold text-[#0A0A0A]">Price (EUR)</label>
+            <Input
+              type="number"
+              prefix={<span className="text-[#0A0A0A] font-bold text-sm">€</span>}
+              value={offerPrice ?? ''}
+              onChange={(e) => setOfferPrice(e.target.value ? Number(e.target.value) : null)}
+              placeholder="950"
+              className="rounded-xl h-11 text-sm font-semibold text-[#0A0A0A] placeholder:text-[#66665E] placeholder:font-normal border-[#D2D2CA] hover:border-[#0A0A0A] focus:border-[#0A0A0A]"
+            />
+          </div>
+          <div className="space-y-1.5">
+            <div className="flex items-center justify-between gap-2">
+              <label className="text-sm font-bold text-[#0A0A0A]">Platforms</label>
+              <span className="text-[11px] font-medium text-[#66665E]">Select one or more</span>
             </div>
-            <div className="space-y-1.5">
-              <label className="text-sm font-bold text-[#0A0A0A]">Platform</label>
-              <Select
-                value={offerPlatform}
-                onChange={(value) => setOfferPlatform(value)}
-                className="w-full h-11 text-sm font-semibold text-[#0A0A0A]"
-                options={[
-                  { value: 'instagram', label: 'Instagram' },
-                  { value: 'tiktok', label: 'TikTok' },
-                  { value: 'youtube', label: 'YouTube' },
-                  { value: 'ugc', label: 'UGC Ads' },
-                  { value: 'all', label: 'All platforms' },
-                ]}
-              />
-            </div>
+            <Select
+              mode="multiple"
+              value={offerPlatforms}
+              onChange={(values: PlatformType[]) => setOfferPlatforms(values)}
+              className="w-full text-sm font-semibold text-[#0A0A0A] [&_.ant-select-selector]:min-h-11 [&_.ant-select-selector]:rounded-xl [&_.ant-select-selector]:px-2"
+              placeholder="Choose platforms"
+              options={[
+                { value: 'instagram', label: 'Instagram' },
+                { value: 'tiktok', label: 'TikTok' },
+                { value: 'youtube', label: 'YouTube' },
+                { value: 'ugc', label: 'UGC Ads' },
+              ]}
+            />
           </div>
           <div className="flex justify-end gap-2 pt-1">
             <button

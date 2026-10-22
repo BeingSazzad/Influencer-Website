@@ -7,6 +7,7 @@ export interface ChatCustomOffer {
   deliverables: string[];
   priceEur: number;
   platform: PlatformType;
+  platforms?: PlatformType[];
   status: 'pending' | 'accepted' | 'declined';
   orderId?: string;
 }
@@ -69,7 +70,7 @@ const INITIAL_CONVERSATIONS: Conversation[] = [
     creatorAvatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
     creatorLocation: 'Trust & Dispute Mediation Desk',
     lastMessage: '👋 Need help with an order brief, deliverable review, or escrow settlement? Support is here.',
-    lastMessageTimestamp: 'Online',
+    lastMessageTimestamp: '1h ago',
     unreadCountBrand: 0,
     unreadCountCreator: 0,
     messages: [
@@ -80,7 +81,7 @@ const INITIAL_CONVERSATIONS: Conversation[] = [
         senderAvatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
         senderRole: 'creator',
         text: '👋 Welcome to Influverse Trust & Support Desk. If you encounter any issues with order deliverables, timelines, or brief requirements, submit a report from your order page or chat directly here. Our mediation team will coordinate with both parties to resolve it fairly.',
-        timestamp: 'Online',
+        timestamp: '1h ago',
         createdAt: Date.now() - 3600000,
         status: 'read',
       },

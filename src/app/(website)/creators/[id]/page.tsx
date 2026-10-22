@@ -793,7 +793,7 @@ export default function CreatorProfilePage() {
                           <BrandLogo name={rev.brandName} logoUrl={rev.brandLogo} size="sm" className="sm:!w-10 sm:!h-10" />
                           <div className="min-w-0">
                             <div className="font-bold text-[13px] sm:text-sm text-[#0A0A0A] truncate">{rev.brandName}</div>
-                            <div className="text-[11px] sm:text-sm text-[#66665E] truncate">{rev.campaignName} • {rev.date}</div>
+                            <div className="text-[11px] sm:text-sm text-[#66665E] truncate">{rev.date}</div>
                           </div>
                         </div>
                         <div className="flex text-amber-500 shrink-0">
@@ -1139,7 +1139,7 @@ export default function CreatorProfilePage() {
                             <BrandLogo name={rev.brandName} logoUrl={rev.brandLogo} size="sm" className="sm:!w-10 sm:!h-10" />
                             <div className="min-w-0">
                               <div className="font-extrabold text-[13px] sm:text-sm text-[#0A0A0A] truncate">{rev.brandName}</div>
-                              <div className="text-[11px] sm:text-sm text-[#66665E] truncate">{rev.campaignName} • {rev.date}</div>
+                              <div className="text-[11px] sm:text-sm text-[#66665E] truncate">{rev.date}</div>
                             </div>
                           </div>
                           <div className="flex text-amber-500 shrink-0">

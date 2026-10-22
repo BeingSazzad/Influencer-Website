@@ -1,5 +1,17 @@
 import { BrandProfile, User } from '@/types';
 
+const COMPANY_SIZE_KEYS = ['500+', '201-500', '51-200', '11-50', '1-10'];
+
+export function companySizeKey(value?: string) {
+  const raw = value || '';
+  return COMPANY_SIZE_KEYS.find((size) => raw.startsWith(size)) || '11-50';
+}
+
+export function formatCompanySize(value?: string) {
+  const key = companySizeKey(value);
+  return `${key} employees`;
+}
+
 export const MOCK_BRANDS: BrandProfile[] = [
   {
     id: 'user_brand_01',
