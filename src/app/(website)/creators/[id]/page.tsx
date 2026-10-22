@@ -545,9 +545,9 @@ export default function CreatorProfilePage() {
 
         {/* TAB 1: OVERVIEW */}
         {activeTab === 'overview' && (
-          <div className="space-y-8">
+          <div className="space-y-5 sm:space-y-8">
             {/* Collaboration Packages Section */}
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
+            <div className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-4 sm:space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                   <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
@@ -560,7 +560,7 @@ export default function CreatorProfilePage() {
               </div>
 
               {/* Packages Cards Row (Curated 3 Packages) */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
                 {filteredPackages.length > 0 ? (
                   filteredPackages.slice(0, 3).map((pkg) => (
                     <PackageCard
@@ -816,7 +816,7 @@ export default function CreatorProfilePage() {
 
         {/* TAB 2: PACKAGES */}
         {activeTab === 'packages' && (
-          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] space-y-8">
+          <div className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-8 border border-[#E7E7E2] space-y-4 sm:space-y-8">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#E7E7E2]/60">
               <div>
                 <h2 className="text-2xl font-extrabold text-[#0A0A0A]">Collaboration Packages</h2>
@@ -826,7 +826,7 @@ export default function CreatorProfilePage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
               {filteredPackages.slice(0, 3).map((pkg) => (
                 <PackageCard
                   key={pkg.id}

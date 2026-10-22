@@ -68,11 +68,21 @@ const config: Config = {
         'btn-sm': '32px',
       },
       fontSize: {
-        'display': ['clamp(2.25rem, 5vw, 3.5rem)', { lineHeight: '1.1', letterSpacing: '-0.03em' }],
-        'h1': ['clamp(1.75rem, 4vw, 2.5rem)', { lineHeight: '1.15', letterSpacing: '-0.025em' }],
-        'h2': ['clamp(1.35rem, 3vw, 1.85rem)', { lineHeight: '1.25', letterSpacing: '-0.02em' }],
-        'h3': ['1.25rem', { lineHeight: '1.35', letterSpacing: '-0.015em' }],
-        'h4': ['1rem', { lineHeight: '1.4', letterSpacing: '-0.01em' }],
+        /* Fluid scale: phone minimum, grows with the viewport, desktop size is the cap.
+           text-sm and text-base stay fixed so body copy does not shrink. */
+        lg: ['clamp(0.95rem, 0.9rem + 0.25vw, 1.125rem)', { lineHeight: '1.45' }],
+        xl: ['clamp(1rem, 0.92rem + 0.45vw, 1.25rem)', { lineHeight: '1.35' }],
+        '2xl': ['clamp(1.05rem, 0.9rem + 0.9vw, 1.5rem)', { lineHeight: '1.25', letterSpacing: '-0.015em' }],
+        '3xl': ['clamp(1.15rem, 0.9rem + 1.5vw, 1.875rem)', { lineHeight: '1.15', letterSpacing: '-0.02em' }],
+        '4xl': ['clamp(1.35rem, 0.95rem + 2vw, 2.25rem)', { lineHeight: '1.12', letterSpacing: '-0.025em' }],
+        '5xl': ['clamp(1.5rem, 0.95rem + 2.6vw, 3rem)', { lineHeight: '1.08', letterSpacing: '-0.03em' }],
+        '6xl': ['clamp(1.65rem, 1rem + 3.1vw, 3.75rem)', { lineHeight: '1.05', letterSpacing: '-0.03em' }],
+        '7xl': ['clamp(1.75rem, 1rem + 3.6vw, 4.5rem)', { lineHeight: '1.02', letterSpacing: '-0.035em' }],
+        display: ['clamp(1.65rem, 1rem + 2.8vw, 3.5rem)', { lineHeight: '1.08', letterSpacing: '-0.03em' }],
+        h1: ['clamp(1.45rem, 0.95rem + 2.2vw, 2.5rem)', { lineHeight: '1.12', letterSpacing: '-0.025em' }],
+        h2: ['clamp(1.25rem, 0.9rem + 1.6vw, 1.85rem)', { lineHeight: '1.2', letterSpacing: '-0.02em' }],
+        h3: ['clamp(1.05rem, 0.95rem + 0.7vw, 1.25rem)', { lineHeight: '1.3', letterSpacing: '-0.015em' }],
+        h4: ['clamp(0.95rem, 0.9rem + 0.3vw, 1rem)', { lineHeight: '1.4', letterSpacing: '-0.01em' }],
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',

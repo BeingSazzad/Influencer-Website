@@ -132,33 +132,33 @@ export function HowItWorksSection() {
         </div>
 
         {/* 4 Steps Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-6">
           {currentSteps.map((step, idx) => {
             const Icon = step.icon;
             return (
               <div
                 key={idx}
-                className="bg-white rounded-3xl p-5 sm:p-7 border border-[#E7E7E2] flex flex-col justify-between hover:border-[#0A0A0A] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative group"
+                className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-7 border border-[#E7E7E2] flex flex-col justify-between sm:hover:border-[#0A0A0A] sm:hover:shadow-xl sm:hover:-translate-y-1 transition-all duration-300 relative group"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <span className="font-sans text-3xl font-black text-[#D2D2CA] group-hover:text-[#0A0A0A] transition-colors tracking-tight">
+                  <div className="flex items-center justify-between mb-2.5 sm:mb-6">
+                    <span className="font-sans text-[1.15rem] md:text-3xl font-black text-[#D2D2CA] group-hover:text-[#0A0A0A] transition-colors tracking-tight leading-none">
                       {step.step}
                     </span>
-                    <div className="w-12 h-12 rounded-2xl bg-[#F4F4F0] text-[#0A0A0A] flex items-center justify-center group-hover:scale-105 transition-transform shadow-2xs">
-                      <Icon className="w-5 h-5" />
+                    <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#F4F4F0] text-[#0A0A0A] flex items-center justify-center sm:group-hover:scale-105 transition-transform shadow-2xs">
+                      <Icon className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
                     </div>
                   </div>
-                  <h3 className="text-2xl font-extrabold text-[#0A0A0A] mb-2 font-sans">
+                  <h3 className="text-[0.95rem] md:text-2xl font-extrabold text-[#0A0A0A] mb-1 sm:mb-2 font-sans leading-snug">
                     {step.title}
                   </h3>
-                  <p className="text-sm text-[#555550] leading-[22px] font-sans font-medium">
+                  <p className="text-xs sm:text-sm text-[#555550] leading-snug sm:leading-[22px] font-sans font-medium line-clamp-3 sm:line-clamp-none">
                     {step.desc}
                   </p>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-[#F4F4F0]">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#66665E] font-sans">
+                <div className="mt-3 pt-2.5 sm:mt-6 sm:pt-4 border-t border-[#F4F4F0]">
+                  <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[#66665E] font-sans">
                     {step.badge}
                   </span>
                 </div>
@@ -168,7 +168,7 @@ export function HowItWorksSection() {
         </div>
 
         {/* CTA Banner Bottom */}
-        <div className="mt-14 text-center">
+        <div className="mt-8 sm:mt-14 text-center">
           <Button
             href={activeTab === 'brand' ? '/creators' : '/register'}
             size="lg"

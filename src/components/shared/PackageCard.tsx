@@ -101,28 +101,28 @@ export function PackageCard({ packageItem, pkg, creator, onSelect }: PackageCard
   return (
     <div
       onClick={handleSelectPackage}
-      className={`rounded-3xl border p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-lg cursor-pointer group font-sans relative bg-white ${
+      className={`min-w-0 rounded-2xl sm:rounded-3xl border p-3.5 sm:p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-lg cursor-pointer group font-sans relative bg-white ${
         currentPkg.popular
           ? 'border-[#0A0A0A] ring-1 ring-[#0A0A0A]'
           : 'border-[#E7E7E2] hover:border-[#0A0A0A]'
       }`}
     >
       {currentPkg.popular && (
-        <div className="absolute -top-3 left-6">
+        <div className="absolute -top-2.5 left-3 sm:-top-3 sm:left-6">
           <Badge variant="dark" size="sm" icon={<Flame className="w-3 h-3 text-amber-300" />}>
             Most Popular
           </Badge>
         </div>
       )}
 
-      <div className="space-y-4">
+      <div className="space-y-2.5 sm:space-y-4">
         {/* Header row: Channel Tags + Price */}
-        <div className="flex items-center justify-between gap-2 flex-wrap">
-          <div className="flex items-center gap-1.5 flex-wrap">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex min-w-0 items-center gap-1 flex-wrap">
             {channels.map((ch) => (
               <span
                 key={ch.id}
-                className="text-sm font-bold px-2.5 py-1 rounded-full bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] inline-flex items-center gap-1"
+                className="text-[11px] sm:text-sm font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] inline-flex items-center gap-1"
               >
                 {ch.icon}
                 <span>{ch.label}</span>
@@ -130,27 +130,27 @@ export function PackageCard({ packageItem, pkg, creator, onSelect }: PackageCard
             ))}
           </div>
 
-          <span className="text-2xl font-black text-[#0A0A0A]">
+          <span className="shrink-0 text-[1.15rem] sm:text-2xl font-black text-[#0A0A0A] tracking-tight">
             €{currentPkg.priceEur.toLocaleString()}
           </span>
         </div>
 
         {/* Title & Description */}
-        <div>
-          <h4 className="font-black text-[#0A0A0A] text-base group-hover:text-zinc-700 transition-colors leading-snug">
+        <div className="min-w-0">
+          <h4 className="font-black text-[#0A0A0A] text-sm sm:text-base group-hover:text-zinc-700 transition-colors leading-snug">
             {currentPkg.title}
           </h4>
-          <p className="text-sm text-[#66665E] mt-1.5 leading-relaxed line-clamp-2">
+          <p className="text-xs sm:text-sm text-[#66665E] mt-1 sm:mt-1.5 leading-snug sm:leading-relaxed line-clamp-2">
             {currentPkg.description}
           </p>
         </div>
 
         {/* Inclusions Checklist */}
         {currentPkg.inclusions && currentPkg.inclusions.length > 0 && (
-          <ul className="space-y-1.5 border-t border-[#F4F4F0] pt-3 text-xs text-[#44443E]">
+          <ul className="space-y-1 sm:space-y-1.5 border-t border-[#F4F4F0] pt-2 sm:pt-3 text-[11px] sm:text-xs text-[#44443E]">
             {currentPkg.inclusions.slice(0, 3).map((item, idx) => (
-              <li key={idx} className="flex items-center gap-2">
-                <Check className="w-3.5 h-3.5 text-[#FF2D78] shrink-0" />
+              <li key={idx} className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+                <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#FF2D78] shrink-0" />
                 <span className="truncate font-medium">{item}</span>
               </li>
             ))}
@@ -159,8 +159,8 @@ export function PackageCard({ packageItem, pkg, creator, onSelect }: PackageCard
       </div>
 
       {/* Footer Specs & CTA */}
-      <div className="pt-4 mt-4 border-t border-[#E7E7E2] space-y-3">
-        <div className="flex items-center justify-between text-sm text-[#66665E] font-bold">
+      <div className="pt-2.5 mt-2.5 sm:pt-4 sm:mt-4 border-t border-[#E7E7E2] space-y-2 sm:space-y-3">
+        <div className="flex items-center justify-between gap-2 text-[12px] sm:text-sm text-[#66665E] font-bold">
           <span className="flex items-center gap-1">
             <Clock className="w-3.5 h-3.5 text-[#66665E]" />
             {currentPkg.deliveryDays}d turnaround
@@ -173,9 +173,10 @@ export function PackageCard({ packageItem, pkg, creator, onSelect }: PackageCard
 
         <Button
           type="button"
-          size="md"
+          size="sm"
           variant={currentPkg.popular ? 'pink' : 'primary'}
           fullWidth
+          className="sm:!h-10 sm:!px-5 sm:!text-sm"
           icon={isSelf ? <Edit3 className="w-3.5 h-3.5" /> : undefined}
           iconRight={!isSelf ? <ArrowRight className="w-3.5 h-3.5" /> : undefined}
         >

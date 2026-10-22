@@ -68,23 +68,23 @@ export function DesignMonkBentoSection() {
               </p>
 
               {/* Interactive Performance Meter */}
-              <div className="grid grid-cols-3 gap-1.5 sm:gap-3 pt-3 sm:pt-4 border-t border-white/10">
-                <div className="min-w-0 bg-white/5 rounded-lg sm:rounded-2xl p-2 sm:p-4 border border-white/5">
-                  <div className="text-[10px] sm:text-sm leading-tight text-[#A3A39C] font-sans font-medium">Avg. Hook Rate</div>
-                  <div className="font-sans text-base sm:text-3xl font-black text-white mt-1 tracking-tight">48.2%</div>
-                  <div className="text-[10px] sm:text-xs leading-tight text-emerald-400 font-sans font-bold mt-0.5">↑ 2.4x vs Industry</div>
+              <div className="grid grid-cols-3 items-stretch gap-2 sm:gap-3 pt-4 border-t border-white/10">
+                <div className="flex min-w-0 flex-col gap-2 rounded-xl sm:rounded-2xl border border-white/5 bg-white/5 p-2 sm:gap-2.5 sm:p-4">
+                  <div className="min-h-[2.3em] text-[9px] min-[400px]:text-[10px] md:text-sm leading-snug text-[#A3A39C] font-sans font-medium">Avg. Hook Rate</div>
+                  <div className="font-sans text-[12px] min-[420px]:text-[14px] md:text-3xl font-black text-white tracking-tight leading-none whitespace-nowrap">48.2%</div>
+                  <div className="min-h-[2.2em] text-[8px] min-[400px]:text-[9px] md:text-xs leading-snug text-emerald-400 font-sans font-bold">↑ 2.4x vs Industry</div>
                 </div>
 
-                <div className="min-w-0 bg-white/5 rounded-lg sm:rounded-2xl p-2 sm:p-4 border border-white/5">
-                  <div className="text-[10px] sm:text-sm leading-tight text-[#A3A39C] font-sans font-medium">Click-Through (CTR)</div>
-                  <div className="font-sans text-base sm:text-3xl font-black text-white mt-1 tracking-tight">3.85%</div>
-                  <div className="text-[10px] sm:text-xs leading-tight text-emerald-400 font-sans font-bold mt-0.5">↑ Meta Benchmarks</div>
+                <div className="flex min-w-0 flex-col gap-2 rounded-xl sm:rounded-2xl border border-white/5 bg-white/5 p-2 sm:gap-2.5 sm:p-4">
+                  <div className="min-h-[2.3em] text-[9px] min-[400px]:text-[10px] md:text-sm leading-snug text-[#A3A39C] font-sans font-medium">Click-Through (CTR)</div>
+                  <div className="font-sans text-[12px] min-[420px]:text-[14px] md:text-3xl font-black text-white tracking-tight leading-none whitespace-nowrap">3.85%</div>
+                  <div className="min-h-[2.2em] text-[8px] min-[400px]:text-[9px] md:text-xs leading-snug text-emerald-400 font-sans font-bold">↑ Meta Benchmarks</div>
                 </div>
 
-                <div className="min-w-0 bg-white/5 rounded-lg sm:rounded-2xl p-2 sm:p-4 border border-white/5">
-                  <div className="text-[10px] sm:text-sm leading-tight text-[#A3A39C] font-sans font-medium">Turnaround Time</div>
-                  <div className="font-sans text-base sm:text-3xl font-black text-white mt-1 tracking-tight">3-5 Days</div>
-                  <div className="text-[10px] sm:text-xs leading-tight text-[#FF2D78] font-sans font-bold mt-0.5">⚡ Rapid Delivery</div>
+                <div className="flex min-w-0 flex-col gap-2 rounded-xl sm:rounded-2xl border border-white/5 bg-white/5 p-2 sm:gap-2.5 sm:p-4">
+                  <div className="min-h-[2.3em] text-[9px] min-[400px]:text-[10px] md:text-sm leading-snug text-[#A3A39C] font-sans font-medium">Turnaround Time</div>
+                  <div className="font-sans text-[12px] min-[420px]:text-[14px] md:text-3xl font-black text-white tracking-tight leading-none whitespace-nowrap">3-5 Days</div>
+                  <div className="min-h-[2.2em] text-[8px] min-[400px]:text-[9px] md:text-xs leading-snug text-[#FF2D78] font-sans font-bold">⚡ Rapid Delivery</div>
                 </div>
               </div>
             </div>

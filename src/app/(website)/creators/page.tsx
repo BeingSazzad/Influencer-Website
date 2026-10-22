@@ -12,6 +12,8 @@ import {
   Search,
   RotateCcw,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   X,
   LayoutGrid,
   List,
@@ -65,6 +67,7 @@ function CreatorsDiscoveryContent() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const categoryRowRef = useRef<HTMLDivElement>(null);
+  const [categoryEdges, setCategoryEdges] = useState({ left: false, right: true });
   const pageSize = 9;
 
   // Synchronize incoming URL search parameters (from Hero search, Footer category links, etc.)
@@ -119,6 +122,27 @@ function CreatorsDiscoveryContent() {
     };
   }, [mobileFiltersOpen]);
 
+  const updateCategoryEdges = () => {
+    const row = categoryRowRef.current;
+    if (!row) return;
+    setCategoryEdges({
+      left: row.scrollLeft > 8,
+      right: row.scrollLeft + row.clientWidth < row.scrollWidth - 8,
+    });
+  };
+
+  useEffect(() => {
+    const row = categoryRowRef.current;
+    if (!row) return;
+    updateCategoryEdges();
+    row.addEventListener('scroll', updateCategoryEdges, { passive: true });
+    window.addEventListener('resize', updateCategoryEdges);
+    return () => {
+      row.removeEventListener('scroll', updateCategoryEdges);
+      window.removeEventListener('resize', updateCategoryEdges);
+    };
+  }, []);
+
   useEffect(() => {
     const row = categoryRowRef.current;
     if (!row) return;
@@ -127,6 +151,10 @@ function CreatorsDiscoveryContent() {
     const left = selected.offsetLeft - (row.clientWidth - selected.offsetWidth) / 2;
     row.scrollTo({ left: Math.max(0, left), behavior: 'smooth' });
   }, [filters.category]);
+
+  const nudgeCategories = (direction: 1 | -1) => {
+    categoryRowRef.current?.scrollBy({ left: direction * 200, behavior: 'smooth' });
+  };
 
   const categories = [
     {
@@ -639,10 +667,20 @@ function CreatorsDiscoveryContent() {
         )}
 
         {/* Category navigation scrolls on its own. It must not widen the page. */}
-        <div className="relative min-w-0 lg:hidden">
+        <div className="relative min-w-0 px-8 lg:hidden">
+          {categoryEdges.left && (
+            <button
+              type="button"
+              aria-label="Previous categories"
+              onClick={() => nudgeCategories(-1)}
+              className="absolute left-0 top-1/2 z-10 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full border border-[#E7E7E2] bg-white text-[#0A0A0A] shadow-sm"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+          )}
           <div
             ref={categoryRowRef}
-            className="flex w-full min-w-0 snap-x gap-1.5 overflow-x-auto overscroll-x-contain no-scrollbar py-0.5"
+            className="flex w-full min-w-0 gap-1.5 overflow-x-auto overscroll-x-contain no-scrollbar py-0.5"
             role="tablist"
             aria-label="Creator categories"
           >
@@ -657,7 +695,7 @@ function CreatorsDiscoveryContent() {
                   data-selected={isSelected}
                   aria-selected={isSelected}
                   onClick={() => dispatch(setFilter({ category: cat.name }))}
-                  className={`flex h-8 shrink-0 snap-start items-center gap-1.5 rounded-full px-2.5 text-xs font-bold ${
+                  className={`flex h-8 shrink-0 items-center gap-1.5 rounded-full px-2.5 text-xs font-bold ${
                     isSelected
                       ? 'bg-[#0A0A0A] text-white'
                       : 'border border-[#E7E7E2] bg-white text-[#555550]'
@@ -674,7 +712,22 @@ function CreatorsDiscoveryContent() {
               );
             })}
           </div>
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#FAFAF8] to-transparent" />
+          {categoryEdges.right && (
+            <>
+              <div className="pointer-events-none absolute inset-y-0 right-8 w-8 bg-gradient-to-l from-[#FAFAF8] to-transparent" />
+              <button
+                type="button"
+                aria-label="More categories"
+                onClick={() => nudgeCategories(1)}
+                className="absolute right-0 top-1/2 z-10 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full border border-[#E7E7E2] bg-white text-[#0A0A0A] shadow-sm"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </button>
+            </>
+          )}
+          {categoryEdges.left && (
+            <div className="pointer-events-none absolute inset-y-0 left-8 w-8 bg-gradient-to-r from-[#FAFAF8] to-transparent" />
+          )}
         </div>
 
         {/* Main Split Grid: Left Category Sidebar + Right Creator Grid */}
