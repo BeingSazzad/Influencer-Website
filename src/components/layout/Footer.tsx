@@ -12,7 +12,7 @@ export function Footer() {
   return (
     <footer className="bg-[#0A0A0A] text-[#FAFAF8] pt-12 sm:pt-16 pb-8 sm:pb-12 border-t border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 lg:gap-8 mb-10 sm:mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-8 mb-8 sm:mb-16">
           {/* Brand Col */}
           <div className="lg:col-span-2">
             <Logo isLight size="md" />
@@ -78,12 +78,13 @@ export function Footer() {
             </div>
           </div>
 
+          <div className="grid grid-cols-2 gap-x-6 gap-y-7 lg:col-span-3 lg:grid-cols-3 lg:gap-8">
           {/* Column: Discover */}
-          <div className="space-y-4">
+          <div className="min-w-0 space-y-3 lg:space-y-4">
             <h4 className="text-xs font-bold uppercase tracking-wider text-[#A3A39C]">
               Discover
             </h4>
-            <ul className="space-y-2.5 text-sm text-[#D4D4CA]">
+            <ul className="space-y-2 text-sm leading-snug text-[#D4D4CA]">
               <li>
                 <Link href="/creators" className="hover:text-white transition-colors">
                   All Creators
@@ -113,11 +114,11 @@ export function Footer() {
           </div>
 
           {/* Column: Platform */}
-          <div className="space-y-4">
+          <div className="min-w-0 space-y-3 lg:space-y-4">
             <h4 className="text-xs font-bold uppercase tracking-wider text-[#A3A39C]">
               Platform
             </h4>
-            <ul className="space-y-2.5 text-sm text-[#D4D4CA]">
+            <ul className="space-y-2 text-sm leading-snug text-[#D4D4CA]">
               <li>
                 <Link href="/about" className="hover:text-white transition-colors flex items-center gap-1.5">
                   About Influverse
@@ -142,11 +143,11 @@ export function Footer() {
           </div>
 
           {/* Column: Company & Legal */}
-          <div className="space-y-4">
+          <div className="min-w-0 space-y-3 lg:space-y-4">
             <h4 className="text-xs font-bold uppercase tracking-wider text-[#A3A39C]">
               Trust & Legal
             </h4>
-            <ul className="space-y-2.5 text-sm text-[#D4D4CA]">
+            <ul className="space-y-2 text-sm leading-snug text-[#D4D4CA]">
               <li>
                 <Link href="/about" className="hover:text-white transition-colors">
                   About Us
@@ -169,13 +170,14 @@ export function Footer() {
               </li>
             </ul>
           </div>
+          </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-[#A3A39C]">
-          <div className="flex items-center gap-2">
+        <div className="pt-6 sm:pt-8 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-sm text-[#A3A39C]">
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-2">
             <span>© {new Date().getFullYear()} Influverse Inc. All rights reserved.</span>
-            <span>•</span>
+            <span className="hidden sm:inline">•</span>
             <span className="text-[#D4D4CA]">Real people. Real results.</span>
           </div>
 

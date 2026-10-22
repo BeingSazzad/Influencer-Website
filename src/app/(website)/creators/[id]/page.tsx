@@ -622,35 +622,35 @@ export default function CreatorProfilePage() {
               const collabPrefsList = ALL_COLLAB_PREFS.filter((p) => activeCollabIds.includes(p.id));
 
               return (
-                <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-5">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                    <div>
-                      <h2 className="text-xl sm:text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
+                <div className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-3 sm:space-y-5">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <h2 className="text-lg sm:text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                         Collaboration Preferences
                       </h2>
-                      <p className="text-sm text-[#66665E] mt-0.5 font-medium">
+                      <p className="text-xs sm:text-sm text-[#66665E] mt-0.5 font-medium">
                         Partnership types and content formats {creator.name} is open to working on.
                       </p>
                     </div>
-                    <span className="text-xs font-bold px-3 py-1 rounded-full bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] self-start sm:self-auto">
-                      {collabPrefsList.length} Preferences Active
+                    <span className="shrink-0 text-[10px] sm:text-xs font-bold px-2 py-1 sm:px-3 rounded-full bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2]">
+                      {collabPrefsList.length} active
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+                  <div className="grid grid-cols-2 gap-2 sm:gap-3.5 lg:grid-cols-3">
                     {collabPrefsList.map((pref) => (
                       <div
                         key={pref.id}
-                        className="p-4 rounded-2xl border border-[#E7E7E2] bg-[#FAFAF8] flex items-start gap-3 hover:border-[#0A0A0A] transition-all"
+                        className="p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border border-[#E7E7E2] bg-[#FAFAF8] flex items-start gap-2 sm:gap-3 hover:border-[#0A0A0A] transition-all"
                       >
-                        <div className="w-9 h-9 rounded-xl bg-white border border-[#E7E7E2] flex items-center justify-center shrink-0 mt-0.5 text-[#0A0A0A]">
-                          <CategoryIcon name={pref.id} size={18} />
+                        <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-white border border-[#E7E7E2] flex items-center justify-center shrink-0 text-[#0A0A0A]">
+                          <CategoryIcon name={pref.id} size={16} />
                         </div>
                         <div className="min-w-0 flex-1">
-                          <h4 className="text-sm font-bold text-[#0A0A0A] truncate">
+                          <h4 className="text-xs sm:text-sm font-bold text-[#0A0A0A] leading-snug">
                             {pref.label}
                           </h4>
-                          <p className="text-xs text-[#66665E] mt-0.5 leading-relaxed">
+                          <p className="text-[11px] sm:text-xs text-[#66665E] mt-0.5 leading-snug line-clamp-3">
                             {pref.desc}
                           </p>
                         </div>
@@ -662,26 +662,27 @@ export default function CreatorProfilePage() {
             })()}
 
             {/* Portfolio Showcase */}
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Featured Portfolio</h2>
-                  <p className="text-sm text-[#66665E] mt-1 font-medium">
+            <div className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-3 sm:space-y-6">
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <h2 className="text-lg sm:text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Featured Portfolio</h2>
+                  <p className="text-xs sm:text-sm text-[#66665E] mt-0.5 sm:mt-1 font-medium">
                     Brand collaborations and creative content samples.
                   </p>
                 </div>
 
                 <button
                   onClick={() => setActiveTab('portfolio')}
-                  className="text-sm font-bold text-[#0A0A0A] hover:text-[#FF2D78] flex items-center gap-1.5 cursor-pointer transition-colors"
+                  className="shrink-0 whitespace-nowrap text-xs sm:text-sm font-bold text-[#0A0A0A] hover:text-[#FF2D78] flex items-center gap-1 cursor-pointer transition-colors"
                 >
-                  <span>View All Campaigns</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <span className="sm:hidden">View all</span>
+                  <span className="hidden sm:inline">View All Campaigns</span>
+                  <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </button>
               </div>
 
               {/* 4 Items Portfolio Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 gap-2 sm:gap-4 lg:grid-cols-4">
                 {creator.portfolio.slice(0, 4).map((item) => (
                   <div
                     key={item.id}
@@ -689,7 +690,7 @@ export default function CreatorProfilePage() {
                     role="button"
                     tabIndex={0}
                     onKeyDown={(e) => e.key === 'Enter' && setSelectedPortfolioItem(item)}
-                    className="relative rounded-2xl overflow-hidden group bg-[#F4F4F0] h-64 border border-[#E7E7E2] hover:border-[#0A0A0A] hover:shadow-lg transition-all cursor-pointer"
+                    className="relative rounded-xl sm:rounded-2xl overflow-hidden group bg-[#F4F4F0] h-36 sm:h-52 lg:h-64 border border-[#E7E7E2] hover:border-[#0A0A0A] hover:shadow-lg transition-all cursor-pointer"
                   >
                     <img
                       src={item.mediaUrl}
@@ -698,16 +699,16 @@ export default function CreatorProfilePage() {
                     />
 
                     {/* Floating Play Indicator Icon */}
-                    <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center group-hover:bg-[#FF2D78] group-hover:scale-110 transition-all shadow-sm">
-                      <Play className="w-3.5 h-3.5 fill-white translate-x-0.5" />
+                    <div className="absolute top-1.5 right-1.5 sm:top-3 sm:right-3 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center group-hover:bg-[#FF2D78] group-hover:scale-110 transition-all shadow-sm">
+                      <Play className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 fill-white translate-x-0.5" />
                     </div>
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-85 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 text-white">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-85 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-2 sm:p-4 text-white">
                       <div className="min-w-0">
-                        <div className="font-extrabold text-sm text-white tracking-tight truncate">
+                        <div className="font-extrabold text-[11px] sm:text-sm text-white tracking-tight truncate">
                           {item.brandName}
                         </div>
-                        <div className="text-xs text-white/80 font-medium truncate mt-0.5">
+                        <div className="text-[10px] sm:text-xs text-white/80 font-medium truncate mt-0.5">
                           {item.deliverableType || item.campaignTitle}
                         </div>
                       </div>
@@ -718,33 +719,34 @@ export default function CreatorProfilePage() {
             </div>
 
             {/* Gallery Preview */}
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div>
-                  <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
+            <div className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-3 sm:space-y-6">
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <h2 className="text-lg sm:text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                     Gallery
                   </h2>
-                  <p className="text-sm text-[#66665E] mt-1 font-medium">
+                  <p className="text-xs sm:text-sm text-[#66665E] mt-0.5 sm:mt-1 font-medium">
                     Photos and visual showcase of {creator.name}.
                   </p>
                 </div>
 
                 <button
                   onClick={() => setActiveTab('photos')}
-                  className="text-sm font-bold text-[#0A0A0A] hover:text-[#FF2D78] flex items-center gap-1.5 cursor-pointer transition-colors"
+                  className="shrink-0 whitespace-nowrap text-xs sm:text-sm font-bold text-[#0A0A0A] hover:text-[#FF2D78] flex items-center gap-1 cursor-pointer transition-colors"
                 >
-                  <span>View All Photos</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <span className="sm:hidden">View all</span>
+                  <span className="hidden sm:inline">View All Photos</span>
+                  <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </button>
               </div>
 
               {/* 4-Card Photo Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 gap-2 sm:gap-4 lg:grid-cols-4">
                 {creatorPhotos.slice(0, 4).map((item) => (
                   <div
                     key={item.id}
                     onClick={() => setSelectedPhoto(item)}
-                    className="relative rounded-2xl overflow-hidden group bg-[#FAFAF8] h-72 border border-[#E7E7E2] hover:border-[#0A0A0A] hover:shadow-lg transition-all cursor-pointer"
+                    className="relative rounded-xl sm:rounded-2xl overflow-hidden group bg-[#FAFAF8] h-36 sm:h-56 lg:h-72 border border-[#E7E7E2] hover:border-[#0A0A0A] hover:shadow-lg transition-all cursor-pointer"
                   >
                     <img
                       src={item.url}
@@ -765,42 +767,42 @@ export default function CreatorProfilePage() {
           </div>
 
             {/* Verified Brand Reviews Preview */}
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Client Reviews & Testimonials</h2>
-                  <p className="text-sm text-[#66665E] mt-1 font-medium">
+            <div className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-3 sm:space-y-6">
+              <div className="flex items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <h2 className="text-base sm:text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Client Reviews</h2>
+                  <p className="text-xs sm:text-sm text-[#66665E] mt-0.5 sm:mt-1 font-medium">
                     Ratings from completed collaborations.
                   </p>
                 </div>
                 <button
                   onClick={() => setActiveTab('reviews')}
-                  className="text-sm font-bold text-[#0A0A0A] hover:text-[#FF2D78] flex items-center gap-1.5 cursor-pointer transition-colors"
+                  className="shrink-0 text-xs sm:text-sm font-bold text-[#0A0A0A] hover:text-[#FF2D78] flex items-center gap-1 cursor-pointer transition-colors"
                 >
-                  <span>All {creator.reviewsCount} Reviews</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <span>All {creator.reviewsCount}</span>
+                  <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </button>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-4">
                 {creator.reviews.slice(0, 4).map((rev) => (
-                  <div key={rev.id} className="p-5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-3 flex flex-col justify-between shadow-2xs">
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between gap-3">
-                        <div className="flex items-center gap-3 min-w-0">
-                          <BrandLogo name={rev.brandName} logoUrl={rev.brandLogo} size="md" />
+                  <div key={rev.id} className="p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-2 sm:space-y-3 flex flex-col justify-between shadow-2xs">
+                    <div className="space-y-2 sm:space-y-3">
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                          <BrandLogo name={rev.brandName} logoUrl={rev.brandLogo} size="sm" className="sm:!w-10 sm:!h-10" />
                           <div className="min-w-0">
-                            <div className="font-bold text-sm text-[#0A0A0A] truncate">{rev.brandName}</div>
-                            <div className="text-sm text-[#66665E] truncate">{rev.campaignName} • {rev.date}</div>
+                            <div className="font-bold text-[13px] sm:text-sm text-[#0A0A0A] truncate">{rev.brandName}</div>
+                            <div className="text-[11px] sm:text-sm text-[#66665E] truncate">{rev.campaignName} • {rev.date}</div>
                           </div>
                         </div>
                         <div className="flex text-amber-500 shrink-0">
                           {[...Array(rev.rating)].map((_, i) => (
-                            <Star key={i} className="w-4 h-4 fill-amber-500" />
+                            <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 fill-amber-500" />
                           ))}
                         </div>
                       </div>
-                      <p className="text-sm text-[#555550] leading-[24px] italic">
+                      <p className="text-[13px] sm:text-sm text-[#555550] leading-snug sm:leading-[24px] italic line-clamp-3 sm:line-clamp-none">
                         &ldquo;{rev.comment}&rdquo;
                       </p>
                     </div>
@@ -882,7 +884,7 @@ export default function CreatorProfilePage() {
             </div>
 
             {filteredPortfolio.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-2 gap-2 sm:gap-4 lg:grid-cols-3 lg:gap-6">
                 {filteredPortfolio.map((item) => (
                   <div
                     key={item.id}
@@ -890,10 +892,10 @@ export default function CreatorProfilePage() {
                     role="button"
                     tabIndex={0}
                     onKeyDown={(e) => e.key === 'Enter' && setSelectedPortfolioItem(item)}
-                    className="rounded-3xl overflow-hidden border border-[#E7E7E2] bg-[#FAFAF8] hover:border-[#0A0A0A] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group cursor-pointer font-sans"
+                    className="rounded-2xl sm:rounded-3xl overflow-hidden border border-[#E7E7E2] bg-[#FAFAF8] hover:border-[#0A0A0A] hover:shadow-xl lg:hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group cursor-pointer font-sans"
                   >
                     {/* Media Thumbnail Container */}
-                    <div className="h-60 overflow-hidden relative bg-[#0A0A0A]">
+                    <div className="h-28 sm:h-44 lg:h-60 overflow-hidden relative bg-[#0A0A0A]">
                       <img
                         src={item.mediaUrl}
                         alt={item.campaignTitle}
@@ -901,8 +903,8 @@ export default function CreatorProfilePage() {
                       />
 
                       {/* Top Badges: Platform & Duration */}
-                      <div className="absolute top-3 inset-x-3 flex items-center justify-between z-10">
-                        <span className="text-xs font-black uppercase tracking-wider bg-black/75 backdrop-blur-md text-white px-3 py-1 rounded-full border border-white/15 flex items-center gap-1.5 shadow-sm">
+                      <div className="absolute top-1.5 inset-x-1.5 sm:top-3 sm:inset-x-3 flex items-center justify-between z-10 gap-1">
+                        <span className="min-w-0 truncate text-[10px] sm:text-xs font-black uppercase tracking-wider bg-black/75 backdrop-blur-md text-white px-1.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-white/15 flex items-center gap-1 shadow-sm">
                           {item.platform === 'instagram' && <Instagram className="w-3 h-3 text-[#FF2D78]" />}
                           {item.platform === 'tiktok' && <Film className="w-3 h-3 text-white" />}
                           {item.platform === 'youtube' && <Youtube className="w-3 h-3 text-red-500" />}
@@ -911,7 +913,7 @@ export default function CreatorProfilePage() {
                         </span>
 
                         {item.duration && (
-                          <span className="text-xs font-extrabold uppercase tracking-wider bg-black/70 backdrop-blur-md text-white px-2.5 py-1 rounded-full border border-white/10">
+                          <span className="shrink-0 text-[10px] sm:text-xs font-extrabold uppercase tracking-wider bg-black/70 backdrop-blur-md text-white px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full border border-white/10">
                             {item.duration}
                           </span>
                         )}
@@ -919,37 +921,37 @@ export default function CreatorProfilePage() {
 
                       {/* Hover Center Play Overlay Button */}
                       <div className="absolute inset-0 bg-black/25 group-hover:bg-black/45 transition-colors flex items-center justify-center">
-                        <div className="w-14 h-14 rounded-full bg-white/95 group-hover:bg-[#FF2D78] group-hover:text-white text-[#0A0A0A] flex items-center justify-center shadow-xl transition-all duration-300 group-hover:scale-110">
-                          <Play className="w-5 h-5 fill-current translate-x-0.5" />
+                        <div className="w-8 h-8 sm:w-14 sm:h-14 rounded-full bg-white/95 group-hover:bg-[#FF2D78] group-hover:text-white text-[#0A0A0A] flex items-center justify-center shadow-xl transition-all duration-300 group-hover:scale-110">
+                          <Play className="w-3 h-3 sm:w-5 sm:h-5 fill-current translate-x-0.5" />
                         </div>
                       </div>
                     </div>
 
                     {/* Card Content Body */}
-                    <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
-                      <div className="space-y-1.5">
-                        <div className="flex items-center justify-between">
-                          <h3 className="font-extrabold text-base text-[#0A0A0A] group-hover:text-[#FF2D78] transition-colors">
+                    <div className="p-2.5 sm:p-5 flex-1 flex flex-col justify-between space-y-2 sm:space-y-3">
+                      <div className="space-y-1 sm:space-y-1.5">
+                        <div className="flex items-center justify-between gap-1">
+                          <h3 className="min-w-0 truncate font-extrabold text-xs sm:text-base text-[#0A0A0A] group-hover:text-[#FF2D78] transition-colors">
                             {item.brandName}
                           </h3>
-                          <span className="text-xs font-extrabold text-[#0A0A0A] bg-[#F4F4F0] px-2.5 py-0.5 rounded-md border border-[#E7E7E2]">
-                            {item.views} Views
+                          <span className="shrink-0 text-[10px] sm:text-xs font-extrabold text-[#0A0A0A] bg-[#F4F4F0] px-1.5 sm:px-2.5 py-0.5 rounded-md border border-[#E7E7E2]">
+                            {item.views}
                           </span>
                         </div>
 
-                        <p className="text-sm font-semibold text-[#0A0A0A] line-clamp-1">
+                        <p className="text-[11px] sm:text-sm font-semibold text-[#0A0A0A] line-clamp-1">
                           {item.campaignTitle}
                         </p>
 
                         {item.deliverableType && (
-                          <p className="text-sm text-[#66665E] font-medium line-clamp-1">
+                          <p className="hidden sm:block text-sm text-[#66665E] font-medium line-clamp-1">
                             {item.deliverableType}
                           </p>
                         )}
                       </div>
 
                       {/* Footer Metrics */}
-                      <div className="pt-3 border-t border-[#E7E7E2] flex items-center justify-between text-sm font-bold text-[#66665E]">
+                      <div className="pt-2 sm:pt-3 border-t border-[#E7E7E2] flex items-center justify-between text-[11px] sm:text-sm font-bold text-[#66665E]">
                         <div className="flex items-center gap-3">
                           <span className="flex items-center gap-1 text-[#0A0A0A]">
                             <Heart className="w-3.5 h-3.5 text-[#FF2D78]" />
@@ -1042,33 +1044,31 @@ export default function CreatorProfilePage() {
           );
 
           return (
-            <div className="space-y-6">
+            <div className="space-y-3 sm:space-y-6">
               {/* Rating Summary & Trust Breakdown Header Card */}
-              <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-sm">
-                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-                  <div>
-                    <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
+              <div className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-8 border border-[#E7E7E2] shadow-sm">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="min-w-0">
+                    <h2 className="text-base sm:text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
                       Brand Reviews
                     </h2>
-                    <p className="text-sm text-[#66665E] mt-1 font-medium">
+                    <p className="text-xs sm:text-sm text-[#66665E] mt-0.5 sm:mt-1 font-medium">
                       Reviews from completed collaborations.
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-3">
-                    <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center gap-3.5">
-                      <div className="text-3xl font-black text-[#0A0A0A] font-sans tracking-tight">
-                        {creator.rating.toFixed(2)}
+                  <div className="shrink-0 p-2 sm:p-4 rounded-xl sm:rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center gap-2 sm:gap-3.5">
+                    <div className="text-[1.35rem] sm:text-3xl font-black text-[#0A0A0A] font-sans tracking-tight leading-none">
+                      {creator.rating.toFixed(2)}
+                    </div>
+                    <div>
+                      <div className="flex text-amber-500">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 fill-amber-500" />
+                        ))}
                       </div>
-                      <div>
-                        <div className="flex text-amber-500">
-                          {[...Array(5)].map((_, i) => (
-                            <Star key={i} className="w-4 h-4 fill-amber-500" />
-                          ))}
-                        </div>
-                        <div className="text-sm font-bold text-[#66665E] mt-0.5">
-                          {creator.reviewsCount || 42} reviews
-                        </div>
+                      <div className="text-[11px] sm:text-sm font-bold text-[#66665E] mt-0.5">
+                        {creator.reviewsCount || 42} reviews
                       </div>
                     </div>
                   </div>
@@ -1077,16 +1077,16 @@ export default function CreatorProfilePage() {
               </div>
 
               {/* Reviews List & Filter Card */}
-              <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-sm space-y-6">
+              <div className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-8 border border-[#E7E7E2] shadow-sm space-y-3 sm:space-y-6">
                 {/* 1-Line Filter Tabs */}
-                <div className="flex items-center justify-between gap-4 pb-2 border-b border-[#E7E7E2] overflow-x-auto">
-                  <div className="inline-flex items-center gap-2 whitespace-nowrap shrink-0">
+                <div className="flex items-center justify-between gap-3 pb-2 border-b border-[#E7E7E2] overflow-x-auto min-w-0">
+                  <div className="inline-flex items-center gap-1.5 sm:gap-2 whitespace-nowrap shrink-0">
                     <button
                       onClick={() => {
                         setReviewFilter('all');
                         setReviewPage(1);
                       }}
-                      className={`h-9 px-4 rounded-full text-sm font-bold transition-all cursor-pointer ${
+                      className={`h-8 sm:h-9 px-3 sm:px-4 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                         reviewFilter === 'all'
                           ? 'bg-[#0A0A0A] text-white shadow-xs'
                           : 'bg-[#FAFAF8] text-[#555550] hover:bg-[#F4F4F0] border border-[#E7E7E2]'
@@ -1099,13 +1099,13 @@ export default function CreatorProfilePage() {
                         setReviewFilter('5');
                         setReviewPage(1);
                       }}
-                      className={`h-9 px-4 rounded-full text-sm font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                      className={`h-8 sm:h-9 px-3 sm:px-4 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-1 ${
                         reviewFilter === '5'
                           ? 'bg-[#0A0A0A] text-white shadow-xs'
                           : 'bg-[#FAFAF8] text-[#555550] hover:bg-[#F4F4F0] border border-[#E7E7E2]'
                       }`}
                     >
-                      <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                      <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-amber-400 text-amber-400" />
                       <span>5 Stars ({creator.reviews.filter((r) => r.rating === 5).length})</span>
                     </button>
                     <button
@@ -1113,13 +1113,13 @@ export default function CreatorProfilePage() {
                         setReviewFilter('4');
                         setReviewPage(1);
                       }}
-                      className={`h-9 px-4 rounded-full text-sm font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                      className={`h-8 sm:h-9 px-3 sm:px-4 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-1 ${
                         reviewFilter === '4'
                           ? 'bg-[#0A0A0A] text-white shadow-xs'
                           : 'bg-[#FAFAF8] text-[#555550] hover:bg-[#F4F4F0] border border-[#E7E7E2]'
                       }`}
                     >
-                      <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                      <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-amber-400 text-amber-400" />
                       <span>4 Stars ({creator.reviews.filter((r) => r.rating === 4).length})</span>
                     </button>
                   </div>
@@ -1130,26 +1130,26 @@ export default function CreatorProfilePage() {
                 </div>
 
                 {/* Reviews Cards List */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-4">
                   {displayedReviews.map((rev) => (
-                    <div key={rev.id} className="p-6 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] hover:border-[#0A0A0A]/30 transition-all space-y-4 flex flex-col justify-between group shadow-2xs">
-                      <div className="space-y-3">
-                        <div className="flex items-start justify-between gap-3">
-                          <div className="flex items-center gap-3 min-w-0">
-                            <BrandLogo name={rev.brandName} logoUrl={rev.brandLogo} size="md" />
+                    <div key={rev.id} className="p-3 sm:p-6 rounded-xl sm:rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] hover:border-[#0A0A0A]/30 transition-all space-y-2 sm:space-y-4 flex flex-col justify-between group shadow-2xs">
+                      <div className="space-y-2 sm:space-y-3">
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                            <BrandLogo name={rev.brandName} logoUrl={rev.brandLogo} size="sm" className="sm:!w-10 sm:!h-10" />
                             <div className="min-w-0">
-                              <div className="font-extrabold text-sm text-[#0A0A0A] truncate">{rev.brandName}</div>
-                              <div className="text-sm text-[#66665E] truncate">{rev.campaignName} • {rev.date}</div>
+                              <div className="font-extrabold text-[13px] sm:text-sm text-[#0A0A0A] truncate">{rev.brandName}</div>
+                              <div className="text-[11px] sm:text-sm text-[#66665E] truncate">{rev.campaignName} • {rev.date}</div>
                             </div>
                           </div>
                           <div className="flex text-amber-500 shrink-0">
                             {[...Array(rev.rating)].map((_, i) => (
-                              <Star key={i} className="w-4 h-4 fill-amber-500" />
+                              <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 fill-amber-500" />
                             ))}
                           </div>
                         </div>
 
-                        <p className="text-sm sm:text-[15px] text-[#44443E] leading-[24px] italic font-normal">
+                        <p className="text-[13px] sm:text-[15px] text-[#44443E] leading-snug sm:leading-[24px] italic font-normal line-clamp-3 sm:line-clamp-none">
                           &ldquo;{rev.comment}&rdquo;
                         </p>
                       </div>

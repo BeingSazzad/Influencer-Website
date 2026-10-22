@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, useEffect, Suspense } from 'react';
+import React, { useState, useMemo, useEffect, useRef, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from '@/redux/hooks';
 import { setFilter, resetFilters } from '@/redux/slices/creatorSlice';
@@ -15,10 +15,45 @@ import {
   X,
   LayoutGrid,
   List,
+  SlidersHorizontal,
 } from 'lucide-react';
 import { Pagination } from 'antd';
 import { Button } from '@/components/ui';
 import { CategoryIcon } from '@/components/shared/CategoryIcon';
+
+function FilterField({
+  label,
+  value,
+  onChange,
+  options,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  options: { value: string; label: string }[];
+}) {
+  return (
+    <label className="block">
+      <span className="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.12em] text-[#73736A]">
+        {label}
+      </span>
+      <span className="relative block">
+        <select
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          className="h-10 w-full appearance-none rounded-xl border border-[#E7E7E2] bg-[#FAFAF8] pl-3 pr-8 text-sm font-semibold text-[#0A0A0A] outline-none"
+        >
+          {options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+        <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#66665E]" />
+      </span>
+    </label>
+  );
+}
 
 function CreatorsDiscoveryContent() {
   const searchParams = useSearchParams();
@@ -28,6 +63,8 @@ function CreatorsDiscoveryContent() {
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const categoryRowRef = useRef<HTMLDivElement>(null);
   const pageSize = 9;
 
   // Synchronize incoming URL search parameters (from Hero search, Footer category links, etc.)
@@ -60,6 +97,36 @@ function CreatorsDiscoveryContent() {
   useEffect(() => {
     setCurrentPage(1);
   }, [filters]);
+
+  const activeFilterCount = [
+    filters.category !== 'all',
+    filters.location !== 'all',
+    filters.platform !== 'all',
+    filters.followerRange !== 'all',
+  ].filter(Boolean).length;
+
+  useEffect(() => {
+    if (!mobileFiltersOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMobileFiltersOpen(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [mobileFiltersOpen]);
+
+  useEffect(() => {
+    const row = categoryRowRef.current;
+    if (!row) return;
+    const selected = row.querySelector<HTMLElement>('[data-selected="true"]');
+    if (!selected) return;
+    const left = selected.offsetLeft - (row.clientWidth - selected.offsetWidth) / 2;
+    row.scrollTo({ left: Math.max(0, left), behavior: 'smooth' });
+  }, [filters.category]);
 
   const categories = [
     {
@@ -233,29 +300,159 @@ function CreatorsDiscoveryContent() {
   }, [filteredCreators, currentPage, pageSize]);
 
   return (
-    <div className="bg-[#FAFAF8] min-h-screen py-6 sm:py-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
+    <div className="bg-[#FAFAF8] min-h-screen overflow-x-clip py-5 sm:py-10">
+      <div className="max-w-7xl mx-auto min-w-0 px-4 sm:px-6 lg:px-8 space-y-4 sm:space-y-8">
         {/* Top Header Area matching reference */}
         <div className="relative">
           <div className="max-w-2xl">
-            <span className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-[#66665E] font-sans block mb-2 sm:mb-3">
+            <span className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-[#66665E] font-sans block mb-1.5 sm:mb-3">
               CREATOR MARKETPLACE
             </span>
-            <h1 className="text-[28px] sm:text-4xl lg:text-[48px] font-black text-[#0A0A0A] tracking-tight leading-[1.12] sm:leading-[1.15] font-sans">
+            <h1 className="text-[1.65rem] sm:text-4xl lg:text-[48px] font-black text-[#0A0A0A] tracking-tight leading-[1.08] sm:leading-[1.15] font-sans">
               Discover amazing{' '}
               <span className="font-editorial italic font-normal text-[#0A0A0A]">
                 creators
               </span>
             </h1>
-            <p className="text-[15px] sm:text-[18px] text-[#555550] font-sans font-medium leading-[24px] sm:leading-[28px] mt-2.5 sm:mt-4">
+            <p className="text-sm sm:text-[18px] text-[#555550] font-sans font-medium leading-5 sm:leading-[28px] mt-2 sm:mt-4 max-w-xl">
               {t?.discovery?.subtitle ||
                 'Find the right creators to bring your brand to life — across all platforms and niches.'}
             </p>
           </div>
         </div>
 
+        {/* Compact search + filter sheet. Desktop keeps the full bar below. */}
+        <div className="lg:hidden">
+          <div className="flex items-center gap-2">
+            <div className="relative min-w-0 flex-1 font-sans">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#66665E]" />
+              <input
+                type="text"
+                placeholder={t?.discovery?.searchPlaceholder || 'Search creators, keywords or niches...'}
+                value={filters.searchQuery}
+                onChange={(e) => dispatch(setFilter({ searchQuery: e.target.value }))}
+                className="h-10 w-full rounded-xl border-none bg-[#F4F4F0] pl-9 pr-3 text-sm font-medium text-[#0A0A0A] outline-none placeholder:text-[#A3A39C]"
+              />
+            </div>
+            <button
+              type="button"
+              onClick={() => setMobileFiltersOpen(true)}
+              className="inline-flex h-10 shrink-0 items-center gap-1.5 rounded-xl border border-[#E7E7E2] bg-white px-3 text-xs font-bold text-[#0A0A0A]"
+            >
+              <SlidersHorizontal className="h-3.5 w-3.5" />
+              Filters
+              {activeFilterCount > 0 && (
+                <span className="inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-[#0A0A0A] px-1 text-[10px] font-bold text-white">
+                  {activeFilterCount}
+                </span>
+              )}
+            </button>
+          </div>
+        </div>
+
+        {mobileFiltersOpen && (
+          <div className="fixed inset-0 z-[70] !mt-0 lg:hidden">
+            <button
+              type="button"
+              aria-label="Close filters"
+              className="absolute inset-0 bg-[#0A0A0A]/40"
+              onClick={() => setMobileFiltersOpen(false)}
+            />
+            <div className="absolute inset-x-0 bottom-0 max-h-[min(85dvh,640px)] overflow-y-auto rounded-t-3xl bg-white px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3 shadow-2xl">
+              <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-[#E7E7E2]" />
+              <div className="mb-4 flex items-center justify-between">
+                <h2 className="text-base font-black text-[#0A0A0A]">Filters</h2>
+                <button
+                  type="button"
+                  onClick={() => dispatch(resetFilters())}
+                  className="text-xs font-bold text-[#66665E]"
+                >
+                  Reset
+                </button>
+              </div>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <FilterField
+                  label="Category"
+                  value={filters.category}
+                  onChange={(category) => dispatch(setFilter({ category }))}
+                  options={[
+                    { value: 'all', label: 'All Categories' },
+                    { value: 'Beauty', label: 'Beauty' },
+                    { value: 'Fashion', label: 'Fashion' },
+                    { value: 'Fitness', label: 'Fitness & Health' },
+                    { value: 'Travel', label: 'Travel' },
+                    { value: 'Food', label: 'Food & Cuisine' },
+                    { value: 'Lifestyle', label: 'Lifestyle' },
+                    { value: 'Tech', label: 'Tech & Gaming' },
+                  ]}
+                />
+                <FilterField
+                  label="Location"
+                  value={filters.location}
+                  onChange={(location) => dispatch(setFilter({ location }))}
+                  options={[
+                    { value: 'all', label: 'All Locations' },
+                    { value: 'London', label: 'London, UK' },
+                    { value: 'Berlin', label: 'Berlin, DE' },
+                    { value: 'Paris', label: 'Paris, FR' },
+                    { value: 'Milan', label: 'Milan, IT' },
+                    { value: 'Amsterdam', label: 'Amsterdam, NL' },
+                    { value: 'Los Angeles', label: 'Los Angeles, US' },
+                    { value: 'New York', label: 'New York, US' },
+                  ]}
+                />
+                <FilterField
+                  label="Platform"
+                  value={filters.platform}
+                  onChange={(platform) => dispatch(setFilter({ platform: platform as CreatorFilterState['platform'] }))}
+                  options={[
+                    { value: 'all', label: 'All Platforms' },
+                    { value: 'instagram', label: 'Instagram' },
+                    { value: 'tiktok', label: 'TikTok' },
+                    { value: 'youtube', label: 'YouTube' },
+                    { value: 'ugc', label: 'UGC Creative' },
+                  ]}
+                />
+                <FilterField
+                  label="Followers"
+                  value={filters.followerRange}
+                  onChange={(followerRange) =>
+                    dispatch(setFilter({ followerRange: followerRange as CreatorFilterState['followerRange'] }))
+                  }
+                  options={[
+                    { value: 'all', label: 'Any range' },
+                    { value: 'nano', label: 'Nano (10K – 50K)' },
+                    { value: 'micro', label: 'Micro (50K – 200K)' },
+                    { value: 'macro', label: 'Macro (200K – 1M)' },
+                    { value: 'mega', label: 'Mega (1M+)' },
+                  ]}
+                />
+                <FilterField
+                  label="Sort"
+                  value={filters.sortBy}
+                  onChange={(sortBy) => dispatch(setFilter({ sortBy: sortBy as CreatorFilterState['sortBy'] }))}
+                  options={[
+                    { value: 'relevance', label: 'Relevance' },
+                    { value: 'followers', label: 'Most Followers' },
+                    { value: 'rating', label: 'Top Rated' },
+                    { value: 'price_asc', label: 'Price: Low to High' },
+                    { value: 'price_desc', label: 'Price: High to Low' },
+                  ]}
+                />
+              </div>
+              <button
+                type="button"
+                onClick={() => setMobileFiltersOpen(false)}
+                className="mt-5 flex h-11 w-full items-center justify-center rounded-full bg-[#0A0A0A] text-sm font-bold text-white"
+              >
+                Show {filteredCreators.length.toLocaleString()} creators
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Global Filter Bar matching reference */}
-        <div className="bg-white p-3 sm:p-3.5 rounded-2xl border border-[#E7E7E2] shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center gap-2.5 sm:gap-3">
+        <div className="hidden lg:flex bg-white p-3.5 rounded-2xl border border-[#E7E7E2] shadow-xs items-center gap-3">
           {/* Omni Search Input */}
           <div className="w-full lg:flex-1 lg:min-w-[220px] relative font-sans">
             <Search className="w-4 h-4 text-[#66665E] absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -441,36 +638,43 @@ function CreatorsDiscoveryContent() {
           </div>
         )}
 
-        {/* Mobile Horizontal Category Pills Strip (Visible only on < lg screens) */}
-        <div className="lg:hidden">
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 -mx-4 px-4 sm:mx-0 sm:px-0">
+        {/* Category navigation scrolls on its own. It must not widen the page. */}
+        <div className="relative min-w-0 lg:hidden">
+          <div
+            ref={categoryRowRef}
+            className="flex w-full min-w-0 snap-x gap-1.5 overflow-x-auto overscroll-x-contain no-scrollbar py-0.5"
+            role="tablist"
+            aria-label="Creator categories"
+          >
             {categories.map((cat) => {
               const isSelected = filters.category.toLowerCase() === cat.name.toLowerCase();
+              const shortLabel = cat.name === 'all' ? 'All' : cat.label.split('&')[0].trim();
               return (
                 <button
                   key={cat.name}
+                  type="button"
+                  role="tab"
+                  data-selected={isSelected}
+                  aria-selected={isSelected}
                   onClick={() => dispatch(setFilter({ category: cat.name }))}
-                  className={`shrink-0 flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  className={`flex h-8 shrink-0 snap-start items-center gap-1.5 rounded-full px-2.5 text-xs font-bold ${
                     isSelected
-                      ? 'bg-[#0A0A0A] text-white shadow-xs'
-                      : 'bg-white text-[#555550] border border-[#E7E7E2] hover:bg-[#F4F4F0]'
+                      ? 'bg-[#0A0A0A] text-white'
+                      : 'border border-[#E7E7E2] bg-white text-[#555550]'
                   }`}
                 >
-                  <span className={isSelected ? 'text-white' : 'text-[#0A0A0A]'}>
+                  <span className={`[&_svg]:h-3.5 [&_svg]:w-3.5 ${isSelected ? 'text-white' : 'text-[#0A0A0A]'}`}>
                     {cat.icon}
                   </span>
-                  <span>{cat.name === 'all' ? 'All' : cat.label.split('&')[0].trim()}</span>
-                  <span
-                    className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
-                      isSelected ? 'bg-white/20 text-white' : 'bg-[#F4F4F0] text-[#66665E]'
-                    }`}
-                  >
+                  <span>{shortLabel}</span>
+                  <span className={`text-[10px] font-bold ${isSelected ? 'text-white/70' : 'text-[#8A8A82]'}`}>
                     {cat.count}
                   </span>
                 </button>
               );
             })}
           </div>
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#FAFAF8] to-transparent" />
         </div>
 
         {/* Main Split Grid: Left Category Sidebar + Right Creator Grid */}
@@ -544,7 +748,7 @@ function CreatorsDiscoveryContent() {
             {/* Results Header with Count & Grid/List switcher */}
             <div className="flex items-center justify-between font-sans">
               <div>
-                <span className="text-2xl font-extrabold text-[#0A0A0A]">
+                <span className="text-lg font-extrabold text-[#0A0A0A] sm:text-2xl">
                   {filteredCreators.length.toLocaleString()} creators
                 </span>
                 <span className="text-sm text-[#66665E] ml-2.5 hidden sm:inline font-medium">
@@ -586,13 +790,13 @@ function CreatorsDiscoveryContent() {
               <CreatorGridSkeleton count={6} />
             ) : paginatedCreators.length > 0 ? (
               viewMode === 'grid' ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
+                <div className="grid grid-cols-2 gap-2.5 sm:gap-5 md:grid-cols-3 lg:gap-7">
                   {paginatedCreators.map((creator) => (
                     <CreatorCard key={creator.id} creator={creator} />
                   ))}
                 </div>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-2.5 sm:space-y-4">
                   {paginatedCreators.map((creator) => (
                     <CreatorListRow key={creator.id} creator={creator} />
                   ))}

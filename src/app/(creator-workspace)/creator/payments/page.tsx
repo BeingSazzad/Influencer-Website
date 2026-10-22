@@ -183,29 +183,29 @@ export default function CreatorPaymentsPage() {
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-7">
         {/* 2-Metric Overview Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+        <div className="grid grid-cols-2 gap-2 sm:gap-5">
           {/* 1. Total Earned */}
-          <div className="p-6 bg-white rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
-            <div className="flex items-center justify-between text-[#66665E]">
-              <span className="text-xs font-bold uppercase tracking-wider">Total Earned</span>
-              <div className="w-7 h-7 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-center text-[#0A0A0A]">
+          <div className="min-w-0 p-3 sm:p-6 bg-white rounded-2xl sm:rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1 sm:space-y-2">
+            <div className="flex items-center justify-between gap-1 text-[#66665E]">
+              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wide leading-tight">Total Earned</span>
+              <div className="hidden sm:flex w-7 h-7 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2] items-center justify-center text-[#0A0A0A]">
                 <ArrowDownLeft className="w-3.5 h-3.5" />
               </div>
             </div>
-            <div className="text-3xl font-black text-[#0A0A0A] tracking-tight">
+            <div className="text-base sm:text-3xl font-black text-[#0A0A0A] tracking-tight">
               €{totalEarnedEur.toLocaleString()}
             </div>
           </div>
 
           {/* 2. In Escrow */}
-          <div className="p-6 bg-white rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
-            <div className="flex items-center justify-between text-[#66665E]">
-              <span className="text-xs font-bold uppercase tracking-wider">Pending Escrow</span>
-              <div className="w-7 h-7 rounded-xl bg-[#FFF0F5] text-[#FF2D78] flex items-center justify-center">
+          <div className="min-w-0 p-3 sm:p-6 bg-white rounded-2xl sm:rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1 sm:space-y-2">
+            <div className="flex items-center justify-between gap-1 text-[#66665E]">
+              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wide leading-tight">Pending Escrow</span>
+              <div className="hidden sm:flex w-7 h-7 rounded-xl bg-[#FFF0F5] text-[#FF2D78] items-center justify-center">
                 <Clock className="w-3.5 h-3.5" />
               </div>
             </div>
-            <div className="text-3xl font-black text-[#0A0A0A] tracking-tight">
+            <div className="text-base sm:text-3xl font-black text-[#0A0A0A] tracking-tight">
               €{inEscrowEur.toLocaleString()}
             </div>
           </div>

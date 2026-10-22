@@ -105,7 +105,7 @@ export function CreatorCardSkeleton() {
  */
 export function CreatorGridSkeleton({ count = 6 }: { count?: number }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-2 gap-2.5 sm:gap-5 md:grid-cols-3 lg:gap-6">
       {Array.from({ length: count }).map((_, i) => (
         <CreatorCardSkeleton key={i} />
       ))}

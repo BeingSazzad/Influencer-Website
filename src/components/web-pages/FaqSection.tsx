@@ -117,34 +117,34 @@ export function FaqSection({
           {displayedFaqs.map((faq, idx) => {
             const isOpen = openIdx === idx;
             return (
-              <div key={idx} className="py-4 sm:py-6 lg:py-8 transition-colors select-none">
+              <div key={idx} className="py-2.5 sm:py-6 lg:py-8 transition-colors select-none">
                 <button
                   type="button"
                   onClick={() => handleToggle(idx)}
-                  className="w-full text-left flex items-center justify-between gap-4 sm:gap-6 group cursor-pointer focus:outline-none"
+                  className="w-full text-left flex items-center justify-between gap-3 sm:gap-6 group cursor-pointer focus:outline-none"
                   aria-expanded={isOpen}
                 >
-                  <span className="text-base sm:text-lg lg:text-[20px] font-bold text-[#0A0A0A] group-hover:text-[#FF2D78] transition-colors leading-snug">
+                  <span className="text-sm sm:text-lg lg:text-[20px] font-bold text-[#0A0A0A] group-hover:text-[#FF2D78] transition-colors leading-snug">
                     {faq.q}
                   </span>
 
                   <span
-                    className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full inline-flex items-center justify-center shrink-0 transition-all duration-300 ${
+                    className={`w-7 h-7 sm:w-11 sm:h-11 rounded-full inline-flex items-center justify-center shrink-0 transition-all duration-300 ${
                       isOpen
                         ? 'bg-[#FF2D78] text-white shadow-md shadow-[#FF2D78]/25 rotate-180'
                         : 'bg-white border border-[#D2D2CA] text-[#0A0A0A] group-hover:border-[#FF2D78] group-hover:text-[#FF2D78] rotate-0'
                     }`}
                   >
-                    <ChevronDown className="w-5 h-5 transition-transform duration-300" />
+                    <ChevronDown className="w-3.5 h-3.5 sm:w-5 sm:h-5 transition-transform duration-300" />
                   </span>
                 </button>
 
                 <div
                   className={`grid transition-all duration-300 ease-in-out ${
-                    isOpen ? 'grid-rows-[1fr] opacity-100 pt-4 sm:pt-5' : 'grid-rows-[0fr] opacity-0 pt-0'
+                    isOpen ? 'grid-rows-[1fr] opacity-100 pt-2 sm:pt-5' : 'grid-rows-[0fr] opacity-0 pt-0'
                   }`}
                 >
-                  <div className="overflow-hidden pr-6 sm:pr-12 text-base sm:text-[17px] text-[#555550] leading-[28px] font-medium">
+                  <div className="overflow-hidden pr-8 sm:pr-12 text-sm sm:text-[17px] text-[#555550] leading-5 sm:leading-[28px] font-medium">
                     <p>{faq.a}</p>
                   </div>
                 </div>

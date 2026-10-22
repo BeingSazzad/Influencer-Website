@@ -44,7 +44,7 @@ export function FeaturedCreators() {
         </div>
 
         {/* 4 Cards Grid per row across full container */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-5 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
           {featured.length > 0 ? (
             featured.map((creator) => (
               <CreatorCard key={creator.id} creator={creator} />

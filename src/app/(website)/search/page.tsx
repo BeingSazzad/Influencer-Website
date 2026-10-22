@@ -564,7 +564,7 @@ function SearchResultsContent() {
           </div>
 
           {/* Quick Filter Tag Pills */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none text-xs">
+          <div className="flex w-full min-w-0 items-center gap-2 overflow-x-auto overscroll-x-contain pb-1 no-scrollbar text-xs">
             <span className="text-[#66665E] font-bold uppercase tracking-wider text-xs shrink-0 mr-1">
               Popular:
             </span>
@@ -766,7 +766,7 @@ function SearchResultsContent() {
         {/* Results Grid or List */}
         {filteredCreators.length > 0 ? (
           viewMode === 'grid' ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 gap-2.5 sm:gap-5 md:grid-cols-3 lg:gap-6">
               {paginatedCreators.map((creator) => (
                 <CreatorCard key={creator.id} creator={creator} />
               ))}

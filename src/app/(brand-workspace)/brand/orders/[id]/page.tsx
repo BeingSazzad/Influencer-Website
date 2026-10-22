@@ -292,7 +292,7 @@ export default function BrandOrderDetailPage() {
           </div>
 
           {/* Escrow Progress Stepper */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 pt-6 border-t border-[#E7E7E2]">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3.5 pt-4 sm:pt-6 border-t border-[#E7E7E2]">
             <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#0A0A0A] space-y-1">
               <div className="flex items-center gap-2 text-sm font-bold text-[#0A0A0A]">
                 <CheckCircle2 className="w-4 h-4 shrink-0 text-[#FF2D78]" />

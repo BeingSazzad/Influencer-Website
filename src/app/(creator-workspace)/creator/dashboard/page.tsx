@@ -83,7 +83,7 @@ export default function CreatorDashboardPage() {
         subtitle={`${creatorDisplayName} (@${creatorDisplayHandle.replace('@', '')})`}
       />
 
-      <div className="p-6 sm:p-8 max-w-6xl mx-auto space-y-7">
+      <div className="px-3 py-4 sm:p-8 max-w-6xl mx-auto space-y-5 sm:space-y-7">
         {/* Profile Completion Nudge Card (Dynamic % & Actionable Checklist) */}
         {currentCreator && (
           <ProfileCompletionCard
@@ -94,66 +94,66 @@ export default function CreatorDashboardPage() {
         )}
 
         {/* Executive Metric Highlights */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-5">
           {/* Total Earned */}
-          <div className="bg-white p-5 sm:p-6 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
+          <div className="min-w-0 bg-white p-3 sm:p-6 rounded-2xl sm:rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1 sm:space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-[#66665E]">
+              <span className="text-[10px] sm:text-xs font-extrabold uppercase tracking-wide leading-tight text-[#66665E]">
                 Total Earned
               </span>
-              <div className="w-8 h-8 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center">
+              <div className="hidden sm:flex w-8 h-8 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] items-center justify-center">
                 <DollarSign className="w-4 h-4" />
               </div>
             </div>
-            <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
+            <div className="text-base sm:text-3xl font-black tracking-tight text-[#0A0A0A]">
               €28,400
             </div>
 
           </div>
 
           {/* Locked in Escrow */}
-          <div className="bg-white p-5 sm:p-6 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
+          <div className="min-w-0 bg-white p-3 sm:p-6 rounded-2xl sm:rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1 sm:space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-[#66665E]">
+              <span className="text-[10px] sm:text-xs font-extrabold uppercase tracking-wide leading-tight text-[#66665E]">
                 In Production
               </span>
-              <div className="w-8 h-8 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center">
+              <div className="hidden sm:flex w-8 h-8 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] items-center justify-center">
                 <Clock className="w-4 h-4" />
               </div>
             </div>
-            <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
+            <div className="text-base sm:text-3xl font-black tracking-tight text-[#0A0A0A]">
               €{pendingInEscrowEur.toLocaleString()}
             </div>
 
           </div>
 
           {/* Incoming Offers */}
-          <div className="bg-white p-5 sm:p-6 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
+          <div className="min-w-0 bg-white p-3 sm:p-6 rounded-2xl sm:rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1 sm:space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-[#66665E]">
+              <span className="text-[10px] sm:text-xs font-extrabold uppercase tracking-wide leading-tight text-[#66665E]">
                 Pending Offers
               </span>
-              <div className="w-8 h-8 rounded-xl bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 flex items-center justify-center">
+              <div className="hidden sm:flex w-8 h-8 rounded-xl bg-[#FFF0F5] text-[#FF2D78] border border-[#FF2D78]/25 items-center justify-center">
                 <Inbox className="w-4 h-4" />
               </div>
             </div>
-            <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
+            <div className="text-base sm:text-3xl font-black tracking-tight text-[#0A0A0A]">
               {incomingOffers.length}
             </div>
 
           </div>
 
           {/* Portfolio Summary */}
-          <div className="bg-white p-5 sm:p-6 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
+          <div className="min-w-0 bg-white p-3 sm:p-6 rounded-2xl sm:rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1 sm:space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-[#66665E]">
+              <span className="text-[10px] sm:text-xs font-extrabold uppercase tracking-wide leading-tight text-[#66665E]">
                 Portfolio
               </span>
-              <div className="w-8 h-8 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center">
+              <div className="hidden sm:flex w-8 h-8 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] items-center justify-center">
                 <Film className="w-4 h-4" />
               </div>
             </div>
-            <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
+            <div className="text-base sm:text-3xl font-black tracking-tight text-[#0A0A0A]">
               {portfolioItems.length}
             </div>
           </div>
@@ -206,7 +206,7 @@ export default function CreatorDashboardPage() {
         <CreatorAnnualAnalytics />
 
         {/* Active Fulfillment Pipeline */}
-        <div className="bg-white rounded-3xl p-6 border border-[#E7E7E2] shadow-2xs space-y-5">
+        <div className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 border border-[#E7E7E2] shadow-2xs space-y-4 sm:space-y-5">
             <div className="flex items-center justify-between pb-3 border-b border-[#E7E7E2]">
               <div>
                 <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">

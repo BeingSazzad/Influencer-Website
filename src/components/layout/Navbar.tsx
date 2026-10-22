@@ -285,7 +285,7 @@ export function Navbar() {
               </div>
             </div>
           ) : (
-            <div className="pt-2 space-y-2.5">
+            <div className="pt-2">
               <Button
                 href="/login"
                 size="md"
@@ -294,15 +294,6 @@ export function Navbar() {
                 onClick={() => setIsDrawerOpen(false)}
               >
                 Get Started
-              </Button>
-              <Button
-                href="/login"
-                size="md"
-                variant="secondary"
-                fullWidth
-                onClick={() => setIsDrawerOpen(false)}
-              >
-                Log In
               </Button>
             </div>
           )}

@@ -221,27 +221,27 @@ export default function BrandPaymentsPage() {
       />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-7">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-          <div className="p-6 bg-white rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
-            <div className="flex items-center justify-between text-[#66665E]">
-              <span className="text-xs font-bold uppercase tracking-wider">Available Wallet</span>
-              <div className="w-7 h-7 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-center text-[#0A0A0A]">
+        <div className="grid grid-cols-2 gap-2 sm:gap-5">
+          <div className="min-w-0 p-3 sm:p-6 bg-white rounded-2xl sm:rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1 sm:space-y-2">
+            <div className="flex items-center justify-between gap-1 text-[#66665E]">
+              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wide leading-tight">Available Wallet</span>
+              <div className="hidden sm:flex w-7 h-7 rounded-xl bg-[#FAFAF8] border border-[#E7E7E2] items-center justify-center text-[#0A0A0A]">
                 <Wallet className="w-3.5 h-3.5" />
               </div>
             </div>
-            <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A] tracking-tight">
+            <div className="text-base sm:text-3xl font-black text-[#0A0A0A] tracking-tight">
               €{balanceEur.toLocaleString()}
             </div>
           </div>
 
-          <div className="p-6 bg-white rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
-            <div className="flex items-center justify-between text-[#66665E]">
-              <span className="text-xs font-bold uppercase tracking-wider">Locked in Escrow</span>
-              <div className="w-7 h-7 rounded-xl bg-[#FFF0F5] text-[#FF2D78] flex items-center justify-center">
+          <div className="min-w-0 p-3 sm:p-6 bg-white rounded-2xl sm:rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1 sm:space-y-2">
+            <div className="flex items-center justify-between gap-1 text-[#66665E]">
+              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wide leading-tight">Locked in Escrow</span>
+              <div className="hidden sm:flex w-7 h-7 rounded-xl bg-[#FFF0F5] text-[#FF2D78] items-center justify-center">
                 <Lock className="w-3.5 h-3.5" />
               </div>
             </div>
-            <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A] tracking-tight">
+            <div className="text-base sm:text-3xl font-black text-[#0A0A0A] tracking-tight">
               €{activeEscrowEur.toLocaleString()}
             </div>
           </div>

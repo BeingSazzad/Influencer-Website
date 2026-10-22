@@ -280,7 +280,7 @@ export default function CreatorPackagesPage() {
               {filteredPackages.slice(0, 3).map((pkg) => (
                 <div
                   key={pkg.id}
-                  className={`rounded-3xl border p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-md relative bg-white ${
+                  className={`rounded-2xl sm:rounded-3xl border p-4 sm:p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-md relative bg-white ${
                     pkg.popular
                       ? 'border-[#0A0A0A] ring-1 ring-[#0A0A0A]'
                       : 'border-[#E7E7E2] hover:border-[#0A0A0A]'

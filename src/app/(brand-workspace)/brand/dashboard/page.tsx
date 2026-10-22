@@ -62,51 +62,51 @@ export default function BrandDashboardPage() {
         }
       />
 
-      <div className="p-6 sm:p-8 max-w-6xl mx-auto space-y-7 font-sans">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
-          <div className="bg-white p-5 sm:p-6 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-[#66665E]">
+      <div className="px-3 py-4 sm:p-8 max-w-6xl mx-auto space-y-5 sm:space-y-7 font-sans">
+        <div className="grid grid-cols-3 gap-2 sm:gap-5">
+          <div className="min-w-0 bg-white p-2.5 sm:p-6 rounded-2xl sm:rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1 sm:space-y-2">
+            <div className="flex items-center justify-between gap-1">
+              <span className="text-[10px] sm:text-xs font-extrabold uppercase tracking-wide text-[#66665E] leading-tight">
                 In Escrow
               </span>
-              <div className="w-8 h-8 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center">
+              <div className="hidden sm:flex w-8 h-8 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] items-center justify-center">
                 <ShieldCheck className="w-4 h-4" />
               </div>
             </div>
-            <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
+            <div className="text-base sm:text-3xl font-black text-[#0A0A0A] tracking-tight">
               €{Math.round(activeSpendEur).toLocaleString()}
             </div>
-            <div className="text-sm text-[#66665E] font-medium">Locked on active hires</div>
+            <div className="text-[10px] sm:text-sm text-[#66665E] font-medium leading-tight">Locked on active hires</div>
           </div>
 
-          <div className="bg-white p-5 sm:p-6 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-[#66665E]">
+          <div className="min-w-0 bg-white p-2.5 sm:p-6 rounded-2xl sm:rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1 sm:space-y-2">
+            <div className="flex items-center justify-between gap-1">
+              <span className="text-[10px] sm:text-xs font-extrabold uppercase tracking-wide text-[#66665E] leading-tight">
                 Active Hires
               </span>
-              <div className="w-8 h-8 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center">
+              <div className="hidden sm:flex w-8 h-8 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] items-center justify-center">
                 <ShoppingBag className="w-4 h-4" />
               </div>
             </div>
-            <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
+            <div className="text-base sm:text-3xl font-black text-[#0A0A0A] tracking-tight">
               {activeOrders.length}
             </div>
-            <div className="text-sm text-[#66665E] font-medium">Campaigns in progress</div>
+            <div className="text-[10px] sm:text-sm text-[#66665E] font-medium leading-tight">Campaigns in progress</div>
           </div>
 
-          <div className="bg-white p-5 sm:p-6 rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-[#66665E]">
+          <div className="min-w-0 bg-white p-2.5 sm:p-6 rounded-2xl sm:rounded-3xl border border-[#E7E7E2] shadow-2xs space-y-1 sm:space-y-2">
+            <div className="flex items-center justify-between gap-1">
+              <span className="text-[10px] sm:text-xs font-extrabold uppercase tracking-wide text-[#66665E] leading-tight">
                 Lifetime Spend
               </span>
-              <div className="w-8 h-8 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] flex items-center justify-center">
+              <div className="hidden sm:flex w-8 h-8 rounded-xl bg-[#FAFAF8] text-[#0A0A0A] border border-[#E7E7E2] items-center justify-center">
                 <TrendingUp className="w-4 h-4" />
               </div>
             </div>
-            <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
+            <div className="text-base sm:text-3xl font-black text-[#0A0A0A] tracking-tight">
               €{Math.round(totalEscrowFundedEur).toLocaleString()}
             </div>
-            <div className="text-sm text-[#66665E] font-medium">All funded campaigns</div>
+            <div className="text-[10px] sm:text-sm text-[#66665E] font-medium leading-tight">All funded campaigns</div>
           </div>
         </div>
 
@@ -114,7 +114,7 @@ export default function BrandDashboardPage() {
         <BrandAnnualAnalytics />
 
         {/* Active Campaigns Table / List */}
-        <div className="bg-white rounded-3xl p-6 border border-[#E7E7E2] shadow-2xs space-y-5">
+        <div className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 border border-[#E7E7E2] shadow-2xs space-y-4 sm:space-y-5">
           <div className="flex items-center justify-between pb-3 border-b border-[#E7E7E2]">
             <div>
               <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
@@ -219,7 +219,7 @@ export default function BrandDashboardPage() {
         </div>
 
         {/* Shortlisted Creators Grid */}
-        <div className="bg-white rounded-3xl p-6 border border-[#E7E7E2] shadow-2xs space-y-5">
+        <div className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 border border-[#E7E7E2] shadow-2xs space-y-4 sm:space-y-5">
           <div className="flex items-center justify-between pb-3 border-b border-[#E7E7E2]">
             <div>
               <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
@@ -239,7 +239,7 @@ export default function BrandDashboardPage() {
           </div>
 
           {savedCreators.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
               {savedCreators.slice(0, 4).map((creator) => (
                 <CreatorCard key={creator.id} creator={creator} />
               ))}

@@ -109,7 +109,7 @@ export function CreatorAnnualAnalytics() {
 
 
   return (
-    <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#E7E7E2] shadow-2xs space-y-6 font-sans">
+    <div className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-7 border border-[#E7E7E2] shadow-2xs space-y-4 sm:space-y-6 font-sans">
       {/* Top Header: Title, Growth Badge, Metric Toggle & Year Dropdown */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#E7E7E2]">
         <div>
@@ -168,7 +168,7 @@ export function CreatorAnnualAnalytics() {
 
       {/* 12-Month Bar Chart */}
       <div className="pt-2">
-        <div className="h-72 w-full flex items-end justify-between gap-1.5 sm:gap-3 px-1 pt-6 pb-2 relative">
+        <div className="h-44 sm:h-72 w-full flex items-end justify-between gap-1 sm:gap-3 px-0.5 sm:px-1 pt-6 pb-2 relative">
           {/* Subtle grid lines */}
           <div className="absolute inset-x-0 top-6 border-b border-dashed border-[#EAEAE3] pointer-events-none" />
           <div className="absolute inset-x-0 top-1/2 border-b border-dashed border-[#EAEAE3] pointer-events-none" />
@@ -211,7 +211,7 @@ export function CreatorAnnualAnalytics() {
 
                 {/* Month Label */}
                 <span
-                  className={`text-xs font-extrabold mt-2 transition-colors ${
+                  className={`text-[9px] sm:text-xs font-extrabold mt-1.5 sm:mt-2 transition-colors ${
                     isHovered
                       ? 'text-[#FF2D78]'
                       : 'text-[#66665E] group-hover:text-[#0A0A0A]'

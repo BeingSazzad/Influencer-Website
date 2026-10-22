@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import {
   Check,
-  Calculator,
   ShieldCheck,
   Building2,
   ArrowRight,
@@ -13,11 +12,9 @@ import {
   Send,
   Zap,
 } from 'lucide-react';
-import { Slider, Modal, Input, message } from 'antd';
+import { Modal, Input, message } from 'antd';
 
 export default function PricingPage() {
-  const [budgetEur, setBudgetEur] = useState<number>(1200);
-
   // Enterprise Modal State
   const [isEnterpriseModalOpen, setIsEnterpriseModalOpen] = useState(false);
   const [companyName, setCompanyName] = useState('');
@@ -25,10 +22,6 @@ export default function PricingPage() {
   const [monthlyBudget, setMonthlyBudget] = useState('€5,000 - €15,000');
   const [inquiryNotes, setInquiryNotes] = useState('');
   const [isSubmittingEnterprise, setIsSubmittingEnterprise] = useState(false);
-
-  // Math for calculations
-  const platformFeeEur = Math.round(budgetEur * 0.15);
-  const totalCostEur = budgetEur + platformFeeEur;
 
   const handleEnterpriseSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,24 +46,34 @@ export default function PricingPage() {
   return (
     <div className="min-h-screen bg-[#FDFDFD] text-[#0A0A0A] font-sans pb-24">
       {/* 1. HERO HEADER */}
-      <section className="pt-12 sm:pt-16 pb-12 sm:pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFF0F5] border border-[#FF2D78]/25 text-[#FF2D78] text-xs font-bold uppercase tracking-wider">
-            <ShieldCheck className="w-3.5 h-3.5" />
-            <span>Pay-Per-Milestone • 0% Subscription Trap</span>
+      <section className="pt-12 sm:pt-16 pb-10 sm:pb-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-2xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#E7E7E2] text-[#52524B] text-[11px] font-bold uppercase tracking-[0.14em]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#FF2D78]" />
+            No monthly fee
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-black text-[#0A0A0A] tracking-tight leading-[1.08]">
-            Simple, Transparent Pricing <br className="hidden sm:inline" />
-            for Brands &amp; Creators.
+          <h1 className="mt-5 text-[2.15rem] sm:text-5xl lg:text-[3.25rem] font-black text-[#0A0A0A] tracking-tight leading-[1.02]">
+            <span className="block">Clear pricing.</span>
+            <span className="block">For both sides.</span>
           </h1>
+        </div>
 
-          <p className="text-base sm:text-lg lg:text-xl text-[#66665E] font-medium leading-[28px] max-w-2xl mx-auto">
-            Brands pay a flat 15% platform fee when they hire a creator. There is no monthly subscription.
-          </p>
-          <p className="text-base sm:text-lg text-[#0A0A0A] font-semibold leading-[28px] max-w-2xl mx-auto">
-            Creators are free. There is no creator plan and no commission. You keep 100% of your rate.
-          </p>
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl mx-auto">
+          <div className="rounded-2xl border border-[#E7E7E2] bg-white px-5 py-4 sm:px-6 sm:py-5 text-left">
+            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#73736A]">Brands</p>
+            <p className="mt-1.5 text-3xl sm:text-4xl font-black tracking-tight text-[#FF2D78]">15%</p>
+            <p className="mt-1.5 text-sm leading-snug text-[#52524B]">
+              Only when you hire. No monthly plan.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-[#0A0A0A] px-5 py-4 sm:px-6 sm:py-5 text-left">
+            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#A3A39C]">Creators</p>
+            <p className="mt-1.5 text-3xl sm:text-4xl font-black tracking-tight text-white">100%</p>
+            <p className="mt-1.5 text-sm leading-snug text-[#D6D6D0]">
+              Free to join. Keep your full rate.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -218,93 +221,6 @@ export default function PricingPage() {
               </div>
             </div>
           </div>
-      </section>
-
-      {/* 3. INTERACTIVE FEE & EARNINGS CALCULATOR */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20" id="calculator">
-        <div className="bg-[#FAFAF8] rounded-3xl p-6 sm:p-10 lg:p-12 border border-[#E7E7E2] shadow-sm max-w-5xl mx-auto space-y-8">
-          <div className="space-y-1 border-b border-[#E7E7E2] pb-6">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-xl bg-[#0A0A0A] text-white flex items-center justify-center">
-                <Calculator className="w-4 h-4" />
-              </div>
-              <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">
-                Interactive Fee &amp; Earnings Calculator
-              </h2>
-            </div>
-            <p className="text-xs sm:text-sm text-[#66665E]">
-              See exactly how budget, platform fee (15%), and creator take-home (100%) calculate in real time.
-            </p>
-          </div>
-
-          {/* Slider */}
-          <div className="space-y-3">
-            <div className="flex justify-between items-center">
-              <span className="text-sm font-bold text-[#66665E]">
-                Select Campaign Creator Quote:
-              </span>
-              <span className="text-3xl sm:text-4xl font-black text-[#0A0A0A]">
-                €{budgetEur.toLocaleString()}
-              </span>
-            </div>
-
-            <Slider
-              min={200}
-              max={10000}
-              step={50}
-              value={budgetEur}
-              onChange={(val) => setBudgetEur(val)}
-              tooltip={{ open: false }}
-              trackStyle={{ backgroundColor: '#0A0A0A' }}
-              handleStyle={{ borderColor: '#0A0A0A', backgroundColor: '#0A0A0A' }}
-            />
-
-            <div className="flex justify-between text-xs text-[#A3A39C] font-semibold">
-              <span>€200 (Micro Package)</span>
-              <span>€5,000 (Mid-Tier Campaign)</span>
-              <span>€10,000+ (Macro Ambassadorship)</span>
-            </div>
-          </div>
-
-          {/* Breakdown Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-            <div className="bg-white rounded-2xl p-5 border border-[#E7E7E2] shadow-2xs space-y-1">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#66665E]">
-                Creator Take-Home Payout
-              </span>
-              <div className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
-                €{budgetEur.toLocaleString()}
-              </div>
-              <p className="text-xs font-bold text-emerald-700">
-                100% of quote &bull; 0% deduction
-              </p>
-            </div>
-
-            <div className="bg-white rounded-2xl p-5 border border-[#E7E7E2] shadow-2xs space-y-1">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#66665E]">
-                Platform Escrow Fee (15%)
-              </span>
-              <div className="text-2xl sm:text-3xl font-black text-[#FF2D78]">
-                +€{platformFeeEur.toLocaleString()}
-              </div>
-              <p className="text-xs text-[#66665E]">
-                Protection, licensing &amp; VAT receipts
-              </p>
-            </div>
-
-            <div className="bg-[#0A0A0A] text-white rounded-2xl p-5 border border-white/10 shadow-sm space-y-1">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#A3A39C]">
-                Total Brand Escrow Deposit
-              </span>
-              <div className="text-2xl sm:text-3xl font-black text-white">
-                €{totalCostEur.toLocaleString()}
-              </div>
-              <p className="text-xs text-emerald-400 font-semibold">
-                Locked safely in escrow until approval
-              </p>
-            </div>
-          </div>
-        </div>
       </section>
 
       {/* 4. VALUE & GUARANTEES MATRIX */}
