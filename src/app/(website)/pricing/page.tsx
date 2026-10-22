@@ -1,35 +1,22 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import {
   Check,
   Calculator,
-  BadgeCheck,
   ShieldCheck,
   Building2,
-  DollarSign,
-  Users,
   ArrowRight,
-  HelpCircle,
-  ChevronDown,
-  Layers,
   Lock,
   Percent,
-  CheckCircle2,
   Send,
-  X,
   Zap,
 } from 'lucide-react';
 import { Slider, Modal, Input, message } from 'antd';
-import { Button, Badge } from '@/components/ui';
 
 export default function PricingPage() {
-  const router = useRouter();
-  const [activePersona, setActivePersona] = useState<'brand' | 'creator'>('brand');
   const [budgetEur, setBudgetEur] = useState<number>(1200);
-  const [openFaqIdx, setOpenFaqIdx] = useState<number | null>(0);
 
   // Enterprise Modal State
   const [isEnterpriseModalOpen, setIsEnterpriseModalOpen] = useState(false);
@@ -42,19 +29,6 @@ export default function PricingPage() {
   // Math for calculations
   const platformFeeEur = Math.round(budgetEur * 0.15);
   const totalCostEur = budgetEur + platformFeeEur;
-
-  // Handle URL hash or param
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      const roleParam = params.get('role') || params.get('tab');
-      if (roleParam === 'creator' || window.location.hash === '#creators') {
-        setActivePersona('creator');
-      } else if (roleParam === 'brand' || window.location.hash === '#brands') {
-        setActivePersona('brand');
-      }
-    }
-  }, []);
 
   const handleEnterpriseSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -76,33 +50,6 @@ export default function PricingPage() {
     }, 800);
   };
 
-  const pricingFaqs = [
-    {
-      q: 'Are there any recurring monthly subscription fees to use Influverse?',
-      a: 'No. Influverse charges zero monthly or annual membership fees. Searching creator portfolios, inspecting media kit analytics, and saving talent to favorites is 100% free forever for both brands and creators. Brands pay only when booking a milestone collaboration.',
-    },
-    {
-      q: 'When is the 15% platform fee charged to the brand?',
-      a: 'The flat 15% platform fee is calculated and authorized at the moment you confirm a milestone offer and fund the escrow account. It covers full payment protection, deliverable review workspace, legal usage licensing, and dispute mediation.',
-    },
-    {
-      q: 'Do creators pay any fee or commission on their earnings?',
-      a: 'Zero. Creators keep 100% of their agreed package rate. If a creator quotes €1,000 for a campaign reel, they receive exactly €1,000 upon deliverable approval. Influverse never takes a percentage cut from creator payouts.',
-    },
-    {
-      q: 'What happens if a creator fails to deliver or submits unsatisfactory work?',
-      a: 'All collaboration funds are locked securely in non-custodial escrow. Creators agree to up to 2 revision rounds if deliverables do not match the campaign brief. If a creator fails to deliver within the agreed deadline, the Influverse Trust Team mediates the order and refunds the escrow deposit to the brand.',
-    },
-    {
-      q: 'How does European VAT invoicing and compliance work?',
-      a: 'Influverse is fully compliant with European Union commercial tax directives. B2B brands with a valid EU VAT number receive automatic reverse-charge zero-VAT invoicing. Standard compliant digital tax receipts are generated for every completed milestone.',
-    },
-    {
-      q: 'How and when are creator payouts disbursed?',
-      a: 'As soon as a brand reviews and approves the submitted deliverables (or when the 7-day auto-approval window expires), escrow funds are released to the creator wallet and transferred via SEPA or SWIFT bank transfer within 48 business hours.',
-    },
-  ];
-
   return (
     <div className="min-h-screen bg-[#FDFDFD] text-[#0A0A0A] font-sans pb-24">
       {/* 1. HERO HEADER */}
@@ -119,43 +66,15 @@ export default function PricingPage() {
           </h1>
 
           <p className="text-base sm:text-lg lg:text-xl text-[#66665E] font-medium leading-[28px] max-w-2xl mx-auto">
-            No recurring monthly SaaS software contracts. Brands pay a flat 15% platform fee on completed escrow milestones. Creators keep 100% of their earnings.
+            Brands pay a flat 15% platform fee when they hire a creator. There is no monthly subscription.
           </p>
-
-          {/* Persona Switcher Tabs */}
-          <div className="pt-6 flex justify-center">
-            <div className="inline-flex p-1.5 rounded-full bg-[#F4F4F0] border border-[#E7E7E2] shadow-2xs">
-              <button
-                type="button"
-                onClick={() => setActivePersona('brand')}
-                className={`px-6 sm:px-8 py-2.5 rounded-full font-bold text-sm transition-all cursor-pointer ${
-                  activePersona === 'brand'
-                    ? 'bg-[#0A0A0A] text-white shadow-sm'
-                    : 'text-[#66665E] hover:text-[#0A0A0A]'
-                }`}
-              >
-                For Brands &amp; Marketers
-              </button>
-              <button
-                type="button"
-                onClick={() => setActivePersona('creator')}
-                className={`px-6 sm:px-8 py-2.5 rounded-full font-bold text-sm transition-all cursor-pointer ${
-                  activePersona === 'creator'
-                    ? 'bg-[#0A0A0A] text-white shadow-sm'
-                    : 'text-[#66665E] hover:text-[#0A0A0A]'
-                }`}
-              >
-                For Creators &amp; Influencers
-              </button>
-            </div>
-          </div>
+          <p className="text-base sm:text-lg text-[#0A0A0A] font-semibold leading-[28px] max-w-2xl mx-auto">
+            Creators are free. There is no creator plan and no commission. You keep 100% of your rate.
+          </p>
         </div>
       </section>
 
-      {/* 2. PRICING TIER CARDS */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
-        {activePersona === 'brand' ? (
-          /* BRAND PLANS */
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {/* Plan 1: Pay-As-You-Go */}
             <div className="bg-white rounded-3xl p-8 sm:p-10 border-2 border-[#0A0A0A] shadow-lg flex flex-col justify-between relative group">
@@ -299,205 +218,23 @@ export default function PricingPage() {
               </div>
             </div>
           </div>
-        ) : (
-          /* CREATOR PLANS */
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {/* Creator Standard: 100% Free */}
-            <div className="bg-white rounded-3xl p-8 sm:p-10 border-2 border-emerald-600 shadow-lg flex flex-col justify-between relative group">
-              <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
-                    100% Free Forever
-                  </span>
-                  <span className="text-xs font-bold text-emerald-700">
-                    0% Commission
-                  </span>
-                </div>
-
-                <div>
-                  <h3 className="text-2xl sm:text-3xl font-black text-[#0A0A0A]">
-                    Creator Standard
-                  </h3>
-                  <p className="text-sm text-[#66665E] mt-2 leading-relaxed">
-                    Zero membership fees, zero commissions. You keep 100% of your rate card price. Brands fund escrow upfront before you record.
-                  </p>
-                </div>
-
-                <div className="pt-2 pb-4 border-y border-[#E7E7E2]">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-4xl sm:text-5xl font-black text-[#0A0A0A] tracking-tight">
-                      €0
-                    </span>
-                    <span className="text-base font-bold text-[#66665E]">
-                      / always
-                    </span>
-                  </div>
-                  <p className="text-xs text-emerald-700 font-bold mt-1.5">
-                    Keep 100% of your earnings. Zero payout deduction.
-                  </p>
-                </div>
-
-                <div className="space-y-3.5">
-                  <span className="text-xs font-bold text-[#0A0A0A] uppercase tracking-wider block">
-                    Creator Privileges:
-                  </span>
-                  {[
-                    'Keep 100% of your package price — 0% fee taken',
-                    'Guaranteed escrow payment upfront before filming',
-                    'Custom portfolio page with media kit analytics',
-                    'Direct brand partnership pitches & incoming offers',
-                    'Automatic SEPA / SWIFT payout transfer within 48h',
-                    'Deliverable upload workspace with revision tracker',
-                    'Full dispute protection and support mediation',
-                  ].map((feat, i) => (
-                    <div key={i} className="flex items-start gap-3 text-sm text-[#44443E]">
-                      <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                      <span>{feat}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="pt-8 space-y-3">
-                <Link href="/register?role=creator" className="block">
-                  <button className="w-full h-12 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.01] active:scale-[0.99]">
-                    <span>Join as a Creator — Free</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                </Link>
-                <Link href="/how-it-works#creators" className="block text-center text-xs font-bold text-[#66665E] hover:text-[#0A0A0A] transition-colors py-1">
-                  Learn How Escrow Protects Creators &rarr;
-                </Link>
-              </div>
-            </div>
-
-            {/* Creator Vetted Pro */}
-            <div className="bg-[#0A0A0A] text-white rounded-3xl p-8 sm:p-10 border border-white/10 shadow-2xl flex flex-col justify-between relative group overflow-hidden">
-              <div className="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-emerald-500/15 blur-[90px] pointer-events-none" />
-
-              <div className="relative z-10 space-y-6">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full bg-white/15 border border-white/20 text-white">
-                    Top 5% Talent
-                  </span>
-                  <span className="text-xs font-bold text-[#A3A39C]">
-                    By Application
-                  </span>
-                </div>
-
-                <div>
-                  <h3 className="text-2xl sm:text-3xl font-black text-white">
-                    Vetted Creator Pro
-                  </h3>
-                  <p className="text-sm text-[#A3A39C] mt-2 leading-relaxed">
-                    Designed for established creators, professional UGC videographers, and influencers with consistent high performance.
-                  </p>
-                </div>
-
-                <div className="pt-2 pb-4 border-y border-white/10">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-4xl sm:text-5xl font-black text-white tracking-tight">
-                      Free
-                    </span>
-                    <span className="text-base font-bold text-[#A3A39C]">
-                      (Merit Vetted)
-                    </span>
-                  </div>
-                  <p className="text-xs text-emerald-400 font-bold mt-1.5">
-                    Highest search ranking &amp; exclusive brand invites
-                  </p>
-                </div>
-
-                <div className="space-y-3.5">
-                  <span className="text-xs font-bold text-white uppercase tracking-wider block">
-                    Vetted Pro Features:
-                  </span>
-                  {[
-                    'Everything in Creator Standard plan (0% fees)',
-                    'Official Verified Marketplace Blue Badge',
-                    'Priority ranking algorithm in Discover search',
-                    'Featured in weekly brand newsletter spotlights',
-                    'Direct access to exclusive high-budget brand briefs',
-                    'White-glove portfolio and rate card optimization',
-                    'Fast-track 24h bank payout processing',
-                  ].map((feat, i) => (
-                    <div key={i} className="flex items-start gap-3 text-sm text-[#E7E7E2]">
-                      <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                      <span>{feat}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="relative z-10 pt-8 space-y-3">
-                <Link href="/register?role=creator" className="block">
-                  <button className="w-full h-12 rounded-full bg-white hover:bg-[#FAFAF8] text-[#0A0A0A] font-bold text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.01] active:scale-[0.99]">
-                    <BadgeCheck className="w-4 h-4 text-[#FF2D78]" />
-                    <span>Apply for Vetted Creator Status</span>
-                  </button>
-                </Link>
-                <div className="text-center text-xs text-[#A3A39C] py-1">
-                  Applications reviewed by editorial team in 48 hours
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
       </section>
 
       {/* 3. INTERACTIVE FEE & EARNINGS CALCULATOR */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20" id="calculator">
         <div className="bg-[#FAFAF8] rounded-3xl p-6 sm:p-10 lg:p-12 border border-[#E7E7E2] shadow-sm max-w-5xl mx-auto space-y-8">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E7E7E2] pb-6">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-xl bg-[#0A0A0A] text-white flex items-center justify-center">
-                  <Calculator className="w-4 h-4" />
-                </div>
-                <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">
-                  Interactive Fee &amp; Earnings Calculator
-                </h2>
-              </div>
-              <p className="text-xs sm:text-sm text-[#66665E]">
-                See exactly how budget, platform fee (15%), and creator take-home (100%) calculate in real time.
-              </p>
-            </div>
-
+          <div className="space-y-1 border-b border-[#E7E7E2] pb-6">
             <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setBudgetEur(350)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  budgetEur === 350
-                    ? 'bg-[#0A0A0A] text-white'
-                    : 'bg-white border border-[#E7E7E2] text-[#66665E] hover:text-[#0A0A0A]'
-                }`}
-              >
-                €350 (UGC Hook)
-              </button>
-              <button
-                type="button"
-                onClick={() => setBudgetEur(1200)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  budgetEur === 1200
-                    ? 'bg-[#0A0A0A] text-white'
-                    : 'bg-white border border-[#E7E7E2] text-[#66665E] hover:text-[#0A0A0A]'
-                }`}
-              >
-                €1,200 (Reels/TikTok)
-              </button>
-              <button
-                type="button"
-                onClick={() => setBudgetEur(3000)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  budgetEur === 3000
-                    ? 'bg-[#0A0A0A] text-white'
-                    : 'bg-white border border-[#E7E7E2] text-[#66665E] hover:text-[#0A0A0A]'
-                }`}
-              >
-                €3,000 (YouTube)
-              </button>
+              <div className="w-8 h-8 rounded-xl bg-[#0A0A0A] text-white flex items-center justify-center">
+                <Calculator className="w-4 h-4" />
+              </div>
+              <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight">
+                Interactive Fee &amp; Earnings Calculator
+              </h2>
             </div>
+            <p className="text-xs sm:text-sm text-[#66665E]">
+              See exactly how budget, platform fee (15%), and creator take-home (100%) calculate in real time.
+            </p>
           </div>
 
           {/* Slider */}
@@ -629,47 +366,6 @@ export default function PricingPage() {
               Automated reverse-charge B2B invoicing with VAT validation for seamless corporate accounting across European territories.
             </p>
           </div>
-        </div>
-      </section>
-
-      {/* 5. PRICING FAQ ACCORDION */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-20" id="faq">
-        <div className="text-center max-w-xl mx-auto mb-10 space-y-2">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-xs font-bold text-[#66665E] uppercase tracking-wider">
-            <HelpCircle className="w-3.5 h-3.5 text-[#FF2D78]" />
-            <span>Pricing &amp; Payment Clarifications</span>
-          </div>
-          <h2 className="text-3xl font-black text-[#0A0A0A] tracking-tight">
-            Frequently Asked Questions
-          </h2>
-        </div>
-
-        <div className="space-y-3">
-          {pricingFaqs.map((faq, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-2xl border border-[#E7E7E2] overflow-hidden transition-all shadow-2xs"
-            >
-              <button
-                type="button"
-                onClick={() => setOpenFaqIdx(openFaqIdx === idx ? null : idx)}
-                className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 font-extrabold text-sm sm:text-base text-[#0A0A0A] cursor-pointer hover:bg-[#FAFAF8] transition-colors"
-              >
-                <span>{faq.q}</span>
-                <ChevronDown
-                  className={`w-4 h-4 text-[#66665E] shrink-0 transition-transform duration-200 ${
-                    openFaqIdx === idx ? 'rotate-180 text-[#0A0A0A]' : ''
-                  }`}
-                />
-              </button>
-
-              {openFaqIdx === idx && (
-                <div className="px-5 sm:px-6 pb-6 text-xs sm:text-sm text-[#555550] leading-relaxed border-t border-[#E7E7E2]/60 pt-4 bg-[#FAFAF8]/50">
-                  {faq.a}
-                </div>
-              )}
-            </div>
-          ))}
         </div>
       </section>
 

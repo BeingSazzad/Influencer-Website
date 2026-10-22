@@ -143,10 +143,7 @@ export function DisputesDocket({ role = 'brand', backHref }: DisputesDocketProps
                   <div className="flex items-center gap-4 text-xs font-medium text-[#66665E]">
                     <span>Filed: {dispute?.filedDate || 'Sep 24, 2026'}</span>
                     <span className="text-[#0A0A0A] font-extrabold text-base">
-                      €{order.basePriceEur.toLocaleString()}{' '}
-                      <span className="text-xs text-[#66665E] font-medium">
-                        (Fee: €{order.platformFeeEur.toLocaleString()})
-                      </span>
+                      €{order.basePriceEur.toLocaleString()}
                     </span>
                   </div>
                 </div>

@@ -7,25 +7,18 @@ import { useAppSelector } from '@/redux/hooks';
 import { getBrandProfile } from '@/data/mockBrands';
 import { BrandLogo } from '@/components/shared/BrandLogo';
 import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
-import { ShareProfileModal } from '@/components/shared/ShareProfileModal';
+import { SaveButton } from '@/components/shared/SaveButton';
 import {
   MapPin,
   Globe,
   ExternalLink,
-  ShieldCheck,
   Star,
   Users,
   Building2,
-  CheckCircle2,
   ChevronRight,
-  Share2,
-  Bookmark,
   Award,
-  Check,
   Send,
-  Calendar,
-  Clock,
-  Target,
+  MessageSquare,
 } from 'lucide-react';
 import { message, Modal, Input } from 'antd';
 
@@ -39,7 +32,6 @@ export default function BrandProfilePage() {
 
   const [reviewTab, setReviewTab] = useState<'given' | 'received'>('given');
   const [isSaved, setIsSaved] = useState(false);
-  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
   // Partnership Pitch Modal State
   const [isPitchModalOpen, setIsPitchModalOpen] = useState(false);
@@ -107,30 +99,13 @@ export default function BrandProfilePage() {
               </Link>
             )}
 
-            <button
-              type="button"
+            <SaveButton
+              saved={isSaved}
               onClick={() => {
                 setIsSaved(!isSaved);
-                message.success(isSaved ? 'Brand removed from saved' : 'Brand saved to favorites');
+                message.success(isSaved ? 'Removed from saved' : 'Saved');
               }}
-              className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border text-xs font-bold transition-all shadow-2xs cursor-pointer ${
-                isSaved
-                  ? 'bg-rose-50 border-rose-200 text-[#FF2D78]'
-                  : 'bg-white border-[#E7E7E2] text-[#52524E] hover:border-[#0A0A0A] hover:text-[#0A0A0A]'
-              }`}
-            >
-              <Bookmark className={`w-3.5 h-3.5 ${isSaved ? 'fill-current' : ''}`} />
-              <span>{isSaved ? 'Saved' : 'Save'}</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setIsShareModalOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-[#E7E7E2] hover:border-[#0A0A0A] text-xs font-bold text-[#52524E] hover:text-[#0A0A0A] transition-all shadow-2xs cursor-pointer"
-            >
-              <Share2 className="w-3.5 h-3.5" />
-              <span>Share</span>
-            </button>
+            />
           </div>
         </div>
       </div>
@@ -152,7 +127,7 @@ export default function BrandProfilePage() {
                     {brand.companyName}
                   </h1>
                   {brand.verified && (
-                    <VerifiedBadge size="md" title="Verified Marketplace Brand" />
+                    <VerifiedBadge size="md" title="Verified" />
                   )}
                   <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#FFF0F5] border border-[#FF2D78]/25 text-[#FF2D78]">
                     {brand.industry.split(',')[0]}
@@ -180,12 +155,6 @@ export default function BrandProfilePage() {
                     <Users className="w-4 h-4 text-[#A3A39C]" />
                     <span>{brand.companySize.split('(')[0].trim()}</span>
                   </span>
-                  {brand.foundedYear && (
-                    <span className="flex items-center gap-1.5">
-                      <Calendar className="w-4 h-4 text-[#A3A39C]" />
-                      <span>Est. {brand.foundedYear}</span>
-                    </span>
-                  )}
                 </div>
               </div>
             </div>
@@ -204,7 +173,7 @@ export default function BrandProfilePage() {
           </div>
 
           {/* Trust & Performance Track Record Highlights */}
-          <div className="mt-6 pt-6 border-t border-[#E7E7E2] grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="mt-6 pt-6 border-t border-[#E7E7E2] grid grid-cols-2 sm:grid-cols-3 gap-4">
             <div className="p-3.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]/80">
               <div className="flex items-center gap-2 text-xs font-bold text-[#66665E] uppercase tracking-wider">
                 <Users className="w-3.5 h-3.5 text-[#FF2D78]" />
@@ -233,27 +202,14 @@ export default function BrandProfilePage() {
 
             <div className="p-3.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]/80">
               <div className="flex items-center gap-2 text-xs font-bold text-[#66665E] uppercase tracking-wider">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                <span>Escrow Funded</span>
+                <MessageSquare className="w-3.5 h-3.5 text-[#0A0A0A]" />
+                <span>Reviews</span>
               </div>
               <div className="mt-1 flex items-baseline gap-1.5">
                 <span className="text-xl sm:text-2xl font-black text-[#0A0A0A]">
-                  {brand.stats.escrowFundedRate}%
+                  {brand.stats.reviewsCount}
                 </span>
-                <span className="text-xs font-bold text-emerald-600">Guaranteed</span>
-              </div>
-            </div>
-
-            <div className="p-3.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2]/80">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#66665E] uppercase tracking-wider">
-                <Clock className="w-3.5 h-3.5 text-blue-600" />
-                <span>Response Time</span>
-              </div>
-              <div className="mt-1 flex items-baseline gap-1.5">
-                <span className="text-xl sm:text-2xl font-black text-[#0A0A0A]">
-                  &lt; {brand.stats.avgResponseHours}h
-                </span>
-                <span className="text-xs text-[#66665E]">Avg Reply</span>
+                <span className="text-xs text-[#66665E]">Creator reviews</span>
               </div>
             </div>
           </div>
@@ -298,65 +254,6 @@ export default function BrandProfilePage() {
               )}
             </div>
 
-            {/* Creator Collaboration Ethos */}
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-5">
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-[#FFF0F5] border border-[#FF2D78]/20 flex items-center justify-center">
-                  <Target className="w-4 h-4 text-[#FF2D78]" />
-                </div>
-                <div>
-                  <h2 className="text-lg font-extrabold text-[#0A0A0A] tracking-tight">
-                    Creator Collaboration Focus
-                  </h2>
-                  <p className="text-xs text-[#66665E] font-medium">
-                    What {brand.companyName} values in talent partnerships.
-                  </p>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-1.5">
-                  <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-[#0A0A0A]">
-                    <Check className="w-4 h-4 text-emerald-600" />
-                    <span>Authentic Voice</span>
-                  </div>
-                  <p className="text-xs text-[#66665E] leading-relaxed">
-                    Creators who naturally integrate brand stories with genuine experience, avoiding scripted infomercials.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-1.5">
-                  <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-[#0A0A0A]">
-                    <Check className="w-4 h-4 text-emerald-600" />
-                    <span>Visual Excellence</span>
-                  </div>
-                  <p className="text-xs text-[#66665E] leading-relaxed">
-                    Clean framing, natural lighting, and crisp high-definition production that aligns with brand aesthetics.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-1.5">
-                  <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-[#0A0A0A]">
-                    <Check className="w-4 h-4 text-emerald-600" />
-                    <span>Timely Delivery</span>
-                  </div>
-                  <p className="text-xs text-[#66665E] leading-relaxed">
-                    Clear milestone alignment, respectful communication, and dependable turnaround schedules.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-1.5">
-                  <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-[#0A0A0A]">
-                    <Check className="w-4 h-4 text-emerald-600" />
-                    <span>Secured Escrow</span>
-                  </div>
-                  <p className="text-xs text-[#66665E] leading-relaxed">
-                    All collaboration budgets are funded upfront to secure escrow before work begins. Zero payment friction.
-                  </p>
-                </div>
-              </div>
-            </div>
-
             {/* REVIEWS & ENDORSEMENTS SECTION */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-6">
               {/* Header with Switcher Tabs */}
@@ -366,7 +263,7 @@ export default function BrandProfilePage() {
                     Reviews &amp; Collaborations
                   </h2>
                   <p className="text-xs text-[#66665E]">
-                    Verified feedback and endorsements between {brand.companyName} and creators.
+                    Feedback between {brand.companyName} and creators.
                   </p>
                 </div>
 
@@ -557,28 +454,6 @@ export default function BrandProfilePage() {
                 <span>Pitch for Partnership</span>
               </button>
 
-              {/* Verified Trust Guarantees */}
-              <div className="pt-4 border-t border-[#E7E7E2] space-y-3">
-                <span className="text-xs font-bold text-[#0A0A0A] uppercase tracking-wider block">
-                  Marketplace Assurance
-                </span>
-
-                <div className="space-y-2.5 text-xs text-[#52524E]">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>100% Escrow Milestone Payout</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>Verified Brand Identity</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>Dispute &amp; Support Mediation</span>
-                  </div>
-                </div>
-              </div>
-
               {/* Brand Meta Specs */}
               <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] space-y-2.5 text-xs">
                 <div className="flex items-center justify-between text-[#66665E]">
@@ -622,17 +497,6 @@ export default function BrandProfilePage() {
         </div>
       </div>
 
-      {/* SHARE MODAL */}
-      <ShareProfileModal
-        isOpen={isShareModalOpen}
-        onClose={() => setIsShareModalOpen(false)}
-        title={brand.companyName}
-        subtitle={brand.industry}
-        shareUrl={`/brands/${brand.id}`}
-        avatar={brand.logo}
-        role="brand"
-      />
-
       {/* PARTNERSHIP PITCH MODAL */}
       <Modal
         open={isPitchModalOpen}
@@ -669,9 +533,6 @@ export default function BrandProfilePage() {
                 className="h-11 rounded-xl font-bold text-sm"
                 required
               />
-              <span className="text-[11px] text-[#66665E]">
-                Funds are protected in escrow upon acceptance of the partnership offer.
-              </span>
             </div>
 
             <div className="space-y-1.5">
@@ -686,13 +547,6 @@ export default function BrandProfilePage() {
                 placeholder="Introduce yourself, outline why your audience matches this brand, and describe the content format you propose..."
                 required
               />
-            </div>
-
-            <div className="p-3.5 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-start gap-2.5">
-              <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-              <p className="text-xs text-[#52524E] leading-relaxed">
-                Your verified creator rate card and profile stats will be delivered to {brand.contactName} at {brand.companyName}.
-              </p>
             </div>
 
             <div className="pt-2 flex items-center justify-end gap-3">

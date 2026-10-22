@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { closeOfferModal, createOffer } from '@/redux/slices/orderSlice';
 import { Modal, Input, message, Button } from 'antd';
-import { ShieldCheck, Send, Package, X } from 'lucide-react';
+import { Send, Package, X } from 'lucide-react';
 import { Order, PlatformType } from '@/types';
 import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
 
@@ -118,7 +118,7 @@ export function OfferModal() {
               Send Collaboration Offer
             </h2>
             <p className="text-xs text-[#66665E] font-medium mt-0.5">
-              Escrow-protected campaign contract and deliverable brief
+              Campaign brief and deliverables
             </p>
           </div>
         </div>
@@ -196,10 +196,6 @@ export function OfferModal() {
         <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center justify-between">
           <div>
             <div className="text-xs font-black text-[#0A0A0A]">Total Offer Amount</div>
-            <div className="text-xs text-[#66665E] font-bold flex items-center gap-1 mt-0.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#0A0A0A]" />
-              <span>Escrow protected · Released after deliverable approval</span>
-            </div>
           </div>
           <div className="text-2xl font-black text-[#0A0A0A]">
             €{basePrice.toLocaleString()}

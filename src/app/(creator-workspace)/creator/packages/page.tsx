@@ -276,7 +276,7 @@ export default function CreatorPackagesPage() {
 
           {/* Deal Cards Grid */}
           {filteredPackages.slice(0, 3).length > 0 ? (
-            <div className={`grid grid-cols-1 ${filteredPackages.slice(0,3).length === 1 ? 'md:grid-cols-1 max-w-sm' : filteredPackages.slice(0,3).length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3'} gap-5`}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {filteredPackages.slice(0, 3).map((pkg) => (
                 <div
                   key={pkg.id}

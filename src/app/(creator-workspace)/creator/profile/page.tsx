@@ -36,7 +36,6 @@ import {
   Eye,
   Languages,
   RefreshCw,
-  ShieldCheck,
   CheckCircle2,
   Unlink,
   Link2,
@@ -318,13 +317,11 @@ function CreatorProfileContent() {
     Boolean(currentCreator?.platforms?.youtube?.handle || (isDemoSophie && ytHandle))
   );
   const [isSyncing, setIsSyncing] = useState<boolean>(false);
-  const [lastSyncedTime, setLastSyncedTime] = useState<string>('Today at 4:15 PM');
 
   const handleSyncAllMetrics = () => {
     setIsSyncing(true);
     setTimeout(() => {
       setIsSyncing(false);
-      setLastSyncedTime('Just now');
       message.success('All social channels and audience metrics synced successfully from official APIs!');
     }, 700);
   };
@@ -1298,9 +1295,6 @@ function CreatorProfileContent() {
                 </div>
 
                 <div className="flex items-center gap-3 shrink-0">
-                  <span className="text-xs text-[#66665E] font-medium hidden md:inline">
-                    Last synced: <strong className="text-[#0A0A0A]">{lastSyncedTime}</strong>
-                  </span>
                   <button
                     type="button"
                     onClick={handleSyncAllMetrics}
@@ -1311,14 +1305,6 @@ function CreatorProfileContent() {
                     <span>{isSyncing ? 'Syncing...' : 'Re-sync All'}</span>
                   </button>
                 </div>
-              </div>
-
-              {/* Security & Marketplace Integrity Banner */}
-              <div className="p-4 rounded-2xl bg-[#FAFAF8] border border-[#E7E7E2] flex items-center gap-3 text-xs text-[#52524E]">
-                <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
-                <span>
-                  <strong>Marketplace Trust Standard:</strong> Follower numbers and engagement percentages are automatically verified from official social APIs. To maintain brand transparency and prevent fraudulent data, metrics cannot be edited manually.
-                </span>
               </div>
 
               {/* Channels Grid */}

@@ -1,14 +1,12 @@
 'use client';
 
 import React, { useState, useMemo, useEffect, Suspense } from 'react';
-import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from '@/redux/hooks';
 import { setFilter, resetFilters } from '@/redux/slices/creatorSlice';
-import { CreatorCard } from '@/components/shared/CreatorCard';
+import { CreatorCard, CreatorListRow } from '@/components/shared/CreatorCard';
 import { CreatorGridSkeleton } from '@/components/shared/Skeleton';
 import { EmptyState } from '@/components/shared/EmptyState';
-import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
 import { PlatformType, CreatorFilterState } from '@/types';
 import {
   Search,
@@ -17,9 +15,6 @@ import {
   X,
   LayoutGrid,
   List,
-  MapPin,
-  Star,
-  ArrowRight,
 } from 'lucide-react';
 import { Pagination } from 'antd';
 import { Button } from '@/components/ui';
@@ -599,103 +594,7 @@ function CreatorsDiscoveryContent() {
               ) : (
                 <div className="space-y-4">
                   {paginatedCreators.map((creator) => (
-                    <div
-                      key={creator.id}
-                      className="bg-white rounded-3xl border border-[#E7E7E2] hover:border-[#0A0A0A] p-5 sm:p-6 transition-all duration-300 shadow-2xs hover:shadow-md flex flex-col md:flex-row items-center justify-between gap-6 group"
-                    >
-                      {/* Left: Avatar & Identity */}
-                      <div className="flex items-center gap-4 w-full md:w-auto">
-                        <Link href={`/creators/${creator.id}`} className="shrink-0 relative">
-                          <img
-                            src={creator.avatar}
-                            alt={creator.name}
-                            className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border border-[#E7E7E2] group-hover:scale-105 transition-transform"
-                          />
-                          <VerifiedBadge className="absolute -bottom-1 -right-1 w-5 h-5" />
-                        </Link>
-
-                        <div className="min-w-0">
-                          <div className="flex items-center gap-2">
-                            <Link
-                              href={`/creators/${creator.id}`}
-                              className="text-2xl font-extrabold text-[#0A0A0A] hover:text-[#FF2D78] transition-colors truncate"
-                            >
-                              {creator.name}
-                            </Link>
-                          </div>
-
-                          <div className="flex items-center gap-2 text-sm font-semibold text-[#66665E] mt-1">
-                            <MapPin className="w-3.5 h-3.5" />
-                            <span>{creator.location}</span>
-                            <span>•</span>
-                            <div className="flex items-center gap-1 text-[#0A0A0A] font-extrabold">
-                              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                              <span>{creator.rating}</span>
-                              <span className="text-[#66665E] font-normal">({creator.reviewsCount})</span>
-                            </div>
-                          </div>
-
-                          <div className="flex items-center gap-2 mt-2 flex-wrap">
-                            {creator.categories.map((cat) => (
-                              <span
-                                key={cat}
-                                className="px-2.5 py-0.5 rounded-full bg-[#FAFAF8] border border-[#E7E7E2] text-sm font-bold text-[#555550]"
-                              >
-                                {cat}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Middle: Platforms & Audience */}
-                      <div className="hidden lg:flex items-center gap-6 border-x border-[#F4F4F0] px-6">
-                        {creator.platforms.instagram && (
-                          <div className="text-center">
-                            <div className="text-xs font-black text-[#0A0A0A]">
-                              {creator.platforms.instagram.followersFormatted}
-                            </div>
-                            <div className="text-sm font-bold text-[#66665E]">Instagram</div>
-                          </div>
-                        )}
-                        {creator.platforms.tiktok && (
-                          <div className="text-center">
-                            <div className="text-xs font-black text-[#0A0A0A]">
-                              {creator.platforms.tiktok.followersFormatted}
-                            </div>
-                            <div className="text-sm font-bold text-[#66665E]">TikTok</div>
-                          </div>
-                        )}
-                        {creator.platforms.youtube && (
-                          <div className="text-center">
-                            <div className="text-xs font-black text-[#0A0A0A]">
-                              {creator.platforms.youtube.followersFormatted}
-                            </div>
-                            <div className="text-sm font-bold text-[#66665E]">YouTube</div>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Right: Pricing & CTA */}
-                      <div className="flex items-center justify-between md:justify-end gap-4 w-full md:w-auto pt-4 md:pt-0 border-t md:border-t-0 border-[#F4F4F0]">
-                        <div className="text-left md:text-right">
-                          <span className="text-sm font-bold text-[#66665E] uppercase tracking-wider block">
-                            Packages From
-                          </span>
-                          <span className="text-2xl font-extrabold text-[#0A0A0A]">
-                            €{creator.startingPriceEur}
-                          </span>
-                        </div>
-
-                        <Link
-                          href={`/creators/${creator.id}`}
-                          className="h-10 px-5 rounded-full bg-[#0A0A0A] hover:bg-zinc-800 text-white text-sm font-bold transition-all flex items-center gap-1.5 shadow-2xs hover:scale-105 active:scale-95"
-                        >
-                          <span>View Profile</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
-                        </Link>
-                      </div>
-                    </div>
+                    <CreatorListRow key={creator.id} creator={creator} />
                   ))}
                 </div>
               )

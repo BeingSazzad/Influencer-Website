@@ -5,8 +5,9 @@ import Link from 'next/link';
 import { Creator } from '@/types';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { toggleSaveCreator } from '@/redux/slices/creatorSlice';
-import { Bookmark, ArrowRight, Instagram, Youtube, Star } from 'lucide-react';
+import { ArrowRight, Instagram, Youtube, Star, MapPin } from 'lucide-react';
 import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
+import { SaveButton } from '@/components/shared/SaveButton';
 import { Button, Badge } from '@/components/ui';
 
 interface CreatorCardProps {
@@ -44,17 +45,7 @@ export function CreatorCard({ creator }: CreatorCardProps) {
 
         {/* Top Right Save/Bookmark Action Button */}
         <div className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3">
-          <button
-            onClick={handleSave}
-            className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center backdrop-blur-md transition-all cursor-pointer shadow-xs ${
-              isSaved
-                ? 'bg-[#0A0A0A] text-white shadow-sm scale-105'
-                : 'bg-white/85 text-[#52524B] hover:bg-white hover:text-[#0A0A0A]'
-            }`}
-            title={isSaved ? 'Saved to Shortlist' : 'Save Creator'}
-          >
-            <Bookmark className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isSaved ? 'fill-white' : ''}`} />
-          </button>
+          <SaveButton saved={isSaved} overlay onClick={handleSave} />
         </div>
       </div>
 
@@ -146,5 +137,99 @@ export function CreatorCard({ creator }: CreatorCardProps) {
         </Button>
       </div>
     </div>
+  );
+}
+
+const LIST_PLATFORMS = ['instagram', 'tiktok', 'youtube'] as const;
+
+export function CreatorListRow({ creator }: CreatorCardProps) {
+  const platforms = LIST_PLATFORMS.map((key) => ({
+    key,
+    label: key === 'instagram' ? 'Instagram' : key === 'tiktok' ? 'TikTok' : 'YouTube',
+    value: creator.platforms[key]?.followersFormatted,
+  }));
+
+  return (
+    <article className="rounded-3xl border border-[#E7E7E2] bg-white p-4 shadow-2xs transition-all hover:border-[#0A0A0A] hover:shadow-md sm:p-5">
+      <div className="flex items-start gap-4">
+        <Link href={`/creators/${creator.id}`} className="relative shrink-0">
+          <img
+            src={creator.avatar}
+            alt={creator.name}
+            className="h-16 w-16 rounded-2xl border border-[#E7E7E2] object-cover sm:h-[72px] sm:w-[72px]"
+          />
+          {creator.verified && (
+            <VerifiedBadge className="absolute -bottom-1 -right-1 h-5 w-5" />
+          )}
+        </Link>
+
+        <div className="min-w-0 flex-1">
+          <div className="flex items-start justify-between gap-4">
+            <div className="min-w-0">
+              <Link
+                href={`/creators/${creator.id}`}
+                className="block truncate text-lg font-extrabold tracking-tight text-[#0A0A0A] transition-colors hover:text-[#FF2D78] sm:text-xl"
+              >
+                {creator.name}
+              </Link>
+              <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-[#66665E]">
+                <span className="inline-flex items-center gap-1">
+                  <MapPin className="h-3.5 w-3.5 shrink-0 text-[#A3A39C]" />
+                  <span>{creator.location}</span>
+                </span>
+                <span className="text-[#D2D2CA]">•</span>
+                <span className="inline-flex items-center gap-1 font-bold text-[#0A0A0A]">
+                  <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
+                  <span>{creator.rating}</span>
+                  <span className="font-medium text-[#66665E]">({creator.reviewsCount})</span>
+                </span>
+              </div>
+            </div>
+
+            <div className="shrink-0 text-right">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-[#66665E]">
+                Packages from
+              </div>
+              <div className="mt-1 text-2xl font-black leading-none text-[#0A0A0A]">
+                €{creator.startingPriceEur.toLocaleString()}
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-2.5 flex flex-wrap gap-1.5">
+            {creator.categories.slice(0, 3).map((cat) => (
+              <span
+                key={cat}
+                className="rounded-full border border-[#E7E7E2] bg-[#FAFAF8] px-2.5 py-0.5 text-xs font-semibold text-[#555550]"
+              >
+                {cat}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-4 flex items-center gap-4 border-t border-[#F4F4F0] pt-4">
+        <div className="grid min-w-0 flex-1 grid-cols-3 gap-2">
+          {platforms.map((platform) => (
+            <div key={platform.key} className="min-w-0">
+              <div className="truncate text-base font-black leading-none text-[#0A0A0A]">
+                {platform.value ?? '—'}
+              </div>
+              <div className="mt-1 truncate text-[11px] font-semibold uppercase tracking-wide text-[#A3A39C]">
+                {platform.label}
+              </div>
+            </div>
+          ))}
+        </div>
+        <Link
+          href={`/creators/${creator.id}`}
+          className="inline-flex h-10 shrink-0 items-center gap-1.5 rounded-full bg-[#0A0A0A] px-5 text-sm font-bold text-white transition-colors hover:bg-zinc-800"
+        >
+          <span>View Profile</span>
+          <ArrowRight className="h-3.5 w-3.5" />
+        </Link>
+      </div>
+    </article>
   );
 }

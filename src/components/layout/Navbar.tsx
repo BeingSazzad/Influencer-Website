@@ -186,7 +186,7 @@ export function Navbar() {
               </Dropdown>
             ) : (
               <div className="flex items-center">
-                <Button href="/register" size="md" variant="primary">
+                <Button href="/login" size="md" variant="primary">
                   Get Started
                 </Button>
               </div>
@@ -287,7 +287,7 @@ export function Navbar() {
           ) : (
             <div className="pt-2 space-y-2.5">
               <Button
-                href="/register"
+                href="/login"
                 size="md"
                 variant="primary"
                 fullWidth

@@ -12,6 +12,7 @@ import { VerifiedBadge } from '@/components/shared/VerifiedBadge';
 import { PortfolioVideoModal } from '@/components/shared/PortfolioVideoModal';
 import { CreatorPhotoLightbox } from '@/components/shared/CreatorPhotoLightbox';
 import { ShareProfileModal } from '@/components/shared/ShareProfileModal';
+import { SaveButton } from '@/components/shared/SaveButton';
 import { BrandLogo } from '@/components/shared/BrandLogo';
 import { CreatorProfileSkeleton } from '@/components/shared/Skeleton';
 import { EmptyState } from '@/components/shared/EmptyState';
@@ -22,10 +23,8 @@ import {
   Instagram,
   Youtube,
   MessageSquare,
-  Bookmark,
   Share2,
   ArrowRight,
-  ShieldCheck,
   Star,
   ChevronLeft,
   ChevronRight,
@@ -279,25 +278,13 @@ export default function CreatorProfilePage() {
 
           <div className="flex shrink-0 items-center gap-2">
             {!isSelfProfile && (
-              <button
-                type="button"
+              <SaveButton
+                saved={isSaved}
                 onClick={() => {
                   dispatch(toggleSaveCreator(creator.id));
-                  message.success(isSaved ? 'Removed from shortlist' : 'Added to brand shortlist');
+                  message.success(isSaved ? 'Removed from saved' : 'Saved');
                 }}
-                title={isSaved ? 'Saved to shortlist' : 'Save Creator'}
-                className={`w-9 h-9 rounded-full flex items-center justify-center transition-all cursor-pointer border ${
-                  isSaved
-                    ? 'bg-[#FFF0F5] border-[#FF2D78]/40 text-[#FF2D78] shadow-xs'
-                    : 'bg-white hover:bg-[#FAFAF8] border-[#E7E7E2] text-[#66665E] hover:text-[#0A0A0A] hover:border-[#0A0A0A] shadow-2xs'
-                }`}
-              >
-                <Bookmark
-                  className={`w-4 h-4 transition-transform ${
-                    isSaved ? 'fill-[#FF2D78] text-[#FF2D78] scale-110' : ''
-                  }`}
-                />
-              </button>
+              />
             )}
 
             <button
@@ -567,7 +554,7 @@ export default function CreatorProfilePage() {
                     Collaboration Packages
                   </h2>
                   <p className="text-sm text-[#66665E] mt-1 font-medium">
-                    Pre-set deliverables with guaranteed turnaround and escrow protection.
+                    Pre-set deliverables and turnaround.
                   </p>
                 </div>
               </div>
@@ -680,7 +667,7 @@ export default function CreatorProfilePage() {
                 <div>
                   <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Featured Portfolio</h2>
                   <p className="text-sm text-[#66665E] mt-1 font-medium">
-                    Verified brand collaborations and creative content samples.
+                    Brand collaborations and creative content samples.
                   </p>
                 </div>
 
@@ -783,7 +770,7 @@ export default function CreatorProfilePage() {
                 <div>
                   <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">Client Reviews & Testimonials</h2>
                   <p className="text-sm text-[#66665E] mt-1 font-medium">
-                    Verified ratings from completed brand escrow contracts.
+                    Ratings from completed collaborations.
                   </p>
                 </div>
                 <button
@@ -832,7 +819,7 @@ export default function CreatorProfilePage() {
               <div>
                 <h2 className="text-2xl font-extrabold text-[#0A0A0A]">Collaboration Packages</h2>
                 <p className="text-xs sm:text-sm text-[#66665E] mt-1 font-medium">
-                  Pre-set deliverables with guaranteed turnaround and escrow protection.
+                  Pre-set deliverables and turnaround.
                 </p>
               </div>
             </div>
@@ -1061,10 +1048,10 @@ export default function CreatorProfilePage() {
                 <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                   <div>
                     <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
-                      Brand Reviews & Verified Ratings
+                      Brand Reviews
                     </h2>
                     <p className="text-sm text-[#66665E] mt-1 font-medium">
-                      All reviews are verified from completed escrow collaborations on Influverse.
+                      Reviews from completed collaborations.
                     </p>
                   </div>
 
@@ -1080,7 +1067,7 @@ export default function CreatorProfilePage() {
                           ))}
                         </div>
                         <div className="text-sm font-bold text-[#66665E] mt-0.5">
-                          {creator.reviewsCount || 42} verified reviews
+                          {creator.reviewsCount || 42} reviews
                         </div>
                       </div>
                     </div>
@@ -1138,7 +1125,7 @@ export default function CreatorProfilePage() {
                   </div>
 
                   <span className="text-sm font-bold text-[#66665E] whitespace-nowrap shrink-0 hidden sm:inline">
-                    Showing {filteredReviews.length === 0 ? 0 : reviewPageStart + 1}–{Math.min(reviewPageStart + reviewsPerPage, filteredReviews.length)} of {filteredReviews.length} Verified Reviews
+                    Showing {filteredReviews.length === 0 ? 0 : reviewPageStart + 1}–{Math.min(reviewPageStart + reviewsPerPage, filteredReviews.length)} of {filteredReviews.length} reviews
                   </span>
                 </div>
 

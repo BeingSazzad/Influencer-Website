@@ -136,19 +136,10 @@ export default function CreatorCampaignsPage() {
 
         {/* Campaigns Deals Container */}
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E7E2] shadow-2xs space-y-5">
-          <div className="pb-3 border-b border-[#E7E7E2] flex items-center justify-between">
+          <div className="pb-3 border-b border-[#E7E7E2]">
             <h2 className="text-2xl font-extrabold text-[#0A0A0A] tracking-tight">
               Contracts
             </h2>
-            {disputedOrders.length > 0 && (
-              <Link
-                href="/creator/messages?conv=conv-influverse-support"
-                className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full bg-[#FAF8F5] text-[#0A0A0A] hover:bg-[#F4F4F0] transition-colors border border-[#E7E7E2]"
-              >
-                <LifeBuoy className="w-3.5 h-3.5 text-amber-600" />
-                <span>Support Inquiries ({disputedOrders.length})</span>
-              </Link>
-            )}
           </div>
 
           {filteredOrders.length > 0 ? (
